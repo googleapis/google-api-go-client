@@ -3311,6 +3311,7 @@ type FhirStore struct {
 	// of this FHIR store to this destination. The Pub/Sub message
 	// attributes contain a map with a string describing the action that has
 	// triggered the notification. For example, "action":"CreateResource".
+	// Deprecated. Use `notification_configs` instead.
 	NotificationConfig *NotificationConfig `json:"notificationConfig,omitempty"`
 
 	// NotificationConfigs: Specifies where and whether to send

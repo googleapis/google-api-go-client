@@ -937,7 +937,7 @@ type GoogleCloudRetailV2BigQuerySource struct {
 	// available here: https://support.google.com/analytics/answer/3437719.
 	// * `user_event_ga4`: The schema is available here:
 	// https://support.google.com/analytics/answer/7029846. Supported values
-	// for auto-completion imports: * `suggestions` (default): One JSON
+	// for autocomplete imports: * `suggestions` (default): One JSON
 	// completion suggestion per line. * `denylist`: One JSON deny
 	// suggestion per line. * `allowlist`: One JSON allow suggestion per
 	// line.
@@ -1211,7 +1211,7 @@ func (s *GoogleCloudRetailV2ColorInfo) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudRetailV2CompleteQueryResponse: Response of the
-// auto-complete query.
+// autocomplete query.
 type GoogleCloudRetailV2CompleteQueryResponse struct {
 	// AttributionToken: A unique complete token. This should be included in
 	// the UserEvent.completion_detail for search events resulting from this

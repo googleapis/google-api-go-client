@@ -2209,6 +2209,10 @@ type GoogleCloudContactcenterinsightsV1IngestConversationsMetadata struct {
 	// EndTime: Output only. The time the operation finished running.
 	EndTime string `json:"endTime,omitempty"`
 
+	// IngestConversationsStats: Output only. Statistics for
+	// IngestConversations operation.
+	IngestConversationsStats *GoogleCloudContactcenterinsightsV1IngestConversationsMetadataIngestConversationsStats `json:"ingestConversationsStats,omitempty"`
+
 	// PartialErrors: Output only. Partial errors during ingest operation
 	// that might cause the operation output to be incomplete.
 	PartialErrors []*GoogleRpcStatus `json:"partialErrors,omitempty"`
@@ -2235,6 +2239,52 @@ type GoogleCloudContactcenterinsightsV1IngestConversationsMetadata struct {
 
 func (s *GoogleCloudContactcenterinsightsV1IngestConversationsMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1IngestConversationsMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1IngestConversationsMetadataIngestCon
+// versationsStats: Statistics for IngestConversations operation.
+type GoogleCloudContactcenterinsightsV1IngestConversationsMetadataIngestConversationsStats struct {
+	// DuplicatesSkippedCount: Output only. The number of objects skipped
+	// because another conversation with the same transcript uri had already
+	// been ingested.
+	DuplicatesSkippedCount int64 `json:"duplicatesSkippedCount,omitempty"`
+
+	// FailedIngestCount: Output only. The number of objects which were
+	// unable to be ingested due to errors. The errors are populated in the
+	// partial_errors field.
+	FailedIngestCount int64 `json:"failedIngestCount,omitempty"`
+
+	// ProcessedObjectCount: Output only. The number of objects processed
+	// during the ingest operation.
+	ProcessedObjectCount int64 `json:"processedObjectCount,omitempty"`
+
+	// SuccessfulIngestCount: Output only. The number of new conversations
+	// added during this ingest operation.
+	SuccessfulIngestCount int64 `json:"successfulIngestCount,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "DuplicatesSkippedCount") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DuplicatesSkippedCount")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudContactcenterinsightsV1IngestConversationsMetadataIngestConversationsStats) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1IngestConversationsMetadataIngestConversationsStats
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4320,6 +4370,10 @@ type GoogleCloudContactcenterinsightsV1alpha1IngestConversationsMetadata struct 
 	// EndTime: Output only. The time the operation finished running.
 	EndTime string `json:"endTime,omitempty"`
 
+	// IngestConversationsStats: Output only. Statistics for
+	// IngestConversations operation.
+	IngestConversationsStats *GoogleCloudContactcenterinsightsV1alpha1IngestConversationsMetadataIngestConversationsStats `json:"ingestConversationsStats,omitempty"`
+
 	// PartialErrors: Output only. Partial errors during ingest operation
 	// that might cause the operation output to be incomplete.
 	PartialErrors []*GoogleRpcStatus `json:"partialErrors,omitempty"`
@@ -4346,6 +4400,52 @@ type GoogleCloudContactcenterinsightsV1alpha1IngestConversationsMetadata struct 
 
 func (s *GoogleCloudContactcenterinsightsV1alpha1IngestConversationsMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1IngestConversationsMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1alpha1IngestConversationsMetadataIng
+// estConversationsStats: Statistics for IngestConversations operation.
+type GoogleCloudContactcenterinsightsV1alpha1IngestConversationsMetadataIngestConversationsStats struct {
+	// DuplicatesSkippedCount: Output only. The number of objects skipped
+	// because another conversation with the same transcript uri had already
+	// been ingested.
+	DuplicatesSkippedCount int64 `json:"duplicatesSkippedCount,omitempty"`
+
+	// FailedIngestCount: Output only. The number of objects which were
+	// unable to be ingested due to errors. The errors are populated in the
+	// partial_errors field.
+	FailedIngestCount int64 `json:"failedIngestCount,omitempty"`
+
+	// ProcessedObjectCount: Output only. The number of objects processed
+	// during the ingest operation.
+	ProcessedObjectCount int64 `json:"processedObjectCount,omitempty"`
+
+	// SuccessfulIngestCount: Output only. The number of new conversations
+	// added during this ingest operation.
+	SuccessfulIngestCount int64 `json:"successfulIngestCount,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "DuplicatesSkippedCount") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DuplicatesSkippedCount")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudContactcenterinsightsV1alpha1IngestConversationsMetadataIngestConversationsStats) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1alpha1IngestConversationsMetadataIngestConversationsStats
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

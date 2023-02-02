@@ -1708,7 +1708,7 @@ type GoogleCloudRetailV2alphaBigQuerySource struct {
 	// available here: https://support.google.com/analytics/answer/3437719.
 	// * `user_event_ga4`: The schema is available here:
 	// https://support.google.com/analytics/answer/7029846. Supported values
-	// for auto-completion imports: * `suggestions` (default): One JSON
+	// for autocomplete imports: * `suggestions` (default): One JSON
 	// completion suggestion per line. * `denylist`: One JSON deny
 	// suggestion per line. * `allowlist`: One JSON allow suggestion per
 	// line.
@@ -2007,7 +2007,7 @@ func (s *GoogleCloudRetailV2alphaColorInfo) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudRetailV2alphaCompleteQueryResponse: Response of the
-// auto-complete query.
+// autocomplete query.
 type GoogleCloudRetailV2alphaCompleteQueryResponse struct {
 	// AttributeResults: A map of matched attribute suggestions. This field
 	// is only available for "cloud-retail" dataset. Current supported keys:
@@ -11920,6 +11920,17 @@ func (r *ProjectsLocationsCatalogsBranchesProductsService) Delete(name string) *
 	return c
 }
 
+// CascadeDelete sets the optional parameter "cascadeDelete": This value
+// only applies to the case when the target product is of type PRIMARY.
+// When deleting a product of VARIANT/COLLECTION type, this value will
+// be ignored. When set to true, the subsequent variant products will be
+// deleted. When set to false, if the primary product has active variant
+// products, an error will be returned.
+func (c *ProjectsLocationsCatalogsBranchesProductsDeleteCall) CascadeDelete(cascadeDelete bool) *ProjectsLocationsCatalogsBranchesProductsDeleteCall {
+	c.urlParams_.Set("cascadeDelete", fmt.Sprint(cascadeDelete))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -12014,6 +12025,11 @@ func (c *ProjectsLocationsCatalogsBranchesProductsDeleteCall) Do(opts ...googlea
 	//     "name"
 	//   ],
 	//   "parameters": {
+	//     "cascadeDelete": {
+	//       "description": "This value only applies to the case when the target product is of type PRIMARY. When deleting a product of VARIANT/COLLECTION type, this value will be ignored. When set to true, the subsequent variant products will be deleted. When set to false, if the primary product has active variant products, an error will be returned.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "name": {
 	//       "description": "Required. Full resource name of Product, such as `projects/*/locations/global/catalogs/default_catalog/branches/default_branch/products/some_product_id`. If the caller does not have permission to delete the Product, regardless of whether or not it exists, a PERMISSION_DENIED error is returned. If the Product to delete does not exist, a NOT_FOUND error is returned. The Product to delete can neither be a Product.Type.COLLECTION Product member nor a Product.Type.PRIMARY Product with more than one variants. Otherwise, an INVALID_ARGUMENT error is returned. All inventory information for the named Product will be deleted.",
 	//       "location": "path",

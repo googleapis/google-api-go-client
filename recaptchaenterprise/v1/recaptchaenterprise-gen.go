@@ -429,6 +429,11 @@ type GoogleCloudRecaptchaenterpriseV1AnnotateAssessmentRequest struct {
 	// phishing, or social engineering.
 	Reasons []string `json:"reasons,omitempty"`
 
+	// TransactionEvent: Optional. If the Assessment is part of a Payment
+	// Transaction, provide details on Payment Lifecycle Events that occur
+	// in the Transaction.
+	TransactionEvent *GoogleCloudRecaptchaenterpriseV1TransactionEvent `json:"transactionEvent,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Annotation") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -460,8 +465,8 @@ type GoogleCloudRecaptchaenterpriseV1AnnotateAssessmentResponse struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
-// GoogleCloudRecaptchaenterpriseV1Assessment: A recaptcha assessment
-// resource.
+// GoogleCloudRecaptchaenterpriseV1Assessment: A reCAPTCHA Enterprise
+// assessment resource.
 type GoogleCloudRecaptchaenterpriseV1Assessment struct {
 	// AccountDefenderAssessment: Assessment returned by account defender
 	// when a hashed_account_id is provided.
@@ -618,12 +623,12 @@ type GoogleCloudRecaptchaenterpriseV1Event struct {
 	// stable secret.
 	HashedAccountId string `json:"hashedAccountId,omitempty"`
 
-	// SiteKey: Optional. The site key that was used to invoke reCAPTCHA on
-	// your site and generate the token.
+	// SiteKey: Optional. The site key that was used to invoke reCAPTCHA
+	// Enterprise on your site and generate the token.
 	SiteKey string `json:"siteKey,omitempty"`
 
 	// Token: Optional. The user response token provided by the reCAPTCHA
-	// client-side integration on your site.
+	// Enterprise client-side integration on your site.
 	Token string `json:"token,omitempty"`
 
 	// UserAgent: Optional. The user agent present in the request from the
@@ -1444,6 +1449,133 @@ func (s *GoogleCloudRecaptchaenterpriseV1TokenProperties) MarshalJSON() ([]byte,
 	type NoMethod GoogleCloudRecaptchaenterpriseV1TokenProperties
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRecaptchaenterpriseV1TransactionEvent: Describes an event
+// in the lifecycle of a payment transaction.
+type GoogleCloudRecaptchaenterpriseV1TransactionEvent struct {
+	// EventTime: Optional. Timestamp when this transaction event occurred;
+	// otherwise assumed to be the time of the API call.
+	EventTime string `json:"eventTime,omitempty"`
+
+	// EventType: Optional. The type of this transaction event.
+	//
+	// Possible values:
+	//   "TRANSACTION_EVENT_TYPE_UNSPECIFIED" - Default, unspecified event
+	// type.
+	//   "MERCHANT_APPROVE" - Indicates that the transaction is approved by
+	// the merchant's risk engine. The accompanying reasons can include
+	// 'INHOUSE', 'ACCERTIFY', or 'RECAPTCHA'.
+	//   "MERCHANT_DENY" - Indicates that the transaction is denied and
+	// concluded due to risks detected by the merchant's risk engine. The
+	// accompanying reasons can include 'INHOUSE', 'ACCERTIFY',
+	// 'MANUAL_REVIEW', or 'RECAPTCHA'.
+	//   "MANUAL_REVIEW" - Indicates that the transaction is being evaluated
+	// by a human, due to suspicion or risk.
+	//   "AUTHORIZATION" - Indicates that the authorization attempt with the
+	// card issuer succeeded.
+	//   "AUTHORIZATION_DECLINE" - Indicates that the authorization attempt
+	// with the card issuer failed. The accompanying reasons can include
+	// Visa's '54' indicating that the card is expired or '82' indicating
+	// that the CVV is incorrect.
+	//   "PAYMENT_CAPTURE" - Indicates that the transaction is completed
+	// because the funds were settled.
+	//   "PAYMENT_CAPTURE_DECLINE" - Indicates that the transaction could
+	// not be completed because the funds were not settled.
+	//   "CANCEL" - Indicates that the transaction has been canceled.
+	// Specify the reason for the cancellation. For example,
+	// 'INSUFFICIENT_INVENTORY'.
+	//   "CHARGEBACK_INQUIRY" - Indicates that the merchant has received a
+	// chargeback inquiry for the transaction, requesting additional
+	// information before a chargeback is officially issued and a formal
+	// chargeback notification is sent.
+	//   "CHARGEBACK_ALERT" - Indicates that the merchant has received a
+	// chargeback alert for the transaction. The process of resolving the
+	// dispute without involving the payment network is started.
+	//   "FRAUD_NOTIFICATION" - Indicates that a fraud notification is
+	// issued for the transaction, sent by the payment instrument's issuing
+	// bank because the transaction appears to be fraudulent. We recommend
+	// including TC40 or SAFE data in the `reason` field for this event
+	// type. For partial chargebacks, we recommend that you include an
+	// amount in the `value` field.
+	//   "CHARGEBACK" - Indicates that the merchant is informed by the
+	// payment network that the transaction has entered the chargeback
+	// process. Reason code examples include Discover's '4553' and '6041'.
+	// For partial chargebacks, we recommend that you include an amount in
+	// the `value` field.
+	//   "CHARGEBACK_REPRESENTMENT" - Indicates that the transaction has
+	// entered the chargeback process, and that the merchant has chosen to
+	// enter representment. Reason examples include Discover's '4553' and
+	// '6041'. For partial chargebacks, we recommend that you include an
+	// amount in the `value` field.
+	//   "CHARGEBACK_REVERSE" - Indicates that the transaction has had a
+	// chargeback which was illegitimate and was reversed as a result. For
+	// partial chargebacks, we recommend that you include an amount in the
+	// `value` field.
+	//   "REFUND_REQUEST" - Indicates that the merchant has received a
+	// refund for a completed transaction. For partial refunds, we recommend
+	// that you include an amount in the `value` field. Reason example:
+	// 'TAX_EXEMPT' (partial refund of exempt tax)
+	//   "REFUND_DECLINE" - Indicates that the merchant has received a
+	// refund request for this transaction, but that they have declined it.
+	// For partial refunds, we recommend that you include an amount in the
+	// `value` field. Reason example: 'TAX_EXEMPT' (partial refund of exempt
+	// tax)
+	//   "REFUND" - Indicates that the completed transaction was refunded by
+	// the merchant. For partial refunds, we recommend that you include an
+	// amount in the `value` field. Reason example: 'TAX_EXEMPT' (partial
+	// refund of exempt tax)
+	//   "REFUND_REVERSE" - Indicates that the completed transaction was
+	// refunded by the merchant, and that this refund was reversed. For
+	// partial refunds, we recommend that you include an amount in the
+	// `value` field.
+	EventType string `json:"eventType,omitempty"`
+
+	// Reason: Optional. The reason or standardized code which corresponds
+	// with this transaction event, if one exists. E.g. a CHARGEBACK Event
+	// with code 4553.
+	Reason string `json:"reason,omitempty"`
+
+	// Value: Optional. The value that corresponds with this transaction
+	// event, if one exists. E.g. A refund event where $5.00 was refunded.
+	// Currency is obtained from the original transaction data.
+	Value float64 `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EventTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EventTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRecaptchaenterpriseV1TransactionEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecaptchaenterpriseV1TransactionEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudRecaptchaenterpriseV1TransactionEvent) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudRecaptchaenterpriseV1TransactionEvent
+	var s1 struct {
+		Value gensupport.JSONFloat64 `json:"value"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Value = float64(s1.Value)
+	return nil
 }
 
 // GoogleCloudRecaptchaenterpriseV1WafSettings: Settings specific to

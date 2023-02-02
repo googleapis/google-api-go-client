@@ -5689,6 +5689,7 @@ func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 
 type TextConfig struct {
 	// Transformations: The transformations to apply to the detected data.
+	// Deprecated. Use `additional_transformations` instead.
 	Transformations []*InfoTypeTransformation `json:"transformations,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Transformations") to

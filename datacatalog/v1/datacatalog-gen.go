@@ -331,7 +331,9 @@ type Binding struct {
 	// (https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts).
 	// For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`.
 	// * `group:{emailid}`: An email address that represents a Google group.
-	// For example, `admins@example.com`. *
+	// For example, `admins@example.com`. * `domain:{domain}`: The G Suite
+	// domain (primary) that represents all the users of that domain. For
+	// example, `google.com` or `example.com`. *
 	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
 	// unique identifier) representing a user that has been recently
 	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
@@ -348,9 +350,7 @@ type Binding struct {
 	// that has been recently deleted. For example,
 	// `admins@example.com?uid=123456789012345678901`. If the group is
 	// recovered, this value reverts to `group:{emailid}` and the recovered
-	// group retains the role in the binding. * `domain:{domain}`: The G
-	// Suite domain (primary) that represents all the users of that domain.
-	// For example, `google.com` or `example.com`.
+	// group retains the role in the binding.
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of `members`, or principals.
@@ -2612,6 +2612,127 @@ type GoogleCloudDatacatalogV1PolicyTag struct {
 
 func (s *GoogleCloudDatacatalogV1PolicyTag) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1PolicyTag
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDatacatalogV1ReconcileTagsMetadata: Metadata message for
+// long-running operation returned by the ReconcileTags.
+type GoogleCloudDatacatalogV1ReconcileTagsMetadata struct {
+	// Errors: Map that maps name of each tagged column (or empty string in
+	// case of sole entry) to tagging operation status.
+	Errors map[string]Status `json:"errors,omitempty"`
+
+	// State: State of the reconciliation operation.
+	//
+	// Possible values:
+	//   "RECONCILIATION_STATE_UNSPECIFIED" - Default value. This value is
+	// unused.
+	//   "RECONCILIATION_QUEUED" - The reconciliation has been queued and
+	// awaits for execution.
+	//   "RECONCILIATION_IN_PROGRESS" - The reconciliation is in progress.
+	//   "RECONCILIATION_DONE" - The reconciliation has been finished.
+	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Errors") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Errors") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDatacatalogV1ReconcileTagsMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatacatalogV1ReconcileTagsMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDatacatalogV1ReconcileTagsRequest: Request message for
+// ReconcileTags.
+type GoogleCloudDatacatalogV1ReconcileTagsRequest struct {
+	// ForceDeleteMissing: If set to true deletes from the entry tags
+	// related to given tag template and not mentioned in the tags source.
+	// If set to false only creates and updates of the tags mentioned in the
+	// source will take place. Other tags in that entry using the same tag
+	// template will be retained instead of being deleted.
+	ForceDeleteMissing bool `json:"forceDeleteMissing,omitempty"`
+
+	// TagTemplate: Required. The name of the tag template, that will be
+	// used for reconciliation.
+	TagTemplate string `json:"tagTemplate,omitempty"`
+
+	// Tags: A list of tags to be applied on a given entry. Individual tags
+	// may specify tag template, but it must be the same as the one in the
+	// ReconcileTagsRequest. The sole entry and each of its columns must be
+	// mentioned at most once.
+	Tags []*GoogleCloudDatacatalogV1Tag `json:"tags,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ForceDeleteMissing")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ForceDeleteMissing") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDatacatalogV1ReconcileTagsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatacatalogV1ReconcileTagsRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDatacatalogV1ReconcileTagsResponse: Request message for
+// long-running operation returned by the ReconcileTags.
+type GoogleCloudDatacatalogV1ReconcileTagsResponse struct {
+	// CreatedTagsCount: Number of tags created in the request.
+	CreatedTagsCount int64 `json:"createdTagsCount,omitempty,string"`
+
+	// DeletedTagsCount: Number of tags deleted in the request.
+	DeletedTagsCount int64 `json:"deletedTagsCount,omitempty,string"`
+
+	// UpdatedTagsCount: Number of tags updated in the request.
+	UpdatedTagsCount int64 `json:"updatedTagsCount,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "CreatedTagsCount") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreatedTagsCount") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDatacatalogV1ReconcileTagsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatacatalogV1ReconcileTagsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -8419,6 +8540,155 @@ func (c *ProjectsLocationsEntryGroupsEntriesTagsPatchCall) Do(opts ...googleapi.
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleCloudDatacatalogV1Tag"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "datacatalog.projects.locations.entryGroups.entries.tags.reconcile":
+
+type ProjectsLocationsEntryGroupsEntriesTagsReconcileCall struct {
+	s                                            *Service
+	parent                                       string
+	googleclouddatacatalogv1reconciletagsrequest *GoogleCloudDatacatalogV1ReconcileTagsRequest
+	urlParams_                                   gensupport.URLParams
+	ctx_                                         context.Context
+	header_                                      http.Header
+}
+
+// Reconcile: Reconciles tags created with a given tag template on a
+// given Entry. Reconciliation is an operation that given a list of tags
+// creates or updates them on the entry. Additionally, the operation is
+// also able to delete tags not mentioned in the tag list. It can be
+// achieved by setting force_delete_missing parameter. Reconciliation is
+// a long-running operation done in the background, so this method
+// returns long-running operation resource. The resource can be queried
+// with Operations.GetOperation which contains metadata and response.
+//
+// - parent: Name of Entry to be tagged.
+func (r *ProjectsLocationsEntryGroupsEntriesTagsService) Reconcile(parent string, googleclouddatacatalogv1reconciletagsrequest *GoogleCloudDatacatalogV1ReconcileTagsRequest) *ProjectsLocationsEntryGroupsEntriesTagsReconcileCall {
+	c := &ProjectsLocationsEntryGroupsEntriesTagsReconcileCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleclouddatacatalogv1reconciletagsrequest = googleclouddatacatalogv1reconciletagsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsEntryGroupsEntriesTagsReconcileCall) Fields(s ...googleapi.Field) *ProjectsLocationsEntryGroupsEntriesTagsReconcileCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsEntryGroupsEntriesTagsReconcileCall) Context(ctx context.Context) *ProjectsLocationsEntryGroupsEntriesTagsReconcileCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsEntryGroupsEntriesTagsReconcileCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsEntryGroupsEntriesTagsReconcileCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddatacatalogv1reconciletagsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/tags:reconcile")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datacatalog.projects.locations.entryGroups.entries.tags.reconcile" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsEntryGroupsEntriesTagsReconcileCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Reconciles tags created with a given tag template on a given Entry. Reconciliation is an operation that given a list of tags creates or updates them on the entry. Additionally, the operation is also able to delete tags not mentioned in the tag list. It can be achieved by setting force_delete_missing parameter. Reconciliation is a long-running operation done in the background, so this method returns long-running operation resource. The resource can be queried with Operations.GetOperation which contains metadata and response.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/entryGroups/{entryGroupsId}/entries/{entriesId}/tags:reconcile",
+	//   "httpMethod": "POST",
+	//   "id": "datacatalog.projects.locations.entryGroups.entries.tags.reconcile",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. Name of Entry to be tagged.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+/entries/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/tags:reconcile",
+	//   "request": {
+	//     "$ref": "GoogleCloudDatacatalogV1ReconcileTagsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

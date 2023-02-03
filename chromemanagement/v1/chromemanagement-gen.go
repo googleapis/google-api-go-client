@@ -2688,6 +2688,10 @@ type GoogleChromeManagementV1TelemetryDevice struct {
 	// ChromeOS update status.
 	OsUpdateStatus []*GoogleChromeManagementV1OsUpdateStatus `json:"osUpdateStatus,omitempty"`
 
+	// PeripheralsReport: Output only. Peripherals reports collected
+	// periodically sorted in a decreasing order of report_time.
+	PeripheralsReport []*GoogleChromeManagementV1PeripheralsReport `json:"peripheralsReport,omitempty"`
+
 	// SerialNumber: Output only. Device serial number. This value is the
 	// same as the Admin Console's Serial Number in the ChromeOS Devices
 	// tab.

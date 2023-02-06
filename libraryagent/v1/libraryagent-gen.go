@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/docs/quota
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/libraryagent/v1"
-//   ...
-//   ctx := context.Background()
-//   libraryagentService, err := libraryagent.NewService(ctx)
+//	import "google.golang.org/api/libraryagent/v1"
+//	...
+//	ctx := context.Background()
+//	libraryagentService, err := libraryagent.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   libraryagentService, err := libraryagent.NewService(ctx, option.WithAPIKey("AIza..."))
+//	libraryagentService, err := libraryagent.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   libraryagentService, err := libraryagent.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	libraryagentService, err := libraryagent.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package libraryagent // import "google.golang.org/api/libraryagent/v1"
@@ -50,6 +50,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -75,21 +76,24 @@ const apiId = "libraryagent:v1"
 const apiName = "libraryagent"
 const apiVersion = "v1"
 const basePath = "https://libraryagent.googleapis.com/"
+const mtlsBasePath = "https://libraryagent.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud data and see the
+	// email address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -159,9 +163,9 @@ type GoogleExampleLibraryagentV1Book struct {
 	// Author: The name of the book author.
 	Author string `json:"author,omitempty"`
 
-	// Name: The resource name of the book.
-	// Book names have the form `shelves/{shelf_id}/books/{book_id}`.
-	// The name is ignored when creating a book.
+	// Name: The resource name of the book. Book names have the form
+	// `shelves/{shelf_id}/books/{book_id}`. The name is ignored when
+	// creating a book.
 	Name string `json:"name,omitempty"`
 
 	// Read: Value indicating whether the book has been read.
@@ -176,10 +180,10 @@ type GoogleExampleLibraryagentV1Book struct {
 
 	// ForceSendFields is a list of field names (e.g. "Author") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Author") to include in API
@@ -203,12 +207,9 @@ type GoogleExampleLibraryagentV1ListBooksResponse struct {
 	// Books: The list of books.
 	Books []*GoogleExampleLibraryagentV1Book `json:"books,omitempty"`
 
-	// NextPageToken: A token to retrieve next page of results.
-	// Pass this value in the
-	// ListBooksRequest.page_token
-	// field in the subsequent call to `ListBooks` method to retrieve the
-	// next
-	// page of results.
+	// NextPageToken: A token to retrieve next page of results. Pass this
+	// value in the ListBooksRequest.page_token field in the subsequent call
+	// to `ListBooks` method to retrieve the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -217,10 +218,10 @@ type GoogleExampleLibraryagentV1ListBooksResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Books") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Books") to include in API
@@ -241,12 +242,9 @@ func (s *GoogleExampleLibraryagentV1ListBooksResponse) MarshalJSON() ([]byte, er
 // GoogleExampleLibraryagentV1ListShelvesResponse: Response message for
 // LibraryAgent.ListShelves.
 type GoogleExampleLibraryagentV1ListShelvesResponse struct {
-	// NextPageToken: A token to retrieve next page of results.
-	// Pass this value in the
-	// ListShelvesRequest.page_token
-	// field in the subsequent call to `ListShelves` method to retrieve the
-	// next
-	// page of results.
+	// NextPageToken: A token to retrieve next page of results. Pass this
+	// value in the ListShelvesRequest.page_token field in the subsequent
+	// call to `ListShelves` method to retrieve the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// Shelves: The list of shelves.
@@ -258,10 +256,10 @@ type GoogleExampleLibraryagentV1ListShelvesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -282,9 +280,9 @@ func (s *GoogleExampleLibraryagentV1ListShelvesResponse) MarshalJSON() ([]byte, 
 // GoogleExampleLibraryagentV1Shelf: A Shelf contains a collection of
 // books with a theme.
 type GoogleExampleLibraryagentV1Shelf struct {
-	// Name: Output only. The resource name of the shelf.
-	// Shelf names have the form `shelves/{shelf_id}`.
-	// The name is ignored when creating a shelf.
+	// Name: Output only. The resource name of the shelf. Shelf names have
+	// the form `shelves/{shelf_id}`. The name is ignored when creating a
+	// shelf.
 	Name string `json:"name,omitempty"`
 
 	// Theme: The theme of the shelf
@@ -296,10 +294,10 @@ type GoogleExampleLibraryagentV1Shelf struct {
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Name") to include in API
@@ -329,6 +327,8 @@ type ShelvesGetCall struct {
 }
 
 // Get: Gets a shelf. Returns NOT_FOUND if the shelf does not exist.
+//
+// - name: The name of the shelf to retrieve.
 func (r *ShelvesService) Get(name string) *ShelvesGetCall {
 	c := &ShelvesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -372,7 +372,7 @@ func (c *ShelvesGetCall) Header() http.Header {
 
 func (c *ShelvesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -410,17 +410,17 @@ func (c *ShelvesGetCall) Do(opts ...googleapi.CallOption) (*GoogleExampleLibrary
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleExampleLibraryagentV1Shelf{
 		ServerResponse: googleapi.ServerResponse{
@@ -472,27 +472,25 @@ type ShelvesListCall struct {
 }
 
 // List: Lists shelves. The order is unspecified but deterministic.
-// Newly created
-// shelves will not necessarily be added to the end of this list.
+// Newly created shelves will not necessarily be added to the end of
+// this list.
 func (r *ShelvesService) List() *ShelvesListCall {
 	c := &ShelvesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Server may return fewer shelves than requested.
-// If unspecified, server will pick an appropriate default.
+// Server may return fewer shelves than requested. If unspecified,
+// server will pick an appropriate default.
 func (c *ShelvesListCall) PageSize(pageSize int64) *ShelvesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results the server should return.
-// Typically, this is the value
-// of
-// ListShelvesResponse.next_page_token
-// returned from the previous call to `ListShelves` method.
+// identifying a page of results the server should return. Typically,
+// this is the value of ListShelvesResponse.next_page_token returned
+// from the previous call to `ListShelves` method.
 func (c *ShelvesListCall) PageToken(pageToken string) *ShelvesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -535,7 +533,7 @@ func (c *ShelvesListCall) Header() http.Header {
 
 func (c *ShelvesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -572,17 +570,17 @@ func (c *ShelvesListCall) Do(opts ...googleapi.CallOption) (*GoogleExampleLibrar
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleExampleLibraryagentV1ListShelvesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -596,20 +594,20 @@ func (c *ShelvesListCall) Do(opts ...googleapi.CallOption) (*GoogleExampleLibrar
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists shelves. The order is unspecified but deterministic. Newly created\nshelves will not necessarily be added to the end of this list.",
+	//   "description": "Lists shelves. The order is unspecified but deterministic. Newly created shelves will not necessarily be added to the end of this list.",
 	//   "flatPath": "v1/shelves",
 	//   "httpMethod": "GET",
 	//   "id": "libraryagent.shelves.list",
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "Requested page size. Server may return fewer shelves than requested.\nIf unspecified, server will pick an appropriate default.",
+	//       "description": "Requested page size. Server may return fewer shelves than requested. If unspecified, server will pick an appropriate default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nListShelvesResponse.next_page_token\nreturned from the previous call to `ListShelves` method.",
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of ListShelvesResponse.next_page_token returned from the previous call to `ListShelves` method.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -657,12 +655,11 @@ type ShelvesBooksBorrowCall struct {
 }
 
 // Borrow: Borrow a book from the library. Returns the book if it is
-// borrowed
-// successfully. Returns NOT_FOUND if the book does not exist in the
-// library.
-// Returns quota exceeded error if the amount of books borrowed
-// exceeds
-// allocation quota in any dimensions.
+// borrowed successfully. Returns NOT_FOUND if the book does not exist
+// in the library. Returns quota exceeded error if the amount of books
+// borrowed exceeds allocation quota in any dimensions.
+//
+// - name: The name of the book to borrow.
 func (r *ShelvesBooksService) Borrow(name string) *ShelvesBooksBorrowCall {
 	c := &ShelvesBooksBorrowCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -696,7 +693,7 @@ func (c *ShelvesBooksBorrowCall) Header() http.Header {
 
 func (c *ShelvesBooksBorrowCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -731,17 +728,17 @@ func (c *ShelvesBooksBorrowCall) Do(opts ...googleapi.CallOption) (*GoogleExampl
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleExampleLibraryagentV1Book{
 		ServerResponse: googleapi.ServerResponse{
@@ -755,7 +752,7 @@ func (c *ShelvesBooksBorrowCall) Do(opts ...googleapi.CallOption) (*GoogleExampl
 	}
 	return ret, nil
 	// {
-	//   "description": "Borrow a book from the library. Returns the book if it is borrowed\nsuccessfully. Returns NOT_FOUND if the book does not exist in the library.\nReturns quota exceeded error if the amount of books borrowed exceeds\nallocation quota in any dimensions.",
+	//   "description": "Borrow a book from the library. Returns the book if it is borrowed successfully. Returns NOT_FOUND if the book does not exist in the library. Returns quota exceeded error if the amount of books borrowed exceeds allocation quota in any dimensions.",
 	//   "flatPath": "v1/shelves/{shelvesId}/books/{booksId}:borrow",
 	//   "httpMethod": "POST",
 	//   "id": "libraryagent.shelves.books.borrow",
@@ -794,6 +791,8 @@ type ShelvesBooksGetCall struct {
 }
 
 // Get: Gets a book. Returns NOT_FOUND if the book does not exist.
+//
+// - name: The name of the book to retrieve.
 func (r *ShelvesBooksService) Get(name string) *ShelvesBooksGetCall {
 	c := &ShelvesBooksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -837,7 +836,7 @@ func (c *ShelvesBooksGetCall) Header() http.Header {
 
 func (c *ShelvesBooksGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -875,17 +874,17 @@ func (c *ShelvesBooksGetCall) Do(opts ...googleapi.CallOption) (*GoogleExampleLi
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleExampleLibraryagentV1Book{
 		ServerResponse: googleapi.ServerResponse{
@@ -938,10 +937,10 @@ type ShelvesBooksListCall struct {
 }
 
 // List: Lists books in a shelf. The order is unspecified but
-// deterministic. Newly
-// created books will not necessarily be added to the end of this
-// list.
-// Returns NOT_FOUND if the shelf does not exist.
+// deterministic. Newly created books will not necessarily be added to
+// the end of this list. Returns NOT_FOUND if the shelf does not exist.
+//
+// - parent: The name of the shelf whose books we'd like to list.
 func (r *ShelvesBooksService) List(parent string) *ShelvesBooksListCall {
 	c := &ShelvesBooksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -949,19 +948,17 @@ func (r *ShelvesBooksService) List(parent string) *ShelvesBooksListCall {
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Server may return fewer books than requested.
-// If unspecified, server will pick an appropriate default.
+// Server may return fewer books than requested. If unspecified, server
+// will pick an appropriate default.
 func (c *ShelvesBooksListCall) PageSize(pageSize int64) *ShelvesBooksListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results the server should return.
-// Typically, this is the value
-// of
-// ListBooksResponse.next_page_token.
-// returned from the previous call to `ListBooks` method.
+// identifying a page of results the server should return. Typically,
+// this is the value of ListBooksResponse.next_page_token. returned from
+// the previous call to `ListBooks` method.
 func (c *ShelvesBooksListCall) PageToken(pageToken string) *ShelvesBooksListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -1004,7 +1001,7 @@ func (c *ShelvesBooksListCall) Header() http.Header {
 
 func (c *ShelvesBooksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1044,17 +1041,17 @@ func (c *ShelvesBooksListCall) Do(opts ...googleapi.CallOption) (*GoogleExampleL
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleExampleLibraryagentV1ListBooksResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1068,7 +1065,7 @@ func (c *ShelvesBooksListCall) Do(opts ...googleapi.CallOption) (*GoogleExampleL
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists books in a shelf. The order is unspecified but deterministic. Newly\ncreated books will not necessarily be added to the end of this list.\nReturns NOT_FOUND if the shelf does not exist.",
+	//   "description": "Lists books in a shelf. The order is unspecified but deterministic. Newly created books will not necessarily be added to the end of this list. Returns NOT_FOUND if the shelf does not exist.",
 	//   "flatPath": "v1/shelves/{shelvesId}/books",
 	//   "httpMethod": "GET",
 	//   "id": "libraryagent.shelves.books.list",
@@ -1077,13 +1074,13 @@ func (c *ShelvesBooksListCall) Do(opts ...googleapi.CallOption) (*GoogleExampleL
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "Requested page size. Server may return fewer books than requested.\nIf unspecified, server will pick an appropriate default.",
+	//       "description": "Requested page size. Server may return fewer books than requested. If unspecified, server will pick an appropriate default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nListBooksResponse.next_page_token.\nreturned from the previous call to `ListBooks` method.",
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of ListBooksResponse.next_page_token. returned from the previous call to `ListBooks` method.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -1138,10 +1135,10 @@ type ShelvesBooksReturnCall struct {
 }
 
 // Return: Return a book to the library. Returns the book if it is
-// returned to the
-// library successfully.
-// Returns error if the book does not belong to the library
-// or the users didn't borrow before.
+// returned to the library successfully. Returns error if the book does
+// not belong to the library or the users didn't borrow before.
+//
+// - name: The name of the book to return.
 func (r *ShelvesBooksService) Return(name string) *ShelvesBooksReturnCall {
 	c := &ShelvesBooksReturnCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1175,7 +1172,7 @@ func (c *ShelvesBooksReturnCall) Header() http.Header {
 
 func (c *ShelvesBooksReturnCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1210,17 +1207,17 @@ func (c *ShelvesBooksReturnCall) Do(opts ...googleapi.CallOption) (*GoogleExampl
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleExampleLibraryagentV1Book{
 		ServerResponse: googleapi.ServerResponse{
@@ -1234,7 +1231,7 @@ func (c *ShelvesBooksReturnCall) Do(opts ...googleapi.CallOption) (*GoogleExampl
 	}
 	return ret, nil
 	// {
-	//   "description": "Return a book to the library. Returns the book if it is returned to the\nlibrary successfully.\nReturns error if the book does not belong to the library\nor the users didn't borrow before.",
+	//   "description": "Return a book to the library. Returns the book if it is returned to the library successfully. Returns error if the book does not belong to the library or the users didn't borrow before.",
 	//   "flatPath": "v1/shelves/{shelvesId}/books/{booksId}:return",
 	//   "httpMethod": "POST",
 	//   "id": "libraryagent.shelves.books.return",

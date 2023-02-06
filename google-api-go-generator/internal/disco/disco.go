@@ -20,6 +20,7 @@ type Document struct {
 	Version           string             `json:"version"`
 	Title             string             `json:"title"`
 	RootURL           string             `json:"rootUrl"`
+	MTLSRootURL       string             `json:"mtlsRootUrl"`
 	ServicePath       string             `json:"servicePath"`
 	BasePath          string             `json:"basePath"`
 	DocumentationLink string             `json:"documentationLink"`

@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -6,37 +6,37 @@
 
 // Package tasks provides access to the Tasks API.
 //
-// For product documentation, see: https://developers.google.com/google-apps/tasks/firstapp
+// For product documentation, see: https://developers.google.com/tasks/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/tasks/v1"
-//   ...
-//   ctx := context.Background()
-//   tasksService, err := tasks.NewService(ctx)
+//	import "google.golang.org/api/tasks/v1"
+//	...
+//	ctx := context.Background()
+//	tasksService, err := tasks.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//   tasksService, err := tasks.NewService(ctx, option.WithScopes(tasks.TasksReadonlyScope))
+//	tasksService, err := tasks.NewService(ctx, option.WithScopes(tasks.TasksReadonlyScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   tasksService, err := tasks.NewService(ctx, option.WithAPIKey("AIza..."))
+//	tasksService, err := tasks.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   tasksService, err := tasks.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	tasksService, err := tasks.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package tasks // import "google.golang.org/api/tasks/v1"
@@ -54,6 +54,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -78,7 +79,8 @@ var _ = internaloption.WithDefaultEndpoint
 const apiId = "tasks:v1"
 const apiName = "tasks"
 const apiVersion = "v1"
-const basePath = "https://www.googleapis.com/tasks/v1/"
+const basePath = "https://tasks.googleapis.com/"
+const mtlsBasePath = "https://tasks.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
@@ -91,13 +93,14 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/tasks",
 		"https://www.googleapis.com/auth/tasks.readonly",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -168,7 +171,7 @@ type Task struct {
 	Completed *string `json:"completed,omitempty"`
 
 	// Deleted: Flag indicating whether the task has been deleted. The
-	// default if False.
+	// default is False.
 	Deleted bool `json:"deleted,omitempty"`
 
 	// Due: Due date of the task (as a RFC 3339 timestamp). Optional. The
@@ -232,10 +235,10 @@ type Task struct {
 
 	// ForceSendFields is a list of field names (e.g. "Completed") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Completed") to include in
@@ -266,10 +269,10 @@ type TaskLinks struct {
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Description") to include
@@ -314,10 +317,10 @@ type TaskList struct {
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Etag") to include in API
@@ -355,10 +358,10 @@ type TaskLists struct {
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Etag") to include in API
@@ -395,10 +398,10 @@ type Tasks struct {
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Etag") to include in API
@@ -427,6 +430,8 @@ type TasklistsDeleteCall struct {
 }
 
 // Delete: Deletes the authenticated user's specified task list.
+//
+// - tasklist: Task list identifier.
 func (r *TasklistsService) Delete(tasklistid string) *TasklistsDeleteCall {
 	c := &TasklistsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tasklistid = tasklistid
@@ -460,7 +465,7 @@ func (c *TasklistsDeleteCall) Header() http.Header {
 
 func (c *TasklistsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -468,7 +473,7 @@ func (c *TasklistsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "users/@me/lists/{tasklist}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tasks/v1/users/@me/lists/{tasklist}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("DELETE", urls, body)
 	if err != nil {
@@ -490,11 +495,12 @@ func (c *TasklistsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return gensupport.WrapError(err)
 	}
 	return nil
 	// {
 	//   "description": "Deletes the authenticated user's specified task list.",
+	//   "flatPath": "tasks/v1/users/@me/lists/{tasklist}",
 	//   "httpMethod": "DELETE",
 	//   "id": "tasks.tasklists.delete",
 	//   "parameterOrder": [
@@ -508,7 +514,7 @@ func (c *TasklistsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "users/@me/lists/{tasklist}",
+	//   "path": "tasks/v1/users/@me/lists/{tasklist}",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/tasks"
 	//   ]
@@ -528,6 +534,8 @@ type TasklistsGetCall struct {
 }
 
 // Get: Returns the authenticated user's specified task list.
+//
+// - tasklist: Task list identifier.
 func (r *TasklistsService) Get(tasklistid string) *TasklistsGetCall {
 	c := &TasklistsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tasklistid = tasklistid
@@ -571,7 +579,7 @@ func (c *TasklistsGetCall) Header() http.Header {
 
 func (c *TasklistsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -582,7 +590,7 @@ func (c *TasklistsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "users/@me/lists/{tasklist}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tasks/v1/users/@me/lists/{tasklist}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -609,17 +617,17 @@ func (c *TasklistsGetCall) Do(opts ...googleapi.CallOption) (*TaskList, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TaskList{
 		ServerResponse: googleapi.ServerResponse{
@@ -634,6 +642,7 @@ func (c *TasklistsGetCall) Do(opts ...googleapi.CallOption) (*TaskList, error) {
 	return ret, nil
 	// {
 	//   "description": "Returns the authenticated user's specified task list.",
+	//   "flatPath": "tasks/v1/users/@me/lists/{tasklist}",
 	//   "httpMethod": "GET",
 	//   "id": "tasks.tasklists.get",
 	//   "parameterOrder": [
@@ -647,7 +656,7 @@ func (c *TasklistsGetCall) Do(opts ...googleapi.CallOption) (*TaskList, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "users/@me/lists/{tasklist}",
+	//   "path": "tasks/v1/users/@me/lists/{tasklist}",
 	//   "response": {
 	//     "$ref": "TaskList"
 	//   },
@@ -670,8 +679,7 @@ type TasklistsInsertCall struct {
 }
 
 // Insert: Creates a new task list and adds it to the authenticated
-// user's task lists. Fails with HTTP code 403 or 429 after reaching the
-// storage limit of 2,000 lists.
+// user's task lists.
 func (r *TasklistsService) Insert(tasklist *TaskList) *TasklistsInsertCall {
 	c := &TasklistsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tasklist = tasklist
@@ -705,7 +713,7 @@ func (c *TasklistsInsertCall) Header() http.Header {
 
 func (c *TasklistsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -718,7 +726,7 @@ func (c *TasklistsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "users/@me/lists")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tasks/v1/users/@me/lists")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -742,17 +750,17 @@ func (c *TasklistsInsertCall) Do(opts ...googleapi.CallOption) (*TaskList, error
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TaskList{
 		ServerResponse: googleapi.ServerResponse{
@@ -766,10 +774,13 @@ func (c *TasklistsInsertCall) Do(opts ...googleapi.CallOption) (*TaskList, error
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new task list and adds it to the authenticated user's task lists. Fails with HTTP code 403 or 429 after reaching the storage limit of 2,000 lists.",
+	//   "description": "Creates a new task list and adds it to the authenticated user's task lists.",
+	//   "flatPath": "tasks/v1/users/@me/lists",
 	//   "httpMethod": "POST",
 	//   "id": "tasks.tasklists.insert",
-	//   "path": "users/@me/lists",
+	//   "parameterOrder": [],
+	//   "parameters": {},
+	//   "path": "tasks/v1/users/@me/lists",
 	//   "request": {
 	//     "$ref": "TaskList"
 	//   },
@@ -851,7 +862,7 @@ func (c *TasklistsListCall) Header() http.Header {
 
 func (c *TasklistsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -862,7 +873,7 @@ func (c *TasklistsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "users/@me/lists")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tasks/v1/users/@me/lists")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -886,17 +897,17 @@ func (c *TasklistsListCall) Do(opts ...googleapi.CallOption) (*TaskLists, error)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TaskLists{
 		ServerResponse: googleapi.ServerResponse{
@@ -911,14 +922,16 @@ func (c *TasklistsListCall) Do(opts ...googleapi.CallOption) (*TaskLists, error)
 	return ret, nil
 	// {
 	//   "description": "Returns all the authenticated user's task lists.",
+	//   "flatPath": "tasks/v1/users/@me/lists",
 	//   "httpMethod": "GET",
 	//   "id": "tasks.tasklists.list",
+	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "maxResults": {
 	//       "description": "Maximum number of task lists returned on one page. Optional. The default is 20 (max allowed: 100).",
-	//       "format": "int64",
+	//       "format": "int32",
 	//       "location": "query",
-	//       "type": "string"
+	//       "type": "integer"
 	//     },
 	//     "pageToken": {
 	//       "description": "Token specifying the result page to return. Optional.",
@@ -926,7 +939,7 @@ func (c *TasklistsListCall) Do(opts ...googleapi.CallOption) (*TaskLists, error)
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "users/@me/lists",
+	//   "path": "tasks/v1/users/@me/lists",
 	//   "response": {
 	//     "$ref": "TaskLists"
 	//   },
@@ -972,6 +985,8 @@ type TasklistsPatchCall struct {
 
 // Patch: Updates the authenticated user's specified task list. This
 // method supports patch semantics.
+//
+// - tasklist: Task list identifier.
 func (r *TasklistsService) Patch(tasklistid string, tasklist *TaskList) *TasklistsPatchCall {
 	c := &TasklistsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tasklistid = tasklistid
@@ -1006,7 +1021,7 @@ func (c *TasklistsPatchCall) Header() http.Header {
 
 func (c *TasklistsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1019,7 +1034,7 @@ func (c *TasklistsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "users/@me/lists/{tasklist}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tasks/v1/users/@me/lists/{tasklist}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PATCH", urls, body)
 	if err != nil {
@@ -1046,17 +1061,17 @@ func (c *TasklistsPatchCall) Do(opts ...googleapi.CallOption) (*TaskList, error)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TaskList{
 		ServerResponse: googleapi.ServerResponse{
@@ -1071,6 +1086,7 @@ func (c *TasklistsPatchCall) Do(opts ...googleapi.CallOption) (*TaskList, error)
 	return ret, nil
 	// {
 	//   "description": "Updates the authenticated user's specified task list. This method supports patch semantics.",
+	//   "flatPath": "tasks/v1/users/@me/lists/{tasklist}",
 	//   "httpMethod": "PATCH",
 	//   "id": "tasks.tasklists.patch",
 	//   "parameterOrder": [
@@ -1084,7 +1100,7 @@ func (c *TasklistsPatchCall) Do(opts ...googleapi.CallOption) (*TaskList, error)
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "users/@me/lists/{tasklist}",
+	//   "path": "tasks/v1/users/@me/lists/{tasklist}",
 	//   "request": {
 	//     "$ref": "TaskList"
 	//   },
@@ -1110,6 +1126,8 @@ type TasklistsUpdateCall struct {
 }
 
 // Update: Updates the authenticated user's specified task list.
+//
+// - tasklist: Task list identifier.
 func (r *TasklistsService) Update(tasklistid string, tasklist *TaskList) *TasklistsUpdateCall {
 	c := &TasklistsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tasklistid = tasklistid
@@ -1144,7 +1162,7 @@ func (c *TasklistsUpdateCall) Header() http.Header {
 
 func (c *TasklistsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1157,7 +1175,7 @@ func (c *TasklistsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "users/@me/lists/{tasklist}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tasks/v1/users/@me/lists/{tasklist}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PUT", urls, body)
 	if err != nil {
@@ -1184,17 +1202,17 @@ func (c *TasklistsUpdateCall) Do(opts ...googleapi.CallOption) (*TaskList, error
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TaskList{
 		ServerResponse: googleapi.ServerResponse{
@@ -1209,6 +1227,7 @@ func (c *TasklistsUpdateCall) Do(opts ...googleapi.CallOption) (*TaskList, error
 	return ret, nil
 	// {
 	//   "description": "Updates the authenticated user's specified task list.",
+	//   "flatPath": "tasks/v1/users/@me/lists/{tasklist}",
 	//   "httpMethod": "PUT",
 	//   "id": "tasks.tasklists.update",
 	//   "parameterOrder": [
@@ -1222,7 +1241,7 @@ func (c *TasklistsUpdateCall) Do(opts ...googleapi.CallOption) (*TaskList, error
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "users/@me/lists/{tasklist}",
+	//   "path": "tasks/v1/users/@me/lists/{tasklist}",
 	//   "request": {
 	//     "$ref": "TaskList"
 	//   },
@@ -1249,6 +1268,8 @@ type TasksClearCall struct {
 // Clear: Clears all completed tasks from the specified task list. The
 // affected tasks will be marked as 'hidden' and no longer be returned
 // by default when retrieving all tasks for a task list.
+//
+// - tasklist: Task list identifier.
 func (r *TasksService) Clear(tasklistid string) *TasksClearCall {
 	c := &TasksClearCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tasklistid = tasklistid
@@ -1282,7 +1303,7 @@ func (c *TasksClearCall) Header() http.Header {
 
 func (c *TasksClearCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1290,7 +1311,7 @@ func (c *TasksClearCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "lists/{tasklist}/clear")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tasks/v1/lists/{tasklist}/clear")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -1312,11 +1333,12 @@ func (c *TasksClearCall) Do(opts ...googleapi.CallOption) error {
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return gensupport.WrapError(err)
 	}
 	return nil
 	// {
 	//   "description": "Clears all completed tasks from the specified task list. The affected tasks will be marked as 'hidden' and no longer be returned by default when retrieving all tasks for a task list.",
+	//   "flatPath": "tasks/v1/lists/{tasklist}/clear",
 	//   "httpMethod": "POST",
 	//   "id": "tasks.tasks.clear",
 	//   "parameterOrder": [
@@ -1330,7 +1352,7 @@ func (c *TasksClearCall) Do(opts ...googleapi.CallOption) error {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "lists/{tasklist}/clear",
+	//   "path": "tasks/v1/lists/{tasklist}/clear",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/tasks"
 	//   ]
@@ -1350,6 +1372,9 @@ type TasksDeleteCall struct {
 }
 
 // Delete: Deletes the specified task from the task list.
+//
+// - task: Task identifier.
+// - tasklist: Task list identifier.
 func (r *TasksService) Delete(tasklistid string, taskid string) *TasksDeleteCall {
 	c := &TasksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tasklistid = tasklistid
@@ -1384,7 +1409,7 @@ func (c *TasksDeleteCall) Header() http.Header {
 
 func (c *TasksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1392,7 +1417,7 @@ func (c *TasksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "lists/{tasklist}/tasks/{task}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tasks/v1/lists/{tasklist}/tasks/{task}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("DELETE", urls, body)
 	if err != nil {
@@ -1415,11 +1440,12 @@ func (c *TasksDeleteCall) Do(opts ...googleapi.CallOption) error {
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return gensupport.WrapError(err)
 	}
 	return nil
 	// {
 	//   "description": "Deletes the specified task from the task list.",
+	//   "flatPath": "tasks/v1/lists/{tasklist}/tasks/{task}",
 	//   "httpMethod": "DELETE",
 	//   "id": "tasks.tasks.delete",
 	//   "parameterOrder": [
@@ -1440,7 +1466,7 @@ func (c *TasksDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "lists/{tasklist}/tasks/{task}",
+	//   "path": "tasks/v1/lists/{tasklist}/tasks/{task}",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/tasks"
 	//   ]
@@ -1461,6 +1487,9 @@ type TasksGetCall struct {
 }
 
 // Get: Returns the specified task.
+//
+// - task: Task identifier.
+// - tasklist: Task list identifier.
 func (r *TasksService) Get(tasklistid string, taskid string) *TasksGetCall {
 	c := &TasksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tasklistid = tasklistid
@@ -1505,7 +1534,7 @@ func (c *TasksGetCall) Header() http.Header {
 
 func (c *TasksGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1516,7 +1545,7 @@ func (c *TasksGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "lists/{tasklist}/tasks/{task}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tasks/v1/lists/{tasklist}/tasks/{task}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -1544,17 +1573,17 @@ func (c *TasksGetCall) Do(opts ...googleapi.CallOption) (*Task, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Task{
 		ServerResponse: googleapi.ServerResponse{
@@ -1569,6 +1598,7 @@ func (c *TasksGetCall) Do(opts ...googleapi.CallOption) (*Task, error) {
 	return ret, nil
 	// {
 	//   "description": "Returns the specified task.",
+	//   "flatPath": "tasks/v1/lists/{tasklist}/tasks/{task}",
 	//   "httpMethod": "GET",
 	//   "id": "tasks.tasks.get",
 	//   "parameterOrder": [
@@ -1589,7 +1619,7 @@ func (c *TasksGetCall) Do(opts ...googleapi.CallOption) (*Task, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "lists/{tasklist}/tasks/{task}",
+	//   "path": "tasks/v1/lists/{tasklist}/tasks/{task}",
 	//   "response": {
 	//     "$ref": "Task"
 	//   },
@@ -1612,9 +1642,9 @@ type TasksInsertCall struct {
 	header_    http.Header
 }
 
-// Insert: Creates a new task on the specified task list. Fails with
-// HTTP code 403 or 429 after reaching the storage limit of 100,000
-// tasks per account.
+// Insert: Creates a new task on the specified task list.
+//
+// - tasklist: Task list identifier.
 func (r *TasksService) Insert(tasklistid string, task *Task) *TasksInsertCall {
 	c := &TasksInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tasklistid = tasklistid
@@ -1664,7 +1694,7 @@ func (c *TasksInsertCall) Header() http.Header {
 
 func (c *TasksInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1677,7 +1707,7 @@ func (c *TasksInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "lists/{tasklist}/tasks")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tasks/v1/lists/{tasklist}/tasks")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -1704,17 +1734,17 @@ func (c *TasksInsertCall) Do(opts ...googleapi.CallOption) (*Task, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Task{
 		ServerResponse: googleapi.ServerResponse{
@@ -1728,7 +1758,8 @@ func (c *TasksInsertCall) Do(opts ...googleapi.CallOption) (*Task, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new task on the specified task list. Fails with HTTP code 403 or 429 after reaching the storage limit of 100,000 tasks per account.",
+	//   "description": "Creates a new task on the specified task list.",
+	//   "flatPath": "tasks/v1/lists/{tasklist}/tasks",
 	//   "httpMethod": "POST",
 	//   "id": "tasks.tasks.insert",
 	//   "parameterOrder": [
@@ -1752,7 +1783,7 @@ func (c *TasksInsertCall) Do(opts ...googleapi.CallOption) (*Task, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "lists/{tasklist}/tasks",
+	//   "path": "tasks/v1/lists/{tasklist}/tasks",
 	//   "request": {
 	//     "$ref": "Task"
 	//   },
@@ -1778,6 +1809,8 @@ type TasksListCall struct {
 }
 
 // List: Returns all tasks in the specified task list.
+//
+// - tasklist: Task list identifier.
 func (r *TasksService) List(tasklistid string) *TasksListCall {
 	c := &TasksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tasklistid = tasklistid
@@ -1833,7 +1866,9 @@ func (c *TasksListCall) PageToken(pageToken string) *TasksListCall {
 
 // ShowCompleted sets the optional parameter "showCompleted": Flag
 // indicating whether completed tasks are returned in the result.  The
-// default is True.
+// default is True. Note that showHidden must also be True to show tasks
+// completed in first party clients, such as the web UI and Google's
+// mobile apps.
 func (c *TasksListCall) ShowCompleted(showCompleted bool) *TasksListCall {
 	c.urlParams_.Set("showCompleted", fmt.Sprint(showCompleted))
 	return c
@@ -1900,7 +1935,7 @@ func (c *TasksListCall) Header() http.Header {
 
 func (c *TasksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1911,7 +1946,7 @@ func (c *TasksListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "lists/{tasklist}/tasks")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tasks/v1/lists/{tasklist}/tasks")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -1938,17 +1973,17 @@ func (c *TasksListCall) Do(opts ...googleapi.CallOption) (*Tasks, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Tasks{
 		ServerResponse: googleapi.ServerResponse{
@@ -1963,6 +1998,7 @@ func (c *TasksListCall) Do(opts ...googleapi.CallOption) (*Tasks, error) {
 	return ret, nil
 	// {
 	//   "description": "Returns all tasks in the specified task list.",
+	//   "flatPath": "tasks/v1/lists/{tasklist}/tasks",
 	//   "httpMethod": "GET",
 	//   "id": "tasks.tasks.list",
 	//   "parameterOrder": [
@@ -1991,9 +2027,9 @@ func (c *TasksListCall) Do(opts ...googleapi.CallOption) (*Tasks, error) {
 	//     },
 	//     "maxResults": {
 	//       "description": "Maximum number of task lists returned on one page. Optional. The default is 20 (max allowed: 100).",
-	//       "format": "int64",
+	//       "format": "int32",
 	//       "location": "query",
-	//       "type": "string"
+	//       "type": "integer"
 	//     },
 	//     "pageToken": {
 	//       "description": "Token specifying the result page to return. Optional.",
@@ -2001,7 +2037,7 @@ func (c *TasksListCall) Do(opts ...googleapi.CallOption) (*Tasks, error) {
 	//       "type": "string"
 	//     },
 	//     "showCompleted": {
-	//       "description": "Flag indicating whether completed tasks are returned in the result. Optional. The default is True.",
+	//       "description": "Flag indicating whether completed tasks are returned in the result. Optional. The default is True. Note that showHidden must also be True to show tasks completed in first party clients, such as the web UI and Google's mobile apps.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -2027,7 +2063,7 @@ func (c *TasksListCall) Do(opts ...googleapi.CallOption) (*Tasks, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "lists/{tasklist}/tasks",
+	//   "path": "tasks/v1/lists/{tasklist}/tasks",
 	//   "response": {
 	//     "$ref": "Tasks"
 	//   },
@@ -2074,6 +2110,9 @@ type TasksMoveCall struct {
 // Move: Moves the specified task to another position in the task list.
 // This can include putting it as a child task under a new parent and/or
 // move it to a different position among its sibling tasks.
+//
+// - task: Task identifier.
+// - tasklist: Task list identifier.
 func (r *TasksService) Move(tasklistid string, taskid string) *TasksMoveCall {
 	c := &TasksMoveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tasklistid = tasklistid
@@ -2124,7 +2163,7 @@ func (c *TasksMoveCall) Header() http.Header {
 
 func (c *TasksMoveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2132,7 +2171,7 @@ func (c *TasksMoveCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "lists/{tasklist}/tasks/{task}/move")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tasks/v1/lists/{tasklist}/tasks/{task}/move")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -2160,17 +2199,17 @@ func (c *TasksMoveCall) Do(opts ...googleapi.CallOption) (*Task, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Task{
 		ServerResponse: googleapi.ServerResponse{
@@ -2185,6 +2224,7 @@ func (c *TasksMoveCall) Do(opts ...googleapi.CallOption) (*Task, error) {
 	return ret, nil
 	// {
 	//   "description": "Moves the specified task to another position in the task list. This can include putting it as a child task under a new parent and/or move it to a different position among its sibling tasks.",
+	//   "flatPath": "tasks/v1/lists/{tasklist}/tasks/{task}/move",
 	//   "httpMethod": "POST",
 	//   "id": "tasks.tasks.move",
 	//   "parameterOrder": [
@@ -2215,7 +2255,7 @@ func (c *TasksMoveCall) Do(opts ...googleapi.CallOption) (*Task, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "lists/{tasklist}/tasks/{task}/move",
+	//   "path": "tasks/v1/lists/{tasklist}/tasks/{task}/move",
 	//   "response": {
 	//     "$ref": "Task"
 	//   },
@@ -2240,6 +2280,9 @@ type TasksPatchCall struct {
 
 // Patch: Updates the specified task. This method supports patch
 // semantics.
+//
+// - task: Task identifier.
+// - tasklist: Task list identifier.
 func (r *TasksService) Patch(tasklistid string, taskid string, task *Task) *TasksPatchCall {
 	c := &TasksPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tasklistid = tasklistid
@@ -2275,7 +2318,7 @@ func (c *TasksPatchCall) Header() http.Header {
 
 func (c *TasksPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2288,7 +2331,7 @@ func (c *TasksPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "lists/{tasklist}/tasks/{task}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tasks/v1/lists/{tasklist}/tasks/{task}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PATCH", urls, body)
 	if err != nil {
@@ -2316,17 +2359,17 @@ func (c *TasksPatchCall) Do(opts ...googleapi.CallOption) (*Task, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Task{
 		ServerResponse: googleapi.ServerResponse{
@@ -2341,6 +2384,7 @@ func (c *TasksPatchCall) Do(opts ...googleapi.CallOption) (*Task, error) {
 	return ret, nil
 	// {
 	//   "description": "Updates the specified task. This method supports patch semantics.",
+	//   "flatPath": "tasks/v1/lists/{tasklist}/tasks/{task}",
 	//   "httpMethod": "PATCH",
 	//   "id": "tasks.tasks.patch",
 	//   "parameterOrder": [
@@ -2361,7 +2405,7 @@ func (c *TasksPatchCall) Do(opts ...googleapi.CallOption) (*Task, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "lists/{tasklist}/tasks/{task}",
+	//   "path": "tasks/v1/lists/{tasklist}/tasks/{task}",
 	//   "request": {
 	//     "$ref": "Task"
 	//   },
@@ -2388,6 +2432,9 @@ type TasksUpdateCall struct {
 }
 
 // Update: Updates the specified task.
+//
+// - task: Task identifier.
+// - tasklist: Task list identifier.
 func (r *TasksService) Update(tasklistid string, taskid string, task *Task) *TasksUpdateCall {
 	c := &TasksUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tasklistid = tasklistid
@@ -2423,7 +2470,7 @@ func (c *TasksUpdateCall) Header() http.Header {
 
 func (c *TasksUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2436,7 +2483,7 @@ func (c *TasksUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "lists/{tasklist}/tasks/{task}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tasks/v1/lists/{tasklist}/tasks/{task}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PUT", urls, body)
 	if err != nil {
@@ -2464,17 +2511,17 @@ func (c *TasksUpdateCall) Do(opts ...googleapi.CallOption) (*Task, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Task{
 		ServerResponse: googleapi.ServerResponse{
@@ -2489,6 +2536,7 @@ func (c *TasksUpdateCall) Do(opts ...googleapi.CallOption) (*Task, error) {
 	return ret, nil
 	// {
 	//   "description": "Updates the specified task.",
+	//   "flatPath": "tasks/v1/lists/{tasklist}/tasks/{task}",
 	//   "httpMethod": "PUT",
 	//   "id": "tasks.tasks.update",
 	//   "parameterOrder": [
@@ -2509,7 +2557,7 @@ func (c *TasksUpdateCall) Do(opts ...googleapi.CallOption) (*Task, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "lists/{tasklist}/tasks/{task}",
+	//   "path": "tasks/v1/lists/{tasklist}/tasks/{task}",
 	//   "request": {
 	//     "$ref": "Task"
 	//   },

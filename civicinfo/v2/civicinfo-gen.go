@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -6,33 +6,33 @@
 
 // Package civicinfo provides access to the Google Civic Information API.
 //
-// For product documentation, see: https://developers.google.com/civic-information
+// For product documentation, see: https://developers.google.com/civic-information/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/civicinfo/v2"
-//   ...
-//   ctx := context.Background()
-//   civicinfoService, err := civicinfo.NewService(ctx)
+//	import "google.golang.org/api/civicinfo/v2"
+//	...
+//	ctx := context.Background()
+//	civicinfoService, err := civicinfo.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   civicinfoService, err := civicinfo.NewService(ctx, option.WithAPIKey("AIza..."))
+//	civicinfoService, err := civicinfo.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   civicinfoService, err := civicinfo.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	civicinfoService, err := civicinfo.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package civicinfo // import "google.golang.org/api/civicinfo/v2"
@@ -50,6 +50,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -74,11 +75,13 @@ var _ = internaloption.WithDefaultEndpoint
 const apiId = "civicinfo:v2"
 const apiName = "civicinfo"
 const apiVersion = "v2"
-const basePath = "https://www.googleapis.com/civicinfo/v2/"
+const basePath = "https://civicinfo.googleapis.com/"
+const mtlsBasePath = "https://civicinfo.mtls.googleapis.com/"
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -162,11 +165,6 @@ type AdministrationRegion struct {
 	// area.
 	ElectionAdministrationBody *AdministrativeBody `json:"electionAdministrationBody,omitempty"`
 
-	// Id: An ID for this object. IDs may change in future requests and
-	// should not be cached. Access to this field requires special access
-	// that can be requested from the Request more link on the Quotas page.
-	Id string `json:"id,omitempty"`
-
 	// LocalJurisdiction: The city or county that provides election
 	// information for this voter. This object can have the same elements as
 	// state.
@@ -181,11 +179,11 @@ type AdministrationRegion struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "ElectionAdministrationBody") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g.
@@ -211,8 +209,6 @@ type AdministrativeBody struct {
 	// information on absentee voting.
 	AbsenteeVotingInfoUrl string `json:"absenteeVotingInfoUrl,omitempty"`
 
-	AddressLines []string `json:"addressLines,omitempty"`
-
 	// BallotInfoUrl: A URL provided by this administrative body to give
 	// contest information to the voter.
 	BallotInfoUrl string `json:"ballotInfoUrl,omitempty"`
@@ -224,6 +220,15 @@ type AdministrativeBody struct {
 	// ElectionInfoUrl: A URL provided by this administrative body for
 	// looking up general election information.
 	ElectionInfoUrl string `json:"electionInfoUrl,omitempty"`
+
+	// ElectionNoticeText: A last minute or emergency notification text
+	// provided by this administrative body.
+	ElectionNoticeText string `json:"electionNoticeText,omitempty"`
+
+	// ElectionNoticeUrl: A URL provided by this administrative body for
+	// additional information related to the last minute or emergency
+	// notification.
+	ElectionNoticeUrl string `json:"electionNoticeUrl,omitempty"`
 
 	// ElectionOfficials: The election officials for this election
 	// administrative body.
@@ -262,8 +267,8 @@ type AdministrativeBody struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "AbsenteeVotingInfoUrl") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -317,10 +322,10 @@ type Candidate struct {
 
 	// ForceSendFields is a list of field names (e.g. "CandidateUrl") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CandidateUrl") to include
@@ -350,10 +355,10 @@ type Channel struct {
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Id") to include in API
@@ -393,16 +398,22 @@ type Contest struct {
 	// requirements for voting in this contest.
 	ElectorateSpecifications string `json:"electorateSpecifications,omitempty"`
 
-	// Id: An ID for this object. IDs may change in future requests and
-	// should not be cached. Access to this field requires special access
-	// that can be requested from the Request more link on the Quotas page.
-	Id string `json:"id,omitempty"`
-
 	// Level: The levels of government of the office for this contest. There
 	// may be more than one in cases where a jurisdiction effectively acts
 	// at two different levels of government; for example, the mayor of the
 	// District of Columbia acts at "locality" level, but also effectively
 	// at both "administrative-area-2" and "administrative-area-1".
+	//
+	// Possible values:
+	//   "international"
+	//   "country"
+	//   "administrativeArea1"
+	//   "regional"
+	//   "administrativeArea2"
+	//   "locality"
+	//   "subLocality1"
+	//   "subLocality2"
+	//   "special"
 	Level []string `json:"level,omitempty"`
 
 	// NumberElected: The number of candidates that will be elected to
@@ -416,8 +427,13 @@ type Contest struct {
 	// Office: The name of the office for this contest.
 	Office string `json:"office,omitempty"`
 
-	// PrimaryParty: If this is a partisan election, the name of the party
-	// it is for.
+	// PrimaryParties: If this is a partisan election, the name of the
+	// party/parties it is for.
+	PrimaryParties []string `json:"primaryParties,omitempty"`
+
+	// PrimaryParty: [DEPRECATED] If this is a partisan election, the name
+	// of the party it is for. This field as deprecated in favor of the
+	// array "primaryParties", as contests may contain more than one party.
 	PrimaryParty string `json:"primaryParty,omitempty"`
 
 	// ReferendumBallotResponses: The set of ballot responses for the
@@ -469,6 +485,20 @@ type Contest struct {
 	ReferendumUrl string `json:"referendumUrl,omitempty"`
 
 	// Roles: The roles which this office fulfills.
+	//
+	// Possible values:
+	//   "headOfState"
+	//   "headOfGovernment"
+	//   "deputyHeadOfGovernment"
+	//   "governmentOfficer"
+	//   "executiveCouncil"
+	//   "legislatorUpperBody"
+	//   "legislatorLowerBody"
+	//   "highestCourtJudge"
+	//   "judge"
+	//   "schoolBoard"
+	//   "specialPurposeOfficer"
+	//   "otherRole"
 	Roles []string `json:"roles,omitempty"`
 
 	// Sources: A list of sources for this contest. If multiple sources are
@@ -487,10 +517,10 @@ type Contest struct {
 
 	// ForceSendFields is a list of field names (e.g. "BallotPlacement") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BallotPlacement") to
@@ -509,87 +539,6 @@ func (s *Contest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-type ContextParams struct {
-	ClientProfile string `json:"clientProfile,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ClientProfile") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ClientProfile") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ContextParams) MarshalJSON() ([]byte, error) {
-	type NoMethod ContextParams
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// DivisionRepresentativeInfoRequest: A request to look up
-// representative information for a single division.
-type DivisionRepresentativeInfoRequest struct {
-	ContextParams *ContextParams `json:"contextParams,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ContextParams") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ContextParams") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *DivisionRepresentativeInfoRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod DivisionRepresentativeInfoRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// DivisionSearchRequest: A search request for political geographies.
-type DivisionSearchRequest struct {
-	ContextParams *ContextParams `json:"contextParams,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ContextParams") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ContextParams") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *DivisionSearchRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod DivisionSearchRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // DivisionSearchResponse: The result of a division search query.
 type DivisionSearchResponse struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -604,10 +553,10 @@ type DivisionSearchResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Kind") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Kind") to include in API
@@ -639,15 +588,15 @@ type DivisionSearchResult struct {
 	// Name: The name of the division.
 	Name string `json:"name,omitempty"`
 
-	// OcdId: The unique Open Civic Data identifier for this division.
+	// OcdId: The unique Open Civic Data identifier for this division
 	OcdId string `json:"ocdId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Aliases") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Aliases") to include in
@@ -683,12 +632,18 @@ type Election struct {
 	// election the entire US (i.e. ocd-division/country:us).
 	OcdDivisionId string `json:"ocdDivisionId,omitempty"`
 
+	// Possible values:
+	//   "shapeLookupDefault"
+	//   "shapeLookupDisabled"
+	//   "shapeLookupEnabled"
+	ShapeLookupBehavior string `json:"shapeLookupBehavior,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "ElectionDay") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ElectionDay") to include
@@ -725,10 +680,10 @@ type ElectionOfficial struct {
 
 	// ForceSendFields is a list of field names (e.g. "EmailAddress") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "EmailAddress") to include
@@ -742,32 +697,6 @@ type ElectionOfficial struct {
 
 func (s *ElectionOfficial) MarshalJSON() ([]byte, error) {
 	type NoMethod ElectionOfficial
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type ElectionsQueryRequest struct {
-	ContextParams *ContextParams `json:"contextParams,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ContextParams") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ContextParams") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ElectionsQueryRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod ElectionsQueryRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -788,10 +717,10 @@ type ElectionsQueryResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Elections") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Elections") to include in
@@ -816,8 +745,6 @@ type ElectoralDistrict struct {
 	// scope of stateUpper.
 	Id string `json:"id,omitempty"`
 
-	KgForeignKey string `json:"kgForeignKey,omitempty"`
-
 	// Name: The name of the district.
 	Name string `json:"name,omitempty"`
 
@@ -826,14 +753,30 @@ type ElectoralDistrict struct {
 	// congressional, stateUpper, stateLower, countywide, judicial,
 	// schoolBoard, cityWide, township, countyCouncil, cityCouncil, ward,
 	// special
+	//
+	// Possible values:
+	//   "statewide"
+	//   "congressional"
+	//   "stateUpper"
+	//   "stateLower"
+	//   "countywide"
+	//   "judicial"
+	//   "schoolBoard"
+	//   "citywide"
+	//   "special"
+	//   "countyCouncil"
+	//   "township"
+	//   "ward"
+	//   "cityCouncil"
+	//   "national"
 	Scope string `json:"scope,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Id") to include in API
@@ -851,19 +794,61 @@ func (s *ElectoralDistrict) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-type FieldMetadataProto struct {
-	Internal *InternalFieldMetadataProto `json:"internal,omitempty"`
+// FeatureIdProto: A globally unique identifier associated with each
+// feature. We use 128-bit identifiers so that we have lots of bits
+// available to distinguish between features. The feature id currently
+// consists of a 64-bit "cell id" that **sometimes** corresponds to the
+// approximate centroid of the feature, plus a 64-bit fingerprint of
+// other identifying information. See more on each respective field in
+// its comments. Feature ids are first assigned when the data is created
+// in MapFacts. After initial creation of the feature, they are
+// immutable. This means that the only properties that you should rely
+// on are that they are unique, and that cell_ids often - but not always
+// - preserve spatial locality. The degree of locality varies as the
+// feature undergoes geometry changes, and should not in general be
+// considered a firm guarantee of the location of any particular
+// feature. In fact, some locationless features have randomized cell
+// IDs! Consumers of FeatureProtos from Mapfacts are guaranteed that
+// fprints in the id field of features will be globally unique. Using
+// the fprint allows consumers who don't need the spatial benefit of
+// cell ids to uniquely identify features in a 64-bit address space.
+// This property is not guaranteed for other sources of FeatureProtos.
+type FeatureIdProto struct {
+	// CellId: The S2CellId corresponding to the approximate location of
+	// this feature as of when it was first created. This can be of variable
+	// accuracy, ranging from the exact centroid of the feature at creation,
+	// a very large S2 Cell, or even being completely randomized for
+	// locationless features. Cell ids have the nice property that they
+	// follow a space-filling curve over the surface of the earth. (See
+	// s2cellid.h for details.) WARNING: Clients should only use cell IDs to
+	// perform spatial locality optimizations. There is no strict guarantee
+	// that the cell ID of a feature is related to the current geometry of
+	// the feature in any way.
+	CellId uint64 `json:"cellId,omitempty,string"`
 
-	// ForceSendFields is a list of field names (e.g. "Internal") to
+	// Fprint: A 64-bit fingerprint used to identify features. Most clients
+	// should rely on MapFacts or OneRing to choose fingerprints. If
+	// creating new fprints, the strategy should be chosen so that the
+	// chance of collision is remote or non-existent, and the distribution
+	// should be reasonably uniform. For example, if the source data assigns
+	// unique ids to features, then a fingerprint of the provider name,
+	// version, and source id is sufficient.
+	Fprint uint64 `json:"fprint,omitempty,string"`
+
+	// TemporaryData: A place for clients to attach arbitrary data to a
+	// feature ID. Never set in MapFacts.
+	TemporaryData *MessageSet `json:"temporaryData,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CellId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Internal") to include in
-	// API requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "CellId") to include in API
+	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -871,25 +856,698 @@ type FieldMetadataProto struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FieldMetadataProto) MarshalJSON() ([]byte, error) {
-	type NoMethod FieldMetadataProto
+func (s *FeatureIdProto) MarshalJSON() ([]byte, error) {
+	type NoMethod FeatureIdProto
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GeocodingSummary: Detailed summary of the result from geocoding an
+// address
+type GeocodingSummary struct {
+	// AddressUnderstood: Represents the best estimate of whether or not the
+	// input address was fully understood and the address is correctly
+	// componentized. Mirrors the same-name field in
+	// geostore.staging.AddressLinkupScoringProto.
+	AddressUnderstood bool `json:"addressUnderstood,omitempty"`
+
+	// FeatureId: The ID of the FeatureProto returned by the geocoder
+	FeatureId *FeatureIdProto `json:"featureId,omitempty"`
+
+	// FeatureType: The feature type for the FeatureProto returned by the
+	// geocoder
+	//
+	// Possible values:
+	//   "typeAny" - ABSTRACT
+	//   "typeTransportation" - ABSTRACT
+	//   "typeRoute" - A route is any section of road (or rails, etc.) that
+	// has a name. This includes city streets as well as highways. Road
+	// segments can belong to multiple routes (e.g. El Camino, CA-82).
+	//   "typeDeprecatedHighwayDoNotUse" - DEPRECATED
+	//   "typeHighway" - ABSTRACT
+	//   "typeHighway1"
+	//   "typeHighway2"
+	//   "typeHighway3"
+	//   "typeHighway4"
+	//   "typeHighway5"
+	//   "typeHighway6"
+	//   "typeHighway7"
+	//   "typeHighway8"
+	//   "typeHighway9"
+	//   "typeBicycleRoute" - A designated bicycle route, whose segments may
+	// consist of any combination of bicycle paths, bicycle lanes, or city
+	// streets.
+	//   "typeTrail" - A designated trail, which may consist of paved
+	// walkways, dirt paths, fire road, streets or highways, etc.
+	//   "typeSegment" - ABSTRACT
+	//   "typeRoad"
+	//   "typeRailway" - Railroads use several different incompatible track
+	// types.
+	//   "typeStandardTrack"
+	//   "typeJrTrack"
+	//   "typeNarrowTrack"
+	//   "typeMonorailTrack"
+	//   "typeSubwayTrack"
+	//   "typeLightRailTrack"
+	//   "typeBroadTrack"
+	//   "typeHighSpeedRail"
+	//   "typeTrolleyTrack" - Tracks for streetcars, cable-cars, etc.
+	// Ferries are services that are part of the road network but are not
+	// roads. They typically involve fares and scheduled departure times.
+	//   "typeFerry" - ABSTRACT
+	//   "typeFerryBoat" - The vast majority of ferries are ferry boats.
+	//   "typeFerryTrain" - Also called a "car transport", a ferry train is
+	// a rail service that carries passengers and their vehicles across
+	// undrivable terrain. The Channel Tunnel ("Chunnel") is the most famous
+	// example, but they are also common in the Alps where they connect
+	// neighboring valleys otherwise separated by impassable mountains.
+	//   "typeVirtualSegment" - Any plausible 1-dimensional path through a
+	// 2+ dimensional space, for the purposes of making graph-search-based
+	// routing possible. Such segments can be used to model paths through
+	// parking lots, squares, floors of buildings and other areas.
+	//   "typeIntersection" - An intersection consists of a collection of
+	// segments that terminate at the same location. This is topological
+	// definition: it may not match what a typical user would think of as an
+	// "intersection". See TYPE_INTERSECTION_GROUP, below, for more
+	// information. Each segment terminating at an intersection has an
+	// "endpoint type" that specifies how that segment is terminated: stop
+	// sign, yield sign, three-way light, etc.
+	//   "typeTransit" - ABSTRACT
+	//   "typeTransitStation" - DEPRECATED
+	//   "typeBusStation" - DEPRECATED
+	//   "typeTramwayStation" - DEPRECATED
+	//   "typeTrainStation" - DEPRECATED
+	//   "typeSubwayStation" - DEPRECATED
+	//   "typeFerryTerminal" - DEPRECATED
+	//   "typeAirport" - DEPRECATED
+	//   "typeAirportCivil" - DEPRECATED
+	//   "typeAirportMilitary" - DEPRECATED
+	//   "typeAirportMixed" - DEPRECATED
+	//   "typeHeliport" - DEPRECATED
+	//   "typeSeaplaneBase" - DEPRECATED
+	//   "typeAirstrip" - DEPRECATED
+	//   "typeCableCarStation" - DEPRECATED
+	//   "typeGondolaLiftStation" - DEPRECATED
+	//   "typeFunicularStation" - DEPRECATED
+	//   "typeSpecialStation" - DEPRECATED
+	//   "typeHorseCarriageStation" - DEPRECATED
+	//   "typeMonorailStation" - DEPRECATED
+	//   "typeSeaport" - DEPRECATED
+	//   "typeTransitStop" - DEPRECATED
+	//   "typeTransitTrip" - DEPRECATED
+	//   "typeTransitDeparture" - DEPRECATED
+	//   "typeTransitLeg" - DEPRECATED
+	//   "typeTransitLine" - A transit line is a collection of transit legs,
+	// associated with some invariant properties of the trips that run over
+	// the legs. See also transitline.proto
+	//   "typeTransitAgencyDeprecatedValue" - TYPE_TRANSIT_AGENCY was moved
+	// to 0xC91. This deprecated enum value still exists for debugging
+	// purposes only.
+	//   "typeTransitTransfer" - DEPRECATED
+	//   "typeSegmentPath" - ABSTRACT
+	//   "typeRoadSign" - Road sign features have names, point geometry,
+	// etc. They also have segment_path data (see below) which lists the
+	// segments that refer to the sign. See segment.proto for the reference
+	// from the segment to the road sign.
+	//   "typeIntersectionGroup" - Our TYPE_INTERSECTION feature, above,
+	// models the point where one or more segments terminate. This is
+	// topological definition: it may not match what a typical user would
+	// think of as an "intersection". Consider the intersections where
+	// Hayes, Market, Larkin, and 9th Street meet near (37.77765,
+	// -122.41638) in San Francisco. Most people would probably consider
+	// this a single feature, even though we model it as four separate
+	// TYPE_INTERSECTION features. This TYPE_INTERSECTION_GROUP is used to
+	// model the user's concept of a complex intersection.
+	//   "typePathway" - RESERVED
+	//   "typeRestrictionGroup" - A restriction group describes a set of
+	// segment restrictions that belong together and have a name or an
+	// associated event. See also restriction_group.proto
+	//   "typeTollCluster" - A toll cluster is either a single point on a
+	// segment (represented as a point at the end of the segment that has
+	// ENDPOINT_TOLL_BOOTH set) or a group of points on various road
+	// segments in MapFacts that represents one or more lanes passing
+	// through a toll fixture that all go to the same routing destination.
+	// Each toll cluster should have at most a single price per payment
+	// method. E.g. {CASH = $5, PASS = $1}. Note: If a toll fixture has
+	// different prices for multiple routing destinations, drivers need to
+	// be in the correct lane before passing through the toll fixture and
+	// hence such a fixture is represented by multiple toll clusters. A toll
+	// cluster does not necessarily represent a real-world entity, e.g. a
+	// particular plaza/structure as perceived by humans. This is because a
+	// plaza can be represented by more than one toll cluster. We require
+	// toll clusters to have names, but they might be non-unique. For
+	// example, a plaza might be represented by multiple toll clusters that
+	// may have the same plaza name. For further details, please see
+	// go/toll-cluster-schema.
+	//   "typePolitical" - ABSTRACT
+	//   "typeCountry"
+	//   "typeAdministrativeArea" - ABSTRACT
+	//   "typeAdministrativeArea1"
+	//   "typeUsState" - DEPRECATED
+	//   "typeGbCountry" - DEPRECATED
+	//   "typeJpTodoufuken" - DEPRECATED
+	//   "typeAdministrativeArea2"
+	//   "typeGbFormerPostalCounty" - DEPRECATED
+	//   "typeGbTraditionalCounty" - DEPRECATED
+	//   "typeAdministrativeArea3"
+	//   "typeAdministrativeArea4"
+	//   "typeAdministrativeArea5"
+	//   "typeAdministrativeArea6"
+	//   "typeAdministrativeArea7"
+	//   "typeAdministrativeArea8"
+	//   "typeAdministrativeArea9"
+	//   "typeColloquialArea" - e.g. Silicon Valley
+	//   "typeReservation" - A reservation is a region collectively held or
+	// governed by indigenous people and officially recognized by the
+	// country’s government at the federal or state level. A reservation
+	// may be fully contained within an administrative feature or partially
+	// contained within two or more. These regions are referred to by
+	// different categorical names depending on country and even by state,
+	// including but not limited to: “Indian Reservations”, “Indian
+	// Reserves”, “Land Claim Settlement Lands”, “Indian Lands”,
+	// “Treaty Lands”, “Indigenous Territories”, etc. A reservation
+	// is not a historic indigenous territory boundary or a region which has
+	// applied for land rights but has not yet received official
+	// recognition.
+	//   "typeLocality"
+	//   "typeGbPostTown" - DEPRECATED
+	//   "typeJpGun" - DEPRECATED
+	//   "typeJpShikuchouson" - DEPRECATED
+	//   "typeJpSubShikuchouson" - DEPRECATED
+	//   "typeColloquialCity" - An entity widely considered to be a city,
+	// that may itself be made up of smaller political entities, some of
+	// which are cities/towns/villages themselves. For example, the
+	// colloquial view of Sydney, Australia actually comprises many smaller
+	// cities, but is regarded as a city itself. This type is not suitable
+	// for modeling official metro-/micropolitan or other statistical areas.
+	//   "typeSublocality" - ABSTRACT
+	//   "typeUsBorough" - DEPRECATED
+	//   "typeGbDependentLocality" - DEPRECATED
+	//   "typeJpOoaza" - DEPRECATED
+	//   "typeJpKoaza" - DEPRECATED
+	//   "typeJpGaiku" - DEPRECATED
+	//   "typeGbDoubleDependentLocality" - DEPRECATED
+	//   "typeJpChiban" - DEPRECATED
+	//   "typeJpEdaban" - DEPRECATED
+	//   "typeSublocality1"
+	//   "typeSublocality2"
+	//   "typeSublocality3"
+	//   "typeSublocality4"
+	//   "typeSublocality5"
+	//   "typeNeighborhood"
+	//   "typeConstituency"
+	//   "typeDesignatedMarketArea" - Designated Market Areas (or DMAs) are
+	// used by marketing and ratings companies (such as the Nielsen Media
+	// Research company) to describe geographical regions (such as the
+	// greater New York metropolitan area) that are covered by a set of
+	// television stations. (See http://www.schooldata.com/pdfs/DMA.pdf) In
+	// the United States, DMAs should have a DMA numeric ID name, tagged
+	// with the FLAG_DESIGNATED_MARKET_AREA_ID flag.
+	//   "typeSchoolDistrict"
+	//   "typeLandParcel"
+	//   "typeDisputedArea" - Eventually we'll have more data for disputed
+	// areas (e.g., who makes claims on the area, who has de facto control,
+	// etc.). For the moment, we just define a type so we can simply mark
+	// areas as disputed.
+	//   "typePoliceJurisdiction" - Boundaries representing the jurisdiction
+	// of a particular police station.
+	//   "typeStatisticalArea" - An area used for aggregating statistical
+	// data, eg, a census region. Note that TYPE_STATISTICAL_AREA has a
+	// third nibble so we can add an abstract parent above it later if need
+	// be at 0x2E1 (and rename TYPE_STATISTICAL_AREA as
+	// TYPE_STATISTICAL_AREA1).
+	//   "typeConstituencyFuture" - DEPRECATED
+	//   "typePark" - DEPRECATED
+	//   "typeGolfCourse" - DEPRECATED
+	//   "typeLocalPark" - DEPRECATED
+	//   "typeNationalPark" - DEPRECATED
+	//   "typeUsNationalPark" - DEPRECATED
+	//   "typeUsNationalMonument" - DEPRECATED
+	//   "typeNationalForest" - DEPRECATED
+	//   "typeProvincialPark" - DEPRECATED
+	//   "typeProvincialForest" - DEPRECATED
+	//   "typeCampgrounds" - DEPRECATED
+	//   "typeHikingArea" - DEPRECATED
+	//   "typeBusiness" - DEPRECATED
+	//   "typeGovernment" - DEPRECATED
+	//   "typeBorderCrossing" - DEPRECATED
+	//   "typeCityHall" - DEPRECATED
+	//   "typeCourthouse" - DEPRECATED
+	//   "typeEmbassy" - DEPRECATED
+	//   "typeLibrary" - DEPRECATED
+	//   "typeSchool" - DEPRECATED
+	//   "typeUniversity" - DEPRECATED
+	//   "typeEmergency" - DEPRECATED
+	//   "typeHospital" - DEPRECATED
+	//   "typePharmacy" - DEPRECATED
+	//   "typePolice" - DEPRECATED
+	//   "typeFire" - DEPRECATED
+	//   "typeDoctor" - DEPRECATED
+	//   "typeDentist" - DEPRECATED
+	//   "typeVeterinarian" - DEPRECATED
+	//   "typeTravelService" - DEPRECATED
+	//   "typeLodging" - DEPRECATED
+	//   "typeRestaurant" - DEPRECATED
+	//   "typeGasStation" - DEPRECATED
+	//   "typeParking" - DEPRECATED
+	//   "typePostOffice" - DEPRECATED
+	//   "typeRestArea" - DEPRECATED
+	//   "typeCashMachine" - DEPRECATED
+	//   "typeCarRental" - DEPRECATED
+	//   "typeCarRepair" - DEPRECATED
+	//   "typeShopping" - DEPRECATED
+	//   "typeGrocery" - DEPRECATED
+	//   "typeTouristDestination" - DEPRECATED
+	//   "typeEcoTouristDestination" - DEPRECATED
+	//   "typeBirdWatching" - DEPRECATED
+	//   "typeFishing" - DEPRECATED
+	//   "typeHunting" - DEPRECATED
+	//   "typeNatureReserve" - DEPRECATED
+	//   "typeTemple" - DEPRECATED
+	//   "typeChurch" - DEPRECATED
+	//   "typeGurudwara" - DEPRECATED
+	//   "typeHinduTemple" - DEPRECATED
+	//   "typeMosque" - DEPRECATED
+	//   "typeSynagogue" - DEPRECATED
+	//   "typeStadium" - DEPRECATED
+	//   "typeBar" - DEPRECATED
+	//   "typeMovieRental" - DEPRECATED
+	//   "typeCoffee" - DEPRECATED
+	//   "typeGolf" - DEPRECATED
+	//   "typeBank" - DEPRECATED
+	//   "typeDoodle" - DEPRECATED
+	//   "typeGrounds" - DEPRECATED
+	//   "typeAirportGrounds" - DEPRECATED
+	//   "typeBuildingGrounds" - DEPRECATED
+	//   "typeCemetery" - DEPRECATED
+	//   "typeHospitalGrounds" - DEPRECATED
+	//   "typeIndustrial" - DEPRECATED
+	//   "typeMilitary" - DEPRECATED
+	//   "typeShoppingCenter" - DEPRECATED
+	//   "typeSportsComplex" - DEPRECATED
+	//   "typeUniversityGrounds" - DEPRECATED
+	//   "typeDeprecatedTarmac" - DEPRECATED
+	//   "typeEnclosedTrafficArea" - DEPRECATED
+	//   "typeParkingLot" - DEPRECATED
+	//   "typeParkingGarage" - DEPRECATED
+	//   "typeOffRoadArea" - DEPRECATED
+	//   "typeBorder" - A line representing the boundary between two
+	// features. See border.proto for details.
+	//   "typeBuilding" - DEPRECATED
+	//   "typeGeocodedAddress" - An association of a point with an address,
+	// with no other information.
+	//   "typeNaturalFeature" - ABSTRACT
+	//   "typeTerrain" - Expanses of land that share common surface
+	// attributes. These areas would look more or less uniform from a high
+	// altitude.
+	//   "typeSand"
+	//   "typeBeach"
+	//   "typeDune"
+	//   "typeRocky"
+	//   "typeIce"
+	//   "typeGlacier"
+	//   "typeBuiltUpArea" - Terrain that looks populated.
+	//   "typeVegetation" - Terrain that is covered in vegetation.
+	//   "typeShrubbery"
+	//   "typeWoods"
+	//   "typeAgricultural"
+	//   "typeGrassland"
+	//   "typeTundra"
+	//   "typeDesert"
+	//   "typeSaltFlat" - A flat expanse of salt left by the evaporation of
+	// a body of salt water.
+	//   "typeWater" - Features can be TYPE_WATER if we don't have enough
+	// information to properly type the body of water. TYPE_WATER is also
+	// used as the type for child features that compose a TYPE_RIVER
+	// feature.
+	//   "typeOcean" - One of the large salt-water bodies that covers most
+	// of the globe.
+	//   "typeBay" - An ocean subdivision formed by a coastal indentation.
+	// Includes coves and gulfs.
+	//   "typeBight" - An open body of water formed by a slight coastal
+	// indentation.
+	//   "typeLagoon"
+	//   "typeSea" - An ocean subdivision more or less confined by land and
+	// islands.
+	//   "typeStrait" - A long narrow ocean subdivision. Includes sounds.
+	//   "typeInlet"
+	//   "typeFjord"
+	//   "typeLake" - An inland body of standing water.
+	//   "typeSeasonalLake" - A lake that dries up part of the year.
+	//   "typeReservoir" - An artificial body of water, possibly created by
+	// a dam, often used for irrigation or house use.
+	//   "typePond"
+	//   "typeRiver" - An inland body of moving water, or parts associated
+	// with it in which there is little or no current (backwater).
+	//   "typeRapids"
+	//   "typeDistributary" - A branch which flows away from the main river.
+	// Includes deltas.
+	//   "typeConfluence" - A place where two or more rivers join.
+	//   "typeWaterfall"
+	//   "typeSpring" - A place where ground water flows naturally out of
+	// the ground.
+	//   "typeGeyser"
+	//   "typeHotSpring"
+	//   "typeSeasonalRiver" - A river that dries up part of the year.
+	//   "typeWadi" - A dry riverbed that occasionally receives flashfloods.
+	//   "typeEstuary" - A place at the end of a river where fresh and salt
+	// water mix. Includes tidal creeks and limans.
+	//   "typeWetland" - Land that is usually flooded. Includes bogs,
+	// marshes, flats, moors, and swamps.
+	//   "typeWaterNavigation"
+	//   "typeFord" - A shallow place where water may be waded through.
+	//   "typeCanal" - A narrow passage used by boats. Normally artificial.
+	//   "typeHarbor" - A deep place near a shore where ships commonly drop
+	// anchor.
+	//   "typeChannel" - A deep part in a body of water that is suitable for
+	// navigation. Includes narrows.
+	//   "typeReef" - Rocks, coral, sandbars, or other features beneath the
+	// surface of the water that pose a hazard to passing ships. Includes
+	// shoals.
+	//   "typeReefFlat" - A relatively shallow zone of the back reef located
+	// closest to the shore, that may be exposed at low tide.
+	//   "typeReefGrowth" - A small section of rocks, coral, sandbars, or
+	// other features beneath the surface of the water that forms part of a
+	// reef.
+	//   "typeReefExtent" - The full extent of the reef complex.
+	//   "typeReefRockSubmerged" - A submerged rock in the water.
+	//   "typeIrrigation" - Man-made (and sometimes natural) channels used
+	// to move water. This type was used for both dam structures and water
+	// that is hold back by dams. We should use TYPE_COMPOUND_BUILDING for
+	// dam structures and TYPE_RESERVOIR for water.
+	//   "typeDam" - DEPRECATED
+	//   "typeDrinkingWater"
+	//   "typeCurrent" - Includes overfalls.
+	//   "typeWateringHole" - A natural depression filled with water where
+	// animals come to drink.
+	//   "typeTectonic" - ABSTRACT This type is incorrectly under
+	// TYPE_TECTONIC instead of TYPE_WATER. This was a mistake and is now
+	// fixed. See TYPE_WATERING_HOLE for the replacement.
+	//   "typeWateringHoleDeprecated" - DEPRECATED
+	//   "typeVolcano"
+	//   "typeLavaField"
+	//   "typeFissure"
+	//   "typeFault"
+	//   "typeLandMass"
+	//   "typeContinent"
+	//   "typeIsland"
+	//   "typeAtoll"
+	//   "typeOceanRockExposed" - An exposed rock in the water.
+	//   "typeCay" - A small, low-elevation, sandy island formed on the
+	// surface of coral reefs
+	//   "typePeninsula" - A stretch of land projecting into water. Includes
+	// capes and spits.
+	//   "typeIsthmus" - A strip of land connecting two larger land masses,
+	// such as continents.
+	//   "typeElevated" - Features that are notable for being high (or low),
+	// or for having sudden changes in elevation. These features might have
+	// an "elevation" extension to specify the actual elevation. See
+	// ElevationProto for more information.
+	//   "typePeak" - Elevations that have a distinctive peak.
+	//   "typeNunatak" - A peak or ridge of a mountain that extends through
+	// a glacier.
+	//   "typeSpur" - A subsidiary peak of a mountain.
+	//   "typePass" - A route over an otherwise difficult to traverse
+	// feature. Includes saddle.
+	//   "typePlateau" - Elevations that are flat on top. Includes mesas and
+	// buttes.
+	//   "typeRidge" - A ridge is a geographical feature consisting of a
+	// chain of mountains or hills that form a continuous elevated crest
+	// with a single ridgeline for some distance.
+	//   "typeRavine" - Steep declines usually carved by erosion. Includes
+	// valleys, canyons, ditches, and gorges.
+	//   "typeCrater" - Depressions causes by impact, explosion, and
+	// sometimes sink-holes.
+	//   "typeKarst" - Topography formed on limestone and gypsum by
+	// dissolution with sinkholes, caves, etc.
+	//   "typeCliff" - A vertical or nearly vertical slope. Includes
+	// escarpments.
+	//   "typeVista" - An elevated place that is notable for having a good
+	// view. Raster digital elevation data. This is not a type to be used by
+	// providers or consumed by clients.
+	//   "typeDigitalElevationModel" - RESERVED
+	//   "typeUpland" - Land along streams higher than the alluvial plain or
+	// stream terrace.
+	//   "typeTerrace"
+	//   "typeSlope" - Land not so steep as a cliff, but changing elevation.
+	// Includes slides.
+	//   "typeContourLine" - All the points on the polygon are at the same
+	// elevation.
+	//   "typePan" - A near-level shallow, natural depression or basin,
+	// usually containing an intermittent lake, pond, or pool.
+	//   "typeUnstableHillside"
+	//   "typeMountainRange" - A series of mountains or hills ranged in a
+	// line and connected by high ground. Mountain ranges usually consist of
+	// many smaller ridges. For example, the Himalayas, the Andes. the Alps,
+	// etc.
+	//   "typeUndersea" - Features that are notable for being high (or low),
+	// or for having sudden changes in elevation. These features might have
+	// an "elevation" extension to specify the actual elevation. See
+	// ElevationProto for more information.
+	//   "typeSubmarineSeamount" - includes peaks, ranges, and spurs
+	//   "typeSubmarineRidge"
+	//   "typeSubmarineGap" - includes saddles
+	//   "typeSubmarinePlateau"
+	//   "typeSubmarineDeep"
+	//   "typeSubmarineValley" - includes trenches and troughs
+	//   "typeSubmarineBasin"
+	//   "typeSubmarineSlope"
+	//   "typeSubmarineCliff"
+	//   "typeSubmarinePlain"
+	//   "typeSubmarineFractureZone"
+	//   "typeCave" - Don't use 0xA7. Use 8 bits for additional types under
+	// TYPE_NATURAL_FEATURE, so we don't run out of space. The following are
+	// miscellaneous natural features that don't fit any of the categories
+	// above.
+	//   "typeRock"
+	//   "typeArchipelago" - A feature representing a group or chain of
+	// islands.
+	//   "typePostal" - ABSTRACT
+	//   "typePostalCode" - This is the type for postal codes which are
+	// complete and independent enough that there should be a feature for
+	// them (e.g. US 5-digit ZIP codes). For even more detailed suffixes
+	// that further subdivide a postal code (such as the +4 component in US
+	// ZIP codes), store the information in a TYPE_POSTAL_CODE_SUFFIX
+	// address component. When a range or set of postal codes share the same
+	// geographical area, e.g. because a precise subdivision does not exist
+	// or this subdivision is unknown, this type is used for each individual
+	// postal code.
+	//   "typePostalCodePrefix" - A prefix portion of a postal code which
+	// does not meet the requirements for TYPE_POSTAL_CODE, but which is
+	// useful to search for, for example UK outcodes.
+	//   "typePremise" - DEPRECATED
+	//   "typeSubPremise" - DEPRECATED This is deprecated and we want to use
+	// TYPE_COMPOUND_SECTION instead.
+	//   "typeSuite" - DEPRECATED
+	//   "typePostTown" - The term "post town" is used for a
+	// locality-like-entity that is only used for postal addresses.
+	//   "typePostalRound" - DEPRECATED
+	//   "typeMetaFeature" - ABSTRACT
+	//   "typeDataSource" - Every data source used in constructing a data
+	// repository has a corresponding feature that provides more information
+	// about that data source. The extra information is stored in the
+	// optional data_source field below.
+	//   "typeLocale" - A locale feature provides region specific
+	// conventions such as preferred language and formatting details for
+	// time, date, and currency values. Locales aren't necessary defined by
+	// physical geographic features, so they are classified as
+	// meta-features.
+	//   "typeTimezone" - A timezone feature is used to specify the region
+	// covering an international timezone. When a point is covered by
+	// multiple timezone features, the most specific one can be used to
+	// compute the local time at this point. Most specific implies a much
+	// smaller region or the one that is closer to the center. A feature's
+	// timezone can be specified in the repeated related_timezone field.
+	//   "typeBusinessChain" - A business chain feature is used to represent
+	// a chain, e.g. Starbucks, McDonald's, etc. Other features representing
+	// specific stores/franchises of this chain may refer to one such
+	// feature via RELATION_MEMBER_OF_CHAIN. This is not strictly reserved
+	// to commercial chains but can also be used to model organizations such
+	// as the Red Cross or the United Nations.
+	//   "typePhoneNumberPrefix" - A phone number prefix feature is used to
+	// specify the region where phone numbers (typically fixed-line numbers)
+	// must begin with a certain prefix. Any phone number prefix down to any
+	// level of granularity could be represented by this type.
+	//   "typePhoneNumberAreaCode" - A phone number area code is a prefix
+	// which also coincides with the area code, or national destination
+	// code, of a particular region.
+	//   "typeBusinessCorridor" - A Business Corridor is a dense cluster of
+	// semantically similar establishments. TYPE_BUSINESS_CORRIDOR features
+	// are distinguished from TYPE_COLLOQUIAL_AREA features because the
+	// corridors are not under the political hierarchy, are allowed to be
+	// nameless, and may not correspond to well-known real world locations.
+	// For more details, see go/geo-corridors-schema.
+	//   "typeAddressTemplate" - An address template feature provides
+	// region-specific conventions for structuring addresses. These features
+	// aren't necessarily defined by physical geographic features, so they
+	// are classified as meta-features.
+	//   "typeTransitAgency" - A transit agency operates a number of lines,
+	// typically all in the same city, region or country. See also
+	// transitagency.proto
+	//   "typeFutureGeometry" - A feature whose geometry is planned to
+	// replace the geometry on another feature.
+	//   "typeEvent" - DEPRECATED
+	//   "typeEarthquake" - DEPRECATED
+	//   "typeHurricane" - DEPRECATED
+	//   "typeWeatherCondition" - DEPRECATED
+	//   "typeTransient" - RESERVED
+	//   "typeEntrance" - A portal of entry or exit to another feature.
+	// Examples: - Subway station entrance. - Parking lot entrance.
+	//   "typeCartographic" - Cartographic features are used to capture
+	// real-world objects for which there is no current desire to model any
+	// specific attributes. These are only useful to make the map tiles look
+	// pretty.
+	//   "typeHighTension" - DEPRECATED
+	//   "typeSkiTrail" - Also see skitrail.proto
+	//   "typeSkiLift" - Also see skilift.proto
+	//   "typeSkiBoundary" - Also see skiboundary.proto
+	//   "typeWatershedBoundary"
+	//   "typeTarmac" - Starting with TYPE_TARMAC, we use longer IDs, so
+	// that we can expand the number of feature types under
+	// TYPE_CARTOGRAPHIC.
+	//   "typeWall" - Use TYPE_COMPOUND_GROUND and appropriate gcids for the
+	// next two.
+	//   "typePicnicArea" - DEPRECATED
+	//   "typePlayGround" - DEPRECATED
+	//   "typeTrailHead"
+	//   "typeGolfTeeingGround" - Sub-types within a golf course.
+	//   "typeGolfPuttingGreen"
+	//   "typeGolfRough"
+	//   "typeGolfSandBunker"
+	//   "typeGolfFairway"
+	//   "typeGolfHole" - Use TYPE_ESTABLISHMENT_POI and gcid:golf_shop for
+	// golf shops instead.
+	//   "typeDeprecatedGolfShop" - DEPRECATED
+	//   "typeCampingSite" - DEPRECATED
+	//   "typeDesignatedBarbecuePit"
+	//   "typeDesignatedCookingArea"
+	//   "typeCampfirePit"
+	//   "typeWaterFountain"
+	//   "typeLitterReceptacle"
+	//   "typeLockerArea"
+	//   "typeAnimalEnclosure" - Subtype within a zoo - a cage or fenced-off
+	// or otherwise delineated area containing animals.
+	//   "typeCartographicLine" - A line for a cartographic detail. For
+	// example the international date line. Such features should have
+	// polyline geometry.
+	//   "typeEstablishment" - ABSTRACT This type is being replaced by
+	// TYPE_COMPOUND_GROUNDS. For further details, see go/compounds-v2
+	//   "typeEstablishmentGrounds" - DEPRECATED This type has been replaced
+	// by TYPE_COMPOUND_BUILDING. For further details, see
+	// go/oyster-compounds
+	//   "typeEstablishmentBuilding" - DEPRECATED
+	//   "typeEstablishmentPoi" - An establishment which has a address
+	// (a.k.a. location or storefront). Note that it *may* also have a
+	// service area (e.g. a restaurant that offers both dine-in and
+	// delivery). This type of business is also known as a "hybrid" Service
+	// Area Business. Establishment POIs can be referenced by TYPE_COMPOUND
+	// features using the RELATION_PRIMARILY_OCCUPIED_BY. This is the
+	// reciprocal relation of the RELATION_OCCUPIES.
+	//   "typeEstablishmentService" - A business without a storefront, e.g.
+	// a plumber. It would normally not have a place that a customer could
+	// visit to receive service, but it would have an area served by the
+	// business. Also known as a "pure" Service Area Business. NOTE(tcain):
+	// Using value 0xD441, since we could find ourselves with a need to
+	// differentiate service areas from online-only at this level in the
+	// future, but still benefit from being able to group those under a
+	// common parent, disjoint from TYPE_ESTABLISHMENT_POI.
+	//   "typeCelestial" - The root of types of features that are in the
+	// sky, rather than on the earth. There will eventually be a hierarchy
+	// of types here.
+	//   "typeRoadMonitor" - Features responsible for monitoring traffic on
+	// roads (usually for speed). Includes cameras at particular points as
+	// well as monitors that cover larger spans. Features of this type
+	// should have a corresponding gcid that specifies the correct subtype
+	// (e.g. gcid:road_camera or gcid:speed_camera_zone). This type was
+	// originally named as TYPE_ROAD_CAMERA.
+	//   "typePublicSpacesAndMonuments" - ABSTRACT
+	//   "typeStatue" - Note that this type does not distinguish the nature
+	// of the statue (religious, historical, memorial, tourist, ...).
+	//   "typeTownSquare" - Open space used for events, gathering, or as
+	// market-place.
+	//   "typeLevel" - A feature used to represent a logical level, e.g.
+	// floor.
+	//   "typeCompound" - ABSTRACT
+	//   "typeCompoundGrounds" - e.g. campus, compound, parcel.
+	//   "typeCompoundBuilding" - e.g. single family dwelling, office
+	// building.
+	//   "typeCompoundSection" - e.g. suite, room, hallway, cubicle.
+	//   "typeTerminalPoint" - A terminal point represents a good location
+	// for a user to meet a taxi, ridesharing vehicle, or general driver.
+	//   "typeRegulatedArea" - An area controlled in some way by an
+	// authoritative source, such as a government-designated COVID
+	// containment zone or an area under government sanctions. Features of
+	// this type should have one or more gcids corresponding to their
+	// specific regulation, and client handling of these features may vary
+	// based on the type of regulation.
+	//   "typeLogicalBorder" - A grouping of TYPE_BORDER features ("border
+	// segments"), which together represent a border between two features of
+	// the same type.
+	//   "typeDoNotUseReservedToCatchGeneratedFiles" - DEPRECATED
+	//   "typeUnknown" - A feature of completely unknown type. This should
+	// only be used when absolutely necessary. One example in which this
+	// type is useful is in the Chinese importer, which must heuristically
+	// segment addresses into components - it often does not know what types
+	// to make those components. Please note that the Oyster address
+	// formatter does not currently support address components of
+	// TYPE_UNKNOWN well.
+	FeatureType string `json:"featureType,omitempty"`
+
+	// PositionPrecisionMeters: Precision of the center point (lat/long) of
+	// the geocoded FeatureProto
+	PositionPrecisionMeters float64 `json:"positionPrecisionMeters,omitempty"`
+
+	// QueryString: The query sent to the geocoder
+	QueryString string `json:"queryString,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AddressUnderstood")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AddressUnderstood") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GeocodingSummary) MarshalJSON() ([]byte, error) {
+	type NoMethod GeocodingSummary
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GeocodingSummary) UnmarshalJSON(data []byte) error {
+	type NoMethod GeocodingSummary
+	var s1 struct {
+		PositionPrecisionMeters gensupport.JSONFloat64 `json:"positionPrecisionMeters"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.PositionPrecisionMeters = float64(s1.PositionPrecisionMeters)
+	return nil
 }
 
 // GeographicDivision: Describes a political geography.
 type GeographicDivision struct {
 	// AlsoKnownAs: Any other valid OCD IDs that refer to the same
-	// division.
-	//
-	// Because OCD IDs are meant to be human-readable and at least somewhat
-	// predictable, there are occasionally several identifiers for a single
-	// division. These identifiers are defined to be equivalent to one
-	// another, and one is always indicated as the primary identifier. The
-	// primary identifier will be returned in ocd_id above, and any other
-	// equivalent valid identifiers will be returned in this list.
-	//
-	// For example, if this division's OCD ID is
+	// division.\n\nBecause OCD IDs are meant to be human-readable and at
+	// least somewhat predictable, there are occasionally several
+	// identifiers for a single division. These identifiers are defined to
+	// be equivalent to one another, and one is always indicated as the
+	// primary identifier. The primary identifier will be returned in ocd_id
+	// above, and any other equivalent valid identifiers will be returned in
+	// this list.\n\nFor example, if this division's OCD ID is
 	// ocd-division/country:us/district:dc, this will contain
 	// ocd-division/country:us/state:dc.
 	AlsoKnownAs []string `json:"alsoKnownAs,omitempty"`
@@ -904,10 +1562,10 @@ type GeographicDivision struct {
 
 	// ForceSendFields is a list of field names (e.g. "AlsoKnownAs") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AlsoKnownAs") to include
@@ -925,60 +1583,8 @@ func (s *GeographicDivision) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-type InternalFieldMetadataProto struct {
-	IsAuto bool `json:"isAuto,omitempty"`
-
-	SourceSummary *InternalSourceSummaryProto `json:"sourceSummary,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "IsAuto") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "IsAuto") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *InternalFieldMetadataProto) MarshalJSON() ([]byte, error) {
-	type NoMethod InternalFieldMetadataProto
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type InternalSourceSummaryProto struct {
-	Dataset string `json:"dataset,omitempty"`
-
-	Provider string `json:"provider,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Dataset") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Dataset") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *InternalSourceSummaryProto) MarshalJSON() ([]byte, error) {
-	type NoMethod InternalSourceSummaryProto
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+// MessageSet: This is proto2's version of MessageSet.
+type MessageSet struct {
 }
 
 // Office: Information about an Office held by one or more Officials.
@@ -992,6 +1598,17 @@ type Office struct {
 	// at two different levels of government; for example, the mayor of the
 	// District of Columbia acts at "locality" level, but also effectively
 	// at both "administrative-area-2" and "administrative-area-1".
+	//
+	// Possible values:
+	//   "international"
+	//   "country"
+	//   "administrativeArea1"
+	//   "regional"
+	//   "administrativeArea2"
+	//   "locality"
+	//   "subLocality1"
+	//   "subLocality2"
+	//   "special"
 	Levels []string `json:"levels,omitempty"`
 
 	// Name: The human-readable name of the office.
@@ -1006,6 +1623,20 @@ type Office struct {
 	// responsibilities of a given office, but are meant to be rough
 	// categories that are useful for general selection from or sorting of a
 	// list of offices.
+	//
+	// Possible values:
+	//   "headOfState"
+	//   "headOfGovernment"
+	//   "deputyHeadOfGovernment"
+	//   "governmentOfficer"
+	//   "executiveCouncil"
+	//   "legislatorUpperBody"
+	//   "legislatorLowerBody"
+	//   "highestCourtJudge"
+	//   "judge"
+	//   "schoolBoard"
+	//   "specialPurposeOfficer"
+	//   "otherRole"
 	Roles []string `json:"roles,omitempty"`
 
 	// Sources: A list of sources for this office. If multiple sources are
@@ -1014,10 +1645,10 @@ type Office struct {
 
 	// ForceSendFields is a list of field names (e.g. "DivisionId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DivisionId") to include in
@@ -1046,6 +1677,10 @@ type Official struct {
 	// Emails: The direct email addresses for the official.
 	Emails []string `json:"emails,omitempty"`
 
+	// GeocodingSummaries: Detailed summary about the official's address's
+	// geocoding
+	GeocodingSummaries []*GeocodingSummary `json:"geocodingSummaries,omitempty"`
+
 	// Name: The official's name.
 	Name string `json:"name,omitempty"`
 
@@ -1063,10 +1698,10 @@ type Official struct {
 
 	// ForceSendFields is a list of field names (e.g. "Address") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Address") to include in
@@ -1084,36 +1719,6 @@ func (s *Official) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-type PointProto struct {
-	LatE7 int64 `json:"latE7,omitempty"`
-
-	LngE7 int64 `json:"lngE7,omitempty"`
-
-	Metadata *FieldMetadataProto `json:"metadata,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "LatE7") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "LatE7") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *PointProto) MarshalJSON() ([]byte, error) {
-	type NoMethod PointProto
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // PollingLocation: A location where a voter can vote. This may be an
 // early vote site, an election day voting location, or a drop off
 // location for a completed ballot.
@@ -1125,23 +1730,12 @@ type PollingLocation struct {
 	// may be used. This field is not populated for polling locations.
 	EndDate string `json:"endDate,omitempty"`
 
-	// Id: An ID for this object. IDs may change in future requests and
-	// should not be cached. Access to this field requires special access
-	// that can be requested from the Request more link on the Quotas page.
-	Id string `json:"id,omitempty"`
-
 	// Latitude: Latitude of the location, in degrees north of the equator.
-	// Only some locations -- generally, ballot drop boxes for vote-by-mail
-	// elections -- will have this set; for others, use a geocoding service
-	// like the Google Maps API to resolve the address to a geographic
-	// point.
+	// Note this field may not be available for some locations.
 	Latitude float64 `json:"latitude,omitempty"`
 
 	// Longitude: Longitude of the location, in degrees east of the Prime
-	// Meridian. Only some locations -- generally, ballot drop boxes for
-	// vote-by-mail elections -- will have this set; for others, use a
-	// geocoding service like the Google Maps API to resolve the address to
-	// a geographic point.
+	// Meridian. Note this field may not be available for some locations.
 	Longitude float64 `json:"longitude,omitempty"`
 
 	// Name: The name of the early vote site or drop off location. This
@@ -1170,10 +1764,10 @@ type PollingLocation struct {
 
 	// ForceSendFields is a list of field names (e.g. "Address") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Address") to include in
@@ -1207,119 +1801,86 @@ func (s *PollingLocation) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-type PostalAddress struct {
-	AddressLines []string `json:"addressLines,omitempty"`
+type Precinct struct {
+	// AdministrationRegionId: ID of the AdministrationRegion message for
+	// this precinct. Corresponds to LocalityId xml tag.
+	AdministrationRegionId string `json:"administrationRegionId,omitempty"`
 
-	AdministrativeAreaName string `json:"administrativeAreaName,omitempty"`
+	// ContestId: ID(s) of the Contest message(s) for this precinct.
+	ContestId []string `json:"contestId,omitempty"`
 
-	CountryName string `json:"countryName,omitempty"`
-
-	CountryNameCode string `json:"countryNameCode,omitempty"`
-
-	DependentLocalityName string `json:"dependentLocalityName,omitempty"`
-
-	DependentThoroughfareName string `json:"dependentThoroughfareName,omitempty"`
-
-	FirmName string `json:"firmName,omitempty"`
-
-	IsDisputed bool `json:"isDisputed,omitempty"`
-
-	LanguageCode string `json:"languageCode,omitempty"`
-
-	LocalityName string `json:"localityName,omitempty"`
-
-	PostBoxNumber string `json:"postBoxNumber,omitempty"`
-
-	PostalCodeNumber string `json:"postalCodeNumber,omitempty"`
-
-	PostalCodeNumberExtension string `json:"postalCodeNumberExtension,omitempty"`
-
-	PremiseName string `json:"premiseName,omitempty"`
-
-	RecipientName string `json:"recipientName,omitempty"`
-
-	SortingCode string `json:"sortingCode,omitempty"`
-
-	SubAdministrativeAreaName string `json:"subAdministrativeAreaName,omitempty"`
-
-	SubPremiseName string `json:"subPremiseName,omitempty"`
-
-	ThoroughfareName string `json:"thoroughfareName,omitempty"`
-
-	ThoroughfareNumber string `json:"thoroughfareNumber,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AddressLines") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AddressLines") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *PostalAddress) MarshalJSON() ([]byte, error) {
-	type NoMethod PostalAddress
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type Provenance struct {
-	CollidedSegmentSource *StreetSegmentList `json:"collidedSegmentSource,omitempty"`
-
-	CtclContestUuid string `json:"ctclContestUuid,omitempty"`
-
-	CtclOfficeUuid string `json:"ctclOfficeUuid,omitempty"`
-
+	// DatasetId: Required. Dataset ID. What datasets our Precincts come
+	// from.
 	DatasetId int64 `json:"datasetId,omitempty,string"`
 
-	PrecinctId int64 `json:"precinctId,omitempty,string"`
+	// EarlyVoteSiteId: ID(s) of the PollingLocation message(s) for this
+	// precinct.
+	EarlyVoteSiteId []string `json:"earlyVoteSiteId,omitempty"`
 
-	PrecinctSplitId int64 `json:"precinctSplitId,omitempty,string"`
+	// ElectoralDistrictId: ID(s) of the ElectoralDistrict message(s) for
+	// this precinct.
+	ElectoralDistrictId []string `json:"electoralDistrictId,omitempty"`
 
-	TsStreetSegmentId string `json:"tsStreetSegmentId,omitempty"`
+	// Id: Required. A unique identifier for this precinct.
+	Id string `json:"id,omitempty"`
 
-	Vip5PrecinctId string `json:"vip5PrecinctId,omitempty"`
+	// MailOnly: Specifies if the precinct runs mail-only elections.
+	MailOnly bool `json:"mailOnly,omitempty"`
 
-	Vip5StreetSegmentId string `json:"vip5StreetSegmentId,omitempty"`
+	// Name: Required. The name of the precinct.
+	Name string `json:"name,omitempty"`
 
-	VipStreetSegmentId int64 `json:"vipStreetSegmentId,omitempty,string"`
+	// Number: The number of the precinct.
+	Number string `json:"number,omitempty"`
+
+	// OcdId: Encouraged. The OCD ID of the precinct
+	OcdId []string `json:"ocdId,omitempty"`
+
+	// PollingLocationId: ID(s) of the PollingLocation message(s) for this
+	// precinct.
+	PollingLocationId []string `json:"pollingLocationId,omitempty"`
+
+	// SpatialBoundaryId: ID(s) of the SpatialBoundary message(s) for this
+	// precinct. Used to specify a geometrical boundary of the precinct.
+	SpatialBoundaryId []string `json:"spatialBoundaryId,omitempty"`
+
+	// SplitName: If present, this proto corresponds to one portion of split
+	// precinct. Other portions of this precinct are guaranteed to have the
+	// same `name`. If not present, this proto represents a full precicnt.
+	SplitName string `json:"splitName,omitempty"`
+
+	// Ward: Specifies the ward the precinct is contained within.
+	Ward string `json:"ward,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
-	// "CollidedSegmentSource") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// "AdministrationRegionId") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CollidedSegmentSource") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
+	// NullFields is a list of field names (e.g. "AdministrationRegionId")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
 	// server as null. It is an error if a field in this list has a
 	// non-empty value. This may be used to include null fields in Patch
 	// requests.
 	NullFields []string `json:"-"`
 }
 
-func (s *Provenance) MarshalJSON() ([]byte, error) {
-	type NoMethod Provenance
+func (s *Precinct) MarshalJSON() ([]byte, error) {
+	type NoMethod Precinct
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 type RepresentativeInfoData struct {
-	// Divisions: Political geographic divisions that contain the requested
-	// address.
+	// Divisions: A map of political geographic divisions that contain the
+	// requested address, keyed by the unique Open Civic Data identifier for
+	// this division.
 	Divisions map[string]GeographicDivision `json:"divisions,omitempty"`
 
 	// Offices: Elected offices referenced by the divisions listed above.
@@ -1336,10 +1897,10 @@ type RepresentativeInfoData struct {
 
 	// ForceSendFields is a list of field names (e.g. "Divisions") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Divisions") to include in
@@ -1357,39 +1918,12 @@ func (s *RepresentativeInfoData) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// RepresentativeInfoRequest: A request for political geography and
-// representative information for an address.
-type RepresentativeInfoRequest struct {
-	ContextParams *ContextParams `json:"contextParams,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ContextParams") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ContextParams") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *RepresentativeInfoRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod RepresentativeInfoRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // RepresentativeInfoResponse: The result of a representative info
 // lookup query.
 type RepresentativeInfoResponse struct {
-	// Divisions: Political geographic divisions that contain the requested
-	// address.
+	// Divisions: A map of political geographic divisions that contain the
+	// requested address, keyed by the unique Open Civic Data identifier for
+	// this division.
 	Divisions map[string]GeographicDivision `json:"divisions,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -1413,10 +1947,10 @@ type RepresentativeInfoResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Divisions") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Divisions") to include in
@@ -1459,10 +1993,10 @@ type SimpleAddressType struct {
 
 	// ForceSendFields is a list of field names (e.g. "City") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "City") to include in API
@@ -1491,10 +2025,10 @@ type Source struct {
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Name") to include in API
@@ -1508,177 +2042,6 @@ type Source struct {
 
 func (s *Source) MarshalJSON() ([]byte, error) {
 	type NoMethod Source
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type StreetSegment struct {
-	AdministrationRegionIds []string `json:"administrationRegionIds,omitempty"`
-
-	BeforeGeocodeId string `json:"beforeGeocodeId,omitempty"`
-
-	CatalistUniquePrecinctCode string `json:"catalistUniquePrecinctCode,omitempty"`
-
-	City string `json:"city,omitempty"`
-
-	CityCouncilDistrict string `json:"cityCouncilDistrict,omitempty"`
-
-	CongressionalDistrict string `json:"congressionalDistrict,omitempty"`
-
-	ContestIds []string `json:"contestIds,omitempty"`
-
-	CountyCouncilDistrict string `json:"countyCouncilDistrict,omitempty"`
-
-	CountyFips string `json:"countyFips,omitempty"`
-
-	DatasetId int64 `json:"datasetId,omitempty,string"`
-
-	EarlyVoteSiteByIds []string `json:"earlyVoteSiteByIds,omitempty"`
-
-	EndHouseNumber int64 `json:"endHouseNumber,omitempty,string"`
-
-	GeocodedPoint *PointProto `json:"geocodedPoint,omitempty"`
-
-	GeographicDivisionOcdIds []string `json:"geographicDivisionOcdIds,omitempty"`
-
-	Id string `json:"id,omitempty"`
-
-	JudicialDistrict string `json:"judicialDistrict,omitempty"`
-
-	MailOnly bool `json:"mailOnly,omitempty"`
-
-	MunicipalDistrict string `json:"municipalDistrict,omitempty"`
-
-	NcoaAddress string `json:"ncoaAddress,omitempty"`
-
-	OddOrEvens []string `json:"oddOrEvens,omitempty"`
-
-	OriginalId string `json:"originalId,omitempty"`
-
-	PollinglocationByIds []string `json:"pollinglocationByIds,omitempty"`
-
-	PrecinctName string `json:"precinctName,omitempty"`
-
-	PrecinctOcdId string `json:"precinctOcdId,omitempty"`
-
-	Provenances []*Provenance `json:"provenances,omitempty"`
-
-	Published bool `json:"published,omitempty"`
-
-	SchoolDistrict string `json:"schoolDistrict,omitempty"`
-
-	StartHouseNumber int64 `json:"startHouseNumber,omitempty,string"`
-
-	StartLatE7 int64 `json:"startLatE7,omitempty"`
-
-	StartLngE7 int64 `json:"startLngE7,omitempty"`
-
-	State string `json:"state,omitempty"`
-
-	StateHouseDistrict string `json:"stateHouseDistrict,omitempty"`
-
-	StateSenateDistrict string `json:"stateSenateDistrict,omitempty"`
-
-	StreetName string `json:"streetName,omitempty"`
-
-	SubAdministrativeAreaName string `json:"subAdministrativeAreaName,omitempty"`
-
-	SurrogateId int64 `json:"surrogateId,omitempty,string"`
-
-	TargetsmartUniquePrecinctCode string `json:"targetsmartUniquePrecinctCode,omitempty"`
-
-	TownshipDistrict string `json:"townshipDistrict,omitempty"`
-
-	UnitNumber string `json:"unitNumber,omitempty"`
-
-	UnitType string `json:"unitType,omitempty"`
-
-	VanPrecinctCode string `json:"vanPrecinctCode,omitempty"`
-
-	VoterGeographicDivisionOcdIds []string `json:"voterGeographicDivisionOcdIds,omitempty"`
-
-	WardDistrict string `json:"wardDistrict,omitempty"`
-
-	Wildcard bool `json:"wildcard,omitempty"`
-
-	Zip string `json:"zip,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "AdministrationRegionIds") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AdministrationRegionIds")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *StreetSegment) MarshalJSON() ([]byte, error) {
-	type NoMethod StreetSegment
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type StreetSegmentList struct {
-	Segments []*StreetSegment `json:"segments,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Segments") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Segments") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *StreetSegmentList) MarshalJSON() ([]byte, error) {
-	type NoMethod StreetSegmentList
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// VoterInfoRequest: A request for information about a voter.
-type VoterInfoRequest struct {
-	ContextParams *ContextParams `json:"contextParams,omitempty"`
-
-	VoterInfoSegmentResult *VoterInfoSegmentResult `json:"voterInfoSegmentResult,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ContextParams") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ContextParams") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *VoterInfoRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod VoterInfoRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1733,7 +2096,10 @@ type VoterInfoResponse struct {
 
 	PrecinctId string `json:"precinctId,omitempty"`
 
-	Segments []*StreetSegment `json:"segments,omitempty"`
+	// Precincts: The precincts that match this voter's address. Will only
+	// be returned for project IDs which have been whitelisted as "partner
+	// projects".
+	Precincts []*Precinct `json:"precincts,omitempty"`
 
 	// State: Local Election Information for the state that the voter votes
 	// in. For the US, there will only be one element in this array.
@@ -1745,10 +2111,10 @@ type VoterInfoResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Contests") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Contests") to include in
@@ -1766,55 +2132,20 @@ func (s *VoterInfoResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-type VoterInfoSegmentResult struct {
-	GeneratedMillis int64 `json:"generatedMillis,omitempty,string"`
-
-	PostalAddress *PostalAddress `json:"postalAddress,omitempty"`
-
-	Request *VoterInfoRequest `json:"request,omitempty"`
-
-	Response *VoterInfoResponse `json:"response,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "GeneratedMillis") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "GeneratedMillis") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *VoterInfoSegmentResult) MarshalJSON() ([]byte, error) {
-	type NoMethod VoterInfoSegmentResult
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // method id "civicinfo.divisions.search":
 
 type DivisionsSearchCall struct {
-	s                     *Service
-	divisionsearchrequest *DivisionSearchRequest
-	urlParams_            gensupport.URLParams
-	ifNoneMatch_          string
-	ctx_                  context.Context
-	header_               http.Header
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
 }
 
 // Search: Searches for political divisions by their natural name or OCD
 // ID.
-func (r *DivisionsService) Search(divisionsearchrequest *DivisionSearchRequest) *DivisionsSearchCall {
+func (r *DivisionsService) Search() *DivisionsSearchCall {
 	c := &DivisionsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.divisionsearchrequest = divisionsearchrequest
 	return c
 }
 
@@ -1866,7 +2197,7 @@ func (c *DivisionsSearchCall) Header() http.Header {
 
 func (c *DivisionsSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1877,7 +2208,7 @@ func (c *DivisionsSearchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "divisions")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "civicinfo/v2/divisions")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -1901,17 +2232,17 @@ func (c *DivisionsSearchCall) Do(opts ...googleapi.CallOption) (*DivisionSearchR
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &DivisionSearchResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1926,8 +2257,10 @@ func (c *DivisionsSearchCall) Do(opts ...googleapi.CallOption) (*DivisionSearchR
 	return ret, nil
 	// {
 	//   "description": "Searches for political divisions by their natural name or OCD ID.",
+	//   "flatPath": "civicinfo/v2/divisions",
 	//   "httpMethod": "GET",
 	//   "id": "civicinfo.divisions.search",
+	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "query": {
 	//       "description": "The search query. Queries can cover any parts of a OCD ID or a human readable division name. All words given in the query are treated as required patterns. In addition to that, most query operators of the Apache Lucene library are supported. See http://lucene.apache.org/core/2_9_4/queryparsersyntax.html",
@@ -1935,10 +2268,7 @@ func (c *DivisionsSearchCall) Do(opts ...googleapi.CallOption) (*DivisionSearchR
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "divisions",
-	//   "request": {
-	//     "$ref": "DivisionSearchRequest"
-	//   },
+	//   "path": "civicinfo/v2/divisions",
 	//   "response": {
 	//     "$ref": "DivisionSearchResponse"
 	//   }
@@ -1949,18 +2279,16 @@ func (c *DivisionsSearchCall) Do(opts ...googleapi.CallOption) (*DivisionSearchR
 // method id "civicinfo.elections.electionQuery":
 
 type ElectionsElectionQueryCall struct {
-	s                     *Service
-	electionsqueryrequest *ElectionsQueryRequest
-	urlParams_            gensupport.URLParams
-	ifNoneMatch_          string
-	ctx_                  context.Context
-	header_               http.Header
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
 }
 
 // ElectionQuery: List of available elections to query.
-func (r *ElectionsService) ElectionQuery(electionsqueryrequest *ElectionsQueryRequest) *ElectionsElectionQueryCall {
+func (r *ElectionsService) ElectionQuery() *ElectionsElectionQueryCall {
 	c := &ElectionsElectionQueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.electionsqueryrequest = electionsqueryrequest
 	return c
 }
 
@@ -2001,7 +2329,7 @@ func (c *ElectionsElectionQueryCall) Header() http.Header {
 
 func (c *ElectionsElectionQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2012,7 +2340,7 @@ func (c *ElectionsElectionQueryCall) doRequest(alt string) (*http.Response, erro
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "elections")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "civicinfo/v2/elections")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -2036,17 +2364,17 @@ func (c *ElectionsElectionQueryCall) Do(opts ...googleapi.CallOption) (*Election
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ElectionsQueryResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2061,12 +2389,12 @@ func (c *ElectionsElectionQueryCall) Do(opts ...googleapi.CallOption) (*Election
 	return ret, nil
 	// {
 	//   "description": "List of available elections to query.",
+	//   "flatPath": "civicinfo/v2/elections",
 	//   "httpMethod": "GET",
 	//   "id": "civicinfo.elections.electionQuery",
-	//   "path": "elections",
-	//   "request": {
-	//     "$ref": "ElectionsQueryRequest"
-	//   },
+	//   "parameterOrder": [],
+	//   "parameters": {},
+	//   "path": "civicinfo/v2/elections",
 	//   "response": {
 	//     "$ref": "ElectionsQueryResponse"
 	//   }
@@ -2077,26 +2405,26 @@ func (c *ElectionsElectionQueryCall) Do(opts ...googleapi.CallOption) (*Election
 // method id "civicinfo.elections.voterInfoQuery":
 
 type ElectionsVoterInfoQueryCall struct {
-	s                *Service
-	voterinforequest *VoterInfoRequest
-	urlParams_       gensupport.URLParams
-	ifNoneMatch_     string
-	ctx_             context.Context
-	header_          http.Header
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
 }
 
 // VoterInfoQuery: Looks up information relevant to a voter based on the
 // voter's registered address.
-func (r *ElectionsService) VoterInfoQuery(address string, voterinforequest *VoterInfoRequest) *ElectionsVoterInfoQueryCall {
+//
+// - address: The registered address of the voter to look up.
+func (r *ElectionsService) VoterInfoQuery(address string) *ElectionsVoterInfoQueryCall {
 	c := &ElectionsVoterInfoQueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("address", address)
-	c.voterinforequest = voterinforequest
 	return c
 }
 
 // ElectionId sets the optional parameter "electionId": The unique ID of
 // the election to look up. A list of election IDs can be obtained at
-// https://www.googleapis.com/civicinfo/{version}/electionsIf no
+// https://www.googleapis.com/civicinfo/{version}/elections. If no
 // election ID is specified in the query and there is more than one
 // election with data for the given voter, the additional elections are
 // provided in the otherElections response field.
@@ -2114,7 +2442,7 @@ func (c *ElectionsVoterInfoQueryCall) OfficialOnly(officialOnly bool) *Elections
 
 // ReturnAllAvailableData sets the optional parameter
 // "returnAllAvailableData": If set to true, the query will return the
-// success codeand include any partial information when it is unable to
+// success code and include any partial information when it is unable to
 // determine a matching address or unable to determine the election for
 // electionId=0 queries.
 func (c *ElectionsVoterInfoQueryCall) ReturnAllAvailableData(returnAllAvailableData bool) *ElectionsVoterInfoQueryCall {
@@ -2159,7 +2487,7 @@ func (c *ElectionsVoterInfoQueryCall) Header() http.Header {
 
 func (c *ElectionsVoterInfoQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2170,7 +2498,7 @@ func (c *ElectionsVoterInfoQueryCall) doRequest(alt string) (*http.Response, err
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "voterinfo")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "civicinfo/v2/voterinfo")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -2194,17 +2522,17 @@ func (c *ElectionsVoterInfoQueryCall) Do(opts ...googleapi.CallOption) (*VoterIn
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &VoterInfoResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2219,6 +2547,7 @@ func (c *ElectionsVoterInfoQueryCall) Do(opts ...googleapi.CallOption) (*VoterIn
 	return ret, nil
 	// {
 	//   "description": "Looks up information relevant to a voter based on the voter's registered address.",
+	//   "flatPath": "civicinfo/v2/voterinfo",
 	//   "httpMethod": "GET",
 	//   "id": "civicinfo.elections.voterInfoQuery",
 	//   "parameterOrder": [
@@ -2233,7 +2562,7 @@ func (c *ElectionsVoterInfoQueryCall) Do(opts ...googleapi.CallOption) (*VoterIn
 	//     },
 	//     "electionId": {
 	//       "default": "0",
-	//       "description": "The unique ID of the election to look up. A list of election IDs can be obtained at https://www.googleapis.com/civicinfo/{version}/electionsIf no election ID is specified in the query and there is more than one election with data for the given voter, the additional elections are provided in the otherElections response field.",
+	//       "description": "The unique ID of the election to look up. A list of election IDs can be obtained at https://www.googleapis.com/civicinfo/{version}/elections. If no election ID is specified in the query and there is more than one election with data for the given voter, the additional elections are provided in the otherElections response field.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"
@@ -2246,15 +2575,12 @@ func (c *ElectionsVoterInfoQueryCall) Do(opts ...googleapi.CallOption) (*VoterIn
 	//     },
 	//     "returnAllAvailableData": {
 	//       "default": "false",
-	//       "description": "If set to true, the query will return the success codeand include any partial information when it is unable to determine a matching address or unable to determine the election for electionId=0 queries.",
+	//       "description": "If set to true, the query will return the success code and include any partial information when it is unable to determine a matching address or unable to determine the election for electionId=0 queries.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
 	//   },
-	//   "path": "voterinfo",
-	//   "request": {
-	//     "$ref": "VoterInfoRequest"
-	//   },
+	//   "path": "civicinfo/v2/voterinfo",
 	//   "response": {
 	//     "$ref": "VoterInfoResponse"
 	//   }
@@ -2265,24 +2591,22 @@ func (c *ElectionsVoterInfoQueryCall) Do(opts ...googleapi.CallOption) (*VoterIn
 // method id "civicinfo.representatives.representativeInfoByAddress":
 
 type RepresentativesRepresentativeInfoByAddressCall struct {
-	s                         *Service
-	representativeinforequest *RepresentativeInfoRequest
-	urlParams_                gensupport.URLParams
-	ifNoneMatch_              string
-	ctx_                      context.Context
-	header_                   http.Header
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
 }
 
 // RepresentativeInfoByAddress: Looks up political geography and
 // representative information for a single address.
-func (r *RepresentativesService) RepresentativeInfoByAddress(representativeinforequest *RepresentativeInfoRequest) *RepresentativesRepresentativeInfoByAddressCall {
+func (r *RepresentativesService) RepresentativeInfoByAddress() *RepresentativesRepresentativeInfoByAddressCall {
 	c := &RepresentativesRepresentativeInfoByAddressCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.representativeinforequest = representativeinforequest
 	return c
 }
 
 // Address sets the optional parameter "address": The address to look
-// up. May only be specified if the field ocdId is not given in the URL.
+// up. May only be specified if the field ocdId is not given in the URL
 func (c *RepresentativesRepresentativeInfoByAddressCall) Address(address string) *RepresentativesRepresentativeInfoByAddressCall {
 	c.urlParams_.Set("address", address)
 	return c
@@ -2302,15 +2626,16 @@ func (c *RepresentativesRepresentativeInfoByAddressCall) IncludeOffices(includeO
 // not be returned.
 //
 // Possible values:
-//   "administrativeArea1"
-//   "administrativeArea2"
-//   "country"
-//   "international"
-//   "locality"
-//   "regional"
-//   "special"
-//   "subLocality1"
-//   "subLocality2"
+//
+//	"international"
+//	"country"
+//	"administrativeArea1"
+//	"regional"
+//	"administrativeArea2"
+//	"locality"
+//	"subLocality1"
+//	"subLocality2"
+//	"special"
 func (c *RepresentativesRepresentativeInfoByAddressCall) Levels(levels ...string) *RepresentativesRepresentativeInfoByAddressCall {
 	c.urlParams_.SetMulti("levels", append([]string{}, levels...))
 	return c
@@ -2322,17 +2647,19 @@ func (c *RepresentativesRepresentativeInfoByAddressCall) Levels(levels ...string
 // returned.
 //
 // Possible values:
-//   "deputyHeadOfGovernment"
-//   "executiveCouncil"
-//   "governmentOfficer"
-//   "headOfGovernment"
-//   "headOfState"
-//   "highestCourtJudge"
-//   "judge"
-//   "legislatorLowerBody"
-//   "legislatorUpperBody"
-//   "schoolBoard"
-//   "specialPurposeOfficer"
+//
+//	"headOfState"
+//	"headOfGovernment"
+//	"deputyHeadOfGovernment"
+//	"governmentOfficer"
+//	"executiveCouncil"
+//	"legislatorUpperBody"
+//	"legislatorLowerBody"
+//	"highestCourtJudge"
+//	"judge"
+//	"schoolBoard"
+//	"specialPurposeOfficer"
+//	"otherRole"
 func (c *RepresentativesRepresentativeInfoByAddressCall) Roles(roles ...string) *RepresentativesRepresentativeInfoByAddressCall {
 	c.urlParams_.SetMulti("roles", append([]string{}, roles...))
 	return c
@@ -2375,7 +2702,7 @@ func (c *RepresentativesRepresentativeInfoByAddressCall) Header() http.Header {
 
 func (c *RepresentativesRepresentativeInfoByAddressCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2386,7 +2713,7 @@ func (c *RepresentativesRepresentativeInfoByAddressCall) doRequest(alt string) (
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "representatives")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "civicinfo/v2/representatives")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -2410,17 +2737,17 @@ func (c *RepresentativesRepresentativeInfoByAddressCall) Do(opts ...googleapi.Ca
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &RepresentativeInfoResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2435,11 +2762,13 @@ func (c *RepresentativesRepresentativeInfoByAddressCall) Do(opts ...googleapi.Ca
 	return ret, nil
 	// {
 	//   "description": "Looks up political geography and representative information for a single address.",
+	//   "flatPath": "civicinfo/v2/representatives",
 	//   "httpMethod": "GET",
 	//   "id": "civicinfo.representatives.representativeInfoByAddress",
+	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "address": {
-	//       "description": "The address to look up. May only be specified if the field ocdId is not given in the URL.",
+	//       "description": "The address to look up. May only be specified if the field ocdId is not given in the URL",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2452,15 +2781,15 @@ func (c *RepresentativesRepresentativeInfoByAddressCall) Do(opts ...googleapi.Ca
 	//     "levels": {
 	//       "description": "A list of office levels to filter by. Only offices that serve at least one of these levels will be returned. Divisions that don't contain a matching office will not be returned.",
 	//       "enum": [
-	//         "administrativeArea1",
-	//         "administrativeArea2",
-	//         "country",
 	//         "international",
-	//         "locality",
+	//         "country",
+	//         "administrativeArea1",
 	//         "regional",
-	//         "special",
+	//         "administrativeArea2",
+	//         "locality",
 	//         "subLocality1",
-	//         "subLocality2"
+	//         "subLocality2",
+	//         "special"
 	//       ],
 	//       "enumDescriptions": [
 	//         "",
@@ -2480,19 +2809,21 @@ func (c *RepresentativesRepresentativeInfoByAddressCall) Do(opts ...googleapi.Ca
 	//     "roles": {
 	//       "description": "A list of office roles to filter by. Only offices fulfilling one of these roles will be returned. Divisions that don't contain a matching office will not be returned.",
 	//       "enum": [
-	//         "deputyHeadOfGovernment",
-	//         "executiveCouncil",
-	//         "governmentOfficer",
-	//         "headOfGovernment",
 	//         "headOfState",
+	//         "headOfGovernment",
+	//         "deputyHeadOfGovernment",
+	//         "governmentOfficer",
+	//         "executiveCouncil",
+	//         "legislatorUpperBody",
+	//         "legislatorLowerBody",
 	//         "highestCourtJudge",
 	//         "judge",
-	//         "legislatorLowerBody",
-	//         "legislatorUpperBody",
 	//         "schoolBoard",
-	//         "specialPurposeOfficer"
+	//         "specialPurposeOfficer",
+	//         "otherRole"
 	//       ],
 	//       "enumDescriptions": [
+	//         "",
 	//         "",
 	//         "",
 	//         "",
@@ -2510,10 +2841,7 @@ func (c *RepresentativesRepresentativeInfoByAddressCall) Do(opts ...googleapi.Ca
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "representatives",
-	//   "request": {
-	//     "$ref": "RepresentativeInfoRequest"
-	//   },
+	//   "path": "civicinfo/v2/representatives",
 	//   "response": {
 	//     "$ref": "RepresentativeInfoResponse"
 	//   }
@@ -2524,21 +2852,22 @@ func (c *RepresentativesRepresentativeInfoByAddressCall) Do(opts ...googleapi.Ca
 // method id "civicinfo.representatives.representativeInfoByDivision":
 
 type RepresentativesRepresentativeInfoByDivisionCall struct {
-	s                                 *Service
-	ocdId                             string
-	divisionrepresentativeinforequest *DivisionRepresentativeInfoRequest
-	urlParams_                        gensupport.URLParams
-	ifNoneMatch_                      string
-	ctx_                              context.Context
-	header_                           http.Header
+	s            *Service
+	ocdId        string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
 }
 
 // RepresentativeInfoByDivision: Looks up representative information for
 // a single geographic division.
-func (r *RepresentativesService) RepresentativeInfoByDivision(ocdId string, divisionrepresentativeinforequest *DivisionRepresentativeInfoRequest) *RepresentativesRepresentativeInfoByDivisionCall {
+//
+//   - ocdId: The Open Civic Data division identifier of the division to
+//     look up.
+func (r *RepresentativesService) RepresentativeInfoByDivision(ocdId string) *RepresentativesRepresentativeInfoByDivisionCall {
 	c := &RepresentativesRepresentativeInfoByDivisionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.ocdId = ocdId
-	c.divisionrepresentativeinforequest = divisionrepresentativeinforequest
 	return c
 }
 
@@ -2548,15 +2877,16 @@ func (r *RepresentativesService) RepresentativeInfoByDivision(ocdId string, divi
 // not be returned.
 //
 // Possible values:
-//   "administrativeArea1"
-//   "administrativeArea2"
-//   "country"
-//   "international"
-//   "locality"
-//   "regional"
-//   "special"
-//   "subLocality1"
-//   "subLocality2"
+//
+//	"international"
+//	"country"
+//	"administrativeArea1"
+//	"regional"
+//	"administrativeArea2"
+//	"locality"
+//	"subLocality1"
+//	"subLocality2"
+//	"special"
 func (c *RepresentativesRepresentativeInfoByDivisionCall) Levels(levels ...string) *RepresentativesRepresentativeInfoByDivisionCall {
 	c.urlParams_.SetMulti("levels", append([]string{}, levels...))
 	return c
@@ -2578,17 +2908,19 @@ func (c *RepresentativesRepresentativeInfoByDivisionCall) Recursive(recursive bo
 // returned.
 //
 // Possible values:
-//   "deputyHeadOfGovernment"
-//   "executiveCouncil"
-//   "governmentOfficer"
-//   "headOfGovernment"
-//   "headOfState"
-//   "highestCourtJudge"
-//   "judge"
-//   "legislatorLowerBody"
-//   "legislatorUpperBody"
-//   "schoolBoard"
-//   "specialPurposeOfficer"
+//
+//	"headOfState"
+//	"headOfGovernment"
+//	"deputyHeadOfGovernment"
+//	"governmentOfficer"
+//	"executiveCouncil"
+//	"legislatorUpperBody"
+//	"legislatorLowerBody"
+//	"highestCourtJudge"
+//	"judge"
+//	"schoolBoard"
+//	"specialPurposeOfficer"
+//	"otherRole"
 func (c *RepresentativesRepresentativeInfoByDivisionCall) Roles(roles ...string) *RepresentativesRepresentativeInfoByDivisionCall {
 	c.urlParams_.SetMulti("roles", append([]string{}, roles...))
 	return c
@@ -2631,7 +2963,7 @@ func (c *RepresentativesRepresentativeInfoByDivisionCall) Header() http.Header {
 
 func (c *RepresentativesRepresentativeInfoByDivisionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2642,7 +2974,7 @@ func (c *RepresentativesRepresentativeInfoByDivisionCall) doRequest(alt string) 
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "representatives/{ocdId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "civicinfo/v2/representatives/{ocdId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -2669,17 +3001,17 @@ func (c *RepresentativesRepresentativeInfoByDivisionCall) Do(opts ...googleapi.C
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &RepresentativeInfoData{
 		ServerResponse: googleapi.ServerResponse{
@@ -2694,6 +3026,7 @@ func (c *RepresentativesRepresentativeInfoByDivisionCall) Do(opts ...googleapi.C
 	return ret, nil
 	// {
 	//   "description": "Looks up representative information for a single geographic division.",
+	//   "flatPath": "civicinfo/v2/representatives/{ocdId}",
 	//   "httpMethod": "GET",
 	//   "id": "civicinfo.representatives.representativeInfoByDivision",
 	//   "parameterOrder": [
@@ -2703,15 +3036,15 @@ func (c *RepresentativesRepresentativeInfoByDivisionCall) Do(opts ...googleapi.C
 	//     "levels": {
 	//       "description": "A list of office levels to filter by. Only offices that serve at least one of these levels will be returned. Divisions that don't contain a matching office will not be returned.",
 	//       "enum": [
-	//         "administrativeArea1",
-	//         "administrativeArea2",
-	//         "country",
 	//         "international",
-	//         "locality",
+	//         "country",
+	//         "administrativeArea1",
 	//         "regional",
-	//         "special",
+	//         "administrativeArea2",
+	//         "locality",
 	//         "subLocality1",
-	//         "subLocality2"
+	//         "subLocality2",
+	//         "special"
 	//       ],
 	//       "enumDescriptions": [
 	//         "",
@@ -2742,19 +3075,21 @@ func (c *RepresentativesRepresentativeInfoByDivisionCall) Do(opts ...googleapi.C
 	//     "roles": {
 	//       "description": "A list of office roles to filter by. Only offices fulfilling one of these roles will be returned. Divisions that don't contain a matching office will not be returned.",
 	//       "enum": [
-	//         "deputyHeadOfGovernment",
-	//         "executiveCouncil",
-	//         "governmentOfficer",
-	//         "headOfGovernment",
 	//         "headOfState",
+	//         "headOfGovernment",
+	//         "deputyHeadOfGovernment",
+	//         "governmentOfficer",
+	//         "executiveCouncil",
+	//         "legislatorUpperBody",
+	//         "legislatorLowerBody",
 	//         "highestCourtJudge",
 	//         "judge",
-	//         "legislatorLowerBody",
-	//         "legislatorUpperBody",
 	//         "schoolBoard",
-	//         "specialPurposeOfficer"
+	//         "specialPurposeOfficer",
+	//         "otherRole"
 	//       ],
 	//       "enumDescriptions": [
+	//         "",
 	//         "",
 	//         "",
 	//         "",
@@ -2772,10 +3107,7 @@ func (c *RepresentativesRepresentativeInfoByDivisionCall) Do(opts ...googleapi.C
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "representatives/{ocdId}",
-	//   "request": {
-	//     "$ref": "DivisionRepresentativeInfoRequest"
-	//   },
+	//   "path": "civicinfo/v2/representatives/{ocdId}",
 	//   "response": {
 	//     "$ref": "RepresentativeInfoData"
 	//   }

@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://developers.google.com/games/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/gamesmanagement/v1management"
-//   ...
-//   ctx := context.Background()
-//   gamesmanagementService, err := gamesmanagement.NewService(ctx)
+//	import "google.golang.org/api/gamesmanagement/v1management"
+//	...
+//	ctx := context.Background()
+//	gamesmanagementService, err := gamesmanagement.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   gamesmanagementService, err := gamesmanagement.NewService(ctx, option.WithAPIKey("AIza..."))
+//	gamesmanagementService, err := gamesmanagement.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   gamesmanagementService, err := gamesmanagement.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	gamesmanagementService, err := gamesmanagement.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package gamesmanagement // import "google.golang.org/api/gamesmanagement/v1management"
@@ -50,6 +50,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -74,7 +75,8 @@ var _ = internaloption.WithDefaultEndpoint
 const apiId = "gamesManagement:v1management"
 const apiName = "gamesManagement"
 const apiVersion = "v1management"
-const basePath = "https://www.googleapis.com/"
+const basePath = "https://gamesmanagement.googleapis.com/"
+const mtlsBasePath = "https://gamesmanagement.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
@@ -84,12 +86,13 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/games",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -193,8 +196,7 @@ type ScoresService struct {
 // AchievementResetAllResponse: Achievement reset all response.
 type AchievementResetAllResponse struct {
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `gamesManagement#achievementResetAllResponse`.
+	// the fixed string `gamesManagement#achievementResetAllResponse`.
 	Kind string `json:"kind,omitempty"`
 
 	// Results: The achievement reset results.
@@ -206,10 +208,10 @@ type AchievementResetAllResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Kind") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Kind") to include in API
@@ -232,16 +234,16 @@ type AchievementResetMultipleForAllRequest struct {
 	AchievementIds []string `json:"achievement_ids,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `gamesManagement#achievementResetMultipleForAllRequest`.
+	// the fixed string
+	// `gamesManagement#achievementResetMultipleForAllRequest`.
 	Kind string `json:"kind,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AchievementIds") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AchievementIds") to
@@ -262,13 +264,10 @@ func (s *AchievementResetMultipleForAllRequest) MarshalJSON() ([]byte, error) {
 
 // AchievementResetResponse: An achievement reset response.
 type AchievementResetResponse struct {
-	// CurrentState: The current state of the achievement.  This is the same
-	// as the initial
-	// state of the achievement. <br/>Possible values are:
-	// <ul>
-	// <li>"HIDDEN"- Achievement is hidden.</li>
-	// <li>"REVEALED" - Achievement is revealed.</li>
-	// <li>"UNLOCKED" - Achievement is unlocked.</li> </ul>
+	// CurrentState: The current state of the achievement. This is the same
+	// as the initial state of the achievement. Possible values are: -
+	// "HIDDEN"- Achievement is hidden. - "REVEALED" - Achievement is
+	// revealed. - "UNLOCKED" - Achievement is unlocked.
 	CurrentState string `json:"currentState,omitempty"`
 
 	// DefinitionId: The ID of an achievement for which player state has
@@ -276,8 +275,7 @@ type AchievementResetResponse struct {
 	DefinitionId string `json:"definitionId,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `gamesManagement#achievementResetResponse`.
+	// the fixed string `gamesManagement#achievementResetResponse`.
 	Kind string `json:"kind,omitempty"`
 
 	// UpdateOccurred: Flag to indicate if the requested update actually
@@ -290,10 +288,10 @@ type AchievementResetResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "CurrentState") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CurrentState") to include
@@ -317,16 +315,15 @@ type EventsResetMultipleForAllRequest struct {
 	EventIds []string `json:"event_ids,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `gamesManagement#eventsResetMultipleForAllRequest`.
+	// the fixed string `gamesManagement#eventsResetMultipleForAllRequest`.
 	Kind string `json:"kind,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EventIds") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "EventIds") to include in
@@ -355,22 +352,20 @@ type GamesPlayerExperienceInfoResource struct {
 	CurrentLevel *GamesPlayerLevelResource `json:"currentLevel,omitempty"`
 
 	// LastLevelUpTimestampMillis: The timestamp when the player was leveled
-	// up, in millis since Unix epoch
-	// UTC.
+	// up, in millis since Unix epoch UTC.
 	LastLevelUpTimestampMillis int64 `json:"lastLevelUpTimestampMillis,omitempty,string"`
 
 	// NextLevel: The next level of the player. If the current level is the
-	// maximum level,
-	// this should be same as the current level.
+	// maximum level, this should be same as the current level.
 	NextLevel *GamesPlayerLevelResource `json:"nextLevel,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "CurrentExperiencePoints") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CurrentExperiencePoints")
@@ -402,10 +397,10 @@ type GamesPlayerLevelResource struct {
 
 	// ForceSendFields is a list of field names (e.g. "Level") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Level") to include in API
@@ -429,8 +424,7 @@ type HiddenPlayer struct {
 	HiddenTimeMillis int64 `json:"hiddenTimeMillis,omitempty,string"`
 
 	// Kind: Output only. Uniquely identifies the type of this resource.
-	// Value is always the fixed
-	// string `gamesManagement#hiddenPlayer`.
+	// Value is always the fixed string `gamesManagement#hiddenPlayer`.
 	Kind string `json:"kind,omitempty"`
 
 	// Player: Output only. The player information.
@@ -438,10 +432,10 @@ type HiddenPlayer struct {
 
 	// ForceSendFields is a list of field names (e.g. "HiddenTimeMillis") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "HiddenTimeMillis") to
@@ -466,8 +460,7 @@ type HiddenPlayerList struct {
 	Items []*HiddenPlayer `json:"items,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `gamesManagement#hiddenPlayerList`.
+	// the fixed string `gamesManagement#hiddenPlayerList`.
 	Kind string `json:"kind,omitempty"`
 
 	// NextPageToken: The pagination token for the next page of results.
@@ -479,10 +472,10 @@ type HiddenPlayerList struct {
 
 	// ForceSendFields is a list of field names (e.g. "Items") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Items") to include in API
@@ -521,30 +514,25 @@ type Player struct {
 	ExperienceInfo *GamesPlayerExperienceInfoResource `json:"experienceInfo,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `gamesManagement#player`.
+	// the fixed string `gamesManagement#player`.
 	Kind string `json:"kind,omitempty"`
 
 	// Name: An object representation of the individual components of the
-	// player's name.
-	// For some players, these fields may not be present.
+	// player's name. For some players, these fields may not be present.
 	Name *PlayerName `json:"name,omitempty"`
 
 	// OriginalPlayerId: The player ID that was used for this player the
-	// first time they signed into
-	// the game in question. This is only populated for calls to player.get
-	// for
-	// the requesting player, only if the player ID has subsequently
-	// changed, and
-	// only to clients that support remapping player IDs.
+	// first time they signed into the game in question. This is only
+	// populated for calls to player.get for the requesting player, only if
+	// the player ID has subsequently changed, and only to clients that
+	// support remapping player IDs.
 	OriginalPlayerId string `json:"originalPlayerId,omitempty"`
 
 	// PlayerId: The ID of the player.
 	PlayerId string `json:"playerId,omitempty"`
 
 	// ProfileSettings: The player's profile settings. Controls whether or
-	// not the player's profile
-	// is visible to other players.
+	// not the player's profile is visible to other players.
 	ProfileSettings *ProfileSettings `json:"profileSettings,omitempty"`
 
 	// Title: The player's title rewarded for their game activities.
@@ -552,10 +540,10 @@ type Player struct {
 
 	// ForceSendFields is a list of field names (e.g. "AvatarImageUrl") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AvatarImageUrl") to
@@ -575,25 +563,22 @@ func (s *Player) MarshalJSON() ([]byte, error) {
 }
 
 // PlayerName: An object representation of the individual components of
-// the player's name.
-// For some players, these fields may not be present.
+// the player's name. For some players, these fields may not be present.
 type PlayerName struct {
 	// FamilyName: The family name of this player. In some places, this is
-	// known as the last
-	// name.
+	// known as the last name.
 	FamilyName string `json:"familyName,omitempty"`
 
 	// GivenName: The given name of this player. In some places, this is
-	// known as the first
-	// name.
+	// known as the first name.
 	GivenName string `json:"givenName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FamilyName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "FamilyName") to include in
@@ -614,8 +599,7 @@ func (s *PlayerName) MarshalJSON() ([]byte, error) {
 // PlayerScoreResetAllResponse: A list of leaderboard reset resources.
 type PlayerScoreResetAllResponse struct {
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `gamesManagement#playerScoreResetAllResponse`.
+	// the fixed string `gamesManagement#playerScoreResetAllResponse`.
 	Kind string `json:"kind,omitempty"`
 
 	// Results: The leaderboard reset results.
@@ -627,10 +611,10 @@ type PlayerScoreResetAllResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Kind") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Kind") to include in API
@@ -656,16 +640,13 @@ type PlayerScoreResetResponse struct {
 	DefinitionId string `json:"definitionId,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `gamesManagement#playerScoreResetResponse`.
+	// the fixed string `gamesManagement#playerScoreResetResponse`.
 	Kind string `json:"kind,omitempty"`
 
-	// ResetScoreTimeSpans: The time spans of the updated score.
-	// <br/>Possible values are: <ul>
-	// <li>"ALL_TIME" - The score is an all-time
-	// score.</li>
-	// <li>"WEEKLY" - The score is a weekly score.</li>
-	// <li>"DAILY" - The score is a daily score.</li> </ul>
+	// ResetScoreTimeSpans: The time spans of the updated score. Possible
+	// values are: - "ALL_TIME" - The score is an all-time score. -
+	// "WEEKLY" - The score is a weekly score. - "DAILY" - The score is
+	// a daily score.
 	ResetScoreTimeSpans []string `json:"resetScoreTimeSpans,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -674,10 +655,10 @@ type PlayerScoreResetResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "DefinitionId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DefinitionId") to include
@@ -698,18 +679,17 @@ func (s *PlayerScoreResetResponse) MarshalJSON() ([]byte, error) {
 // ProfileSettings: Profile settings
 type ProfileSettings struct {
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `gamesManagement#profileSettings`.
+	// the fixed string `gamesManagement#profileSettings`.
 	Kind string `json:"kind,omitempty"`
 
 	ProfileVisible bool `json:"profileVisible,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Kind") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Kind") to include in API
@@ -729,8 +709,7 @@ func (s *ProfileSettings) MarshalJSON() ([]byte, error) {
 
 type ScoresResetMultipleForAllRequest struct {
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `gamesManagement#scoresResetMultipleForAllRequest`.
+	// the fixed string `gamesManagement#scoresResetMultipleForAllRequest`.
 	Kind string `json:"kind,omitempty"`
 
 	// LeaderboardIds: The IDs of leaderboards to reset.
@@ -738,10 +717,10 @@ type ScoresResetMultipleForAllRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "Kind") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Kind") to include in API
@@ -770,10 +749,10 @@ type AchievementsResetCall struct {
 }
 
 // Reset: Resets the achievement with the given ID for the currently
-// authenticated
-// player. This method is only accessible to whitelisted tester accounts
-// for
-// your application.
+// authenticated player. This method is only accessible to whitelisted
+// tester accounts for your application.
+//
+// - achievementId: The ID of the achievement used by this method.
 func (r *AchievementsService) Reset(achievementId string) *AchievementsResetCall {
 	c := &AchievementsResetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.achievementId = achievementId
@@ -807,7 +786,7 @@ func (c *AchievementsResetCall) Header() http.Header {
 
 func (c *AchievementsResetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -842,17 +821,17 @@ func (c *AchievementsResetCall) Do(opts ...googleapi.CallOption) (*AchievementRe
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AchievementResetResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -866,7 +845,7 @@ func (c *AchievementsResetCall) Do(opts ...googleapi.CallOption) (*AchievementRe
 	}
 	return ret, nil
 	// {
-	//   "description": "Resets the achievement with the given ID for the currently authenticated\nplayer. This method is only accessible to whitelisted tester accounts for\nyour application.",
+	//   "description": "Resets the achievement with the given ID for the currently authenticated player. This method is only accessible to whitelisted tester accounts for your application.",
 	//   "flatPath": "games/v1management/achievements/{achievementId}/reset",
 	//   "httpMethod": "POST",
 	//   "id": "gamesManagement.achievements.reset",
@@ -902,10 +881,8 @@ type AchievementsResetAllCall struct {
 }
 
 // ResetAll: Resets all achievements for the currently authenticated
-// player for your
-// application. This method is only accessible to whitelisted tester
-// accounts
-// for your application.
+// player for your application. This method is only accessible to
+// whitelisted tester accounts for your application.
 func (r *AchievementsService) ResetAll() *AchievementsResetAllCall {
 	c := &AchievementsResetAllCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -938,7 +915,7 @@ func (c *AchievementsResetAllCall) Header() http.Header {
 
 func (c *AchievementsResetAllCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -970,17 +947,17 @@ func (c *AchievementsResetAllCall) Do(opts ...googleapi.CallOption) (*Achievemen
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AchievementResetAllResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -994,7 +971,7 @@ func (c *AchievementsResetAllCall) Do(opts ...googleapi.CallOption) (*Achievemen
 	}
 	return ret, nil
 	// {
-	//   "description": "Resets all achievements for the currently authenticated player for your\napplication. This method is only accessible to whitelisted tester accounts\nfor your application.",
+	//   "description": "Resets all achievements for the currently authenticated player for your application. This method is only accessible to whitelisted tester accounts for your application.",
 	//   "flatPath": "games/v1management/achievements/reset",
 	//   "httpMethod": "POST",
 	//   "id": "gamesManagement.achievements.resetAll",
@@ -1021,8 +998,8 @@ type AchievementsResetAllForAllPlayersCall struct {
 }
 
 // ResetAllForAllPlayers: Resets all draft achievements for all players.
-// This method is only
-// available to user accounts for your developer console.
+// This method is only available to user accounts for your developer
+// console.
 func (r *AchievementsService) ResetAllForAllPlayers() *AchievementsResetAllForAllPlayersCall {
 	c := &AchievementsResetAllForAllPlayersCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -1055,7 +1032,7 @@ func (c *AchievementsResetAllForAllPlayersCall) Header() http.Header {
 
 func (c *AchievementsResetAllForAllPlayersCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1082,11 +1059,11 @@ func (c *AchievementsResetAllForAllPlayersCall) Do(opts ...googleapi.CallOption)
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return gensupport.WrapError(err)
 	}
 	return nil
 	// {
-	//   "description": "Resets all draft achievements for all players. This method is only\navailable to user accounts for your developer console.",
+	//   "description": "Resets all draft achievements for all players. This method is only available to user accounts for your developer console.",
 	//   "flatPath": "games/v1management/achievements/resetAllForAllPlayers",
 	//   "httpMethod": "POST",
 	//   "id": "gamesManagement.achievements.resetAllForAllPlayers",
@@ -1111,10 +1088,10 @@ type AchievementsResetForAllPlayersCall struct {
 }
 
 // ResetForAllPlayers: Resets the achievement with the given ID for all
-// players. This method is
-// only available to user accounts for your developer console. Only
-// draft
-// achievements can be reset.
+// players. This method is only available to user accounts for your
+// developer console. Only draft achievements can be reset.
+//
+// - achievementId: The ID of the achievement used by this method.
 func (r *AchievementsService) ResetForAllPlayers(achievementId string) *AchievementsResetForAllPlayersCall {
 	c := &AchievementsResetForAllPlayersCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.achievementId = achievementId
@@ -1148,7 +1125,7 @@ func (c *AchievementsResetForAllPlayersCall) Header() http.Header {
 
 func (c *AchievementsResetForAllPlayersCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1178,11 +1155,11 @@ func (c *AchievementsResetForAllPlayersCall) Do(opts ...googleapi.CallOption) er
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return gensupport.WrapError(err)
 	}
 	return nil
 	// {
-	//   "description": "Resets the achievement with the given ID for all players. This method is\nonly available to user accounts for your developer console. Only draft\nachievements can be reset.",
+	//   "description": "Resets the achievement with the given ID for all players. This method is only available to user accounts for your developer console. Only draft achievements can be reset.",
 	//   "flatPath": "games/v1management/achievements/{achievementId}/resetForAllPlayers",
 	//   "httpMethod": "POST",
 	//   "id": "gamesManagement.achievements.resetForAllPlayers",
@@ -1216,10 +1193,8 @@ type AchievementsResetMultipleForAllPlayersCall struct {
 }
 
 // ResetMultipleForAllPlayers: Resets achievements with the given IDs
-// for all players. This method is only
-// available to user accounts for your developer console. Only
-// draft
-// achievements may be reset.
+// for all players. This method is only available to user accounts for
+// your developer console. Only draft achievements may be reset.
 func (r *AchievementsService) ResetMultipleForAllPlayers(achievementresetmultipleforallrequest *AchievementResetMultipleForAllRequest) *AchievementsResetMultipleForAllPlayersCall {
 	c := &AchievementsResetMultipleForAllPlayersCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.achievementresetmultipleforallrequest = achievementresetmultipleforallrequest
@@ -1253,7 +1228,7 @@ func (c *AchievementsResetMultipleForAllPlayersCall) Header() http.Header {
 
 func (c *AchievementsResetMultipleForAllPlayersCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1285,11 +1260,11 @@ func (c *AchievementsResetMultipleForAllPlayersCall) Do(opts ...googleapi.CallOp
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return gensupport.WrapError(err)
 	}
 	return nil
 	// {
-	//   "description": "Resets achievements with the given IDs for all players. This method is only\navailable to user accounts for your developer console. Only draft\nachievements may be reset.",
+	//   "description": "Resets achievements with the given IDs for all players. This method is only available to user accounts for your developer console. Only draft achievements may be reset.",
 	//   "flatPath": "games/v1management/achievements/resetMultipleForAllPlayers",
 	//   "httpMethod": "POST",
 	//   "id": "gamesManagement.achievements.resetMultipleForAllPlayers",
@@ -1318,8 +1293,11 @@ type ApplicationsListHiddenCall struct {
 }
 
 // ListHidden: Get the list of players hidden from the given
-// application. This method is
-// only available to user accounts for your developer console.
+// application. This method is only available to user accounts for your
+// developer console.
+//
+//   - applicationId: The application ID from the Google Play developer
+//     console.
 func (r *ApplicationsService) ListHidden(applicationId string) *ApplicationsListHiddenCall {
 	c := &ApplicationsListHiddenCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.applicationId = applicationId
@@ -1327,11 +1305,9 @@ func (r *ApplicationsService) ListHidden(applicationId string) *ApplicationsList
 }
 
 // MaxResults sets the optional parameter "maxResults": The maximum
-// number of player resources to return in the response, used
-// for
+// number of player resources to return in the response, used for
 // paging. For any response, the actual number of player resources
-// returned
-// may be less than the specified `maxResults`.
+// returned may be less than the specified `maxResults`.
 func (c *ApplicationsListHiddenCall) MaxResults(maxResults int64) *ApplicationsListHiddenCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -1381,7 +1357,7 @@ func (c *ApplicationsListHiddenCall) Header() http.Header {
 
 func (c *ApplicationsListHiddenCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1419,17 +1395,17 @@ func (c *ApplicationsListHiddenCall) Do(opts ...googleapi.CallOption) (*HiddenPl
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &HiddenPlayerList{
 		ServerResponse: googleapi.ServerResponse{
@@ -1443,7 +1419,7 @@ func (c *ApplicationsListHiddenCall) Do(opts ...googleapi.CallOption) (*HiddenPl
 	}
 	return ret, nil
 	// {
-	//   "description": "Get the list of players hidden from the given application. This method is\nonly available to user accounts for your developer console.",
+	//   "description": "Get the list of players hidden from the given application. This method is only available to user accounts for your developer console.",
 	//   "flatPath": "games/v1management/applications/{applicationId}/players/hidden",
 	//   "httpMethod": "GET",
 	//   "id": "gamesManagement.applications.listHidden",
@@ -1458,7 +1434,7 @@ func (c *ApplicationsListHiddenCall) Do(opts ...googleapi.CallOption) (*HiddenPl
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
-	//       "description": "The maximum number of player resources to return in the response, used for\npaging. For any response, the actual number of player resources returned\nmay be less than the specified `maxResults`.",
+	//       "description": "The maximum number of player resources to return in the response, used for paging. For any response, the actual number of player resources returned may be less than the specified `maxResults`.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -1512,10 +1488,10 @@ type EventsResetCall struct {
 }
 
 // Reset: Resets all player progress on the event with the given ID for
-// the currently
-// authenticated player. This method is only accessible to whitelisted
-// tester
-// accounts for your application.
+// the currently authenticated player. This method is only accessible to
+// whitelisted tester accounts for your application.
+//
+// - eventId: The ID of the event.
 func (r *EventsService) Reset(eventId string) *EventsResetCall {
 	c := &EventsResetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.eventId = eventId
@@ -1549,7 +1525,7 @@ func (c *EventsResetCall) Header() http.Header {
 
 func (c *EventsResetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1579,11 +1555,11 @@ func (c *EventsResetCall) Do(opts ...googleapi.CallOption) error {
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return gensupport.WrapError(err)
 	}
 	return nil
 	// {
-	//   "description": "Resets all player progress on the event with the given ID for the currently\nauthenticated player. This method is only accessible to whitelisted tester\naccounts for your application.",
+	//   "description": "Resets all player progress on the event with the given ID for the currently authenticated player. This method is only accessible to whitelisted tester accounts for your application.",
 	//   "flatPath": "games/v1management/events/{eventId}/reset",
 	//   "httpMethod": "POST",
 	//   "id": "gamesManagement.events.reset",
@@ -1616,10 +1592,8 @@ type EventsResetAllCall struct {
 }
 
 // ResetAll: Resets all player progress on all events for the currently
-// authenticated
-// player. This method is only accessible to whitelisted tester accounts
-// for
-// your application.
+// authenticated player. This method is only accessible to whitelisted
+// tester accounts for your application.
 func (r *EventsService) ResetAll() *EventsResetAllCall {
 	c := &EventsResetAllCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -1652,7 +1626,7 @@ func (c *EventsResetAllCall) Header() http.Header {
 
 func (c *EventsResetAllCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1679,11 +1653,11 @@ func (c *EventsResetAllCall) Do(opts ...googleapi.CallOption) error {
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return gensupport.WrapError(err)
 	}
 	return nil
 	// {
-	//   "description": "Resets all player progress on all events for the currently authenticated\nplayer. This method is only accessible to whitelisted tester accounts for\nyour application.",
+	//   "description": "Resets all player progress on all events for the currently authenticated player. This method is only accessible to whitelisted tester accounts for your application.",
 	//   "flatPath": "games/v1management/events/reset",
 	//   "httpMethod": "POST",
 	//   "id": "gamesManagement.events.resetAll",
@@ -1707,8 +1681,7 @@ type EventsResetAllForAllPlayersCall struct {
 }
 
 // ResetAllForAllPlayers: Resets all draft events for all players. This
-// method is only available to
-// user accounts for your developer console.
+// method is only available to user accounts for your developer console.
 func (r *EventsService) ResetAllForAllPlayers() *EventsResetAllForAllPlayersCall {
 	c := &EventsResetAllForAllPlayersCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -1741,7 +1714,7 @@ func (c *EventsResetAllForAllPlayersCall) Header() http.Header {
 
 func (c *EventsResetAllForAllPlayersCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1768,11 +1741,11 @@ func (c *EventsResetAllForAllPlayersCall) Do(opts ...googleapi.CallOption) error
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return gensupport.WrapError(err)
 	}
 	return nil
 	// {
-	//   "description": "Resets all draft events for all players. This method is only available to\nuser accounts for your developer console.",
+	//   "description": "Resets all draft events for all players. This method is only available to user accounts for your developer console.",
 	//   "flatPath": "games/v1management/events/resetAllForAllPlayers",
 	//   "httpMethod": "POST",
 	//   "id": "gamesManagement.events.resetAllForAllPlayers",
@@ -1797,10 +1770,10 @@ type EventsResetForAllPlayersCall struct {
 }
 
 // ResetForAllPlayers: Resets the event with the given ID for all
-// players. This method is only
-// available to user accounts for your developer console. Only draft
-// events
-// can be reset.
+// players. This method is only available to user accounts for your
+// developer console. Only draft events can be reset.
+//
+// - eventId: The ID of the event.
 func (r *EventsService) ResetForAllPlayers(eventId string) *EventsResetForAllPlayersCall {
 	c := &EventsResetForAllPlayersCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.eventId = eventId
@@ -1834,7 +1807,7 @@ func (c *EventsResetForAllPlayersCall) Header() http.Header {
 
 func (c *EventsResetForAllPlayersCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1864,11 +1837,11 @@ func (c *EventsResetForAllPlayersCall) Do(opts ...googleapi.CallOption) error {
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return gensupport.WrapError(err)
 	}
 	return nil
 	// {
-	//   "description": "Resets the event with the given ID for all players. This method is only\navailable to user accounts for your developer console. Only draft events\ncan be reset.",
+	//   "description": "Resets the event with the given ID for all players. This method is only available to user accounts for your developer console. Only draft events can be reset.",
 	//   "flatPath": "games/v1management/events/{eventId}/resetForAllPlayers",
 	//   "httpMethod": "POST",
 	//   "id": "gamesManagement.events.resetForAllPlayers",
@@ -1902,10 +1875,8 @@ type EventsResetMultipleForAllPlayersCall struct {
 }
 
 // ResetMultipleForAllPlayers: Resets events with the given IDs for all
-// players. This method is only
-// available to user accounts for your developer console. Only draft
-// events
-// may be reset.
+// players. This method is only available to user accounts for your
+// developer console. Only draft events may be reset.
 func (r *EventsService) ResetMultipleForAllPlayers(eventsresetmultipleforallrequest *EventsResetMultipleForAllRequest) *EventsResetMultipleForAllPlayersCall {
 	c := &EventsResetMultipleForAllPlayersCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.eventsresetmultipleforallrequest = eventsresetmultipleforallrequest
@@ -1939,7 +1910,7 @@ func (c *EventsResetMultipleForAllPlayersCall) Header() http.Header {
 
 func (c *EventsResetMultipleForAllPlayersCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1971,11 +1942,11 @@ func (c *EventsResetMultipleForAllPlayersCall) Do(opts ...googleapi.CallOption) 
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return gensupport.WrapError(err)
 	}
 	return nil
 	// {
-	//   "description": "Resets events with the given IDs for all players. This method is only\navailable to user accounts for your developer console. Only draft events\nmay be reset.",
+	//   "description": "Resets events with the given IDs for all players. This method is only available to user accounts for your developer console. Only draft events may be reset.",
 	//   "flatPath": "games/v1management/events/resetMultipleForAllPlayers",
 	//   "httpMethod": "POST",
 	//   "id": "gamesManagement.events.resetMultipleForAllPlayers",
@@ -2004,8 +1975,13 @@ type PlayersHideCall struct {
 }
 
 // Hide: Hide the given player's leaderboard scores from the given
-// application. This
-// method is only available to user accounts for your developer console.
+// application. This method is only available to user accounts for your
+// developer console.
+//
+//   - applicationId: The application ID from the Google Play developer
+//     console.
+//   - playerId: A player ID. A value of `me` may be used in place of the
+//     authenticated player's ID.
 func (r *PlayersService) Hide(applicationId string, playerId string) *PlayersHideCall {
 	c := &PlayersHideCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.applicationId = applicationId
@@ -2040,7 +2016,7 @@ func (c *PlayersHideCall) Header() http.Header {
 
 func (c *PlayersHideCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2071,11 +2047,11 @@ func (c *PlayersHideCall) Do(opts ...googleapi.CallOption) error {
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return gensupport.WrapError(err)
 	}
 	return nil
 	// {
-	//   "description": "Hide the given player's leaderboard scores from the given application. This\nmethod is only available to user accounts for your developer console.",
+	//   "description": "Hide the given player's leaderboard scores from the given application. This method is only available to user accounts for your developer console.",
 	//   "flatPath": "games/v1management/applications/{applicationId}/players/hidden/{playerId}",
 	//   "httpMethod": "POST",
 	//   "id": "gamesManagement.players.hide",
@@ -2091,7 +2067,7 @@ func (c *PlayersHideCall) Do(opts ...googleapi.CallOption) error {
 	//       "type": "string"
 	//     },
 	//     "playerId": {
-	//       "description": "A player ID. A value of `me` may be used in place of the\nauthenticated player's ID.",
+	//       "description": "A player ID. A value of `me` may be used in place of the authenticated player's ID.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -2117,9 +2093,13 @@ type PlayersUnhideCall struct {
 }
 
 // Unhide: Unhide the given player's leaderboard scores from the given
-// application.
-// This method is only available to user accounts for your developer
-// console.
+// application. This method is only available to user accounts for your
+// developer console.
+//
+//   - applicationId: The application ID from the Google Play developer
+//     console.
+//   - playerId: A player ID. A value of `me` may be used in place of the
+//     authenticated player's ID.
 func (r *PlayersService) Unhide(applicationId string, playerId string) *PlayersUnhideCall {
 	c := &PlayersUnhideCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.applicationId = applicationId
@@ -2154,7 +2134,7 @@ func (c *PlayersUnhideCall) Header() http.Header {
 
 func (c *PlayersUnhideCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2185,11 +2165,11 @@ func (c *PlayersUnhideCall) Do(opts ...googleapi.CallOption) error {
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return gensupport.WrapError(err)
 	}
 	return nil
 	// {
-	//   "description": "Unhide the given player's leaderboard scores from the given application.\nThis method is only available to user accounts for your developer console.",
+	//   "description": "Unhide the given player's leaderboard scores from the given application. This method is only available to user accounts for your developer console.",
 	//   "flatPath": "games/v1management/applications/{applicationId}/players/hidden/{playerId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "gamesManagement.players.unhide",
@@ -2205,7 +2185,7 @@ func (c *PlayersUnhideCall) Do(opts ...googleapi.CallOption) error {
 	//       "type": "string"
 	//     },
 	//     "playerId": {
-	//       "description": "A player ID. A value of `me` may be used in place of the\nauthenticated player's ID.",
+	//       "description": "A player ID. A value of `me` may be used in place of the authenticated player's ID.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -2230,10 +2210,10 @@ type ScoresResetCall struct {
 }
 
 // Reset: Resets scores for the leaderboard with the given ID for the
-// currently
-// authenticated player. This method is only accessible to whitelisted
-// tester
-// accounts for your application.
+// currently authenticated player. This method is only accessible to
+// whitelisted tester accounts for your application.
+//
+// - leaderboardId: The ID of the leaderboard.
 func (r *ScoresService) Reset(leaderboardId string) *ScoresResetCall {
 	c := &ScoresResetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.leaderboardId = leaderboardId
@@ -2267,7 +2247,7 @@ func (c *ScoresResetCall) Header() http.Header {
 
 func (c *ScoresResetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2302,17 +2282,17 @@ func (c *ScoresResetCall) Do(opts ...googleapi.CallOption) (*PlayerScoreResetRes
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &PlayerScoreResetResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2326,7 +2306,7 @@ func (c *ScoresResetCall) Do(opts ...googleapi.CallOption) (*PlayerScoreResetRes
 	}
 	return ret, nil
 	// {
-	//   "description": "Resets scores for the leaderboard with the given ID for the currently\nauthenticated player. This method is only accessible to whitelisted tester\naccounts for your application.",
+	//   "description": "Resets scores for the leaderboard with the given ID for the currently authenticated player. This method is only accessible to whitelisted tester accounts for your application.",
 	//   "flatPath": "games/v1management/leaderboards/{leaderboardId}/scores/reset",
 	//   "httpMethod": "POST",
 	//   "id": "gamesManagement.scores.reset",
@@ -2362,10 +2342,8 @@ type ScoresResetAllCall struct {
 }
 
 // ResetAll: Resets all scores for all leaderboards for the currently
-// authenticated
-// players. This method is only accessible to whitelisted tester
-// accounts for
-// your application.
+// authenticated players. This method is only accessible to whitelisted
+// tester accounts for your application.
 func (r *ScoresService) ResetAll() *ScoresResetAllCall {
 	c := &ScoresResetAllCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -2398,7 +2376,7 @@ func (c *ScoresResetAllCall) Header() http.Header {
 
 func (c *ScoresResetAllCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2430,17 +2408,17 @@ func (c *ScoresResetAllCall) Do(opts ...googleapi.CallOption) (*PlayerScoreReset
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &PlayerScoreResetAllResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2454,7 +2432,7 @@ func (c *ScoresResetAllCall) Do(opts ...googleapi.CallOption) (*PlayerScoreReset
 	}
 	return ret, nil
 	// {
-	//   "description": "Resets all scores for all leaderboards for the currently authenticated\nplayers. This method is only accessible to whitelisted tester accounts for\nyour application.",
+	//   "description": "Resets all scores for all leaderboards for the currently authenticated players. This method is only accessible to whitelisted tester accounts for your application.",
 	//   "flatPath": "games/v1management/scores/reset",
 	//   "httpMethod": "POST",
 	//   "id": "gamesManagement.scores.resetAll",
@@ -2481,8 +2459,8 @@ type ScoresResetAllForAllPlayersCall struct {
 }
 
 // ResetAllForAllPlayers: Resets scores for all draft leaderboards for
-// all players. This method is
-// only available to user accounts for your developer console.
+// all players. This method is only available to user accounts for your
+// developer console.
 func (r *ScoresService) ResetAllForAllPlayers() *ScoresResetAllForAllPlayersCall {
 	c := &ScoresResetAllForAllPlayersCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -2515,7 +2493,7 @@ func (c *ScoresResetAllForAllPlayersCall) Header() http.Header {
 
 func (c *ScoresResetAllForAllPlayersCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2542,11 +2520,11 @@ func (c *ScoresResetAllForAllPlayersCall) Do(opts ...googleapi.CallOption) error
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return gensupport.WrapError(err)
 	}
 	return nil
 	// {
-	//   "description": "Resets scores for all draft leaderboards for all players. This method is\nonly available to user accounts for your developer console.",
+	//   "description": "Resets scores for all draft leaderboards for all players. This method is only available to user accounts for your developer console.",
 	//   "flatPath": "games/v1management/scores/resetAllForAllPlayers",
 	//   "httpMethod": "POST",
 	//   "id": "gamesManagement.scores.resetAllForAllPlayers",
@@ -2571,10 +2549,10 @@ type ScoresResetForAllPlayersCall struct {
 }
 
 // ResetForAllPlayers: Resets scores for the leaderboard with the given
-// ID for all players. This
-// method is only available to user accounts for your developer console.
-// Only
-// draft leaderboards can be reset.
+// ID for all players. This method is only available to user accounts
+// for your developer console. Only draft leaderboards can be reset.
+//
+// - leaderboardId: The ID of the leaderboard.
 func (r *ScoresService) ResetForAllPlayers(leaderboardId string) *ScoresResetForAllPlayersCall {
 	c := &ScoresResetForAllPlayersCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.leaderboardId = leaderboardId
@@ -2608,7 +2586,7 @@ func (c *ScoresResetForAllPlayersCall) Header() http.Header {
 
 func (c *ScoresResetForAllPlayersCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2638,11 +2616,11 @@ func (c *ScoresResetForAllPlayersCall) Do(opts ...googleapi.CallOption) error {
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return gensupport.WrapError(err)
 	}
 	return nil
 	// {
-	//   "description": "Resets scores for the leaderboard with the given ID for all players. This\nmethod is only available to user accounts for your developer console. Only\ndraft leaderboards can be reset.",
+	//   "description": "Resets scores for the leaderboard with the given ID for all players. This method is only available to user accounts for your developer console. Only draft leaderboards can be reset.",
 	//   "flatPath": "games/v1management/leaderboards/{leaderboardId}/scores/resetForAllPlayers",
 	//   "httpMethod": "POST",
 	//   "id": "gamesManagement.scores.resetForAllPlayers",
@@ -2676,10 +2654,9 @@ type ScoresResetMultipleForAllPlayersCall struct {
 }
 
 // ResetMultipleForAllPlayers: Resets scores for the leaderboards with
-// the given IDs for all players. This
-// method is only available to user accounts for your developer console.
-// Only
-// draft leaderboards may be reset.
+// the given IDs for all players. This method is only available to user
+// accounts for your developer console. Only draft leaderboards may be
+// reset.
 func (r *ScoresService) ResetMultipleForAllPlayers(scoresresetmultipleforallrequest *ScoresResetMultipleForAllRequest) *ScoresResetMultipleForAllPlayersCall {
 	c := &ScoresResetMultipleForAllPlayersCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.scoresresetmultipleforallrequest = scoresresetmultipleforallrequest
@@ -2713,7 +2690,7 @@ func (c *ScoresResetMultipleForAllPlayersCall) Header() http.Header {
 
 func (c *ScoresResetMultipleForAllPlayersCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2745,11 +2722,11 @@ func (c *ScoresResetMultipleForAllPlayersCall) Do(opts ...googleapi.CallOption) 
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return gensupport.WrapError(err)
 	}
 	return nil
 	// {
-	//   "description": "Resets scores for the leaderboards with the given IDs for all players. This\nmethod is only available to user accounts for your developer console. Only\ndraft leaderboards may be reset.",
+	//   "description": "Resets scores for the leaderboards with the given IDs for all players. This method is only available to user accounts for your developer console. Only draft leaderboards may be reset.",
 	//   "flatPath": "games/v1management/scores/resetMultipleForAllPlayers",
 	//   "httpMethod": "POST",
 	//   "id": "gamesManagement.scores.resetMultipleForAllPlayers",

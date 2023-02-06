@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://developers.google.com/search/apis/indexing-api/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/indexing/v3"
-//   ...
-//   ctx := context.Background()
-//   indexingService, err := indexing.NewService(ctx)
+//	import "google.golang.org/api/indexing/v3"
+//	...
+//	ctx := context.Background()
+//	indexingService, err := indexing.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   indexingService, err := indexing.NewService(ctx, option.WithAPIKey("AIza..."))
+//	indexingService, err := indexing.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   indexingService, err := indexing.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	indexingService, err := indexing.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package indexing // import "google.golang.org/api/indexing/v3"
@@ -50,6 +50,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -75,6 +76,7 @@ const apiId = "indexing:v3"
 const apiName = "indexing"
 const apiVersion = "v3"
 const basePath = "https://indexing.googleapis.com/"
+const mtlsBasePath = "https://indexing.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
@@ -84,12 +86,13 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/indexing",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -154,11 +157,11 @@ type PublishUrlNotificationResponse struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "UrlNotificationMetadata") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "UrlNotificationMetadata")
@@ -178,12 +181,11 @@ func (s *PublishUrlNotificationResponse) MarshalJSON() ([]byte, error) {
 }
 
 // UrlNotification: `UrlNotification` is the resource used in all
-// Indexing API calls.
-// It describes one event in the life cycle of a Web Document.
+// Indexing API calls. It describes one event in the life cycle of a Web
+// Document.
 type UrlNotification struct {
-	// NotifyTime: Creation timestamp for this notification.
-	// Users should _not_ specify it, the field is ignored at the request
-	// time.
+	// NotifyTime: Creation timestamp for this notification. Users should
+	// _not_ specify it, the field is ignored at the request time.
 	NotifyTime string `json:"notifyTime,omitempty"`
 
 	// Type: The URL life cycle event that Google is being notified about.
@@ -195,18 +197,16 @@ type UrlNotification struct {
 	Type string `json:"type,omitempty"`
 
 	// Url: The object of this notification. The URL must be owned by the
-	// publisher
-	// of this notification and, in case of `URL_UPDATED` notifications, it
-	// _must_
-	// be crawlable by Google.
+	// publisher of this notification and, in case of `URL_UPDATED`
+	// notifications, it _must_ be crawlable by Google.
 	Url string `json:"url,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "NotifyTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NotifyTime") to include in
@@ -225,8 +225,7 @@ func (s *UrlNotification) MarshalJSON() ([]byte, error) {
 }
 
 // UrlNotificationMetadata: Summary of the most recent Indexing API
-// notifications successfully received,
-// for a given URL.
+// notifications successfully received, for a given URL.
 type UrlNotificationMetadata struct {
 	// LatestRemove: Latest notification received with type `URL_REMOVED`.
 	LatestRemove *UrlNotification `json:"latestRemove,omitempty"`
@@ -243,10 +242,10 @@ type UrlNotificationMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "LatestRemove") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "LatestRemove") to include
@@ -275,10 +274,9 @@ type UrlNotificationsGetMetadataCall struct {
 }
 
 // GetMetadata: Gets metadata about a Web Document. This method can
-// _only_ be used to query
-// URLs that were previously seen in successful Indexing API
-// notifications.
-// Includes the latest `UrlNotification` received via this API.
+// _only_ be used to query URLs that were previously seen in successful
+// Indexing API notifications. Includes the latest `UrlNotification`
+// received via this API.
 func (r *UrlNotificationsService) GetMetadata() *UrlNotificationsGetMetadataCall {
 	c := &UrlNotificationsGetMetadataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -327,7 +325,7 @@ func (c *UrlNotificationsGetMetadataCall) Header() http.Header {
 
 func (c *UrlNotificationsGetMetadataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -362,17 +360,17 @@ func (c *UrlNotificationsGetMetadataCall) Do(opts ...googleapi.CallOption) (*Url
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &UrlNotificationMetadata{
 		ServerResponse: googleapi.ServerResponse{
@@ -386,7 +384,7 @@ func (c *UrlNotificationsGetMetadataCall) Do(opts ...googleapi.CallOption) (*Url
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets metadata about a Web Document. This method can _only_ be used to query\nURLs that were previously seen in successful Indexing API notifications.\nIncludes the latest `UrlNotification` received via this API.",
+	//   "description": "Gets metadata about a Web Document. This method can _only_ be used to query URLs that were previously seen in successful Indexing API notifications. Includes the latest `UrlNotification` received via this API.",
 	//   "flatPath": "v3/urlNotifications/metadata",
 	//   "httpMethod": "GET",
 	//   "id": "indexing.urlNotifications.getMetadata",
@@ -453,7 +451,7 @@ func (c *UrlNotificationsPublishCall) Header() http.Header {
 
 func (c *UrlNotificationsPublishCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -490,17 +488,17 @@ func (c *UrlNotificationsPublishCall) Do(opts ...googleapi.CallOption) (*Publish
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &PublishUrlNotificationResponse{
 		ServerResponse: googleapi.ServerResponse{

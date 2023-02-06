@@ -18,7 +18,6 @@
   "description": "Accesses AdSense publishers' inventory and generates performance reports.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/adsense/management/",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/dfix3ZHBvAnIueNNH7PxNzmvJeE\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/adsense-16.png",
     "x32": "https://www.google.com/images/icons/product/adsense-32.png"
@@ -159,6 +158,11 @@
                   "description": "Ad client to get the code for.",
                   "location": "path",
                   "required": true,
+                  "type": "string"
+                },
+                "tagPartner": {
+                  "description": "Tag partner to include in the ad code snippet.",
+                  "location": "query",
                   "type": "string"
                 }
               },
@@ -1655,6 +1659,7 @@
       }
     }
   },
+  "revision": "20201002",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Account": {

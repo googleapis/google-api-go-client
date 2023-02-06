@@ -33,6 +33,7 @@ const (
 type Client struct {
 	client  pb.ByteStreamClient
 	options []grpc.CallOption
+	conn    *grpc.ClientConn
 }
 
 // NewClient creates a new bytestream.Client.
@@ -40,6 +41,7 @@ func NewClient(cc *grpc.ClientConn, options ...grpc.CallOption) *Client {
 	return &Client{
 		client:  pb.NewByteStreamClient(cc),
 		options: options,
+		conn:    cc,
 	}
 }
 
@@ -87,9 +89,11 @@ func (r *Reader) Read(p []byte) (int, error) {
 		if backoffDelay > backoffMax {
 			backoffDelay = backoffMax
 		}
+		t := time.NewTimer(backoffDelay)
 		select {
-		case <-time.After(backoffDelay):
+		case <-t.C:
 		case <-r.ctx.Done():
+			t.Stop()
 			if err := r.ctx.Err(); err != nil {
 				r.err = err
 			}
@@ -227,4 +231,10 @@ func (c *Client) NewWriter(ctx context.Context, resourceName string) (*Writer, e
 		writeClient:  wc,
 		resourceName: resourceName,
 	}, nil
+}
+
+// Close closes the connection to the API service. The user should invoke this when
+// the client is no longer required.
+func (c *Client) Close() {
+	c.conn.Close()
 }

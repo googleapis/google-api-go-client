@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://developers.google.com/speed/docs/insights/v4/getting-started
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/pagespeedonline/v4"
-//   ...
-//   ctx := context.Background()
-//   pagespeedonlineService, err := pagespeedonline.NewService(ctx)
+//	import "google.golang.org/api/pagespeedonline/v4"
+//	...
+//	ctx := context.Background()
+//	pagespeedonlineService, err := pagespeedonline.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   pagespeedonlineService, err := pagespeedonline.NewService(ctx, option.WithAPIKey("AIza..."))
+//	pagespeedonlineService, err := pagespeedonline.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   pagespeedonlineService, err := pagespeedonline.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	pagespeedonlineService, err := pagespeedonline.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package pagespeedonline // import "google.golang.org/api/pagespeedonline/v4"
@@ -932,8 +932,9 @@ func (c *PagespeedapiRunpagespeedCall) Snapshots(snapshots bool) *PagespeedapiRu
 // strategy (desktop or mobile) to use, and desktop is the default
 //
 // Possible values:
-//   "desktop" - Fetch and analyze the URL for desktop browsers
-//   "mobile" - Fetch and analyze the URL for mobile devices
+//
+//	"desktop" - Fetch and analyze the URL for desktop browsers
+//	"mobile" - Fetch and analyze the URL for mobile devices
 func (c *PagespeedapiRunpagespeedCall) Strategy(strategy string) *PagespeedapiRunpagespeedCall {
 	c.urlParams_.Set("strategy", strategy)
 	return c

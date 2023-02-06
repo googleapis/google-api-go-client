@@ -298,6 +298,20 @@ Details:
   }
 ]`,
 	},
+	{
+		// Case: Confirm that response headers are propagated to the error.
+		&http.Response{
+			StatusCode: http.StatusInternalServerError,
+			Header:     map[string][]string{"key1": {"value1"}, "key2": {"value2", "value3"}},
+		},
+		`{"error":{}}`,
+		&Error{
+			Code:   http.StatusInternalServerError,
+			Body:   `{"error":{}}`,
+			Header: map[string][]string{"key1": {"value1"}, "key2": {"value2", "value3"}},
+		},
+		`googleapi: got HTTP response code 500 with body: {"error":{}}`,
+	},
 }
 
 func TestCheckResponse(t *testing.T) {

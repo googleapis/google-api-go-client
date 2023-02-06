@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -6,33 +6,33 @@
 
 // Package doubleclicksearch provides access to the Search Ads 360 API.
 //
-// For product documentation, see: https://developers.google.com/doubleclick-search/
+// For product documentation, see: https://developers.google.com/search-ads
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/doubleclicksearch/v2"
-//   ...
-//   ctx := context.Background()
-//   doubleclicksearchService, err := doubleclicksearch.NewService(ctx)
+//	import "google.golang.org/api/doubleclicksearch/v2"
+//	...
+//	ctx := context.Background()
+//	doubleclicksearchService, err := doubleclicksearch.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   doubleclicksearchService, err := doubleclicksearch.NewService(ctx, option.WithAPIKey("AIza..."))
+//	doubleclicksearchService, err := doubleclicksearch.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   doubleclicksearchService, err := doubleclicksearch.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	doubleclicksearchService, err := doubleclicksearch.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package doubleclicksearch // import "google.golang.org/api/doubleclicksearch/v2"
@@ -50,6 +50,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -74,7 +75,8 @@ var _ = internaloption.WithDefaultEndpoint
 const apiId = "doubleclicksearch:v2"
 const apiName = "doubleclicksearch"
 const apiVersion = "v2"
-const basePath = "https://www.googleapis.com/doubleclicksearch/v2/"
+const basePath = "https://doubleclicksearch.googleapis.com/"
+const mtlsBasePath = "https://doubleclicksearch.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
@@ -84,12 +86,13 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/doubleclicksearch",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -177,7 +180,11 @@ type Availability struct {
 
 	// AvailabilityTimestamp: The time by which all conversions have been
 	// uploaded, in epoch millis UTC.
-	AvailabilityTimestamp uint64 `json:"availabilityTimestamp,omitempty,string"`
+	AvailabilityTimestamp int64 `json:"availabilityTimestamp,omitempty,string"`
+
+	// CustomerId: Customer ID of a client account in the new Search Ads 360
+	// experience.
+	CustomerId string `json:"customerId,omitempty"`
 
 	// SegmentationId: The numeric segmentation identifier (for example,
 	// DoubleClick Search Floodlight activity ID).
@@ -188,15 +195,15 @@ type Availability struct {
 	SegmentationName string `json:"segmentationName,omitempty"`
 
 	// SegmentationType: The segmentation type that this availability is for
-	// (its default value is FLOODLIGHT).
+	// (its default value is `FLOODLIGHT`).
 	SegmentationType string `json:"segmentationType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AdvertiserId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AdvertiserId") to include
@@ -236,9 +243,8 @@ type Conversion struct {
 	// CampaignId: DS campaign ID.
 	CampaignId int64 `json:"campaignId,omitempty,string"`
 
-	// Channel: Sales channel for the product. Acceptable values are:
-	// - "local": a physical store
-	// - "online": an online store
+	// Channel: Sales channel for the product. Acceptable values are: -
+	// "local": a physical store - "online": an online store
 	Channel string `json:"channel,omitempty"`
 
 	// ClickId: DS click ID for the conversion.
@@ -248,19 +254,18 @@ type Conversion struct {
 	// Advertisers can specify any ID that is meaningful to them. Each
 	// conversion in a request must specify a unique ID, and the combination
 	// of ID and timestamp must be unique amongst all conversions within the
-	// advertiser.
-	// For online conversions, DS copies the dsConversionId or
-	// floodlightOrderId into this property depending on the advertiser's
+	// advertiser. For online conversions, DS copies the `dsConversionId` or
+	// `floodlightOrderId` into this property depending on the advertiser's
 	// Floodlight instructions.
 	ConversionId string `json:"conversionId,omitempty"`
 
 	// ConversionModifiedTimestamp: The time at which the conversion was
 	// last modified, in epoch millis UTC.
-	ConversionModifiedTimestamp uint64 `json:"conversionModifiedTimestamp,omitempty,string"`
+	ConversionModifiedTimestamp int64 `json:"conversionModifiedTimestamp,omitempty,string"`
 
 	// ConversionTimestamp: The time at which the conversion took place, in
 	// epoch millis UTC.
-	ConversionTimestamp uint64 `json:"conversionTimestamp,omitempty,string"`
+	ConversionTimestamp string `json:"conversionTimestamp,omitempty"`
 
 	// CountMillis: Available to advertisers only after contacting
 	// DoubleClick Search customer support.
@@ -279,6 +284,10 @@ type Conversion struct {
 
 	// CustomMetric: Custom metrics for the conversion.
 	CustomMetric []*CustomMetric `json:"customMetric,omitempty"`
+
+	// CustomerId: Customer ID of a client account in the new Search Ads 360
+	// experience.
+	CustomerId string `json:"customerId,omitempty"`
 
 	// DeviceType: The type of device on which the conversion occurred.
 	DeviceType string `json:"deviceType,omitempty"`
@@ -315,11 +324,11 @@ type Conversion struct {
 	// QuantityMillis: The quantity of this conversion, in millis.
 	QuantityMillis int64 `json:"quantityMillis,omitempty,string"`
 
-	// RevenueMicros: The revenue amount of this TRANSACTION conversion, in
-	// micros (value multiplied by 1000000, no decimal). For example, to
+	// RevenueMicros: The revenue amount of this `TRANSACTION` conversion,
+	// in micros (value multiplied by 1000000, no decimal). For example, to
 	// specify a revenue value of "10" enter "10000000" (10 million) in your
 	// request.
-	RevenueMicros int64 `json:"revenueMicros,omitempty,string"`
+	RevenueMicros string `json:"revenueMicros,omitempty"`
 
 	// SegmentationId: The numeric segmentation identifier (for example,
 	// DoubleClick Search Floodlight activity ID).
@@ -330,31 +339,31 @@ type Conversion struct {
 	SegmentationName string `json:"segmentationName,omitempty"`
 
 	// SegmentationType: The segmentation type of this conversion (for
-	// example, FLOODLIGHT).
+	// example, `FLOODLIGHT`).
 	SegmentationType string `json:"segmentationType,omitempty"`
 
-	// State: The state of the conversion, that is, either ACTIVE or
-	// REMOVED. Note: state DELETED is deprecated.
+	// State: The state of the conversion, that is, either `ACTIVE` or
+	// `REMOVED`. Note: state DELETED is deprecated.
 	State string `json:"state,omitempty"`
 
 	// StoreId: The ID of the local store for which the product was
 	// advertised. Applicable only when the channel is "local".
 	StoreId string `json:"storeId,omitempty"`
 
-	// Type: The type of the conversion, that is, either ACTION or
-	// TRANSACTION. An ACTION conversion is an action by the user that has
-	// no monetarily quantifiable value, while a TRANSACTION conversion is
-	// an action that does have a monetarily quantifiable value. Examples
-	// are email list signups (ACTION) versus ecommerce purchases
-	// (TRANSACTION).
+	// Type: The type of the conversion, that is, either `ACTION` or
+	// `TRANSACTION`. An `ACTION` conversion is an action by the user that
+	// has no monetarily quantifiable value, while a `TRANSACTION`
+	// conversion is an action that does have a monetarily quantifiable
+	// value. Examples are email list signups (`ACTION`) versus ecommerce
+	// purchases (`TRANSACTION`).
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AdGroupId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AdGroupId") to include in
@@ -387,10 +396,10 @@ type ConversionList struct {
 
 	// ForceSendFields is a list of field names (e.g. "Conversion") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Conversion") to include in
@@ -408,7 +417,7 @@ func (s *ConversionList) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// CustomDimension: A message containing the custome dimension.
+// CustomDimension: A message containing the custom dimension.
 type CustomDimension struct {
 	// Name: Custom dimension name.
 	Name string `json:"name,omitempty"`
@@ -418,10 +427,10 @@ type CustomDimension struct {
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Name") to include in API
@@ -439,7 +448,7 @@ func (s *CustomDimension) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// CustomMetric: A message containing the custome metric.
+// CustomMetric: A message containing the custom metric.
 type CustomMetric struct {
 	// Name: Custom metric name.
 	Name string `json:"name,omitempty"`
@@ -449,10 +458,10 @@ type CustomMetric struct {
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Name") to include in API
@@ -484,6 +493,14 @@ func (s *CustomMetric) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// IdMappingFile: File returned to
+// https://developers.google.com/search-ads/v2/reference/reports/getIdMappingFile.
+type IdMappingFile struct {
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+}
+
 // Report: A DoubleClick Search report. This object contains the report
 // request, some report metadata such as currency code, and the
 // generated report rows or report files.
@@ -501,7 +518,7 @@ type Report struct {
 	IsReportReady bool `json:"isReportReady,omitempty"`
 
 	// Kind: Identifies this as a Report resource. Value: the fixed string
-	// doubleclicksearch#report.
+	// `doubleclicksearch#report`.
 	Kind string `json:"kind,omitempty"`
 
 	// Request: The request that created the report. Optional fields not
@@ -518,7 +535,7 @@ type Report struct {
 	// StatisticsCurrencyCode: The currency code of all monetary values
 	// produced in the report, including values that are set by users (e.g.,
 	// keyword bid settings) and metrics (e.g., cost and revenue). The
-	// currency code of a report is determined by the statisticsCurrency
+	// currency code of a report is determined by the `statisticsCurrency`
 	// field of the report request.
 	StatisticsCurrencyCode string `json:"statisticsCurrencyCode,omitempty"`
 
@@ -532,10 +549,10 @@ type Report struct {
 
 	// ForceSendFields is a list of field names (e.g. "Files") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Files") to include in API
@@ -562,10 +579,10 @@ type ReportFiles struct {
 
 	// ForceSendFields is a list of field names (e.g. "ByteCount") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ByteCount") to include in
@@ -594,10 +611,9 @@ type ReportApiColumnSpec struct {
 	// report must be scoped to an advertiser or lower, and the custom
 	// dimension must already be set up in DoubleClick Search. The custom
 	// dimension name, which appears in DoubleClick Search, is case
-	// sensitive.
-	// If used in a conversion report, returns the value of the specified
-	// custom dimension for the given conversion, if set. This column does
-	// not segment the conversion report.
+	// sensitive.\ If used in a conversion report, returns the value of the
+	// specified custom dimension for the given conversion, if set. This
+	// column does not segment the conversion report.
 	CustomDimensionName string `json:"customDimensionName,omitempty"`
 
 	// CustomMetricName: Name of a custom metric to include in the report.
@@ -608,17 +624,17 @@ type ReportApiColumnSpec struct {
 
 	// EndDate: Inclusive day in YYYY-MM-DD format. When provided, this
 	// overrides the overall time range of the report for this column only.
-	// Must be provided together with startDate.
+	// Must be provided together with `startDate`.
 	EndDate string `json:"endDate,omitempty"`
 
-	// GroupByColumn: Synchronous report only. Set to true to group by this
-	// column. Defaults to false.
+	// GroupByColumn: Synchronous report only. Set to `true` to group by
+	// this column. Defaults to `false`.
 	GroupByColumn bool `json:"groupByColumn,omitempty"`
 
 	// HeaderText: Text used to identify this column in the report output;
-	// defaults to columnName or savedColumnName when not specified. This
-	// can be used to prevent collisions between DoubleClick Search columns
-	// and saved columns with the same name.
+	// defaults to `columnName` or `savedColumnName` when not specified.
+	// This can be used to prevent collisions between DoubleClick Search
+	// columns and saved columns with the same name.
 	HeaderText string `json:"headerText,omitempty"`
 
 	// PlatformSource: The platform that is used to provide data for the
@@ -626,11 +642,10 @@ type ReportApiColumnSpec struct {
 	PlatformSource string `json:"platformSource,omitempty"`
 
 	// ProductReportPerspective: Returns metrics only for a specific type of
-	// product activity. Accepted values are:
-	// - "sold": returns metrics only for products that were sold
-	// - "advertised": returns metrics only for products that were
-	// advertised in a Shopping campaign, and that might or might not have
-	// been sold
+	// product activity. Accepted values are: - "sold": returns metrics
+	// only for products that were sold - "advertised": returns metrics
+	// only for products that were advertised in a Shopping campaign, and
+	// that might or might not have been sold
 	ProductReportPerspective string `json:"productReportPerspective,omitempty"`
 
 	// SavedColumnName: Name of a saved column to include in the report. The
@@ -640,15 +655,15 @@ type ReportApiColumnSpec struct {
 
 	// StartDate: Inclusive date in YYYY-MM-DD format. When provided, this
 	// overrides the overall time range of the report for this column only.
-	// Must be provided together with endDate.
+	// Must be provided together with `endDate`.
 	StartDate string `json:"startDate,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ColumnName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ColumnName") to include in
@@ -671,37 +686,38 @@ func (s *ReportApiColumnSpec) MarshalJSON() ([]byte, error) {
 type ReportRequest struct {
 	// Columns: The columns to include in the report. This includes both
 	// DoubleClick Search columns and saved columns. For DoubleClick Search
-	// columns, only the columnName parameter is required. For saved columns
-	// only the savedColumnName parameter is required. Both columnName and
-	// savedColumnName cannot be set in the same stanza.
+	// columns, only the `columnName` parameter is required. For saved
+	// columns only the `savedColumnName` parameter is required. Both
+	// `columnName` and `savedColumnName` cannot be set in the same stanza.\
 	// The maximum number of columns per request is 300.
 	Columns []*ReportApiColumnSpec `json:"columns,omitempty"`
 
 	// DownloadFormat: Format that the report should be returned in.
-	// Currently csv or tsv is supported.
+	// Currently `csv` or `tsv` is supported.
 	DownloadFormat string `json:"downloadFormat,omitempty"`
 
-	// Filters: A list of filters to be applied to the report.
-	// The maximum number of filters per request is 300.
+	// Filters: A list of filters to be applied to the report.\ The maximum
+	// number of filters per request is 300.
 	Filters []*ReportRequestFilters `json:"filters,omitempty"`
 
 	// IncludeDeletedEntities: Determines if removed entities should be
-	// included in the report. Defaults to false. Deprecated, please use
-	// includeRemovedEntities instead.
+	// included in the report. Defaults to `false`. Deprecated, please use
+	// `includeRemovedEntities` instead.
 	IncludeDeletedEntities bool `json:"includeDeletedEntities,omitempty"`
 
 	// IncludeRemovedEntities: Determines if removed entities should be
-	// included in the report. Defaults to false.
+	// included in the report. Defaults to `false`.
 	IncludeRemovedEntities bool `json:"includeRemovedEntities,omitempty"`
 
 	// MaxRowsPerFile: Asynchronous report only. The maximum number of rows
 	// per report file. A large report is split into many files based on
-	// this field. Acceptable values are 1000000 to 100000000, inclusive.
+	// this field. Acceptable values are `1000000` to `100000000`,
+	// inclusive.
 	MaxRowsPerFile int64 `json:"maxRowsPerFile,omitempty"`
 
 	// OrderBy: Synchronous report only. A list of columns and directions
-	// defining sorting to be performed on the report rows.
-	// The maximum number of orderings per request is 300.
+	// defining sorting to be performed on the report rows.\ The maximum
+	// number of orderings per request is 300.
 	OrderBy []*ReportRequestOrderBy `json:"orderBy,omitempty"`
 
 	// ReportScope: The reportScope is a set of IDs that are used to
@@ -711,45 +727,44 @@ type ReportRequest struct {
 	ReportScope *ReportRequestReportScope `json:"reportScope,omitempty"`
 
 	// ReportType: Determines the type of rows that are returned in the
-	// report. For example, if you specify reportType: keyword, each row in
-	// the report will contain data about a keyword. See the Types of
-	// Reports reference for the columns that are available for each type.
+	// report. For example, if you specify `reportType: keyword`, each row
+	// in the report will contain data about a keyword. See the Types of
+	// Reports (/search-ads/v2/report-types/) reference for the columns that
+	// are available for each type.
 	ReportType string `json:"reportType,omitempty"`
 
 	// RowCount: Synchronous report only. The maximum number of rows to
-	// return; additional rows are dropped. Acceptable values are 0 to
-	// 10000, inclusive. Defaults to 10000.
-	//
-	// Default: 10000
-	RowCount *int64 `json:"rowCount,omitempty"`
+	// return; additional rows are dropped. Acceptable values are `0` to
+	// `10000`, inclusive. Defaults to `10000`.
+	RowCount int64 `json:"rowCount,omitempty"`
 
 	// StartRow: Synchronous report only. Zero-based index of the first row
-	// to return. Acceptable values are 0 to 50000, inclusive. Defaults to
-	// 0.
+	// to return. Acceptable values are `0` to `50000`, inclusive. Defaults
+	// to `0`.
 	StartRow int64 `json:"startRow,omitempty"`
 
 	// StatisticsCurrency: Specifies the currency in which monetary will be
-	// returned. Possible values are: usd, agency (valid if the report is
-	// scoped to agency or lower), advertiser (valid if the report is scoped
-	// to * advertiser or lower), or account (valid if the report is scoped
-	// to engine account or lower).
+	// returned. Possible values are: `usd`, `agency` (valid if the report
+	// is scoped to agency or lower), `advertiser` (valid if the report is
+	// scoped to * advertiser or lower), or `account` (valid if the report
+	// is scoped to engine account or lower).
 	StatisticsCurrency string `json:"statisticsCurrency,omitempty"`
 
 	// TimeRange: If metrics are requested in a report, this argument will
 	// be used to restrict the metrics to a specific time range.
 	TimeRange *ReportRequestTimeRange `json:"timeRange,omitempty"`
 
-	// VerifySingleTimeZone: If true, the report would only be created if
+	// VerifySingleTimeZone: If `true`, the report would only be created if
 	// all the requested stat data are sourced from a single timezone.
-	// Defaults to false.
+	// Defaults to `false`.
 	VerifySingleTimeZone bool `json:"verifySingleTimeZone,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Columns") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Columns") to include in
@@ -776,16 +791,16 @@ type ReportRequestFilters struct {
 	// a list of available operators.
 	Operator string `json:"operator,omitempty"`
 
-	// Values: A list of values to filter the column value against.
-	// The maximum number of filter values per request is 300.
+	// Values: A list of values to filter the column value against.\ The
+	// maximum number of filter values per request is 300.
 	Values []interface{} `json:"values,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Column") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Column") to include in API
@@ -808,16 +823,16 @@ type ReportRequestOrderBy struct {
 	// Search-defined column or a saved column.
 	Column *ReportApiColumnSpec `json:"column,omitempty"`
 
-	// SortOrder: The sort direction, which is either ascending or
-	// descending.
+	// SortOrder: The sort direction, which is either `ascending` or
+	// `descending`.
 	SortOrder string `json:"sortOrder,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Column") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Column") to include in API
@@ -863,10 +878,10 @@ type ReportRequestReportScope struct {
 
 	// ForceSendFields is a list of field names (e.g. "AdGroupId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AdGroupId") to include in
@@ -889,12 +904,12 @@ func (s *ReportRequestReportScope) MarshalJSON() ([]byte, error) {
 // range.
 type ReportRequestTimeRange struct {
 	// ChangedAttributesSinceTimestamp: Inclusive UTC timestamp in RFC
-	// format, e.g., 2013-07-16T10:16:23.555Z. See additional references on
-	// how changed attribute reports work.
+	// format, e.g., `2013-07-16T10:16:23.555Z`. See additional references
+	// on how changed attribute reports work.
 	ChangedAttributesSinceTimestamp string `json:"changedAttributesSinceTimestamp,omitempty"`
 
 	// ChangedMetricsSinceTimestamp: Inclusive UTC timestamp in RFC format,
-	// e.g., 2013-07-16T10:16:23.555Z. See additional references on how
+	// e.g., `2013-07-16T10:16:23.555Z`. See additional references on how
 	// changed metrics reports work.
 	ChangedMetricsSinceTimestamp string `json:"changedMetricsSinceTimestamp,omitempty"`
 
@@ -906,11 +921,11 @@ type ReportRequestTimeRange struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "ChangedAttributesSinceTimestamp") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g.
@@ -943,10 +958,10 @@ type SavedColumn struct {
 
 	// ForceSendFields is a list of field names (e.g. "Kind") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Kind") to include in API
@@ -982,10 +997,10 @@ type SavedColumnList struct {
 
 	// ForceSendFields is a list of field names (e.g. "Items") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Items") to include in API
@@ -1010,10 +1025,10 @@ type UpdateAvailabilityRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "Availabilities") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Availabilities") to
@@ -1044,10 +1059,10 @@ type UpdateAvailabilityResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Availabilities") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Availabilities") to
@@ -1081,6 +1096,17 @@ type ConversionGetCall struct {
 
 // Get: Retrieves a list of conversions from a DoubleClick Search engine
 // account.
+//
+//   - advertiserId: Numeric ID of the advertiser.
+//   - agencyId: Numeric ID of the agency.
+//   - endDate: Last date (inclusive) on which to retrieve conversions.
+//     Format is yyyymmdd.
+//   - engineAccountId: Numeric ID of the engine account.
+//   - rowCount: The number of conversions to return per call.
+//   - startDate: First date (inclusive) on which to retrieve conversions.
+//     Format is yyyymmdd.
+//   - startRow: The 0-based starting index for retrieving conversions
+//     results.
 func (r *ConversionService) Get(agencyId int64, advertiserId int64, engineAccountId int64, endDate int64, rowCount int64, startDate int64, startRow int64) *ConversionGetCall {
 	c := &ConversionGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.agencyId = agencyId
@@ -1117,6 +1143,13 @@ func (c *ConversionGetCall) CampaignId(campaignId int64) *ConversionGetCall {
 // the criterion.
 func (c *ConversionGetCall) CriterionId(criterionId int64) *ConversionGetCall {
 	c.urlParams_.Set("criterionId", fmt.Sprint(criterionId))
+	return c
+}
+
+// CustomerId sets the optional parameter "customerId": Customer ID of a
+// client account in the new Search Ads 360 experience.
+func (c *ConversionGetCall) CustomerId(customerId string) *ConversionGetCall {
+	c.urlParams_.Set("customerId", customerId)
 	return c
 }
 
@@ -1157,7 +1190,7 @@ func (c *ConversionGetCall) Header() http.Header {
 
 func (c *ConversionGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1168,7 +1201,7 @@ func (c *ConversionGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "agency/{agencyId}/advertiser/{advertiserId}/engine/{engineAccountId}/conversion")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "doubleclicksearch/v2/agency/{agencyId}/advertiser/{advertiserId}/engine/{engineAccountId}/conversion")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -1197,17 +1230,17 @@ func (c *ConversionGetCall) Do(opts ...googleapi.CallOption) (*ConversionList, e
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ConversionList{
 		ServerResponse: googleapi.ServerResponse{
@@ -1222,6 +1255,7 @@ func (c *ConversionGetCall) Do(opts ...googleapi.CallOption) (*ConversionList, e
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of conversions from a DoubleClick Search engine account.",
+	//   "flatPath": "doubleclicksearch/v2/agency/{agencyId}/advertiser/{advertiserId}/engine/{engineAccountId}/conversion",
 	//   "httpMethod": "GET",
 	//   "id": "doubleclicksearch.conversion.get",
 	//   "parameterOrder": [
@@ -1272,6 +1306,11 @@ func (c *ConversionGetCall) Do(opts ...googleapi.CallOption) (*ConversionList, e
 	//       "location": "query",
 	//       "type": "string"
 	//     },
+	//     "customerId": {
+	//       "description": "Customer ID of a client account in the new Search Ads 360 experience.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "endDate": {
 	//       "description": "Last date (inclusive) on which to retrieve conversions. Format is yyyymmdd.",
 	//       "format": "int32",
@@ -1314,7 +1353,293 @@ func (c *ConversionGetCall) Do(opts ...googleapi.CallOption) (*ConversionList, e
 	//       "type": "integer"
 	//     }
 	//   },
-	//   "path": "agency/{agencyId}/advertiser/{advertiserId}/engine/{engineAccountId}/conversion",
+	//   "path": "doubleclicksearch/v2/agency/{agencyId}/advertiser/{advertiserId}/engine/{engineAccountId}/conversion",
+	//   "response": {
+	//     "$ref": "ConversionList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/doubleclicksearch"
+	//   ]
+	// }
+
+}
+
+// method id "doubleclicksearch.conversion.getByCustomerId":
+
+type ConversionGetByCustomerIdCall struct {
+	s            *Service
+	customerId   string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetByCustomerId: Retrieves a list of conversions from a DoubleClick
+// Search engine account.
+//
+//   - customerId: Customer ID of a client account in the new Search Ads
+//     360 experience.
+//   - endDate: Last date (inclusive) on which to retrieve conversions.
+//     Format is yyyymmdd.
+//   - rowCount: The number of conversions to return per call.
+//   - startDate: First date (inclusive) on which to retrieve conversions.
+//     Format is yyyymmdd.
+//   - startRow: The 0-based starting index for retrieving conversions
+//     results.
+func (r *ConversionService) GetByCustomerId(customerId string, endDate int64, rowCount int64, startDate int64, startRow int64) *ConversionGetByCustomerIdCall {
+	c := &ConversionGetByCustomerIdCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.customerId = customerId
+	c.urlParams_.Set("endDate", fmt.Sprint(endDate))
+	c.urlParams_.Set("rowCount", fmt.Sprint(rowCount))
+	c.urlParams_.Set("startDate", fmt.Sprint(startDate))
+	c.urlParams_.Set("startRow", fmt.Sprint(startRow))
+	return c
+}
+
+// AdGroupId sets the optional parameter "adGroupId": Numeric ID of the
+// ad group.
+func (c *ConversionGetByCustomerIdCall) AdGroupId(adGroupId int64) *ConversionGetByCustomerIdCall {
+	c.urlParams_.Set("adGroupId", fmt.Sprint(adGroupId))
+	return c
+}
+
+// AdId sets the optional parameter "adId": Numeric ID of the ad.
+func (c *ConversionGetByCustomerIdCall) AdId(adId int64) *ConversionGetByCustomerIdCall {
+	c.urlParams_.Set("adId", fmt.Sprint(adId))
+	return c
+}
+
+// AdvertiserId sets the optional parameter "advertiserId": Numeric ID
+// of the advertiser.
+func (c *ConversionGetByCustomerIdCall) AdvertiserId(advertiserId int64) *ConversionGetByCustomerIdCall {
+	c.urlParams_.Set("advertiserId", fmt.Sprint(advertiserId))
+	return c
+}
+
+// AgencyId sets the optional parameter "agencyId": Numeric ID of the
+// agency.
+func (c *ConversionGetByCustomerIdCall) AgencyId(agencyId int64) *ConversionGetByCustomerIdCall {
+	c.urlParams_.Set("agencyId", fmt.Sprint(agencyId))
+	return c
+}
+
+// CampaignId sets the optional parameter "campaignId": Numeric ID of
+// the campaign.
+func (c *ConversionGetByCustomerIdCall) CampaignId(campaignId int64) *ConversionGetByCustomerIdCall {
+	c.urlParams_.Set("campaignId", fmt.Sprint(campaignId))
+	return c
+}
+
+// CriterionId sets the optional parameter "criterionId": Numeric ID of
+// the criterion.
+func (c *ConversionGetByCustomerIdCall) CriterionId(criterionId int64) *ConversionGetByCustomerIdCall {
+	c.urlParams_.Set("criterionId", fmt.Sprint(criterionId))
+	return c
+}
+
+// EngineAccountId sets the optional parameter "engineAccountId":
+// Numeric ID of the engine account.
+func (c *ConversionGetByCustomerIdCall) EngineAccountId(engineAccountId int64) *ConversionGetByCustomerIdCall {
+	c.urlParams_.Set("engineAccountId", fmt.Sprint(engineAccountId))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ConversionGetByCustomerIdCall) Fields(s ...googleapi.Field) *ConversionGetByCustomerIdCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ConversionGetByCustomerIdCall) IfNoneMatch(entityTag string) *ConversionGetByCustomerIdCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ConversionGetByCustomerIdCall) Context(ctx context.Context) *ConversionGetByCustomerIdCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ConversionGetByCustomerIdCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ConversionGetByCustomerIdCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "doubleclicksearch/v2/customer/{customerId}/conversion")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"customerId": c.customerId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "doubleclicksearch.conversion.getByCustomerId" call.
+// Exactly one of *ConversionList or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *ConversionList.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ConversionGetByCustomerIdCall) Do(opts ...googleapi.CallOption) (*ConversionList, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ConversionList{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves a list of conversions from a DoubleClick Search engine account.",
+	//   "flatPath": "doubleclicksearch/v2/customer/{customerId}/conversion",
+	//   "httpMethod": "GET",
+	//   "id": "doubleclicksearch.conversion.getByCustomerId",
+	//   "parameterOrder": [
+	//     "customerId",
+	//     "endDate",
+	//     "rowCount",
+	//     "startDate",
+	//     "startRow"
+	//   ],
+	//   "parameters": {
+	//     "adGroupId": {
+	//       "description": "Numeric ID of the ad group.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "adId": {
+	//       "description": "Numeric ID of the ad.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "advertiserId": {
+	//       "description": "Numeric ID of the advertiser.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "agencyId": {
+	//       "description": "Numeric ID of the agency.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "campaignId": {
+	//       "description": "Numeric ID of the campaign.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "criterionId": {
+	//       "description": "Numeric ID of the criterion.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "customerId": {
+	//       "description": "Customer ID of a client account in the new Search Ads 360 experience.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "endDate": {
+	//       "description": "Last date (inclusive) on which to retrieve conversions. Format is yyyymmdd.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "maximum": "99991231",
+	//       "minimum": "20091101",
+	//       "required": true,
+	//       "type": "integer"
+	//     },
+	//     "engineAccountId": {
+	//       "description": "Numeric ID of the engine account.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "rowCount": {
+	//       "description": "The number of conversions to return per call.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "maximum": "1000",
+	//       "minimum": "1",
+	//       "required": true,
+	//       "type": "integer"
+	//     },
+	//     "startDate": {
+	//       "description": "First date (inclusive) on which to retrieve conversions. Format is yyyymmdd.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "maximum": "99991231",
+	//       "minimum": "20091101",
+	//       "required": true,
+	//       "type": "integer"
+	//     },
+	//     "startRow": {
+	//       "description": "The 0-based starting index for retrieving conversions results.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "integer"
+	//     }
+	//   },
+	//   "path": "doubleclicksearch/v2/customer/{customerId}/conversion",
 	//   "response": {
 	//     "$ref": "ConversionList"
 	//   },
@@ -1369,7 +1694,7 @@ func (c *ConversionInsertCall) Header() http.Header {
 
 func (c *ConversionInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1382,7 +1707,7 @@ func (c *ConversionInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "conversion")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "doubleclicksearch/v2/conversion")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -1406,17 +1731,17 @@ func (c *ConversionInsertCall) Do(opts ...googleapi.CallOption) (*ConversionList
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ConversionList{
 		ServerResponse: googleapi.ServerResponse{
@@ -1431,9 +1756,12 @@ func (c *ConversionInsertCall) Do(opts ...googleapi.CallOption) (*ConversionList
 	return ret, nil
 	// {
 	//   "description": "Inserts a batch of new conversions into DoubleClick Search.",
+	//   "flatPath": "doubleclicksearch/v2/conversion",
 	//   "httpMethod": "POST",
 	//   "id": "doubleclicksearch.conversion.insert",
-	//   "path": "conversion",
+	//   "parameterOrder": [],
+	//   "parameters": {},
+	//   "path": "doubleclicksearch/v2/conversion",
 	//   "request": {
 	//     "$ref": "ConversionList"
 	//   },
@@ -1491,7 +1819,7 @@ func (c *ConversionUpdateCall) Header() http.Header {
 
 func (c *ConversionUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1504,7 +1832,7 @@ func (c *ConversionUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "conversion")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "doubleclicksearch/v2/conversion")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PUT", urls, body)
 	if err != nil {
@@ -1528,17 +1856,17 @@ func (c *ConversionUpdateCall) Do(opts ...googleapi.CallOption) (*ConversionList
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ConversionList{
 		ServerResponse: googleapi.ServerResponse{
@@ -1553,9 +1881,12 @@ func (c *ConversionUpdateCall) Do(opts ...googleapi.CallOption) (*ConversionList
 	return ret, nil
 	// {
 	//   "description": "Updates a batch of conversions in DoubleClick Search.",
+	//   "flatPath": "doubleclicksearch/v2/conversion",
 	//   "httpMethod": "PUT",
 	//   "id": "doubleclicksearch.conversion.update",
-	//   "path": "conversion",
+	//   "parameterOrder": [],
+	//   "parameters": {},
+	//   "path": "doubleclicksearch/v2/conversion",
 	//   "request": {
 	//     "$ref": "ConversionList"
 	//   },
@@ -1614,7 +1945,7 @@ func (c *ConversionUpdateAvailabilityCall) Header() http.Header {
 
 func (c *ConversionUpdateAvailabilityCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1627,7 +1958,7 @@ func (c *ConversionUpdateAvailabilityCall) doRequest(alt string) (*http.Response
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "conversion/updateAvailability")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "doubleclicksearch/v2/conversion/updateAvailability")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -1651,17 +1982,17 @@ func (c *ConversionUpdateAvailabilityCall) Do(opts ...googleapi.CallOption) (*Up
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &UpdateAvailabilityResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1676,12 +2007,14 @@ func (c *ConversionUpdateAvailabilityCall) Do(opts ...googleapi.CallOption) (*Up
 	return ret, nil
 	// {
 	//   "description": "Updates the availabilities of a batch of floodlight activities in DoubleClick Search.",
+	//   "flatPath": "doubleclicksearch/v2/conversion/updateAvailability",
 	//   "httpMethod": "POST",
 	//   "id": "doubleclicksearch.conversion.updateAvailability",
-	//   "path": "conversion/updateAvailability",
+	//   "parameterOrder": [],
+	//   "parameters": {},
+	//   "path": "doubleclicksearch/v2/conversion/updateAvailability",
 	//   "request": {
-	//     "$ref": "UpdateAvailabilityRequest",
-	//     "parameterName": "empty"
+	//     "$ref": "UpdateAvailabilityRequest"
 	//   },
 	//   "response": {
 	//     "$ref": "UpdateAvailabilityResponse"
@@ -1737,7 +2070,7 @@ func (c *ReportsGenerateCall) Header() http.Header {
 
 func (c *ReportsGenerateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1750,7 +2083,7 @@ func (c *ReportsGenerateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "reports/generate")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "doubleclicksearch/v2/reports/generate")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -1774,17 +2107,17 @@ func (c *ReportsGenerateCall) Do(opts ...googleapi.CallOption) (*Report, error) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Report{
 		ServerResponse: googleapi.ServerResponse{
@@ -1799,12 +2132,14 @@ func (c *ReportsGenerateCall) Do(opts ...googleapi.CallOption) (*Report, error) 
 	return ret, nil
 	// {
 	//   "description": "Generates and returns a report immediately.",
+	//   "flatPath": "doubleclicksearch/v2/reports/generate",
 	//   "httpMethod": "POST",
 	//   "id": "doubleclicksearch.reports.generate",
-	//   "path": "reports/generate",
+	//   "parameterOrder": [],
+	//   "parameters": {},
+	//   "path": "doubleclicksearch/v2/reports/generate",
 	//   "request": {
-	//     "$ref": "ReportRequest",
-	//     "parameterName": "reportRequest"
+	//     "$ref": "ReportRequest"
 	//   },
 	//   "response": {
 	//     "$ref": "Report"
@@ -1828,6 +2163,8 @@ type ReportsGetCall struct {
 }
 
 // Get: Polls for the status of a report request.
+//
+// - reportId: ID of the report request being polled.
 func (r *ReportsService) Get(reportId string) *ReportsGetCall {
 	c := &ReportsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.reportId = reportId
@@ -1871,7 +2208,7 @@ func (c *ReportsGetCall) Header() http.Header {
 
 func (c *ReportsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1882,7 +2219,7 @@ func (c *ReportsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "reports/{reportId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "doubleclicksearch/v2/reports/{reportId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -1909,17 +2246,17 @@ func (c *ReportsGetCall) Do(opts ...googleapi.CallOption) (*Report, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Report{
 		ServerResponse: googleapi.ServerResponse{
@@ -1934,6 +2271,7 @@ func (c *ReportsGetCall) Do(opts ...googleapi.CallOption) (*Report, error) {
 	return ret, nil
 	// {
 	//   "description": "Polls for the status of a report request.",
+	//   "flatPath": "doubleclicksearch/v2/reports/{reportId}",
 	//   "httpMethod": "GET",
 	//   "id": "doubleclicksearch.reports.get",
 	//   "parameterOrder": [
@@ -1947,7 +2285,7 @@ func (c *ReportsGetCall) Do(opts ...googleapi.CallOption) (*Report, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "reports/{reportId}",
+	//   "path": "doubleclicksearch/v2/reports/{reportId}",
 	//   "response": {
 	//     "$ref": "Report"
 	//   },
@@ -1971,6 +2309,9 @@ type ReportsGetFileCall struct {
 }
 
 // GetFile: Downloads a report file encoded in UTF-8.
+//
+// - reportFragment: The index of the report fragment to download.
+// - reportId: ID of the report.
 func (r *ReportsService) GetFile(reportId string, reportFragment int64) *ReportsGetFileCall {
 	c := &ReportsGetFileCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.reportId = reportId
@@ -2015,7 +2356,7 @@ func (c *ReportsGetFileCall) Header() http.Header {
 
 func (c *ReportsGetFileCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2026,7 +2367,7 @@ func (c *ReportsGetFileCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "reports/{reportId}/files/{reportFragment}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "doubleclicksearch/v2/reports/{reportId}/files/{reportFragment}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -2049,9 +2390,9 @@ func (c *ReportsGetFileCall) Download(opts ...googleapi.CallOption) (*http.Respo
 	if err != nil {
 		return nil, err
 	}
-	if err := googleapi.CheckMediaResponse(res); err != nil {
+	if err := googleapi.CheckResponse(res); err != nil {
 		res.Body.Close()
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	return res, nil
 }
@@ -2065,11 +2406,12 @@ func (c *ReportsGetFileCall) Do(opts ...googleapi.CallOption) error {
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return gensupport.WrapError(err)
 	}
 	return nil
 	// {
 	//   "description": "Downloads a report file encoded in UTF-8.",
+	//   "flatPath": "doubleclicksearch/v2/reports/{reportId}/files/{reportFragment}",
 	//   "httpMethod": "GET",
 	//   "id": "doubleclicksearch.reports.getFile",
 	//   "parameterOrder": [
@@ -2092,7 +2434,187 @@ func (c *ReportsGetFileCall) Do(opts ...googleapi.CallOption) error {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "reports/{reportId}/files/{reportFragment}",
+	//   "path": "doubleclicksearch/v2/reports/{reportId}/files/{reportFragment}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/doubleclicksearch"
+	//   ],
+	//   "supportsMediaDownload": true,
+	//   "useMediaDownloadService": true
+	// }
+
+}
+
+// method id "doubleclicksearch.reports.getIdMappingFile":
+
+type ReportsGetIdMappingFileCall struct {
+	s            *Service
+	agencyId     int64
+	advertiserId int64
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetIdMappingFile: Downloads a csv file(encoded in UTF-8) that
+// contains ID mappings between legacy SA360 and new SA360. The file
+// includes all children entities of the given advertiser(e.g. engine
+// accounts, campaigns, ad groups, etc.) that exist in both legacy SA360
+// and new SA360.
+//
+// - advertiserId: Legacy SA360 advertiser ID.
+// - agencyId: Legacy SA360 agency ID.
+func (r *ReportsService) GetIdMappingFile(agencyId int64, advertiserId int64) *ReportsGetIdMappingFileCall {
+	c := &ReportsGetIdMappingFileCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.agencyId = agencyId
+	c.advertiserId = advertiserId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ReportsGetIdMappingFileCall) Fields(s ...googleapi.Field) *ReportsGetIdMappingFileCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ReportsGetIdMappingFileCall) IfNoneMatch(entityTag string) *ReportsGetIdMappingFileCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do and Download
+// methods. Any pending HTTP request will be aborted if the provided
+// context is canceled.
+func (c *ReportsGetIdMappingFileCall) Context(ctx context.Context) *ReportsGetIdMappingFileCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ReportsGetIdMappingFileCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ReportsGetIdMappingFileCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "doubleclicksearch/v2/agency/{agencyId}/advertiser/{advertiserId}/idmapping")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"agencyId":     strconv.FormatInt(c.agencyId, 10),
+		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Download fetches the API endpoint's "media" value, instead of the normal
+// API response value. If the returned error is nil, the Response is guaranteed to
+// have a 2xx status code. Callers must close the Response.Body as usual.
+func (c *ReportsGetIdMappingFileCall) Download(opts ...googleapi.CallOption) (*http.Response, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("media")
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		res.Body.Close()
+		return nil, gensupport.WrapError(err)
+	}
+	return res, nil
+}
+
+// Do executes the "doubleclicksearch.reports.getIdMappingFile" call.
+// Exactly one of *IdMappingFile or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *IdMappingFile.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ReportsGetIdMappingFileCall) Do(opts ...googleapi.CallOption) (*IdMappingFile, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &IdMappingFile{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Downloads a csv file(encoded in UTF-8) that contains ID mappings between legacy SA360 and new SA360. The file includes all children entities of the given advertiser(e.g. engine accounts, campaigns, ad groups, etc.) that exist in both legacy SA360 and new SA360.",
+	//   "flatPath": "doubleclicksearch/v2/agency/{agencyId}/advertiser/{advertiserId}/idmapping",
+	//   "httpMethod": "GET",
+	//   "id": "doubleclicksearch.reports.getIdMappingFile",
+	//   "parameterOrder": [
+	//     "agencyId",
+	//     "advertiserId"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "Legacy SA360 advertiser ID.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "agencyId": {
+	//       "description": "Legacy SA360 agency ID.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "doubleclicksearch/v2/agency/{agencyId}/advertiser/{advertiserId}/idmapping",
+	//   "response": {
+	//     "$ref": "IdMappingFile"
+	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/doubleclicksearch"
 	//   ],
@@ -2146,7 +2668,7 @@ func (c *ReportsRequestCall) Header() http.Header {
 
 func (c *ReportsRequestCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2159,7 +2681,7 @@ func (c *ReportsRequestCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "reports")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "doubleclicksearch/v2/reports")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -2183,17 +2705,17 @@ func (c *ReportsRequestCall) Do(opts ...googleapi.CallOption) (*Report, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Report{
 		ServerResponse: googleapi.ServerResponse{
@@ -2208,12 +2730,14 @@ func (c *ReportsRequestCall) Do(opts ...googleapi.CallOption) (*Report, error) {
 	return ret, nil
 	// {
 	//   "description": "Inserts a report request into the reporting system.",
+	//   "flatPath": "doubleclicksearch/v2/reports",
 	//   "httpMethod": "POST",
 	//   "id": "doubleclicksearch.reports.request",
-	//   "path": "reports",
+	//   "parameterOrder": [],
+	//   "parameters": {},
+	//   "path": "doubleclicksearch/v2/reports",
 	//   "request": {
-	//     "$ref": "ReportRequest",
-	//     "parameterName": "reportRequest"
+	//     "$ref": "ReportRequest"
 	//   },
 	//   "response": {
 	//     "$ref": "Report"
@@ -2238,6 +2762,9 @@ type SavedColumnsListCall struct {
 }
 
 // List: Retrieve the list of saved columns for a specified advertiser.
+//
+// - advertiserId: DS ID of the advertiser.
+// - agencyId: DS ID of the agency.
 func (r *SavedColumnsService) List(agencyId int64, advertiserId int64) *SavedColumnsListCall {
 	c := &SavedColumnsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.agencyId = agencyId
@@ -2282,7 +2809,7 @@ func (c *SavedColumnsListCall) Header() http.Header {
 
 func (c *SavedColumnsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2293,7 +2820,7 @@ func (c *SavedColumnsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "agency/{agencyId}/advertiser/{advertiserId}/savedcolumns")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "doubleclicksearch/v2/agency/{agencyId}/advertiser/{advertiserId}/savedcolumns")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -2321,17 +2848,17 @@ func (c *SavedColumnsListCall) Do(opts ...googleapi.CallOption) (*SavedColumnLis
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &SavedColumnList{
 		ServerResponse: googleapi.ServerResponse{
@@ -2346,6 +2873,7 @@ func (c *SavedColumnsListCall) Do(opts ...googleapi.CallOption) (*SavedColumnLis
 	return ret, nil
 	// {
 	//   "description": "Retrieve the list of saved columns for a specified advertiser.",
+	//   "flatPath": "doubleclicksearch/v2/agency/{agencyId}/advertiser/{advertiserId}/savedcolumns",
 	//   "httpMethod": "GET",
 	//   "id": "doubleclicksearch.savedColumns.list",
 	//   "parameterOrder": [
@@ -2368,7 +2896,7 @@ func (c *SavedColumnsListCall) Do(opts ...googleapi.CallOption) (*SavedColumnLis
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "agency/{agencyId}/advertiser/{advertiserId}/savedcolumns",
+	//   "path": "doubleclicksearch/v2/agency/{agencyId}/advertiser/{advertiserId}/savedcolumns",
 	//   "response": {
 	//     "$ref": "SavedColumnList"
 	//   },

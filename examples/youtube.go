@@ -23,8 +23,9 @@ func init() {
 // but has been modified slightly to fit into the examples framework.
 //
 // Example usage:
-//   go build -o go-api-demo
-//   go-api-demo -clientid="my-clientid" -secret="my-secret" youtube filename
+//
+//	go build -o go-api-demo
+//	go-api-demo -clientid="my-clientid" -secret="my-secret" youtube filename
 func youtubeMain(client *http.Client, argv []string) {
 	if len(argv) < 1 {
 		fmt.Fprintln(os.Stderr, "Usage: youtube filename")
@@ -49,7 +50,7 @@ func youtubeMain(client *http.Client, argv []string) {
 	// The API returns a 400 Bad Request response if tags is an empty string.
 	upload.Snippet.Tags = []string{"test", "upload", "api"}
 
-	call := service.Videos.Insert("snippet,status", upload)
+	call := service.Videos.Insert([]string{"snippet", "status"}, upload)
 
 	file, err := os.Open(filename)
 	if err != nil {

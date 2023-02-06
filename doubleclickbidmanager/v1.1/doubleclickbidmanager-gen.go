@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://developers.google.com/bid-manager/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/doubleclickbidmanager/v1.1"
-//   ...
-//   ctx := context.Background()
-//   doubleclickbidmanagerService, err := doubleclickbidmanager.NewService(ctx)
+//	import "google.golang.org/api/doubleclickbidmanager/v1.1"
+//	...
+//	ctx := context.Background()
+//	doubleclickbidmanagerService, err := doubleclickbidmanager.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   doubleclickbidmanagerService, err := doubleclickbidmanager.NewService(ctx, option.WithAPIKey("AIza..."))
+//	doubleclickbidmanagerService, err := doubleclickbidmanager.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   doubleclickbidmanagerService, err := doubleclickbidmanager.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	doubleclickbidmanagerService, err := doubleclickbidmanager.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package doubleclickbidmanager // import "google.golang.org/api/doubleclickbidmanager/v1.1"
@@ -50,6 +50,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -74,7 +75,8 @@ var _ = internaloption.WithDefaultEndpoint
 const apiId = "doubleclickbidmanager:v1.1"
 const apiName = "doubleclickbidmanager"
 const apiVersion = "v1.1"
-const basePath = "https://www.googleapis.com/doubleclickbidmanager/v1.1/"
+const basePath = "https://doubleclickbidmanager.googleapis.com/doubleclickbidmanager/v1.1/"
+const mtlsBasePath = "https://doubleclickbidmanager.mtls.googleapis.com/doubleclickbidmanager/v1.1/"
 
 // OAuth2 scopes used by this API.
 const (
@@ -84,12 +86,13 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/doubleclickbidmanager",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -114,10 +117,8 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client, BasePath: basePath}
-	s.Lineitems = NewLineitemsService(s)
 	s.Queries = NewQueriesService(s)
 	s.Reports = NewReportsService(s)
-	s.Sdf = NewSdfService(s)
 	return s, nil
 }
 
@@ -126,13 +127,9 @@ type Service struct {
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
-	Lineitems *LineitemsService
-
 	Queries *QueriesService
 
 	Reports *ReportsService
-
-	Sdf *SdfService
 }
 
 func (s *Service) userAgent() string {
@@ -140,15 +137,6 @@ func (s *Service) userAgent() string {
 		return googleapi.UserAgent
 	}
 	return googleapi.UserAgent + " " + s.UserAgent
-}
-
-func NewLineitemsService(s *Service) *LineitemsService {
-	rs := &LineitemsService{s: s}
-	return rs
-}
-
-type LineitemsService struct {
-	s *Service
 }
 
 func NewQueriesService(s *Service) *QueriesService {
@@ -169,208 +157,99 @@ type ReportsService struct {
 	s *Service
 }
 
-func NewSdfService(s *Service) *SdfService {
-	rs := &SdfService{s: s}
-	return rs
-}
+// ChannelGrouping: A channel grouping defines a set of rules that can
+// be used to categorize events in a path report.
+type ChannelGrouping struct {
+	// FallbackName: The name to apply to an event that does not match any
+	// of the rules in the channel grouping.
+	FallbackName string `json:"fallbackName,omitempty"`
 
-type SdfService struct {
-	s *Service
-}
+	// Name: Channel Grouping name.
+	Name string `json:"name,omitempty"`
 
-// DownloadLineItemsRequest: Request to fetch stored line items.
-type DownloadLineItemsRequest struct {
-	// FileSpec: File specification (column names, types, order) in which
-	// the line items will be returned. Default to EWF.
-	//
-	// Possible values:
-	//   "EWF"
-	FileSpec string `json:"fileSpec,omitempty"`
+	// Rules: Rules within Channel Grouping. There is a limit of 100 rules
+	// that can be set per channel grouping.
+	Rules []*Rule `json:"rules,omitempty"`
 
-	// FilterIds: Ids of the specified filter type used to filter line items
-	// to fetch. If omitted, all the line items will be returned.
-	FilterIds googleapi.Int64s `json:"filterIds,omitempty"`
-
-	// FilterType: Filter type used to filter line items to fetch.
-	//
-	// Possible values:
-	//   "ADVERTISER_ID"
-	//   "INSERTION_ORDER_ID"
-	//   "LINE_ITEM_ID"
-	FilterType string `json:"filterType,omitempty"`
-
-	// Format: Format in which the line items will be returned. Default to
-	// CSV.
-	//
-	// Possible values:
-	//   "CSV"
-	Format string `json:"format,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "FileSpec") to
+	// ForceSendFields is a list of field names (e.g. "FallbackName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "FileSpec") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "FallbackName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
-func (s *DownloadLineItemsRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod DownloadLineItemsRequest
+func (s *ChannelGrouping) MarshalJSON() ([]byte, error) {
+	type NoMethod ChannelGrouping
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DownloadLineItemsResponse: Download line items response.
-type DownloadLineItemsResponse struct {
-	// LineItems: Retrieved line items in CSV format. For more information
-	// about file formats, see  Entity Write File Format.
-	LineItems string `json:"lineItems,omitempty"`
+// DisjunctiveMatchStatement: DisjunctiveMatchStatement that OR's all
+// contained filters.
+type DisjunctiveMatchStatement struct {
+	// EventFilters: Filters. There is a limit of 100 filters that can be
+	// set per disjunctive match statement.
+	EventFilters []*EventFilter `json:"eventFilters,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "LineItems") to
+	// ForceSendFields is a list of field names (e.g. "EventFilters") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "LineItems") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "EventFilters") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
-func (s *DownloadLineItemsResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod DownloadLineItemsResponse
+func (s *DisjunctiveMatchStatement) MarshalJSON() ([]byte, error) {
+	type NoMethod DisjunctiveMatchStatement
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DownloadRequest: Request to fetch stored inventory sources,
-// campaigns, insertion orders, line items, TrueView ad groups and ads.
-type DownloadRequest struct {
-	// FileTypes: File types that will be returned. If INVENTORY_SOURCE is
-	// requested, no other file types may be requested.
-	//
-	// Acceptable values are:
-	// - "AD"
-	// - "AD_GROUP"
-	// - "CAMPAIGN"
-	// - "INSERTION_ORDER"
-	// - "INVENTORY_SOURCE"
-	// - "LINE_ITEM"
-	//
-	// Possible values:
-	//   "AD"
-	//   "AD_GROUP"
-	//   "CAMPAIGN"
-	//   "INSERTION_ORDER"
-	//   "INVENTORY_SOURCE"
-	//   "LINE_ITEM"
-	FileTypes []string `json:"fileTypes,omitempty"`
+// EventFilter: Defines the type of filter to be applied to the path, a
+// DV360 event dimension filter.
+type EventFilter struct {
+	// DimensionFilter: Filter on a dimension.
+	DimensionFilter *PathQueryOptionsFilter `json:"dimensionFilter,omitempty"`
 
-	// FilterIds: The IDs of the specified filter type. This is used to
-	// filter entities to fetch. At least one ID must be specified.
-	FilterIds googleapi.Int64s `json:"filterIds,omitempty"`
-
-	// FilterType: Filter type used to filter entities to fetch. PARTNER_ID
-	// and INVENTORY_SOURCE_ID may only be used when downloading inventory
-	// sources.
-	//
-	// Possible values:
-	//   "ADVERTISER_ID"
-	//   "CAMPAIGN_ID"
-	//   "INSERTION_ORDER_ID"
-	//   "INVENTORY_SOURCE_ID"
-	//   "LINE_ITEM_ID"
-	//   "PARTNER_ID"
-	FilterType string `json:"filterType,omitempty"`
-
-	// Version: SDF Version (column names, types, order) in which the
-	// entities will be returned. Default to 5.
-	Version string `json:"version,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "FileTypes") to
+	// ForceSendFields is a list of field names (e.g. "DimensionFilter") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "FileTypes") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DimensionFilter") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
-func (s *DownloadRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod DownloadRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// DownloadResponse: Download response.
-type DownloadResponse struct {
-	// AdGroups: Retrieved ad groups in SDF format.
-	AdGroups string `json:"adGroups,omitempty"`
-
-	// Ads: Retrieved ads in SDF format.
-	Ads string `json:"ads,omitempty"`
-
-	// Campaigns: Retrieved campaigns in SDF format.
-	Campaigns string `json:"campaigns,omitempty"`
-
-	// InsertionOrders: Retrieved insertion orders in SDF format.
-	InsertionOrders string `json:"insertionOrders,omitempty"`
-
-	InventorySources string `json:"inventorySources,omitempty"`
-
-	// LineItems: Retrieved line items in SDF format.
-	LineItems string `json:"lineItems,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "AdGroups") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AdGroups") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *DownloadResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod DownloadResponse
+func (s *EventFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod EventFilter
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -380,19 +259,145 @@ type FilterPair struct {
 	// Type: Filter type.
 	//
 	// Possible values:
-	//   "FILTER_ACTIVE_VIEW_CUSTOM_METRIC_ID"
-	//   "FILTER_ACTIVE_VIEW_CUSTOM_METRIC_NAME"
-	//   "FILTER_ACTIVE_VIEW_EXPECTED_VIEWABILITY"
+	//   "FILTER_UNKNOWN"
+	//   "FILTER_DATE"
+	//   "FILTER_DAY_OF_WEEK"
+	//   "FILTER_WEEK"
+	//   "FILTER_MONTH"
+	//   "FILTER_YEAR"
+	//   "FILTER_TIME_OF_DAY"
+	//   "FILTER_CONVERSION_DELAY"
+	//   "FILTER_CREATIVE_ID"
+	//   "FILTER_CREATIVE_SIZE"
+	//   "FILTER_CREATIVE_TYPE"
+	//   "FILTER_EXCHANGE_ID"
+	//   "FILTER_AD_POSITION"
+	//   "FILTER_PUBLIC_INVENTORY"
+	//   "FILTER_INVENTORY_SOURCE"
+	//   "FILTER_CITY"
+	//   "FILTER_REGION"
+	//   "FILTER_DMA"
+	//   "FILTER_COUNTRY"
+	//   "FILTER_SITE_ID"
+	//   "FILTER_CHANNEL_ID"
+	//   "FILTER_PARTNER"
 	//   "FILTER_ADVERTISER"
+	//   "FILTER_INSERTION_ORDER"
+	//   "FILTER_LINE_ITEM"
+	//   "FILTER_PARTNER_CURRENCY"
 	//   "FILTER_ADVERTISER_CURRENCY"
+	//   "FILTER_ADVERTISER_TIMEZONE"
+	//   "FILTER_LINE_ITEM_TYPE"
+	//   "FILTER_USER_LIST"
+	//   "FILTER_USER_LIST_FIRST_PARTY"
+	//   "FILTER_USER_LIST_THIRD_PARTY"
+	//   "FILTER_TARGETED_USER_LIST"
+	//   "FILTER_DATA_PROVIDER"
+	//   "FILTER_ORDER_ID"
+	//   "FILTER_VIDEO_PLAYER_SIZE"
+	//   "FILTER_VIDEO_DURATION_SECONDS"
+	//   "FILTER_KEYWORD"
+	//   "FILTER_PAGE_CATEGORY"
+	//   "FILTER_CAMPAIGN_DAILY_FREQUENCY"
+	//   "FILTER_LINE_ITEM_DAILY_FREQUENCY"
+	//   "FILTER_LINE_ITEM_LIFETIME_FREQUENCY"
+	//   "FILTER_OS"
+	//   "FILTER_BROWSER"
+	//   "FILTER_CARRIER"
+	//   "FILTER_SITE_LANGUAGE"
+	//   "FILTER_INVENTORY_FORMAT"
+	//   "FILTER_ZIP_CODE"
+	//   "FILTER_VIDEO_RATING_TIER"
+	//   "FILTER_VIDEO_FORMAT_SUPPORT"
+	//   "FILTER_VIDEO_SKIPPABLE_SUPPORT"
+	//   "FILTER_VIDEO_CREATIVE_DURATION"
+	//   "FILTER_PAGE_LAYOUT"
+	//   "FILTER_VIDEO_AD_POSITION_IN_STREAM"
+	//   "FILTER_AGE"
+	//   "FILTER_GENDER"
+	//   "FILTER_QUARTER"
+	//   "FILTER_TRUEVIEW_CONVERSION_TYPE"
+	//   "FILTER_MOBILE_GEO"
+	//   "FILTER_MRAID_SUPPORT"
+	//   "FILTER_ACTIVE_VIEW_EXPECTED_VIEWABILITY"
+	//   "FILTER_VIDEO_CREATIVE_DURATION_SKIPPABLE"
+	//   "FILTER_NIELSEN_COUNTRY_CODE"
+	//   "FILTER_NIELSEN_DEVICE_ID"
+	//   "FILTER_NIELSEN_GENDER"
+	//   "FILTER_NIELSEN_AGE"
+	//   "FILTER_INVENTORY_SOURCE_TYPE"
+	//   "FILTER_CREATIVE_WIDTH"
+	//   "FILTER_CREATIVE_HEIGHT"
+	//   "FILTER_DFP_ORDER_ID"
+	//   "FILTER_TRUEVIEW_AGE"
+	//   "FILTER_TRUEVIEW_GENDER"
+	//   "FILTER_TRUEVIEW_PARENTAL_STATUS"
+	//   "FILTER_TRUEVIEW_REMARKETING_LIST"
+	//   "FILTER_TRUEVIEW_INTEREST"
+	//   "FILTER_TRUEVIEW_AD_GROUP_ID"
+	//   "FILTER_TRUEVIEW_AD_GROUP_AD_ID"
+	//   "FILTER_TRUEVIEW_IAR_LANGUAGE"
+	//   "FILTER_TRUEVIEW_IAR_GENDER"
+	//   "FILTER_TRUEVIEW_IAR_AGE"
+	//   "FILTER_TRUEVIEW_IAR_CATEGORY"
+	//   "FILTER_TRUEVIEW_IAR_COUNTRY"
+	//   "FILTER_TRUEVIEW_IAR_CITY"
+	//   "FILTER_TRUEVIEW_IAR_REGION"
+	//   "FILTER_TRUEVIEW_IAR_ZIPCODE"
+	//   "FILTER_TRUEVIEW_IAR_REMARKETING_LIST"
+	//   "FILTER_TRUEVIEW_IAR_INTEREST"
+	//   "FILTER_TRUEVIEW_IAR_PARENTAL_STATUS"
+	//   "FILTER_TRUEVIEW_IAR_TIME_OF_DAY"
+	//   "FILTER_TRUEVIEW_CUSTOM_AFFINITY"
+	//   "FILTER_TRUEVIEW_CATEGORY"
+	//   "FILTER_TRUEVIEW_KEYWORD"
+	//   "FILTER_TRUEVIEW_PLACEMENT"
+	//   "FILTER_TRUEVIEW_URL"
+	//   "FILTER_TRUEVIEW_COUNTRY"
+	//   "FILTER_TRUEVIEW_REGION"
+	//   "FILTER_TRUEVIEW_CITY"
+	//   "FILTER_TRUEVIEW_DMA"
+	//   "FILTER_TRUEVIEW_ZIPCODE"
+	//   "FILTER_NOT_SUPPORTED"
+	//   "FILTER_MEDIA_PLAN"
+	//   "FILTER_TRUEVIEW_IAR_YOUTUBE_CHANNEL"
+	//   "FILTER_TRUEVIEW_IAR_YOUTUBE_VIDEO"
+	//   "FILTER_SKIPPABLE_SUPPORT"
+	//   "FILTER_COMPANION_CREATIVE_ID"
+	//   "FILTER_BUDGET_SEGMENT_DESCRIPTION"
+	//   "FILTER_FLOODLIGHT_ACTIVITY_ID"
+	//   "FILTER_DEVICE_MODEL"
+	//   "FILTER_DEVICE_MAKE"
+	//   "FILTER_DEVICE_TYPE"
+	//   "FILTER_CREATIVE_ATTRIBUTE"
+	//   "FILTER_INVENTORY_COMMITMENT_TYPE"
+	//   "FILTER_INVENTORY_RATE_TYPE"
+	//   "FILTER_INVENTORY_DELIVERY_METHOD"
+	//   "FILTER_INVENTORY_SOURCE_EXTERNAL_ID"
+	//   "FILTER_AUTHORIZED_SELLER_STATE"
+	//   "FILTER_VIDEO_DURATION_SECONDS_RANGE"
+	//   "FILTER_PARTNER_NAME"
+	//   "FILTER_PARTNER_STATUS"
+	//   "FILTER_ADVERTISER_NAME"
 	//   "FILTER_ADVERTISER_INTEGRATION_CODE"
 	//   "FILTER_ADVERTISER_INTEGRATION_STATUS"
-	//   "FILTER_ADVERTISER_NAME"
-	//   "FILTER_ADVERTISER_TIMEZONE"
-	//   "FILTER_AD_POSITION"
-	//   "FILTER_AD_POSITION_NAME"
+	//   "FILTER_CARRIER_NAME"
+	//   "FILTER_CHANNEL_NAME"
+	//   "FILTER_CITY_NAME"
+	//   "FILTER_COMPANION_CREATIVE_NAME"
+	//   "FILTER_USER_LIST_FIRST_PARTY_NAME"
+	//   "FILTER_USER_LIST_THIRD_PARTY_NAME"
+	//   "FILTER_NIELSEN_RESTATEMENT_DATE"
+	//   "FILTER_NIELSEN_DATE_RANGE"
+	//   "FILTER_INSERTION_ORDER_NAME"
+	//   "FILTER_REGION_NAME"
+	//   "FILTER_DMA_NAME"
+	//   "FILTER_TRUEVIEW_IAR_REGION_NAME"
+	//   "FILTER_TRUEVIEW_DMA_NAME"
+	//   "FILTER_TRUEVIEW_REGION_NAME"
+	//   "FILTER_ACTIVE_VIEW_CUSTOM_METRIC_ID"
+	//   "FILTER_ACTIVE_VIEW_CUSTOM_METRIC_NAME"
 	//   "FILTER_AD_TYPE"
-	//   "FILTER_AGE"
 	//   "FILTER_ALGORITHM"
 	//   "FILTER_ALGORITHM_ID"
 	//   "FILTER_AMP_PAGE_REQUEST"
@@ -408,71 +413,39 @@ type FilterPair struct {
 	//   "FILTER_AUDIENCE_LIST_TYPE"
 	//   "FILTER_AUDIENCE_NAME"
 	//   "FILTER_AUDIENCE_TYPE"
-	//   "FILTER_AUTHORIZED_SELLER_STATE"
 	//   "FILTER_BILLABLE_OUTCOME"
 	//   "FILTER_BRAND_LIFT_TYPE"
-	//   "FILTER_BROWSER"
-	//   "FILTER_BUDGET_SEGMENT_DESCRIPTION"
-	//   "FILTER_CAMPAIGN_DAILY_FREQUENCY"
-	//   "FILTER_CARRIER"
-	//   "FILTER_CARRIER_NAME"
-	//   "FILTER_CHANNEL_ID"
-	//   "FILTER_CHANNEL_NAME"
 	//   "FILTER_CHANNEL_TYPE"
-	//   "FILTER_CITY"
-	//   "FILTER_CITY_NAME"
 	//   "FILTER_CM_PLACEMENT_ID"
-	//   "FILTER_COMPANION_CREATIVE_ID"
-	//   "FILTER_COMPANION_CREATIVE_NAME"
-	//   "FILTER_CONVERSION_DELAY"
 	//   "FILTER_CONVERSION_SOURCE"
 	//   "FILTER_CONVERSION_SOURCE_ID"
-	//   "FILTER_COUNTRY"
 	//   "FILTER_COUNTRY_ID"
 	//   "FILTER_CREATIVE"
 	//   "FILTER_CREATIVE_ASSET"
-	//   "FILTER_CREATIVE_ATTRIBUTE"
-	//   "FILTER_CREATIVE_HEIGHT"
-	//   "FILTER_CREATIVE_ID"
 	//   "FILTER_CREATIVE_INTEGRATION_CODE"
 	//   "FILTER_CREATIVE_RENDERED_IN_AMP"
-	//   "FILTER_CREATIVE_SIZE"
 	//   "FILTER_CREATIVE_SOURCE"
 	//   "FILTER_CREATIVE_STATUS"
-	//   "FILTER_CREATIVE_TYPE"
-	//   "FILTER_CREATIVE_WIDTH"
-	//   "FILTER_DATA_PROVIDER"
 	//   "FILTER_DATA_PROVIDER_NAME"
-	//   "FILTER_DATE"
-	//   "FILTER_DAY_OF_WEEK"
 	//   "FILTER_DETAILED_DEMOGRAPHICS"
 	//   "FILTER_DETAILED_DEMOGRAPHICS_ID"
 	//   "FILTER_DEVICE"
-	//   "FILTER_DEVICE_MAKE"
-	//   "FILTER_DEVICE_MODEL"
-	//   "FILTER_DEVICE_TYPE"
-	//   "FILTER_DFP_ORDER_ID"
+	//   "FILTER_GAM_INSERTION_ORDER"
+	//   "FILTER_GAM_LINE_ITEM"
+	//   "FILTER_GAM_LINE_ITEM_ID"
 	//   "FILTER_DIGITAL_CONTENT_LABEL"
-	//   "FILTER_DMA"
-	//   "FILTER_DMA_NAME"
 	//   "FILTER_DOMAIN"
 	//   "FILTER_ELIGIBLE_COOKIES_ON_FIRST_PARTY_AUDIENCE_LIST"
 	//   "FILTER_ELIGIBLE_COOKIES_ON_THIRD_PARTY_AUDIENCE_LIST_AND_INTEREST"
 	//   "FILTER_EXCHANGE"
 	//   "FILTER_EXCHANGE_CODE"
-	//   "FILTER_EXCHANGE_ID"
 	//   "FILTER_EXTENSION"
 	//   "FILTER_EXTENSION_STATUS"
 	//   "FILTER_EXTENSION_TYPE"
 	//   "FILTER_FIRST_PARTY_AUDIENCE_LIST_COST"
 	//   "FILTER_FIRST_PARTY_AUDIENCE_LIST_TYPE"
 	//   "FILTER_FLOODLIGHT_ACTIVITY"
-	//   "FILTER_FLOODLIGHT_ACTIVITY_ID"
 	//   "FILTER_FORMAT"
-	//   "FILTER_GAM_INSERTION_ORDER"
-	//   "FILTER_GAM_LINE_ITEM"
-	//   "FILTER_GAM_LINE_ITEM_ID"
-	//   "FILTER_GENDER"
 	//   "FILTER_GMAIL_AGE"
 	//   "FILTER_GMAIL_CITY"
 	//   "FILTER_GMAIL_COUNTRY"
@@ -484,159 +457,102 @@ type FilterPair struct {
 	//   "FILTER_GMAIL_REMARKETING_LIST"
 	//   "FILTER_HOUSEHOLD_INCOME"
 	//   "FILTER_IMPRESSION_COUNTING_METHOD"
-	//   "FILTER_INSERTION_ORDER"
+	//   "FILTER_YOUTUBE_PROGRAMMATIC_GUARANTEED_INSERTION_ORDER"
 	//   "FILTER_INSERTION_ORDER_INTEGRATION_CODE"
-	//   "FILTER_INSERTION_ORDER_NAME"
 	//   "FILTER_INSERTION_ORDER_STATUS"
 	//   "FILTER_INTEREST"
-	//   "FILTER_INVENTORY_COMMITMENT_TYPE"
-	//   "FILTER_INVENTORY_DELIVERY_METHOD"
-	//   "FILTER_INVENTORY_FORMAT"
-	//   "FILTER_INVENTORY_RATE_TYPE"
-	//   "FILTER_INVENTORY_SOURCE"
-	//   "FILTER_INVENTORY_SOURCE_EXTERNAL_ID"
 	//   "FILTER_INVENTORY_SOURCE_GROUP"
 	//   "FILTER_INVENTORY_SOURCE_GROUP_ID"
 	//   "FILTER_INVENTORY_SOURCE_ID"
 	//   "FILTER_INVENTORY_SOURCE_NAME"
-	//   "FILTER_INVENTORY_SOURCE_TYPE"
-	//   "FILTER_KEYWORD"
 	//   "FILTER_LIFE_EVENT"
 	//   "FILTER_LIFE_EVENTS"
-	//   "FILTER_LINE_ITEM"
-	//   "FILTER_LINE_ITEM_DAILY_FREQUENCY"
 	//   "FILTER_LINE_ITEM_INTEGRATION_CODE"
-	//   "FILTER_LINE_ITEM_LIFETIME_FREQUENCY"
 	//   "FILTER_LINE_ITEM_NAME"
 	//   "FILTER_LINE_ITEM_STATUS"
-	//   "FILTER_LINE_ITEM_TYPE"
 	//   "FILTER_MATCH_RATIO"
 	//   "FILTER_MEASUREMENT_SOURCE"
-	//   "FILTER_MEDIA_PLAN"
 	//   "FILTER_MEDIA_PLAN_NAME"
-	//   "FILTER_MOBILE_GEO"
-	//   "FILTER_MONTH"
-	//   "FILTER_MRAID_SUPPORT"
-	//   "FILTER_NIELSEN_AGE"
-	//   "FILTER_NIELSEN_COUNTRY_CODE"
-	//   "FILTER_NIELSEN_DATE_RANGE"
-	//   "FILTER_NIELSEN_DEVICE_ID"
-	//   "FILTER_NIELSEN_GENDER"
-	//   "FILTER_NIELSEN_RESTATEMENT_DATE"
-	//   "FILTER_NOT_SUPPORTED"
-	//   "FILTER_ORDER_ID"
-	//   "FILTER_OS"
-	//   "FILTER_PAGE_CATEGORY"
-	//   "FILTER_PAGE_LAYOUT"
 	//   "FILTER_PARENTAL_STATUS"
-	//   "FILTER_PARTNER"
-	//   "FILTER_PARTNER_CURRENCY"
-	//   "FILTER_PARTNER_NAME"
-	//   "FILTER_PARTNER_STATUS"
 	//   "FILTER_PLACEMENT_ALL_YOUTUBE_CHANNELS"
-	//   "FILTER_PLACEMENT_NAME_ALL_YOUTUBE_CHANNELS"
 	//   "FILTER_PLATFORM"
 	//   "FILTER_PLAYBACK_METHOD"
 	//   "FILTER_POSITION_IN_CONTENT"
-	//   "FILTER_PUBLIC_INVENTORY"
 	//   "FILTER_PUBLISHER_PROPERTY"
 	//   "FILTER_PUBLISHER_PROPERTY_ID"
 	//   "FILTER_PUBLISHER_PROPERTY_SECTION"
 	//   "FILTER_PUBLISHER_PROPERTY_SECTION_ID"
-	//   "FILTER_QUARTER"
 	//   "FILTER_REFUND_REASON"
-	//   "FILTER_REGION"
-	//   "FILTER_REGION_NAME"
 	//   "FILTER_REMARKETING_LIST"
 	//   "FILTER_REWARDED"
 	//   "FILTER_SENSITIVE_CATEGORY"
 	//   "FILTER_SERVED_PIXEL_DENSITY"
-	//   "FILTER_SITE_ID"
-	//   "FILTER_SITE_LANGUAGE"
-	//   "FILTER_SKIPPABLE_SUPPORT"
 	//   "FILTER_TARGETED_DATA_PROVIDERS"
-	//   "FILTER_TARGETED_USER_LIST"
 	//   "FILTER_THIRD_PARTY_AUDIENCE_LIST_COST"
 	//   "FILTER_THIRD_PARTY_AUDIENCE_LIST_TYPE"
-	//   "FILTER_TIME_OF_DAY"
 	//   "FILTER_TRUEVIEW_AD"
 	//   "FILTER_TRUEVIEW_AD_GROUP"
-	//   "FILTER_TRUEVIEW_AD_GROUP_AD_ID"
-	//   "FILTER_TRUEVIEW_AD_GROUP_ID"
-	//   "FILTER_TRUEVIEW_AGE"
-	//   "FILTER_TRUEVIEW_CATEGORY"
-	//   "FILTER_TRUEVIEW_CITY"
-	//   "FILTER_TRUEVIEW_CONVERSION_TYPE"
-	//   "FILTER_TRUEVIEW_COUNTRY"
-	//   "FILTER_TRUEVIEW_CUSTOM_AFFINITY"
 	//   "FILTER_TRUEVIEW_DETAILED_DEMOGRAPHICS"
 	//   "FILTER_TRUEVIEW_DETAILED_DEMOGRAPHICS_ID"
-	//   "FILTER_TRUEVIEW_DMA"
-	//   "FILTER_TRUEVIEW_DMA_NAME"
-	//   "FILTER_TRUEVIEW_GENDER"
 	//   "FILTER_TRUEVIEW_HOUSEHOLD_INCOME"
-	//   "FILTER_TRUEVIEW_IAR_AGE"
-	//   "FILTER_TRUEVIEW_IAR_CATEGORY"
-	//   "FILTER_TRUEVIEW_IAR_CITY"
-	//   "FILTER_TRUEVIEW_IAR_COUNTRY"
 	//   "FILTER_TRUEVIEW_IAR_COUNTRY_NAME"
-	//   "FILTER_TRUEVIEW_IAR_GENDER"
-	//   "FILTER_TRUEVIEW_IAR_INTEREST"
-	//   "FILTER_TRUEVIEW_IAR_LANGUAGE"
-	//   "FILTER_TRUEVIEW_IAR_PARENTAL_STATUS"
-	//   "FILTER_TRUEVIEW_IAR_REGION"
-	//   "FILTER_TRUEVIEW_IAR_REGION_NAME"
-	//   "FILTER_TRUEVIEW_IAR_REMARKETING_LIST"
-	//   "FILTER_TRUEVIEW_IAR_TIME_OF_DAY"
-	//   "FILTER_TRUEVIEW_IAR_YOUTUBE_CHANNEL"
-	//   "FILTER_TRUEVIEW_IAR_YOUTUBE_VIDEO"
-	//   "FILTER_TRUEVIEW_IAR_ZIPCODE"
-	//   "FILTER_TRUEVIEW_INTEREST"
-	//   "FILTER_TRUEVIEW_KEYWORD"
-	//   "FILTER_TRUEVIEW_PARENTAL_STATUS"
-	//   "FILTER_TRUEVIEW_PLACEMENT"
-	//   "FILTER_TRUEVIEW_REGION"
-	//   "FILTER_TRUEVIEW_REGION_NAME"
-	//   "FILTER_TRUEVIEW_REMARKETING_LIST"
 	//   "FILTER_TRUEVIEW_REMARKETING_LIST_NAME"
-	//   "FILTER_TRUEVIEW_URL"
-	//   "FILTER_TRUEVIEW_ZIPCODE"
-	//   "FILTER_UNKNOWN"
-	//   "FILTER_USER_LIST"
-	//   "FILTER_USER_LIST_FIRST_PARTY"
-	//   "FILTER_USER_LIST_FIRST_PARTY_NAME"
-	//   "FILTER_USER_LIST_THIRD_PARTY"
-	//   "FILTER_USER_LIST_THIRD_PARTY_NAME"
 	//   "FILTER_VARIANT_ID"
 	//   "FILTER_VARIANT_NAME"
 	//   "FILTER_VARIANT_VERSION"
 	//   "FILTER_VERIFICATION_VIDEO_PLAYER_SIZE"
 	//   "FILTER_VERIFICATION_VIDEO_POSITION"
-	//   "FILTER_VIDEO_AD_POSITION_IN_STREAM"
 	//   "FILTER_VIDEO_COMPANION_CREATIVE_SIZE"
 	//   "FILTER_VIDEO_CONTINUOUS_PLAY"
-	//   "FILTER_VIDEO_CREATIVE_DURATION"
-	//   "FILTER_VIDEO_CREATIVE_DURATION_SKIPPABLE"
 	//   "FILTER_VIDEO_DURATION"
-	//   "FILTER_VIDEO_DURATION_SECONDS"
-	//   "FILTER_VIDEO_DURATION_SECONDS_RANGE"
-	//   "FILTER_VIDEO_FORMAT_SUPPORT"
-	//   "FILTER_VIDEO_PLAYER_SIZE"
-	//   "FILTER_VIDEO_RATING_TIER"
-	//   "FILTER_VIDEO_SKIPPABLE_SUPPORT"
-	//   "FILTER_VIDEO_VPAID_SUPPORT"
-	//   "FILTER_WEEK"
-	//   "FILTER_YEAR"
 	//   "FILTER_YOUTUBE_ADAPTED_AUDIENCE_LIST"
 	//   "FILTER_YOUTUBE_AD_VIDEO"
 	//   "FILTER_YOUTUBE_AD_VIDEO_ID"
 	//   "FILTER_YOUTUBE_CHANNEL"
 	//   "FILTER_YOUTUBE_PROGRAMMATIC_GUARANTEED_ADVERTISER"
-	//   "FILTER_YOUTUBE_PROGRAMMATIC_GUARANTEED_INSERTION_ORDER"
 	//   "FILTER_YOUTUBE_PROGRAMMATIC_GUARANTEED_PARTNER"
 	//   "FILTER_YOUTUBE_VIDEO"
-	//   "FILTER_ZIP_CODE"
 	//   "FILTER_ZIP_POSTAL_CODE"
+	//   "FILTER_PLACEMENT_NAME_ALL_YOUTUBE_CHANNELS"
+	//   "FILTER_TRUEVIEW_PLACEMENT_ID"
+	//   "FILTER_PATH_PATTERN_ID"
+	//   "FILTER_PATH_EVENT_INDEX"
+	//   "FILTER_EVENT_TYPE"
+	//   "FILTER_CHANNEL_GROUPING"
+	//   "FILTER_OM_SDK_AVAILABLE"
+	//   "FILTER_DATA_SOURCE"
+	//   "FILTER_CM360_PLACEMENT_ID"
+	//   "FILTER_TRUEVIEW_CLICK_TYPE_NAME"
+	//   "FILTER_TRUEVIEW_AD_TYPE_NAME"
+	//   "FILTER_VIDEO_CONTENT_DURATION"
+	//   "FILTER_MATCHED_GENRE_TARGET"
+	//   "FILTER_VIDEO_CONTENT_LIVE_STREAM"
+	//   "FILTER_BUDGET_SEGMENT_TYPE"
+	//   "FILTER_BUDGET_SEGMENT_BUDGET"
+	//   "FILTER_BUDGET_SEGMENT_START_DATE"
+	//   "FILTER_BUDGET_SEGMENT_END_DATE"
+	//   "FILTER_BUDGET_SEGMENT_PACING_PERCENTAGE"
+	//   "FILTER_LINE_ITEM_BUDGET"
+	//   "FILTER_LINE_ITEM_START_DATE"
+	//   "FILTER_LINE_ITEM_END_DATE"
+	//   "FILTER_INSERTION_ORDER_GOAL_TYPE"
+	//   "FILTER_LINE_ITEM_PACING_PERCENTAGE"
+	//   "FILTER_INSERTION_ORDER_GOAL_VALUE"
+	//   "FILTER_OMID_CAPABLE"
+	//   "FILTER_VENDOR_MEASUREMENT_MODE"
+	//   "FILTER_IMPRESSION_LOSS_REJECTION_REASON"
+	//   "FILTER_VERIFICATION_VIDEO_PLAYER_SIZE_START"
+	//   "FILTER_VERIFICATION_VIDEO_PLAYER_SIZE_FIRST_QUARTILE"
+	//   "FILTER_VERIFICATION_VIDEO_PLAYER_SIZE_MID_POINT"
+	//   "FILTER_VERIFICATION_VIDEO_PLAYER_SIZE_THIRD_QUARTILE"
+	//   "FILTER_VERIFICATION_VIDEO_PLAYER_SIZE_COMPLETE"
+	//   "FILTER_VERIFICATION_VIDEO_RESIZED"
+	//   "FILTER_VERIFICATION_AUDIBILITY_START"
+	//   "FILTER_VERIFICATION_AUDIBILITY_COMPLETE"
+	//   "FILTER_MEDIA_TYPE"
+	//   "FILTER_AUDIO_FEED_TYPE_NAME"
+	//   "FILTER_TRUEVIEW_TARGETING_EXPANSION"
+	//   "FILTER_PUBLISHER_TRAFFIC_SOURCE"
 	Type string `json:"type,omitempty"`
 
 	// Value: Filter value.
@@ -644,10 +560,10 @@ type FilterPair struct {
 
 	// ForceSendFields is a list of field names (e.g. "Type") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Type") to include in API
@@ -683,10 +599,10 @@ type ListQueriesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Kind") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Kind") to include in API
@@ -722,10 +638,10 @@ type ListReportsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Kind") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Kind") to include in API
@@ -750,13 +666,17 @@ type Options struct {
 	// audience lists specifically targeted by those items.
 	IncludeOnlyTargetedUserLists bool `json:"includeOnlyTargetedUserLists,omitempty"`
 
+	// PathQueryOptions: Options that contain Path Filters and Custom
+	// Channel Groupings.
+	PathQueryOptions *PathQueryOptions `json:"pathQueryOptions,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g.
 	// "IncludeOnlyTargetedUserLists") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g.
@@ -783,19 +703,145 @@ type Parameters struct {
 	// GroupBys: Data is grouped by the filters listed in this field.
 	//
 	// Possible values:
-	//   "FILTER_ACTIVE_VIEW_CUSTOM_METRIC_ID"
-	//   "FILTER_ACTIVE_VIEW_CUSTOM_METRIC_NAME"
-	//   "FILTER_ACTIVE_VIEW_EXPECTED_VIEWABILITY"
+	//   "FILTER_UNKNOWN"
+	//   "FILTER_DATE"
+	//   "FILTER_DAY_OF_WEEK"
+	//   "FILTER_WEEK"
+	//   "FILTER_MONTH"
+	//   "FILTER_YEAR"
+	//   "FILTER_TIME_OF_DAY"
+	//   "FILTER_CONVERSION_DELAY"
+	//   "FILTER_CREATIVE_ID"
+	//   "FILTER_CREATIVE_SIZE"
+	//   "FILTER_CREATIVE_TYPE"
+	//   "FILTER_EXCHANGE_ID"
+	//   "FILTER_AD_POSITION"
+	//   "FILTER_PUBLIC_INVENTORY"
+	//   "FILTER_INVENTORY_SOURCE"
+	//   "FILTER_CITY"
+	//   "FILTER_REGION"
+	//   "FILTER_DMA"
+	//   "FILTER_COUNTRY"
+	//   "FILTER_SITE_ID"
+	//   "FILTER_CHANNEL_ID"
+	//   "FILTER_PARTNER"
 	//   "FILTER_ADVERTISER"
+	//   "FILTER_INSERTION_ORDER"
+	//   "FILTER_LINE_ITEM"
+	//   "FILTER_PARTNER_CURRENCY"
 	//   "FILTER_ADVERTISER_CURRENCY"
+	//   "FILTER_ADVERTISER_TIMEZONE"
+	//   "FILTER_LINE_ITEM_TYPE"
+	//   "FILTER_USER_LIST"
+	//   "FILTER_USER_LIST_FIRST_PARTY"
+	//   "FILTER_USER_LIST_THIRD_PARTY"
+	//   "FILTER_TARGETED_USER_LIST"
+	//   "FILTER_DATA_PROVIDER"
+	//   "FILTER_ORDER_ID"
+	//   "FILTER_VIDEO_PLAYER_SIZE"
+	//   "FILTER_VIDEO_DURATION_SECONDS"
+	//   "FILTER_KEYWORD"
+	//   "FILTER_PAGE_CATEGORY"
+	//   "FILTER_CAMPAIGN_DAILY_FREQUENCY"
+	//   "FILTER_LINE_ITEM_DAILY_FREQUENCY"
+	//   "FILTER_LINE_ITEM_LIFETIME_FREQUENCY"
+	//   "FILTER_OS"
+	//   "FILTER_BROWSER"
+	//   "FILTER_CARRIER"
+	//   "FILTER_SITE_LANGUAGE"
+	//   "FILTER_INVENTORY_FORMAT"
+	//   "FILTER_ZIP_CODE"
+	//   "FILTER_VIDEO_RATING_TIER"
+	//   "FILTER_VIDEO_FORMAT_SUPPORT"
+	//   "FILTER_VIDEO_SKIPPABLE_SUPPORT"
+	//   "FILTER_VIDEO_CREATIVE_DURATION"
+	//   "FILTER_PAGE_LAYOUT"
+	//   "FILTER_VIDEO_AD_POSITION_IN_STREAM"
+	//   "FILTER_AGE"
+	//   "FILTER_GENDER"
+	//   "FILTER_QUARTER"
+	//   "FILTER_TRUEVIEW_CONVERSION_TYPE"
+	//   "FILTER_MOBILE_GEO"
+	//   "FILTER_MRAID_SUPPORT"
+	//   "FILTER_ACTIVE_VIEW_EXPECTED_VIEWABILITY"
+	//   "FILTER_VIDEO_CREATIVE_DURATION_SKIPPABLE"
+	//   "FILTER_NIELSEN_COUNTRY_CODE"
+	//   "FILTER_NIELSEN_DEVICE_ID"
+	//   "FILTER_NIELSEN_GENDER"
+	//   "FILTER_NIELSEN_AGE"
+	//   "FILTER_INVENTORY_SOURCE_TYPE"
+	//   "FILTER_CREATIVE_WIDTH"
+	//   "FILTER_CREATIVE_HEIGHT"
+	//   "FILTER_DFP_ORDER_ID"
+	//   "FILTER_TRUEVIEW_AGE"
+	//   "FILTER_TRUEVIEW_GENDER"
+	//   "FILTER_TRUEVIEW_PARENTAL_STATUS"
+	//   "FILTER_TRUEVIEW_REMARKETING_LIST"
+	//   "FILTER_TRUEVIEW_INTEREST"
+	//   "FILTER_TRUEVIEW_AD_GROUP_ID"
+	//   "FILTER_TRUEVIEW_AD_GROUP_AD_ID"
+	//   "FILTER_TRUEVIEW_IAR_LANGUAGE"
+	//   "FILTER_TRUEVIEW_IAR_GENDER"
+	//   "FILTER_TRUEVIEW_IAR_AGE"
+	//   "FILTER_TRUEVIEW_IAR_CATEGORY"
+	//   "FILTER_TRUEVIEW_IAR_COUNTRY"
+	//   "FILTER_TRUEVIEW_IAR_CITY"
+	//   "FILTER_TRUEVIEW_IAR_REGION"
+	//   "FILTER_TRUEVIEW_IAR_ZIPCODE"
+	//   "FILTER_TRUEVIEW_IAR_REMARKETING_LIST"
+	//   "FILTER_TRUEVIEW_IAR_INTEREST"
+	//   "FILTER_TRUEVIEW_IAR_PARENTAL_STATUS"
+	//   "FILTER_TRUEVIEW_IAR_TIME_OF_DAY"
+	//   "FILTER_TRUEVIEW_CUSTOM_AFFINITY"
+	//   "FILTER_TRUEVIEW_CATEGORY"
+	//   "FILTER_TRUEVIEW_KEYWORD"
+	//   "FILTER_TRUEVIEW_PLACEMENT"
+	//   "FILTER_TRUEVIEW_URL"
+	//   "FILTER_TRUEVIEW_COUNTRY"
+	//   "FILTER_TRUEVIEW_REGION"
+	//   "FILTER_TRUEVIEW_CITY"
+	//   "FILTER_TRUEVIEW_DMA"
+	//   "FILTER_TRUEVIEW_ZIPCODE"
+	//   "FILTER_NOT_SUPPORTED"
+	//   "FILTER_MEDIA_PLAN"
+	//   "FILTER_TRUEVIEW_IAR_YOUTUBE_CHANNEL"
+	//   "FILTER_TRUEVIEW_IAR_YOUTUBE_VIDEO"
+	//   "FILTER_SKIPPABLE_SUPPORT"
+	//   "FILTER_COMPANION_CREATIVE_ID"
+	//   "FILTER_BUDGET_SEGMENT_DESCRIPTION"
+	//   "FILTER_FLOODLIGHT_ACTIVITY_ID"
+	//   "FILTER_DEVICE_MODEL"
+	//   "FILTER_DEVICE_MAKE"
+	//   "FILTER_DEVICE_TYPE"
+	//   "FILTER_CREATIVE_ATTRIBUTE"
+	//   "FILTER_INVENTORY_COMMITMENT_TYPE"
+	//   "FILTER_INVENTORY_RATE_TYPE"
+	//   "FILTER_INVENTORY_DELIVERY_METHOD"
+	//   "FILTER_INVENTORY_SOURCE_EXTERNAL_ID"
+	//   "FILTER_AUTHORIZED_SELLER_STATE"
+	//   "FILTER_VIDEO_DURATION_SECONDS_RANGE"
+	//   "FILTER_PARTNER_NAME"
+	//   "FILTER_PARTNER_STATUS"
+	//   "FILTER_ADVERTISER_NAME"
 	//   "FILTER_ADVERTISER_INTEGRATION_CODE"
 	//   "FILTER_ADVERTISER_INTEGRATION_STATUS"
-	//   "FILTER_ADVERTISER_NAME"
-	//   "FILTER_ADVERTISER_TIMEZONE"
-	//   "FILTER_AD_POSITION"
-	//   "FILTER_AD_POSITION_NAME"
+	//   "FILTER_CARRIER_NAME"
+	//   "FILTER_CHANNEL_NAME"
+	//   "FILTER_CITY_NAME"
+	//   "FILTER_COMPANION_CREATIVE_NAME"
+	//   "FILTER_USER_LIST_FIRST_PARTY_NAME"
+	//   "FILTER_USER_LIST_THIRD_PARTY_NAME"
+	//   "FILTER_NIELSEN_RESTATEMENT_DATE"
+	//   "FILTER_NIELSEN_DATE_RANGE"
+	//   "FILTER_INSERTION_ORDER_NAME"
+	//   "FILTER_REGION_NAME"
+	//   "FILTER_DMA_NAME"
+	//   "FILTER_TRUEVIEW_IAR_REGION_NAME"
+	//   "FILTER_TRUEVIEW_DMA_NAME"
+	//   "FILTER_TRUEVIEW_REGION_NAME"
+	//   "FILTER_ACTIVE_VIEW_CUSTOM_METRIC_ID"
+	//   "FILTER_ACTIVE_VIEW_CUSTOM_METRIC_NAME"
 	//   "FILTER_AD_TYPE"
-	//   "FILTER_AGE"
 	//   "FILTER_ALGORITHM"
 	//   "FILTER_ALGORITHM_ID"
 	//   "FILTER_AMP_PAGE_REQUEST"
@@ -811,71 +857,39 @@ type Parameters struct {
 	//   "FILTER_AUDIENCE_LIST_TYPE"
 	//   "FILTER_AUDIENCE_NAME"
 	//   "FILTER_AUDIENCE_TYPE"
-	//   "FILTER_AUTHORIZED_SELLER_STATE"
 	//   "FILTER_BILLABLE_OUTCOME"
 	//   "FILTER_BRAND_LIFT_TYPE"
-	//   "FILTER_BROWSER"
-	//   "FILTER_BUDGET_SEGMENT_DESCRIPTION"
-	//   "FILTER_CAMPAIGN_DAILY_FREQUENCY"
-	//   "FILTER_CARRIER"
-	//   "FILTER_CARRIER_NAME"
-	//   "FILTER_CHANNEL_ID"
-	//   "FILTER_CHANNEL_NAME"
 	//   "FILTER_CHANNEL_TYPE"
-	//   "FILTER_CITY"
-	//   "FILTER_CITY_NAME"
 	//   "FILTER_CM_PLACEMENT_ID"
-	//   "FILTER_COMPANION_CREATIVE_ID"
-	//   "FILTER_COMPANION_CREATIVE_NAME"
-	//   "FILTER_CONVERSION_DELAY"
 	//   "FILTER_CONVERSION_SOURCE"
 	//   "FILTER_CONVERSION_SOURCE_ID"
-	//   "FILTER_COUNTRY"
 	//   "FILTER_COUNTRY_ID"
 	//   "FILTER_CREATIVE"
 	//   "FILTER_CREATIVE_ASSET"
-	//   "FILTER_CREATIVE_ATTRIBUTE"
-	//   "FILTER_CREATIVE_HEIGHT"
-	//   "FILTER_CREATIVE_ID"
 	//   "FILTER_CREATIVE_INTEGRATION_CODE"
 	//   "FILTER_CREATIVE_RENDERED_IN_AMP"
-	//   "FILTER_CREATIVE_SIZE"
 	//   "FILTER_CREATIVE_SOURCE"
 	//   "FILTER_CREATIVE_STATUS"
-	//   "FILTER_CREATIVE_TYPE"
-	//   "FILTER_CREATIVE_WIDTH"
-	//   "FILTER_DATA_PROVIDER"
 	//   "FILTER_DATA_PROVIDER_NAME"
-	//   "FILTER_DATE"
-	//   "FILTER_DAY_OF_WEEK"
 	//   "FILTER_DETAILED_DEMOGRAPHICS"
 	//   "FILTER_DETAILED_DEMOGRAPHICS_ID"
 	//   "FILTER_DEVICE"
-	//   "FILTER_DEVICE_MAKE"
-	//   "FILTER_DEVICE_MODEL"
-	//   "FILTER_DEVICE_TYPE"
-	//   "FILTER_DFP_ORDER_ID"
+	//   "FILTER_GAM_INSERTION_ORDER"
+	//   "FILTER_GAM_LINE_ITEM"
+	//   "FILTER_GAM_LINE_ITEM_ID"
 	//   "FILTER_DIGITAL_CONTENT_LABEL"
-	//   "FILTER_DMA"
-	//   "FILTER_DMA_NAME"
 	//   "FILTER_DOMAIN"
 	//   "FILTER_ELIGIBLE_COOKIES_ON_FIRST_PARTY_AUDIENCE_LIST"
 	//   "FILTER_ELIGIBLE_COOKIES_ON_THIRD_PARTY_AUDIENCE_LIST_AND_INTEREST"
 	//   "FILTER_EXCHANGE"
 	//   "FILTER_EXCHANGE_CODE"
-	//   "FILTER_EXCHANGE_ID"
 	//   "FILTER_EXTENSION"
 	//   "FILTER_EXTENSION_STATUS"
 	//   "FILTER_EXTENSION_TYPE"
 	//   "FILTER_FIRST_PARTY_AUDIENCE_LIST_COST"
 	//   "FILTER_FIRST_PARTY_AUDIENCE_LIST_TYPE"
 	//   "FILTER_FLOODLIGHT_ACTIVITY"
-	//   "FILTER_FLOODLIGHT_ACTIVITY_ID"
 	//   "FILTER_FORMAT"
-	//   "FILTER_GAM_INSERTION_ORDER"
-	//   "FILTER_GAM_LINE_ITEM"
-	//   "FILTER_GAM_LINE_ITEM_ID"
-	//   "FILTER_GENDER"
 	//   "FILTER_GMAIL_AGE"
 	//   "FILTER_GMAIL_CITY"
 	//   "FILTER_GMAIL_COUNTRY"
@@ -887,159 +901,102 @@ type Parameters struct {
 	//   "FILTER_GMAIL_REMARKETING_LIST"
 	//   "FILTER_HOUSEHOLD_INCOME"
 	//   "FILTER_IMPRESSION_COUNTING_METHOD"
-	//   "FILTER_INSERTION_ORDER"
+	//   "FILTER_YOUTUBE_PROGRAMMATIC_GUARANTEED_INSERTION_ORDER"
 	//   "FILTER_INSERTION_ORDER_INTEGRATION_CODE"
-	//   "FILTER_INSERTION_ORDER_NAME"
 	//   "FILTER_INSERTION_ORDER_STATUS"
 	//   "FILTER_INTEREST"
-	//   "FILTER_INVENTORY_COMMITMENT_TYPE"
-	//   "FILTER_INVENTORY_DELIVERY_METHOD"
-	//   "FILTER_INVENTORY_FORMAT"
-	//   "FILTER_INVENTORY_RATE_TYPE"
-	//   "FILTER_INVENTORY_SOURCE"
-	//   "FILTER_INVENTORY_SOURCE_EXTERNAL_ID"
 	//   "FILTER_INVENTORY_SOURCE_GROUP"
 	//   "FILTER_INVENTORY_SOURCE_GROUP_ID"
 	//   "FILTER_INVENTORY_SOURCE_ID"
 	//   "FILTER_INVENTORY_SOURCE_NAME"
-	//   "FILTER_INVENTORY_SOURCE_TYPE"
-	//   "FILTER_KEYWORD"
 	//   "FILTER_LIFE_EVENT"
 	//   "FILTER_LIFE_EVENTS"
-	//   "FILTER_LINE_ITEM"
-	//   "FILTER_LINE_ITEM_DAILY_FREQUENCY"
 	//   "FILTER_LINE_ITEM_INTEGRATION_CODE"
-	//   "FILTER_LINE_ITEM_LIFETIME_FREQUENCY"
 	//   "FILTER_LINE_ITEM_NAME"
 	//   "FILTER_LINE_ITEM_STATUS"
-	//   "FILTER_LINE_ITEM_TYPE"
 	//   "FILTER_MATCH_RATIO"
 	//   "FILTER_MEASUREMENT_SOURCE"
-	//   "FILTER_MEDIA_PLAN"
 	//   "FILTER_MEDIA_PLAN_NAME"
-	//   "FILTER_MOBILE_GEO"
-	//   "FILTER_MONTH"
-	//   "FILTER_MRAID_SUPPORT"
-	//   "FILTER_NIELSEN_AGE"
-	//   "FILTER_NIELSEN_COUNTRY_CODE"
-	//   "FILTER_NIELSEN_DATE_RANGE"
-	//   "FILTER_NIELSEN_DEVICE_ID"
-	//   "FILTER_NIELSEN_GENDER"
-	//   "FILTER_NIELSEN_RESTATEMENT_DATE"
-	//   "FILTER_NOT_SUPPORTED"
-	//   "FILTER_ORDER_ID"
-	//   "FILTER_OS"
-	//   "FILTER_PAGE_CATEGORY"
-	//   "FILTER_PAGE_LAYOUT"
 	//   "FILTER_PARENTAL_STATUS"
-	//   "FILTER_PARTNER"
-	//   "FILTER_PARTNER_CURRENCY"
-	//   "FILTER_PARTNER_NAME"
-	//   "FILTER_PARTNER_STATUS"
 	//   "FILTER_PLACEMENT_ALL_YOUTUBE_CHANNELS"
-	//   "FILTER_PLACEMENT_NAME_ALL_YOUTUBE_CHANNELS"
 	//   "FILTER_PLATFORM"
 	//   "FILTER_PLAYBACK_METHOD"
 	//   "FILTER_POSITION_IN_CONTENT"
-	//   "FILTER_PUBLIC_INVENTORY"
 	//   "FILTER_PUBLISHER_PROPERTY"
 	//   "FILTER_PUBLISHER_PROPERTY_ID"
 	//   "FILTER_PUBLISHER_PROPERTY_SECTION"
 	//   "FILTER_PUBLISHER_PROPERTY_SECTION_ID"
-	//   "FILTER_QUARTER"
 	//   "FILTER_REFUND_REASON"
-	//   "FILTER_REGION"
-	//   "FILTER_REGION_NAME"
 	//   "FILTER_REMARKETING_LIST"
 	//   "FILTER_REWARDED"
 	//   "FILTER_SENSITIVE_CATEGORY"
 	//   "FILTER_SERVED_PIXEL_DENSITY"
-	//   "FILTER_SITE_ID"
-	//   "FILTER_SITE_LANGUAGE"
-	//   "FILTER_SKIPPABLE_SUPPORT"
 	//   "FILTER_TARGETED_DATA_PROVIDERS"
-	//   "FILTER_TARGETED_USER_LIST"
 	//   "FILTER_THIRD_PARTY_AUDIENCE_LIST_COST"
 	//   "FILTER_THIRD_PARTY_AUDIENCE_LIST_TYPE"
-	//   "FILTER_TIME_OF_DAY"
 	//   "FILTER_TRUEVIEW_AD"
 	//   "FILTER_TRUEVIEW_AD_GROUP"
-	//   "FILTER_TRUEVIEW_AD_GROUP_AD_ID"
-	//   "FILTER_TRUEVIEW_AD_GROUP_ID"
-	//   "FILTER_TRUEVIEW_AGE"
-	//   "FILTER_TRUEVIEW_CATEGORY"
-	//   "FILTER_TRUEVIEW_CITY"
-	//   "FILTER_TRUEVIEW_CONVERSION_TYPE"
-	//   "FILTER_TRUEVIEW_COUNTRY"
-	//   "FILTER_TRUEVIEW_CUSTOM_AFFINITY"
 	//   "FILTER_TRUEVIEW_DETAILED_DEMOGRAPHICS"
 	//   "FILTER_TRUEVIEW_DETAILED_DEMOGRAPHICS_ID"
-	//   "FILTER_TRUEVIEW_DMA"
-	//   "FILTER_TRUEVIEW_DMA_NAME"
-	//   "FILTER_TRUEVIEW_GENDER"
 	//   "FILTER_TRUEVIEW_HOUSEHOLD_INCOME"
-	//   "FILTER_TRUEVIEW_IAR_AGE"
-	//   "FILTER_TRUEVIEW_IAR_CATEGORY"
-	//   "FILTER_TRUEVIEW_IAR_CITY"
-	//   "FILTER_TRUEVIEW_IAR_COUNTRY"
 	//   "FILTER_TRUEVIEW_IAR_COUNTRY_NAME"
-	//   "FILTER_TRUEVIEW_IAR_GENDER"
-	//   "FILTER_TRUEVIEW_IAR_INTEREST"
-	//   "FILTER_TRUEVIEW_IAR_LANGUAGE"
-	//   "FILTER_TRUEVIEW_IAR_PARENTAL_STATUS"
-	//   "FILTER_TRUEVIEW_IAR_REGION"
-	//   "FILTER_TRUEVIEW_IAR_REGION_NAME"
-	//   "FILTER_TRUEVIEW_IAR_REMARKETING_LIST"
-	//   "FILTER_TRUEVIEW_IAR_TIME_OF_DAY"
-	//   "FILTER_TRUEVIEW_IAR_YOUTUBE_CHANNEL"
-	//   "FILTER_TRUEVIEW_IAR_YOUTUBE_VIDEO"
-	//   "FILTER_TRUEVIEW_IAR_ZIPCODE"
-	//   "FILTER_TRUEVIEW_INTEREST"
-	//   "FILTER_TRUEVIEW_KEYWORD"
-	//   "FILTER_TRUEVIEW_PARENTAL_STATUS"
-	//   "FILTER_TRUEVIEW_PLACEMENT"
-	//   "FILTER_TRUEVIEW_REGION"
-	//   "FILTER_TRUEVIEW_REGION_NAME"
-	//   "FILTER_TRUEVIEW_REMARKETING_LIST"
 	//   "FILTER_TRUEVIEW_REMARKETING_LIST_NAME"
-	//   "FILTER_TRUEVIEW_URL"
-	//   "FILTER_TRUEVIEW_ZIPCODE"
-	//   "FILTER_UNKNOWN"
-	//   "FILTER_USER_LIST"
-	//   "FILTER_USER_LIST_FIRST_PARTY"
-	//   "FILTER_USER_LIST_FIRST_PARTY_NAME"
-	//   "FILTER_USER_LIST_THIRD_PARTY"
-	//   "FILTER_USER_LIST_THIRD_PARTY_NAME"
 	//   "FILTER_VARIANT_ID"
 	//   "FILTER_VARIANT_NAME"
 	//   "FILTER_VARIANT_VERSION"
 	//   "FILTER_VERIFICATION_VIDEO_PLAYER_SIZE"
 	//   "FILTER_VERIFICATION_VIDEO_POSITION"
-	//   "FILTER_VIDEO_AD_POSITION_IN_STREAM"
 	//   "FILTER_VIDEO_COMPANION_CREATIVE_SIZE"
 	//   "FILTER_VIDEO_CONTINUOUS_PLAY"
-	//   "FILTER_VIDEO_CREATIVE_DURATION"
-	//   "FILTER_VIDEO_CREATIVE_DURATION_SKIPPABLE"
 	//   "FILTER_VIDEO_DURATION"
-	//   "FILTER_VIDEO_DURATION_SECONDS"
-	//   "FILTER_VIDEO_DURATION_SECONDS_RANGE"
-	//   "FILTER_VIDEO_FORMAT_SUPPORT"
-	//   "FILTER_VIDEO_PLAYER_SIZE"
-	//   "FILTER_VIDEO_RATING_TIER"
-	//   "FILTER_VIDEO_SKIPPABLE_SUPPORT"
-	//   "FILTER_VIDEO_VPAID_SUPPORT"
-	//   "FILTER_WEEK"
-	//   "FILTER_YEAR"
 	//   "FILTER_YOUTUBE_ADAPTED_AUDIENCE_LIST"
 	//   "FILTER_YOUTUBE_AD_VIDEO"
 	//   "FILTER_YOUTUBE_AD_VIDEO_ID"
 	//   "FILTER_YOUTUBE_CHANNEL"
 	//   "FILTER_YOUTUBE_PROGRAMMATIC_GUARANTEED_ADVERTISER"
-	//   "FILTER_YOUTUBE_PROGRAMMATIC_GUARANTEED_INSERTION_ORDER"
 	//   "FILTER_YOUTUBE_PROGRAMMATIC_GUARANTEED_PARTNER"
 	//   "FILTER_YOUTUBE_VIDEO"
-	//   "FILTER_ZIP_CODE"
 	//   "FILTER_ZIP_POSTAL_CODE"
+	//   "FILTER_PLACEMENT_NAME_ALL_YOUTUBE_CHANNELS"
+	//   "FILTER_TRUEVIEW_PLACEMENT_ID"
+	//   "FILTER_PATH_PATTERN_ID"
+	//   "FILTER_PATH_EVENT_INDEX"
+	//   "FILTER_EVENT_TYPE"
+	//   "FILTER_CHANNEL_GROUPING"
+	//   "FILTER_OM_SDK_AVAILABLE"
+	//   "FILTER_DATA_SOURCE"
+	//   "FILTER_CM360_PLACEMENT_ID"
+	//   "FILTER_TRUEVIEW_CLICK_TYPE_NAME"
+	//   "FILTER_TRUEVIEW_AD_TYPE_NAME"
+	//   "FILTER_VIDEO_CONTENT_DURATION"
+	//   "FILTER_MATCHED_GENRE_TARGET"
+	//   "FILTER_VIDEO_CONTENT_LIVE_STREAM"
+	//   "FILTER_BUDGET_SEGMENT_TYPE"
+	//   "FILTER_BUDGET_SEGMENT_BUDGET"
+	//   "FILTER_BUDGET_SEGMENT_START_DATE"
+	//   "FILTER_BUDGET_SEGMENT_END_DATE"
+	//   "FILTER_BUDGET_SEGMENT_PACING_PERCENTAGE"
+	//   "FILTER_LINE_ITEM_BUDGET"
+	//   "FILTER_LINE_ITEM_START_DATE"
+	//   "FILTER_LINE_ITEM_END_DATE"
+	//   "FILTER_INSERTION_ORDER_GOAL_TYPE"
+	//   "FILTER_LINE_ITEM_PACING_PERCENTAGE"
+	//   "FILTER_INSERTION_ORDER_GOAL_VALUE"
+	//   "FILTER_OMID_CAPABLE"
+	//   "FILTER_VENDOR_MEASUREMENT_MODE"
+	//   "FILTER_IMPRESSION_LOSS_REJECTION_REASON"
+	//   "FILTER_VERIFICATION_VIDEO_PLAYER_SIZE_START"
+	//   "FILTER_VERIFICATION_VIDEO_PLAYER_SIZE_FIRST_QUARTILE"
+	//   "FILTER_VERIFICATION_VIDEO_PLAYER_SIZE_MID_POINT"
+	//   "FILTER_VERIFICATION_VIDEO_PLAYER_SIZE_THIRD_QUARTILE"
+	//   "FILTER_VERIFICATION_VIDEO_PLAYER_SIZE_COMPLETE"
+	//   "FILTER_VERIFICATION_VIDEO_RESIZED"
+	//   "FILTER_VERIFICATION_AUDIBILITY_START"
+	//   "FILTER_VERIFICATION_AUDIBILITY_COMPLETE"
+	//   "FILTER_MEDIA_TYPE"
+	//   "FILTER_AUDIO_FEED_TYPE_NAME"
+	//   "FILTER_TRUEVIEW_TARGETING_EXPANSION"
+	//   "FILTER_PUBLISHER_TRAFFIC_SOURCE"
 	GroupBys []string `json:"groupBys,omitempty"`
 
 	// IncludeInviteData: Deprecated. This field is no longer in use.
@@ -1048,6 +1005,288 @@ type Parameters struct {
 	// Metrics: Metrics to include as columns in your report.
 	//
 	// Possible values:
+	//   "METRIC_UNKNOWN"
+	//   "METRIC_IMPRESSIONS"
+	//   "METRIC_CLICKS"
+	//   "METRIC_LAST_IMPRESSIONS"
+	//   "METRIC_LAST_CLICKS"
+	//   "METRIC_TOTAL_CONVERSIONS"
+	//   "METRIC_MEDIA_COST_ADVERTISER"
+	//   "METRIC_MEDIA_COST_USD"
+	//   "METRIC_MEDIA_COST_PARTNER"
+	//   "METRIC_DATA_COST_ADVERTISER"
+	//   "METRIC_DATA_COST_USD"
+	//   "METRIC_DATA_COST_PARTNER"
+	//   "METRIC_CPM_FEE1_ADVERTISER"
+	//   "METRIC_CPM_FEE1_USD"
+	//   "METRIC_CPM_FEE1_PARTNER"
+	//   "METRIC_CPM_FEE2_ADVERTISER"
+	//   "METRIC_CPM_FEE2_USD"
+	//   "METRIC_CPM_FEE2_PARTNER"
+	//   "METRIC_MEDIA_FEE1_ADVERTISER"
+	//   "METRIC_MEDIA_FEE1_USD"
+	//   "METRIC_MEDIA_FEE1_PARTNER"
+	//   "METRIC_MEDIA_FEE2_ADVERTISER"
+	//   "METRIC_MEDIA_FEE2_USD"
+	//   "METRIC_MEDIA_FEE2_PARTNER"
+	//   "METRIC_REVENUE_ADVERTISER"
+	//   "METRIC_REVENUE_USD"
+	//   "METRIC_REVENUE_PARTNER"
+	//   "METRIC_PROFIT_ADVERTISER"
+	//   "METRIC_PROFIT_USD"
+	//   "METRIC_PROFIT_PARTNER"
+	//   "METRIC_PROFIT_MARGIN"
+	//   "METRIC_TOTAL_MEDIA_COST_USD"
+	//   "METRIC_TOTAL_MEDIA_COST_PARTNER"
+	//   "METRIC_TOTAL_MEDIA_COST_ADVERTISER"
+	//   "METRIC_BILLABLE_COST_USD"
+	//   "METRIC_BILLABLE_COST_PARTNER"
+	//   "METRIC_BILLABLE_COST_ADVERTISER"
+	//   "METRIC_PLATFORM_FEE_USD"
+	//   "METRIC_PLATFORM_FEE_PARTNER"
+	//   "METRIC_PLATFORM_FEE_ADVERTISER"
+	//   "METRIC_VIDEO_COMPLETION_RATE"
+	//   "METRIC_PROFIT_ECPM_ADVERTISER"
+	//   "METRIC_PROFIT_ECPM_USD"
+	//   "METRIC_PROFIT_ECPM_PARTNER"
+	//   "METRIC_REVENUE_ECPM_ADVERTISER"
+	//   "METRIC_REVENUE_ECPM_USD"
+	//   "METRIC_REVENUE_ECPM_PARTNER"
+	//   "METRIC_REVENUE_ECPC_ADVERTISER"
+	//   "METRIC_REVENUE_ECPC_USD"
+	//   "METRIC_REVENUE_ECPC_PARTNER"
+	//   "METRIC_REVENUE_ECPA_ADVERTISER"
+	//   "METRIC_REVENUE_ECPA_USD"
+	//   "METRIC_REVENUE_ECPA_PARTNER"
+	//   "METRIC_REVENUE_ECPAPV_ADVERTISER"
+	//   "METRIC_REVENUE_ECPAPV_USD"
+	//   "METRIC_REVENUE_ECPAPV_PARTNER"
+	//   "METRIC_REVENUE_ECPAPC_ADVERTISER"
+	//   "METRIC_REVENUE_ECPAPC_USD"
+	//   "METRIC_REVENUE_ECPAPC_PARTNER"
+	//   "METRIC_MEDIA_COST_ECPM_ADVERTISER"
+	//   "METRIC_MEDIA_COST_ECPM_USD"
+	//   "METRIC_MEDIA_COST_ECPM_PARTNER"
+	//   "METRIC_MEDIA_COST_ECPC_ADVERTISER"
+	//   "METRIC_MEDIA_COST_ECPC_USD"
+	//   "METRIC_MEDIA_COST_ECPC_PARTNER"
+	//   "METRIC_MEDIA_COST_ECPA_ADVERTISER"
+	//   "METRIC_MEDIA_COST_ECPA_USD"
+	//   "METRIC_MEDIA_COST_ECPA_PARTNER"
+	//   "METRIC_MEDIA_COST_ECPAPV_ADVERTISER"
+	//   "METRIC_MEDIA_COST_ECPAPV_USD"
+	//   "METRIC_MEDIA_COST_ECPAPV_PARTNER"
+	//   "METRIC_MEDIA_COST_ECPAPC_ADVERTISER"
+	//   "METRIC_MEDIA_COST_ECPAPC_USD"
+	//   "METRIC_MEDIA_COST_ECPAPC_PARTNER"
+	//   "METRIC_TOTAL_MEDIA_COST_ECPM_ADVERTISER"
+	//   "METRIC_TOTAL_MEDIA_COST_ECPM_USD"
+	//   "METRIC_TOTAL_MEDIA_COST_ECPM_PARTNER"
+	//   "METRIC_TOTAL_MEDIA_COST_ECPC_ADVERTISER"
+	//   "METRIC_TOTAL_MEDIA_COST_ECPC_USD"
+	//   "METRIC_TOTAL_MEDIA_COST_ECPC_PARTNER"
+	//   "METRIC_TOTAL_MEDIA_COST_ECPA_ADVERTISER"
+	//   "METRIC_TOTAL_MEDIA_COST_ECPA_USD"
+	//   "METRIC_TOTAL_MEDIA_COST_ECPA_PARTNER"
+	//   "METRIC_TOTAL_MEDIA_COST_ECPAPV_ADVERTISER"
+	//   "METRIC_TOTAL_MEDIA_COST_ECPAPV_USD"
+	//   "METRIC_TOTAL_MEDIA_COST_ECPAPV_PARTNER"
+	//   "METRIC_TOTAL_MEDIA_COST_ECPAPC_ADVERTISER"
+	//   "METRIC_TOTAL_MEDIA_COST_ECPAPC_USD"
+	//   "METRIC_TOTAL_MEDIA_COST_ECPAPC_PARTNER"
+	//   "METRIC_RICH_MEDIA_VIDEO_PLAYS"
+	//   "METRIC_RICH_MEDIA_VIDEO_COMPLETIONS"
+	//   "METRIC_RICH_MEDIA_VIDEO_PAUSES"
+	//   "METRIC_RICH_MEDIA_VIDEO_MUTES"
+	//   "METRIC_RICH_MEDIA_VIDEO_MIDPOINTS"
+	//   "METRIC_RICH_MEDIA_VIDEO_FULL_SCREENS"
+	//   "METRIC_RICH_MEDIA_VIDEO_FIRST_QUARTILE_COMPLETES"
+	//   "METRIC_RICH_MEDIA_VIDEO_THIRD_QUARTILE_COMPLETES"
+	//   "METRIC_CLICK_TO_POST_CLICK_CONVERSION_RATE"
+	//   "METRIC_IMPRESSIONS_TO_CONVERSION_RATE"
+	//   "METRIC_CONVERSIONS_PER_MILLE"
+	//   "METRIC_CTR"
+	//   "METRIC_BID_REQUESTS"
+	//   "METRIC_UNIQUE_VISITORS_COOKIES"
+	//   "METRIC_REVENUE_ECPCV_ADVERTISER"
+	//   "METRIC_REVENUE_ECPCV_USD"
+	//   "METRIC_REVENUE_ECPCV_PARTNER"
+	//   "METRIC_MEDIA_COST_ECPCV_ADVERTISER"
+	//   "METRIC_MEDIA_COST_ECPCV_USD"
+	//   "METRIC_MEDIA_COST_ECPCV_PARTNER"
+	//   "METRIC_TOTAL_MEDIA_COST_ECPCV_ADVERTISER"
+	//   "METRIC_TOTAL_MEDIA_COST_ECPCV_USD"
+	//   "METRIC_TOTAL_MEDIA_COST_ECPCV_PARTNER"
+	//   "METRIC_RICH_MEDIA_VIDEO_SKIPS"
+	//   "METRIC_FEE2_ADVERTISER"
+	//   "METRIC_FEE2_USD"
+	//   "METRIC_FEE2_PARTNER"
+	//   "METRIC_FEE3_ADVERTISER"
+	//   "METRIC_FEE3_USD"
+	//   "METRIC_FEE3_PARTNER"
+	//   "METRIC_FEE4_ADVERTISER"
+	//   "METRIC_FEE4_USD"
+	//   "METRIC_FEE4_PARTNER"
+	//   "METRIC_FEE5_ADVERTISER"
+	//   "METRIC_FEE5_USD"
+	//   "METRIC_FEE5_PARTNER"
+	//   "METRIC_FEE6_ADVERTISER"
+	//   "METRIC_FEE6_USD"
+	//   "METRIC_FEE6_PARTNER"
+	//   "METRIC_FEE7_ADVERTISER"
+	//   "METRIC_FEE7_USD"
+	//   "METRIC_FEE7_PARTNER"
+	//   "METRIC_FEE8_ADVERTISER"
+	//   "METRIC_FEE8_USD"
+	//   "METRIC_FEE8_PARTNER"
+	//   "METRIC_FEE9_ADVERTISER"
+	//   "METRIC_FEE9_USD"
+	//   "METRIC_FEE9_PARTNER"
+	//   "METRIC_FEE10_ADVERTISER"
+	//   "METRIC_FEE10_USD"
+	//   "METRIC_FEE10_PARTNER"
+	//   "METRIC_FEE11_ADVERTISER"
+	//   "METRIC_FEE11_USD"
+	//   "METRIC_FEE11_PARTNER"
+	//   "METRIC_FEE12_ADVERTISER"
+	//   "METRIC_FEE12_USD"
+	//   "METRIC_FEE12_PARTNER"
+	//   "METRIC_FEE13_ADVERTISER"
+	//   "METRIC_FEE13_USD"
+	//   "METRIC_FEE13_PARTNER"
+	//   "METRIC_FEE14_ADVERTISER"
+	//   "METRIC_FEE14_USD"
+	//   "METRIC_FEE14_PARTNER"
+	//   "METRIC_FEE15_ADVERTISER"
+	//   "METRIC_FEE15_USD"
+	//   "METRIC_FEE15_PARTNER"
+	//   "METRIC_CPM_FEE3_ADVERTISER"
+	//   "METRIC_CPM_FEE3_USD"
+	//   "METRIC_CPM_FEE3_PARTNER"
+	//   "METRIC_CPM_FEE4_ADVERTISER"
+	//   "METRIC_CPM_FEE4_USD"
+	//   "METRIC_CPM_FEE4_PARTNER"
+	//   "METRIC_CPM_FEE5_ADVERTISER"
+	//   "METRIC_CPM_FEE5_USD"
+	//   "METRIC_CPM_FEE5_PARTNER"
+	//   "METRIC_MEDIA_FEE3_ADVERTISER"
+	//   "METRIC_MEDIA_FEE3_USD"
+	//   "METRIC_MEDIA_FEE3_PARTNER"
+	//   "METRIC_MEDIA_FEE4_ADVERTISER"
+	//   "METRIC_MEDIA_FEE4_USD"
+	//   "METRIC_MEDIA_FEE4_PARTNER"
+	//   "METRIC_MEDIA_FEE5_ADVERTISER"
+	//   "METRIC_MEDIA_FEE5_USD"
+	//   "METRIC_MEDIA_FEE5_PARTNER"
+	//   "METRIC_VIDEO_COMPANION_IMPRESSIONS"
+	//   "METRIC_VIDEO_COMPANION_CLICKS"
+	//   "METRIC_FEE16_ADVERTISER"
+	//   "METRIC_FEE16_USD"
+	//   "METRIC_FEE16_PARTNER"
+	//   "METRIC_FEE17_ADVERTISER"
+	//   "METRIC_FEE17_USD"
+	//   "METRIC_FEE17_PARTNER"
+	//   "METRIC_FEE18_ADVERTISER"
+	//   "METRIC_FEE18_USD"
+	//   "METRIC_FEE18_PARTNER"
+	//   "METRIC_TRUEVIEW_VIEWS"
+	//   "METRIC_TRUEVIEW_UNIQUE_VIEWERS"
+	//   "METRIC_TRUEVIEW_EARNED_VIEWS"
+	//   "METRIC_TRUEVIEW_EARNED_SUBSCRIBERS"
+	//   "METRIC_TRUEVIEW_EARNED_PLAYLIST_ADDITIONS"
+	//   "METRIC_TRUEVIEW_EARNED_LIKES"
+	//   "METRIC_TRUEVIEW_EARNED_SHARES"
+	//   "METRIC_TRUEVIEW_IMPRESSION_SHARE"
+	//   "METRIC_TRUEVIEW_LOST_IS_BUDGET"
+	//   "METRIC_TRUEVIEW_LOST_IS_RANK"
+	//   "METRIC_TRUEVIEW_VIEW_THROUGH_CONVERSION"
+	//   "METRIC_TRUEVIEW_CONVERSION_MANY_PER_VIEW"
+	//   "METRIC_TRUEVIEW_VIEW_RATE"
+	//   "METRIC_TRUEVIEW_CONVERSION_RATE_ONE_PER_VIEW"
+	//   "METRIC_TRUEVIEW_CPV_ADVERTISER"
+	//   "METRIC_TRUEVIEW_CPV_USD"
+	//   "METRIC_TRUEVIEW_CPV_PARTNER"
+	//   "METRIC_FEE19_ADVERTISER"
+	//   "METRIC_FEE19_USD"
+	//   "METRIC_FEE19_PARTNER"
+	//   "METRIC_TEA_TRUEVIEW_IMPRESSIONS"
+	//   "METRIC_TEA_TRUEVIEW_UNIQUE_COOKIES"
+	//   "METRIC_FEE20_ADVERTISER"
+	//   "METRIC_FEE20_USD"
+	//   "METRIC_FEE20_PARTNER"
+	//   "METRIC_FEE21_ADVERTISER"
+	//   "METRIC_FEE21_USD"
+	//   "METRIC_FEE21_PARTNER"
+	//   "METRIC_FEE22_ADVERTISER"
+	//   "METRIC_FEE22_USD"
+	//   "METRIC_FEE22_PARTNER"
+	//   "METRIC_TRUEVIEW_TOTAL_CONVERSION_VALUES_ADVERTISER"
+	//   "METRIC_TRUEVIEW_TOTAL_CONVERSION_VALUES_USD"
+	//   "METRIC_TRUEVIEW_TOTAL_CONVERSION_VALUES_PARTNER"
+	//   "METRIC_TRUEVIEW_CONVERSION_COST_MANY_PER_VIEW_ADVERTISER"
+	//   "METRIC_TRUEVIEW_CONVERSION_COST_MANY_PER_VIEW_USD"
+	//   "METRIC_TRUEVIEW_CONVERSION_COST_MANY_PER_VIEW_PARTNER"
+	//   "METRIC_PROFIT_VIEWABLE_ECPM_ADVERTISER"
+	//   "METRIC_PROFIT_VIEWABLE_ECPM_USD"
+	//   "METRIC_PROFIT_VIEWABLE_ECPM_PARTNER"
+	//   "METRIC_REVENUE_VIEWABLE_ECPM_ADVERTISER"
+	//   "METRIC_REVENUE_VIEWABLE_ECPM_USD"
+	//   "METRIC_REVENUE_VIEWABLE_ECPM_PARTNER"
+	//   "METRIC_MEDIA_COST_VIEWABLE_ECPM_ADVERTISER"
+	//   "METRIC_MEDIA_COST_VIEWABLE_ECPM_USD"
+	//   "METRIC_MEDIA_COST_VIEWABLE_ECPM_PARTNER"
+	//   "METRIC_TOTAL_MEDIA_COST_VIEWABLE_ECPM_ADVERTISER"
+	//   "METRIC_TOTAL_MEDIA_COST_VIEWABLE_ECPM_USD"
+	//   "METRIC_TOTAL_MEDIA_COST_VIEWABLE_ECPM_PARTNER"
+	//   "METRIC_TRUEVIEW_ENGAGEMENTS"
+	//   "METRIC_TRUEVIEW_ENGAGEMENT_RATE"
+	//   "METRIC_TRUEVIEW_AVERAGE_CPE_ADVERTISER"
+	//   "METRIC_TRUEVIEW_AVERAGE_CPE_USD"
+	//   "METRIC_TRUEVIEW_AVERAGE_CPE_PARTNER"
+	//   "METRIC_ACTIVE_VIEW_VIEWABLE_IMPRESSIONS"
+	//   "METRIC_ACTIVE_VIEW_ELIGIBLE_IMPRESSIONS"
+	//   "METRIC_ACTIVE_VIEW_MEASURABLE_IMPRESSIONS"
+	//   "METRIC_ACTIVE_VIEW_PCT_MEASURABLE_IMPRESSIONS"
+	//   "METRIC_ACTIVE_VIEW_PCT_VIEWABLE_IMPRESSIONS"
+	//   "METRIC_ACTIVE_VIEW_AVERAGE_VIEWABLE_TIME"
+	//   "METRIC_ACTIVE_VIEW_UNMEASURABLE_IMPRESSIONS"
+	//   "METRIC_ACTIVE_VIEW_UNVIEWABLE_IMPRESSIONS"
+	//   "METRIC_ACTIVE_VIEW_DISTRIBUTION_UNMEASURABLE"
+	//   "METRIC_ACTIVE_VIEW_DISTRIBUTION_UNVIEWABLE"
+	//   "METRIC_ACTIVE_VIEW_DISTRIBUTION_VIEWABLE"
+	//   "METRIC_ACTIVE_VIEW_PERCENT_VIEWABLE_FOR_TIME_THRESHOLD"
+	//   "METRIC_ACTIVE_VIEW_VIEWABLE_FOR_TIME_THRESHOLD"
+	//   "METRIC_ACTIVE_VIEW_PERCENT_VISIBLE_AT_START"
+	//   "METRIC_ACTIVE_VIEW_PERCENT_VISIBLE_FIRST_QUAR"
+	//   "METRIC_ACTIVE_VIEW_PERCENT_VISIBLE_SECOND_QUAR"
+	//   "METRIC_ACTIVE_VIEW_PERCENT_VISIBLE_THIRD_QUAR"
+	//   "METRIC_ACTIVE_VIEW_PERCENT_VISIBLE_ON_COMPLETE"
+	//   "METRIC_ACTIVE_VIEW_PERCENT_AUDIBLE_VISIBLE_AT_START"
+	//   "METRIC_ACTIVE_VIEW_PERCENT_AUDIBLE_VISIBLE_FIRST_QUAR"
+	//   "METRIC_ACTIVE_VIEW_PERCENT_AUDIBLE_VISIBLE_SECOND_QUAR"
+	//   "METRIC_ACTIVE_VIEW_PERCENT_AUDIBLE_VISIBLE_THIRD_QUAR"
+	//   "METRIC_ACTIVE_VIEW_PERCENT_AUDIBLE_VISIBLE_ON_COMPLETE"
+	//   "METRIC_ACTIVE_VIEW_AUDIBLE_VISIBLE_ON_COMPLETE_IMPRESSIONS"
+	//   "METRIC_VIEWABLE_BID_REQUESTS"
+	//   "METRIC_COOKIE_REACH_IMPRESSION_REACH"
+	//   "METRIC_COOKIE_REACH_AVERAGE_IMPRESSION_FREQUENCY"
+	//   "METRIC_DBM_ENGAGEMENT_RATE"
+	//   "METRIC_RICH_MEDIA_SCROLLS"
+	//   "METRIC_CM_POST_VIEW_REVENUE"
+	//   "METRIC_CM_POST_CLICK_REVENUE"
+	//   "METRIC_FLOODLIGHT_IMPRESSIONS"
+	//   "METRIC_BILLABLE_IMPRESSIONS"
+	//   "METRIC_NIELSEN_AVERAGE_FREQUENCY"
+	//   "METRIC_NIELSEN_IMPRESSIONS"
+	//   "METRIC_NIELSEN_UNIQUE_AUDIENCE"
+	//   "METRIC_NIELSEN_GRP"
+	//   "METRIC_NIELSEN_IMPRESSION_INDEX"
+	//   "METRIC_NIELSEN_IMPRESSIONS_SHARE"
+	//   "METRIC_NIELSEN_POPULATION"
+	//   "METRIC_NIELSEN_POPULATION_REACH"
+	//   "METRIC_NIELSEN_POPULATION_SHARE"
+	//   "METRIC_NIELSEN_REACH_INDEX"
+	//   "METRIC_NIELSEN_REACH_SHARE"
 	//
 	// "METRIC_ACTIVE_VIEW_AUDIBLE_FULLY_ON_SCREEN_HALF_OF_DURATION_IMPRESSIO
 	// NS"
@@ -1064,24 +1303,10 @@ type Parameters struct {
 	//
 	// "METRIC_ACTIVE_VIEW_AUDIBLE_FULLY_ON_SCREEN_HALF_OF_DURATION_TRUEVIEW_
 	// RATE"
-	//   "METRIC_ACTIVE_VIEW_AUDIBLE_VISIBLE_ON_COMPLETE_IMPRESSIONS"
-	//   "METRIC_ACTIVE_VIEW_AVERAGE_VIEWABLE_TIME"
 	//   "METRIC_ACTIVE_VIEW_CUSTOM_METRIC_MEASURABLE_IMPRESSIONS"
 	//   "METRIC_ACTIVE_VIEW_CUSTOM_METRIC_VIEWABLE_IMPRESSIONS"
 	//   "METRIC_ACTIVE_VIEW_CUSTOM_METRIC_VIEWABLE_RATE"
-	//   "METRIC_ACTIVE_VIEW_DISTRIBUTION_UNMEASURABLE"
-	//   "METRIC_ACTIVE_VIEW_DISTRIBUTION_UNVIEWABLE"
-	//   "METRIC_ACTIVE_VIEW_DISTRIBUTION_VIEWABLE"
-	//   "METRIC_ACTIVE_VIEW_ELIGIBLE_IMPRESSIONS"
-	//   "METRIC_ACTIVE_VIEW_MEASURABLE_IMPRESSIONS"
-	//   "METRIC_ACTIVE_VIEW_PCT_MEASURABLE_IMPRESSIONS"
-	//   "METRIC_ACTIVE_VIEW_PCT_VIEWABLE_IMPRESSIONS"
 	//   "METRIC_ACTIVE_VIEW_PERCENT_AUDIBLE_IMPRESSIONS"
-	//   "METRIC_ACTIVE_VIEW_PERCENT_AUDIBLE_VISIBLE_AT_START"
-	//   "METRIC_ACTIVE_VIEW_PERCENT_AUDIBLE_VISIBLE_FIRST_QUAR"
-	//   "METRIC_ACTIVE_VIEW_PERCENT_AUDIBLE_VISIBLE_ON_COMPLETE"
-	//   "METRIC_ACTIVE_VIEW_PERCENT_AUDIBLE_VISIBLE_SECOND_QUAR"
-	//   "METRIC_ACTIVE_VIEW_PERCENT_AUDIBLE_VISIBLE_THIRD_QUAR"
 	//   "METRIC_ACTIVE_VIEW_PERCENT_FULLY_ON_SCREEN_2_SEC"
 	//   "METRIC_ACTIVE_VIEW_PERCENT_FULL_SCREEN"
 	//   "METRIC_ACTIVE_VIEW_PERCENT_IN_BACKGROUND"
@@ -1105,16 +1330,6 @@ type Parameters struct {
 	//   "METRIC_ACTIVE_VIEW_PERCENT_PLAY_TIME_AUDIBLE"
 	//   "METRIC_ACTIVE_VIEW_PERCENT_PLAY_TIME_AUDIBLE_AND_VISIBLE"
 	//   "METRIC_ACTIVE_VIEW_PERCENT_PLAY_TIME_VISIBLE"
-	//   "METRIC_ACTIVE_VIEW_PERCENT_VIEWABLE_FOR_TIME_THRESHOLD"
-	//   "METRIC_ACTIVE_VIEW_PERCENT_VISIBLE_AT_START"
-	//   "METRIC_ACTIVE_VIEW_PERCENT_VISIBLE_FIRST_QUAR"
-	//   "METRIC_ACTIVE_VIEW_PERCENT_VISIBLE_ON_COMPLETE"
-	//   "METRIC_ACTIVE_VIEW_PERCENT_VISIBLE_SECOND_QUAR"
-	//   "METRIC_ACTIVE_VIEW_PERCENT_VISIBLE_THIRD_QUAR"
-	//   "METRIC_ACTIVE_VIEW_UNMEASURABLE_IMPRESSIONS"
-	//   "METRIC_ACTIVE_VIEW_UNVIEWABLE_IMPRESSIONS"
-	//   "METRIC_ACTIVE_VIEW_VIEWABLE_FOR_TIME_THRESHOLD"
-	//   "METRIC_ACTIVE_VIEW_VIEWABLE_IMPRESSIONS"
 	//   "METRIC_ADAPTED_AUDIENCE_FREQUENCY"
 	//   "METRIC_ADLINGO_FEE_ADVERTISER_CURRENCY"
 	//   "METRIC_AUDIO_CLIENT_COST_ECPCL_ADVERTISER_CURRENCY"
@@ -1124,19 +1339,12 @@ type Parameters struct {
 	//   "METRIC_AUDIO_UNMUTES_AUDIO"
 	//   "METRIC_AUDIO_UNMUTES_VIDEO"
 	//   "METRIC_AVERAGE_DISPLAY_TIME"
-	//   "METRIC_AVERAGE_IMPRESSION_FREQUENCY_PER_COOKIE"
 	//   "METRIC_AVERAGE_IMPRESSION_FREQUENCY_PER_USER"
 	//   "METRIC_AVERAGE_INTERACTION_TIME"
-	//   "METRIC_AVERAGE_VIEW_FREQUENCY_PER_COOKIE"
 	//   "METRIC_AVERAGE_WATCH_TIME_PER_IMPRESSION"
 	//   "METRIC_BEGIN_TO_RENDER_ELIGIBLE_IMPRESSIONS"
 	//   "METRIC_BEGIN_TO_RENDER_IMPRESSIONS"
 	//   "METRIC_BENCHMARK_FREQUENCY"
-	//   "METRIC_BID_REQUESTS"
-	//   "METRIC_BILLABLE_COST_ADVERTISER"
-	//   "METRIC_BILLABLE_COST_PARTNER"
-	//   "METRIC_BILLABLE_COST_USD"
-	//   "METRIC_BILLABLE_IMPRESSIONS"
 	//   "METRIC_BRAND_LIFT_ABSOLUTE_BRAND_LIFT"
 	//   "METRIC_BRAND_LIFT_ALL_SURVEY_RESPONSES"
 	//   "METRIC_BRAND_LIFT_BASELINE_POSITIVE_RESPONSE_RATE"
@@ -1147,8 +1355,6 @@ type Parameters struct {
 	//   "METRIC_BRAND_LIFT_RELATIVE_BRAND_LIFT"
 	//   "METRIC_BRAND_LIFT_USERS"
 	//   "METRIC_CARD_CLICKS"
-	//   "METRIC_CLICKS"
-	//   "METRIC_CLICK_TO_POST_CLICK_CONVERSION_RATE"
 	//   "METRIC_CLIENT_COST_ADVERTISER_CURRENCY"
 	//   "METRIC_CLIENT_COST_ECPA_ADVERTISER_CURRENCY"
 	//   "METRIC_CLIENT_COST_ECPA_PC_ADVERTISER_CURRENCY"
@@ -1156,45 +1362,19 @@ type Parameters struct {
 	//   "METRIC_CLIENT_COST_ECPC_ADVERTISER_CURRENCY"
 	//   "METRIC_CLIENT_COST_ECPM_ADVERTISER_CURRENCY"
 	//   "METRIC_CLIENT_COST_VIEWABLE_ECPM_ADVERTISER_CURRENCY"
-	//   "METRIC_CM_POST_CLICK_REVENUE"
 	//   "METRIC_CM_POST_CLICK_REVENUE_CROSS_ENVIRONMENT"
-	//   "METRIC_CM_POST_VIEW_REVENUE"
 	//   "METRIC_CM_POST_VIEW_REVENUE_CROSS_ENVIRONMENT"
 	//   "METRIC_COMPANION_CLICKS_AUDIO"
 	//   "METRIC_COMPANION_IMPRESSIONS_AUDIO"
 	//   "METRIC_COMPLETE_LISTENS_AUDIO"
 	//   "METRIC_COMPLETION_RATE_AUDIO"
-	//   "METRIC_CONVERSIONS_PER_MILLE"
-	//   "METRIC_COOKIE_REACH_AVERAGE_IMPRESSION_FREQUENCY"
-	//   "METRIC_COOKIE_REACH_IMPRESSION_REACH"
-	//   "METRIC_COST_PER_STORE_VISIT"
 	//   "METRIC_COUNTERS"
-	//   "METRIC_CPM_FEE1_ADVERTISER"
-	//   "METRIC_CPM_FEE1_PARTNER"
-	//   "METRIC_CPM_FEE1_USD"
-	//   "METRIC_CPM_FEE2_ADVERTISER"
-	//   "METRIC_CPM_FEE2_PARTNER"
-	//   "METRIC_CPM_FEE2_USD"
-	//   "METRIC_CPM_FEE3_ADVERTISER"
-	//   "METRIC_CPM_FEE3_PARTNER"
-	//   "METRIC_CPM_FEE3_USD"
-	//   "METRIC_CPM_FEE4_ADVERTISER"
-	//   "METRIC_CPM_FEE4_PARTNER"
-	//   "METRIC_CPM_FEE4_USD"
-	//   "METRIC_CPM_FEE5_ADVERTISER"
-	//   "METRIC_CPM_FEE5_PARTNER"
-	//   "METRIC_CPM_FEE5_USD"
-	//   "METRIC_CTR"
 	//   "METRIC_CUSTOM_FEE_1_ADVERTISER_CURRENCY"
 	//   "METRIC_CUSTOM_FEE_2_ADVERTISER_CURRENCY"
 	//   "METRIC_CUSTOM_FEE_3_ADVERTISER_CURRENCY"
 	//   "METRIC_CUSTOM_FEE_4_ADVERTISER_CURRENCY"
 	//   "METRIC_CUSTOM_FEE_5_ADVERTISER_CURRENCY"
 	//   "METRIC_CUSTOM_VALUE_PER_1000_IMPRESSIONS"
-	//   "METRIC_DATA_COST_ADVERTISER"
-	//   "METRIC_DATA_COST_PARTNER"
-	//   "METRIC_DATA_COST_USD"
-	//   "METRIC_DBM_ENGAGEMENT_RATE"
 	//   "METRIC_ENGAGEMENTS"
 	//
 	// "METRIC_ESTIMATED_CPM_FOR_IMPRESSIONS_WITH_CUSTOM_VALUE_ADVERTISER_CUR
@@ -1204,71 +1384,7 @@ type Parameters struct {
 	// SER_CURRENCY"
 	//   "METRIC_EXITS"
 	//   "METRIC_EXPANSIONS"
-	//   "METRIC_FEE10_ADVERTISER"
-	//   "METRIC_FEE10_PARTNER"
-	//   "METRIC_FEE10_USD"
-	//   "METRIC_FEE11_ADVERTISER"
-	//   "METRIC_FEE11_PARTNER"
-	//   "METRIC_FEE11_USD"
-	//   "METRIC_FEE12_ADVERTISER"
-	//   "METRIC_FEE12_PARTNER"
-	//   "METRIC_FEE12_USD"
-	//   "METRIC_FEE13_ADVERTISER"
-	//   "METRIC_FEE13_PARTNER"
-	//   "METRIC_FEE13_USD"
-	//   "METRIC_FEE14_ADVERTISER"
-	//   "METRIC_FEE14_PARTNER"
-	//   "METRIC_FEE14_USD"
-	//   "METRIC_FEE15_ADVERTISER"
-	//   "METRIC_FEE15_PARTNER"
-	//   "METRIC_FEE15_USD"
-	//   "METRIC_FEE16_ADVERTISER"
-	//   "METRIC_FEE16_PARTNER"
-	//   "METRIC_FEE16_USD"
-	//   "METRIC_FEE17_ADVERTISER"
-	//   "METRIC_FEE17_PARTNER"
-	//   "METRIC_FEE17_USD"
-	//   "METRIC_FEE18_ADVERTISER"
-	//   "METRIC_FEE18_PARTNER"
-	//   "METRIC_FEE18_USD"
-	//   "METRIC_FEE19_ADVERTISER"
-	//   "METRIC_FEE19_PARTNER"
-	//   "METRIC_FEE19_USD"
-	//   "METRIC_FEE20_ADVERTISER"
-	//   "METRIC_FEE20_PARTNER"
-	//   "METRIC_FEE20_USD"
-	//   "METRIC_FEE21_ADVERTISER"
-	//   "METRIC_FEE21_PARTNER"
-	//   "METRIC_FEE21_USD"
-	//   "METRIC_FEE22_ADVERTISER"
-	//   "METRIC_FEE22_PARTNER"
-	//   "METRIC_FEE22_USD"
-	//   "METRIC_FEE2_ADVERTISER"
-	//   "METRIC_FEE2_PARTNER"
-	//   "METRIC_FEE2_USD"
-	//   "METRIC_FEE3_ADVERTISER"
-	//   "METRIC_FEE3_PARTNER"
-	//   "METRIC_FEE3_USD"
-	//   "METRIC_FEE4_ADVERTISER"
-	//   "METRIC_FEE4_PARTNER"
-	//   "METRIC_FEE4_USD"
-	//   "METRIC_FEE5_ADVERTISER"
-	//   "METRIC_FEE5_PARTNER"
-	//   "METRIC_FEE5_USD"
-	//   "METRIC_FEE6_ADVERTISER"
-	//   "METRIC_FEE6_PARTNER"
-	//   "METRIC_FEE6_USD"
-	//   "METRIC_FEE7_ADVERTISER"
-	//   "METRIC_FEE7_PARTNER"
-	//   "METRIC_FEE7_USD"
-	//   "METRIC_FEE8_ADVERTISER"
-	//   "METRIC_FEE8_PARTNER"
-	//   "METRIC_FEE8_USD"
-	//   "METRIC_FEE9_ADVERTISER"
-	//   "METRIC_FEE9_PARTNER"
-	//   "METRIC_FEE9_USD"
 	//   "METRIC_FIRST_QUARTILE_AUDIO"
-	//   "METRIC_FLOODLIGHT_IMPRESSIONS"
 	//   "METRIC_GENERAL_INVALID_TRAFFIC_GIVT_IMPRESSIONS"
 	//   "METRIC_GENERAL_INVALID_TRAFFIC_GIVT_TRACKED_ADS"
 	//   "METRIC_GIVT_ACTIVE_VIEW_ELIGIBLE_IMPRESSIONS"
@@ -1280,8 +1396,6 @@ type Parameters struct {
 	//   "METRIC_GMAIL_POST_CLICK_CONVERSIONS"
 	//   "METRIC_GMAIL_POST_VIEW_CONVERSIONS"
 	//   "METRIC_GMAIL_POTENTIAL_VIEWS"
-	//   "METRIC_IMPRESSIONS"
-	//   "METRIC_IMPRESSIONS_TO_CONVERSION_RATE"
 	//   "METRIC_IMPRESSIONS_WITH_CUSTOM_VALUE"
 	//   "METRIC_IMPRESSIONS_WITH_POSITIVE_CUSTOM_VALUE"
 	//   "METRIC_IMPRESSION_CUSTOM_VALUE_COST"
@@ -1293,82 +1407,16 @@ type Parameters struct {
 	//   "METRIC_INVALID_CLICKS"
 	//   "METRIC_INVALID_IMPRESSIONS"
 	//   "METRIC_INVALID_TRACKED_ADS"
-	//   "METRIC_LAST_CLICKS"
-	//   "METRIC_LAST_IMPRESSIONS"
-	//   "METRIC_MEDIA_COST_ADVERTISER"
-	//   "METRIC_MEDIA_COST_ADVERTISER_CURRENCY_PER_STORE_VISIT_ADX_ONLY"
-	//   "METRIC_MEDIA_COST_ECPAPC_ADVERTISER"
-	//   "METRIC_MEDIA_COST_ECPAPC_PARTNER"
-	//   "METRIC_MEDIA_COST_ECPAPC_USD"
-	//   "METRIC_MEDIA_COST_ECPAPV_ADVERTISER"
-	//   "METRIC_MEDIA_COST_ECPAPV_PARTNER"
-	//   "METRIC_MEDIA_COST_ECPAPV_USD"
-	//   "METRIC_MEDIA_COST_ECPA_ADVERTISER"
-	//   "METRIC_MEDIA_COST_ECPA_PARTNER"
-	//   "METRIC_MEDIA_COST_ECPA_USD"
-	//   "METRIC_MEDIA_COST_ECPCV_ADVERTISER"
-	//   "METRIC_MEDIA_COST_ECPCV_PARTNER"
-	//   "METRIC_MEDIA_COST_ECPCV_USD"
-	//   "METRIC_MEDIA_COST_ECPC_ADVERTISER"
-	//   "METRIC_MEDIA_COST_ECPC_PARTNER"
-	//   "METRIC_MEDIA_COST_ECPC_USD"
-	//   "METRIC_MEDIA_COST_ECPM_ADVERTISER"
-	//   "METRIC_MEDIA_COST_ECPM_PARTNER"
-	//   "METRIC_MEDIA_COST_ECPM_USD"
-	//   "METRIC_MEDIA_COST_PARTNER"
-	//   "METRIC_MEDIA_COST_USD"
-	//   "METRIC_MEDIA_COST_VIEWABLE_ECPM_ADVERTISER"
-	//   "METRIC_MEDIA_COST_VIEWABLE_ECPM_PARTNER"
-	//   "METRIC_MEDIA_COST_VIEWABLE_ECPM_USD"
-	//   "METRIC_MEDIA_FEE1_ADVERTISER"
-	//   "METRIC_MEDIA_FEE1_PARTNER"
-	//   "METRIC_MEDIA_FEE1_USD"
-	//   "METRIC_MEDIA_FEE2_ADVERTISER"
-	//   "METRIC_MEDIA_FEE2_PARTNER"
-	//   "METRIC_MEDIA_FEE2_USD"
-	//   "METRIC_MEDIA_FEE3_ADVERTISER"
-	//   "METRIC_MEDIA_FEE3_PARTNER"
-	//   "METRIC_MEDIA_FEE3_USD"
-	//   "METRIC_MEDIA_FEE4_ADVERTISER"
-	//   "METRIC_MEDIA_FEE4_PARTNER"
-	//   "METRIC_MEDIA_FEE4_USD"
-	//   "METRIC_MEDIA_FEE5_ADVERTISER"
-	//   "METRIC_MEDIA_FEE5_PARTNER"
-	//   "METRIC_MEDIA_FEE5_USD"
 	//   "METRIC_MIDPOINT_AUDIO"
-	//   "METRIC_NIELSEN_AVERAGE_FREQUENCY"
-	//   "METRIC_NIELSEN_GRP"
-	//   "METRIC_NIELSEN_IMPRESSIONS"
-	//   "METRIC_NIELSEN_IMPRESSIONS_SHARE"
-	//   "METRIC_NIELSEN_IMPRESSION_INDEX"
-	//   "METRIC_NIELSEN_POPULATION"
-	//   "METRIC_NIELSEN_POPULATION_REACH"
-	//   "METRIC_NIELSEN_POPULATION_SHARE"
-	//   "METRIC_NIELSEN_REACH_INDEX"
-	//   "METRIC_NIELSEN_REACH_SHARE"
-	//   "METRIC_NIELSEN_UNIQUE_AUDIENCE"
 	//   "METRIC_ORIGINAL_AUDIENCE_FREQUENCY"
 	//   "METRIC_PAUSES_AUDIO"
 	//   "METRIC_PERCENT_IMPRESSIONS_WITH_POSITIVE_CUSTOM_VALUE"
-	//   "METRIC_PLATFORM_FEE_ADVERTISER"
-	//   "METRIC_PLATFORM_FEE_PARTNER"
 	//   "METRIC_PLATFORM_FEE_RATE"
-	//   "METRIC_PLATFORM_FEE_USD"
 	//   "METRIC_POST_CLICK_CONVERSIONS_CROSS_ENVIRONMENT"
 	//   "METRIC_POST_VIEW_CONVERSIONS_CROSS_ENVIRONMENT"
 	//   "METRIC_POTENTIAL_IMPRESSIONS"
 	//   "METRIC_POTENTIAL_VIEWS"
 	//   "METRIC_PREMIUM_FEE_ADVERTISER_CURRENCY"
-	//   "METRIC_PROFIT_ADVERTISER"
-	//   "METRIC_PROFIT_ECPM_ADVERTISER"
-	//   "METRIC_PROFIT_ECPM_PARTNER"
-	//   "METRIC_PROFIT_ECPM_USD"
-	//   "METRIC_PROFIT_MARGIN"
-	//   "METRIC_PROFIT_PARTNER"
-	//   "METRIC_PROFIT_USD"
-	//   "METRIC_PROFIT_VIEWABLE_ECPM_ADVERTISER"
-	//   "METRIC_PROFIT_VIEWABLE_ECPM_PARTNER"
-	//   "METRIC_PROFIT_VIEWABLE_ECPM_USD"
 	//
 	// "METRIC_PROGRAMMATIC_GUARANTEED_IMPRESSIONS_PASSED_DUE_TO_FREQUENCY"
 	//
@@ -1377,130 +1425,89 @@ type Parameters struct {
 	//   "METRIC_REFUND_BILLABLE_COST_ADVERTISER_CURRENCY"
 	//   "METRIC_REFUND_MEDIA_COST_ADVERTISER_CURRENCY"
 	//   "METRIC_REFUND_PLATFORM_FEE_ADVERTISER_CURRENCY"
-	//   "METRIC_REVENUE_ADVERTISER"
-	//   "METRIC_REVENUE_ADVERTISER_CURRENCY_PER_STORE_VISIT_ADX_ONLY"
-	//   "METRIC_REVENUE_ECPAPC_ADVERTISER"
-	//   "METRIC_REVENUE_ECPAPC_PARTNER"
-	//   "METRIC_REVENUE_ECPAPC_USD"
-	//   "METRIC_REVENUE_ECPAPV_ADVERTISER"
-	//   "METRIC_REVENUE_ECPAPV_PARTNER"
-	//   "METRIC_REVENUE_ECPAPV_USD"
-	//   "METRIC_REVENUE_ECPA_ADVERTISER"
-	//   "METRIC_REVENUE_ECPA_PARTNER"
-	//   "METRIC_REVENUE_ECPA_USD"
-	//   "METRIC_REVENUE_ECPCV_ADVERTISER"
-	//   "METRIC_REVENUE_ECPCV_PARTNER"
-	//   "METRIC_REVENUE_ECPCV_USD"
-	//   "METRIC_REVENUE_ECPC_ADVERTISER"
-	//   "METRIC_REVENUE_ECPC_PARTNER"
-	//   "METRIC_REVENUE_ECPC_USD"
-	//   "METRIC_REVENUE_ECPM_ADVERTISER"
-	//   "METRIC_REVENUE_ECPM_PARTNER"
-	//   "METRIC_REVENUE_ECPM_USD"
-	//   "METRIC_REVENUE_PARTNER"
-	//   "METRIC_REVENUE_USD"
-	//   "METRIC_REVENUE_VIEWABLE_ECPM_ADVERTISER"
-	//   "METRIC_REVENUE_VIEWABLE_ECPM_PARTNER"
-	//   "METRIC_REVENUE_VIEWABLE_ECPM_USD"
 	//   "METRIC_RICH_MEDIA_ENGAGEMENTS"
-	//   "METRIC_RICH_MEDIA_SCROLLS"
-	//   "METRIC_RICH_MEDIA_VIDEO_COMPLETIONS"
-	//   "METRIC_RICH_MEDIA_VIDEO_FIRST_QUARTILE_COMPLETES"
-	//   "METRIC_RICH_MEDIA_VIDEO_FULL_SCREENS"
-	//   "METRIC_RICH_MEDIA_VIDEO_MIDPOINTS"
-	//   "METRIC_RICH_MEDIA_VIDEO_MUTES"
-	//   "METRIC_RICH_MEDIA_VIDEO_PAUSES"
-	//   "METRIC_RICH_MEDIA_VIDEO_PLAYS"
-	//   "METRIC_RICH_MEDIA_VIDEO_SKIPS"
-	//   "METRIC_RICH_MEDIA_VIDEO_THIRD_QUARTILE_COMPLETES"
 	//   "METRIC_STARTS_AUDIO"
 	//   "METRIC_STOPS_AUDIO"
-	//   "METRIC_STORE_VISITS_ADX_ONLY"
 	//   "METRIC_STORE_VISIT_CONVERSIONS"
-	//   "METRIC_TEA_TRUEVIEW_IMPRESSIONS"
-	//   "METRIC_TEA_TRUEVIEW_UNIQUE_COOKIES"
 	//   "METRIC_THIRD_QUARTILE_AUDIO"
 	//   "METRIC_TIMERS"
 	//   "METRIC_TOTAL_AUDIO_MEDIA_COST_ECPCL_ADVERTISER_CURRENCY"
-	//   "METRIC_TOTAL_CONVERSIONS"
 	//   "METRIC_TOTAL_CONVERSIONS_CROSS_ENVIRONMENT"
-	//   "METRIC_TOTAL_COOKIES"
 	//   "METRIC_TOTAL_DISPLAY_TIME"
 	//   "METRIC_TOTAL_IMPRESSION_CUSTOM_VALUE"
 	//   "METRIC_TOTAL_INTERACTION_TIME"
-	//   "METRIC_TOTAL_MEDIA_COST_ADVERTISER"
-	//
-	// "METRIC_TOTAL_MEDIA_COST_ADVERTISER_CURRENCY_PER_STORE_VISIT_ADX_ONLY"
-	//   "METRIC_TOTAL_MEDIA_COST_ECPAPC_ADVERTISER"
-	//   "METRIC_TOTAL_MEDIA_COST_ECPAPC_PARTNER"
-	//   "METRIC_TOTAL_MEDIA_COST_ECPAPC_USD"
-	//   "METRIC_TOTAL_MEDIA_COST_ECPAPV_ADVERTISER"
-	//   "METRIC_TOTAL_MEDIA_COST_ECPAPV_PARTNER"
-	//   "METRIC_TOTAL_MEDIA_COST_ECPAPV_USD"
-	//   "METRIC_TOTAL_MEDIA_COST_ECPA_ADVERTISER"
-	//   "METRIC_TOTAL_MEDIA_COST_ECPA_PARTNER"
-	//   "METRIC_TOTAL_MEDIA_COST_ECPA_USD"
-	//   "METRIC_TOTAL_MEDIA_COST_ECPCV_ADVERTISER"
-	//   "METRIC_TOTAL_MEDIA_COST_ECPCV_PARTNER"
-	//   "METRIC_TOTAL_MEDIA_COST_ECPCV_USD"
-	//   "METRIC_TOTAL_MEDIA_COST_ECPC_ADVERTISER"
-	//   "METRIC_TOTAL_MEDIA_COST_ECPC_PARTNER"
-	//   "METRIC_TOTAL_MEDIA_COST_ECPC_USD"
-	//   "METRIC_TOTAL_MEDIA_COST_ECPM_ADVERTISER"
-	//   "METRIC_TOTAL_MEDIA_COST_ECPM_PARTNER"
-	//   "METRIC_TOTAL_MEDIA_COST_ECPM_USD"
-	//   "METRIC_TOTAL_MEDIA_COST_PARTNER"
-	//   "METRIC_TOTAL_MEDIA_COST_USD"
-	//   "METRIC_TOTAL_MEDIA_COST_VIEWABLE_ECPM_ADVERTISER"
-	//   "METRIC_TOTAL_MEDIA_COST_VIEWABLE_ECPM_PARTNER"
-	//   "METRIC_TOTAL_MEDIA_COST_VIEWABLE_ECPM_USD"
 	//   "METRIC_TOTAL_USERS"
-	//   "METRIC_TOTAL_VIEWERS_COOKIES"
 	//   "METRIC_TRACKED_ADS"
-	//   "METRIC_TRUEVIEW_AVERAGE_CPE_ADVERTISER"
-	//   "METRIC_TRUEVIEW_AVERAGE_CPE_PARTNER"
-	//   "METRIC_TRUEVIEW_AVERAGE_CPE_USD"
-	//   "METRIC_TRUEVIEW_CONVERSION_COST_MANY_PER_VIEW_ADVERTISER"
-	//   "METRIC_TRUEVIEW_CONVERSION_COST_MANY_PER_VIEW_PARTNER"
-	//   "METRIC_TRUEVIEW_CONVERSION_COST_MANY_PER_VIEW_USD"
-	//   "METRIC_TRUEVIEW_CONVERSION_MANY_PER_VIEW"
-	//   "METRIC_TRUEVIEW_CONVERSION_RATE_ONE_PER_VIEW"
-	//   "METRIC_TRUEVIEW_CPV_ADVERTISER"
-	//   "METRIC_TRUEVIEW_CPV_PARTNER"
-	//   "METRIC_TRUEVIEW_CPV_USD"
-	//   "METRIC_TRUEVIEW_EARNED_LIKES"
-	//   "METRIC_TRUEVIEW_EARNED_PLAYLIST_ADDITIONS"
-	//   "METRIC_TRUEVIEW_EARNED_SHARES"
-	//   "METRIC_TRUEVIEW_EARNED_SUBSCRIBERS"
-	//   "METRIC_TRUEVIEW_EARNED_VIEWS"
-	//   "METRIC_TRUEVIEW_ENGAGEMENTS"
-	//   "METRIC_TRUEVIEW_ENGAGEMENT_RATE"
 	//   "METRIC_TRUEVIEW_GENERAL_INVALID_TRAFFIC_GIVT_VIEWS"
-	//   "METRIC_TRUEVIEW_IMPRESSION_SHARE"
 	//   "METRIC_TRUEVIEW_INVALID_VIEWS"
-	//   "METRIC_TRUEVIEW_LOST_IS_BUDGET"
-	//   "METRIC_TRUEVIEW_LOST_IS_RANK"
-	//   "METRIC_TRUEVIEW_TOTAL_CONVERSION_VALUES_ADVERTISER"
-	//   "METRIC_TRUEVIEW_TOTAL_CONVERSION_VALUES_PARTNER"
-	//   "METRIC_TRUEVIEW_TOTAL_CONVERSION_VALUES_USD"
-	//   "METRIC_TRUEVIEW_UNIQUE_VIEWERS"
-	//   "METRIC_TRUEVIEW_VIEWS"
-	//   "METRIC_TRUEVIEW_VIEW_RATE"
-	//   "METRIC_TRUEVIEW_VIEW_THROUGH_CONVERSION"
 	//   "METRIC_UNIQUE_COOKIES_WITH_IMPRESSIONS"
 	//   "METRIC_UNIQUE_REACH_AVERAGE_IMPRESSION_FREQUENCY"
 	//   "METRIC_UNIQUE_REACH_CLICK_REACH"
 	//   "METRIC_UNIQUE_REACH_IMPRESSION_REACH"
 	//   "METRIC_UNIQUE_REACH_TOTAL_REACH"
-	//   "METRIC_UNIQUE_VISITORS_COOKIES"
-	//   "METRIC_UNKNOWN"
 	//   "METRIC_VERIFIABLE_IMPRESSIONS"
 	//   "METRIC_VIDEO_CLIENT_COST_ECPCV_ADVERTISER_CURRENCY"
-	//   "METRIC_VIDEO_COMPANION_CLICKS"
-	//   "METRIC_VIDEO_COMPANION_IMPRESSIONS"
-	//   "METRIC_VIDEO_COMPLETION_RATE"
-	//   "METRIC_VIEWABLE_BID_REQUESTS"
 	//   "METRIC_WATCH_TIME"
+	//   "METRIC_LAST_TOUCH_TOTAL_CONVERSIONS"
+	//   "METRIC_LAST_TOUCH_CLICK_THROUGH_CONVERSIONS"
+	//   "METRIC_LAST_TOUCH_VIEW_THROUGH_CONVERSIONS"
+	//   "METRIC_TOTAL_PATHS"
+	//   "METRIC_TOTAL_EXPOSURES"
+	//   "METRIC_PATH_CONVERSION_RATE"
+	//   "METRIC_CONVERTING_PATHS"
+	//   "METRIC_ACTIVITY_REVENUE"
+	//   "METRIC_PERCENT_INVALID_IMPRESSIONS_PREBID"
+	//   "METRIC_GRP_CORRECTED_IMPRESSIONS"
+	//   "METRIC_DEMO_CORRECTED_CLICKS"
+	//   "METRIC_VIRTUAL_PEOPLE_IMPRESSION_REACH_BY_DEMO"
+	//   "METRIC_VIRTUAL_PEOPLE_CLICK_REACH_BY_DEMO"
+	//   "METRIC_VIRTUAL_PEOPLE_AVERAGE_IMPRESSION_FREQUENCY_BY_DEMO"
+	//   "METRIC_DEMO_COMPOSITION_IMPRESSION"
+	//   "METRIC_VIRTUAL_PEOPLE_IMPRESSION_REACH_SHARE_PERCENT"
+	//   "METRIC_DEMO_POPULATION"
+	//   "METRIC_VIRTUAL_PEOPLE_IMPRESSION_REACH_PERCENT"
+	//   "METRIC_TARGET_RATING_POINTS"
+	//   "METRIC_PROVISIONAL_IMPRESSIONS"
+	//   "METRIC_VENDOR_BLOCKED_ADS"
+	//   "METRIC_GRP_CORRECTED_VIEWABLE_IMPRESSIONS"
+	//   "METRIC_GRP_CORRECTED_VIEWABLE_IMPRESSIONS_SHARE_PERCENT"
+	//   "METRIC_VIEWABLE_GROSS_RATING_POINTS"
+	//
+	// "METRIC_VIRTUAL_PEOPLE_AVERAGE_VIEWABLE_IMPRESSION_FREQUENCY_BY_DEMO"
+	//   "METRIC_VIRTUAL_PEOPLE_VIEWABLE_IMPRESSION_REACH_BY_DEMO"
+	//   "METRIC_VIRTUAL_PEOPLE_VIEWABLE_IMPRESSION_REACH_PERCENT"
+	//   "METRIC_VIRTUAL_PEOPLE_VIEWABLE_IMPRESSION_REACH_SHARE_PERCENT"
+	//   "METRIC_ENGAGEMENT_RATE"
+	//   "METRIC_CM360_POST_VIEW_REVENUE"
+	//   "METRIC_CM360_POST_CLICK_REVENUE"
+	//   "METRIC_CM360_POST_CLICK_REVENUE_CROSS_ENVIRONMENT"
+	//   "METRIC_CM360_POST_VIEW_REVENUE_CROSS_ENVIRONMENT"
+	//   "METRIC_PERCENTAGE_FROM_CURRENT_IO_GOAL"
+	//   "METRIC_DUPLICATE_FLOODLIGHT_IMPRESSIONS"
+	//   "METRIC_COOKIE_CONSENTED_FLOODLIGHT_IMPRESSIONS"
+	//   "METRIC_COOKIE_UNCONSENTED_FLOODLIGHT_IMPRESSIONS"
+	//   "METRIC_TRACKING_UNCONSENTED_CLICKS"
+	//   "METRIC_IMPRESSION_LOSS_TARGETED_IMPRESSIONS"
+	//   "METRIC_LINEITEM_BID_RESPONSE_COUNT"
+	//   "METRIC_WIN_LOSS_RATE"
+	//   "METRIC_WIN_LOSS_DEAL_AVAILABLE_REQUESTS"
+	//   "METRIC_WIN_LOSS_LINEITEM_AVAILABLE_REQUESTS"
+	//   "METRIC_WIN_LOSS_DEAL_TARGETED_IMPRESSIONS"
+	//   "METRIC_WIN_LOSS_LINEITEM_TARGETED_IMPRESSIONS"
+	//   "METRIC_VERIFICATION_VIDEO_PLAYER_SIZE_MEASURABLE_IMPRESSIONS"
+	//   "METRIC_TRUEVIEW_ALL_AD_SEQUENCE_IMPRESSIONS"
+	//   "METRIC_IMPRESSIONS_COVIEWED"
+	//   "METRIC_UNIQUE_REACH_IMPRESSION_REACH_COVIEWED"
+	//   "METRIC_UNIQUE_REACH_TOTAL_REACH_COVIEWED"
+	//   "METRIC_UNIQUE_REACH_AVERAGE_IMPRESSION_FREQUENCY_COVIEWED"
+	//   "METRIC_GRP_CORRECTED_IMPRESSIONS_COVIEWED"
+	//   "METRIC_VIRTUAL_PEOPLE_IMPRESSION_REACH_BY_DEMO_COVIEWED"
+	//
+	// "METRIC_VIRTUAL_PEOPLE_AVERAGE_IMPRESSION_FREQUENCY_BY_DEMO_COVIEWED"
+	//   "METRIC_TARGET_RATING_POINTS_COVIEWED"
+	//   "METRIC_DEMO_COMPOSITION_IMPRESSION_COVIEWED"
+	//   "METRIC_VIRTUAL_PEOPLE_IMPRESSION_REACH_SHARE_PERCENT_COVIEWED"
+	//   "METRIC_VIRTUAL_PEOPLE_IMPRESSION_REACH_PERCENT_COVIEWED"
 	Metrics []string `json:"metrics,omitempty"`
 
 	// Options: Additional query options.
@@ -1509,46 +1516,48 @@ type Parameters struct {
 	// Type: Report type.
 	//
 	// Possible values:
-	//   "TYPE_ACTIVE_GRP"
-	//   "TYPE_AUDIENCE_COMPOSITION"
-	//   "TYPE_AUDIENCE_PERFORMANCE"
-	//   "TYPE_CLIENT_SAFE"
-	//   "TYPE_COMSCORE_VCE"
-	//   "TYPE_CROSS_FEE"
-	//   "TYPE_CROSS_PARTNER"
-	//   "TYPE_CROSS_PARTNER_THIRD_PARTY_DATA_PROVIDER"
-	//   "TYPE_ESTIMATED_CONVERSION"
-	//   "TYPE_FEE"
 	//   "TYPE_GENERAL"
+	//   "TYPE_AUDIENCE_PERFORMANCE"
 	//   "TYPE_INVENTORY_AVAILABILITY"
 	//   "TYPE_KEYWORD"
-	//   "TYPE_LINEAR_TV_SEARCH_LIFT"
+	//   "TYPE_PIXEL_LOAD"
+	//   "TYPE_AUDIENCE_COMPOSITION"
+	//   "TYPE_CROSS_PARTNER"
+	//   "TYPE_PAGE_CATEGORY"
+	//   "TYPE_THIRD_PARTY_DATA_PROVIDER"
+	//   "TYPE_CROSS_PARTNER_THIRD_PARTY_DATA_PROVIDER"
+	//   "TYPE_CLIENT_SAFE"
+	//   "TYPE_ORDER_ID"
+	//   "TYPE_FEE"
+	//   "TYPE_CROSS_FEE"
+	//   "TYPE_ACTIVE_GRP"
+	//   "TYPE_YOUTUBE_VERTICAL"
+	//   "TYPE_COMSCORE_VCE"
+	//   "TYPE_TRUEVIEW"
 	//   "TYPE_NIELSEN_AUDIENCE_PROFILE"
 	//   "TYPE_NIELSEN_DAILY_REACH_BUILD"
-	//   "TYPE_NIELSEN_ONLINE_GLOBAL_MARKET"
 	//   "TYPE_NIELSEN_SITE"
-	//   "TYPE_NOT_SUPPORTED"
-	//   "TYPE_ORDER_ID"
-	//   "TYPE_PAGE_CATEGORY"
+	//   "TYPE_REACH_AND_FREQUENCY"
+	//   "TYPE_ESTIMATED_CONVERSION"
+	//   "TYPE_VERIFICATION"
+	//   "TYPE_TRUEVIEW_IAR"
+	//   "TYPE_NIELSEN_ONLINE_GLOBAL_MARKET"
 	//   "TYPE_PETRA_NIELSEN_AUDIENCE_PROFILE"
 	//   "TYPE_PETRA_NIELSEN_DAILY_REACH_BUILD"
 	//   "TYPE_PETRA_NIELSEN_ONLINE_GLOBAL_MARKET"
-	//   "TYPE_PIXEL_LOAD"
-	//   "TYPE_REACH_AND_FREQUENCY"
+	//   "TYPE_NOT_SUPPORTED"
 	//   "TYPE_REACH_AUDIENCE"
-	//   "TYPE_THIRD_PARTY_DATA_PROVIDER"
-	//   "TYPE_TRUEVIEW"
-	//   "TYPE_TRUEVIEW_IAR"
-	//   "TYPE_VERIFICATION"
-	//   "TYPE_YOUTUBE_VERTICAL"
+	//   "TYPE_LINEAR_TV_SEARCH_LIFT"
+	//   "TYPE_PATH"
+	//   "TYPE_PATH_ATTRIBUTION"
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Filters") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Filters") to include in
@@ -1562,6 +1571,418 @@ type Parameters struct {
 
 func (s *Parameters) MarshalJSON() ([]byte, error) {
 	type NoMethod Parameters
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PathFilter: Path filters specify which paths to include in a report.
+// A path is the result of combining DV360 events based on User ID to
+// create a workflow of users' actions. When a path filter is set, the
+// resulting report will only include paths that match the specified
+// event at the specified position. All other paths will be excluded.
+type PathFilter struct {
+	// EventFilters: Filter on an event to be applied to some part of the
+	// path.
+	EventFilters []*EventFilter `json:"eventFilters,omitempty"`
+
+	// PathMatchPosition: Indicates the position of the path the filter
+	// should match to (first, last, or any event in path).
+	//
+	// Possible values:
+	//   "ANY"
+	//   "FIRST"
+	//   "LAST"
+	PathMatchPosition string `json:"pathMatchPosition,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EventFilters") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EventFilters") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PathFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod PathFilter
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PathQueryOptions: Path Query Options for Report Options.
+type PathQueryOptions struct {
+	// ChannelGrouping: Custom Channel Groupings.
+	ChannelGrouping *ChannelGrouping `json:"channelGrouping,omitempty"`
+
+	// PathFilters: Path Filters. There is a limit of 100 path filters that
+	// can be set per report.
+	PathFilters []*PathFilter `json:"pathFilters,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ChannelGrouping") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ChannelGrouping") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PathQueryOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod PathQueryOptions
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PathQueryOptionsFilter: Dimension Filter on path events.
+type PathQueryOptionsFilter struct {
+	// Filter: Dimension the filter is applied to.
+	//
+	// Possible values:
+	//   "FILTER_UNKNOWN"
+	//   "FILTER_DATE"
+	//   "FILTER_DAY_OF_WEEK"
+	//   "FILTER_WEEK"
+	//   "FILTER_MONTH"
+	//   "FILTER_YEAR"
+	//   "FILTER_TIME_OF_DAY"
+	//   "FILTER_CONVERSION_DELAY"
+	//   "FILTER_CREATIVE_ID"
+	//   "FILTER_CREATIVE_SIZE"
+	//   "FILTER_CREATIVE_TYPE"
+	//   "FILTER_EXCHANGE_ID"
+	//   "FILTER_AD_POSITION"
+	//   "FILTER_PUBLIC_INVENTORY"
+	//   "FILTER_INVENTORY_SOURCE"
+	//   "FILTER_CITY"
+	//   "FILTER_REGION"
+	//   "FILTER_DMA"
+	//   "FILTER_COUNTRY"
+	//   "FILTER_SITE_ID"
+	//   "FILTER_CHANNEL_ID"
+	//   "FILTER_PARTNER"
+	//   "FILTER_ADVERTISER"
+	//   "FILTER_INSERTION_ORDER"
+	//   "FILTER_LINE_ITEM"
+	//   "FILTER_PARTNER_CURRENCY"
+	//   "FILTER_ADVERTISER_CURRENCY"
+	//   "FILTER_ADVERTISER_TIMEZONE"
+	//   "FILTER_LINE_ITEM_TYPE"
+	//   "FILTER_USER_LIST"
+	//   "FILTER_USER_LIST_FIRST_PARTY"
+	//   "FILTER_USER_LIST_THIRD_PARTY"
+	//   "FILTER_TARGETED_USER_LIST"
+	//   "FILTER_DATA_PROVIDER"
+	//   "FILTER_ORDER_ID"
+	//   "FILTER_VIDEO_PLAYER_SIZE"
+	//   "FILTER_VIDEO_DURATION_SECONDS"
+	//   "FILTER_KEYWORD"
+	//   "FILTER_PAGE_CATEGORY"
+	//   "FILTER_CAMPAIGN_DAILY_FREQUENCY"
+	//   "FILTER_LINE_ITEM_DAILY_FREQUENCY"
+	//   "FILTER_LINE_ITEM_LIFETIME_FREQUENCY"
+	//   "FILTER_OS"
+	//   "FILTER_BROWSER"
+	//   "FILTER_CARRIER"
+	//   "FILTER_SITE_LANGUAGE"
+	//   "FILTER_INVENTORY_FORMAT"
+	//   "FILTER_ZIP_CODE"
+	//   "FILTER_VIDEO_RATING_TIER"
+	//   "FILTER_VIDEO_FORMAT_SUPPORT"
+	//   "FILTER_VIDEO_SKIPPABLE_SUPPORT"
+	//   "FILTER_VIDEO_CREATIVE_DURATION"
+	//   "FILTER_PAGE_LAYOUT"
+	//   "FILTER_VIDEO_AD_POSITION_IN_STREAM"
+	//   "FILTER_AGE"
+	//   "FILTER_GENDER"
+	//   "FILTER_QUARTER"
+	//   "FILTER_TRUEVIEW_CONVERSION_TYPE"
+	//   "FILTER_MOBILE_GEO"
+	//   "FILTER_MRAID_SUPPORT"
+	//   "FILTER_ACTIVE_VIEW_EXPECTED_VIEWABILITY"
+	//   "FILTER_VIDEO_CREATIVE_DURATION_SKIPPABLE"
+	//   "FILTER_NIELSEN_COUNTRY_CODE"
+	//   "FILTER_NIELSEN_DEVICE_ID"
+	//   "FILTER_NIELSEN_GENDER"
+	//   "FILTER_NIELSEN_AGE"
+	//   "FILTER_INVENTORY_SOURCE_TYPE"
+	//   "FILTER_CREATIVE_WIDTH"
+	//   "FILTER_CREATIVE_HEIGHT"
+	//   "FILTER_DFP_ORDER_ID"
+	//   "FILTER_TRUEVIEW_AGE"
+	//   "FILTER_TRUEVIEW_GENDER"
+	//   "FILTER_TRUEVIEW_PARENTAL_STATUS"
+	//   "FILTER_TRUEVIEW_REMARKETING_LIST"
+	//   "FILTER_TRUEVIEW_INTEREST"
+	//   "FILTER_TRUEVIEW_AD_GROUP_ID"
+	//   "FILTER_TRUEVIEW_AD_GROUP_AD_ID"
+	//   "FILTER_TRUEVIEW_IAR_LANGUAGE"
+	//   "FILTER_TRUEVIEW_IAR_GENDER"
+	//   "FILTER_TRUEVIEW_IAR_AGE"
+	//   "FILTER_TRUEVIEW_IAR_CATEGORY"
+	//   "FILTER_TRUEVIEW_IAR_COUNTRY"
+	//   "FILTER_TRUEVIEW_IAR_CITY"
+	//   "FILTER_TRUEVIEW_IAR_REGION"
+	//   "FILTER_TRUEVIEW_IAR_ZIPCODE"
+	//   "FILTER_TRUEVIEW_IAR_REMARKETING_LIST"
+	//   "FILTER_TRUEVIEW_IAR_INTEREST"
+	//   "FILTER_TRUEVIEW_IAR_PARENTAL_STATUS"
+	//   "FILTER_TRUEVIEW_IAR_TIME_OF_DAY"
+	//   "FILTER_TRUEVIEW_CUSTOM_AFFINITY"
+	//   "FILTER_TRUEVIEW_CATEGORY"
+	//   "FILTER_TRUEVIEW_KEYWORD"
+	//   "FILTER_TRUEVIEW_PLACEMENT"
+	//   "FILTER_TRUEVIEW_URL"
+	//   "FILTER_TRUEVIEW_COUNTRY"
+	//   "FILTER_TRUEVIEW_REGION"
+	//   "FILTER_TRUEVIEW_CITY"
+	//   "FILTER_TRUEVIEW_DMA"
+	//   "FILTER_TRUEVIEW_ZIPCODE"
+	//   "FILTER_NOT_SUPPORTED"
+	//   "FILTER_MEDIA_PLAN"
+	//   "FILTER_TRUEVIEW_IAR_YOUTUBE_CHANNEL"
+	//   "FILTER_TRUEVIEW_IAR_YOUTUBE_VIDEO"
+	//   "FILTER_SKIPPABLE_SUPPORT"
+	//   "FILTER_COMPANION_CREATIVE_ID"
+	//   "FILTER_BUDGET_SEGMENT_DESCRIPTION"
+	//   "FILTER_FLOODLIGHT_ACTIVITY_ID"
+	//   "FILTER_DEVICE_MODEL"
+	//   "FILTER_DEVICE_MAKE"
+	//   "FILTER_DEVICE_TYPE"
+	//   "FILTER_CREATIVE_ATTRIBUTE"
+	//   "FILTER_INVENTORY_COMMITMENT_TYPE"
+	//   "FILTER_INVENTORY_RATE_TYPE"
+	//   "FILTER_INVENTORY_DELIVERY_METHOD"
+	//   "FILTER_INVENTORY_SOURCE_EXTERNAL_ID"
+	//   "FILTER_AUTHORIZED_SELLER_STATE"
+	//   "FILTER_VIDEO_DURATION_SECONDS_RANGE"
+	//   "FILTER_PARTNER_NAME"
+	//   "FILTER_PARTNER_STATUS"
+	//   "FILTER_ADVERTISER_NAME"
+	//   "FILTER_ADVERTISER_INTEGRATION_CODE"
+	//   "FILTER_ADVERTISER_INTEGRATION_STATUS"
+	//   "FILTER_CARRIER_NAME"
+	//   "FILTER_CHANNEL_NAME"
+	//   "FILTER_CITY_NAME"
+	//   "FILTER_COMPANION_CREATIVE_NAME"
+	//   "FILTER_USER_LIST_FIRST_PARTY_NAME"
+	//   "FILTER_USER_LIST_THIRD_PARTY_NAME"
+	//   "FILTER_NIELSEN_RESTATEMENT_DATE"
+	//   "FILTER_NIELSEN_DATE_RANGE"
+	//   "FILTER_INSERTION_ORDER_NAME"
+	//   "FILTER_REGION_NAME"
+	//   "FILTER_DMA_NAME"
+	//   "FILTER_TRUEVIEW_IAR_REGION_NAME"
+	//   "FILTER_TRUEVIEW_DMA_NAME"
+	//   "FILTER_TRUEVIEW_REGION_NAME"
+	//   "FILTER_ACTIVE_VIEW_CUSTOM_METRIC_ID"
+	//   "FILTER_ACTIVE_VIEW_CUSTOM_METRIC_NAME"
+	//   "FILTER_AD_TYPE"
+	//   "FILTER_ALGORITHM"
+	//   "FILTER_ALGORITHM_ID"
+	//   "FILTER_AMP_PAGE_REQUEST"
+	//   "FILTER_ANONYMOUS_INVENTORY_MODELING"
+	//   "FILTER_APP_URL"
+	//   "FILTER_APP_URL_EXCLUDED"
+	//   "FILTER_ATTRIBUTED_USERLIST"
+	//   "FILTER_ATTRIBUTED_USERLIST_COST"
+	//   "FILTER_ATTRIBUTED_USERLIST_TYPE"
+	//   "FILTER_ATTRIBUTION_MODEL"
+	//   "FILTER_AUDIENCE_LIST"
+	//   "FILTER_AUDIENCE_LIST_COST"
+	//   "FILTER_AUDIENCE_LIST_TYPE"
+	//   "FILTER_AUDIENCE_NAME"
+	//   "FILTER_AUDIENCE_TYPE"
+	//   "FILTER_BILLABLE_OUTCOME"
+	//   "FILTER_BRAND_LIFT_TYPE"
+	//   "FILTER_CHANNEL_TYPE"
+	//   "FILTER_CM_PLACEMENT_ID"
+	//   "FILTER_CONVERSION_SOURCE"
+	//   "FILTER_CONVERSION_SOURCE_ID"
+	//   "FILTER_COUNTRY_ID"
+	//   "FILTER_CREATIVE"
+	//   "FILTER_CREATIVE_ASSET"
+	//   "FILTER_CREATIVE_INTEGRATION_CODE"
+	//   "FILTER_CREATIVE_RENDERED_IN_AMP"
+	//   "FILTER_CREATIVE_SOURCE"
+	//   "FILTER_CREATIVE_STATUS"
+	//   "FILTER_DATA_PROVIDER_NAME"
+	//   "FILTER_DETAILED_DEMOGRAPHICS"
+	//   "FILTER_DETAILED_DEMOGRAPHICS_ID"
+	//   "FILTER_DEVICE"
+	//   "FILTER_GAM_INSERTION_ORDER"
+	//   "FILTER_GAM_LINE_ITEM"
+	//   "FILTER_GAM_LINE_ITEM_ID"
+	//   "FILTER_DIGITAL_CONTENT_LABEL"
+	//   "FILTER_DOMAIN"
+	//   "FILTER_ELIGIBLE_COOKIES_ON_FIRST_PARTY_AUDIENCE_LIST"
+	//   "FILTER_ELIGIBLE_COOKIES_ON_THIRD_PARTY_AUDIENCE_LIST_AND_INTEREST"
+	//   "FILTER_EXCHANGE"
+	//   "FILTER_EXCHANGE_CODE"
+	//   "FILTER_EXTENSION"
+	//   "FILTER_EXTENSION_STATUS"
+	//   "FILTER_EXTENSION_TYPE"
+	//   "FILTER_FIRST_PARTY_AUDIENCE_LIST_COST"
+	//   "FILTER_FIRST_PARTY_AUDIENCE_LIST_TYPE"
+	//   "FILTER_FLOODLIGHT_ACTIVITY"
+	//   "FILTER_FORMAT"
+	//   "FILTER_GMAIL_AGE"
+	//   "FILTER_GMAIL_CITY"
+	//   "FILTER_GMAIL_COUNTRY"
+	//   "FILTER_GMAIL_COUNTRY_NAME"
+	//   "FILTER_GMAIL_DEVICE_TYPE"
+	//   "FILTER_GMAIL_DEVICE_TYPE_NAME"
+	//   "FILTER_GMAIL_GENDER"
+	//   "FILTER_GMAIL_REGION"
+	//   "FILTER_GMAIL_REMARKETING_LIST"
+	//   "FILTER_HOUSEHOLD_INCOME"
+	//   "FILTER_IMPRESSION_COUNTING_METHOD"
+	//   "FILTER_YOUTUBE_PROGRAMMATIC_GUARANTEED_INSERTION_ORDER"
+	//   "FILTER_INSERTION_ORDER_INTEGRATION_CODE"
+	//   "FILTER_INSERTION_ORDER_STATUS"
+	//   "FILTER_INTEREST"
+	//   "FILTER_INVENTORY_SOURCE_GROUP"
+	//   "FILTER_INVENTORY_SOURCE_GROUP_ID"
+	//   "FILTER_INVENTORY_SOURCE_ID"
+	//   "FILTER_INVENTORY_SOURCE_NAME"
+	//   "FILTER_LIFE_EVENT"
+	//   "FILTER_LIFE_EVENTS"
+	//   "FILTER_LINE_ITEM_INTEGRATION_CODE"
+	//   "FILTER_LINE_ITEM_NAME"
+	//   "FILTER_LINE_ITEM_STATUS"
+	//   "FILTER_MATCH_RATIO"
+	//   "FILTER_MEASUREMENT_SOURCE"
+	//   "FILTER_MEDIA_PLAN_NAME"
+	//   "FILTER_PARENTAL_STATUS"
+	//   "FILTER_PLACEMENT_ALL_YOUTUBE_CHANNELS"
+	//   "FILTER_PLATFORM"
+	//   "FILTER_PLAYBACK_METHOD"
+	//   "FILTER_POSITION_IN_CONTENT"
+	//   "FILTER_PUBLISHER_PROPERTY"
+	//   "FILTER_PUBLISHER_PROPERTY_ID"
+	//   "FILTER_PUBLISHER_PROPERTY_SECTION"
+	//   "FILTER_PUBLISHER_PROPERTY_SECTION_ID"
+	//   "FILTER_REFUND_REASON"
+	//   "FILTER_REMARKETING_LIST"
+	//   "FILTER_REWARDED"
+	//   "FILTER_SENSITIVE_CATEGORY"
+	//   "FILTER_SERVED_PIXEL_DENSITY"
+	//   "FILTER_TARGETED_DATA_PROVIDERS"
+	//   "FILTER_THIRD_PARTY_AUDIENCE_LIST_COST"
+	//   "FILTER_THIRD_PARTY_AUDIENCE_LIST_TYPE"
+	//   "FILTER_TRUEVIEW_AD"
+	//   "FILTER_TRUEVIEW_AD_GROUP"
+	//   "FILTER_TRUEVIEW_DETAILED_DEMOGRAPHICS"
+	//   "FILTER_TRUEVIEW_DETAILED_DEMOGRAPHICS_ID"
+	//   "FILTER_TRUEVIEW_HOUSEHOLD_INCOME"
+	//   "FILTER_TRUEVIEW_IAR_COUNTRY_NAME"
+	//   "FILTER_TRUEVIEW_REMARKETING_LIST_NAME"
+	//   "FILTER_VARIANT_ID"
+	//   "FILTER_VARIANT_NAME"
+	//   "FILTER_VARIANT_VERSION"
+	//   "FILTER_VERIFICATION_VIDEO_PLAYER_SIZE"
+	//   "FILTER_VERIFICATION_VIDEO_POSITION"
+	//   "FILTER_VIDEO_COMPANION_CREATIVE_SIZE"
+	//   "FILTER_VIDEO_CONTINUOUS_PLAY"
+	//   "FILTER_VIDEO_DURATION"
+	//   "FILTER_YOUTUBE_ADAPTED_AUDIENCE_LIST"
+	//   "FILTER_YOUTUBE_AD_VIDEO"
+	//   "FILTER_YOUTUBE_AD_VIDEO_ID"
+	//   "FILTER_YOUTUBE_CHANNEL"
+	//   "FILTER_YOUTUBE_PROGRAMMATIC_GUARANTEED_ADVERTISER"
+	//   "FILTER_YOUTUBE_PROGRAMMATIC_GUARANTEED_PARTNER"
+	//   "FILTER_YOUTUBE_VIDEO"
+	//   "FILTER_ZIP_POSTAL_CODE"
+	//   "FILTER_PLACEMENT_NAME_ALL_YOUTUBE_CHANNELS"
+	//   "FILTER_TRUEVIEW_PLACEMENT_ID"
+	//   "FILTER_PATH_PATTERN_ID"
+	//   "FILTER_PATH_EVENT_INDEX"
+	//   "FILTER_EVENT_TYPE"
+	//   "FILTER_CHANNEL_GROUPING"
+	//   "FILTER_OM_SDK_AVAILABLE"
+	//   "FILTER_DATA_SOURCE"
+	//   "FILTER_CM360_PLACEMENT_ID"
+	//   "FILTER_TRUEVIEW_CLICK_TYPE_NAME"
+	//   "FILTER_TRUEVIEW_AD_TYPE_NAME"
+	//   "FILTER_VIDEO_CONTENT_DURATION"
+	//   "FILTER_MATCHED_GENRE_TARGET"
+	//   "FILTER_VIDEO_CONTENT_LIVE_STREAM"
+	//   "FILTER_BUDGET_SEGMENT_TYPE"
+	//   "FILTER_BUDGET_SEGMENT_BUDGET"
+	//   "FILTER_BUDGET_SEGMENT_START_DATE"
+	//   "FILTER_BUDGET_SEGMENT_END_DATE"
+	//   "FILTER_BUDGET_SEGMENT_PACING_PERCENTAGE"
+	//   "FILTER_LINE_ITEM_BUDGET"
+	//   "FILTER_LINE_ITEM_START_DATE"
+	//   "FILTER_LINE_ITEM_END_DATE"
+	//   "FILTER_INSERTION_ORDER_GOAL_TYPE"
+	//   "FILTER_LINE_ITEM_PACING_PERCENTAGE"
+	//   "FILTER_INSERTION_ORDER_GOAL_VALUE"
+	//   "FILTER_OMID_CAPABLE"
+	//   "FILTER_VENDOR_MEASUREMENT_MODE"
+	//   "FILTER_IMPRESSION_LOSS_REJECTION_REASON"
+	//   "FILTER_VERIFICATION_VIDEO_PLAYER_SIZE_START"
+	//   "FILTER_VERIFICATION_VIDEO_PLAYER_SIZE_FIRST_QUARTILE"
+	//   "FILTER_VERIFICATION_VIDEO_PLAYER_SIZE_MID_POINT"
+	//   "FILTER_VERIFICATION_VIDEO_PLAYER_SIZE_THIRD_QUARTILE"
+	//   "FILTER_VERIFICATION_VIDEO_PLAYER_SIZE_COMPLETE"
+	//   "FILTER_VERIFICATION_VIDEO_RESIZED"
+	//   "FILTER_VERIFICATION_AUDIBILITY_START"
+	//   "FILTER_VERIFICATION_AUDIBILITY_COMPLETE"
+	//   "FILTER_MEDIA_TYPE"
+	//   "FILTER_AUDIO_FEED_TYPE_NAME"
+	//   "FILTER_TRUEVIEW_TARGETING_EXPANSION"
+	//   "FILTER_PUBLISHER_TRAFFIC_SOURCE"
+	Filter string `json:"filter,omitempty"`
+
+	// Match: Indicates how the filter should be matched to the value.
+	//
+	// Possible values:
+	//   "UNKNOWN"
+	//   "EXACT"
+	//   "PARTIAL"
+	//   "BEGINS_WITH"
+	//   "WILDCARD_EXPRESSION"
+	Match string `json:"match,omitempty"`
+
+	// Values: Value to filter on.
+	Values []string `json:"values,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Filter") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Filter") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PathQueryOptionsFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod PathQueryOptionsFilter
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1604,10 +2025,10 @@ type Query struct {
 
 	// ForceSendFields is a list of field names (e.g. "Kind") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Kind") to include in API
@@ -1630,26 +2051,26 @@ type QueryMetadata struct {
 	// DataRange: Range of report data.
 	//
 	// Possible values:
-	//   "ALL_TIME"
-	//   "CURRENT_DAY"
 	//   "CUSTOM_DATES"
-	//   "LAST_14_DAYS"
-	//   "LAST_30_DAYS"
-	//   "LAST_365_DAYS"
-	//   "LAST_60_DAYS"
-	//   "LAST_7_DAYS"
-	//   "LAST_90_DAYS"
-	//   "MONTH_TO_DATE"
+	//   "CURRENT_DAY"
 	//   "PREVIOUS_DAY"
+	//   "WEEK_TO_DATE"
+	//   "MONTH_TO_DATE"
+	//   "QUARTER_TO_DATE"
+	//   "YEAR_TO_DATE"
+	//   "PREVIOUS_WEEK"
 	//   "PREVIOUS_HALF_MONTH"
 	//   "PREVIOUS_MONTH"
 	//   "PREVIOUS_QUARTER"
-	//   "PREVIOUS_WEEK"
 	//   "PREVIOUS_YEAR"
-	//   "QUARTER_TO_DATE"
+	//   "LAST_7_DAYS"
+	//   "LAST_30_DAYS"
+	//   "LAST_90_DAYS"
+	//   "LAST_365_DAYS"
+	//   "ALL_TIME"
+	//   "LAST_14_DAYS"
 	//   "TYPE_NOT_SUPPORTED"
-	//   "WEEK_TO_DATE"
-	//   "YEAR_TO_DATE"
+	//   "LAST_60_DAYS"
 	DataRange string `json:"dataRange,omitempty"`
 
 	// Format: Format of the generated report.
@@ -1675,10 +2096,8 @@ type QueryMetadata struct {
 	// Locale: Locale of the generated reports. Valid values are cs CZECH de
 	// GERMAN en ENGLISH es SPANISH fr FRENCH it ITALIAN ja JAPANESE ko
 	// KOREAN pl POLISH pt-BR BRAZILIAN_PORTUGUESE ru RUSSIAN tr TURKISH uk
-	// UKRAINIAN zh-CN CHINA_CHINESE zh-TW TAIWAN_CHINESE
-	//
-	// An locale string not in the list above will generate reports in
-	// English.
+	// UKRAINIAN zh-CN CHINA_CHINESE zh-TW TAIWAN_CHINESE An locale string
+	// not in the list above will generate reports in English.
 	Locale string `json:"locale,omitempty"`
 
 	// ReportCount: Number of reports that have been generated for the
@@ -1703,10 +2122,10 @@ type QueryMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "DataRange") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DataRange") to include in
@@ -1732,12 +2151,13 @@ type QuerySchedule struct {
 	// Frequency: How often the query is run.
 	//
 	// Possible values:
-	//   "DAILY"
-	//   "MONTHLY"
 	//   "ONE_TIME"
-	//   "QUARTERLY"
-	//   "SEMI_MONTHLY"
+	//   "DAILY"
 	//   "WEEKLY"
+	//   "SEMI_MONTHLY"
+	//   "MONTHLY"
+	//   "QUARTERLY"
+	//   "YEARLY"
 	Frequency string `json:"frequency,omitempty"`
 
 	// NextRunMinuteOfDay: Time of day at which a new report will be
@@ -1755,10 +2175,10 @@ type QuerySchedule struct {
 
 	// ForceSendFields is a list of field names (e.g. "EndTimeMs") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "EndTimeMs") to include in
@@ -1789,10 +2209,10 @@ type Report struct {
 
 	// ForceSendFields is a list of field names (e.g. "Key") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Key") to include in API
@@ -1816,31 +2236,31 @@ type ReportFailure struct {
 	//
 	// Possible values:
 	//   "AUTHENTICATION_ERROR"
-	//   "DEPRECATED_REPORTING_INVALID_QUERY"
+	//   "UNAUTHORIZED_API_ACCESS"
+	//   "SERVER_ERROR"
+	//   "VALIDATION_ERROR"
+	//   "REPORTING_FATAL_ERROR"
+	//   "REPORTING_TRANSIENT_ERROR"
+	//   "REPORTING_IMCOMPATIBLE_METRICS"
+	//   "REPORTING_ILLEGAL_FILENAME"
+	//   "REPORTING_QUERY_NOT_FOUND"
 	//   "REPORTING_BUCKET_NOT_FOUND"
 	//   "REPORTING_CREATE_BUCKET_FAILED"
 	//   "REPORTING_DELETE_BUCKET_FAILED"
-	//   "REPORTING_FATAL_ERROR"
-	//   "REPORTING_ILLEGAL_FILENAME"
-	//   "REPORTING_IMCOMPATIBLE_METRICS"
-	//   "REPORTING_INVALID_QUERY_MISSING_PARTNER_AND_ADVERTISER_FILTERS"
-	//   "REPORTING_INVALID_QUERY_TITLE_MISSING"
-	//   "REPORTING_INVALID_QUERY_TOO_MANY_UNFILTERED_LARGE_GROUP_BYS"
-	//   "REPORTING_QUERY_NOT_FOUND"
-	//   "REPORTING_TRANSIENT_ERROR"
 	//   "REPORTING_UPDATE_BUCKET_PERMISSION_FAILED"
 	//   "REPORTING_WRITE_BUCKET_OBJECT_FAILED"
-	//   "SERVER_ERROR"
-	//   "UNAUTHORIZED_API_ACCESS"
-	//   "VALIDATION_ERROR"
+	//   "DEPRECATED_REPORTING_INVALID_QUERY"
+	//   "REPORTING_INVALID_QUERY_TOO_MANY_UNFILTERED_LARGE_GROUP_BYS"
+	//   "REPORTING_INVALID_QUERY_TITLE_MISSING"
+	//   "REPORTING_INVALID_QUERY_MISSING_PARTNER_AND_ADVERTISER_FILTERS"
 	ErrorCode string `json:"errorCode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ErrorCode") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ErrorCode") to include in
@@ -1868,10 +2288,10 @@ type ReportKey struct {
 
 	// ForceSendFields is a list of field names (e.g. "QueryId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "QueryId") to include in
@@ -1908,8 +2328,8 @@ type ReportMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "GoogleCloudStoragePath") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -1951,17 +2371,17 @@ type ReportStatus struct {
 	// State: The state of the report.
 	//
 	// Possible values:
+	//   "RUNNING"
 	//   "DONE"
 	//   "FAILED"
-	//   "RUNNING"
 	State string `json:"state,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Failure") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Failure") to include in
@@ -1979,45 +2399,38 @@ func (s *ReportStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// RowStatus: Represents the upload status of a row in the request.
-type RowStatus struct {
-	// Changed: Whether the stored entity is changed as a result of upload.
-	Changed bool `json:"changed,omitempty"`
+// Rule: A Rule defines a name, and a boolean expression in conjunctive
+// normal form (http:
+// //mathworld.wolfram.com/ConjunctiveNormalForm.html){.external} that
+// can be // applied to a path event to determine if that name should be
+// applied.
+type Rule struct {
+	DisjunctiveMatchStatements []*DisjunctiveMatchStatement `json:"disjunctiveMatchStatements,omitempty"`
 
-	// EntityId: Entity Id.
-	EntityId int64 `json:"entityId,omitempty,string"`
+	// Name: Rule name.
+	Name string `json:"name,omitempty"`
 
-	// EntityName: Entity name.
-	EntityName string `json:"entityName,omitempty"`
-
-	// Errors: Reasons why the entity can't be uploaded.
-	Errors []string `json:"errors,omitempty"`
-
-	// Persisted: Whether the entity is persisted.
-	Persisted bool `json:"persisted,omitempty"`
-
-	// RowNumber: Row number.
-	RowNumber int64 `json:"rowNumber,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Changed") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "DisjunctiveMatchStatements") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Changed") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g.
+	// "DisjunctiveMatchStatements") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
-func (s *RowStatus) MarshalJSON() ([]byte, error) {
-	type NoMethod RowStatus
+func (s *Rule) MarshalJSON() ([]byte, error) {
+	type NoMethod Rule
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2027,26 +2440,26 @@ type RunQueryRequest struct {
 	// DataRange: Report data range used to generate the report.
 	//
 	// Possible values:
-	//   "ALL_TIME"
-	//   "CURRENT_DAY"
 	//   "CUSTOM_DATES"
-	//   "LAST_14_DAYS"
-	//   "LAST_30_DAYS"
-	//   "LAST_365_DAYS"
-	//   "LAST_60_DAYS"
-	//   "LAST_7_DAYS"
-	//   "LAST_90_DAYS"
-	//   "MONTH_TO_DATE"
+	//   "CURRENT_DAY"
 	//   "PREVIOUS_DAY"
+	//   "WEEK_TO_DATE"
+	//   "MONTH_TO_DATE"
+	//   "QUARTER_TO_DATE"
+	//   "YEAR_TO_DATE"
+	//   "PREVIOUS_WEEK"
 	//   "PREVIOUS_HALF_MONTH"
 	//   "PREVIOUS_MONTH"
 	//   "PREVIOUS_QUARTER"
-	//   "PREVIOUS_WEEK"
 	//   "PREVIOUS_YEAR"
-	//   "QUARTER_TO_DATE"
+	//   "LAST_7_DAYS"
+	//   "LAST_30_DAYS"
+	//   "LAST_90_DAYS"
+	//   "LAST_365_DAYS"
+	//   "ALL_TIME"
+	//   "LAST_14_DAYS"
 	//   "TYPE_NOT_SUPPORTED"
-	//   "WEEK_TO_DATE"
-	//   "YEAR_TO_DATE"
+	//   "LAST_60_DAYS"
 	DataRange string `json:"dataRange,omitempty"`
 
 	// ReportDataEndTimeMs: The ending time for the data that is shown in
@@ -2065,10 +2478,10 @@ type RunQueryRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "DataRange") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DataRange") to include in
@@ -2084,354 +2497,6 @@ func (s *RunQueryRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RunQueryRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// UploadLineItemsRequest: Request to upload line items.
-type UploadLineItemsRequest struct {
-	// DryRun: Set to true to get upload status without actually persisting
-	// the line items.
-	DryRun bool `json:"dryRun,omitempty"`
-
-	// Format: Format the line items are in. Default to CSV.
-	//
-	// Possible values:
-	//   "CSV"
-	Format string `json:"format,omitempty"`
-
-	// LineItems: Line items in CSV to upload. Refer to  Entity Write File
-	// Format for more information on file format.
-	LineItems string `json:"lineItems,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "DryRun") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DryRun") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *UploadLineItemsRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod UploadLineItemsRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// UploadLineItemsResponse: Upload line items response.
-type UploadLineItemsResponse struct {
-	// UploadStatus: Status of upload.
-	UploadStatus *UploadStatus `json:"uploadStatus,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "UploadStatus") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "UploadStatus") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *UploadLineItemsResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod UploadLineItemsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// UploadStatus: Represents the status of upload.
-type UploadStatus struct {
-	// Errors: Reasons why upload can't be completed.
-	Errors []string `json:"errors,omitempty"`
-
-	// RowStatus: Per-row upload status.
-	RowStatus []*RowStatus `json:"rowStatus,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Errors") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Errors") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *UploadStatus) MarshalJSON() ([]byte, error) {
-	type NoMethod UploadStatus
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// method id "doubleclickbidmanager.lineitems.downloadlineitems":
-
-type LineitemsDownloadlineitemsCall struct {
-	s                        *Service
-	downloadlineitemsrequest *DownloadLineItemsRequest
-	urlParams_               gensupport.URLParams
-	ctx_                     context.Context
-	header_                  http.Header
-}
-
-// Downloadlineitems: Retrieves line items in CSV format. TrueView line
-// items are not supported.
-func (r *LineitemsService) Downloadlineitems(downloadlineitemsrequest *DownloadLineItemsRequest) *LineitemsDownloadlineitemsCall {
-	c := &LineitemsDownloadlineitemsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.downloadlineitemsrequest = downloadlineitemsrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *LineitemsDownloadlineitemsCall) Fields(s ...googleapi.Field) *LineitemsDownloadlineitemsCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *LineitemsDownloadlineitemsCall) Context(ctx context.Context) *LineitemsDownloadlineitemsCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *LineitemsDownloadlineitemsCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *LineitemsDownloadlineitemsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.downloadlineitemsrequest)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "lineitems/downloadlineitems")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "doubleclickbidmanager.lineitems.downloadlineitems" call.
-// Exactly one of *DownloadLineItemsResponse or error will be non-nil.
-// Any non-2xx status code is an error. Response headers are in either
-// *DownloadLineItemsResponse.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *LineitemsDownloadlineitemsCall) Do(opts ...googleapi.CallOption) (*DownloadLineItemsResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &DownloadLineItemsResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Retrieves line items in CSV format. TrueView line items are not supported.",
-	//   "httpMethod": "POST",
-	//   "id": "doubleclickbidmanager.lineitems.downloadlineitems",
-	//   "path": "lineitems/downloadlineitems",
-	//   "request": {
-	//     "$ref": "DownloadLineItemsRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "DownloadLineItemsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/doubleclickbidmanager"
-	//   ]
-	// }
-
-}
-
-// method id "doubleclickbidmanager.lineitems.uploadlineitems":
-
-type LineitemsUploadlineitemsCall struct {
-	s                      *Service
-	uploadlineitemsrequest *UploadLineItemsRequest
-	urlParams_             gensupport.URLParams
-	ctx_                   context.Context
-	header_                http.Header
-}
-
-// Uploadlineitems: Uploads line items in CSV format. TrueView line
-// items are not supported.
-func (r *LineitemsService) Uploadlineitems(uploadlineitemsrequest *UploadLineItemsRequest) *LineitemsUploadlineitemsCall {
-	c := &LineitemsUploadlineitemsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.uploadlineitemsrequest = uploadlineitemsrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *LineitemsUploadlineitemsCall) Fields(s ...googleapi.Field) *LineitemsUploadlineitemsCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *LineitemsUploadlineitemsCall) Context(ctx context.Context) *LineitemsUploadlineitemsCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *LineitemsUploadlineitemsCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *LineitemsUploadlineitemsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.uploadlineitemsrequest)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "lineitems/uploadlineitems")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "doubleclickbidmanager.lineitems.uploadlineitems" call.
-// Exactly one of *UploadLineItemsResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *UploadLineItemsResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *LineitemsUploadlineitemsCall) Do(opts ...googleapi.CallOption) (*UploadLineItemsResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &UploadLineItemsResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Uploads line items in CSV format. TrueView line items are not supported.",
-	//   "httpMethod": "POST",
-	//   "id": "doubleclickbidmanager.lineitems.uploadlineitems",
-	//   "path": "lineitems/uploadlineitems",
-	//   "request": {
-	//     "$ref": "UploadLineItemsRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "UploadLineItemsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/doubleclickbidmanager"
-	//   ]
-	// }
-
 }
 
 // method id "doubleclickbidmanager.queries.createquery":
@@ -2486,7 +2551,7 @@ func (c *QueriesCreatequeryCall) Header() http.Header {
 
 func (c *QueriesCreatequeryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2523,17 +2588,17 @@ func (c *QueriesCreatequeryCall) Do(opts ...googleapi.CallOption) (*Query, error
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Query{
 		ServerResponse: googleapi.ServerResponse{
@@ -2548,8 +2613,10 @@ func (c *QueriesCreatequeryCall) Do(opts ...googleapi.CallOption) (*Query, error
 	return ret, nil
 	// {
 	//   "description": "Creates a query.",
+	//   "flatPath": "query",
 	//   "httpMethod": "POST",
 	//   "id": "doubleclickbidmanager.queries.createquery",
+	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "asynchronous": {
 	//       "default": "false",
@@ -2584,6 +2651,8 @@ type QueriesDeletequeryCall struct {
 
 // Deletequery: Deletes a stored query as well as the associated stored
 // reports.
+//
+// - queryId: Query ID to delete.
 func (r *QueriesService) Deletequery(queryId int64) *QueriesDeletequeryCall {
 	c := &QueriesDeletequeryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.queryId = queryId
@@ -2617,7 +2686,7 @@ func (c *QueriesDeletequeryCall) Header() http.Header {
 
 func (c *QueriesDeletequeryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2647,11 +2716,12 @@ func (c *QueriesDeletequeryCall) Do(opts ...googleapi.CallOption) error {
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return gensupport.WrapError(err)
 	}
 	return nil
 	// {
 	//   "description": "Deletes a stored query as well as the associated stored reports.",
+	//   "flatPath": "query/{queryId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "doubleclickbidmanager.queries.deletequery",
 	//   "parameterOrder": [
@@ -2686,6 +2756,8 @@ type QueriesGetqueryCall struct {
 }
 
 // Getquery: Retrieves a stored query.
+//
+// - queryId: Query ID to retrieve.
 func (r *QueriesService) Getquery(queryId int64) *QueriesGetqueryCall {
 	c := &QueriesGetqueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.queryId = queryId
@@ -2729,7 +2801,7 @@ func (c *QueriesGetqueryCall) Header() http.Header {
 
 func (c *QueriesGetqueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2767,17 +2839,17 @@ func (c *QueriesGetqueryCall) Do(opts ...googleapi.CallOption) (*Query, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Query{
 		ServerResponse: googleapi.ServerResponse{
@@ -2792,6 +2864,7 @@ func (c *QueriesGetqueryCall) Do(opts ...googleapi.CallOption) (*Query, error) {
 	return ret, nil
 	// {
 	//   "description": "Retrieves a stored query.",
+	//   "flatPath": "query/{queryId}",
 	//   "httpMethod": "GET",
 	//   "id": "doubleclickbidmanager.queries.getquery",
 	//   "parameterOrder": [
@@ -2885,7 +2958,7 @@ func (c *QueriesListqueriesCall) Header() http.Header {
 
 func (c *QueriesListqueriesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2920,17 +2993,17 @@ func (c *QueriesListqueriesCall) Do(opts ...googleapi.CallOption) (*ListQueriesR
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListQueriesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2945,8 +3018,10 @@ func (c *QueriesListqueriesCall) Do(opts ...googleapi.CallOption) (*ListQueriesR
 	return ret, nil
 	// {
 	//   "description": "Retrieves stored queries.",
+	//   "flatPath": "queries",
 	//   "httpMethod": "GET",
 	//   "id": "doubleclickbidmanager.queries.listqueries",
+	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "pageSize": {
 	//       "description": "Maximum number of results per page. Must be between 1 and 100. Defaults to 100 if unspecified.",
@@ -3004,6 +3079,8 @@ type QueriesRunqueryCall struct {
 }
 
 // Runquery: Runs a stored query to generate a report.
+//
+// - queryId: Query ID to run.
 func (r *QueriesService) Runquery(queryId int64, runqueryrequest *RunQueryRequest) *QueriesRunqueryCall {
 	c := &QueriesRunqueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.queryId = queryId
@@ -3045,7 +3122,7 @@ func (c *QueriesRunqueryCall) Header() http.Header {
 
 func (c *QueriesRunqueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3080,11 +3157,12 @@ func (c *QueriesRunqueryCall) Do(opts ...googleapi.CallOption) error {
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return gensupport.WrapError(err)
 	}
 	return nil
 	// {
 	//   "description": "Runs a stored query to generate a report.",
+	//   "flatPath": "query/{queryId}",
 	//   "httpMethod": "POST",
 	//   "id": "doubleclickbidmanager.queries.runquery",
 	//   "parameterOrder": [
@@ -3128,6 +3206,8 @@ type ReportsListreportsCall struct {
 }
 
 // Listreports: Retrieves stored reports.
+//
+// - queryId: Query ID with which the reports are associated.
 func (r *ReportsService) Listreports(queryId int64) *ReportsListreportsCall {
 	c := &ReportsListreportsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.queryId = queryId
@@ -3186,7 +3266,7 @@ func (c *ReportsListreportsCall) Header() http.Header {
 
 func (c *ReportsListreportsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3224,17 +3304,17 @@ func (c *ReportsListreportsCall) Do(opts ...googleapi.CallOption) (*ListReportsR
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListReportsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3249,6 +3329,7 @@ func (c *ReportsListreportsCall) Do(opts ...googleapi.CallOption) (*ListReportsR
 	return ret, nil
 	// {
 	//   "description": "Retrieves stored reports.",
+	//   "flatPath": "queries/{queryId}/reports",
 	//   "httpMethod": "GET",
 	//   "id": "doubleclickbidmanager.reports.listreports",
 	//   "parameterOrder": [
@@ -3304,126 +3385,4 @@ func (c *ReportsListreportsCall) Pages(ctx context.Context, f func(*ListReportsR
 		}
 		c.PageToken(x.NextPageToken)
 	}
-}
-
-// method id "doubleclickbidmanager.sdf.download":
-
-type SdfDownloadCall struct {
-	s               *Service
-	downloadrequest *DownloadRequest
-	urlParams_      gensupport.URLParams
-	ctx_            context.Context
-	header_         http.Header
-}
-
-// Download: Retrieves entities in SDF format.
-func (r *SdfService) Download(downloadrequest *DownloadRequest) *SdfDownloadCall {
-	c := &SdfDownloadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.downloadrequest = downloadrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *SdfDownloadCall) Fields(s ...googleapi.Field) *SdfDownloadCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *SdfDownloadCall) Context(ctx context.Context) *SdfDownloadCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *SdfDownloadCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *SdfDownloadCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.downloadrequest)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "sdf/download")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "doubleclickbidmanager.sdf.download" call.
-// Exactly one of *DownloadResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *DownloadResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *SdfDownloadCall) Do(opts ...googleapi.CallOption) (*DownloadResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &DownloadResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Retrieves entities in SDF format.",
-	//   "httpMethod": "POST",
-	//   "id": "doubleclickbidmanager.sdf.download",
-	//   "path": "sdf/download",
-	//   "request": {
-	//     "$ref": "DownloadRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "DownloadResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/doubleclickbidmanager"
-	//   ]
-	// }
-
 }

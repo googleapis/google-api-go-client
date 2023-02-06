@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -8,35 +8,35 @@
 //
 // For product documentation, see: https://developers.google.com/youtube/reporting/v1/reports/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/youtubereporting/v1"
-//   ...
-//   ctx := context.Background()
-//   youtubereportingService, err := youtubereporting.NewService(ctx)
+//	import "google.golang.org/api/youtubereporting/v1"
+//	...
+//	ctx := context.Background()
+//	youtubereportingService, err := youtubereporting.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//   youtubereportingService, err := youtubereporting.NewService(ctx, option.WithScopes(youtubereporting.YtAnalyticsReadonlyScope))
+//	youtubereportingService, err := youtubereporting.NewService(ctx, option.WithScopes(youtubereporting.YtAnalyticsReadonlyScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   youtubereportingService, err := youtubereporting.NewService(ctx, option.WithAPIKey("AIza..."))
+//	youtubereportingService, err := youtubereporting.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   youtubereportingService, err := youtubereporting.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	youtubereportingService, err := youtubereporting.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package youtubereporting // import "google.golang.org/api/youtubereporting/v1"
@@ -54,6 +54,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -79,6 +80,7 @@ const apiId = "youtubereporting:v1"
 const apiName = "youtubereporting"
 const apiVersion = "v1"
 const basePath = "https://youtubereporting.googleapis.com/"
+const mtlsBasePath = "https://youtubereporting.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
@@ -92,13 +94,14 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/yt-analytics-monetary.readonly",
 		"https://www.googleapis.com/auth/yt-analytics.readonly",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -188,17 +191,10 @@ type ReportTypesService struct {
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
-// duplicated
-// empty messages in your APIs. A typical example is to use it as the
-// request
-// or the response type of an API method. For instance:
-//
-//     service Foo {
-//       rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty);
-//     }
-//
-// The JSON representation for `Empty` is empty JSON object `{}`.
+// duplicated empty messages in your APIs. A typical example is to use
+// it as the request or the response type of an API method. For
+// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); }
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -224,10 +220,10 @@ type GdataBlobstore2Info struct {
 
 	// ForceSendFields is a list of field names (e.g. "BlobGeneration") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BlobGeneration") to
@@ -290,10 +286,10 @@ type GdataCompositeMedia struct {
 
 	// ForceSendFields is a list of field names (e.g. "BlobRef") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BlobRef") to include in
@@ -330,10 +326,10 @@ type GdataContentTypeInfo struct {
 
 	// ForceSendFields is a list of field names (e.g. "BestGuess") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BestGuess") to include in
@@ -370,10 +366,10 @@ type GdataDiffChecksumsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "ChecksumsLocation")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ChecksumsLocation") to
@@ -399,10 +395,10 @@ type GdataDiffDownloadResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "ObjectLocation") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ObjectLocation") to
@@ -434,10 +430,10 @@ type GdataDiffUploadRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "ChecksumsInfo") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ChecksumsInfo") to include
@@ -465,10 +461,10 @@ type GdataDiffUploadResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "ObjectVersion") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ObjectVersion") to include
@@ -496,10 +492,10 @@ type GdataDiffVersionResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "ObjectSizeBytes") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ObjectSizeBytes") to
@@ -528,8 +524,8 @@ type GdataDownloadParameters struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "AllowGzipCompression") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -664,10 +660,10 @@ type GdataMedia struct {
 
 	// ForceSendFields is a list of field names (e.g. "Algorithm") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Algorithm") to include in
@@ -698,10 +694,10 @@ type GdataObjectId struct {
 
 	// ForceSendFields is a list of field names (e.g. "BucketName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BucketName") to include in
@@ -725,8 +721,7 @@ type Job struct {
 	CreateTime string `json:"createTime,omitempty"`
 
 	// ExpireTime: The date/time when this job will expire/expired. After a
-	// job expired, no
-	// new reports are generated.
+	// job expired, no new reports are generated.
 	ExpireTime string `json:"expireTime,omitempty"`
 
 	// Id: The server-generated ID of the job (max. 40 characters).
@@ -736,13 +731,11 @@ type Job struct {
 	Name string `json:"name,omitempty"`
 
 	// ReportTypeId: The type of reports this job creates. Corresponds to
-	// the ID of a
-	// ReportType.
+	// the ID of a ReportType.
 	ReportTypeId string `json:"reportTypeId,omitempty"`
 
 	// SystemManaged: True if this a system-managed job that cannot be
-	// modified by the user;
-	// otherwise false.
+	// modified by the user; otherwise false.
 	SystemManaged bool `json:"systemManaged,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -751,10 +744,10 @@ type Job struct {
 
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CreateTime") to include in
@@ -777,12 +770,9 @@ type ListJobsResponse struct {
 	// Jobs: The list of jobs.
 	Jobs []*Job `json:"jobs,omitempty"`
 
-	// NextPageToken: A token to retrieve next page of results.
-	// Pass this value in the
-	// ListJobsRequest.page_token
-	// field in the subsequent call to `ListJobs` method to retrieve the
-	// next
-	// page of results.
+	// NextPageToken: A token to retrieve next page of results. Pass this
+	// value in the ListJobsRequest.page_token field in the subsequent call
+	// to `ListJobs` method to retrieve the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -791,10 +781,10 @@ type ListJobsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Jobs") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Jobs") to include in API
@@ -815,12 +805,10 @@ func (s *ListJobsResponse) MarshalJSON() ([]byte, error) {
 // ListReportTypesResponse: Response message for
 // ReportingService.ListReportTypes.
 type ListReportTypesResponse struct {
-	// NextPageToken: A token to retrieve next page of results.
-	// Pass this value in the
-	// ListReportTypesRequest.page_token
-	// field in the subsequent call to `ListReportTypes` method to retrieve
-	// the
-	// next page of results.
+	// NextPageToken: A token to retrieve next page of results. Pass this
+	// value in the ListReportTypesRequest.page_token field in the
+	// subsequent call to `ListReportTypes` method to retrieve the next page
+	// of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ReportTypes: The list of report types.
@@ -832,10 +820,10 @@ type ListReportTypesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -856,12 +844,9 @@ func (s *ListReportTypesResponse) MarshalJSON() ([]byte, error) {
 // ListReportsResponse: Response message for
 // ReportingService.ListReports.
 type ListReportsResponse struct {
-	// NextPageToken: A token to retrieve next page of results.
-	// Pass this value in the
-	// ListReportsRequest.page_token
-	// field in the subsequent call to `ListReports` method to retrieve the
-	// next
-	// page of results.
+	// NextPageToken: A token to retrieve next page of results. Pass this
+	// value in the ListReportsRequest.page_token field in the subsequent
+	// call to `ListReports` method to retrieve the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// Reports: The list of report types.
@@ -873,10 +858,10 @@ type ListReportsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -895,8 +880,7 @@ func (s *ListReportsResponse) MarshalJSON() ([]byte, error) {
 }
 
 // Report: A report's metadata including the URL from which the report
-// itself can be
-// downloaded.
+// itself can be downloaded.
 type Report struct {
 	// CreateTime: The date/time when this report was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -906,8 +890,7 @@ type Report struct {
 	DownloadUrl string `json:"downloadUrl,omitempty"`
 
 	// EndTime: The end of the time period that the report instance covers.
-	// The value is
-	// exclusive.
+	// The value is exclusive.
 	EndTime string `json:"endTime,omitempty"`
 
 	// Id: The server-generated ID of the report.
@@ -921,8 +904,7 @@ type Report struct {
 	JobId string `json:"jobId,omitempty"`
 
 	// StartTime: The start of the time period that the report instance
-	// covers. The value is
-	// inclusive.
+	// covers. The value is inclusive.
 	StartTime string `json:"startTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -931,10 +913,10 @@ type Report struct {
 
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CreateTime") to include in
@@ -965,18 +947,16 @@ type ReportType struct {
 	Name string `json:"name,omitempty"`
 
 	// SystemManaged: True if this a system-managed report type; otherwise
-	// false. Reporting jobs
-	// for system-managed report types are created automatically and can
-	// thus not
-	// be used in the `CreateJob` method.
+	// false. Reporting jobs for system-managed report types are created
+	// automatically and can thus not be used in the `CreateJob` method.
 	SystemManaged bool `json:"systemManaged,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DeprecateTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DeprecateTime") to include
@@ -1013,8 +993,8 @@ func (r *JobsService) Create(job *Job) *JobsCreateCall {
 
 // OnBehalfOfContentOwner sets the optional parameter
 // "onBehalfOfContentOwner": The content owner's external ID on which
-// behalf the user is acting on. If
-// not set, the user is acting for himself (his own channel).
+// behalf the user is acting on. If not set, the user is acting for
+// himself (his own channel).
 func (c *JobsCreateCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *JobsCreateCall {
 	c.urlParams_.Set("onBehalfOfContentOwner", onBehalfOfContentOwner)
 	return c
@@ -1047,7 +1027,7 @@ func (c *JobsCreateCall) Header() http.Header {
 
 func (c *JobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1084,17 +1064,17 @@ func (c *JobsCreateCall) Do(opts ...googleapi.CallOption) (*Job, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Job{
 		ServerResponse: googleapi.ServerResponse{
@@ -1115,7 +1095,7 @@ func (c *JobsCreateCall) Do(opts ...googleapi.CallOption) (*Job, error) {
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "onBehalfOfContentOwner": {
-	//       "description": "The content owner's external ID on which behalf the user is acting on. If\nnot set, the user is acting for himself (his own channel).",
+	//       "description": "The content owner's external ID on which behalf the user is acting on. If not set, the user is acting for himself (his own channel).",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -1146,6 +1126,8 @@ type JobsDeleteCall struct {
 }
 
 // Delete: Deletes a job.
+//
+// - jobId: The ID of the job to delete.
 func (r *JobsService) Delete(jobId string) *JobsDeleteCall {
 	c := &JobsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.jobId = jobId
@@ -1154,8 +1136,8 @@ func (r *JobsService) Delete(jobId string) *JobsDeleteCall {
 
 // OnBehalfOfContentOwner sets the optional parameter
 // "onBehalfOfContentOwner": The content owner's external ID on which
-// behalf the user is acting on. If
-// not set, the user is acting for himself (his own channel).
+// behalf the user is acting on. If not set, the user is acting for
+// himself (his own channel).
 func (c *JobsDeleteCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *JobsDeleteCall {
 	c.urlParams_.Set("onBehalfOfContentOwner", onBehalfOfContentOwner)
 	return c
@@ -1188,7 +1170,7 @@ func (c *JobsDeleteCall) Header() http.Header {
 
 func (c *JobsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1223,17 +1205,17 @@ func (c *JobsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -1262,7 +1244,7 @@ func (c *JobsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	//       "type": "string"
 	//     },
 	//     "onBehalfOfContentOwner": {
-	//       "description": "The content owner's external ID on which behalf the user is acting on. If\nnot set, the user is acting for himself (his own channel).",
+	//       "description": "The content owner's external ID on which behalf the user is acting on. If not set, the user is acting for himself (his own channel).",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -1291,6 +1273,8 @@ type JobsGetCall struct {
 }
 
 // Get: Gets a job.
+//
+// - jobId: The ID of the job to retrieve.
 func (r *JobsService) Get(jobId string) *JobsGetCall {
 	c := &JobsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.jobId = jobId
@@ -1299,8 +1283,8 @@ func (r *JobsService) Get(jobId string) *JobsGetCall {
 
 // OnBehalfOfContentOwner sets the optional parameter
 // "onBehalfOfContentOwner": The content owner's external ID on which
-// behalf the user is acting on. If
-// not set, the user is acting for himself (his own channel).
+// behalf the user is acting on. If not set, the user is acting for
+// himself (his own channel).
 func (c *JobsGetCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *JobsGetCall {
 	c.urlParams_.Set("onBehalfOfContentOwner", onBehalfOfContentOwner)
 	return c
@@ -1343,7 +1327,7 @@ func (c *JobsGetCall) Header() http.Header {
 
 func (c *JobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1381,17 +1365,17 @@ func (c *JobsGetCall) Do(opts ...googleapi.CallOption) (*Job, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Job{
 		ServerResponse: googleapi.ServerResponse{
@@ -1420,7 +1404,7 @@ func (c *JobsGetCall) Do(opts ...googleapi.CallOption) (*Job, error) {
 	//       "type": "string"
 	//     },
 	//     "onBehalfOfContentOwner": {
-	//       "description": "The content owner's external ID on which behalf the user is acting on. If\nnot set, the user is acting for himself (his own channel).",
+	//       "description": "The content owner's external ID on which behalf the user is acting on. If not set, the user is acting for himself (his own channel).",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -1455,10 +1439,8 @@ func (r *JobsService) List() *JobsListCall {
 
 // IncludeSystemManaged sets the optional parameter
 // "includeSystemManaged": If set to true, also system-managed jobs will
-// be returned; otherwise only
-// user-created jobs will be returned. System-managed jobs can neither
-// be
-// modified nor deleted.
+// be returned; otherwise only user-created jobs will be returned.
+// System-managed jobs can neither be modified nor deleted.
 func (c *JobsListCall) IncludeSystemManaged(includeSystemManaged bool) *JobsListCall {
 	c.urlParams_.Set("includeSystemManaged", fmt.Sprint(includeSystemManaged))
 	return c
@@ -1466,27 +1448,25 @@ func (c *JobsListCall) IncludeSystemManaged(includeSystemManaged bool) *JobsList
 
 // OnBehalfOfContentOwner sets the optional parameter
 // "onBehalfOfContentOwner": The content owner's external ID on which
-// behalf the user is acting on. If
-// not set, the user is acting for himself (his own channel).
+// behalf the user is acting on. If not set, the user is acting for
+// himself (his own channel).
 func (c *JobsListCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *JobsListCall {
 	c.urlParams_.Set("onBehalfOfContentOwner", onBehalfOfContentOwner)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Server may return fewer jobs than requested.
-// If unspecified, server will pick an appropriate default.
+// Server may return fewer jobs than requested. If unspecified, server
+// will pick an appropriate default.
 func (c *JobsListCall) PageSize(pageSize int64) *JobsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results the server should return.
-// Typically,
-// this is the value of
-// ListReportTypesResponse.next_page_token
-// returned in response to the previous call to the `ListJobs` method.
+// identifying a page of results the server should return. Typically,
+// this is the value of ListReportTypesResponse.next_page_token returned
+// in response to the previous call to the `ListJobs` method.
 func (c *JobsListCall) PageToken(pageToken string) *JobsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -1529,7 +1509,7 @@ func (c *JobsListCall) Header() http.Header {
 
 func (c *JobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1564,17 +1544,17 @@ func (c *JobsListCall) Do(opts ...googleapi.CallOption) (*ListJobsResponse, erro
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListJobsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1595,23 +1575,23 @@ func (c *JobsListCall) Do(opts ...googleapi.CallOption) (*ListJobsResponse, erro
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "includeSystemManaged": {
-	//       "description": "If set to true, also system-managed jobs will be returned; otherwise only\nuser-created jobs will be returned. System-managed jobs can neither be\nmodified nor deleted.",
+	//       "description": "If set to true, also system-managed jobs will be returned; otherwise only user-created jobs will be returned. System-managed jobs can neither be modified nor deleted.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "onBehalfOfContentOwner": {
-	//       "description": "The content owner's external ID on which behalf the user is acting on. If\nnot set, the user is acting for himself (his own channel).",
+	//       "description": "The content owner's external ID on which behalf the user is acting on. If not set, the user is acting for himself (his own channel).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Server may return fewer jobs than requested.\nIf unspecified, server will pick an appropriate default.",
+	//       "description": "Requested page size. Server may return fewer jobs than requested. If unspecified, server will pick an appropriate default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token identifying a page of results the server should return. Typically,\nthis is the value of\nListReportTypesResponse.next_page_token\nreturned in response to the previous call to the `ListJobs` method.",
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of ListReportTypesResponse.next_page_token returned in response to the previous call to the `ListJobs` method.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -1662,6 +1642,9 @@ type JobsReportsGetCall struct {
 }
 
 // Get: Gets the metadata of a specific report.
+//
+// - jobId: The ID of the job.
+// - reportId: The ID of the report to retrieve.
 func (r *JobsReportsService) Get(jobId string, reportId string) *JobsReportsGetCall {
 	c := &JobsReportsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.jobId = jobId
@@ -1671,8 +1654,8 @@ func (r *JobsReportsService) Get(jobId string, reportId string) *JobsReportsGetC
 
 // OnBehalfOfContentOwner sets the optional parameter
 // "onBehalfOfContentOwner": The content owner's external ID on which
-// behalf the user is acting on. If
-// not set, the user is acting for himself (his own channel).
+// behalf the user is acting on. If not set, the user is acting for
+// himself (his own channel).
 func (c *JobsReportsGetCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *JobsReportsGetCall {
 	c.urlParams_.Set("onBehalfOfContentOwner", onBehalfOfContentOwner)
 	return c
@@ -1715,7 +1698,7 @@ func (c *JobsReportsGetCall) Header() http.Header {
 
 func (c *JobsReportsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1754,17 +1737,17 @@ func (c *JobsReportsGetCall) Do(opts ...googleapi.CallOption) (*Report, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Report{
 		ServerResponse: googleapi.ServerResponse{
@@ -1794,7 +1777,7 @@ func (c *JobsReportsGetCall) Do(opts ...googleapi.CallOption) (*Report, error) {
 	//       "type": "string"
 	//     },
 	//     "onBehalfOfContentOwner": {
-	//       "description": "The content owner's external ID on which behalf the user is acting on. If\nnot set, the user is acting for himself (his own channel).",
+	//       "description": "The content owner's external ID on which behalf the user is acting on. If not set, the user is acting for himself (his own channel).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -1828,8 +1811,10 @@ type JobsReportsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists reports created by a specific job.
-// Returns NOT_FOUND if the job does not exist.
+// List: Lists reports created by a specific job. Returns NOT_FOUND if
+// the job does not exist.
+//
+// - jobId: The ID of the job.
 func (r *JobsReportsService) List(jobId string) *JobsReportsListCall {
 	c := &JobsReportsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.jobId = jobId
@@ -1845,36 +1830,32 @@ func (c *JobsReportsListCall) CreatedAfter(createdAfter string) *JobsReportsList
 
 // OnBehalfOfContentOwner sets the optional parameter
 // "onBehalfOfContentOwner": The content owner's external ID on which
-// behalf the user is acting on. If
-// not set, the user is acting for himself (his own channel).
+// behalf the user is acting on. If not set, the user is acting for
+// himself (his own channel).
 func (c *JobsReportsListCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *JobsReportsListCall {
 	c.urlParams_.Set("onBehalfOfContentOwner", onBehalfOfContentOwner)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Server may return fewer report types than requested.
-// If unspecified, server will pick an appropriate default.
+// Server may return fewer report types than requested. If unspecified,
+// server will pick an appropriate default.
 func (c *JobsReportsListCall) PageSize(pageSize int64) *JobsReportsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results the server should return.
-// Typically,
-// this is the value of
-// ListReportsResponse.next_page_token
-// returned in response to the previous call to the `ListReports`
-// method.
+// identifying a page of results the server should return. Typically,
+// this is the value of ListReportsResponse.next_page_token returned in
+// response to the previous call to the `ListReports` method.
 func (c *JobsReportsListCall) PageToken(pageToken string) *JobsReportsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // StartTimeAtOrAfter sets the optional parameter "startTimeAtOrAfter":
-// If set, only reports whose start time is greater than or equal
-// the
+// If set, only reports whose start time is greater than or equal the
 // specified date/time are returned.
 func (c *JobsReportsListCall) StartTimeAtOrAfter(startTimeAtOrAfter string) *JobsReportsListCall {
 	c.urlParams_.Set("startTimeAtOrAfter", startTimeAtOrAfter)
@@ -1882,8 +1863,7 @@ func (c *JobsReportsListCall) StartTimeAtOrAfter(startTimeAtOrAfter string) *Job
 }
 
 // StartTimeBefore sets the optional parameter "startTimeBefore": If
-// set, only reports whose start time is smaller than the
-// specified
+// set, only reports whose start time is smaller than the specified
 // date/time are returned.
 func (c *JobsReportsListCall) StartTimeBefore(startTimeBefore string) *JobsReportsListCall {
 	c.urlParams_.Set("startTimeBefore", startTimeBefore)
@@ -1927,7 +1907,7 @@ func (c *JobsReportsListCall) Header() http.Header {
 
 func (c *JobsReportsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1965,17 +1945,17 @@ func (c *JobsReportsListCall) Do(opts ...googleapi.CallOption) (*ListReportsResp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListReportsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1989,7 +1969,7 @@ func (c *JobsReportsListCall) Do(opts ...googleapi.CallOption) (*ListReportsResp
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists reports created by a specific job.\nReturns NOT_FOUND if the job does not exist.",
+	//   "description": "Lists reports created by a specific job. Returns NOT_FOUND if the job does not exist.",
 	//   "flatPath": "v1/jobs/{jobId}/reports",
 	//   "httpMethod": "GET",
 	//   "id": "youtubereporting.jobs.reports.list",
@@ -2010,29 +1990,29 @@ func (c *JobsReportsListCall) Do(opts ...googleapi.CallOption) (*ListReportsResp
 	//       "type": "string"
 	//     },
 	//     "onBehalfOfContentOwner": {
-	//       "description": "The content owner's external ID on which behalf the user is acting on. If\nnot set, the user is acting for himself (his own channel).",
+	//       "description": "The content owner's external ID on which behalf the user is acting on. If not set, the user is acting for himself (his own channel).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Server may return fewer report types than requested.\nIf unspecified, server will pick an appropriate default.",
+	//       "description": "Requested page size. Server may return fewer report types than requested. If unspecified, server will pick an appropriate default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token identifying a page of results the server should return. Typically,\nthis is the value of\nListReportsResponse.next_page_token\nreturned in response to the previous call to the `ListReports` method.",
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of ListReportsResponse.next_page_token returned in response to the previous call to the `ListReports` method.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "startTimeAtOrAfter": {
-	//       "description": "If set, only reports whose start time is greater than or equal the\nspecified date/time are returned.",
+	//       "description": "If set, only reports whose start time is greater than or equal the specified date/time are returned.",
 	//       "format": "google-datetime",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "startTimeBefore": {
-	//       "description": "If set, only reports whose start time is smaller than the specified\ndate/time are returned.",
+	//       "description": "If set, only reports whose start time is smaller than the specified date/time are returned.",
 	//       "format": "google-datetime",
 	//       "location": "query",
 	//       "type": "string"
@@ -2082,8 +2062,10 @@ type MediaDownloadCall struct {
 	header_      http.Header
 }
 
-// Download: Method for media download. Download is supported
-// on the URI `/v1/media/{+name}?alt=media`.
+// Download: Method for media download. Download is supported on the URI
+// `/v1/media/{+name}?alt=media`.
+//
+// - resourceName: Name of the media that is being downloaded.
 func (r *MediaService) Download(resourceName string) *MediaDownloadCall {
 	c := &MediaDownloadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resourceName = resourceName
@@ -2127,7 +2109,7 @@ func (c *MediaDownloadCall) Header() http.Header {
 
 func (c *MediaDownloadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2160,9 +2142,9 @@ func (c *MediaDownloadCall) Download(opts ...googleapi.CallOption) (*http.Respon
 	if err != nil {
 		return nil, err
 	}
-	if err := googleapi.CheckMediaResponse(res); err != nil {
+	if err := googleapi.CheckResponse(res); err != nil {
 		res.Body.Close()
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	return res, nil
 }
@@ -2181,17 +2163,17 @@ func (c *MediaDownloadCall) Do(opts ...googleapi.CallOption) (*GdataMedia, error
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GdataMedia{
 		ServerResponse: googleapi.ServerResponse{
@@ -2205,7 +2187,7 @@ func (c *MediaDownloadCall) Do(opts ...googleapi.CallOption) (*GdataMedia, error
 	}
 	return ret, nil
 	// {
-	//   "description": "Method for media download. Download is supported\non the URI `/v1/media/{+name}?alt=media`.",
+	//   "description": "Method for media download. Download is supported on the URI `/v1/media/{+name}?alt=media`.",
 	//   "flatPath": "v1/media/{mediaId}",
 	//   "httpMethod": "GET",
 	//   "id": "youtubereporting.media.download",
@@ -2253,10 +2235,8 @@ func (r *ReportTypesService) List() *ReportTypesListCall {
 
 // IncludeSystemManaged sets the optional parameter
 // "includeSystemManaged": If set to true, also system-managed report
-// types will be returned;
-// otherwise only the report types that can be used to create new
-// reporting
-// jobs will be returned.
+// types will be returned; otherwise only the report types that can be
+// used to create new reporting jobs will be returned.
 func (c *ReportTypesListCall) IncludeSystemManaged(includeSystemManaged bool) *ReportTypesListCall {
 	c.urlParams_.Set("includeSystemManaged", fmt.Sprint(includeSystemManaged))
 	return c
@@ -2264,28 +2244,25 @@ func (c *ReportTypesListCall) IncludeSystemManaged(includeSystemManaged bool) *R
 
 // OnBehalfOfContentOwner sets the optional parameter
 // "onBehalfOfContentOwner": The content owner's external ID on which
-// behalf the user is acting on. If
-// not set, the user is acting for himself (his own channel).
+// behalf the user is acting on. If not set, the user is acting for
+// himself (his own channel).
 func (c *ReportTypesListCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *ReportTypesListCall {
 	c.urlParams_.Set("onBehalfOfContentOwner", onBehalfOfContentOwner)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Server may return fewer report types than requested.
-// If unspecified, server will pick an appropriate default.
+// Server may return fewer report types than requested. If unspecified,
+// server will pick an appropriate default.
 func (c *ReportTypesListCall) PageSize(pageSize int64) *ReportTypesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results the server should return.
-// Typically,
-// this is the value of
-// ListReportTypesResponse.next_page_token
-// returned in response to the previous call to the `ListReportTypes`
-// method.
+// identifying a page of results the server should return. Typically,
+// this is the value of ListReportTypesResponse.next_page_token returned
+// in response to the previous call to the `ListReportTypes` method.
 func (c *ReportTypesListCall) PageToken(pageToken string) *ReportTypesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -2328,7 +2305,7 @@ func (c *ReportTypesListCall) Header() http.Header {
 
 func (c *ReportTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2363,17 +2340,17 @@ func (c *ReportTypesListCall) Do(opts ...googleapi.CallOption) (*ListReportTypes
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListReportTypesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2394,23 +2371,23 @@ func (c *ReportTypesListCall) Do(opts ...googleapi.CallOption) (*ListReportTypes
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "includeSystemManaged": {
-	//       "description": "If set to true, also system-managed report types will be returned;\notherwise only the report types that can be used to create new reporting\njobs will be returned.",
+	//       "description": "If set to true, also system-managed report types will be returned; otherwise only the report types that can be used to create new reporting jobs will be returned.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "onBehalfOfContentOwner": {
-	//       "description": "The content owner's external ID on which behalf the user is acting on. If\nnot set, the user is acting for himself (his own channel).",
+	//       "description": "The content owner's external ID on which behalf the user is acting on. If not set, the user is acting for himself (his own channel).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Server may return fewer report types than requested.\nIf unspecified, server will pick an appropriate default.",
+	//       "description": "Requested page size. Server may return fewer report types than requested. If unspecified, server will pick an appropriate default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token identifying a page of results the server should return. Typically,\nthis is the value of\nListReportTypesResponse.next_page_token\nreturned in response to the previous call to the `ListReportTypes` method.",
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of ListReportTypesResponse.next_page_token returned in response to the previous call to the `ListReportTypes` method.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }

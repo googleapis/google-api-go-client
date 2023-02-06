@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -8,35 +8,35 @@
 //
 // For product documentation, see: https://cloud.google.com/iot
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/cloudiot/v1"
-//   ...
-//   ctx := context.Background()
-//   cloudiotService, err := cloudiot.NewService(ctx)
+//	import "google.golang.org/api/cloudiot/v1"
+//	...
+//	ctx := context.Background()
+//	cloudiotService, err := cloudiot.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//   cloudiotService, err := cloudiot.NewService(ctx, option.WithScopes(cloudiot.CloudiotScope))
+//	cloudiotService, err := cloudiot.NewService(ctx, option.WithScopes(cloudiot.CloudiotScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   cloudiotService, err := cloudiot.NewService(ctx, option.WithAPIKey("AIza..."))
+//	cloudiotService, err := cloudiot.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   cloudiotService, err := cloudiot.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	cloudiotService, err := cloudiot.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package cloudiot // import "google.golang.org/api/cloudiot/v1"
@@ -54,6 +54,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -79,10 +80,12 @@ const apiId = "cloudiot:v1"
 const apiName = "cloudiot"
 const apiVersion = "v1"
 const basePath = "https://cloudiot.googleapis.com/"
+const mtlsBasePath = "https://cloudiot.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud data and see the
+	// email address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
 	// Register and manage devices in the Google Cloud IoT service
@@ -91,13 +94,14 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
 		"https://www.googleapis.com/auth/cloudiot",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -237,23 +241,20 @@ type ProjectsLocationsRegistriesGroupsDevicesService struct {
 // BindDeviceToGatewayRequest: Request for `BindDeviceToGateway`.
 type BindDeviceToGatewayRequest struct {
 	// DeviceId: Required. The device to associate with the specified
-	// gateway. The value of
-	// `device_id` can be either the device numeric ID or the user-defined
-	// device
-	// identifier.
+	// gateway. The value of `device_id` can be either the device numeric ID
+	// or the user-defined device identifier.
 	DeviceId string `json:"deviceId,omitempty"`
 
 	// GatewayId: Required. The value of `gateway_id` can be either the
-	// device numeric ID or the
-	// user-defined device identifier.
+	// device numeric ID or the user-defined device identifier.
 	GatewayId string `json:"gatewayId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DeviceId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DeviceId") to include in
@@ -278,93 +279,67 @@ type BindDeviceToGatewayResponse struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
-// Binding: Associates `members` with a `role`.
+// Binding: Associates `members`, or principals, with a `role`.
 type Binding struct {
-	// Condition: The condition that is associated with this binding.
-	// NOTE: An unsatisfied condition will not allow user access via
-	// current
-	// binding. Different bindings, including their conditions, are
-	// examined
-	// independently.
+	// Condition: The condition that is associated with this binding. If the
+	// condition evaluates to `true`, then this binding applies to the
+	// current request. If the condition evaluates to `false`, then this
+	// binding does not apply to the current request. However, a different
+	// role binding might grant the same role to one or more of the
+	// principals in this binding. To learn which resources support
+	// conditions in their IAM policies, see the IAM documentation
+	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Condition *Expr `json:"condition,omitempty"`
 
-	// Members: Specifies the identities requesting access for a Cloud
-	// Platform resource.
-	// `members` can have the following values:
-	//
-	// * `allUsers`: A special identifier that represents anyone who is
-	//    on the internet; with or without a Google account.
-	//
-	// * `allAuthenticatedUsers`: A special identifier that represents
-	// anyone
-	//    who is authenticated with a Google account or a service
-	// account.
-	//
-	// * `user:{emailid}`: An email address that represents a specific
-	// Google
-	//    account. For example, `alice@example.com` .
-	//
-	//
-	// * `serviceAccount:{emailid}`: An email address that represents a
-	// service
-	//    account. For example,
-	// `my-other-app@appspot.gserviceaccount.com`.
-	//
-	// * `group:{emailid}`: An email address that represents a Google
-	// group.
-	//    For example, `admins@example.com`.
-	//
-	// * `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
-	// unique
-	//    identifier) representing a user that has been recently deleted.
-	// For
-	//    example, `alice@example.com?uid=123456789012345678901`. If the
-	// user is
-	//    recovered, this value reverts to `user:{emailid}` and the
-	// recovered user
-	//    retains the role in the binding.
-	//
-	// * `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
-	// (plus
-	//    unique identifier) representing a service account that has been
-	// recently
-	//    deleted. For example,
-	//
+	// Members: Specifies the principals requesting access for a Google
+	// Cloud resource. `members` can have the following values: *
+	// `allUsers`: A special identifier that represents anyone who is on the
+	// internet; with or without a Google account. *
+	// `allAuthenticatedUsers`: A special identifier that represents anyone
+	// who is authenticated with a Google account or a service account. Does
+	// not include identities that come from external identity providers
+	// (IdPs) through identity federation. * `user:{emailid}`: An email
+	// address that represents a specific Google account. For example,
+	// `alice@example.com` . * `serviceAccount:{emailid}`: An email address
+	// that represents a Google service account. For example,
+	// `my-other-app@appspot.gserviceaccount.com`. *
+	// `serviceAccount:{projectid}.svc.id.goog[{namespace}/{kubernetes-sa}]`:
+	//  An identifier for a Kubernetes service account
+	// (https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts).
+	// For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`.
+	// * `group:{emailid}`: An email address that represents a Google group.
+	// For example, `admins@example.com`. *
+	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
+	// unique identifier) representing a user that has been recently
+	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
+	// If the user is recovered, this value reverts to `user:{emailid}` and
+	// the recovered user retains the role in the binding. *
+	// `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
+	// (plus unique identifier) representing a service account that has been
+	// recently deleted. For example,
 	// `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`.
-	//
-	//    If the service account is undeleted, this value reverts to
-	//    `serviceAccount:{emailid}` and the undeleted service account
-	// retains the
-	//    role in the binding.
-	//
-	// * `deleted:group:{emailid}?uid={uniqueid}`: An email address (plus
-	// unique
-	//    identifier) representing a Google group that has been recently
-	//    deleted. For example,
-	// `admins@example.com?uid=123456789012345678901`. If
-	//    the group is recovered, this value reverts to `group:{emailid}`
-	// and the
-	//    recovered group retains the role in the binding.
-	//
-	//
-	// * `domain:{domain}`: The G Suite domain (primary) that represents all
-	// the
-	//    users of that domain. For example, `google.com` or
-	// `example.com`.
-	//
-	//
+	// If the service account is undeleted, this value reverts to
+	// `serviceAccount:{emailid}` and the undeleted service account retains
+	// the role in the binding. * `deleted:group:{emailid}?uid={uniqueid}`:
+	// An email address (plus unique identifier) representing a Google group
+	// that has been recently deleted. For example,
+	// `admins@example.com?uid=123456789012345678901`. If the group is
+	// recovered, this value reverts to `group:{emailid}` and the recovered
+	// group retains the role in the binding. * `domain:{domain}`: The G
+	// Suite domain (primary) that represents all the users of that domain.
+	// For example, `google.com` or `example.com`.
 	Members []string `json:"members,omitempty"`
 
-	// Role: Role that is assigned to `members`.
+	// Role: Role that is assigned to the list of `members`, or principals.
 	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`.
 	Role string `json:"role,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Condition") to include in
@@ -385,104 +360,76 @@ func (s *Binding) MarshalJSON() ([]byte, error) {
 // Device: The device resource.
 type Device struct {
 	// Blocked: If a device is blocked, connections or requests from this
-	// device will fail.
-	// Can be used to temporarily prevent the device from connecting if,
-	// for
-	// example, the sensor is generating bad data and needs maintenance.
+	// device will fail. Can be used to temporarily prevent the device from
+	// connecting if, for example, the sensor is generating bad data and
+	// needs maintenance.
 	Blocked bool `json:"blocked,omitempty"`
 
 	// Config: The most recent device configuration, which is eventually
-	// sent from
-	// Cloud IoT Core to the device. If not present on creation,
-	// the
-	// configuration will be initialized with an empty payload and version
-	// value
-	// of `1`. To update this field after creation, use
-	// the
+	// sent from Cloud IoT Core to the device. If not present on creation,
+	// the configuration will be initialized with an empty payload and
+	// version value of `1`. To update this field after creation, use the
 	// `DeviceManager.ModifyCloudToDeviceConfig` method.
 	Config *DeviceConfig `json:"config,omitempty"`
 
 	// Credentials: The credentials used to authenticate this device. To
-	// allow credential
-	// rotation without interruption, multiple device credentials can be
-	// bound to
-	// this device. No more than 3 credentials can be bound to a single
-	// device at
-	// a time. When new credentials are added to a device, they are
-	// verified
-	// against the registry credentials. For details, see the description of
-	// the
+	// allow credential rotation without interruption, multiple device
+	// credentials can be bound to this device. No more than 3 credentials
+	// can be bound to a single device at a time. When new credentials are
+	// added to a device, they are verified against the registry
+	// credentials. For details, see the description of the
 	// `DeviceRegistry.credentials` field.
 	Credentials []*DeviceCredential `json:"credentials,omitempty"`
 
 	// GatewayConfig: Gateway-related configuration and state.
 	GatewayConfig *GatewayConfig `json:"gatewayConfig,omitempty"`
 
-	// Id: The user-defined device identifier. The device ID must be
-	// unique
+	// Id: The user-defined device identifier. The device ID must be unique
 	// within a device registry.
 	Id string `json:"id,omitempty"`
 
 	// LastConfigAckTime: [Output only] The last time a cloud-to-device
-	// config version acknowledgment
-	// was received from the device. This field is only for
-	// configurations
-	// sent through MQTT.
+	// config version acknowledgment was received from the device. This
+	// field is only for configurations sent through MQTT.
 	LastConfigAckTime string `json:"lastConfigAckTime,omitempty"`
 
 	// LastConfigSendTime: [Output only] The last time a cloud-to-device
-	// config version was sent to
-	// the device.
+	// config version was sent to the device.
 	LastConfigSendTime string `json:"lastConfigSendTime,omitempty"`
 
 	// LastErrorStatus: [Output only] The error message of the most recent
-	// error, such as a failure
-	// to publish to Cloud Pub/Sub. 'last_error_time' is the timestamp of
-	// this
-	// field. If no errors have occurred, this field has an empty
-	// message
-	// and the status code 0 == OK. Otherwise, this field is expected to
-	// have a
-	// status code other than OK.
+	// error, such as a failure to publish to Cloud Pub/Sub.
+	// 'last_error_time' is the timestamp of this field. If no errors have
+	// occurred, this field has an empty message and the status code 0 ==
+	// OK. Otherwise, this field is expected to have a status code other
+	// than OK.
 	LastErrorStatus *Status `json:"lastErrorStatus,omitempty"`
 
 	// LastErrorTime: [Output only] The time the most recent error occurred,
-	// such as a failure to
-	// publish to Cloud Pub/Sub. This field is the timestamp
-	// of
-	// 'last_error_status'.
+	// such as a failure to publish to Cloud Pub/Sub. This field is the
+	// timestamp of 'last_error_status'.
 	LastErrorTime string `json:"lastErrorTime,omitempty"`
 
 	// LastEventTime: [Output only] The last time a telemetry event was
-	// received. Timestamps are
-	// periodically collected and written to storage; they may be stale by a
-	// few
-	// minutes.
+	// received. Timestamps are periodically collected and written to
+	// storage; they may be stale by a few minutes.
 	LastEventTime string `json:"lastEventTime,omitempty"`
 
 	// LastHeartbeatTime: [Output only] The last time an MQTT `PINGREQ` was
-	// received. This field
-	// applies only to devices connecting through MQTT. MQTT clients usually
-	// only
-	// send `PINGREQ` messages if the connection is idle, and no other
-	// messages
-	// have been sent. Timestamps are periodically collected and written
-	// to
-	// storage; they may be stale by a few minutes.
+	// received. This field applies only to devices connecting through MQTT.
+	// MQTT clients usually only send `PINGREQ` messages if the connection
+	// is idle, and no other messages have been sent. Timestamps are
+	// periodically collected and written to storage; they may be stale by a
+	// few minutes.
 	LastHeartbeatTime string `json:"lastHeartbeatTime,omitempty"`
 
 	// LastStateTime: [Output only] The last time a state event was
-	// received. Timestamps are
-	// periodically collected and written to storage; they may be stale by a
-	// few
-	// minutes.
+	// received. Timestamps are periodically collected and written to
+	// storage; they may be stale by a few minutes.
 	LastStateTime string `json:"lastStateTime,omitempty"`
 
-	// LogLevel: **Beta Feature**
-	//
-	// The logging verbosity for device activity. If
-	// unspecified,
-	// DeviceRegistry.log_level will be used.
+	// LogLevel: **Beta Feature** The logging verbosity for device activity.
+	// If unspecified, DeviceRegistry.log_level will be used.
 	//
 	// Possible values:
 	//   "LOG_LEVEL_UNSPECIFIED" - No logging specified. If not specified,
@@ -490,49 +437,34 @@ type Device struct {
 	//   "NONE" - Disables logging.
 	//   "ERROR" - Error events will be logged.
 	//   "INFO" - Informational events will be logged, such as connections
-	// and
-	// disconnections.
+	// and disconnections.
 	//   "DEBUG" - All events will be logged.
 	LogLevel string `json:"logLevel,omitempty"`
 
 	// Metadata: The metadata key-value pairs assigned to the device. This
-	// metadata is not
-	// interpreted or indexed by Cloud IoT Core. It can be used to add
-	// contextual
-	// information for the device.
-	//
-	// Keys must conform to the regular expression a-zA-Z+ and
-	// be less than 128 bytes in length.
-	//
-	// Values are free-form strings. Each value must be less than or equal
-	// to 32
-	// KB in size.
-	//
-	// The total size of all keys and values must be less than 256 KB, and
-	// the
-	// maximum number of key-value pairs is 500.
+	// metadata is not interpreted or indexed by Cloud IoT Core. It can be
+	// used to add contextual information for the device. Keys must conform
+	// to the regular expression a-zA-Z+ and be less than 128 bytes in
+	// length. Values are free-form strings. Each value must be less than or
+	// equal to 32 KB in size. The total size of all keys and values must be
+	// less than 256 KB, and the maximum number of key-value pairs is 500.
 	Metadata map[string]string `json:"metadata,omitempty"`
 
-	// Name: The resource path name. For
-	// example,
-	// `projects/p1/locations/us-central1/registries/registry0/devic
-	// es/dev0`
+	// Name: The resource path name. For example,
+	// `projects/p1/locations/us-central1/registries/registry0/devices/dev0`
 	// or
-	// `projects/p1/locations/us-central1/registries/registry0/devices/{nu
-	// m_id}`.
-	// When `name` is populated as a response from the service, it always
-	// ends
-	// in the device numeric ID.
+	// `projects/p1/locations/us-central1/registries/registry0/devices/{num_i
+	// d}`. When `name` is populated as a response from the service, it
+	// always ends in the device numeric ID.
 	Name string `json:"name,omitempty"`
 
 	// NumId: [Output only] A server-defined unique numeric ID for the
-	// device. This is a
-	// more compact way to identify devices, and it is globally unique.
+	// device. This is a more compact way to identify devices, and it is
+	// globally unique.
 	NumId uint64 `json:"numId,omitempty,string"`
 
 	// State: [Output only] The state most recently received from the
-	// device. If no state
-	// has been reported, this field is not present.
+	// device. If no state has been reported, this field is not present.
 	State *DeviceState `json:"state,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -541,10 +473,10 @@ type Device struct {
 
 	// ForceSendFields is a list of field names (e.g. "Blocked") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Blocked") to include in
@@ -569,37 +501,27 @@ type DeviceConfig struct {
 	BinaryData string `json:"binaryData,omitempty"`
 
 	// CloudUpdateTime: [Output only] The time at which this configuration
-	// version was updated in
-	// Cloud IoT Core. This timestamp is set by the server.
+	// version was updated in Cloud IoT Core. This timestamp is set by the
+	// server.
 	CloudUpdateTime string `json:"cloudUpdateTime,omitempty"`
 
 	// DeviceAckTime: [Output only] The time at which Cloud IoT Core
-	// received the
-	// acknowledgment from the device, indicating that the device has
-	// received
-	// this configuration version. If this field is not present, the device
-	// has
-	// not yet acknowledged that it received this version. Note that
-	// when
-	// the config was sent to the device, many config versions may have
-	// been
-	// available in Cloud IoT Core while the device was disconnected, and
-	// on
-	// connection, only the latest version is sent to the device.
-	// Some
-	// versions may never be sent to the device, and therefore are
-	// never
-	// acknowledged. This timestamp is set by Cloud IoT Core.
+	// received the acknowledgment from the device, indicating that the
+	// device has received this configuration version. If this field is not
+	// present, the device has not yet acknowledged that it received this
+	// version. Note that when the config was sent to the device, many
+	// config versions may have been available in Cloud IoT Core while the
+	// device was disconnected, and on connection, only the latest version
+	// is sent to the device. Some versions may never be sent to the device,
+	// and therefore are never acknowledged. This timestamp is set by Cloud
+	// IoT Core.
 	DeviceAckTime string `json:"deviceAckTime,omitempty"`
 
 	// Version: [Output only] The version of this update. The version number
-	// is assigned by
-	// the server, and is always greater than 0 after device creation.
-	// The
-	// version must be 0 on the `CreateDevice` request if a `config`
-	// is
-	// specified; the response of `CreateDevice` will always have a value of
-	// 1.
+	// is assigned by the server, and is always greater than 0 after device
+	// creation. The version must be 0 on the `CreateDevice` request if a
+	// `config` is specified; the response of `CreateDevice` will always
+	// have a value of 1.
 	Version int64 `json:"version,omitempty,string"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -608,10 +530,10 @@ type DeviceConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "BinaryData") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BinaryData") to include in
@@ -633,39 +555,30 @@ func (s *DeviceConfig) MarshalJSON() ([]byte, error) {
 // authentication.
 type DeviceCredential struct {
 	// ExpirationTime: [Optional] The time at which this credential becomes
-	// invalid. This
-	// credential will be ignored for new client authentication requests
-	// after
-	// this timestamp; however, it will not be automatically deleted.
+	// invalid. This credential will be ignored for new client
+	// authentication requests after this timestamp; however, it will not be
+	// automatically deleted.
 	ExpirationTime string `json:"expirationTime,omitempty"`
 
 	// PublicKey: A public key used to verify the signature of JSON Web
-	// Tokens (JWTs).
-	// When adding a new device credential, either via device creation or
-	// via
-	// modifications, this public key credential may be required to be
-	// signed by
-	// one of the registry level certificates. More specifically, if
-	// the
-	// registry contains at least one certificate, any new device
-	// credential
-	// must be signed by one of the registry certificates. As a result,
-	// when the registry contains certificates, only X.509 certificates
-	// are
-	// accepted as device credentials. However, if the registry does
-	// not contain a certificate, self-signed certificates and public keys
-	// will
-	// be accepted. New device credentials must be different from
-	// every
-	// registry-level certificate.
+	// Tokens (JWTs). When adding a new device credential, either via device
+	// creation or via modifications, this public key credential may be
+	// required to be signed by one of the registry level certificates. More
+	// specifically, if the registry contains at least one certificate, any
+	// new device credential must be signed by one of the registry
+	// certificates. As a result, when the registry contains certificates,
+	// only X.509 certificates are accepted as device credentials. However,
+	// if the registry does not contain a certificate, self-signed
+	// certificates and public keys will be accepted. New device credentials
+	// must be different from every registry-level certificate.
 	PublicKey *PublicKeyCredential `json:"publicKey,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ExpirationTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ExpirationTime") to
@@ -687,43 +600,28 @@ func (s *DeviceCredential) MarshalJSON() ([]byte, error) {
 // DeviceRegistry: A container for a group of devices.
 type DeviceRegistry struct {
 	// Credentials: The credentials used to verify the device credentials.
-	// No more than 10
-	// credentials can be bound to a single registry at a time. The
-	// verification
-	// process occurs at the time of device creation or update. If this
-	// field is
-	// empty, no verification is performed. Otherwise, the credentials of a
-	// newly
-	// created device or added credentials of an updated device should be
-	// signed
-	// with one of these registry credentials.
-	//
-	// Note, however, that existing devices will never be affected
-	// by
-	// modifications to this list of credentials: after a device has
-	// been
-	// successfully created in a registry, it should be able to connect even
-	// if
-	// its registry credentials are revoked, deleted, or modified.
+	// No more than 10 credentials can be bound to a single registry at a
+	// time. The verification process occurs at the time of device creation
+	// or update. If this field is empty, no verification is performed.
+	// Otherwise, the credentials of a newly created device or added
+	// credentials of an updated device should be signed with one of these
+	// registry credentials. Note, however, that existing devices will never
+	// be affected by modifications to this list of credentials: after a
+	// device has been successfully created in a registry, it should be able
+	// to connect even if its registry credentials are revoked, deleted, or
+	// modified.
 	Credentials []*RegistryCredential `json:"credentials,omitempty"`
 
 	// EventNotificationConfigs: The configuration for notification of
-	// telemetry events received from the
-	// device. All telemetry events that were successfully published by
-	// the
-	// device and acknowledged by Cloud IoT Core are guaranteed to
-	// be
-	// delivered to Cloud Pub/Sub. If multiple configurations match a
-	// message,
-	// only the first matching configuration is used. If you try to publish
-	// a
-	// device telemetry event using MQTT without specifying a Cloud Pub/Sub
-	// topic
-	// for the device's registry, the connection closes automatically. If
-	// you try
-	// to do so using an HTTP connection, an error is returned. Up to
-	// 10
-	// configurations may be provided.
+	// telemetry events received from the device. All telemetry events that
+	// were successfully published by the device and acknowledged by Cloud
+	// IoT Core are guaranteed to be delivered to Cloud Pub/Sub. If multiple
+	// configurations match a message, only the first matching configuration
+	// is used. If you try to publish a device telemetry event using MQTT
+	// without specifying a Cloud Pub/Sub topic for the device's registry,
+	// the connection closes automatically. If you try to do so using an
+	// HTTP connection, an error is returned. Up to 10 configurations may be
+	// provided.
 	EventNotificationConfigs []*EventNotificationConfig `json:"eventNotificationConfigs,omitempty"`
 
 	// HttpConfig: The DeviceService (HTTP) configuration for this device
@@ -734,11 +632,9 @@ type DeviceRegistry struct {
 	// `myRegistry`.
 	Id string `json:"id,omitempty"`
 
-	// LogLevel: **Beta Feature**
-	//
-	// The default logging verbosity for activity from devices in this
-	// registry.
-	// The verbosity level can be overridden by Device.log_level.
+	// LogLevel: **Beta Feature** The default logging verbosity for activity
+	// from devices in this registry. The verbosity level can be overridden
+	// by Device.log_level.
 	//
 	// Possible values:
 	//   "LOG_LEVEL_UNSPECIFIED" - No logging specified. If not specified,
@@ -746,31 +642,24 @@ type DeviceRegistry struct {
 	//   "NONE" - Disables logging.
 	//   "ERROR" - Error events will be logged.
 	//   "INFO" - Informational events will be logged, such as connections
-	// and
-	// disconnections.
+	// and disconnections.
 	//   "DEBUG" - All events will be logged.
 	LogLevel string `json:"logLevel,omitempty"`
 
 	// MqttConfig: The MQTT configuration for this device registry.
 	MqttConfig *MqttConfig `json:"mqttConfig,omitempty"`
 
-	// Name: The resource path name. For
-	// example,
-	// `projects/example-project/locations/us-central1/registries/my
-	// -registry`.
+	// Name: The resource path name. For example,
+	// `projects/example-project/locations/us-central1/registries/my-registry
+	// `.
 	Name string `json:"name,omitempty"`
 
 	// StateNotificationConfig: The configuration for notification of new
-	// states received from the device.
-	// State updates are guaranteed to be stored in the state history,
-	// but
-	// notifications to Cloud Pub/Sub are not guaranteed. For example,
-	// if
-	// permissions are misconfigured or the specified topic doesn't exist,
-	// no
-	// notification will be published but the state will still be stored in
-	// Cloud
-	// IoT Core.
+	// states received from the device. State updates are guaranteed to be
+	// stored in the state history, but notifications to Cloud Pub/Sub are
+	// not guaranteed. For example, if permissions are misconfigured or the
+	// specified topic doesn't exist, no notification will be published but
+	// the state will still be stored in Cloud IoT Core.
 	StateNotificationConfig *StateNotificationConfig `json:"stateNotificationConfig,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -779,10 +668,10 @@ type DeviceRegistry struct {
 
 	// ForceSendFields is a list of field names (e.g. "Credentials") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Credentials") to include
@@ -806,16 +695,15 @@ type DeviceState struct {
 	BinaryData string `json:"binaryData,omitempty"`
 
 	// UpdateTime: [Output only] The time at which this state version was
-	// updated in Cloud
-	// IoT Core.
+	// updated in Cloud IoT Core.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BinaryData") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BinaryData") to include in
@@ -834,17 +722,10 @@ func (s *DeviceState) MarshalJSON() ([]byte, error) {
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
-// duplicated
-// empty messages in your APIs. A typical example is to use it as the
-// request
-// or the response type of an API method. For instance:
-//
-//     service Foo {
-//       rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty);
-//     }
-//
-// The JSON representation for `Empty` is empty JSON object `{}`.
+// duplicated empty messages in your APIs. A typical example is to use
+// it as the request or the response type of an API method. For
+// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); }
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -854,26 +735,23 @@ type Empty struct {
 // EventNotificationConfig: The configuration for forwarding telemetry
 // events.
 type EventNotificationConfig struct {
-	// PubsubTopicName: A Cloud Pub/Sub topic name. For
-	// example,
+	// PubsubTopicName: A Cloud Pub/Sub topic name. For example,
 	// `projects/myProject/topics/deviceEvents`.
 	PubsubTopicName string `json:"pubsubTopicName,omitempty"`
 
 	// SubfolderMatches: If the subfolder name matches this string exactly,
-	// this configuration will
-	// be used. The string must not include the leading '/' character. If
-	// empty,
-	// all strings are matched. This field is used only for telemetry
-	// events;
-	// subfolders are not supported for state changes.
+	// this configuration will be used. The string must not include the
+	// leading '/' character. If empty, all strings are matched. This field
+	// is used only for telemetry events; subfolders are not supported for
+	// state changes.
 	SubfolderMatches string `json:"subfolderMatches,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PubsubTopicName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "PubsubTopicName") to
@@ -893,73 +771,48 @@ func (s *EventNotificationConfig) MarshalJSON() ([]byte, error) {
 }
 
 // Expr: Represents a textual expression in the Common Expression
-// Language (CEL)
-// syntax. CEL is a C-like expression language. The syntax and semantics
-// of CEL
-// are documented at https://github.com/google/cel-spec.
-//
-// Example (Comparison):
-//
-//     title: "Summary size limit"
-//     description: "Determines if a summary is less than 100 chars"
-//     expression: "document.summary.size() < 100"
-//
-// Example (Equality):
-//
-//     title: "Requestor is owner"
-//     description: "Determines if requestor is the document owner"
-//     expression: "document.owner ==
-// request.auth.claims.email"
-//
-// Example (Logic):
-//
-//     title: "Public documents"
-//     description: "Determine whether the document should be publicly
-// visible"
-//     expression: "document.type != 'private' && document.type !=
-// 'internal'"
-//
-// Example (Data Manipulation):
-//
-//     title: "Notification string"
-//     description: "Create a notification string with a timestamp."
-//     expression: "'New message received at ' +
-// string(document.create_time)"
-//
-// The exact variables and functions that may be referenced within an
-// expression
-// are determined by the service that evaluates it. See the
-// service
-// documentation for additional information.
+// Language (CEL) syntax. CEL is a C-like expression language. The
+// syntax and semantics of CEL are documented at
+// https://github.com/google/cel-spec. Example (Comparison): title:
+// "Summary size limit" description: "Determines if a summary is less
+// than 100 chars" expression: "document.summary.size() < 100" Example
+// (Equality): title: "Requestor is owner" description: "Determines if
+// requestor is the document owner" expression: "document.owner ==
+// request.auth.claims.email" Example (Logic): title: "Public documents"
+// description: "Determine whether the document should be publicly
+// visible" expression: "document.type != 'private' && document.type !=
+// 'internal'" Example (Data Manipulation): title: "Notification string"
+// description: "Create a notification string with a timestamp."
+// expression: "'New message received at ' +
+// string(document.create_time)" The exact variables and functions that
+// may be referenced within an expression are determined by the service
+// that evaluates it. See the service documentation for additional
+// information.
 type Expr struct {
 	// Description: Optional. Description of the expression. This is a
-	// longer text which
-	// describes the expression, e.g. when hovered over it in a UI.
+	// longer text which describes the expression, e.g. when hovered over it
+	// in a UI.
 	Description string `json:"description,omitempty"`
 
 	// Expression: Textual representation of an expression in Common
-	// Expression Language
-	// syntax.
+	// Expression Language syntax.
 	Expression string `json:"expression,omitempty"`
 
 	// Location: Optional. String indicating the location of the expression
-	// for error
-	// reporting, e.g. a file name and a position in the file.
+	// for error reporting, e.g. a file name and a position in the file.
 	Location string `json:"location,omitempty"`
 
 	// Title: Optional. Title for the expression, i.e. a short string
-	// describing
-	// its purpose. This can be used e.g. in UIs which allow to enter
-	// the
-	// expression.
+	// describing its purpose. This can be used e.g. in UIs which allow to
+	// enter the expression.
 	Title string `json:"title,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Description") to include
@@ -980,24 +833,19 @@ func (s *Expr) MarshalJSON() ([]byte, error) {
 // GatewayConfig: Gateway-related configuration and state.
 type GatewayConfig struct {
 	// GatewayAuthMethod: Indicates how to authorize and/or authenticate
-	// devices to access the
-	// gateway.
+	// devices to access the gateway.
 	//
 	// Possible values:
 	//   "GATEWAY_AUTH_METHOD_UNSPECIFIED" - No authentication/authorization
-	// method specified. No devices are allowed to
-	// access the gateway.
+	// method specified. No devices are allowed to access the gateway.
 	//   "ASSOCIATION_ONLY" - The device is authenticated through the
-	// gateway association only. Device
-	// credentials are ignored even if provided.
+	// gateway association only. Device credentials are ignored even if
+	// provided.
 	//   "DEVICE_AUTH_TOKEN_ONLY" - The device is authenticated through its
-	// own credentials. Gateway
-	// association is not checked.
+	// own credentials. Gateway association is not checked.
 	//   "ASSOCIATION_AND_DEVICE_AUTH_TOKEN" - The device is authenticated
-	// through both device credentials and gateway
-	// association. The device must be bound to the gateway and must provide
-	// its
-	// own credentials.
+	// through both device credentials and gateway association. The device
+	// must be bound to the gateway and must provide its own credentials.
 	GatewayAuthMethod string `json:"gatewayAuthMethod,omitempty"`
 
 	// GatewayType: Indicates whether the device is a gateway.
@@ -1014,16 +862,15 @@ type GatewayConfig struct {
 	LastAccessedGatewayId string `json:"lastAccessedGatewayId,omitempty"`
 
 	// LastAccessedGatewayTime: [Output only] The most recent time at which
-	// the device accessed the gateway
-	// specified in `last_accessed_gateway`.
+	// the device accessed the gateway specified in `last_accessed_gateway`.
 	LastAccessedGatewayTime string `json:"lastAccessedGatewayTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "GatewayAuthMethod")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "GatewayAuthMethod") to
@@ -1045,16 +892,15 @@ func (s *GatewayConfig) MarshalJSON() ([]byte, error) {
 // GetIamPolicyRequest: Request message for `GetIamPolicy` method.
 type GetIamPolicyRequest struct {
 	// Options: OPTIONAL: A `GetPolicyOptions` object for specifying options
-	// to
-	// `GetIamPolicy`.
+	// to `GetIamPolicy`.
 	Options *GetPolicyOptions `json:"options,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Options") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Options") to include in
@@ -1074,24 +920,24 @@ func (s *GetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 
 // GetPolicyOptions: Encapsulates settings provided to GetIamPolicy.
 type GetPolicyOptions struct {
-	// RequestedPolicyVersion: Optional. The policy format version to be
-	// returned.
-	//
-	// Valid values are 0, 1, and 3. Requests specifying an invalid value
-	// will be
-	// rejected.
-	//
-	// Requests for policies with any conditional bindings must specify
-	// version 3.
-	// Policies without any conditional bindings may specify any valid value
-	// or
-	// leave the field unset.
+	// RequestedPolicyVersion: Optional. The maximum policy version that
+	// will be used to format the policy. Valid values are 0, 1, and 3.
+	// Requests specifying an invalid value will be rejected. Requests for
+	// policies with any conditional role bindings must specify version 3.
+	// Policies with no conditional role bindings may specify any valid
+	// value or leave the field unset. The policy in the response might use
+	// the policy version that you specified, or it might use a lower policy
+	// version. For example, if you specify version 3, but the policy has no
+	// conditional role bindings, the response uses version 1. To learn
+	// which resources support conditions in their IAM policies, see the IAM
+	// documentation
+	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	RequestedPolicyVersion int64 `json:"requestedPolicyVersion,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "RequestedPolicyVersion") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -1117,13 +963,12 @@ func (s *GetPolicyOptions) MarshalJSON() ([]byte, error) {
 // registry.
 type HttpConfig struct {
 	// HttpEnabledState: If enabled, allows devices to use DeviceService via
-	// the HTTP protocol.
-	// Otherwise, any requests to DeviceService will fail for this registry.
+	// the HTTP protocol. Otherwise, any requests to DeviceService will fail
+	// for this registry.
 	//
 	// Possible values:
 	//   "HTTP_STATE_UNSPECIFIED" - No HTTP state specified. If not
-	// specified, DeviceService will be
-	// enabled by default.
+	// specified, DeviceService will be enabled by default.
 	//   "HTTP_ENABLED" - Enables DeviceService (HTTP) service for the
 	// registry.
 	//   "HTTP_DISABLED" - Disables DeviceService (HTTP) service for the
@@ -1132,10 +977,10 @@ type HttpConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "HttpEnabledState") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "HttpEnabledState") to
@@ -1158,8 +1003,8 @@ func (s *HttpConfig) MarshalJSON() ([]byte, error) {
 // `ListDeviceConfigVersions`.
 type ListDeviceConfigVersionsResponse struct {
 	// DeviceConfigs: The device configuration for the last few versions.
-	// Versions are listed
-	// in decreasing order, starting from the most recent one.
+	// Versions are listed in decreasing order, starting from the most
+	// recent one.
 	DeviceConfigs []*DeviceConfig `json:"deviceConfigs,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1168,10 +1013,10 @@ type ListDeviceConfigVersionsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "DeviceConfigs") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DeviceConfigs") to include
@@ -1195,10 +1040,8 @@ type ListDeviceRegistriesResponse struct {
 	DeviceRegistries []*DeviceRegistry `json:"deviceRegistries,omitempty"`
 
 	// NextPageToken: If not empty, indicates that there may be more
-	// registries that match the
-	// request; this value should be passed in a
-	// new
-	// `ListDeviceRegistriesRequest`.
+	// registries that match the request; this value should be passed in a
+	// new `ListDeviceRegistriesRequest`.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1207,10 +1050,10 @@ type ListDeviceRegistriesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "DeviceRegistries") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DeviceRegistries") to
@@ -1232,8 +1075,8 @@ func (s *ListDeviceRegistriesResponse) MarshalJSON() ([]byte, error) {
 // ListDeviceStatesResponse: Response for `ListDeviceStates`.
 type ListDeviceStatesResponse struct {
 	// DeviceStates: The last few device states. States are listed in
-	// descending order of server
-	// update time, starting from the most recent one.
+	// descending order of server update time, starting from the most recent
+	// one.
 	DeviceStates []*DeviceState `json:"deviceStates,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1242,10 +1085,10 @@ type ListDeviceStatesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "DeviceStates") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DeviceStates") to include
@@ -1269,8 +1112,8 @@ type ListDevicesResponse struct {
 	Devices []*Device `json:"devices,omitempty"`
 
 	// NextPageToken: If not empty, indicates that there may be more devices
-	// that match the
-	// request; this value should be passed in a new `ListDevicesRequest`.
+	// that match the request; this value should be passed in a new
+	// `ListDevicesRequest`.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1279,10 +1122,10 @@ type ListDevicesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Devices") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Devices") to include in
@@ -1307,22 +1150,19 @@ type ModifyCloudToDeviceConfigRequest struct {
 	BinaryData string `json:"binaryData,omitempty"`
 
 	// VersionToUpdate: The version number to update. If this value is zero,
-	// it will not check the
-	// version number of the server and will always update the current
-	// version;
-	// otherwise, this update will fail if the version number found on the
-	// server
-	// does not match this version number. This is used to support
-	// multiple
-	// simultaneous updates without losing data.
+	// it will not check the version number of the server and will always
+	// update the current version; otherwise, this update will fail if the
+	// version number found on the server does not match this version
+	// number. This is used to support multiple simultaneous updates without
+	// losing data.
 	VersionToUpdate int64 `json:"versionToUpdate,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "BinaryData") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BinaryData") to include in
@@ -1343,8 +1183,7 @@ func (s *ModifyCloudToDeviceConfigRequest) MarshalJSON() ([]byte, error) {
 // MqttConfig: The configuration of MQTT for a device registry.
 type MqttConfig struct {
 	// MqttEnabledState: If enabled, allows connections using the MQTT
-	// protocol. Otherwise, MQTT
-	// connections to this registry will fail.
+	// protocol. Otherwise, MQTT connections to this registry will fail.
 	//
 	// Possible values:
 	//   "MQTT_STATE_UNSPECIFIED" - No MQTT state specified. If not
@@ -1355,10 +1194,10 @@ type MqttConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "MqttEnabledState") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "MqttEnabledState") to
@@ -1378,139 +1217,82 @@ func (s *MqttConfig) MarshalJSON() ([]byte, error) {
 }
 
 // Policy: An Identity and Access Management (IAM) policy, which
-// specifies access
-// controls for Google Cloud resources.
-//
-//
-// A `Policy` is a collection of `bindings`. A `binding` binds one or
-// more
-// `members` to a single `role`. Members can be user accounts, service
-// accounts,
-// Google groups, and domains (such as G Suite). A `role` is a named
-// list of
-// permissions; each `role` can be an IAM predefined role or a
-// user-created
-// custom role.
-//
-// Optionally, a `binding` can specify a `condition`, which is a
-// logical
-// expression that allows access to a resource only if the expression
-// evaluates
-// to `true`. A condition can add constraints based on attributes of
-// the
-// request, the resource, or both.
-//
-// **JSON example:**
-//
-//     {
-//       "bindings": [
-//         {
-//           "role": "roles/resourcemanager.organizationAdmin",
-//           "members": [
-//             "user:mike@example.com",
-//             "group:admins@example.com",
-//             "domain:google.com",
-//
-// "serviceAccount:my-project-id@appspot.gserviceaccount.com"
-//           ]
-//         },
-//         {
-//           "role": "roles/resourcemanager.organizationViewer",
-//           "members": ["user:eve@example.com"],
-//           "condition": {
-//             "title": "expirable access",
-//             "description": "Does not grant access after Sep 2020",
-//             "expression": "request.time <
-// timestamp('2020-10-01T00:00:00.000Z')",
-//           }
-//         }
-//       ],
-//       "etag": "BwWWja0YfJA=",
-//       "version": 3
-//     }
-//
-// **YAML example:**
-//
-//     bindings:
-//     - members:
-//       - user:mike@example.com
-//       - group:admins@example.com
-//       - domain:google.com
-//       - serviceAccount:my-project-id@appspot.gserviceaccount.com
-//       role: roles/resourcemanager.organizationAdmin
-//     - members:
-//       - user:eve@example.com
-//       role: roles/resourcemanager.organizationViewer
-//       condition:
-//         title: expirable access
-//         description: Does not grant access after Sep 2020
-//         expression: request.time <
-// timestamp('2020-10-01T00:00:00.000Z')
-//     - etag: BwWWja0YfJA=
-//     - version: 3
-//
-// For a description of IAM and its features, see the
-// [IAM documentation](https://cloud.google.com/iam/docs/).
+// specifies access controls for Google Cloud resources. A `Policy` is a
+// collection of `bindings`. A `binding` binds one or more `members`, or
+// principals, to a single `role`. Principals can be user accounts,
+// service accounts, Google groups, and domains (such as G Suite). A
+// `role` is a named list of permissions; each `role` can be an IAM
+// predefined role or a user-created custom role. For some types of
+// Google Cloud resources, a `binding` can also specify a `condition`,
+// which is a logical expression that allows access to a resource only
+// if the expression evaluates to `true`. A condition can add
+// constraints based on attributes of the request, the resource, or
+// both. To learn which resources support conditions in their IAM
+// policies, see the IAM documentation
+// (https://cloud.google.com/iam/help/conditions/resource-policies).
+// **JSON example:** { "bindings": [ { "role":
+// "roles/resourcemanager.organizationAdmin", "members": [
+// "user:mike@example.com", "group:admins@example.com",
+// "domain:google.com",
+// "serviceAccount:my-project-id@appspot.gserviceaccount.com" ] }, {
+// "role": "roles/resourcemanager.organizationViewer", "members": [
+// "user:eve@example.com" ], "condition": { "title": "expirable access",
+// "description": "Does not grant access after Sep 2020", "expression":
+// "request.time < timestamp('2020-10-01T00:00:00.000Z')", } } ],
+// "etag": "BwWWja0YfJA=", "version": 3 } **YAML example:** bindings: -
+// members: - user:mike@example.com - group:admins@example.com -
+// domain:google.com -
+// serviceAccount:my-project-id@appspot.gserviceaccount.com role:
+// roles/resourcemanager.organizationAdmin - members: -
+// user:eve@example.com role: roles/resourcemanager.organizationViewer
+// condition: title: expirable access description: Does not grant access
+// after Sep 2020 expression: request.time <
+// timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3
+// For a description of IAM and its features, see the IAM documentation
+// (https://cloud.google.com/iam/docs/).
 type Policy struct {
-	// Bindings: Associates a list of `members` to a `role`. Optionally, may
-	// specify a
-	// `condition` that determines how and when the `bindings` are applied.
-	// Each
-	// of the `bindings` must contain at least one member.
+	// Bindings: Associates a list of `members`, or principals, with a
+	// `role`. Optionally, may specify a `condition` that determines how and
+	// when the `bindings` are applied. Each of the `bindings` must contain
+	// at least one principal. The `bindings` in a `Policy` can refer to up
+	// to 1,500 principals; up to 250 of these principals can be Google
+	// groups. Each occurrence of a principal counts towards these limits.
+	// For example, if the `bindings` grant 50 different roles to
+	// `user:alice@example.com`, and not to any other principal, then you
+	// can add another 1,450 principals to the `bindings` in the `Policy`.
 	Bindings []*Binding `json:"bindings,omitempty"`
 
 	// Etag: `etag` is used for optimistic concurrency control as a way to
-	// help
-	// prevent simultaneous updates of a policy from overwriting each
-	// other.
-	// It is strongly suggested that systems make use of the `etag` in
-	// the
-	// read-modify-write cycle to perform policy updates in order to avoid
-	// race
-	// conditions: An `etag` is returned in the response to `getIamPolicy`,
-	// and
-	// systems are expected to put that etag in the request to
-	// `setIamPolicy` to
-	// ensure that their change will be applied to the same version of the
-	// policy.
-	//
-	// **Important:** If you use IAM Conditions, you must include the `etag`
-	// field
-	// whenever you call `setIamPolicy`. If you omit this field, then IAM
-	// allows
-	// you to overwrite a version `3` policy with a version `1` policy, and
-	// all of
+	// help prevent simultaneous updates of a policy from overwriting each
+	// other. It is strongly suggested that systems make use of the `etag`
+	// in the read-modify-write cycle to perform policy updates in order to
+	// avoid race conditions: An `etag` is returned in the response to
+	// `getIamPolicy`, and systems are expected to put that etag in the
+	// request to `setIamPolicy` to ensure that their change will be applied
+	// to the same version of the policy. **Important:** If you use IAM
+	// Conditions, you must include the `etag` field whenever you call
+	// `setIamPolicy`. If you omit this field, then IAM allows you to
+	// overwrite a version `3` policy with a version `1` policy, and all of
 	// the conditions in the version `3` policy are lost.
 	Etag string `json:"etag,omitempty"`
 
-	// Version: Specifies the format of the policy.
-	//
-	// Valid values are `0`, `1`, and `3`. Requests that specify an invalid
-	// value
-	// are rejected.
-	//
+	// Version: Specifies the format of the policy. Valid values are `0`,
+	// `1`, and `3`. Requests that specify an invalid value are rejected.
 	// Any operation that affects conditional role bindings must specify
-	// version
-	// `3`. This requirement applies to the following operations:
-	//
-	// * Getting a policy that includes a conditional role binding
-	// * Adding a conditional role binding to a policy
-	// * Changing a conditional role binding in a policy
-	// * Removing any role binding, with or without a condition, from a
-	// policy
-	//   that includes conditions
-	//
-	// **Important:** If you use IAM Conditions, you must include the `etag`
-	// field
-	// whenever you call `setIamPolicy`. If you omit this field, then IAM
-	// allows
-	// you to overwrite a version `3` policy with a version `1` policy, and
-	// all of
-	// the conditions in the version `3` policy are lost.
-	//
-	// If a policy does not include any conditions, operations on that
-	// policy may
-	// specify any valid version or leave the field unset.
+	// version `3`. This requirement applies to the following operations: *
+	// Getting a policy that includes a conditional role binding * Adding a
+	// conditional role binding to a policy * Changing a conditional role
+	// binding in a policy * Removing any role binding, with or without a
+	// condition, from a policy that includes conditions **Important:** If
+	// you use IAM Conditions, you must include the `etag` field whenever
+	// you call `setIamPolicy`. If you omit this field, then IAM allows you
+	// to overwrite a version `3` policy with a version `1` policy, and all
+	// of the conditions in the version `3` policy are lost. If a policy
+	// does not include any conditions, operations on that policy may
+	// specify any valid version or leave the field unset. To learn which
+	// resources support conditions in their IAM policies, see the IAM
+	// documentation
+	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Version int64 `json:"version,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1519,10 +1301,10 @@ type Policy struct {
 
 	// ForceSendFields is a list of field names (e.g. "Bindings") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Bindings") to include in
@@ -1549,13 +1331,12 @@ type PublicKeyCertificate struct {
 	//
 	// Possible values:
 	//   "UNSPECIFIED_PUBLIC_KEY_CERTIFICATE_FORMAT" - The format has not
-	// been specified. This is an invalid default value and
-	// must not be used.
+	// been specified. This is an invalid default value and must not be
+	// used.
 	//   "X509_CERTIFICATE_PEM" - An X.509v3 certificate
-	// ([RFC5280](https://www.ietf.org/rfc/rfc5280.txt)),
-	// encoded in base64, and wrapped by `-----BEGIN CERTIFICATE-----`
-	// and
-	// `-----END CERTIFICATE-----`.
+	// ([RFC5280](https://www.ietf.org/rfc/rfc5280.txt)), encoded in base64,
+	// and wrapped by `-----BEGIN CERTIFICATE-----` and `-----END
+	// CERTIFICATE-----`.
 	Format string `json:"format,omitempty"`
 
 	// X509Details: [Output only] The certificate details. Used only for
@@ -1564,10 +1345,10 @@ type PublicKeyCertificate struct {
 
 	// ForceSendFields is a list of field names (e.g. "Certificate") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Certificate") to include
@@ -1591,35 +1372,26 @@ type PublicKeyCredential struct {
 	//
 	// Possible values:
 	//   "UNSPECIFIED_PUBLIC_KEY_FORMAT" - The format has not been
-	// specified. This is an invalid default value and
-	// must not be used.
-	//   "RSA_PEM" - An RSA public key encoded in base64, and wrapped
-	// by
+	// specified. This is an invalid default value and must not be used.
+	//   "RSA_PEM" - An RSA public key encoded in base64, and wrapped by
 	// `-----BEGIN PUBLIC KEY-----` and `-----END PUBLIC KEY-----`. This can
-	// be
-	// used to verify `RS256` signatures in JWT tokens
-	// ([RFC7518](
+	// be used to verify `RS256` signatures in JWT tokens ([RFC7518](
 	// https://www.ietf.org/rfc/rfc7518.txt)).
 	//   "RSA_X509_PEM" - As RSA_PEM, but wrapped in an X.509v3 certificate
-	// ([RFC5280](
-	// https://www.ietf.org/rfc/rfc5280.txt)), encoded in base64, and
-	// wrapped by
-	// `-----BEGIN CERTIFICATE-----` and `-----END CERTIFICATE-----`.
+	// ([RFC5280]( https://www.ietf.org/rfc/rfc5280.txt)), encoded in
+	// base64, and wrapped by `-----BEGIN CERTIFICATE-----` and `-----END
+	// CERTIFICATE-----`.
 	//   "ES256_PEM" - Public key for the ECDSA algorithm using P-256 and
-	// SHA-256, encoded in
-	// base64, and wrapped by `-----BEGIN PUBLIC KEY-----` and
-	// `-----END
-	// PUBLIC KEY-----`. This can be used to verify JWT tokens with the
-	// `ES256`
-	// algorithm ([RFC7518](https://www.ietf.org/rfc/rfc7518.txt)). This
-	// curve is
+	// SHA-256, encoded in base64, and wrapped by `-----BEGIN PUBLIC
+	// KEY-----` and `-----END PUBLIC KEY-----`. This can be used to verify
+	// JWT tokens with the `ES256` algorithm
+	// ([RFC7518](https://www.ietf.org/rfc/rfc7518.txt)). This curve is
 	// defined in [OpenSSL](https://www.openssl.org/) as the `prime256v1`
 	// curve.
 	//   "ES256_X509_PEM" - As ES256_PEM, but wrapped in an X.509v3
-	// certificate ([RFC5280](
-	// https://www.ietf.org/rfc/rfc5280.txt)), encoded in base64, and
-	// wrapped by
-	// `-----BEGIN CERTIFICATE-----` and `-----END CERTIFICATE-----`.
+	// certificate ([RFC5280]( https://www.ietf.org/rfc/rfc5280.txt)),
+	// encoded in base64, and wrapped by `-----BEGIN CERTIFICATE-----` and
+	// `-----END CERTIFICATE-----`.
 	Format string `json:"format,omitempty"`
 
 	// Key: The key data.
@@ -1627,10 +1399,10 @@ type PublicKeyCredential struct {
 
 	// ForceSendFields is a list of field names (e.g. "Format") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Format") to include in API
@@ -1657,8 +1429,8 @@ type RegistryCredential struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "PublicKeyCertificate") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -1686,23 +1458,20 @@ type SendCommandToDeviceRequest struct {
 	BinaryData string `json:"binaryData,omitempty"`
 
 	// Subfolder: Optional subfolder for the command. If empty, the command
-	// will be delivered
-	// to the /devices/{device-id}/commands topic, otherwise it will be
-	// delivered
-	// to the /devices/{device-id}/commands/{subfolder} topic.
-	// Multi-level
+	// will be delivered to the /devices/{device-id}/commands topic,
+	// otherwise it will be delivered to the
+	// /devices/{device-id}/commands/{subfolder} topic. Multi-level
 	// subfolders are allowed. This field must not have more than 256
-	// characters,
-	// and must not contain any MQTT wildcards ("+" or "#") or null
-	// characters.
+	// characters, and must not contain any MQTT wildcards ("+" or "#") or
+	// null characters.
 	Subfolder string `json:"subfolder,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BinaryData") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BinaryData") to include in
@@ -1730,19 +1499,17 @@ type SendCommandToDeviceResponse struct {
 // SetIamPolicyRequest: Request message for `SetIamPolicy` method.
 type SetIamPolicyRequest struct {
 	// Policy: REQUIRED: The complete policy to be applied to the
-	// `resource`. The size of
-	// the policy is limited to a few 10s of KB. An empty policy is a
-	// valid policy but certain Cloud Platform services (such as
-	// Projects)
-	// might reject them.
+	// `resource`. The size of the policy is limited to a few 10s of KB. An
+	// empty policy is a valid policy but certain Google Cloud services
+	// (such as Projects) might reject them.
 	Policy *Policy `json:"policy,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Policy") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Policy") to include in API
@@ -1763,17 +1530,16 @@ func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 // StateNotificationConfig: The configuration for notification of new
 // states received from the device.
 type StateNotificationConfig struct {
-	// PubsubTopicName: A Cloud Pub/Sub topic name. For
-	// example,
+	// PubsubTopicName: A Cloud Pub/Sub topic name. For example,
 	// `projects/myProject/topics/deviceEvents`.
 	PubsubTopicName string `json:"pubsubTopicName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PubsubTopicName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "PubsubTopicName") to
@@ -1793,40 +1559,32 @@ func (s *StateNotificationConfig) MarshalJSON() ([]byte, error) {
 }
 
 // Status: The `Status` type defines a logical error model that is
-// suitable for
-// different programming environments, including REST APIs and RPC APIs.
-// It is
-// used by [gRPC](https://github.com/grpc). Each `Status` message
-// contains
-// three pieces of data: error code, error message, and error
-// details.
-//
-// You can find out more about this error model and how to work with it
-// in the
-// [API Design Guide](https://cloud.google.com/apis/design/errors).
+// suitable for different programming environments, including REST APIs
+// and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
+// `Status` message contains three pieces of data: error code, error
+// message, and error details. You can find out more about this error
+// model and how to work with it in the API Design Guide
+// (https://cloud.google.com/apis/design/errors).
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
 	Code int64 `json:"code,omitempty"`
 
-	// Details: A list of messages that carry the error details.  There is a
-	// common set of
-	// message types for APIs to use.
+	// Details: A list of messages that carry the error details. There is a
+	// common set of message types for APIs to use.
 	Details []googleapi.RawMessage `json:"details,omitempty"`
 
 	// Message: A developer-facing error message, which should be in
-	// English. Any
-	// user-facing error message should be localized and sent in
-	// the
-	// google.rpc.Status.details field, or localized by the client.
+	// English. Any user-facing error message should be localized and sent
+	// in the google.rpc.Status.details field, or localized by the client.
 	Message string `json:"message,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Code") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Code") to include in API
@@ -1848,20 +1606,17 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 // method.
 type TestIamPermissionsRequest struct {
 	// Permissions: The set of permissions to check for the `resource`.
-	// Permissions with
-	// wildcards (such as '*' or 'storage.*') are not allowed. For
-	// more
-	// information see
-	// [IAM
-	// Overview](https://cloud.google.com/iam/docs/overview#permissions).
+	// Permissions with wildcards (such as `*` or `storage.*`) are not
+	// allowed. For more information see IAM Overview
+	// (https://cloud.google.com/iam/docs/overview#permissions).
 	Permissions []string `json:"permissions,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Permissions") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Permissions") to include
@@ -1883,8 +1638,7 @@ func (s *TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
 // method.
 type TestIamPermissionsResponse struct {
 	// Permissions: A subset of `TestPermissionsRequest.permissions` that
-	// the caller is
-	// allowed.
+	// the caller is allowed.
 	Permissions []string `json:"permissions,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1893,10 +1647,10 @@ type TestIamPermissionsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Permissions") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Permissions") to include
@@ -1918,23 +1672,20 @@ func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 // `UnbindDeviceFromGateway`.
 type UnbindDeviceFromGatewayRequest struct {
 	// DeviceId: Required. The device to disassociate from the specified
-	// gateway. The value of
-	// `device_id` can be either the device numeric ID or the user-defined
-	// device
-	// identifier.
+	// gateway. The value of `device_id` can be either the device numeric ID
+	// or the user-defined device identifier.
 	DeviceId string `json:"deviceId,omitempty"`
 
 	// GatewayId: Required. The value of `gateway_id` can be either the
-	// device numeric ID or the
-	// user-defined device identifier.
+	// device numeric ID or the user-defined device identifier.
 	GatewayId string `json:"gatewayId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DeviceId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DeviceId") to include in
@@ -1983,10 +1734,10 @@ type X509CertificateDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "ExpiryTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ExpiryTime") to include in
@@ -2016,6 +1767,10 @@ type ProjectsLocationsRegistriesBindDeviceToGatewayCall struct {
 }
 
 // BindDeviceToGateway: Associates the device with the gateway.
+//
+//   - parent: The name of the registry. For example,
+//     `projects/example-project/locations/us-central1/registries/my-regist
+//     ry`.
 func (r *ProjectsLocationsRegistriesService) BindDeviceToGateway(parent string, binddevicetogatewayrequest *BindDeviceToGatewayRequest) *ProjectsLocationsRegistriesBindDeviceToGatewayCall {
 	c := &ProjectsLocationsRegistriesBindDeviceToGatewayCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2050,7 +1805,7 @@ func (c *ProjectsLocationsRegistriesBindDeviceToGatewayCall) Header() http.Heade
 
 func (c *ProjectsLocationsRegistriesBindDeviceToGatewayCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2090,17 +1845,17 @@ func (c *ProjectsLocationsRegistriesBindDeviceToGatewayCall) Do(opts ...googleap
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &BindDeviceToGatewayResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2123,7 +1878,7 @@ func (c *ProjectsLocationsRegistriesBindDeviceToGatewayCall) Do(opts ...googleap
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The name of the registry. For example,\n`projects/example-project/locations/us-central1/registries/my-registry`.",
+	//       "description": "Required. The name of the registry. For example, `projects/example-project/locations/us-central1/registries/my-registry`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/registries/[^/]+$",
 	//       "required": true,
@@ -2157,6 +1912,10 @@ type ProjectsLocationsRegistriesCreateCall struct {
 }
 
 // Create: Creates a device registry that contains devices.
+//
+//   - parent: The project and cloud region where this device registry
+//     must be created. For example,
+//     `projects/example-project/locations/us-central1`.
 func (r *ProjectsLocationsRegistriesService) Create(parent string, deviceregistry *DeviceRegistry) *ProjectsLocationsRegistriesCreateCall {
 	c := &ProjectsLocationsRegistriesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2191,7 +1950,7 @@ func (c *ProjectsLocationsRegistriesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsRegistriesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2231,17 +1990,17 @@ func (c *ProjectsLocationsRegistriesCreateCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &DeviceRegistry{
 		ServerResponse: googleapi.ServerResponse{
@@ -2264,7 +2023,7 @@ func (c *ProjectsLocationsRegistriesCreateCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The project and cloud region where this device registry must be created.\nFor example, `projects/example-project/locations/us-central1`.",
+	//       "description": "Required. The project and cloud region where this device registry must be created. For example, `projects/example-project/locations/us-central1`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -2297,6 +2056,10 @@ type ProjectsLocationsRegistriesDeleteCall struct {
 }
 
 // Delete: Deletes a device registry configuration.
+//
+//   - name: The name of the device registry. For example,
+//     `projects/example-project/locations/us-central1/registries/my-regist
+//     ry`.
 func (r *ProjectsLocationsRegistriesService) Delete(name string) *ProjectsLocationsRegistriesDeleteCall {
 	c := &ProjectsLocationsRegistriesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2330,7 +2093,7 @@ func (c *ProjectsLocationsRegistriesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsRegistriesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2365,17 +2128,17 @@ func (c *ProjectsLocationsRegistriesDeleteCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -2398,7 +2161,7 @@ func (c *ProjectsLocationsRegistriesDeleteCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the device registry. For example,\n`projects/example-project/locations/us-central1/registries/my-registry`.",
+	//       "description": "Required. The name of the device registry. For example, `projects/example-project/locations/us-central1/registries/my-registry`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/registries/[^/]+$",
 	//       "required": true,
@@ -2429,6 +2192,10 @@ type ProjectsLocationsRegistriesGetCall struct {
 }
 
 // Get: Gets a device registry configuration.
+//
+//   - name: The name of the device registry. For example,
+//     `projects/example-project/locations/us-central1/registries/my-regist
+//     ry`.
 func (r *ProjectsLocationsRegistriesService) Get(name string) *ProjectsLocationsRegistriesGetCall {
 	c := &ProjectsLocationsRegistriesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2472,7 +2239,7 @@ func (c *ProjectsLocationsRegistriesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsRegistriesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2510,17 +2277,17 @@ func (c *ProjectsLocationsRegistriesGetCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &DeviceRegistry{
 		ServerResponse: googleapi.ServerResponse{
@@ -2543,7 +2310,7 @@ func (c *ProjectsLocationsRegistriesGetCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the device registry. For example,\n`projects/example-project/locations/us-central1/registries/my-registry`.",
+	//       "description": "Required. The name of the device registry. For example, `projects/example-project/locations/us-central1/registries/my-registry`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/registries/[^/]+$",
 	//       "required": true,
@@ -2573,10 +2340,14 @@ type ProjectsLocationsRegistriesGetIamPolicyCall struct {
 	header_             http.Header
 }
 
-// GetIamPolicy: Gets the access control policy for a resource.
-// Returns an empty policy if the resource exists and does not have a
-// policy
+// GetIamPolicy: Gets the access control policy for a resource. Returns
+// an empty policy if the resource exists and does not have a policy
 // set.
+//
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsRegistriesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsLocationsRegistriesGetIamPolicyCall {
 	c := &ProjectsLocationsRegistriesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2611,7 +2382,7 @@ func (c *ProjectsLocationsRegistriesGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsRegistriesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2651,17 +2422,17 @@ func (c *ProjectsLocationsRegistriesGetIamPolicyCall) Do(opts ...googleapi.CallO
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -2675,7 +2446,7 @@ func (c *ProjectsLocationsRegistriesGetIamPolicyCall) Do(opts ...googleapi.CallO
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the access control policy for a resource.\nReturns an empty policy if the resource exists and does not have a policy\nset.",
+	//   "description": "Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/registries/{registriesId}:getIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "cloudiot.projects.locations.registries.getIamPolicy",
@@ -2684,7 +2455,7 @@ func (c *ProjectsLocationsRegistriesGetIamPolicyCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested.\nSee the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/registries/[^/]+$",
 	//       "required": true,
@@ -2718,6 +2489,9 @@ type ProjectsLocationsRegistriesListCall struct {
 }
 
 // List: Lists device registries.
+//
+//   - parent: The project and cloud region path. For example,
+//     `projects/example-project/locations/us-central1`.
 func (r *ProjectsLocationsRegistriesService) List(parent string) *ProjectsLocationsRegistriesListCall {
 	c := &ProjectsLocationsRegistriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2725,11 +2499,9 @@ func (r *ProjectsLocationsRegistriesService) List(parent string) *ProjectsLocati
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of registries to return in the response. If this value
-// is zero, the service will select a default size. A call may return
-// fewer
-// objects than requested. A non-empty `next_page_token` in the
-// response
+// of registries to return in the response. If this value is zero, the
+// service will select a default size. A call may return fewer objects
+// than requested. A non-empty `next_page_token` in the response
 // indicates that more data is available.
 func (c *ProjectsLocationsRegistriesListCall) PageSize(pageSize int64) *ProjectsLocationsRegistriesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
@@ -2737,10 +2509,9 @@ func (c *ProjectsLocationsRegistriesListCall) PageSize(pageSize int64) *Projects
 }
 
 // PageToken sets the optional parameter "pageToken": The value returned
-// by the last `ListDeviceRegistriesResponse`; indicates
-// that this is a continuation of a prior `ListDeviceRegistries` call
-// and
-// the system should return the next page of data.
+// by the last `ListDeviceRegistriesResponse`; indicates that this is a
+// continuation of a prior `ListDeviceRegistries` call and the system
+// should return the next page of data.
 func (c *ProjectsLocationsRegistriesListCall) PageToken(pageToken string) *ProjectsLocationsRegistriesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -2783,7 +2554,7 @@ func (c *ProjectsLocationsRegistriesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsRegistriesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2821,17 +2592,17 @@ func (c *ProjectsLocationsRegistriesListCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListDeviceRegistriesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2854,18 +2625,18 @@ func (c *ProjectsLocationsRegistriesListCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "The maximum number of registries to return in the response. If this value\nis zero, the service will select a default size. A call may return fewer\nobjects than requested. A non-empty `next_page_token` in the response\nindicates that more data is available.",
+	//       "description": "The maximum number of registries to return in the response. If this value is zero, the service will select a default size. A call may return fewer objects than requested. A non-empty `next_page_token` in the response indicates that more data is available.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The value returned by the last `ListDeviceRegistriesResponse`; indicates\nthat this is a continuation of a prior `ListDeviceRegistries` call and\nthe system should return the next page of data.",
+	//       "description": "The value returned by the last `ListDeviceRegistriesResponse`; indicates that this is a continuation of a prior `ListDeviceRegistries` call and the system should return the next page of data.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The project and cloud region path. For example,\n`projects/example-project/locations/us-central1`.",
+	//       "description": "Required. The project and cloud region path. For example, `projects/example-project/locations/us-central1`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -2917,6 +2688,10 @@ type ProjectsLocationsRegistriesPatchCall struct {
 }
 
 // Patch: Updates a device registry configuration.
+//
+//   - name: The resource path name. For example,
+//     `projects/example-project/locations/us-central1/registries/my-regist
+//     ry`.
 func (r *ProjectsLocationsRegistriesService) Patch(name string, deviceregistry *DeviceRegistry) *ProjectsLocationsRegistriesPatchCall {
 	c := &ProjectsLocationsRegistriesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2925,13 +2700,11 @@ func (r *ProjectsLocationsRegistriesService) Patch(name string, deviceregistry *
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. Only
-// updates the `device_registry` fields indicated by this mask.
-// The field mask must not be empty, and it must not contain fields
-// that
-// are immutable or only set by the server.
-// Mutable top-level fields: `event_notification_config`,
-// `http_config`,
-// `mqtt_config`, and `state_notification_config`.
+// updates the `device_registry` fields indicated by this mask. The
+// field mask must not be empty, and it must not contain fields that are
+// immutable or only set by the server. Mutable top-level fields:
+// `event_notification_config`, `http_config`, `mqtt_config`, and
+// `state_notification_config`.
 func (c *ProjectsLocationsRegistriesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsRegistriesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -2964,7 +2737,7 @@ func (c *ProjectsLocationsRegistriesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsRegistriesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3004,17 +2777,17 @@ func (c *ProjectsLocationsRegistriesPatchCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &DeviceRegistry{
 		ServerResponse: googleapi.ServerResponse{
@@ -3037,14 +2810,14 @@ func (c *ProjectsLocationsRegistriesPatchCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource path name. For example,\n`projects/example-project/locations/us-central1/registries/my-registry`.",
+	//       "description": "The resource path name. For example, `projects/example-project/locations/us-central1/registries/my-registry`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/registries/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. Only updates the `device_registry` fields indicated by this mask.\nThe field mask must not be empty, and it must not contain fields that\nare immutable or only set by the server.\nMutable top-level fields: `event_notification_config`, `http_config`,\n`mqtt_config`, and `state_notification_config`.",
+	//       "description": "Required. Only updates the `device_registry` fields indicated by this mask. The field mask must not be empty, and it must not contain fields that are immutable or only set by the server. Mutable top-level fields: `event_notification_config`, `http_config`, `mqtt_config`, and `state_notification_config`.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -3077,8 +2850,12 @@ type ProjectsLocationsRegistriesSetIamPolicyCall struct {
 }
 
 // SetIamPolicy: Sets the access control policy on the specified
-// resource. Replaces any
-// existing policy.
+// resource. Replaces any existing policy.
+//
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsRegistriesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsRegistriesSetIamPolicyCall {
 	c := &ProjectsLocationsRegistriesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3113,7 +2890,7 @@ func (c *ProjectsLocationsRegistriesSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsRegistriesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3153,17 +2930,17 @@ func (c *ProjectsLocationsRegistriesSetIamPolicyCall) Do(opts ...googleapi.CallO
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -3177,7 +2954,7 @@ func (c *ProjectsLocationsRegistriesSetIamPolicyCall) Do(opts ...googleapi.CallO
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets the access control policy on the specified resource. Replaces any\nexisting policy.",
+	//   "description": "Sets the access control policy on the specified resource. Replaces any existing policy.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/registries/{registriesId}:setIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "cloudiot.projects.locations.registries.setIamPolicy",
@@ -3186,7 +2963,7 @@ func (c *ProjectsLocationsRegistriesSetIamPolicyCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified.\nSee the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/registries/[^/]+$",
 	//       "required": true,
@@ -3220,10 +2997,13 @@ type ProjectsLocationsRegistriesTestIamPermissionsCall struct {
 }
 
 // TestIamPermissions: Returns permissions that a caller has on the
-// specified resource.
-// If the resource does not exist, this will return an empty set
-// of
-// permissions, not a NOT_FOUND error.
+// specified resource. If the resource does not exist, this will return
+// an empty set of permissions, not a NOT_FOUND error.
+//
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsRegistriesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsRegistriesTestIamPermissionsCall {
 	c := &ProjectsLocationsRegistriesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3258,7 +3038,7 @@ func (c *ProjectsLocationsRegistriesTestIamPermissionsCall) Header() http.Header
 
 func (c *ProjectsLocationsRegistriesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3298,17 +3078,17 @@ func (c *ProjectsLocationsRegistriesTestIamPermissionsCall) Do(opts ...googleapi
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TestIamPermissionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3322,7 +3102,7 @@ func (c *ProjectsLocationsRegistriesTestIamPermissionsCall) Do(opts ...googleapi
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns permissions that a caller has on the specified resource.\nIf the resource does not exist, this will return an empty set of\npermissions, not a NOT_FOUND error.",
+	//   "description": "Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a NOT_FOUND error.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/registries/{registriesId}:testIamPermissions",
 	//   "httpMethod": "POST",
 	//   "id": "cloudiot.projects.locations.registries.testIamPermissions",
@@ -3331,7 +3111,7 @@ func (c *ProjectsLocationsRegistriesTestIamPermissionsCall) Do(opts ...googleapi
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested.\nSee the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/registries/[^/]+$",
 	//       "required": true,
@@ -3366,6 +3146,10 @@ type ProjectsLocationsRegistriesUnbindDeviceFromGatewayCall struct {
 
 // UnbindDeviceFromGateway: Deletes the association between the device
 // and the gateway.
+//
+//   - parent: The name of the registry. For example,
+//     `projects/example-project/locations/us-central1/registries/my-regist
+//     ry`.
 func (r *ProjectsLocationsRegistriesService) UnbindDeviceFromGateway(parent string, unbinddevicefromgatewayrequest *UnbindDeviceFromGatewayRequest) *ProjectsLocationsRegistriesUnbindDeviceFromGatewayCall {
 	c := &ProjectsLocationsRegistriesUnbindDeviceFromGatewayCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3400,7 +3184,7 @@ func (c *ProjectsLocationsRegistriesUnbindDeviceFromGatewayCall) Header() http.H
 
 func (c *ProjectsLocationsRegistriesUnbindDeviceFromGatewayCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3440,17 +3224,17 @@ func (c *ProjectsLocationsRegistriesUnbindDeviceFromGatewayCall) Do(opts ...goog
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &UnbindDeviceFromGatewayResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3473,7 +3257,7 @@ func (c *ProjectsLocationsRegistriesUnbindDeviceFromGatewayCall) Do(opts ...goog
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The name of the registry. For example,\n`projects/example-project/locations/us-central1/registries/my-registry`.",
+	//       "description": "Required. The name of the registry. For example, `projects/example-project/locations/us-central1/registries/my-registry`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/registries/[^/]+$",
 	//       "required": true,
@@ -3507,6 +3291,11 @@ type ProjectsLocationsRegistriesDevicesCreateCall struct {
 }
 
 // Create: Creates a device in a device registry.
+//
+//   - parent: The name of the device registry where this device should be
+//     created. For example,
+//     `projects/example-project/locations/us-central1/registries/my-regist
+//     ry`.
 func (r *ProjectsLocationsRegistriesDevicesService) Create(parent string, device *Device) *ProjectsLocationsRegistriesDevicesCreateCall {
 	c := &ProjectsLocationsRegistriesDevicesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3541,7 +3330,7 @@ func (c *ProjectsLocationsRegistriesDevicesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsRegistriesDevicesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3581,17 +3370,17 @@ func (c *ProjectsLocationsRegistriesDevicesCreateCall) Do(opts ...googleapi.Call
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Device{
 		ServerResponse: googleapi.ServerResponse{
@@ -3614,7 +3403,7 @@ func (c *ProjectsLocationsRegistriesDevicesCreateCall) Do(opts ...googleapi.Call
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The name of the device registry where this device should be created.\nFor example,\n`projects/example-project/locations/us-central1/registries/my-registry`.",
+	//       "description": "Required. The name of the device registry where this device should be created. For example, `projects/example-project/locations/us-central1/registries/my-registry`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/registries/[^/]+$",
 	//       "required": true,
@@ -3647,6 +3436,12 @@ type ProjectsLocationsRegistriesDevicesDeleteCall struct {
 }
 
 // Delete: Deletes a device.
+//
+//   - name: The name of the device. For example,
+//     `projects/p0/locations/us-central1/registries/registry0/devices/devi
+//     ce0` or
+//     `projects/p0/locations/us-central1/registries/registry0/devices/{num
+//     _id}`.
 func (r *ProjectsLocationsRegistriesDevicesService) Delete(name string) *ProjectsLocationsRegistriesDevicesDeleteCall {
 	c := &ProjectsLocationsRegistriesDevicesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3680,7 +3475,7 @@ func (c *ProjectsLocationsRegistriesDevicesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsRegistriesDevicesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3715,17 +3510,17 @@ func (c *ProjectsLocationsRegistriesDevicesDeleteCall) Do(opts ...googleapi.Call
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -3748,7 +3543,7 @@ func (c *ProjectsLocationsRegistriesDevicesDeleteCall) Do(opts ...googleapi.Call
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the device. For example,\n`projects/p0/locations/us-central1/registries/registry0/devices/device0` or\n`projects/p0/locations/us-central1/registries/registry0/devices/{num_id}`.",
+	//       "description": "Required. The name of the device. For example, `projects/p0/locations/us-central1/registries/registry0/devices/device0` or `projects/p0/locations/us-central1/registries/registry0/devices/{num_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/registries/[^/]+/devices/[^/]+$",
 	//       "required": true,
@@ -3779,6 +3574,12 @@ type ProjectsLocationsRegistriesDevicesGetCall struct {
 }
 
 // Get: Gets details about a device.
+//
+//   - name: The name of the device. For example,
+//     `projects/p0/locations/us-central1/registries/registry0/devices/devi
+//     ce0` or
+//     `projects/p0/locations/us-central1/registries/registry0/devices/{num
+//     _id}`.
 func (r *ProjectsLocationsRegistriesDevicesService) Get(name string) *ProjectsLocationsRegistriesDevicesGetCall {
 	c := &ProjectsLocationsRegistriesDevicesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3786,8 +3587,9 @@ func (r *ProjectsLocationsRegistriesDevicesService) Get(name string) *ProjectsLo
 }
 
 // FieldMask sets the optional parameter "fieldMask": The fields of the
-// `Device` resource to be returned in the response. If the
-// field mask is unset or empty, all fields are returned.
+// `Device` resource to be returned in the response. If the field mask
+// is unset or empty, all fields are returned. Fields have to be
+// provided in snake_case format, for example: `last_heartbeat_time`.
 func (c *ProjectsLocationsRegistriesDevicesGetCall) FieldMask(fieldMask string) *ProjectsLocationsRegistriesDevicesGetCall {
 	c.urlParams_.Set("fieldMask", fieldMask)
 	return c
@@ -3830,7 +3632,7 @@ func (c *ProjectsLocationsRegistriesDevicesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsRegistriesDevicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3868,17 +3670,17 @@ func (c *ProjectsLocationsRegistriesDevicesGetCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Device{
 		ServerResponse: googleapi.ServerResponse{
@@ -3901,13 +3703,13 @@ func (c *ProjectsLocationsRegistriesDevicesGetCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "fieldMask": {
-	//       "description": "The fields of the `Device` resource to be returned in the response. If the\nfield mask is unset or empty, all fields are returned.",
+	//       "description": "The fields of the `Device` resource to be returned in the response. If the field mask is unset or empty, all fields are returned. Fields have to be provided in snake_case format, for example: `last_heartbeat_time`.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. The name of the device. For example,\n`projects/p0/locations/us-central1/registries/registry0/devices/device0` or\n`projects/p0/locations/us-central1/registries/registry0/devices/{num_id}`.",
+	//       "description": "Required. The name of the device. For example, `projects/p0/locations/us-central1/registries/registry0/devices/device0` or `projects/p0/locations/us-central1/registries/registry0/devices/{num_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/registries/[^/]+/devices/[^/]+$",
 	//       "required": true,
@@ -3938,6 +3740,9 @@ type ProjectsLocationsRegistriesDevicesListCall struct {
 }
 
 // List: List devices in a device registry.
+//
+//   - parent: The device registry path. Required. For example,
+//     `projects/my-project/locations/us-central1/registries/my-registry`.
 func (r *ProjectsLocationsRegistriesDevicesService) List(parent string) *ProjectsLocationsRegistriesDevicesListCall {
 	c := &ProjectsLocationsRegistriesDevicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3945,16 +3750,16 @@ func (r *ProjectsLocationsRegistriesDevicesService) List(parent string) *Project
 }
 
 // DeviceIds sets the optional parameter "deviceIds": A list of device
-// string IDs. For example, `['device0', 'device12']`.
-// If empty, this field is ignored. Maximum IDs: 10,000
+// string IDs. For example, `['device0', 'device12']`. If empty, this
+// field is ignored. Maximum IDs: 10,000
 func (c *ProjectsLocationsRegistriesDevicesListCall) DeviceIds(deviceIds ...string) *ProjectsLocationsRegistriesDevicesListCall {
 	c.urlParams_.SetMulti("deviceIds", append([]string{}, deviceIds...))
 	return c
 }
 
 // DeviceNumIds sets the optional parameter "deviceNumIds": A list of
-// device numeric IDs. If empty, this field is ignored. Maximum
-// IDs: 10,000.
+// device numeric IDs. If empty, this field is ignored. Maximum IDs:
+// 10,000.
 func (c *ProjectsLocationsRegistriesDevicesListCall) DeviceNumIds(deviceNumIds ...uint64) *ProjectsLocationsRegistriesDevicesListCall {
 	var deviceNumIds_ []string
 	for _, v := range deviceNumIds {
@@ -3965,9 +3770,9 @@ func (c *ProjectsLocationsRegistriesDevicesListCall) DeviceNumIds(deviceNumIds .
 }
 
 // FieldMask sets the optional parameter "fieldMask": The fields of the
-// `Device` resource to be returned in the response. The
-// fields `id` and `num_id` are always returned, along with any
-// other fields specified.
+// `Device` resource to be returned in the response. The fields `id` and
+// `num_id` are always returned, along with any other fields specified
+// in snake_case format, for example: `last_heartbeat_time`.
 func (c *ProjectsLocationsRegistriesDevicesListCall) FieldMask(fieldMask string) *ProjectsLocationsRegistriesDevicesListCall {
 	c.urlParams_.Set("fieldMask", fieldMask)
 	return c
@@ -3975,12 +3780,10 @@ func (c *ProjectsLocationsRegistriesDevicesListCall) FieldMask(fieldMask string)
 
 // GatewayListOptionsAssociationsDeviceId sets the optional parameter
 // "gatewayListOptions.associationsDeviceId": If set, returns only the
-// gateways with which the specified device is
-// associated. The device ID can be numeric (`num_id`) or the
-// user-defined
-// string (`id`). For example, if `456` is specified, returns only
-// the
-// gateways to which the device with `num_id` 456 is bound.
+// gateways with which the specified device is associated. The device ID
+// can be numeric (`num_id`) or the user-defined string (`id`). For
+// example, if `456` is specified, returns only the gateways to which
+// the device with `num_id` 456 is bound.
 func (c *ProjectsLocationsRegistriesDevicesListCall) GatewayListOptionsAssociationsDeviceId(gatewayListOptionsAssociationsDeviceId string) *ProjectsLocationsRegistriesDevicesListCall {
 	c.urlParams_.Set("gatewayListOptions.associationsDeviceId", gatewayListOptionsAssociationsDeviceId)
 	return c
@@ -3988,12 +3791,10 @@ func (c *ProjectsLocationsRegistriesDevicesListCall) GatewayListOptionsAssociati
 
 // GatewayListOptionsAssociationsGatewayId sets the optional parameter
 // "gatewayListOptions.associationsGatewayId": If set, only devices
-// associated with the specified gateway are returned.
-// The gateway ID can be numeric (`num_id`) or the user-defined
-// string
-// (`id`). For example, if `123` is specified, only devices bound to
-// the
-// gateway with `num_id` 123 are returned.
+// associated with the specified gateway are returned. The gateway ID
+// can be numeric (`num_id`) or the user-defined string (`id`). For
+// example, if `123` is specified, only devices bound to the gateway
+// with `num_id` 123 are returned.
 func (c *ProjectsLocationsRegistriesDevicesListCall) GatewayListOptionsAssociationsGatewayId(gatewayListOptionsAssociationsGatewayId string) *ProjectsLocationsRegistriesDevicesListCall {
 	c.urlParams_.Set("gatewayListOptions.associationsGatewayId", gatewayListOptionsAssociationsGatewayId)
 	return c
@@ -4001,26 +3802,27 @@ func (c *ProjectsLocationsRegistriesDevicesListCall) GatewayListOptionsAssociati
 
 // GatewayListOptionsGatewayType sets the optional parameter
 // "gatewayListOptions.gatewayType": If `GATEWAY` is specified, only
-// gateways are returned. If `NON_GATEWAY`
-// is specified, only non-gateway devices are returned.
-// If
-// `GATEWAY_TYPE_UNSPECIFIED` is specified, all devices are returned.
+// gateways are returned. If `NON_GATEWAY` is specified, only
+// non-gateway devices are returned. If `GATEWAY_TYPE_UNSPECIFIED` is
+// specified, all devices are returned.
 //
 // Possible values:
-//   "GATEWAY_TYPE_UNSPECIFIED"
-//   "GATEWAY"
-//   "NON_GATEWAY"
+//
+//	"GATEWAY_TYPE_UNSPECIFIED" - If unspecified, the device is
+//
+// considered a non-gateway device.
+//
+//	"GATEWAY" - The device is a gateway.
+//	"NON_GATEWAY" - The device is not a gateway.
 func (c *ProjectsLocationsRegistriesDevicesListCall) GatewayListOptionsGatewayType(gatewayListOptionsGatewayType string) *ProjectsLocationsRegistriesDevicesListCall {
 	c.urlParams_.Set("gatewayListOptions.gatewayType", gatewayListOptionsGatewayType)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of devices to return in the response. If this value
-// is zero, the service will select a default size. A call may return
-// fewer
-// objects than requested. A non-empty `next_page_token` in the
-// response
+// of devices to return in the response. If this value is zero, the
+// service will select a default size. A call may return fewer objects
+// than requested. A non-empty `next_page_token` in the response
 // indicates that more data is available.
 func (c *ProjectsLocationsRegistriesDevicesListCall) PageSize(pageSize int64) *ProjectsLocationsRegistriesDevicesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
@@ -4028,9 +3830,9 @@ func (c *ProjectsLocationsRegistriesDevicesListCall) PageSize(pageSize int64) *P
 }
 
 // PageToken sets the optional parameter "pageToken": The value returned
-// by the last `ListDevicesResponse`; indicates
-// that this is a continuation of a prior `ListDevices` call and
-// the system should return the next page of data.
+// by the last `ListDevicesResponse`; indicates that this is a
+// continuation of a prior `ListDevices` call and the system should
+// return the next page of data.
 func (c *ProjectsLocationsRegistriesDevicesListCall) PageToken(pageToken string) *ProjectsLocationsRegistriesDevicesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -4073,7 +3875,7 @@ func (c *ProjectsLocationsRegistriesDevicesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsRegistriesDevicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4111,17 +3913,17 @@ func (c *ProjectsLocationsRegistriesDevicesListCall) Do(opts ...googleapi.CallOp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListDevicesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4144,57 +3946,62 @@ func (c *ProjectsLocationsRegistriesDevicesListCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "deviceIds": {
-	//       "description": "A list of device string IDs. For example, `['device0', 'device12']`.\nIf empty, this field is ignored. Maximum IDs: 10,000",
+	//       "description": "A list of device string IDs. For example, `['device0', 'device12']`. If empty, this field is ignored. Maximum IDs: 10,000",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
 	//     },
 	//     "deviceNumIds": {
-	//       "description": "A list of device numeric IDs. If empty, this field is ignored. Maximum\nIDs: 10,000.",
+	//       "description": "A list of device numeric IDs. If empty, this field is ignored. Maximum IDs: 10,000.",
 	//       "format": "uint64",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
 	//     },
 	//     "fieldMask": {
-	//       "description": "The fields of the `Device` resource to be returned in the response. The\nfields `id` and `num_id` are always returned, along with any\nother fields specified.",
+	//       "description": "The fields of the `Device` resource to be returned in the response. The fields `id` and `num_id` are always returned, along with any other fields specified in snake_case format, for example: `last_heartbeat_time`.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "gatewayListOptions.associationsDeviceId": {
-	//       "description": "If set, returns only the gateways with which the specified device is\nassociated. The device ID can be numeric (`num_id`) or the user-defined\nstring (`id`). For example, if `456` is specified, returns only the\ngateways to which the device with `num_id` 456 is bound.",
+	//       "description": "If set, returns only the gateways with which the specified device is associated. The device ID can be numeric (`num_id`) or the user-defined string (`id`). For example, if `456` is specified, returns only the gateways to which the device with `num_id` 456 is bound.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "gatewayListOptions.associationsGatewayId": {
-	//       "description": "If set, only devices associated with the specified gateway are returned.\nThe gateway ID can be numeric (`num_id`) or the user-defined string\n(`id`). For example, if `123` is specified, only devices bound to the\ngateway with `num_id` 123 are returned.",
+	//       "description": "If set, only devices associated with the specified gateway are returned. The gateway ID can be numeric (`num_id`) or the user-defined string (`id`). For example, if `123` is specified, only devices bound to the gateway with `num_id` 123 are returned.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "gatewayListOptions.gatewayType": {
-	//       "description": "If `GATEWAY` is specified, only gateways are returned. If `NON_GATEWAY`\nis specified, only non-gateway devices are returned. If\n`GATEWAY_TYPE_UNSPECIFIED` is specified, all devices are returned.",
+	//       "description": "If `GATEWAY` is specified, only gateways are returned. If `NON_GATEWAY` is specified, only non-gateway devices are returned. If `GATEWAY_TYPE_UNSPECIFIED` is specified, all devices are returned.",
 	//       "enum": [
 	//         "GATEWAY_TYPE_UNSPECIFIED",
 	//         "GATEWAY",
 	//         "NON_GATEWAY"
 	//       ],
+	//       "enumDescriptions": [
+	//         "If unspecified, the device is considered a non-gateway device.",
+	//         "The device is a gateway.",
+	//         "The device is not a gateway."
+	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The maximum number of devices to return in the response. If this value\nis zero, the service will select a default size. A call may return fewer\nobjects than requested. A non-empty `next_page_token` in the response\nindicates that more data is available.",
+	//       "description": "The maximum number of devices to return in the response. If this value is zero, the service will select a default size. A call may return fewer objects than requested. A non-empty `next_page_token` in the response indicates that more data is available.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The value returned by the last `ListDevicesResponse`; indicates\nthat this is a continuation of a prior `ListDevices` call and\nthe system should return the next page of data.",
+	//       "description": "The value returned by the last `ListDevicesResponse`; indicates that this is a continuation of a prior `ListDevices` call and the system should return the next page of data.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The device registry path. Required. For example,\n`projects/my-project/locations/us-central1/registries/my-registry`.",
+	//       "description": "Required. The device registry path. Required. For example, `projects/my-project/locations/us-central1/registries/my-registry`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/registries/[^/]+$",
 	//       "required": true,
@@ -4246,10 +4053,14 @@ type ProjectsLocationsRegistriesDevicesModifyCloudToDeviceConfigCall struct {
 }
 
 // ModifyCloudToDeviceConfig: Modifies the configuration for the device,
-// which is eventually sent from
-// the Cloud IoT Core servers. Returns the modified configuration
-// version and
-// its metadata.
+// which is eventually sent from the Cloud IoT Core servers. Returns the
+// modified configuration version and its metadata.
+//
+//   - name: The name of the device. For example,
+//     `projects/p0/locations/us-central1/registries/registry0/devices/devi
+//     ce0` or
+//     `projects/p0/locations/us-central1/registries/registry0/devices/{num
+//     _id}`.
 func (r *ProjectsLocationsRegistriesDevicesService) ModifyCloudToDeviceConfig(name string, modifycloudtodeviceconfigrequest *ModifyCloudToDeviceConfigRequest) *ProjectsLocationsRegistriesDevicesModifyCloudToDeviceConfigCall {
 	c := &ProjectsLocationsRegistriesDevicesModifyCloudToDeviceConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4284,7 +4095,7 @@ func (c *ProjectsLocationsRegistriesDevicesModifyCloudToDeviceConfigCall) Header
 
 func (c *ProjectsLocationsRegistriesDevicesModifyCloudToDeviceConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4324,17 +4135,17 @@ func (c *ProjectsLocationsRegistriesDevicesModifyCloudToDeviceConfigCall) Do(opt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &DeviceConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -4348,7 +4159,7 @@ func (c *ProjectsLocationsRegistriesDevicesModifyCloudToDeviceConfigCall) Do(opt
 	}
 	return ret, nil
 	// {
-	//   "description": "Modifies the configuration for the device, which is eventually sent from\nthe Cloud IoT Core servers. Returns the modified configuration version and\nits metadata.",
+	//   "description": "Modifies the configuration for the device, which is eventually sent from the Cloud IoT Core servers. Returns the modified configuration version and its metadata.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/registries/{registriesId}/devices/{devicesId}:modifyCloudToDeviceConfig",
 	//   "httpMethod": "POST",
 	//   "id": "cloudiot.projects.locations.registries.devices.modifyCloudToDeviceConfig",
@@ -4357,7 +4168,7 @@ func (c *ProjectsLocationsRegistriesDevicesModifyCloudToDeviceConfigCall) Do(opt
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the device. For example,\n`projects/p0/locations/us-central1/registries/registry0/devices/device0` or\n`projects/p0/locations/us-central1/registries/registry0/devices/{num_id}`.",
+	//       "description": "Required. The name of the device. For example, `projects/p0/locations/us-central1/registries/registry0/devices/device0` or `projects/p0/locations/us-central1/registries/registry0/devices/{num_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/registries/[^/]+/devices/[^/]+$",
 	//       "required": true,
@@ -4391,6 +4202,13 @@ type ProjectsLocationsRegistriesDevicesPatchCall struct {
 }
 
 // Patch: Updates a device.
+//
+//   - name: The resource path name. For example,
+//     `projects/p1/locations/us-central1/registries/registry0/devices/dev0
+//     ` or
+//     `projects/p1/locations/us-central1/registries/registry0/devices/{num
+//     _id}`. When `name` is populated as a response from the service, it
+//     always ends in the device numeric ID.
 func (r *ProjectsLocationsRegistriesDevicesService) Patch(name string, device *Device) *ProjectsLocationsRegistriesDevicesPatchCall {
 	c := &ProjectsLocationsRegistriesDevicesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4399,11 +4217,10 @@ func (r *ProjectsLocationsRegistriesDevicesService) Patch(name string, device *D
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. Only
-// updates the `device` fields indicated by this mask.
-// The field mask must not be empty, and it must not contain fields
-// that
-// are immutable or only set by the server.
-// Mutable top-level fields: `credentials`, `blocked`, and `metadata`
+// updates the `device` fields indicated by this mask. The field mask
+// must not be empty, and it must not contain fields that are immutable
+// or only set by the server. Mutable top-level fields: `credentials`,
+// `blocked`, and `metadata`
 func (c *ProjectsLocationsRegistriesDevicesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsRegistriesDevicesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -4436,7 +4253,7 @@ func (c *ProjectsLocationsRegistriesDevicesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsRegistriesDevicesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4476,17 +4293,17 @@ func (c *ProjectsLocationsRegistriesDevicesPatchCall) Do(opts ...googleapi.CallO
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Device{
 		ServerResponse: googleapi.ServerResponse{
@@ -4509,14 +4326,14 @@ func (c *ProjectsLocationsRegistriesDevicesPatchCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource path name. For example,\n`projects/p1/locations/us-central1/registries/registry0/devices/dev0` or\n`projects/p1/locations/us-central1/registries/registry0/devices/{num_id}`.\nWhen `name` is populated as a response from the service, it always ends\nin the device numeric ID.",
+	//       "description": "The resource path name. For example, `projects/p1/locations/us-central1/registries/registry0/devices/dev0` or `projects/p1/locations/us-central1/registries/registry0/devices/{num_id}`. When `name` is populated as a response from the service, it always ends in the device numeric ID.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/registries/[^/]+/devices/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. Only updates the `device` fields indicated by this mask.\nThe field mask must not be empty, and it must not contain fields that\nare immutable or only set by the server.\nMutable top-level fields: `credentials`, `blocked`, and `metadata`",
+	//       "description": "Required. Only updates the `device` fields indicated by this mask. The field mask must not be empty, and it must not contain fields that are immutable or only set by the server. Mutable top-level fields: `credentials`, `blocked`, and `metadata`",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -4549,26 +4366,25 @@ type ProjectsLocationsRegistriesDevicesSendCommandToDeviceCall struct {
 }
 
 // SendCommandToDevice: Sends a command to the specified device. In
-// order for a device to be able
-// to receive commands, it must:
-// 1) be connected to Cloud IoT Core using the MQTT protocol, and
-// 2) be subscribed to the group of MQTT topics specified by
-//    /devices/{device-id}/commands/#. This subscription will receive
-// commands
-//    at the top-level topic /devices/{device-id}/commands as well as
-// commands
-//    for subfolders, like /devices/{device-id}/commands/subfolder.
-//    Note that subscribing to specific subfolders is not supported.
-// If the command could not be delivered to the device, this method
-// will
-// return an error; in particular, if the device is not subscribed,
-// this
-// method will return FAILED_PRECONDITION. Otherwise, this method
-// will
-// return OK. If the subscription is QoS 1, at least once delivery will
-// be
-// guaranteed; for QoS 0, no acknowledgment will be expected from the
-// device.
+// order for a device to be able to receive commands, it must: 1) be
+// connected to Cloud IoT Core using the MQTT protocol, and 2) be
+// subscribed to the group of MQTT topics specified by
+// /devices/{device-id}/commands/#. This subscription will receive
+// commands at the top-level topic /devices/{device-id}/commands as well
+// as commands for subfolders, like
+// /devices/{device-id}/commands/subfolder. Note that subscribing to
+// specific subfolders is not supported. If the command could not be
+// delivered to the device, this method will return an error; in
+// particular, if the device is not subscribed, this method will return
+// FAILED_PRECONDITION. Otherwise, this method will return OK. If the
+// subscription is QoS 1, at least once delivery will be guaranteed; for
+// QoS 0, no acknowledgment will be expected from the device.
+//
+//   - name: The name of the device. For example,
+//     `projects/p0/locations/us-central1/registries/registry0/devices/devi
+//     ce0` or
+//     `projects/p0/locations/us-central1/registries/registry0/devices/{num
+//     _id}`.
 func (r *ProjectsLocationsRegistriesDevicesService) SendCommandToDevice(name string, sendcommandtodevicerequest *SendCommandToDeviceRequest) *ProjectsLocationsRegistriesDevicesSendCommandToDeviceCall {
 	c := &ProjectsLocationsRegistriesDevicesSendCommandToDeviceCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4603,7 +4419,7 @@ func (c *ProjectsLocationsRegistriesDevicesSendCommandToDeviceCall) Header() htt
 
 func (c *ProjectsLocationsRegistriesDevicesSendCommandToDeviceCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4643,17 +4459,17 @@ func (c *ProjectsLocationsRegistriesDevicesSendCommandToDeviceCall) Do(opts ...g
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &SendCommandToDeviceResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4667,7 +4483,7 @@ func (c *ProjectsLocationsRegistriesDevicesSendCommandToDeviceCall) Do(opts ...g
 	}
 	return ret, nil
 	// {
-	//   "description": "Sends a command to the specified device. In order for a device to be able\nto receive commands, it must:\n1) be connected to Cloud IoT Core using the MQTT protocol, and\n2) be subscribed to the group of MQTT topics specified by\n   /devices/{device-id}/commands/#. This subscription will receive commands\n   at the top-level topic /devices/{device-id}/commands as well as commands\n   for subfolders, like /devices/{device-id}/commands/subfolder.\n   Note that subscribing to specific subfolders is not supported.\nIf the command could not be delivered to the device, this method will\nreturn an error; in particular, if the device is not subscribed, this\nmethod will return FAILED_PRECONDITION. Otherwise, this method will\nreturn OK. If the subscription is QoS 1, at least once delivery will be\nguaranteed; for QoS 0, no acknowledgment will be expected from the device.",
+	//   "description": "Sends a command to the specified device. In order for a device to be able to receive commands, it must: 1) be connected to Cloud IoT Core using the MQTT protocol, and 2) be subscribed to the group of MQTT topics specified by /devices/{device-id}/commands/#. This subscription will receive commands at the top-level topic /devices/{device-id}/commands as well as commands for subfolders, like /devices/{device-id}/commands/subfolder. Note that subscribing to specific subfolders is not supported. If the command could not be delivered to the device, this method will return an error; in particular, if the device is not subscribed, this method will return FAILED_PRECONDITION. Otherwise, this method will return OK. If the subscription is QoS 1, at least once delivery will be guaranteed; for QoS 0, no acknowledgment will be expected from the device.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/registries/{registriesId}/devices/{devicesId}:sendCommandToDevice",
 	//   "httpMethod": "POST",
 	//   "id": "cloudiot.projects.locations.registries.devices.sendCommandToDevice",
@@ -4676,7 +4492,7 @@ func (c *ProjectsLocationsRegistriesDevicesSendCommandToDeviceCall) Do(opts ...g
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the device. For example,\n`projects/p0/locations/us-central1/registries/registry0/devices/device0` or\n`projects/p0/locations/us-central1/registries/registry0/devices/{num_id}`.",
+	//       "description": "Required. The name of the device. For example, `projects/p0/locations/us-central1/registries/registry0/devices/device0` or `projects/p0/locations/us-central1/registries/registry0/devices/{num_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/registries/[^/]+/devices/[^/]+$",
 	//       "required": true,
@@ -4710,8 +4526,13 @@ type ProjectsLocationsRegistriesDevicesConfigVersionsListCall struct {
 }
 
 // List: Lists the last few versions of the device configuration in
-// descending
-// order (i.e.: newest first).
+// descending order (i.e.: newest first).
+//
+//   - name: The name of the device. For example,
+//     `projects/p0/locations/us-central1/registries/registry0/devices/devi
+//     ce0` or
+//     `projects/p0/locations/us-central1/registries/registry0/devices/{num
+//     _id}`.
 func (r *ProjectsLocationsRegistriesDevicesConfigVersionsService) List(name string) *ProjectsLocationsRegistriesDevicesConfigVersionsListCall {
 	c := &ProjectsLocationsRegistriesDevicesConfigVersionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4719,10 +4540,9 @@ func (r *ProjectsLocationsRegistriesDevicesConfigVersionsService) List(name stri
 }
 
 // NumVersions sets the optional parameter "numVersions": The number of
-// versions to list. Versions are listed in decreasing order of
-// the version number. The maximum number of versions retained is 10. If
-// this
-// value is zero, it will return all the versions available.
+// versions to list. Versions are listed in decreasing order of the
+// version number. The maximum number of versions retained is 10. If
+// this value is zero, it will return all the versions available.
 func (c *ProjectsLocationsRegistriesDevicesConfigVersionsListCall) NumVersions(numVersions int64) *ProjectsLocationsRegistriesDevicesConfigVersionsListCall {
 	c.urlParams_.Set("numVersions", fmt.Sprint(numVersions))
 	return c
@@ -4765,7 +4585,7 @@ func (c *ProjectsLocationsRegistriesDevicesConfigVersionsListCall) Header() http
 
 func (c *ProjectsLocationsRegistriesDevicesConfigVersionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4803,17 +4623,17 @@ func (c *ProjectsLocationsRegistriesDevicesConfigVersionsListCall) Do(opts ...go
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListDeviceConfigVersionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4827,7 +4647,7 @@ func (c *ProjectsLocationsRegistriesDevicesConfigVersionsListCall) Do(opts ...go
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the last few versions of the device configuration in descending\norder (i.e.: newest first).",
+	//   "description": "Lists the last few versions of the device configuration in descending order (i.e.: newest first).",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/registries/{registriesId}/devices/{devicesId}/configVersions",
 	//   "httpMethod": "GET",
 	//   "id": "cloudiot.projects.locations.registries.devices.configVersions.list",
@@ -4836,14 +4656,14 @@ func (c *ProjectsLocationsRegistriesDevicesConfigVersionsListCall) Do(opts ...go
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the device. For example,\n`projects/p0/locations/us-central1/registries/registry0/devices/device0` or\n`projects/p0/locations/us-central1/registries/registry0/devices/{num_id}`.",
+	//       "description": "Required. The name of the device. For example, `projects/p0/locations/us-central1/registries/registry0/devices/device0` or `projects/p0/locations/us-central1/registries/registry0/devices/{num_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/registries/[^/]+/devices/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "numVersions": {
-	//       "description": "The number of versions to list. Versions are listed in decreasing order of\nthe version number. The maximum number of versions retained is 10. If this\nvalue is zero, it will return all the versions available.",
+	//       "description": "The number of versions to list. Versions are listed in decreasing order of the version number. The maximum number of versions retained is 10. If this value is zero, it will return all the versions available.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -4873,8 +4693,13 @@ type ProjectsLocationsRegistriesDevicesStatesListCall struct {
 }
 
 // List: Lists the last few versions of the device state in descending
-// order (i.e.:
-// newest first).
+// order (i.e.: newest first).
+//
+//   - name: The name of the device. For example,
+//     `projects/p0/locations/us-central1/registries/registry0/devices/devi
+//     ce0` or
+//     `projects/p0/locations/us-central1/registries/registry0/devices/{num
+//     _id}`.
 func (r *ProjectsLocationsRegistriesDevicesStatesService) List(name string) *ProjectsLocationsRegistriesDevicesStatesListCall {
 	c := &ProjectsLocationsRegistriesDevicesStatesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4882,10 +4707,9 @@ func (r *ProjectsLocationsRegistriesDevicesStatesService) List(name string) *Pro
 }
 
 // NumStates sets the optional parameter "numStates": The number of
-// states to list. States are listed in descending order of
-// update time. The maximum number of states retained is 10. If
-// this
-// value is zero, it will return all the states available.
+// states to list. States are listed in descending order of update time.
+// The maximum number of states retained is 10. If this value is zero,
+// it will return all the states available.
 func (c *ProjectsLocationsRegistriesDevicesStatesListCall) NumStates(numStates int64) *ProjectsLocationsRegistriesDevicesStatesListCall {
 	c.urlParams_.Set("numStates", fmt.Sprint(numStates))
 	return c
@@ -4928,7 +4752,7 @@ func (c *ProjectsLocationsRegistriesDevicesStatesListCall) Header() http.Header 
 
 func (c *ProjectsLocationsRegistriesDevicesStatesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4966,17 +4790,17 @@ func (c *ProjectsLocationsRegistriesDevicesStatesListCall) Do(opts ...googleapi.
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListDeviceStatesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4990,7 +4814,7 @@ func (c *ProjectsLocationsRegistriesDevicesStatesListCall) Do(opts ...googleapi.
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the last few versions of the device state in descending order (i.e.:\nnewest first).",
+	//   "description": "Lists the last few versions of the device state in descending order (i.e.: newest first).",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/registries/{registriesId}/devices/{devicesId}/states",
 	//   "httpMethod": "GET",
 	//   "id": "cloudiot.projects.locations.registries.devices.states.list",
@@ -4999,14 +4823,14 @@ func (c *ProjectsLocationsRegistriesDevicesStatesListCall) Do(opts ...googleapi.
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the device. For example,\n`projects/p0/locations/us-central1/registries/registry0/devices/device0` or\n`projects/p0/locations/us-central1/registries/registry0/devices/{num_id}`.",
+	//       "description": "Required. The name of the device. For example, `projects/p0/locations/us-central1/registries/registry0/devices/device0` or `projects/p0/locations/us-central1/registries/registry0/devices/{num_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/registries/[^/]+/devices/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "numStates": {
-	//       "description": "The number of states to list. States are listed in descending order of\nupdate time. The maximum number of states retained is 10. If this\nvalue is zero, it will return all the states available.",
+	//       "description": "The number of states to list. States are listed in descending order of update time. The maximum number of states retained is 10. If this value is zero, it will return all the states available.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -5035,10 +4859,14 @@ type ProjectsLocationsRegistriesGroupsGetIamPolicyCall struct {
 	header_             http.Header
 }
 
-// GetIamPolicy: Gets the access control policy for a resource.
-// Returns an empty policy if the resource exists and does not have a
-// policy
+// GetIamPolicy: Gets the access control policy for a resource. Returns
+// an empty policy if the resource exists and does not have a policy
 // set.
+//
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsRegistriesGroupsService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsLocationsRegistriesGroupsGetIamPolicyCall {
 	c := &ProjectsLocationsRegistriesGroupsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5073,7 +4901,7 @@ func (c *ProjectsLocationsRegistriesGroupsGetIamPolicyCall) Header() http.Header
 
 func (c *ProjectsLocationsRegistriesGroupsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5113,17 +4941,17 @@ func (c *ProjectsLocationsRegistriesGroupsGetIamPolicyCall) Do(opts ...googleapi
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -5137,7 +4965,7 @@ func (c *ProjectsLocationsRegistriesGroupsGetIamPolicyCall) Do(opts ...googleapi
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the access control policy for a resource.\nReturns an empty policy if the resource exists and does not have a policy\nset.",
+	//   "description": "Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/registries/{registriesId}/groups/{groupsId}:getIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "cloudiot.projects.locations.registries.groups.getIamPolicy",
@@ -5146,7 +4974,7 @@ func (c *ProjectsLocationsRegistriesGroupsGetIamPolicyCall) Do(opts ...googleapi
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested.\nSee the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/registries/[^/]+/groups/[^/]+$",
 	//       "required": true,
@@ -5180,8 +5008,12 @@ type ProjectsLocationsRegistriesGroupsSetIamPolicyCall struct {
 }
 
 // SetIamPolicy: Sets the access control policy on the specified
-// resource. Replaces any
-// existing policy.
+// resource. Replaces any existing policy.
+//
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsRegistriesGroupsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsRegistriesGroupsSetIamPolicyCall {
 	c := &ProjectsLocationsRegistriesGroupsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5216,7 +5048,7 @@ func (c *ProjectsLocationsRegistriesGroupsSetIamPolicyCall) Header() http.Header
 
 func (c *ProjectsLocationsRegistriesGroupsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5256,17 +5088,17 @@ func (c *ProjectsLocationsRegistriesGroupsSetIamPolicyCall) Do(opts ...googleapi
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -5280,7 +5112,7 @@ func (c *ProjectsLocationsRegistriesGroupsSetIamPolicyCall) Do(opts ...googleapi
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets the access control policy on the specified resource. Replaces any\nexisting policy.",
+	//   "description": "Sets the access control policy on the specified resource. Replaces any existing policy.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/registries/{registriesId}/groups/{groupsId}:setIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "cloudiot.projects.locations.registries.groups.setIamPolicy",
@@ -5289,7 +5121,7 @@ func (c *ProjectsLocationsRegistriesGroupsSetIamPolicyCall) Do(opts ...googleapi
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified.\nSee the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/registries/[^/]+/groups/[^/]+$",
 	//       "required": true,
@@ -5323,10 +5155,13 @@ type ProjectsLocationsRegistriesGroupsTestIamPermissionsCall struct {
 }
 
 // TestIamPermissions: Returns permissions that a caller has on the
-// specified resource.
-// If the resource does not exist, this will return an empty set
-// of
-// permissions, not a NOT_FOUND error.
+// specified resource. If the resource does not exist, this will return
+// an empty set of permissions, not a NOT_FOUND error.
+//
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsRegistriesGroupsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsRegistriesGroupsTestIamPermissionsCall {
 	c := &ProjectsLocationsRegistriesGroupsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5361,7 +5196,7 @@ func (c *ProjectsLocationsRegistriesGroupsTestIamPermissionsCall) Header() http.
 
 func (c *ProjectsLocationsRegistriesGroupsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5401,17 +5236,17 @@ func (c *ProjectsLocationsRegistriesGroupsTestIamPermissionsCall) Do(opts ...goo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TestIamPermissionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -5425,7 +5260,7 @@ func (c *ProjectsLocationsRegistriesGroupsTestIamPermissionsCall) Do(opts ...goo
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns permissions that a caller has on the specified resource.\nIf the resource does not exist, this will return an empty set of\npermissions, not a NOT_FOUND error.",
+	//   "description": "Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a NOT_FOUND error.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/registries/{registriesId}/groups/{groupsId}:testIamPermissions",
 	//   "httpMethod": "POST",
 	//   "id": "cloudiot.projects.locations.registries.groups.testIamPermissions",
@@ -5434,7 +5269,7 @@ func (c *ProjectsLocationsRegistriesGroupsTestIamPermissionsCall) Do(opts ...goo
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested.\nSee the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/registries/[^/]+/groups/[^/]+$",
 	//       "required": true,
@@ -5468,6 +5303,9 @@ type ProjectsLocationsRegistriesGroupsDevicesListCall struct {
 }
 
 // List: List devices in a device registry.
+//
+//   - parent: The device registry path. Required. For example,
+//     `projects/my-project/locations/us-central1/registries/my-registry`.
 func (r *ProjectsLocationsRegistriesGroupsDevicesService) List(parent string) *ProjectsLocationsRegistriesGroupsDevicesListCall {
 	c := &ProjectsLocationsRegistriesGroupsDevicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5475,16 +5313,16 @@ func (r *ProjectsLocationsRegistriesGroupsDevicesService) List(parent string) *P
 }
 
 // DeviceIds sets the optional parameter "deviceIds": A list of device
-// string IDs. For example, `['device0', 'device12']`.
-// If empty, this field is ignored. Maximum IDs: 10,000
+// string IDs. For example, `['device0', 'device12']`. If empty, this
+// field is ignored. Maximum IDs: 10,000
 func (c *ProjectsLocationsRegistriesGroupsDevicesListCall) DeviceIds(deviceIds ...string) *ProjectsLocationsRegistriesGroupsDevicesListCall {
 	c.urlParams_.SetMulti("deviceIds", append([]string{}, deviceIds...))
 	return c
 }
 
 // DeviceNumIds sets the optional parameter "deviceNumIds": A list of
-// device numeric IDs. If empty, this field is ignored. Maximum
-// IDs: 10,000.
+// device numeric IDs. If empty, this field is ignored. Maximum IDs:
+// 10,000.
 func (c *ProjectsLocationsRegistriesGroupsDevicesListCall) DeviceNumIds(deviceNumIds ...uint64) *ProjectsLocationsRegistriesGroupsDevicesListCall {
 	var deviceNumIds_ []string
 	for _, v := range deviceNumIds {
@@ -5495,9 +5333,9 @@ func (c *ProjectsLocationsRegistriesGroupsDevicesListCall) DeviceNumIds(deviceNu
 }
 
 // FieldMask sets the optional parameter "fieldMask": The fields of the
-// `Device` resource to be returned in the response. The
-// fields `id` and `num_id` are always returned, along with any
-// other fields specified.
+// `Device` resource to be returned in the response. The fields `id` and
+// `num_id` are always returned, along with any other fields specified
+// in snake_case format, for example: `last_heartbeat_time`.
 func (c *ProjectsLocationsRegistriesGroupsDevicesListCall) FieldMask(fieldMask string) *ProjectsLocationsRegistriesGroupsDevicesListCall {
 	c.urlParams_.Set("fieldMask", fieldMask)
 	return c
@@ -5505,12 +5343,10 @@ func (c *ProjectsLocationsRegistriesGroupsDevicesListCall) FieldMask(fieldMask s
 
 // GatewayListOptionsAssociationsDeviceId sets the optional parameter
 // "gatewayListOptions.associationsDeviceId": If set, returns only the
-// gateways with which the specified device is
-// associated. The device ID can be numeric (`num_id`) or the
-// user-defined
-// string (`id`). For example, if `456` is specified, returns only
-// the
-// gateways to which the device with `num_id` 456 is bound.
+// gateways with which the specified device is associated. The device ID
+// can be numeric (`num_id`) or the user-defined string (`id`). For
+// example, if `456` is specified, returns only the gateways to which
+// the device with `num_id` 456 is bound.
 func (c *ProjectsLocationsRegistriesGroupsDevicesListCall) GatewayListOptionsAssociationsDeviceId(gatewayListOptionsAssociationsDeviceId string) *ProjectsLocationsRegistriesGroupsDevicesListCall {
 	c.urlParams_.Set("gatewayListOptions.associationsDeviceId", gatewayListOptionsAssociationsDeviceId)
 	return c
@@ -5518,12 +5354,10 @@ func (c *ProjectsLocationsRegistriesGroupsDevicesListCall) GatewayListOptionsAss
 
 // GatewayListOptionsAssociationsGatewayId sets the optional parameter
 // "gatewayListOptions.associationsGatewayId": If set, only devices
-// associated with the specified gateway are returned.
-// The gateway ID can be numeric (`num_id`) or the user-defined
-// string
-// (`id`). For example, if `123` is specified, only devices bound to
-// the
-// gateway with `num_id` 123 are returned.
+// associated with the specified gateway are returned. The gateway ID
+// can be numeric (`num_id`) or the user-defined string (`id`). For
+// example, if `123` is specified, only devices bound to the gateway
+// with `num_id` 123 are returned.
 func (c *ProjectsLocationsRegistriesGroupsDevicesListCall) GatewayListOptionsAssociationsGatewayId(gatewayListOptionsAssociationsGatewayId string) *ProjectsLocationsRegistriesGroupsDevicesListCall {
 	c.urlParams_.Set("gatewayListOptions.associationsGatewayId", gatewayListOptionsAssociationsGatewayId)
 	return c
@@ -5531,26 +5365,27 @@ func (c *ProjectsLocationsRegistriesGroupsDevicesListCall) GatewayListOptionsAss
 
 // GatewayListOptionsGatewayType sets the optional parameter
 // "gatewayListOptions.gatewayType": If `GATEWAY` is specified, only
-// gateways are returned. If `NON_GATEWAY`
-// is specified, only non-gateway devices are returned.
-// If
-// `GATEWAY_TYPE_UNSPECIFIED` is specified, all devices are returned.
+// gateways are returned. If `NON_GATEWAY` is specified, only
+// non-gateway devices are returned. If `GATEWAY_TYPE_UNSPECIFIED` is
+// specified, all devices are returned.
 //
 // Possible values:
-//   "GATEWAY_TYPE_UNSPECIFIED"
-//   "GATEWAY"
-//   "NON_GATEWAY"
+//
+//	"GATEWAY_TYPE_UNSPECIFIED" - If unspecified, the device is
+//
+// considered a non-gateway device.
+//
+//	"GATEWAY" - The device is a gateway.
+//	"NON_GATEWAY" - The device is not a gateway.
 func (c *ProjectsLocationsRegistriesGroupsDevicesListCall) GatewayListOptionsGatewayType(gatewayListOptionsGatewayType string) *ProjectsLocationsRegistriesGroupsDevicesListCall {
 	c.urlParams_.Set("gatewayListOptions.gatewayType", gatewayListOptionsGatewayType)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of devices to return in the response. If this value
-// is zero, the service will select a default size. A call may return
-// fewer
-// objects than requested. A non-empty `next_page_token` in the
-// response
+// of devices to return in the response. If this value is zero, the
+// service will select a default size. A call may return fewer objects
+// than requested. A non-empty `next_page_token` in the response
 // indicates that more data is available.
 func (c *ProjectsLocationsRegistriesGroupsDevicesListCall) PageSize(pageSize int64) *ProjectsLocationsRegistriesGroupsDevicesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
@@ -5558,9 +5393,9 @@ func (c *ProjectsLocationsRegistriesGroupsDevicesListCall) PageSize(pageSize int
 }
 
 // PageToken sets the optional parameter "pageToken": The value returned
-// by the last `ListDevicesResponse`; indicates
-// that this is a continuation of a prior `ListDevices` call and
-// the system should return the next page of data.
+// by the last `ListDevicesResponse`; indicates that this is a
+// continuation of a prior `ListDevices` call and the system should
+// return the next page of data.
 func (c *ProjectsLocationsRegistriesGroupsDevicesListCall) PageToken(pageToken string) *ProjectsLocationsRegistriesGroupsDevicesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -5603,7 +5438,7 @@ func (c *ProjectsLocationsRegistriesGroupsDevicesListCall) Header() http.Header 
 
 func (c *ProjectsLocationsRegistriesGroupsDevicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5641,17 +5476,17 @@ func (c *ProjectsLocationsRegistriesGroupsDevicesListCall) Do(opts ...googleapi.
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListDevicesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -5674,57 +5509,62 @@ func (c *ProjectsLocationsRegistriesGroupsDevicesListCall) Do(opts ...googleapi.
 	//   ],
 	//   "parameters": {
 	//     "deviceIds": {
-	//       "description": "A list of device string IDs. For example, `['device0', 'device12']`.\nIf empty, this field is ignored. Maximum IDs: 10,000",
+	//       "description": "A list of device string IDs. For example, `['device0', 'device12']`. If empty, this field is ignored. Maximum IDs: 10,000",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
 	//     },
 	//     "deviceNumIds": {
-	//       "description": "A list of device numeric IDs. If empty, this field is ignored. Maximum\nIDs: 10,000.",
+	//       "description": "A list of device numeric IDs. If empty, this field is ignored. Maximum IDs: 10,000.",
 	//       "format": "uint64",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
 	//     },
 	//     "fieldMask": {
-	//       "description": "The fields of the `Device` resource to be returned in the response. The\nfields `id` and `num_id` are always returned, along with any\nother fields specified.",
+	//       "description": "The fields of the `Device` resource to be returned in the response. The fields `id` and `num_id` are always returned, along with any other fields specified in snake_case format, for example: `last_heartbeat_time`.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "gatewayListOptions.associationsDeviceId": {
-	//       "description": "If set, returns only the gateways with which the specified device is\nassociated. The device ID can be numeric (`num_id`) or the user-defined\nstring (`id`). For example, if `456` is specified, returns only the\ngateways to which the device with `num_id` 456 is bound.",
+	//       "description": "If set, returns only the gateways with which the specified device is associated. The device ID can be numeric (`num_id`) or the user-defined string (`id`). For example, if `456` is specified, returns only the gateways to which the device with `num_id` 456 is bound.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "gatewayListOptions.associationsGatewayId": {
-	//       "description": "If set, only devices associated with the specified gateway are returned.\nThe gateway ID can be numeric (`num_id`) or the user-defined string\n(`id`). For example, if `123` is specified, only devices bound to the\ngateway with `num_id` 123 are returned.",
+	//       "description": "If set, only devices associated with the specified gateway are returned. The gateway ID can be numeric (`num_id`) or the user-defined string (`id`). For example, if `123` is specified, only devices bound to the gateway with `num_id` 123 are returned.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "gatewayListOptions.gatewayType": {
-	//       "description": "If `GATEWAY` is specified, only gateways are returned. If `NON_GATEWAY`\nis specified, only non-gateway devices are returned. If\n`GATEWAY_TYPE_UNSPECIFIED` is specified, all devices are returned.",
+	//       "description": "If `GATEWAY` is specified, only gateways are returned. If `NON_GATEWAY` is specified, only non-gateway devices are returned. If `GATEWAY_TYPE_UNSPECIFIED` is specified, all devices are returned.",
 	//       "enum": [
 	//         "GATEWAY_TYPE_UNSPECIFIED",
 	//         "GATEWAY",
 	//         "NON_GATEWAY"
 	//       ],
+	//       "enumDescriptions": [
+	//         "If unspecified, the device is considered a non-gateway device.",
+	//         "The device is a gateway.",
+	//         "The device is not a gateway."
+	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The maximum number of devices to return in the response. If this value\nis zero, the service will select a default size. A call may return fewer\nobjects than requested. A non-empty `next_page_token` in the response\nindicates that more data is available.",
+	//       "description": "The maximum number of devices to return in the response. If this value is zero, the service will select a default size. A call may return fewer objects than requested. A non-empty `next_page_token` in the response indicates that more data is available.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The value returned by the last `ListDevicesResponse`; indicates\nthat this is a continuation of a prior `ListDevices` call and\nthe system should return the next page of data.",
+	//       "description": "The value returned by the last `ListDevicesResponse`; indicates that this is a continuation of a prior `ListDevices` call and the system should return the next page of data.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The device registry path. Required. For example,\n`projects/my-project/locations/us-central1/registries/my-registry`.",
+	//       "description": "Required. The device registry path. Required. For example, `projects/my-project/locations/us-central1/registries/my-registry`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/registries/[^/]+/groups/[^/]+$",
 	//       "required": true,

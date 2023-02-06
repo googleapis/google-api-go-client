@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -10,31 +10,31 @@
 //
 // For product documentation, see: https://cloud.google.com/text-to-speech/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/texttospeech/v1"
-//   ...
-//   ctx := context.Background()
-//   texttospeechService, err := texttospeech.NewService(ctx)
+//	import "google.golang.org/api/texttospeech/v1"
+//	...
+//	ctx := context.Background()
+//	texttospeechService, err := texttospeech.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   texttospeechService, err := texttospeech.NewService(ctx, option.WithAPIKey("AIza..."))
+//	texttospeechService, err := texttospeech.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   texttospeechService, err := texttospeech.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	texttospeechService, err := texttospeech.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package texttospeech // import "google.golang.org/api/texttospeech/v1"
@@ -52,6 +52,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -77,21 +78,24 @@ const apiId = "texttospeech:v1"
 const apiName = "texttospeech"
 const apiVersion = "v1"
 const basePath = "https://texttospeech.googleapis.com/"
+const mtlsBasePath = "https://texttospeech.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud data and see the
+	// email address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -116,6 +120,8 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client, BasePath: basePath}
+	s.Operations = NewOperationsService(s)
+	s.Projects = NewProjectsService(s)
 	s.Text = NewTextService(s)
 	s.Voices = NewVoicesService(s)
 	return s, nil
@@ -125,6 +131,10 @@ type Service struct {
 	client    *http.Client
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
+
+	Operations *OperationsService
+
+	Projects *ProjectsService
 
 	Text *TextService
 
@@ -136,6 +146,48 @@ func (s *Service) userAgent() string {
 		return googleapi.UserAgent
 	}
 	return googleapi.UserAgent + " " + s.UserAgent
+}
+
+func NewOperationsService(s *Service) *OperationsService {
+	rs := &OperationsService{s: s}
+	return rs
+}
+
+type OperationsService struct {
+	s *Service
+}
+
+func NewProjectsService(s *Service) *ProjectsService {
+	rs := &ProjectsService{s: s}
+	rs.Locations = NewProjectsLocationsService(s)
+	return rs
+}
+
+type ProjectsService struct {
+	s *Service
+
+	Locations *ProjectsLocationsService
+}
+
+func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
+	rs := &ProjectsLocationsService{s: s}
+	rs.Operations = NewProjectsLocationsOperationsService(s)
+	return rs
+}
+
+type ProjectsLocationsService struct {
+	s *Service
+
+	Operations *ProjectsLocationsOperationsService
+}
+
+func NewProjectsLocationsOperationsService(s *Service) *ProjectsLocationsOperationsService {
+	rs := &ProjectsLocationsOperationsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsOperationsService struct {
+	s *Service
 }
 
 func NewTextService(s *Service) *TextService {
@@ -164,84 +216,69 @@ type AudioConfig struct {
 	//   "AUDIO_ENCODING_UNSPECIFIED" - Not specified. Will return result
 	// google.rpc.Code.INVALID_ARGUMENT.
 	//   "LINEAR16" - Uncompressed 16-bit signed little-endian samples
-	// (Linear PCM).
-	// Audio content returned as LINEAR16 also contains a WAV header.
+	// (Linear PCM). Audio content returned as LINEAR16 also contains a WAV
+	// header.
 	//   "MP3" - MP3 audio at 32kbps.
 	//   "OGG_OPUS" - Opus encoded audio wrapped in an ogg container. The
-	// result will be a
-	// file which can be played natively on Android, and in browsers (at
-	// least
-	// Chrome and Firefox). The quality of the encoding is considerably
-	// higher
-	// than MP3 while using approximately the same bitrate.
+	// result will be a file which can be played natively on Android, and in
+	// browsers (at least Chrome and Firefox). The quality of the encoding
+	// is considerably higher than MP3 while using approximately the same
+	// bitrate.
+	//   "MULAW" - 8-bit samples that compand 14-bit audio samples using
+	// G.711 PCMU/mu-law. Audio content returned as MULAW also contains a
+	// WAV header.
+	//   "ALAW" - 8-bit samples that compand 14-bit audio samples using
+	// G.711 PCMU/A-law. Audio content returned as ALAW also contains a WAV
+	// header.
 	AudioEncoding string `json:"audioEncoding,omitempty"`
 
 	// EffectsProfileId: Optional. Input only. An identifier which selects
-	// 'audio effects' profiles
-	// that are applied on (post synthesized) text to speech. Effects are
-	// applied
-	// on top of each other in the order they are given.
-	// See
-	// [audio
-	// profiles](https://cloud.google.com/text-to-speech/docs/audi
-	// o-profiles) for
+	// 'audio effects' profiles that are applied on (post synthesized) text
+	// to speech. Effects are applied on top of each other in the order they
+	// are given. See audio profiles
+	// (https://cloud.google.com/text-to-speech/docs/audio-profiles) for
 	// current supported profile ids.
 	EffectsProfileId []string `json:"effectsProfileId,omitempty"`
 
 	// Pitch: Optional. Input only. Speaking pitch, in the range [-20.0,
-	// 20.0]. 20 means
-	// increase 20 semitones from the original pitch. -20 means decrease
-	// 20
-	// semitones from the original pitch.
+	// 20.0]. 20 means increase 20 semitones from the original pitch. -20
+	// means decrease 20 semitones from the original pitch.
 	Pitch float64 `json:"pitch,omitempty"`
 
 	// SampleRateHertz: Optional. The synthesis sample rate (in hertz) for
-	// this audio. When this is
-	// specified in SynthesizeSpeechRequest, if this is different from the
-	// voice's
-	// natural sample rate, then the synthesizer will honor this request
-	// by
-	// converting to the desired sample rate (which might result in worse
-	// audio
-	// quality), unless the specified sample rate is not supported for
-	// the
-	// encoding chosen, in which case it will fail the request and
-	// return
+	// this audio. When this is specified in SynthesizeSpeechRequest, if
+	// this is different from the voice's natural sample rate, then the
+	// synthesizer will honor this request by converting to the desired
+	// sample rate (which might result in worse audio quality), unless the
+	// specified sample rate is not supported for the encoding chosen, in
+	// which case it will fail the request and return
 	// google.rpc.Code.INVALID_ARGUMENT.
 	SampleRateHertz int64 `json:"sampleRateHertz,omitempty"`
 
 	// SpeakingRate: Optional. Input only. Speaking rate/speed, in the range
-	// [0.25, 4.0]. 1.0 is
-	// the normal native speed supported by the specific voice. 2.0 is twice
-	// as
-	// fast, and 0.5 is half as fast. If unset(0.0), defaults to the native
-	// 1.0
-	// speed. Any other values < 0.25 or > 4.0 will return an error.
+	// [0.25, 4.0]. 1.0 is the normal native speed supported by the specific
+	// voice. 2.0 is twice as fast, and 0.5 is half as fast. If unset(0.0),
+	// defaults to the native 1.0 speed. Any other values < 0.25 or > 4.0
+	// will return an error.
 	SpeakingRate float64 `json:"speakingRate,omitempty"`
 
 	// VolumeGainDb: Optional. Input only. Volume gain (in dB) of the normal
-	// native volume
-	// supported by the specific voice, in the range [-96.0, 16.0]. If
-	// unset, or
-	// set to a value of 0.0 (dB), will play at normal native signal
-	// amplitude. A
-	// value of -6.0 (dB) will play at approximately half the amplitude of
-	// the
-	// normal native signal amplitude. A value of +6.0 (dB) will play
-	// at
-	// approximately twice the amplitude of the normal native signal
-	// amplitude.
-	// Strongly recommend not to exceed +10 (dB) as there's usually no
-	// effective
-	// increase in loudness for any value greater than that.
+	// native volume supported by the specific voice, in the range [-96.0,
+	// 16.0]. If unset, or set to a value of 0.0 (dB), will play at normal
+	// native signal amplitude. A value of -6.0 (dB) will play at
+	// approximately half the amplitude of the normal native signal
+	// amplitude. A value of +6.0 (dB) will play at approximately twice the
+	// amplitude of the normal native signal amplitude. Strongly recommend
+	// not to exceed +10 (dB) as there's usually no effective increase in
+	// loudness for any value greater than that.
 	VolumeGainDb float64 `json:"volumeGainDb,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AudioEncoding") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AudioEncoding") to include
@@ -277,6 +314,150 @@ func (s *AudioConfig) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// CancelOperationRequest: The request message for
+// Operations.CancelOperation.
+type CancelOperationRequest struct {
+}
+
+// CustomVoiceParams: Description of the custom voice to be synthesized.
+type CustomVoiceParams struct {
+	// Model: Required. The name of the AutoML model that synthesizes the
+	// custom voice.
+	Model string `json:"model,omitempty"`
+
+	// ReportedUsage: Optional. The usage of the synthesized audio to be
+	// reported.
+	//
+	// Possible values:
+	//   "REPORTED_USAGE_UNSPECIFIED" - Request with reported usage
+	// unspecified will be rejected.
+	//   "REALTIME" - For scenarios where the synthesized audio is not
+	// downloadable and can only be used once. For example, real-time
+	// request in IVR system.
+	//   "OFFLINE" - For scenarios where the synthesized audio is
+	// downloadable and can be reused. For example, the synthesized audio is
+	// downloaded, stored in customer service system and played repeatedly.
+	ReportedUsage string `json:"reportedUsage,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Model") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Model") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CustomVoiceParams) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomVoiceParams
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Empty: A generic empty message that you can re-use to avoid defining
+// duplicated empty messages in your APIs. A typical example is to use
+// it as the request or the response type of an API method. For
+// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); }
+type Empty struct {
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+}
+
+// GoogleCloudTexttospeechV1SynthesizeLongAudioMetadata: Metadata for
+// response returned by the `SynthesizeLongAudio` method.
+type GoogleCloudTexttospeechV1SynthesizeLongAudioMetadata struct {
+	// ProgressPercentage: The progress of the most recent processing update
+	// in percentage, ie. 70.0%.
+	ProgressPercentage float64 `json:"progressPercentage,omitempty"`
+
+	// StartTime: Time when the request was received.
+	StartTime string `json:"startTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ProgressPercentage")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ProgressPercentage") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudTexttospeechV1SynthesizeLongAudioMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudTexttospeechV1SynthesizeLongAudioMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudTexttospeechV1SynthesizeLongAudioMetadata) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudTexttospeechV1SynthesizeLongAudioMetadata
+	var s1 struct {
+		ProgressPercentage gensupport.JSONFloat64 `json:"progressPercentage"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.ProgressPercentage = float64(s1.ProgressPercentage)
+	return nil
+}
+
+// ListOperationsResponse: The response message for
+// Operations.ListOperations.
+type ListOperationsResponse struct {
+	// NextPageToken: The standard List next-page token.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Operations: A list of operations that matches the specified filter in
+	// the request.
+	Operations []*Operation `json:"operations,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListOperationsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ListVoicesResponse: The message returned to the client by the
 // `ListVoices` method.
 type ListVoicesResponse struct {
@@ -289,10 +470,10 @@ type ListVoicesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Voices") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Voices") to include in API
@@ -310,21 +491,121 @@ func (s *ListVoicesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Operation: This resource represents a long-running operation that is
+// the result of a network API call.
+type Operation struct {
+	// Done: If the value is `false`, it means the operation is still in
+	// progress. If `true`, the operation is completed, and either `error`
+	// or `response` is available.
+	Done bool `json:"done,omitempty"`
+
+	// Error: The error result of the operation in case of failure or
+	// cancellation.
+	Error *Status `json:"error,omitempty"`
+
+	// Metadata: Service-specific metadata associated with the operation. It
+	// typically contains progress information and common metadata such as
+	// create time. Some services might not provide such metadata. Any
+	// method that returns a long-running operation should document the
+	// metadata type, if any.
+	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
+
+	// Name: The server-assigned name, which is only unique within the same
+	// service that originally returns it. If you use the default HTTP
+	// mapping, the `name` should be a resource name ending with
+	// `operations/{unique_id}`.
+	Name string `json:"name,omitempty"`
+
+	// Response: The normal response of the operation in case of success. If
+	// the original method returns no data on success, such as `Delete`, the
+	// response is `google.protobuf.Empty`. If the original method is
+	// standard `Get`/`Create`/`Update`, the response should be the
+	// resource. For other methods, the response should have the type
+	// `XxxResponse`, where `Xxx` is the original method name. For example,
+	// if the original method name is `TakeSnapshot()`, the inferred
+	// response type is `TakeSnapshotResponse`.
+	Response googleapi.RawMessage `json:"response,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Done") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Done") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Operation) MarshalJSON() ([]byte, error) {
+	type NoMethod Operation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Status: The `Status` type defines a logical error model that is
+// suitable for different programming environments, including REST APIs
+// and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
+// `Status` message contains three pieces of data: error code, error
+// message, and error details. You can find out more about this error
+// model and how to work with it in the API Design Guide
+// (https://cloud.google.com/apis/design/errors).
+type Status struct {
+	// Code: The status code, which should be an enum value of
+	// google.rpc.Code.
+	Code int64 `json:"code,omitempty"`
+
+	// Details: A list of messages that carry the error details. There is a
+	// common set of message types for APIs to use.
+	Details []googleapi.RawMessage `json:"details,omitempty"`
+
+	// Message: A developer-facing error message, which should be in
+	// English. Any user-facing error message should be localized and sent
+	// in the google.rpc.Status.details field, or localized by the client.
+	Message string `json:"message,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Code") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Code") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Status) MarshalJSON() ([]byte, error) {
+	type NoMethod Status
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // SynthesisInput: Contains text input to be synthesized. Either `text`
-// or `ssml` must be
-// supplied. Supplying both or neither
-// returns
-// google.rpc.Code.INVALID_ARGUMENT. The input size is limited to
-// 5000
-// characters.
+// or `ssml` must be supplied. Supplying both or neither returns
+// google.rpc.Code.INVALID_ARGUMENT. The input size is limited to 5000
+// bytes.
 type SynthesisInput struct {
 	// Ssml: The SSML document to be synthesized. The SSML document must be
-	// valid
-	// and well-formed. Otherwise the RPC will fail and
-	// return
-	// google.rpc.Code.INVALID_ARGUMENT. For more information,
-	// see
-	// [SSML](/speech/text-to-speech/docs/ssml).
+	// valid and well-formed. Otherwise the RPC will fail and return
+	// google.rpc.Code.INVALID_ARGUMENT. For more information, see SSML
+	// (https://cloud.google.com/text-to-speech/docs/ssml).
 	Ssml string `json:"ssml,omitempty"`
 
 	// Text: The raw text to be synthesized.
@@ -332,10 +613,10 @@ type SynthesisInput struct {
 
 	// ForceSendFields is a list of field names (e.g. "Ssml") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Ssml") to include in API
@@ -349,6 +630,95 @@ type SynthesisInput struct {
 
 func (s *SynthesisInput) MarshalJSON() ([]byte, error) {
 	type NoMethod SynthesisInput
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SynthesizeLongAudioMetadata: Metadata for response returned by the
+// `SynthesizeLongAudio` method.
+type SynthesizeLongAudioMetadata struct {
+	// ProgressPercentage: The progress of the most recent processing update
+	// in percentage, ie. 70.0%.
+	ProgressPercentage float64 `json:"progressPercentage,omitempty"`
+
+	// StartTime: Time when the request was received.
+	StartTime string `json:"startTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ProgressPercentage")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ProgressPercentage") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SynthesizeLongAudioMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod SynthesizeLongAudioMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *SynthesizeLongAudioMetadata) UnmarshalJSON(data []byte) error {
+	type NoMethod SynthesizeLongAudioMetadata
+	var s1 struct {
+		ProgressPercentage gensupport.JSONFloat64 `json:"progressPercentage"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.ProgressPercentage = float64(s1.ProgressPercentage)
+	return nil
+}
+
+// SynthesizeLongAudioRequest: The top-level message sent by the client
+// for the `SynthesizeLongAudio` method.
+type SynthesizeLongAudioRequest struct {
+	// AudioConfig: Required. The configuration of the synthesized audio.
+	AudioConfig *AudioConfig `json:"audioConfig,omitempty"`
+
+	// Input: Required. The Synthesizer requires either plain text or SSML
+	// as input.
+	Input *SynthesisInput `json:"input,omitempty"`
+
+	// OutputGcsUri: Specifies a Cloud Storage URI for the synthesis
+	// results. Must be specified in the format:
+	// `gs://bucket_name/object_name`, and the bucket must already exist.
+	OutputGcsUri string `json:"outputGcsUri,omitempty"`
+
+	// Voice: The desired voice of the synthesized audio.
+	Voice *VoiceSelectionParams `json:"voice,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AudioConfig") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AudioConfig") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SynthesizeLongAudioRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod SynthesizeLongAudioRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -368,10 +738,10 @@ type SynthesizeSpeechRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "AudioConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AudioConfig") to include
@@ -393,13 +763,10 @@ func (s *SynthesizeSpeechRequest) MarshalJSON() ([]byte, error) {
 // `SynthesizeSpeech` method.
 type SynthesizeSpeechResponse struct {
 	// AudioContent: The audio data bytes encoded as specified in the
-	// request, including the
-	// header for encodings that are wrapped in containers (e.g. MP3,
-	// OGG_OPUS).
-	// For LINEAR16 audio, we include the WAV header. Note: as
-	// with all bytes fields, protobuffers use a pure binary
-	// representation,
-	// whereas JSON representations use base64.
+	// request, including the header for encodings that are wrapped in
+	// containers (e.g. MP3, OGG_OPUS). For LINEAR16 audio, we include the
+	// WAV header. Note: as with all bytes fields, protobuffers use a pure
+	// binary representation, whereas JSON representations use base64.
 	AudioContent string `json:"audioContent,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -408,10 +775,10 @@ type SynthesizeSpeechResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "AudioContent") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AudioContent") to include
@@ -431,14 +798,12 @@ func (s *SynthesizeSpeechResponse) MarshalJSON() ([]byte, error) {
 
 // Voice: Description of a voice supported by the TTS service.
 type Voice struct {
-	// LanguageCodes: The languages that this voice supports, expressed
-	// as
-	// [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tags
-	// (e.g.
-	// "en-US", "es-419", "cmn-tw").
+	// LanguageCodes: The languages that this voice supports, expressed as
+	// BCP-47 (https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tags
+	// (e.g. "en-US", "es-419", "cmn-tw").
 	LanguageCodes []string `json:"languageCodes,omitempty"`
 
-	// Name: The name of this voice.  Each distinct voice has a unique name.
+	// Name: The name of this voice. Each distinct voice has a unique name.
 	Name string `json:"name,omitempty"`
 
 	// NaturalSampleRateHertz: The natural sample rate (in hertz) for this
@@ -448,26 +813,24 @@ type Voice struct {
 	// SsmlGender: The gender of this voice.
 	//
 	// Possible values:
-	//   "SSML_VOICE_GENDER_UNSPECIFIED" - An unspecified gender.
-	// In VoiceSelectionParams, this means that the client doesn't care
-	// which
-	// gender the selected voice will have. In the Voice field
-	// of
+	//   "SSML_VOICE_GENDER_UNSPECIFIED" - An unspecified gender. In
+	// VoiceSelectionParams, this means that the client doesn't care which
+	// gender the selected voice will have. In the Voice field of
 	// ListVoicesResponse, this may mean that the voice doesn't fit any of
-	// the
-	// other categories in this enum, or that the gender of the voice isn't
-	// known.
+	// the other categories in this enum, or that the gender of the voice
+	// isn't known.
 	//   "MALE" - A male voice.
 	//   "FEMALE" - A female voice.
-	//   "NEUTRAL" - A gender-neutral voice.
+	//   "NEUTRAL" - A gender-neutral voice. This voice is not yet
+	// supported.
 	SsmlGender string `json:"ssmlGender,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LanguageCodes") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "LanguageCodes") to include
@@ -488,67 +851,58 @@ func (s *Voice) MarshalJSON() ([]byte, error) {
 // VoiceSelectionParams: Description of which voice to use for a
 // synthesis request.
 type VoiceSelectionParams struct {
+	// CustomVoice: The configuration for a custom voice. If
+	// [CustomVoiceParams.model] is set, the service will choose the custom
+	// voice matching the specified configuration.
+	CustomVoice *CustomVoiceParams `json:"customVoice,omitempty"`
+
 	// LanguageCode: Required. The language (and potentially also the
-	// region) of the voice expressed as
-	// a
-	// [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag,
-	// e.g.
-	// "en-US". This should not include a script tag (e.g. use
-	// "cmn-cn" rather than "cmn-Hant-cn"), because the script will be
-	// inferred
-	// from the input provided in the SynthesisInput.  The TTS service
-	// will use this parameter to help choose an appropriate voice.  Note
-	// that
-	// the TTS service may choose a voice with a slightly different language
-	// code
-	// than the one selected; it may substitute a different region
-	// (e.g. using en-US rather than en-CA if there isn't a Canadian
-	// voice
-	// available), or even a different language, e.g. using "nb"
-	// (Norwegian
+	// region) of the voice expressed as a BCP-47
+	// (https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag, e.g.
+	// "en-US". This should not include a script tag (e.g. use "cmn-cn"
+	// rather than "cmn-Hant-cn"), because the script will be inferred from
+	// the input provided in the SynthesisInput. The TTS service will use
+	// this parameter to help choose an appropriate voice. Note that the TTS
+	// service may choose a voice with a slightly different language code
+	// than the one selected; it may substitute a different region (e.g.
+	// using en-US rather than en-CA if there isn't a Canadian voice
+	// available), or even a different language, e.g. using "nb" (Norwegian
 	// Bokmal) instead of "no" (Norwegian)".
 	LanguageCode string `json:"languageCode,omitempty"`
 
-	// Name: The name of the voice. If not set, the service will choose
-	// a
+	// Name: The name of the voice. If not set, the service will choose a
 	// voice based on the other parameters such as language_code and gender.
 	Name string `json:"name,omitempty"`
 
 	// SsmlGender: The preferred gender of the voice. If not set, the
-	// service will
-	// choose a voice based on the other parameters such as language_code
-	// and
-	// name. Note that this is only a preference, not requirement; if
-	// a
-	// voice of the appropriate gender is not available, the synthesizer
-	// should
-	// substitute a voice with a different gender rather than failing the
-	// request.
+	// service will choose a voice based on the other parameters such as
+	// language_code and name. Note that this is only a preference, not
+	// requirement; if a voice of the appropriate gender is not available,
+	// the synthesizer should substitute a voice with a different gender
+	// rather than failing the request.
 	//
 	// Possible values:
-	//   "SSML_VOICE_GENDER_UNSPECIFIED" - An unspecified gender.
-	// In VoiceSelectionParams, this means that the client doesn't care
-	// which
-	// gender the selected voice will have. In the Voice field
-	// of
+	//   "SSML_VOICE_GENDER_UNSPECIFIED" - An unspecified gender. In
+	// VoiceSelectionParams, this means that the client doesn't care which
+	// gender the selected voice will have. In the Voice field of
 	// ListVoicesResponse, this may mean that the voice doesn't fit any of
-	// the
-	// other categories in this enum, or that the gender of the voice isn't
-	// known.
+	// the other categories in this enum, or that the gender of the voice
+	// isn't known.
 	//   "MALE" - A male voice.
 	//   "FEMALE" - A female voice.
-	//   "NEUTRAL" - A gender-neutral voice.
+	//   "NEUTRAL" - A gender-neutral voice. This voice is not yet
+	// supported.
 	SsmlGender string `json:"ssmlGender,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "LanguageCode") to
+	// ForceSendFields is a list of field names (e.g. "CustomVoice") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "LanguageCode") to include
+	// NullFields is a list of field names (e.g. "CustomVoice") to include
 	// in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. However, any field with
 	// an empty value appearing in NullFields will be sent to the server as
@@ -563,6 +917,796 @@ func (s *VoiceSelectionParams) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// method id "texttospeech.operations.cancel":
+
+type OperationsCancelCall struct {
+	s                      *Service
+	name                   string
+	canceloperationrequest *CancelOperationRequest
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+	header_                http.Header
+}
+
+// Cancel: Starts asynchronous cancellation on a long-running operation.
+// The server makes a best effort to cancel the operation, but success
+// is not guaranteed. If the server doesn't support this method, it
+// returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use
+// Operations.GetOperation or other methods to check whether the
+// cancellation succeeded or whether the operation completed despite
+// cancellation. On successful cancellation, the operation is not
+// deleted; instead, it becomes an operation with an Operation.error
+// value with a google.rpc.Status.code of 1, corresponding to
+// `Code.CANCELLED`.
+//
+// - name: The name of the operation resource to be cancelled.
+func (r *OperationsService) Cancel(name string, canceloperationrequest *CancelOperationRequest) *OperationsCancelCall {
+	c := &OperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.canceloperationrequest = canceloperationrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OperationsCancelCall) Fields(s ...googleapi.Field) *OperationsCancelCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OperationsCancelCall) Context(ctx context.Context) *OperationsCancelCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OperationsCancelCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OperationsCancelCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.canceloperationrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:cancel")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "texttospeech.operations.cancel" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *OperationsCancelCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
+	//   "flatPath": "v1/operations/{operationsId}:cancel",
+	//   "httpMethod": "POST",
+	//   "id": "texttospeech.operations.cancel",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The name of the operation resource to be cancelled.",
+	//       "location": "path",
+	//       "pattern": "^operations/.*$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:cancel",
+	//   "request": {
+	//     "$ref": "CancelOperationRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "texttospeech.operations.delete":
+
+type OperationsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a long-running operation. This method indicates that
+// the client is no longer interested in the operation result. It does
+// not cancel the operation. If the server doesn't support this method,
+// it returns `google.rpc.Code.UNIMPLEMENTED`.
+//
+// - name: The name of the operation resource to be deleted.
+func (r *OperationsService) Delete(name string) *OperationsDeleteCall {
+	c := &OperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OperationsDeleteCall) Fields(s ...googleapi.Field) *OperationsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OperationsDeleteCall) Context(ctx context.Context) *OperationsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OperationsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "texttospeech.operations.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *OperationsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a long-running operation. This method indicates that the client is no longer interested in the operation result. It does not cancel the operation. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`.",
+	//   "flatPath": "v1/operations/{operationsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "texttospeech.operations.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The name of the operation resource to be deleted.",
+	//       "location": "path",
+	//       "pattern": "^operations/.*$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "texttospeech.projects.locations.synthesizeLongAudio":
+
+type ProjectsLocationsSynthesizeLongAudioCall struct {
+	s                          *Service
+	parent                     string
+	synthesizelongaudiorequest *SynthesizeLongAudioRequest
+	urlParams_                 gensupport.URLParams
+	ctx_                       context.Context
+	header_                    http.Header
+}
+
+// SynthesizeLongAudio: Synthesizes long form text asynchronously.
+//
+//   - parent: The resource states of the request in the form of
+//     `projects/*/locations/*/voices/*`.
+func (r *ProjectsLocationsService) SynthesizeLongAudio(parent string, synthesizelongaudiorequest *SynthesizeLongAudioRequest) *ProjectsLocationsSynthesizeLongAudioCall {
+	c := &ProjectsLocationsSynthesizeLongAudioCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.synthesizelongaudiorequest = synthesizelongaudiorequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsSynthesizeLongAudioCall) Fields(s ...googleapi.Field) *ProjectsLocationsSynthesizeLongAudioCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsSynthesizeLongAudioCall) Context(ctx context.Context) *ProjectsLocationsSynthesizeLongAudioCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsSynthesizeLongAudioCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSynthesizeLongAudioCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.synthesizelongaudiorequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}:synthesizeLongAudio")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "texttospeech.projects.locations.synthesizeLongAudio" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsSynthesizeLongAudioCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Synthesizes long form text asynchronously.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}:synthesizeLongAudio",
+	//   "httpMethod": "POST",
+	//   "id": "texttospeech.projects.locations.synthesizeLongAudio",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "The resource states of the request in the form of `projects/*/locations/*/voices/*`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}:synthesizeLongAudio",
+	//   "request": {
+	//     "$ref": "SynthesizeLongAudioRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "texttospeech.projects.locations.operations.get":
+
+type ProjectsLocationsOperationsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the latest state of a long-running operation. Clients can
+// use this method to poll the operation result at intervals as
+// recommended by the API service.
+//
+// - name: The name of the operation resource.
+func (r *ProjectsLocationsOperationsService) Get(name string) *ProjectsLocationsOperationsGetCall {
+	c := &ProjectsLocationsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsOperationsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsOperationsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsOperationsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsOperationsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsOperationsGetCall) Context(ctx context.Context) *ProjectsLocationsOperationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "texttospeech.projects.locations.operations.get" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsOperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/operations/{operationsId}",
+	//   "httpMethod": "GET",
+	//   "id": "texttospeech.projects.locations.operations.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The name of the operation resource.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/operations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "texttospeech.projects.locations.operations.list":
+
+type ProjectsLocationsOperationsListCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists operations that match the specified filter in the
+// request. If the server doesn't support this method, it returns
+// `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to
+// override the binding to use different resource name schemes, such as
+// `users/*/operations`. To override the binding, API services can add a
+// binding such as "/v1/{name=users/*}/operations" to their service
+// configuration. For backwards compatibility, the default name includes
+// the operations collection id, however overriding users must ensure
+// the name binding is the parent resource, without the operations
+// collection id.
+//
+// - name: The name of the operation's parent resource.
+func (r *ProjectsLocationsOperationsService) List(name string) *ProjectsLocationsOperationsListCall {
+	c := &ProjectsLocationsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Filter sets the optional parameter "filter": The standard list
+// filter.
+func (c *ProjectsLocationsOperationsListCall) Filter(filter string) *ProjectsLocationsOperationsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The standard list
+// page size.
+func (c *ProjectsLocationsOperationsListCall) PageSize(pageSize int64) *ProjectsLocationsOperationsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The standard list
+// page token.
+func (c *ProjectsLocationsOperationsListCall) PageToken(pageToken string) *ProjectsLocationsOperationsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsOperationsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsOperationsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsOperationsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsOperationsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsOperationsListCall) Context(ctx context.Context) *ProjectsLocationsOperationsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}/operations")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "texttospeech.projects.locations.operations.list" call.
+// Exactly one of *ListOperationsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListOperationsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsOperationsListCall) Do(opts ...googleapi.CallOption) (*ListOperationsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListOperationsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/operations",
+	//   "httpMethod": "GET",
+	//   "id": "texttospeech.projects.locations.operations.list",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "The standard list filter.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "The name of the operation's parent resource.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The standard list page size.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The standard list page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}/operations",
+	//   "response": {
+	//     "$ref": "ListOperationsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsOperationsListCall) Pages(ctx context.Context, f func(*ListOperationsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "texttospeech.text.synthesize":
 
 type TextSynthesizeCall struct {
@@ -574,8 +1718,7 @@ type TextSynthesizeCall struct {
 }
 
 // Synthesize: Synthesizes speech synchronously: receive results after
-// all text input
-// has been processed.
+// all text input has been processed.
 func (r *TextService) Synthesize(synthesizespeechrequest *SynthesizeSpeechRequest) *TextSynthesizeCall {
 	c := &TextSynthesizeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.synthesizespeechrequest = synthesizespeechrequest
@@ -609,7 +1752,7 @@ func (c *TextSynthesizeCall) Header() http.Header {
 
 func (c *TextSynthesizeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -646,17 +1789,17 @@ func (c *TextSynthesizeCall) Do(opts ...googleapi.CallOption) (*SynthesizeSpeech
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &SynthesizeSpeechResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -670,7 +1813,7 @@ func (c *TextSynthesizeCall) Do(opts ...googleapi.CallOption) (*SynthesizeSpeech
 	}
 	return ret, nil
 	// {
-	//   "description": "Synthesizes speech synchronously: receive results after all text input\nhas been processed.",
+	//   "description": "Synthesizes speech synchronously: receive results after all text input has been processed.",
 	//   "flatPath": "v1/text:synthesize",
 	//   "httpMethod": "POST",
 	//   "id": "texttospeech.text.synthesize",
@@ -706,21 +1849,14 @@ func (r *VoicesService) List() *VoicesListCall {
 	return c
 }
 
-// LanguageCode sets the optional parameter "languageCode":
-// Recommended.
-// [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag.
-// If
+// LanguageCode sets the optional parameter "languageCode": Recommended.
+// BCP-47 (https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag.
+// If not specified, the API will return all supported voices. If
 // specified, the ListVoices call will only return voices that can be
-// used to
-// synthesize this language_code. E.g. when specifying "en-NZ", you will
-// get
-// supported "en-*" voices; when specifying "no", you will get
-// supported
-// "no-*" (Norwegian) and "nb-*" (Norwegian Bokmal) voices; specifying
-// "zh"
-// will also get supported "cmn-*" voices; specifying "zh-hk" will also
-// get
-// supported "yue-*" voices.
+// used to synthesize this language_code. For example, if you specify
+// "en-NZ", all "en-NZ" voices will be returned. If you specify
+// "no", both "no-\*" (Norwegian) and "nb-\*" (Norwegian Bokmal)
+// voices will be returned.
 func (c *VoicesListCall) LanguageCode(languageCode string) *VoicesListCall {
 	c.urlParams_.Set("languageCode", languageCode)
 	return c
@@ -763,7 +1899,7 @@ func (c *VoicesListCall) Header() http.Header {
 
 func (c *VoicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -798,17 +1934,17 @@ func (c *VoicesListCall) Do(opts ...googleapi.CallOption) (*ListVoicesResponse, 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListVoicesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -829,7 +1965,7 @@ func (c *VoicesListCall) Do(opts ...googleapi.CallOption) (*ListVoicesResponse, 
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "languageCode": {
-	//       "description": "Optional. Recommended.\n[BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag. If\nspecified, the ListVoices call will only return voices that can be used to\nsynthesize this language_code. E.g. when specifying \"en-NZ\", you will get\nsupported \"en-*\" voices; when specifying \"no\", you will get supported\n\"no-*\" (Norwegian) and \"nb-*\" (Norwegian Bokmal) voices; specifying \"zh\"\nwill also get supported \"cmn-*\" voices; specifying \"zh-hk\" will also get\nsupported \"yue-*\" voices.",
+	//       "description": "Optional. Recommended. [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag. If not specified, the API will return all supported voices. If specified, the ListVoices call will only return voices that can be used to synthesize this language_code. For example, if you specify `\"en-NZ\"`, all `\"en-NZ\"` voices will be returned. If you specify `\"no\"`, both `\"no-\\*\"` (Norwegian) and `\"nb-\\*\"` (Norwegian Bokmal) voices will be returned.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }

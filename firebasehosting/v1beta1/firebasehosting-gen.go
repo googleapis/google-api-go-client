@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -8,35 +8,35 @@
 //
 // For product documentation, see: https://firebase.google.com/docs/hosting/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/firebasehosting/v1beta1"
-//   ...
-//   ctx := context.Background()
-//   firebasehostingService, err := firebasehosting.NewService(ctx)
+//	import "google.golang.org/api/firebasehosting/v1beta1"
+//	...
+//	ctx := context.Background()
+//	firebasehostingService, err := firebasehosting.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//   firebasehostingService, err := firebasehosting.NewService(ctx, option.WithScopes(firebasehosting.FirebaseReadonlyScope))
+//	firebasehostingService, err := firebasehosting.NewService(ctx, option.WithScopes(firebasehosting.FirebaseReadonlyScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   firebasehostingService, err := firebasehosting.NewService(ctx, option.WithAPIKey("AIza..."))
+//	firebasehostingService, err := firebasehosting.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   firebasehostingService, err := firebasehosting.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	firebasehostingService, err := firebasehosting.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package firebasehosting // import "google.golang.org/api/firebasehosting/v1beta1"
@@ -54,6 +54,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -79,13 +80,16 @@ const apiId = "firebasehosting:v1beta1"
 const apiName = "firebasehosting"
 const apiVersion = "v1beta1"
 const basePath = "https://firebasehosting.googleapis.com/"
+const mtlsBasePath = "https://firebasehosting.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud data and see the
+	// email address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
-	// View your data across Google Cloud Platform services
+	// View your data across Google Cloud services and see the email address
+	// of your Google Account
 	CloudPlatformReadOnlyScope = "https://www.googleapis.com/auth/cloud-platform.read-only"
 
 	// View and administer all your Firebase data and settings
@@ -97,7 +101,7 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
 		"https://www.googleapis.com/auth/cloud-platform.read-only",
 		"https://www.googleapis.com/auth/firebase",
@@ -106,6 +110,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -339,24 +344,22 @@ type SitesVersionsFilesService struct {
 }
 
 // ActingUser: Contains metadata about the user who performed an action,
-// such as creating
-// a release or finalizing a version.
+// such as creating a release or finalizing a version.
 type ActingUser struct {
 	// Email: The email address of the user when the user performed the
 	// action.
 	Email string `json:"email,omitempty"`
 
 	// ImageUrl: A profile image URL for the user. May not be present if the
-	// user has
-	// changed their email address or deleted their account.
+	// user has changed their email address or deleted their account.
 	ImageUrl string `json:"imageUrl,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Email") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Email") to include in API
@@ -381,16 +384,15 @@ type CertDnsChallenge struct {
 	DomainName string `json:"domainName,omitempty"`
 
 	// Token: The value that must be present as a TXT record on the domain
-	// name to
-	// satisfy the challenge.
+	// name to satisfy the challenge.
 	Token string `json:"token,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DomainName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DomainName") to include in
@@ -411,21 +413,19 @@ func (s *CertDnsChallenge) MarshalJSON() ([]byte, error) {
 // CertHttpChallenge: Represents an HTTP certificate challenge.
 type CertHttpChallenge struct {
 	// Path: The URL path on which to serve the specified token to satisfy
-	// the
-	// certificate challenge.
+	// the certificate challenge.
 	Path string `json:"path,omitempty"`
 
 	// Token: The token to serve at the specified URL path to satisfy the
-	// certificate
-	// challenge.
+	// certificate challenge.
 	Token string `json:"token,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Path") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Path") to include in API
@@ -443,19 +443,129 @@ func (s *CertHttpChallenge) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Channel: A `Channel` represents a stream of releases for a site. All
+// sites have a default `live` channel that serves content to the
+// Firebase-provided subdomains and any connected custom domains.
+type Channel struct {
+	// CreateTime: Output only. The time at which the channel was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// ExpireTime: The time at which the channel will be automatically
+	// deleted. If null, the channel will not be automatically deleted. This
+	// field is present in the output whether it's set directly or via the
+	// `ttl` field.
+	ExpireTime string `json:"expireTime,omitempty"`
+
+	// Labels: Text labels used for extra metadata and/or filtering.
+	Labels map[string]string `json:"labels,omitempty"`
+
+	// Name: The fully-qualified resource name for the channel, in the
+	// format: sites/ SITE_ID/channels/CHANNEL_ID
+	Name string `json:"name,omitempty"`
+
+	// Release: Output only. The current release for the channel, if any.
+	Release *Release `json:"release,omitempty"`
+
+	// RetainedReleaseCount: The number of previous releases to retain on
+	// the channel for rollback or other purposes. Must be a number between
+	// 1-100. Defaults to 10 for new channels.
+	RetainedReleaseCount int64 `json:"retainedReleaseCount,omitempty"`
+
+	// Ttl: Input only. A time-to-live for this channel. Sets `expire_time`
+	// to the provided duration past the time of the request.
+	Ttl string `json:"ttl,omitempty"`
+
+	// UpdateTime: Output only. The time at which the channel was last
+	// updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// Url: Output only. The URL at which the content of this channel's
+	// current release can be viewed. This URL is a Firebase-provided
+	// subdomain of `web.app`. The content of this channel's current release
+	// can also be viewed at the Firebase-provided subdomain of
+	// `firebaseapp.com`. If this channel is the `live` channel for the
+	// Hosting site, then the content of this channel's current release can
+	// also be viewed at any connected custom domains.
+	Url string `json:"url,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Channel) MarshalJSON() ([]byte, error) {
+	type NoMethod Channel
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type CloneVersionRequest struct {
+	// Exclude: If provided, only paths that do not match any of the RegEx
+	// values in this list will be included in the new version.
+	Exclude *PathFilter `json:"exclude,omitempty"`
+
+	// Finalize: If true, the call to `CloneVersion` immediately finalizes
+	// the version after cloning is complete. If false, the cloned version
+	// will have a status of `CREATED`. Use `UpdateVersion` (patch) to set
+	// the status of the version to `FINALIZED`.
+	Finalize bool `json:"finalize,omitempty"`
+
+	// Include: If provided, only paths that match one or more RegEx values
+	// in this list will be included in the new version.
+	Include *PathFilter `json:"include,omitempty"`
+
+	// SourceVersion: Required. The unique identifier for the version to be
+	// cloned, in the format: sites/SITE_ID/versions/VERSION_ID
+	SourceVersion string `json:"sourceVersion,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Exclude") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Exclude") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CloneVersionRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod CloneVersionRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // CloudRunRewrite: A configured rewrite that directs requests to a
-// Cloud Run service. If the
-// Cloud Run service does not exist when setting or updating your
-// Firebase
-// Hosting configuration, then the request fails. Any errors from the
-// Cloud Run
-// service are passed to the end user (for example, if you delete a
-// service, any
-// requests directed to that service receive a `404` error).
+// Cloud Run service. If the Cloud Run service does not exist when
+// setting or updating your Firebase Hosting configuration, then the
+// request fails. Any errors from the Cloud Run service are passed to
+// the end user (for example, if you delete a service, any requests
+// directed to that service receive a `404` error).
 type CloudRunRewrite struct {
 	// Region: Optional. User-provided region where the Cloud Run service is
-	// hosted.<br>
-	// Defaults to `us-central1` if not supplied.
+	// hosted. Defaults to `us-central1` if not supplied.
 	Region string `json:"region,omitempty"`
 
 	// ServiceId: Required. User-defined ID of the Cloud Run service.
@@ -463,10 +573,10 @@ type CloudRunRewrite struct {
 
 	// ForceSendFields is a list of field names (e.g. "Region") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Region") to include in API
@@ -494,8 +604,7 @@ type Domain struct {
 	DomainRedirect *DomainRedirect `json:"domainRedirect,omitempty"`
 
 	// Provisioning: Output only. Information about the provisioning of
-	// certificates and the
-	// health of the DNS resolution for the domain.
+	// certificates and the health of the DNS resolution for the domain.
 	Provisioning *DomainProvisioning `json:"provisioning,omitempty"`
 
 	// Site: Required. The site name of the association.
@@ -507,18 +616,17 @@ type Domain struct {
 	//   "DOMAIN_STATUS_UNSPECIFIED" - Unspecified domain association
 	// status.
 	//   "DOMAIN_CHANGE_PENDING" - An external operation is in progress on
-	// the domain association and no
-	// further operations can be performed until it is complete. Formerly
-	// used for
-	// metabase updates.  Not currently used
+	// the domain association and no further operations can be performed
+	// until it is complete. Formerly used for metabase updates. Not
+	// currently used
 	//   "DOMAIN_ACTIVE" - The domain association is active and no
 	// additional action is required.
 	//   "DOMAIN_VERIFICATION_REQUIRED" - The domain was previously verified
-	// in the legacy system. User must
-	// reverify the domain through the ownership service.
+	// in the legacy system. User must reverify the domain through the
+	// ownership service.
 	//   "DOMAIN_VERIFICATION_LOST" - The domain verification has been lost
-	// and the domain is in the grace period
-	// before being removed from the Firebase Hosting site.
+	// and the domain is in the grace period before being removed from the
+	// Firebase Hosting site.
 	Status string `json:"status,omitempty"`
 
 	// UpdateTime: Output only. The time at which the domain was last
@@ -531,10 +639,10 @@ type Domain struct {
 
 	// ForceSendFields is a list of field names (e.g. "DomainName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DomainName") to include in
@@ -556,8 +664,7 @@ func (s *Domain) MarshalJSON() ([]byte, error) {
 // information for a domain.
 type DomainProvisioning struct {
 	// CertChallengeDiscoveredTxt: The TXT records (for the certificate
-	// challenge) that were found at the last
-	// DNS fetch.
+	// challenge) that were found at the last DNS fetch.
 	CertChallengeDiscoveredTxt []string `json:"certChallengeDiscoveredTxt,omitempty"`
 
 	// CertChallengeDns: The DNS challenge for generating a certificate.
@@ -567,8 +674,7 @@ type DomainProvisioning struct {
 	CertChallengeHttp *CertHttpChallenge `json:"certChallengeHttp,omitempty"`
 
 	// CertStatus: The certificate provisioning status; updated when
-	// Firebase Hosting
-	// provisions an SSL certificate for the domain.
+	// Firebase Hosting provisions an SSL certificate for the domain.
 	//
 	// Possible values:
 	//   "CERT_STATUS_UNSPECIFIED" - Unspecified certificate provisioning
@@ -599,14 +705,13 @@ type DomainProvisioning struct {
 	//   "DNS_MISSING" - None of the required DNS records have been detected
 	// on the domain.
 	//   "DNS_PARTIAL_MATCH" - Some of the required DNS records were
-	// detected, but not all of them. No
-	// extra (non-required) DNS records were detected.
-	//   "DNS_MATCH" - All required DNS records were detected. No extra
-	// (non-required) DNS records
+	// detected, but not all of them. No extra (non-required) DNS records
 	// were detected.
+	//   "DNS_MATCH" - All required DNS records were detected. No extra
+	// (non-required) DNS records were detected.
 	//   "DNS_EXTRANEOUS_MATCH" - The domain has at least one of the
-	// required DNS records, and it has at
-	// least one extra (non-required) DNS record.
+	// required DNS records, and it has at least one extra (non-required)
+	// DNS record.
 	DnsStatus string `json:"dnsStatus,omitempty"`
 
 	// ExpectedIps: The list of IPs to which the domain is expected to
@@ -615,11 +720,11 @@ type DomainProvisioning struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "CertChallengeDiscoveredTxt") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g.
@@ -639,10 +744,9 @@ func (s *DomainProvisioning) MarshalJSON() ([]byte, error) {
 }
 
 // DomainRedirect: Defines the behavior of a domain-level redirect.
-// Domain redirects preserve
-// the path of the redirect but replace the requested domain with the
-// one
-// specified in the redirect configuration.
+// Domain redirects preserve the path of the redirect but replace the
+// requested domain with the one specified in the redirect
+// configuration.
 type DomainRedirect struct {
 	// DomainName: Required. The domain name to redirect to.
 	DomainName string `json:"domainName,omitempty"`
@@ -653,16 +757,15 @@ type DomainRedirect struct {
 	//   "REDIRECT_TYPE_UNSPECIFIED" - The default redirect type; should not
 	// be intentionlly used.
 	//   "MOVED_PERMANENTLY" - The redirect will respond with an HTTP status
-	// code of
-	// `301 Moved Permanently`.
+	// code of `301 Moved Permanently`.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DomainName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DomainName") to include in
@@ -681,48 +784,39 @@ func (s *DomainRedirect) MarshalJSON() ([]byte, error) {
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
-// duplicated
-// empty messages in your APIs. A typical example is to use it as the
-// request
-// or the response type of an API method. For instance:
-//
-//     service Foo {
-//       rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty);
-//     }
-//
-// The JSON representation for `Empty` is empty JSON object `{}`.
+// duplicated empty messages in your APIs. A typical example is to use
+// it as the request or the response type of an API method. For
+// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); }
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
 }
 
-// Header: A [`header`](/docs/hosting/full-config#headers) defines
-// custom headers to
-// add to a response should the request URL path match the pattern.
+// Header: A `Header`
+// (https://firebase.google.com/docs/hosting/full-config#headers)
+// specifies a URL pattern that, if matched to the request URL path,
+// triggers Hosting to apply the specified custom response headers.
 type Header struct {
-	// Glob: The user-supplied
-	// [glob
-	// pattern](/docs/hosting/full-config#glob_pattern_matching) to
-	// match
-	// against the request URL path.
+	// Glob: The user-supplied glob
+	// (https://firebase.google.com/docs/hosting/full-config#glob_pattern_matching)
+	// to match against the request URL path.
 	Glob string `json:"glob,omitempty"`
 
 	// Headers: Required. The additional headers to add to the response.
 	Headers map[string]string `json:"headers,omitempty"`
 
 	// Regex: The user-supplied RE2 regular expression to match against the
-	// request
-	// URL path.
+	// request URL path.
 	Regex string `json:"regex,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Glob") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Glob") to include in API
@@ -736,6 +830,71 @@ type Header struct {
 
 func (s *Header) MarshalJSON() ([]byte, error) {
 	type NoMethod Header
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// I18nConfig: If provided, i18n rewrites are enabled.
+type I18nConfig struct {
+	// Root: Required. The user-supplied path where country and language
+	// specific content will be looked for within the public directory.
+	Root string `json:"root,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Root") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Root") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *I18nConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod I18nConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type ListChannelsResponse struct {
+	// Channels: The list of channels.
+	Channels []*Channel `json:"channels,omitempty"`
+
+	// NextPageToken: The pagination token, if more results exist beyond the
+	// ones in this response. Include this token in your next call to
+	// `ListChannels`. Page tokens are short-lived and should not be stored.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Channels") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Channels") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListChannelsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListChannelsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -754,10 +913,10 @@ type ListDomainsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Domains") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Domains") to include in
@@ -776,13 +935,9 @@ func (s *ListDomainsResponse) MarshalJSON() ([]byte, error) {
 }
 
 type ListReleasesResponse struct {
-	// NextPageToken: If there are additional releases remaining beyond the
-	// ones in this
-	// response, then supply this token in the
-	// next
-	// [`list`](../sites.versions.files/list) call to continue with the next
-	// set
-	// of releases.
+	// NextPageToken: The pagination token, if more results exist beyond the
+	// ones in this response. Include this token in your next call to
+	// `ListReleases`. Page tokens are short-lived and should not be stored.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// Releases: The list of hashes of files that still need to be uploaded,
@@ -795,10 +950,10 @@ type ListReleasesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -816,11 +971,52 @@ func (s *ListReleasesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type ListSitesResponse struct {
+	// NextPageToken: The pagination token, if more results exist beyond the
+	// ones in this response. Include this token in your next call to
+	// `ListSites`. Page tokens are short-lived and should not be stored.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Sites: A list of Site objects associated with the specified Firebase
+	// project.
+	Sites []*Site `json:"sites,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListSitesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListSitesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type ListVersionFilesResponse struct {
-	// Files: The list path/hashes in the specified version.
+	// Files:  The list of paths to the hashes of the files in the specified
+	// version.
 	Files []*VersionFile `json:"files,omitempty"`
 
-	// NextPageToken: The pagination token, if more results exist.
+	// NextPageToken: The pagination token, if more results exist beyond the
+	// ones in this response. Include this token in your next call to
+	// `ListVersionFiles`. Page tokens are short-lived and should not be
+	// stored.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -829,10 +1025,10 @@ type ListVersionFilesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Files") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Files") to include in API
@@ -851,7 +1047,9 @@ func (s *ListVersionFilesResponse) MarshalJSON() ([]byte, error) {
 }
 
 type ListVersionsResponse struct {
-	// NextPageToken: The pagination token, if more results exist
+	// NextPageToken: The pagination token, if more results exist beyond the
+	// ones in this response. Include this token in your next call to
+	// `ListVersions`. Page tokens are short-lived and should not be stored.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// Versions: The list of versions, if any exist.
@@ -863,10 +1061,10 @@ type ListVersionsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -885,52 +1083,38 @@ func (s *ListVersionsResponse) MarshalJSON() ([]byte, error) {
 }
 
 // Operation: This resource represents a long-running operation that is
-// the result of a
-// network API call.
+// the result of a network API call.
 type Operation struct {
 	// Done: If the value is `false`, it means the operation is still in
-	// progress.
-	// If `true`, the operation is completed, and either `error` or
-	// `response` is
-	// available.
+	// progress. If `true`, the operation is completed, and either `error`
+	// or `response` is available.
 	Done bool `json:"done,omitempty"`
 
 	// Error: The error result of the operation in case of failure or
 	// cancellation.
 	Error *Status `json:"error,omitempty"`
 
-	// Metadata: Service-specific metadata associated with the operation.
-	// It typically
-	// contains progress information and common metadata such as create
-	// time.
-	// Some services might not provide such metadata.  Any method that
-	// returns a
-	// long-running operation should document the metadata type, if any.
+	// Metadata: Service-specific metadata associated with the operation. It
+	// typically contains progress information and common metadata such as
+	// create time. Some services might not provide such metadata. Any
+	// method that returns a long-running operation should document the
+	// metadata type, if any.
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
 
 	// Name: The server-assigned name, which is only unique within the same
-	// service that
-	// originally returns it. If you use the default HTTP mapping,
-	// the
-	// `name` should be a resource name ending with
+	// service that originally returns it. If you use the default HTTP
+	// mapping, the `name` should be a resource name ending with
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success.
-	// If the original
-	// method returns no data on success, such as `Delete`, the response
-	// is
-	// `google.protobuf.Empty`.  If the original method is
-	// standard
-	// `Get`/`Create`/`Update`, the response should be the resource.  For
-	// other
-	// methods, the response should have the type `XxxResponse`, where
-	// `Xxx`
-	// is the original method name.  For example, if the original method
-	// name
-	// is `TakeSnapshot()`, the inferred response type
-	// is
-	// `TakeSnapshotResponse`.
+	// Response: The normal response of the operation in case of success. If
+	// the original method returns no data on success, such as `Delete`, the
+	// response is `google.protobuf.Empty`. If the original method is
+	// standard `Get`/`Create`/`Update`, the response should be the
+	// resource. For other methods, the response should have the type
+	// `XxxResponse`, where `Xxx` is the original method name. For example,
+	// if the original method name is `TakeSnapshot()`, the inferred
+	// response type is `TakeSnapshotResponse`.
 	Response googleapi.RawMessage `json:"response,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -939,10 +1123,10 @@ type Operation struct {
 
 	// ForceSendFields is a list of field names (e.g. "Done") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Done") to include in API
@@ -960,24 +1144,47 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// PopulateVersionFilesRequest: The request to populate a Version's
-// Files.
+// PathFilter: A representation of filter path.
+type PathFilter struct {
+	// Regexes: An array of RegEx values by which to filter.
+	Regexes []string `json:"regexes,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Regexes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Regexes") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PathFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod PathFilter
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type PopulateVersionFilesRequest struct {
 	// Files: A set of file paths to the hashes corresponding to assets that
-	// should be
-	// added to the version. Note that a file path to an empty hash will
-	// remove
-	// the path from the version. Calculate a hash by Gzipping the file
-	// then
-	// taking the SHA256 hash of the newly compressed file.
+	// should be added to the version. A file path to an empty hash will
+	// remove the path from the version. Calculate a hash by Gzipping the
+	// file then taking the SHA256 hash of the newly compressed file.
 	Files map[string]string `json:"files,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Files") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Files") to include in API
@@ -997,17 +1204,15 @@ func (s *PopulateVersionFilesRequest) MarshalJSON() ([]byte, error) {
 
 type PopulateVersionFilesResponse struct {
 	// UploadRequiredHashes: The content hashes of the specified files that
-	// need to be uploaded to the
-	// specified endpoint.
+	// need to be uploaded to the specified URL.
 	UploadRequiredHashes []string `json:"uploadRequiredHashes,omitempty"`
 
 	// UploadUrl: The URL to which the files should be uploaded, in the
 	// format:
-	// <br>"https://upload-firebasehosting.googleapis.com/upload/site
-	// s/<var>site-name</var>/versions/<var>versionID</var>/files".
-	// <br>Perfo
-	// rm a multipart `POST` of the Gzipped file contents to the URL
-	// using a forward slash and the hash of the file appended to the end.
+	// "https://upload-firebasehosting.googleapis.com/upload/sites/SITE_ID
+	// /versions/VERSION_ID/files" Perform a multipart `POST` of the Gzipped
+	// file contents to the URL using a forward slash and the hash of the
+	// file appended to the end.
 	UploadUrl string `json:"uploadUrl,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1016,8 +1221,8 @@ type PopulateVersionFilesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "UploadRequiredHashes") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -1039,84 +1244,39 @@ func (s *PopulateVersionFilesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// PreviewConfig: Version preview configuration. If active and
-// unexpired,
-// this version will be accessible via a custom URL even
-// if it is not the currently released version.
-type PreviewConfig struct {
-	// Active: If true, preview URLs are enabled for this version.
-	Active bool `json:"active,omitempty"`
-
-	// ExpireTime: Indicates the expiration time for previewing
-	// this
-	// version; preview URL requests received after this time will 404.
-	ExpireTime string `json:"expireTime,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Active") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Active") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *PreviewConfig) MarshalJSON() ([]byte, error) {
-	type NoMethod PreviewConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// Redirect: A [`redirect`](/docs/hosting/full-config#redirects)
-// represents the
-// configuration for returning an HTTP redirect response given a
-// matching
-// request URL path.
+// Redirect: A `Redirect`
+// (https://firebase.google.com/docs/hosting/full-config#redirects)
+// specifies a URL pattern that, if matched to the request URL path,
+// triggers Hosting to respond with a redirect to the specified
+// destination path.
 type Redirect struct {
-	// Glob: The user-supplied
-	// [glob
-	// pattern](/docs/hosting/full-config#glob_pattern_matching) to
-	// match
-	// against the request URL path.
+	// Glob: The user-supplied glob
+	// (https://firebase.google.com/docs/hosting/full-config#glob_pattern_matching)
+	// to match against the request URL path.
 	Glob string `json:"glob,omitempty"`
 
 	// Location: Required. The value to put in the HTTP location header of
-	// the response.
-	// <br>The location can contain capture group values from the pattern
-	// using
-	// a `:` prefix to identify the segment and an optional `*` to capture
-	// the
-	// rest of the URL.
-	// For example:
-	// <code>"glob": "/:capture*",
-	// <br>"statusCode": 301,
-	// <br>"location": "https://example.com/foo/:capture"</code>
+	// the response. The location can contain capture group values from the
+	// pattern using a `:` prefix to identify the segment and an optional
+	// `*` to capture the rest of the URL. For example: "glob":
+	// "/:capture*", "statusCode": 301, "location":
+	// "https://example.com/foo/:capture"
 	Location string `json:"location,omitempty"`
 
 	// Regex: The user-supplied RE2 regular expression to match against the
-	// request
-	// URL path.
+	// request URL path.
 	Regex string `json:"regex,omitempty"`
 
 	// StatusCode: Required. The status HTTP code to return in the response.
-	// It must be a
-	// valid 3xx status code.
+	// It must be a valid 3xx status code.
 	StatusCode int64 `json:"statusCode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Glob") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Glob") to include in API
@@ -1134,22 +1294,20 @@ func (s *Redirect) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Release: A `Release` is a particular
-// [collection of configurations and files](sites.versions)
-// that is set to be public at a particular time.
+// Release:  A `Release` is a particular collection of configurations
+// and files (sites.versions) that is set to be public at a particular
+// time.
 type Release struct {
 	// Message: The deploy description when the release was created. The
-	// value can be up to
-	// 512&nbsp;characters.
+	// value can be up to 512 characters.
 	Message string `json:"message,omitempty"`
 
-	// Name: Output only. The unique identifier for the release, in the
-	// format:
-	// <code>sites/<var>site-name</var>/releases/<var>releaseID</var>
-	// </code>
-	// This name is provided in the response body when you call
-	// the
-	// [`CreateRelease`](sites.releases/create) endpoint.
+	// Name: Output only. The unique identifier for the release, in either
+	// of the following formats: - sites/SITE_ID/releases/RELEASE_ID -
+	// sites/SITE_ID/channels/CHANNEL_ID/releases/RELEASE_ID This name is
+	// provided in the response body when you call `releases.create`
+	// (sites.releases/create) or `channels.releases.create`
+	// (sites.channels.releases/create).
 	Name string `json:"name,omitempty"`
 
 	// ReleaseTime: Output only. The time at which the version is set to be
@@ -1160,23 +1318,18 @@ type Release struct {
 	// release.
 	ReleaseUser *ActingUser `json:"releaseUser,omitempty"`
 
-	// Type: Explains the reason for the release.
-	// <br>Specify a value for this field only when creating a
-	// `SITE_DISABLE`
-	// type release.
+	// Type: Explains the reason for the release. Specify a value for this
+	// field only when creating a `SITE_DISABLE` type release.
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - An unspecified type. Indicates that a version
-	// was released.
-	// <br>This is the default value when no other `type` is
-	// explicitly
-	// specified.
+	// was released. This is the default value when no other `type` is
+	// explicitly specified.
 	//   "DEPLOY" - A version was uploaded to Firebase Hosting and released.
 	//   "ROLLBACK" - The release points back to a previously deployed
 	// version.
 	//   "SITE_DISABLE" - The release prevents the site from serving
-	// content. Firebase Hosting acts
-	// as if the site never existed.
+	// content. Firebase Hosting acts as if the site never existed.
 	Type string `json:"type,omitempty"`
 
 	// Version: Output only. The configuration and content that was
@@ -1189,10 +1342,10 @@ type Release struct {
 
 	// ForceSendFields is a list of field names (e.g. "Message") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Message") to include in
@@ -1210,36 +1363,34 @@ func (s *Release) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Rewrite: A [`rewrite`](/docs/hosting/full-config#rewrites) represents
-// an internal
-// content rewrite on the version. If the pattern matches, the request
-// will be
-// handled as if it were to the destination path specified in
-// the
-// configuration.
+// Rewrite: A `Rewrite`
+// (https://firebase.google.com/docs/hosting/full-config#rewrites)
+// specifies a URL pattern that, if matched to the request URL path,
+// triggers Hosting to respond as if the service were given the
+// specified destination URL.
 type Rewrite struct {
 	// DynamicLinks: The request will be forwarded to Firebase Dynamic
 	// Links.
 	DynamicLinks bool `json:"dynamicLinks,omitempty"`
 
 	// Function: The function to proxy requests to. Must match the exported
-	// function
-	// name exactly.
+	// function name exactly.
 	Function string `json:"function,omitempty"`
 
-	// Glob: The user-supplied
-	// [glob
-	// pattern](/docs/hosting/full-config#glob_pattern_matching) to
-	// match
-	// against the request URL path.
+	// FunctionRegion: Optional. Specify a Cloud region for rewritten
+	// Functions invocations. If not provided, defaults to us-central1.
+	FunctionRegion string `json:"functionRegion,omitempty"`
+
+	// Glob: The user-supplied glob
+	// (https://firebase.google.com/docs/hosting/full-config#glob_pattern_matching)
+	// to match against the request URL path.
 	Glob string `json:"glob,omitempty"`
 
 	// Path: The URL path to rewrite the request to.
 	Path string `json:"path,omitempty"`
 
 	// Regex: The user-supplied RE2 regular expression to match against the
-	// request
-	// URL path.
+	// request URL path.
 	Regex string `json:"regex,omitempty"`
 
 	// Run: The request will be forwarded to Cloud Run.
@@ -1247,10 +1398,10 @@ type Rewrite struct {
 
 	// ForceSendFields is a list of field names (e.g. "DynamicLinks") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DynamicLinks") to include
@@ -1269,65 +1420,64 @@ func (s *Rewrite) MarshalJSON() ([]byte, error) {
 }
 
 // ServingConfig: The configuration for how incoming requests to a site
-// should be routed and
-// processed before serving content. The patterns are matched and
-// applied
-// according to a specific
-// [priority order](/docs/hosting/full-config#hosting_priority_order).
+// should be routed and processed before serving content. The URL
+// request paths are matched against the specified URL patterns in the
+// configuration, then Hosting applies the applicable configuration
+// according to a specific priority order
+// (https://firebase.google.com/docs/hosting/full-config#hosting_priority_order).
 type ServingConfig struct {
 	// AppAssociation: How to handle well known App Association files.
 	//
 	// Possible values:
-	//   "AUTO" - The app association files will be automattically created
-	// from the apps
-	// that exist in the Firebase project.
+	//   "AUTO" - The app association files will be automatically created
+	// from the apps that exist in the Firebase project.
 	//   "NONE" - No special handling of the app association files will
-	// occur, these paths
-	// will result in a 404 unless caught with a Rewrite.
+	// occur, these paths will result in a 404 unless caught with a Rewrite.
 	AppAssociation string `json:"appAssociation,omitempty"`
 
 	// CleanUrls: Defines whether to drop the file extension from uploaded
 	// files.
 	CleanUrls bool `json:"cleanUrls,omitempty"`
 
-	// Headers: A list of custom response headers that are added to the
-	// content if the
-	// request URL path matches the glob.
+	// Headers: An array of objects, where each object specifies a URL
+	// pattern that, if matched to the request URL path, triggers Hosting to
+	// apply the specified custom response headers.
 	Headers []*Header `json:"headers,omitempty"`
 
-	// Redirects: A list of globs that will cause the response to redirect
-	// to another
-	// location.
+	// I18n: Optional. Defines i18n rewrite behavior.
+	I18n *I18nConfig `json:"i18n,omitempty"`
+
+	// Redirects: An array of objects (called redirect rules), where each
+	// rule specifies a URL pattern that, if matched to the request URL
+	// path, triggers Hosting to respond with a redirect to the specified
+	// destination path.
 	Redirects []*Redirect `json:"redirects,omitempty"`
 
-	// Rewrites: A list of rewrites that will act as if the service were
-	// given the
-	// destination URL.
+	// Rewrites: An array of objects (called rewrite rules), where each rule
+	// specifies a URL pattern that, if matched to the request URL path,
+	// triggers Hosting to respond as if the service were given the
+	// specified destination URL.
 	Rewrites []*Rewrite `json:"rewrites,omitempty"`
 
 	// TrailingSlashBehavior: Defines how to handle a trailing slash in the
 	// URL path.
 	//
 	// Possible values:
-	//   "TRAILING_SLASH_BEHAVIOR_UNSPECIFIED" - No behavior is
-	// specified.
-	// <br>Files are served at their exact location only, and trailing
-	// slashes
+	//   "TRAILING_SLASH_BEHAVIOR_UNSPECIFIED" - No behavior is specified.
+	// Files are served at their exact location only, and trailing slashes
 	// are only added to directory indexes.
 	//   "ADD" - Trailing slashes are _added_ to directory indexes as well
-	// as to any URL
-	// path not ending in a file extension.
+	// as to any URL path not ending in a file extension.
 	//   "REMOVE" - Trailing slashes are _removed_ from directory indexes as
-	// well as from any
-	// URL path not ending in a file extension.
+	// well as from any URL path not ending in a file extension.
 	TrailingSlashBehavior string `json:"trailingSlashBehavior,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AppAssociation") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AppAssociation") to
@@ -1346,24 +1496,81 @@ func (s *ServingConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Site: A `Site` represents a Firebase Hosting site.
+type Site struct {
+	// AppId: Optional. The ID of a Web App
+	// (https://firebase.google.com/docs/reference/firebase-management/rest/v1beta1/projects.webApps#WebApp.FIELDS.app_id)
+	// associated with the Hosting site.
+	AppId string `json:"appId,omitempty"`
+
+	// DefaultUrl: Output only. The default URL for the Hosting site.
+	DefaultUrl string `json:"defaultUrl,omitempty"`
+
+	// Labels: Optional. User-specified labels for the Hosting site.
+	Labels map[string]string `json:"labels,omitempty"`
+
+	// Name: Output only. The fully-qualified resource name of the Hosting
+	// site, in the format: projects/PROJECT_IDENTIFIER/sites/SITE_ID
+	// PROJECT_IDENTIFIER: the Firebase project's `ProjectNumber`
+	// (https://firebase.google.com/docs/reference/firebase-management/rest/v1beta1/projects#FirebaseProject.FIELDS.project_number)
+	// ***(recommended)*** or its `ProjectId`
+	// (https://firebase.google.com/docs/reference/firebase-management/rest/v1beta1/projects#FirebaseProject.FIELDS.project_id).
+	// Learn more about using project identifiers in Google's AIP 2510
+	// standard (https://google.aip.dev/cloud/2510).
+	Name string `json:"name,omitempty"`
+
+	// Type: Output only. The type of Hosting site. Every Firebase project
+	// has a `DEFAULT_SITE`, which is created when Hosting is provisioned
+	// for the project. All additional sites are `USER_SITE`.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Unknown state, likely the result of an error
+	// on the backend.
+	//   "DEFAULT_SITE" - The default Hosting site that is provisioned when
+	// a Firebase project is created.
+	//   "USER_SITE" - A Hosting site that the user created.
+	Type string `json:"type,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AppId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AppId") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Site) MarshalJSON() ([]byte, error) {
+	type NoMethod Site
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // SiteConfig: A `SiteConfig` contains metadata associated with a
-// specific site that
-// controls Firebase Hosting serving behavior
+// specific site that controls Firebase Hosting serving behavior
 type SiteConfig struct {
 	// CloudLoggingEnabled: Whether or not web requests made by site
-	// visitors are logged via Cloud
-	// Logging.
+	// visitors are logged via Cloud Logging.
 	CloudLoggingEnabled bool `json:"cloudLoggingEnabled,omitempty"`
 
 	// MaxVersions: The number of FINALIZED versions that will be held for a
-	// site before
-	// automatic deletion. When a new version is deployed, content for
-	// versions
-	// in storage in excess of this number will be deleted, and will no
-	// longer be
-	// billed for storage usage. Oldest versions will be deleted first;
-	// sites are
-	// created with an unlimited number of max_versions by default.
+	// site before automatic deletion. When a new version is deployed,
+	// content for versions in storage in excess of this number will be
+	// deleted, and will no longer be billed for storage usage. Oldest
+	// versions will be deleted first; sites are created with an unlimited
+	// number of max_versions by default.
 	MaxVersions int64 `json:"maxVersions,omitempty,string"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1372,10 +1579,10 @@ type SiteConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "CloudLoggingEnabled")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CloudLoggingEnabled") to
@@ -1395,40 +1602,32 @@ func (s *SiteConfig) MarshalJSON() ([]byte, error) {
 }
 
 // Status: The `Status` type defines a logical error model that is
-// suitable for
-// different programming environments, including REST APIs and RPC APIs.
-// It is
-// used by [gRPC](https://github.com/grpc). Each `Status` message
-// contains
-// three pieces of data: error code, error message, and error
-// details.
-//
-// You can find out more about this error model and how to work with it
-// in the
-// [API Design Guide](https://cloud.google.com/apis/design/errors).
+// suitable for different programming environments, including REST APIs
+// and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
+// `Status` message contains three pieces of data: error code, error
+// message, and error details. You can find out more about this error
+// model and how to work with it in the API Design Guide
+// (https://cloud.google.com/apis/design/errors).
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
 	Code int64 `json:"code,omitempty"`
 
-	// Details: A list of messages that carry the error details.  There is a
-	// common set of
-	// message types for APIs to use.
+	// Details: A list of messages that carry the error details. There is a
+	// common set of message types for APIs to use.
 	Details []googleapi.RawMessage `json:"details,omitempty"`
 
 	// Message: A developer-facing error message, which should be in
-	// English. Any
-	// user-facing error message should be localized and sent in
-	// the
-	// google.rpc.Status.details field, or localized by the client.
+	// English. Any user-facing error message should be localized and sent
+	// in the google.rpc.Status.details field, or localized by the client.
 	Message string `json:"message,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Code") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Code") to include in API
@@ -1446,13 +1645,12 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Version: A `Version` is the collection of configuration and
-// [static files](sites.versions.files) that determine how a site is
-// displayed.
+// Version: A `Version` is a configuration and a collection of static
+// files which determine how a site is displayed.
 type Version struct {
 	// Config: The configuration for the behavior of the site. This
-	// configuration exists
-	// in the [`firebase.json`](/docs/cli/#the_firebasejson_file) file.
+	// configuration exists in the `firebase.json`
+	// (https://firebase.google.com/docs/cli/#the_firebasejson_file) file.
 	Config *ServingConfig `json:"config,omitempty"`
 
 	// CreateTime: Output only. The time at which the version was created.
@@ -1469,8 +1667,7 @@ type Version struct {
 	DeleteUser *ActingUser `json:"deleteUser,omitempty"`
 
 	// FileCount: Output only. The total number of files associated with the
-	// version.
-	// <br>This value is calculated after a version is `FINALIZED`.
+	// version. This value is calculated after a version is `FINALIZED`.
 	FileCount int64 `json:"fileCount,omitempty,string"`
 
 	// FinalizeTime: Output only. The time at which the version was
@@ -1484,68 +1681,41 @@ type Version struct {
 	// Labels: The labels used for extra metadata and/or filtering.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// Name: The unique identifier for a version, in the
-	// format:
-	// <code>sites/<var>site-name</var>/versions/<var>versionID</var>
-	// </code>
-	// This name is provided in the response body when you call
-	// the
-	// [`CreateVersion`](../sites.versions/create) endpoint.
+	// Name: The fully-qualified resource name for the version, in the
+	// format: sites/ SITE_ID/versions/VERSION_ID This name is provided in
+	// the response body when you call `CreateVersion`
+	// (sites.versions/create).
 	Name string `json:"name,omitempty"`
 
-	// Preview: Version preview configuration for the site version. This
-	// configuration
-	// specfies whether previewing is enabled for this site version.
-	// Version
-	// previews allow you to preview your site at a custom URL
-	// before
-	// releasing it as the live version.
-	Preview *PreviewConfig `json:"preview,omitempty"`
-
-	// Status: The deploy status of a version.
-	// <br>
-	// <br>For a successful deploy, call
-	// the
-	// [`CreateVersion`](sites.versions/create) endpoint to make a new
-	// version
-	// (`CREATED` status),
-	// [upload all desired files](sites.versions/populateFiles) to the
-	// version,
-	// then [update](sites.versions/patch) the version to the `FINALIZED`
-	// status.
-	// <br>
-	// <br>Note that if you leave the version in the `CREATED` state for
-	// more
-	// than 12&nbsp;hours, the system will automatically mark the version
-	// as
-	// `ABANDONED`.
-	// <br>
-	// <br>You can also change the status of a version to `DELETED` by
-	// calling the
-	// [`DeleteVersion`](sites.versions/delete) endpoint.
+	// Status: The deploy status of the version. For a successful deploy,
+	// call `CreateVersion` (sites.versions/create) to make a new version
+	// (`CREATED` status), upload all desired files
+	// (sites.versions/populateFiles) to the version, then update
+	// (sites.versions/patch) the version to the `FINALIZED` status. Note
+	// that if you leave the version in the `CREATED` state for more than 12
+	// hours, the system will automatically mark the version as `ABANDONED`.
+	// You can also change the status of a version to `DELETED` by calling
+	// `DeleteVersion` (sites.versions/delete).
 	//
 	// Possible values:
 	//   "VERSION_STATUS_UNSPECIFIED" - The default status; should not be
 	// intentionally used.
 	//   "CREATED" - The version has been created, and content is currently
-	// being added to the
-	// version.
+	// being added to the version.
 	//   "FINALIZED" - All content has been added to the version, and the
-	// version can no longer be
-	// changed.
+	// version can no longer be changed.
 	//   "DELETED" - The version has been deleted.
-	//   "ABANDONED" - The version was not updated to `FINALIZED` within
-	// 12&nbsp;hours and was
-	// automatically deleted.
+	//   "ABANDONED" - The version was not updated to `FINALIZED` within 12
+	// hours and was automatically deleted.
 	//   "EXPIRED" - The version is outside the site-configured limit for
-	// the number of
-	// retained versions, so the version's content is scheduled for
-	// deletion.
+	// the number of retained versions, so the version's content is
+	// scheduled for deletion.
+	//   "CLONING" - The version is being cloned from another version. All
+	// content is still being copied over.
 	Status string `json:"status,omitempty"`
 
-	// VersionBytes: Output only. The total stored bytesize of the
-	// version.
-	// <br>This value is calculated after a version is `FINALIZED`.
+	// VersionBytes: Output only. The total stored bytesize of the version.
+	// This value is calculated after a version is `FINALIZED`.
 	VersionBytes int64 `json:"versionBytes,omitempty,string"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1554,10 +1724,10 @@ type Version struct {
 
 	// ForceSendFields is a list of field names (e.g. "Config") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Config") to include in API
@@ -1584,25 +1754,23 @@ type VersionFile struct {
 	Path string `json:"path,omitempty"`
 
 	// Status: Output only. The current status of a particular file in the
-	// specified
-	// version.
-	// <br>The value will be either `pending upload` or `uploaded`.
+	// specified version. The value will be either `pending upload` or
+	// `uploaded`.
 	//
 	// Possible values:
 	//   "STATUS_UNSPECIFIED" - The default status; should not be
 	// intentionally used.
 	//   "EXPECTED" - The file has been included in the version and is
-	// expected to be uploaded
-	// in the near future.
+	// expected to be uploaded in the near future.
 	//   "ACTIVE" - The file has already been uploaded to Firebase Hosting.
 	Status string `json:"status,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Hash") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Hash") to include in API
@@ -1631,11 +1799,11 @@ type ProjectsOperationsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets the latest state of a long-running operation.  Clients can
-// use this
-// method to poll the operation result at intervals as recommended by
-// the API
-// service.
+// Get: Gets the latest state of a long-running operation. Clients can
+// use this method to poll the operation result at intervals as
+// recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsOperationsService) Get(name string) *ProjectsOperationsGetCall {
 	c := &ProjectsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1679,7 +1847,7 @@ func (c *ProjectsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1717,17 +1885,17 @@ func (c *ProjectsOperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -1741,7 +1909,7 @@ func (c *ProjectsOperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the latest state of a long-running operation.  Clients can use this\nmethod to poll the operation result at intervals as recommended by the API\nservice.",
+	//   "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/operations/{operationsId}",
 	//   "httpMethod": "GET",
 	//   "id": "firebasehosting.projects.operations.get",
@@ -1771,6 +1939,459 @@ func (c *ProjectsOperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation
 
 }
 
+// method id "firebasehosting.projects.sites.create":
+
+type ProjectsSitesCreateCall struct {
+	s          *Service
+	parent     string
+	site       *Site
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Create: Creates a new Hosting Site in the specified parent Firebase
+// project. Note that Hosting sites can take several minutes to
+// propagate through Firebase systems.
+//
+//   - parent: The Firebase project in which to create a Hosting site, in
+//     the format: projects/PROJECT_IDENTIFIER Refer to the `Site` `name`
+//     (../projects#Site.FIELDS.name) field for details about
+//     PROJECT_IDENTIFIER values.
+func (r *ProjectsSitesService) Create(parent string, site *Site) *ProjectsSitesCreateCall {
+	c := &ProjectsSitesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.site = site
+	return c
+}
+
+// SiteId sets the optional parameter "siteId": Required. Immutable. A
+// globally unique identifier for the Hosting site. This identifier is
+// used to construct the Firebase-provisioned subdomains for the site,
+// so it must also be a valid domain name label.
+func (c *ProjectsSitesCreateCall) SiteId(siteId string) *ProjectsSitesCreateCall {
+	c.urlParams_.Set("siteId", siteId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsSitesCreateCall) Fields(s ...googleapi.Field) *ProjectsSitesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsSitesCreateCall) Context(ctx context.Context) *ProjectsSitesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsSitesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsSitesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.site)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/sites")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebasehosting.projects.sites.create" call.
+// Exactly one of *Site or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Site.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsSitesCreateCall) Do(opts ...googleapi.CallOption) (*Site, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Site{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new Hosting Site in the specified parent Firebase project. Note that Hosting sites can take several minutes to propagate through Firebase systems.",
+	//   "flatPath": "v1beta1/projects/{projectsId}/sites",
+	//   "httpMethod": "POST",
+	//   "id": "firebasehosting.projects.sites.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The Firebase project in which to create a Hosting site, in the format: projects/PROJECT_IDENTIFIER Refer to the `Site` [`name`](../projects#Site.FIELDS.name) field for details about PROJECT_IDENTIFIER values.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "siteId": {
+	//       "description": "Required. Immutable. A globally unique identifier for the Hosting site. This identifier is used to construct the Firebase-provisioned subdomains for the site, so it must also be a valid domain name label.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+parent}/sites",
+	//   "request": {
+	//     "$ref": "Site"
+	//   },
+	//   "response": {
+	//     "$ref": "Site"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/firebase"
+	//   ]
+	// }
+
+}
+
+// method id "firebasehosting.projects.sites.delete":
+
+type ProjectsSitesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes the specified Hosting Site from the specified parent
+// Firebase project.
+//
+//   - name: The fully-qualified resource name for the Hosting site, in
+//     the format: projects/PROJECT_IDENTIFIER/sites/SITE_ID Refer to the
+//     `Site` `name` (../projects#Site.FIELDS.name) field for details
+//     about PROJECT_IDENTIFIER values.
+func (r *ProjectsSitesService) Delete(name string) *ProjectsSitesDeleteCall {
+	c := &ProjectsSitesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsSitesDeleteCall) Fields(s ...googleapi.Field) *ProjectsSitesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsSitesDeleteCall) Context(ctx context.Context) *ProjectsSitesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsSitesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsSitesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebasehosting.projects.sites.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsSitesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes the specified Hosting Site from the specified parent Firebase project.",
+	//   "flatPath": "v1beta1/projects/{projectsId}/sites/{sitesId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "firebasehosting.projects.sites.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The fully-qualified resource name for the Hosting site, in the format: projects/PROJECT_IDENTIFIER/sites/SITE_ID Refer to the `Site` [`name`](../projects#Site.FIELDS.name) field for details about PROJECT_IDENTIFIER values.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/sites/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+name}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/firebase"
+	//   ]
+	// }
+
+}
+
+// method id "firebasehosting.projects.sites.get":
+
+type ProjectsSitesGetCall struct {
+	s            *Service
+	nameid       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the specified Hosting Site.
+//
+//   - name: The fully-qualified resource name for the Hosting site, in
+//     the format: projects/PROJECT_IDENTIFIER/sites/SITE_ID Refer to the
+//     `Site` `name` (../projects#Site.FIELDS.name) field for details
+//     about PROJECT_IDENTIFIER values. Since a SITE_ID is a globally
+//     unique identifier, you can also use the unique sub-collection
+//     resource access pattern, in the format: projects/-/sites/SITE_ID.
+func (r *ProjectsSitesService) Get(nameid string) *ProjectsSitesGetCall {
+	c := &ProjectsSitesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.nameid = nameid
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsSitesGetCall) Fields(s ...googleapi.Field) *ProjectsSitesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsSitesGetCall) IfNoneMatch(entityTag string) *ProjectsSitesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsSitesGetCall) Context(ctx context.Context) *ProjectsSitesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsSitesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsSitesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.nameid,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebasehosting.projects.sites.get" call.
+// Exactly one of *Site or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Site.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsSitesGetCall) Do(opts ...googleapi.CallOption) (*Site, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Site{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the specified Hosting Site.",
+	//   "flatPath": "v1beta1/projects/{projectsId}/sites/{sitesId}",
+	//   "httpMethod": "GET",
+	//   "id": "firebasehosting.projects.sites.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The fully-qualified resource name for the Hosting site, in the format: projects/PROJECT_IDENTIFIER/sites/SITE_ID Refer to the `Site` [`name`](../projects#Site.FIELDS.name) field for details about PROJECT_IDENTIFIER values. Since a SITE_ID is a globally unique identifier, you can also use the unique sub-collection resource access pattern, in the format: projects/-/sites/SITE_ID",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/sites/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+name}",
+	//   "response": {
+	//     "$ref": "Site"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
+	//     "https://www.googleapis.com/auth/firebase",
+	//     "https://www.googleapis.com/auth/firebase.readonly"
+	//   ]
+	// }
+
+}
+
 // method id "firebasehosting.projects.sites.getConfig":
 
 type ProjectsSitesGetConfigCall struct {
@@ -1783,6 +2404,9 @@ type ProjectsSitesGetConfigCall struct {
 }
 
 // GetConfig: Gets the Hosting metadata for a specific site.
+//
+//   - name: The site for which to get the SiteConfig, in the format:
+//     sites/ site-name/config.
 func (r *ProjectsSitesService) GetConfig(name string) *ProjectsSitesGetConfigCall {
 	c := &ProjectsSitesGetConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1826,7 +2450,7 @@ func (c *ProjectsSitesGetConfigCall) Header() http.Header {
 
 func (c *ProjectsSitesGetConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1864,17 +2488,17 @@ func (c *ProjectsSitesGetConfigCall) Do(opts ...googleapi.CallOption) (*SiteConf
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &SiteConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -1897,7 +2521,7 @@ func (c *ProjectsSitesGetConfigCall) Do(opts ...googleapi.CallOption) (*SiteConf
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The site for which to get the SiteConfig, in the format:\n\u003ccode\u003esites/\u003cvar\u003esite-name\u003c/var\u003e/config\u003c/code\u003e",
+	//       "description": "Required. The site for which to get the SiteConfig, in the format: sites/ site-name/config",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/sites/[^/]+/config$",
 	//       "required": true,
@@ -1918,6 +2542,370 @@ func (c *ProjectsSitesGetConfigCall) Do(opts ...googleapi.CallOption) (*SiteConf
 
 }
 
+// method id "firebasehosting.projects.sites.list":
+
+type ProjectsSitesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists each Hosting Site associated with the specified parent
+// Firebase project.
+//
+//   - parent: The Firebase project for which to list sites, in the
+//     format: projects/PROJECT_IDENTIFIER Refer to the `Site` `name`
+//     (../projects#Site.FIELDS.name) field for details about
+//     PROJECT_IDENTIFIER values.
+func (r *ProjectsSitesService) List(parent string) *ProjectsSitesListCall {
+	c := &ProjectsSitesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of sites to return. The service may return a lower number if fewer
+// sites exist than this maximum number. If unspecified, defaults to 40.
+func (c *ProjectsSitesListCall) PageSize(pageSize int64) *ProjectsSitesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token from a
+// previous call to `ListSites` that tells the server where to resume
+// listing.
+func (c *ProjectsSitesListCall) PageToken(pageToken string) *ProjectsSitesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsSitesListCall) Fields(s ...googleapi.Field) *ProjectsSitesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsSitesListCall) IfNoneMatch(entityTag string) *ProjectsSitesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsSitesListCall) Context(ctx context.Context) *ProjectsSitesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsSitesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsSitesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/sites")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebasehosting.projects.sites.list" call.
+// Exactly one of *ListSitesResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListSitesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsSitesListCall) Do(opts ...googleapi.CallOption) (*ListSitesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListSitesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists each Hosting Site associated with the specified parent Firebase project.",
+	//   "flatPath": "v1beta1/projects/{projectsId}/sites",
+	//   "httpMethod": "GET",
+	//   "id": "firebasehosting.projects.sites.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Optional. The maximum number of sites to return. The service may return a lower number if fewer sites exist than this maximum number. If unspecified, defaults to 40.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. A token from a previous call to `ListSites` that tells the server where to resume listing.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The Firebase project for which to list sites, in the format: projects/PROJECT_IDENTIFIER Refer to the `Site` [`name`](../projects#Site.FIELDS.name) field for details about PROJECT_IDENTIFIER values.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+parent}/sites",
+	//   "response": {
+	//     "$ref": "ListSitesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
+	//     "https://www.googleapis.com/auth/firebase",
+	//     "https://www.googleapis.com/auth/firebase.readonly"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsSitesListCall) Pages(ctx context.Context, f func(*ListSitesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "firebasehosting.projects.sites.patch":
+
+type ProjectsSitesPatchCall struct {
+	s          *Service
+	nameid     string
+	site       *Site
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Updates attributes of the specified Hosting Site.
+//
+//   - name: Output only. The fully-qualified resource name of the Hosting
+//     site, in the format: projects/PROJECT_IDENTIFIER/sites/SITE_ID
+//     PROJECT_IDENTIFIER: the Firebase project's `ProjectNumber`
+//     (https://firebase.google.com/docs/reference/firebase-management/rest/v1beta1/projects#FirebaseProject.FIELDS.project_number)
+//     ***(recommended)*** or its `ProjectId`
+//     (https://firebase.google.com/docs/reference/firebase-management/rest/v1beta1/projects#FirebaseProject.FIELDS.project_id).
+//     Learn more about using project identifiers in Google's AIP 2510
+//     standard (https://google.aip.dev/cloud/2510).
+func (r *ProjectsSitesService) Patch(nameid string, site *Site) *ProjectsSitesPatchCall {
+	c := &ProjectsSitesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.nameid = nameid
+	c.site = site
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": A set of field
+// names from your Site that you want to update.
+func (c *ProjectsSitesPatchCall) UpdateMask(updateMask string) *ProjectsSitesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsSitesPatchCall) Fields(s ...googleapi.Field) *ProjectsSitesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsSitesPatchCall) Context(ctx context.Context) *ProjectsSitesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsSitesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsSitesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.site)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.nameid,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebasehosting.projects.sites.patch" call.
+// Exactly one of *Site or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Site.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsSitesPatchCall) Do(opts ...googleapi.CallOption) (*Site, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Site{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates attributes of the specified Hosting Site.",
+	//   "flatPath": "v1beta1/projects/{projectsId}/sites/{sitesId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "firebasehosting.projects.sites.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Output only. The fully-qualified resource name of the Hosting site, in the format: projects/PROJECT_IDENTIFIER/sites/SITE_ID PROJECT_IDENTIFIER: the Firebase project's [`ProjectNumber`](https://firebase.google.com/docs/reference/firebase-management/rest/v1beta1/projects#FirebaseProject.FIELDS.project_number) ***(recommended)*** or its [`ProjectId`](https://firebase.google.com/docs/reference/firebase-management/rest/v1beta1/projects#FirebaseProject.FIELDS.project_id). Learn more about using project identifiers in Google's [AIP 2510 standard](https://google.aip.dev/cloud/2510).",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/sites/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "A set of field names from your Site that you want to update.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+name}",
+	//   "request": {
+	//     "$ref": "Site"
+	//   },
+	//   "response": {
+	//     "$ref": "Site"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/firebase"
+	//   ]
+	// }
+
+}
+
 // method id "firebasehosting.projects.sites.updateConfig":
 
 type ProjectsSitesUpdateConfigCall struct {
@@ -1930,6 +2918,9 @@ type ProjectsSitesUpdateConfigCall struct {
 }
 
 // UpdateConfig: Sets the Hosting metadata for a specific site.
+//
+//   - name: The site for which to update the SiteConfig, in the format:
+//     sites/ site-name/config.
 func (r *ProjectsSitesService) UpdateConfig(name string, siteconfig *SiteConfig) *ProjectsSitesUpdateConfigCall {
 	c := &ProjectsSitesUpdateConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1938,13 +2929,10 @@ func (r *ProjectsSitesService) UpdateConfig(name string, siteconfig *SiteConfig)
 }
 
 // UpdateMask sets the optional parameter "updateMask": A set of field
-// names from your [site configuration](../sites.SiteConfig)
-// that you want to update.
-// <br>A field will be overwritten if, and only if, it's in the
-// mask.
-// <br>If a mask is not provided then a default mask of
-// only
-// [`max_versions`](../sites.SiteConfig.max_versions) will be used.
+// names from your site configuration (../sites.SiteConfig) that you
+// want to update. A field will be overwritten if, and only if, it's in
+// the mask. If a mask is not provided then a default mask of only
+// `max_versions` (../sites.SiteConfig.max_versions) will be used.
 func (c *ProjectsSitesUpdateConfigCall) UpdateMask(updateMask string) *ProjectsSitesUpdateConfigCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -1977,7 +2965,7 @@ func (c *ProjectsSitesUpdateConfigCall) Header() http.Header {
 
 func (c *ProjectsSitesUpdateConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2017,17 +3005,17 @@ func (c *ProjectsSitesUpdateConfigCall) Do(opts ...googleapi.CallOption) (*SiteC
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &SiteConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -2050,14 +3038,14 @@ func (c *ProjectsSitesUpdateConfigCall) Do(opts ...googleapi.CallOption) (*SiteC
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The site for which to update the SiteConfig, in the format:\n\u003ccode\u003esites/\u003cvar\u003esite-name\u003c/var\u003e/config\u003c/code\u003e",
+	//       "description": "Required. The site for which to update the SiteConfig, in the format: sites/ site-name/config",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/sites/[^/]+/config$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "A set of field names from your [site configuration](../sites.SiteConfig)\nthat you want to update.\n\u003cbr\u003eA field will be overwritten if, and only if, it's in the mask.\n\u003cbr\u003eIf a mask is not provided then a default mask of only\n[`max_versions`](../sites.SiteConfig.max_versions) will be used.",
+	//       "description": "A set of field names from your [site configuration](../sites.SiteConfig) that you want to update. A field will be overwritten if, and only if, it's in the mask. If a mask is not provided then a default mask of only [`max_versions`](../sites.SiteConfig.max_versions) will be used.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -2078,6 +3066,807 @@ func (c *ProjectsSitesUpdateConfigCall) Do(opts ...googleapi.CallOption) (*SiteC
 
 }
 
+// method id "firebasehosting.projects.sites.channels.create":
+
+type ProjectsSitesChannelsCreateCall struct {
+	s          *Service
+	parent     string
+	channel    *Channel
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Create: Creates a new channel in the specified site.
+//
+//   - parent: The site in which to create this channel, in the format:
+//     sites/ SITE_ID.
+func (r *ProjectsSitesChannelsService) Create(parent string, channel *Channel) *ProjectsSitesChannelsCreateCall {
+	c := &ProjectsSitesChannelsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.channel = channel
+	return c
+}
+
+// ChannelId sets the optional parameter "channelId": Required.
+// Immutable. A unique ID within the site that identifies the channel.
+func (c *ProjectsSitesChannelsCreateCall) ChannelId(channelId string) *ProjectsSitesChannelsCreateCall {
+	c.urlParams_.Set("channelId", channelId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsSitesChannelsCreateCall) Fields(s ...googleapi.Field) *ProjectsSitesChannelsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsSitesChannelsCreateCall) Context(ctx context.Context) *ProjectsSitesChannelsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsSitesChannelsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsSitesChannelsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channel)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/channels")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebasehosting.projects.sites.channels.create" call.
+// Exactly one of *Channel or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Channel.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsSitesChannelsCreateCall) Do(opts ...googleapi.CallOption) (*Channel, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Channel{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new channel in the specified site.",
+	//   "flatPath": "v1beta1/projects/{projectsId}/sites/{sitesId}/channels",
+	//   "httpMethod": "POST",
+	//   "id": "firebasehosting.projects.sites.channels.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "channelId": {
+	//       "description": "Required. Immutable. A unique ID within the site that identifies the channel.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The site in which to create this channel, in the format: sites/ SITE_ID",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/sites/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+parent}/channels",
+	//   "request": {
+	//     "$ref": "Channel"
+	//   },
+	//   "response": {
+	//     "$ref": "Channel"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/firebase"
+	//   ]
+	// }
+
+}
+
+// method id "firebasehosting.projects.sites.channels.delete":
+
+type ProjectsSitesChannelsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes the specified channel of the specified site. The
+// `live` channel cannot be deleted.
+//
+//   - name: The fully-qualified resource name for the channel, in the
+//     format: sites/SITE_ID/channels/CHANNEL_ID.
+func (r *ProjectsSitesChannelsService) Delete(name string) *ProjectsSitesChannelsDeleteCall {
+	c := &ProjectsSitesChannelsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsSitesChannelsDeleteCall) Fields(s ...googleapi.Field) *ProjectsSitesChannelsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsSitesChannelsDeleteCall) Context(ctx context.Context) *ProjectsSitesChannelsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsSitesChannelsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsSitesChannelsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebasehosting.projects.sites.channels.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsSitesChannelsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes the specified channel of the specified site. The `live` channel cannot be deleted.",
+	//   "flatPath": "v1beta1/projects/{projectsId}/sites/{sitesId}/channels/{channelsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "firebasehosting.projects.sites.channels.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The fully-qualified resource name for the channel, in the format: sites/SITE_ID/channels/CHANNEL_ID",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/sites/[^/]+/channels/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+name}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/firebase"
+	//   ]
+	// }
+
+}
+
+// method id "firebasehosting.projects.sites.channels.get":
+
+type ProjectsSitesChannelsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Retrieves information for the specified channel of the specified
+// site.
+//
+//   - name: The fully-qualified resource name for the channel, in the
+//     format: sites/SITE_ID/channels/CHANNEL_ID.
+func (r *ProjectsSitesChannelsService) Get(name string) *ProjectsSitesChannelsGetCall {
+	c := &ProjectsSitesChannelsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsSitesChannelsGetCall) Fields(s ...googleapi.Field) *ProjectsSitesChannelsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsSitesChannelsGetCall) IfNoneMatch(entityTag string) *ProjectsSitesChannelsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsSitesChannelsGetCall) Context(ctx context.Context) *ProjectsSitesChannelsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsSitesChannelsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsSitesChannelsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebasehosting.projects.sites.channels.get" call.
+// Exactly one of *Channel or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Channel.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsSitesChannelsGetCall) Do(opts ...googleapi.CallOption) (*Channel, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Channel{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves information for the specified channel of the specified site.",
+	//   "flatPath": "v1beta1/projects/{projectsId}/sites/{sitesId}/channels/{channelsId}",
+	//   "httpMethod": "GET",
+	//   "id": "firebasehosting.projects.sites.channels.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The fully-qualified resource name for the channel, in the format: sites/SITE_ID/channels/CHANNEL_ID",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/sites/[^/]+/channels/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+name}",
+	//   "response": {
+	//     "$ref": "Channel"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
+	//     "https://www.googleapis.com/auth/firebase",
+	//     "https://www.googleapis.com/auth/firebase.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "firebasehosting.projects.sites.channels.list":
+
+type ProjectsSitesChannelsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists the channels for the specified site. All sites have a
+// default `live` channel.
+//
+//   - parent: The site for which to list channels, in the format:
+//     sites/SITE_ID.
+func (r *ProjectsSitesChannelsService) List(parent string) *ProjectsSitesChannelsListCall {
+	c := &ProjectsSitesChannelsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of channels to return. The service may return a lower number if fewer
+// channels exist than this maximum number. If unspecified, defaults to
+// 10. The maximum value is 100; values above 100 will be coerced to
+// 100.
+func (c *ProjectsSitesChannelsListCall) PageSize(pageSize int64) *ProjectsSitesChannelsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token from a
+// previous call to `ListChannels` that tells the server where to resume
+// listing.
+func (c *ProjectsSitesChannelsListCall) PageToken(pageToken string) *ProjectsSitesChannelsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsSitesChannelsListCall) Fields(s ...googleapi.Field) *ProjectsSitesChannelsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsSitesChannelsListCall) IfNoneMatch(entityTag string) *ProjectsSitesChannelsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsSitesChannelsListCall) Context(ctx context.Context) *ProjectsSitesChannelsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsSitesChannelsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsSitesChannelsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/channels")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebasehosting.projects.sites.channels.list" call.
+// Exactly one of *ListChannelsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListChannelsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsSitesChannelsListCall) Do(opts ...googleapi.CallOption) (*ListChannelsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListChannelsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists the channels for the specified site. All sites have a default `live` channel.",
+	//   "flatPath": "v1beta1/projects/{projectsId}/sites/{sitesId}/channels",
+	//   "httpMethod": "GET",
+	//   "id": "firebasehosting.projects.sites.channels.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The maximum number of channels to return. The service may return a lower number if fewer channels exist than this maximum number. If unspecified, defaults to 10. The maximum value is 100; values above 100 will be coerced to 100.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A token from a previous call to `ListChannels` that tells the server where to resume listing.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The site for which to list channels, in the format: sites/SITE_ID",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/sites/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+parent}/channels",
+	//   "response": {
+	//     "$ref": "ListChannelsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
+	//     "https://www.googleapis.com/auth/firebase",
+	//     "https://www.googleapis.com/auth/firebase.readonly"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsSitesChannelsListCall) Pages(ctx context.Context, f func(*ListChannelsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "firebasehosting.projects.sites.channels.patch":
+
+type ProjectsSitesChannelsPatchCall struct {
+	s          *Service
+	name       string
+	channel    *Channel
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Updates information for the specified channel of the specified
+// site. Implicitly creates the channel if it doesn't already exist.
+//
+//   - name: The fully-qualified resource name for the channel, in the
+//     format: sites/ SITE_ID/channels/CHANNEL_ID.
+func (r *ProjectsSitesChannelsService) Patch(name string, channel *Channel) *ProjectsSitesChannelsPatchCall {
+	c := &ProjectsSitesChannelsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.channel = channel
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": A
+// comma-separated list of fields to be updated in this request.
+func (c *ProjectsSitesChannelsPatchCall) UpdateMask(updateMask string) *ProjectsSitesChannelsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsSitesChannelsPatchCall) Fields(s ...googleapi.Field) *ProjectsSitesChannelsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsSitesChannelsPatchCall) Context(ctx context.Context) *ProjectsSitesChannelsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsSitesChannelsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsSitesChannelsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channel)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebasehosting.projects.sites.channels.patch" call.
+// Exactly one of *Channel or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Channel.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsSitesChannelsPatchCall) Do(opts ...googleapi.CallOption) (*Channel, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Channel{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates information for the specified channel of the specified site. Implicitly creates the channel if it doesn't already exist.",
+	//   "flatPath": "v1beta1/projects/{projectsId}/sites/{sitesId}/channels/{channelsId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "firebasehosting.projects.sites.channels.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The fully-qualified resource name for the channel, in the format: sites/ SITE_ID/channels/CHANNEL_ID",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/sites/[^/]+/channels/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "A comma-separated list of fields to be updated in this request.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+name}",
+	//   "request": {
+	//     "$ref": "Channel"
+	//   },
+	//   "response": {
+	//     "$ref": "Channel"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/firebase"
+	//   ]
+	// }
+
+}
+
 // method id "firebasehosting.projects.sites.channels.releases.create":
 
 type ProjectsSitesChannelsReleasesCreateCall struct {
@@ -2089,9 +3878,12 @@ type ProjectsSitesChannelsReleasesCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates a new release which makes the content of the
-// specified version
-// actively display on the appropriate URL(s).
+// Create: Creates a new release, which makes the content of the
+// specified version actively display on the appropriate URL(s).
+//
+//   - parent: The site or channel to which the release belongs, in either
+//     of the following formats: - sites/SITE_ID -
+//     sites/SITE_ID/channels/CHANNEL_ID.
 func (r *ProjectsSitesChannelsReleasesService) Create(parent string, release *Release) *ProjectsSitesChannelsReleasesCreateCall {
 	c := &ProjectsSitesChannelsReleasesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2100,17 +3892,10 @@ func (r *ProjectsSitesChannelsReleasesService) Create(parent string, release *Re
 }
 
 // VersionName sets the optional parameter "versionName": The unique
-// identifier for a version, in the
-// format:
-// <code>/sites/<var>site-name</var>/versions/<var>versionID</var
-// ></code>
-// The <var>site-name</var> in this version identifier must match
-// the
-// <var>site-name</var> in the `parent` parameter.
-// <br>
-// <br>This query parameter must be empty if the `type` field in
-// the
-// request body is `SITE_DISABLE`.
+// identifier for a version, in the format: sites/SITE_ID/versions/
+// VERSION_ID The SITE_ID in this version identifier must match the
+// SITE_ID in the `parent` parameter. This query parameter must be empty
+// if the `type` field in the request body is `SITE_DISABLE`.
 func (c *ProjectsSitesChannelsReleasesCreateCall) VersionName(versionName string) *ProjectsSitesChannelsReleasesCreateCall {
 	c.urlParams_.Set("versionName", versionName)
 	return c
@@ -2143,7 +3928,7 @@ func (c *ProjectsSitesChannelsReleasesCreateCall) Header() http.Header {
 
 func (c *ProjectsSitesChannelsReleasesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2183,17 +3968,17 @@ func (c *ProjectsSitesChannelsReleasesCreateCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Release{
 		ServerResponse: googleapi.ServerResponse{
@@ -2207,7 +3992,7 @@ func (c *ProjectsSitesChannelsReleasesCreateCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new release which makes the content of the specified version\nactively display on the appropriate URL(s).",
+	//   "description": "Creates a new release, which makes the content of the specified version actively display on the appropriate URL(s).",
 	//   "flatPath": "v1beta1/projects/{projectsId}/sites/{sitesId}/channels/{channelsId}/releases",
 	//   "httpMethod": "POST",
 	//   "id": "firebasehosting.projects.sites.channels.releases.create",
@@ -2216,14 +4001,14 @@ func (c *ProjectsSitesChannelsReleasesCreateCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The site that the release belongs to, in the format:\n\u003ccode\u003esites/\u003cvar\u003esite-name\u003c/var\u003e\u003c/code\u003e",
+	//       "description": "Required. The site or channel to which the release belongs, in either of the following formats: - sites/SITE_ID - sites/SITE_ID/channels/CHANNEL_ID",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/sites/[^/]+/channels/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "versionName": {
-	//       "description": "The unique identifier for a version, in the format:\n\u003ccode\u003e/sites/\u003cvar\u003esite-name\u003c/var\u003e/versions/\u003cvar\u003eversionID\u003c/var\u003e\u003c/code\u003e\nThe \u003cvar\u003esite-name\u003c/var\u003e in this version identifier must match the\n\u003cvar\u003esite-name\u003c/var\u003e in the `parent` parameter.\n\u003cbr\u003e\n\u003cbr\u003eThis query parameter must be empty if the `type` field in the\nrequest body is `SITE_DISABLE`.",
+	//       "description": " The unique identifier for a version, in the format: sites/SITE_ID/versions/ VERSION_ID The SITE_ID in this version identifier must match the SITE_ID in the `parent` parameter. This query parameter must be empty if the `type` field in the request body is `SITE_DISABLE`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -2254,23 +4039,32 @@ type ProjectsSitesChannelsReleasesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the releases that have been created on the specified
-// site.
+// List: Lists the releases that have been created for the specified
+// site or channel. When used to list releases for a site, this list
+// includes releases for both the default `live` channel and any active
+// preview channels for the specified site.
+//
+//   - parent: The site or channel for which to list releases, in either
+//     of the following formats: - sites/SITE_ID -
+//     sites/SITE_ID/channels/CHANNEL_ID.
 func (r *ProjectsSitesChannelsReleasesService) List(parent string) *ProjectsSitesChannelsReleasesListCall {
 	c := &ProjectsSitesChannelsReleasesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The page size to
-// return. Defaults to 100.
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of releases to return. The service may return a lower number if fewer
+// releases exist than this maximum number. If unspecified, defaults to
+// 100.
 func (c *ProjectsSitesChannelsReleasesListCall) PageSize(pageSize int64) *ProjectsSitesChannelsReleasesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The
-// next_page_token from a previous request, if provided.
+// PageToken sets the optional parameter "pageToken": A token from a
+// previous call to `releases.list` or `channels.releases.list` that
+// tells the server where to resume listing.
 func (c *ProjectsSitesChannelsReleasesListCall) PageToken(pageToken string) *ProjectsSitesChannelsReleasesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -2313,7 +4107,7 @@ func (c *ProjectsSitesChannelsReleasesListCall) Header() http.Header {
 
 func (c *ProjectsSitesChannelsReleasesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2351,17 +4145,17 @@ func (c *ProjectsSitesChannelsReleasesListCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListReleasesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2375,7 +4169,7 @@ func (c *ProjectsSitesChannelsReleasesListCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the releases that have been created on the specified site.",
+	//   "description": "Lists the releases that have been created for the specified site or channel. When used to list releases for a site, this list includes releases for both the default `live` channel and any active preview channels for the specified site.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/sites/{sitesId}/channels/{channelsId}/releases",
 	//   "httpMethod": "GET",
 	//   "id": "firebasehosting.projects.sites.channels.releases.list",
@@ -2384,18 +4178,18 @@ func (c *ProjectsSitesChannelsReleasesListCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "The page size to return. Defaults to 100.",
+	//       "description": "The maximum number of releases to return. The service may return a lower number if fewer releases exist than this maximum number. If unspecified, defaults to 100.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The next_page_token from a previous request, if provided.",
+	//       "description": "A token from a previous call to `releases.list` or `channels.releases.list` that tells the server where to resume listing.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent for which to list files, in the format:\n\u003ccode\u003esites/\u003cvar\u003esite-name\u003c/var\u003e\u003c/code\u003e",
+	//       "description": "Required. The site or channel for which to list releases, in either of the following formats: - sites/SITE_ID - sites/SITE_ID/channels/CHANNEL_ID ",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/sites/[^/]+/channels/[^/]+$",
 	//       "required": true,
@@ -2449,6 +4243,9 @@ type ProjectsSitesDomainsCreateCall struct {
 }
 
 // Create: Creates a domain mapping on the specified site.
+//
+//   - parent: The parent to create the domain association for, in the
+//     format: sites/site-name.
 func (r *ProjectsSitesDomainsService) Create(parent string, domain *Domain) *ProjectsSitesDomainsCreateCall {
 	c := &ProjectsSitesDomainsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2483,7 +4280,7 @@ func (c *ProjectsSitesDomainsCreateCall) Header() http.Header {
 
 func (c *ProjectsSitesDomainsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2523,17 +4320,17 @@ func (c *ProjectsSitesDomainsCreateCall) Do(opts ...googleapi.CallOption) (*Doma
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Domain{
 		ServerResponse: googleapi.ServerResponse{
@@ -2556,7 +4353,7 @@ func (c *ProjectsSitesDomainsCreateCall) Do(opts ...googleapi.CallOption) (*Doma
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The parent to create the domain association for, in the format:\n\u003ccode\u003esites/\u003cvar\u003esite-name\u003c/var\u003e\u003c/code\u003e",
+	//       "description": "Required. The parent to create the domain association for, in the format: sites/site-name",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/sites/[^/]+$",
 	//       "required": true,
@@ -2589,6 +4386,8 @@ type ProjectsSitesDomainsDeleteCall struct {
 }
 
 // Delete: Deletes the existing domain mapping on the specified site.
+//
+// - name: The name of the domain association to delete.
 func (r *ProjectsSitesDomainsService) Delete(name string) *ProjectsSitesDomainsDeleteCall {
 	c := &ProjectsSitesDomainsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2622,7 +4421,7 @@ func (c *ProjectsSitesDomainsDeleteCall) Header() http.Header {
 
 func (c *ProjectsSitesDomainsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2657,17 +4456,17 @@ func (c *ProjectsSitesDomainsDeleteCall) Do(opts ...googleapi.CallOption) (*Empt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -2721,6 +4520,8 @@ type ProjectsSitesDomainsGetCall struct {
 }
 
 // Get: Gets a domain mapping on the specified site.
+//
+// - name: The name of the domain configuration to get.
 func (r *ProjectsSitesDomainsService) Get(name string) *ProjectsSitesDomainsGetCall {
 	c := &ProjectsSitesDomainsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2764,7 +4565,7 @@ func (c *ProjectsSitesDomainsGetCall) Header() http.Header {
 
 func (c *ProjectsSitesDomainsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2802,17 +4603,17 @@ func (c *ProjectsSitesDomainsGetCall) Do(opts ...googleapi.CallOption) (*Domain,
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Domain{
 		ServerResponse: googleapi.ServerResponse{
@@ -2868,6 +4669,9 @@ type ProjectsSitesDomainsListCall struct {
 }
 
 // List: Lists the domains for the specified site.
+//
+//   - parent: The parent for which to list domains, in the format: sites/
+//     site-name.
 func (r *ProjectsSitesDomainsService) List(parent string) *ProjectsSitesDomainsListCall {
 	c := &ProjectsSitesDomainsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2925,7 +4729,7 @@ func (c *ProjectsSitesDomainsListCall) Header() http.Header {
 
 func (c *ProjectsSitesDomainsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2963,17 +4767,17 @@ func (c *ProjectsSitesDomainsListCall) Do(opts ...googleapi.CallOption) (*ListDo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListDomainsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3007,7 +4811,7 @@ func (c *ProjectsSitesDomainsListCall) Do(opts ...googleapi.CallOption) (*ListDo
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent for which to list domains, in the format:\n\u003ccode\u003esites/\u003cvar\u003esite-name\u003c/var\u003e\u003c/code\u003e",
+	//       "description": "Required. The parent for which to list domains, in the format: sites/ site-name",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/sites/[^/]+$",
 	//       "required": true,
@@ -3061,8 +4865,10 @@ type ProjectsSitesDomainsUpdateCall struct {
 }
 
 // Update: Updates the specified domain mapping, creating the mapping as
-// if it does
-// not exist.
+// if it does not exist.
+//
+//   - name: The name of the domain association to update or create, if an
+//     association doesn't already exist.
 func (r *ProjectsSitesDomainsService) Update(name string, domain *Domain) *ProjectsSitesDomainsUpdateCall {
 	c := &ProjectsSitesDomainsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3097,7 +4903,7 @@ func (c *ProjectsSitesDomainsUpdateCall) Header() http.Header {
 
 func (c *ProjectsSitesDomainsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3137,17 +4943,17 @@ func (c *ProjectsSitesDomainsUpdateCall) Do(opts ...googleapi.CallOption) (*Doma
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Domain{
 		ServerResponse: googleapi.ServerResponse{
@@ -3161,7 +4967,7 @@ func (c *ProjectsSitesDomainsUpdateCall) Do(opts ...googleapi.CallOption) (*Doma
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the specified domain mapping, creating the mapping as if it does\nnot exist.",
+	//   "description": "Updates the specified domain mapping, creating the mapping as if it does not exist.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/sites/{sitesId}/domains/{domainsId}",
 	//   "httpMethod": "PUT",
 	//   "id": "firebasehosting.projects.sites.domains.update",
@@ -3170,7 +4976,7 @@ func (c *ProjectsSitesDomainsUpdateCall) Do(opts ...googleapi.CallOption) (*Doma
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the domain association to update or create, if an\nassociation doesn't already exist.",
+	//       "description": "Required. The name of the domain association to update or create, if an association doesn't already exist.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/sites/[^/]+/domains/[^/]+$",
 	//       "required": true,
@@ -3203,9 +5009,12 @@ type ProjectsSitesReleasesCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates a new release which makes the content of the
-// specified version
-// actively display on the appropriate URL(s).
+// Create: Creates a new release, which makes the content of the
+// specified version actively display on the appropriate URL(s).
+//
+//   - parent: The site or channel to which the release belongs, in either
+//     of the following formats: - sites/SITE_ID -
+//     sites/SITE_ID/channels/CHANNEL_ID.
 func (r *ProjectsSitesReleasesService) Create(parent string, release *Release) *ProjectsSitesReleasesCreateCall {
 	c := &ProjectsSitesReleasesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3214,17 +5023,10 @@ func (r *ProjectsSitesReleasesService) Create(parent string, release *Release) *
 }
 
 // VersionName sets the optional parameter "versionName": The unique
-// identifier for a version, in the
-// format:
-// <code>/sites/<var>site-name</var>/versions/<var>versionID</var
-// ></code>
-// The <var>site-name</var> in this version identifier must match
-// the
-// <var>site-name</var> in the `parent` parameter.
-// <br>
-// <br>This query parameter must be empty if the `type` field in
-// the
-// request body is `SITE_DISABLE`.
+// identifier for a version, in the format: sites/SITE_ID/versions/
+// VERSION_ID The SITE_ID in this version identifier must match the
+// SITE_ID in the `parent` parameter. This query parameter must be empty
+// if the `type` field in the request body is `SITE_DISABLE`.
 func (c *ProjectsSitesReleasesCreateCall) VersionName(versionName string) *ProjectsSitesReleasesCreateCall {
 	c.urlParams_.Set("versionName", versionName)
 	return c
@@ -3257,7 +5059,7 @@ func (c *ProjectsSitesReleasesCreateCall) Header() http.Header {
 
 func (c *ProjectsSitesReleasesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3297,17 +5099,17 @@ func (c *ProjectsSitesReleasesCreateCall) Do(opts ...googleapi.CallOption) (*Rel
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Release{
 		ServerResponse: googleapi.ServerResponse{
@@ -3321,7 +5123,7 @@ func (c *ProjectsSitesReleasesCreateCall) Do(opts ...googleapi.CallOption) (*Rel
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new release which makes the content of the specified version\nactively display on the appropriate URL(s).",
+	//   "description": "Creates a new release, which makes the content of the specified version actively display on the appropriate URL(s).",
 	//   "flatPath": "v1beta1/projects/{projectsId}/sites/{sitesId}/releases",
 	//   "httpMethod": "POST",
 	//   "id": "firebasehosting.projects.sites.releases.create",
@@ -3330,14 +5132,14 @@ func (c *ProjectsSitesReleasesCreateCall) Do(opts ...googleapi.CallOption) (*Rel
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The site that the release belongs to, in the format:\n\u003ccode\u003esites/\u003cvar\u003esite-name\u003c/var\u003e\u003c/code\u003e",
+	//       "description": "Required. The site or channel to which the release belongs, in either of the following formats: - sites/SITE_ID - sites/SITE_ID/channels/CHANNEL_ID",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/sites/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "versionName": {
-	//       "description": "The unique identifier for a version, in the format:\n\u003ccode\u003e/sites/\u003cvar\u003esite-name\u003c/var\u003e/versions/\u003cvar\u003eversionID\u003c/var\u003e\u003c/code\u003e\nThe \u003cvar\u003esite-name\u003c/var\u003e in this version identifier must match the\n\u003cvar\u003esite-name\u003c/var\u003e in the `parent` parameter.\n\u003cbr\u003e\n\u003cbr\u003eThis query parameter must be empty if the `type` field in the\nrequest body is `SITE_DISABLE`.",
+	//       "description": " The unique identifier for a version, in the format: sites/SITE_ID/versions/ VERSION_ID The SITE_ID in this version identifier must match the SITE_ID in the `parent` parameter. This query parameter must be empty if the `type` field in the request body is `SITE_DISABLE`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -3368,23 +5170,32 @@ type ProjectsSitesReleasesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the releases that have been created on the specified
-// site.
+// List: Lists the releases that have been created for the specified
+// site or channel. When used to list releases for a site, this list
+// includes releases for both the default `live` channel and any active
+// preview channels for the specified site.
+//
+//   - parent: The site or channel for which to list releases, in either
+//     of the following formats: - sites/SITE_ID -
+//     sites/SITE_ID/channels/CHANNEL_ID.
 func (r *ProjectsSitesReleasesService) List(parent string) *ProjectsSitesReleasesListCall {
 	c := &ProjectsSitesReleasesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The page size to
-// return. Defaults to 100.
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of releases to return. The service may return a lower number if fewer
+// releases exist than this maximum number. If unspecified, defaults to
+// 100.
 func (c *ProjectsSitesReleasesListCall) PageSize(pageSize int64) *ProjectsSitesReleasesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The
-// next_page_token from a previous request, if provided.
+// PageToken sets the optional parameter "pageToken": A token from a
+// previous call to `releases.list` or `channels.releases.list` that
+// tells the server where to resume listing.
 func (c *ProjectsSitesReleasesListCall) PageToken(pageToken string) *ProjectsSitesReleasesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -3427,7 +5238,7 @@ func (c *ProjectsSitesReleasesListCall) Header() http.Header {
 
 func (c *ProjectsSitesReleasesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3465,17 +5276,17 @@ func (c *ProjectsSitesReleasesListCall) Do(opts ...googleapi.CallOption) (*ListR
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListReleasesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3489,7 +5300,7 @@ func (c *ProjectsSitesReleasesListCall) Do(opts ...googleapi.CallOption) (*ListR
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the releases that have been created on the specified site.",
+	//   "description": "Lists the releases that have been created for the specified site or channel. When used to list releases for a site, this list includes releases for both the default `live` channel and any active preview channels for the specified site.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/sites/{sitesId}/releases",
 	//   "httpMethod": "GET",
 	//   "id": "firebasehosting.projects.sites.releases.list",
@@ -3498,18 +5309,18 @@ func (c *ProjectsSitesReleasesListCall) Do(opts ...googleapi.CallOption) (*ListR
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "The page size to return. Defaults to 100.",
+	//       "description": "The maximum number of releases to return. The service may return a lower number if fewer releases exist than this maximum number. If unspecified, defaults to 100.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The next_page_token from a previous request, if provided.",
+	//       "description": "A token from a previous call to `releases.list` or `channels.releases.list` that tells the server where to resume listing.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent for which to list files, in the format:\n\u003ccode\u003esites/\u003cvar\u003esite-name\u003c/var\u003e\u003c/code\u003e",
+	//       "description": "Required. The site or channel for which to list releases, in either of the following formats: - sites/SITE_ID - sites/SITE_ID/channels/CHANNEL_ID ",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/sites/[^/]+$",
 	//       "required": true,
@@ -3551,6 +5362,151 @@ func (c *ProjectsSitesReleasesListCall) Pages(ctx context.Context, f func(*ListR
 	}
 }
 
+// method id "firebasehosting.projects.sites.versions.clone":
+
+type ProjectsSitesVersionsCloneCall struct {
+	s                   *Service
+	parent              string
+	cloneversionrequest *CloneVersionRequest
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// Clone: Creates a new version on the specified target site using the
+// content of the specified version.
+//
+//   - parent: The target site for the cloned version, in the format:
+//     sites/ SITE_ID.
+func (r *ProjectsSitesVersionsService) Clone(parent string, cloneversionrequest *CloneVersionRequest) *ProjectsSitesVersionsCloneCall {
+	c := &ProjectsSitesVersionsCloneCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.cloneversionrequest = cloneversionrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsSitesVersionsCloneCall) Fields(s ...googleapi.Field) *ProjectsSitesVersionsCloneCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsSitesVersionsCloneCall) Context(ctx context.Context) *ProjectsSitesVersionsCloneCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsSitesVersionsCloneCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsSitesVersionsCloneCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.cloneversionrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/versions:clone")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebasehosting.projects.sites.versions.clone" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsSitesVersionsCloneCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new version on the specified target site using the content of the specified version.",
+	//   "flatPath": "v1beta1/projects/{projectsId}/sites/{sitesId}/versions:clone",
+	//   "httpMethod": "POST",
+	//   "id": "firebasehosting.projects.sites.versions.clone",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The target site for the cloned version, in the format: sites/ SITE_ID",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/sites/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+parent}/versions:clone",
+	//   "request": {
+	//     "$ref": "CloneVersionRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/firebase"
+	//   ]
+	// }
+
+}
+
 // method id "firebasehosting.projects.sites.versions.create":
 
 type ProjectsSitesVersionsCreateCall struct {
@@ -3562,7 +5518,10 @@ type ProjectsSitesVersionsCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates a new version for a site.
+// Create: Creates a new version for the specified site.
+//
+//   - parent: The site in which to create the version, in the format:
+//     sites/ SITE_ID.
 func (r *ProjectsSitesVersionsService) Create(parent string, version *Version) *ProjectsSitesVersionsCreateCall {
 	c := &ProjectsSitesVersionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3571,16 +5530,16 @@ func (r *ProjectsSitesVersionsService) Create(parent string, version *Version) *
 }
 
 // SizeBytes sets the optional parameter "sizeBytes": The self-reported
-// size of the version. This value is used for a pre-emptive
-// quota check for legacy version uploads.
+// size of the version. This value is used for a pre-emptive quota check
+// for legacy version uploads.
 func (c *ProjectsSitesVersionsCreateCall) SizeBytes(sizeBytes int64) *ProjectsSitesVersionsCreateCall {
 	c.urlParams_.Set("sizeBytes", fmt.Sprint(sizeBytes))
 	return c
 }
 
 // VersionId sets the optional parameter "versionId": A unique id for
-// the new version. This is only specified for legacy version
-// creations.
+// the new version. This is was only specified for legacy version
+// creations, and should be blank.
 func (c *ProjectsSitesVersionsCreateCall) VersionId(versionId string) *ProjectsSitesVersionsCreateCall {
 	c.urlParams_.Set("versionId", versionId)
 	return c
@@ -3613,7 +5572,7 @@ func (c *ProjectsSitesVersionsCreateCall) Header() http.Header {
 
 func (c *ProjectsSitesVersionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3653,17 +5612,17 @@ func (c *ProjectsSitesVersionsCreateCall) Do(opts ...googleapi.CallOption) (*Ver
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Version{
 		ServerResponse: googleapi.ServerResponse{
@@ -3677,7 +5636,7 @@ func (c *ProjectsSitesVersionsCreateCall) Do(opts ...googleapi.CallOption) (*Ver
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new version for a site.",
+	//   "description": "Creates a new version for the specified site.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/sites/{sitesId}/versions",
 	//   "httpMethod": "POST",
 	//   "id": "firebasehosting.projects.sites.versions.create",
@@ -3686,20 +5645,20 @@ func (c *ProjectsSitesVersionsCreateCall) Do(opts ...googleapi.CallOption) (*Ver
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The parent to create the version for, in the format:\n\u003ccode\u003esites/\u003cvar\u003esite-name\u003c/var\u003e\u003c/code\u003e",
+	//       "description": "Required. The site in which to create the version, in the format: sites/ SITE_ID",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/sites/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "sizeBytes": {
-	//       "description": "The self-reported size of the version. This value is used for a pre-emptive\nquota check for legacy version uploads.",
+	//       "description": "The self-reported size of the version. This value is used for a pre-emptive quota check for legacy version uploads.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "versionId": {
-	//       "description": "A unique id for the new version. This is only specified for legacy version\ncreations.",
+	//       "description": "A unique id for the new version. This is was only specified for legacy version creations, and should be blank.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -3730,6 +5689,9 @@ type ProjectsSitesVersionsDeleteCall struct {
 }
 
 // Delete: Deletes the specified version.
+//
+//   - name: The fully-qualified resource name for the version, in the
+//     format: sites/SITE_ID/versions/VERSION_ID.
 func (r *ProjectsSitesVersionsService) Delete(name string) *ProjectsSitesVersionsDeleteCall {
 	c := &ProjectsSitesVersionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3763,7 +5725,7 @@ func (c *ProjectsSitesVersionsDeleteCall) Header() http.Header {
 
 func (c *ProjectsSitesVersionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3798,17 +5760,17 @@ func (c *ProjectsSitesVersionsDeleteCall) Do(opts ...googleapi.CallOption) (*Emp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -3831,7 +5793,7 @@ func (c *ProjectsSitesVersionsDeleteCall) Do(opts ...googleapi.CallOption) (*Emp
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the version to be deleted, in the format:\n\u003ccode\u003esites/\u003cvar\u003esite-name\u003c/var\u003e/versions/\u003cvar\u003eversionID\u003c/var\u003e\u003c/code\u003e",
+	//       "description": "Required. The fully-qualified resource name for the version, in the format: sites/SITE_ID/versions/VERSION_ID",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/sites/[^/]+/versions/[^/]+$",
 	//       "required": true,
@@ -3861,38 +5823,42 @@ type ProjectsSitesVersionsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the versions that have been created on the specified
-// site.
-// Will include filtering in the future.
+// List: Lists the versions that have been created for the specified
+// site. This list includes versions for both the default `live` channel
+// and any active preview channels for the specified site.
+//
+//   - parent: The site or channel for which to list versions, in either
+//     of the following formats: - sites/SITE_ID -
+//     sites/SITE_ID/channels/CHANNEL_ID.
 func (r *ProjectsSitesVersionsService) List(parent string) *ProjectsSitesVersionsListCall {
 	c := &ProjectsSitesVersionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": The filter string used
-// to return a subset of versions in the response.
-// Currently supported fields for filtering are: name, status,
-// and create_time. Filter processing will be implemented in
-// accordance
-// with go/filtering.
+// Filter sets the optional parameter "filter": A filter string used to
+// return a subset of versions in the response. The currently supported
+// fields for filtering are: `name`, `status`, and `create_time`. Learn
+// more about filtering in Google's AIP 160 standard
+// (https://google.aip.dev/160).
 func (c *ProjectsSitesVersionsListCall) Filter(filter string) *ProjectsSitesVersionsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of versions to return. The service may return fewer than
-// this value.
-// If unspecified, at most 25 versions will be returned.
-// The maximum value is 100; values above 100 will be coerced to 100
+// of versions to return. The service may return a lower number if fewer
+// versions exist than this maximum number. If unspecified, defaults to
+// 25. The maximum value is 100; values above 100 will be coerced to
+// 100.
 func (c *ProjectsSitesVersionsListCall) PageSize(pageSize int64) *ProjectsSitesVersionsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The
-// next_page_token from a previous request, if provided.
+// PageToken sets the optional parameter "pageToken": A token from a
+// previous call to `ListVersions` that tells the server where to resume
+// listing.
 func (c *ProjectsSitesVersionsListCall) PageToken(pageToken string) *ProjectsSitesVersionsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -3935,7 +5901,7 @@ func (c *ProjectsSitesVersionsListCall) Header() http.Header {
 
 func (c *ProjectsSitesVersionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3973,17 +5939,17 @@ func (c *ProjectsSitesVersionsListCall) Do(opts ...googleapi.CallOption) (*ListV
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListVersionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3997,7 +5963,7 @@ func (c *ProjectsSitesVersionsListCall) Do(opts ...googleapi.CallOption) (*ListV
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the versions that have been created on the specified site.\nWill include filtering in the future.",
+	//   "description": "Lists the versions that have been created for the specified site. This list includes versions for both the default `live` channel and any active preview channels for the specified site.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/sites/{sitesId}/versions",
 	//   "httpMethod": "GET",
 	//   "id": "firebasehosting.projects.sites.versions.list",
@@ -4006,23 +5972,23 @@ func (c *ProjectsSitesVersionsListCall) Do(opts ...googleapi.CallOption) (*ListV
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "The filter string used to return a subset of versions in the response.\nCurrently supported fields for filtering are: name, status,\nand create_time. Filter processing will be implemented in accordance\nwith go/filtering.",
+	//       "description": "A filter string used to return a subset of versions in the response. The currently supported fields for filtering are: `name`, `status`, and `create_time`. Learn more about filtering in Google's [AIP 160 standard](https://google.aip.dev/160).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The maximum number of versions to return. The service may return fewer than\nthis value.\nIf unspecified, at most 25 versions will be returned.\nThe maximum value is 100; values above 100 will be coerced to 100",
+	//       "description": "The maximum number of versions to return. The service may return a lower number if fewer versions exist than this maximum number. If unspecified, defaults to 25. The maximum value is 100; values above 100 will be coerced to 100.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The next_page_token from a previous request, if provided.",
+	//       "description": "A token from a previous call to `ListVersions` that tells the server where to resume listing.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent for which to list files, in the format:\n\u003ccode\u003esites/\u003cvar\u003esite-name\u003c/var\u003e\u003c/code\u003e",
+	//       "description": "Required. The site or channel for which to list versions, in either of the following formats: - sites/SITE_ID - sites/SITE_ID/channels/CHANNEL_ID ",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/sites/[^/]+$",
 	//       "required": true,
@@ -4068,38 +6034,36 @@ func (c *ProjectsSitesVersionsListCall) Pages(ctx context.Context, f func(*ListV
 
 type ProjectsSitesVersionsPatchCall struct {
 	s          *Service
-	nameid     string
+	name       string
 	version    *Version
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
 	header_    http.Header
 }
 
-// Patch: Updates the specified metadata for a version. Note that this
-// method will
-// fail with `FAILED_PRECONDITION` in the event of an invalid
-// state
-// transition. The only valid transition for a version is currently from
-// a
-// `CREATED` status to a `FINALIZED` status.
-// Use [`DeleteVersion`](../sites.versions/delete) to set the status of
-// a
-// version to `DELETED`.
-func (r *ProjectsSitesVersionsService) Patch(nameid string, version *Version) *ProjectsSitesVersionsPatchCall {
+// Patch:  Updates the specified metadata for the specified version.
+// This method will fail with `FAILED_PRECONDITION` in the event of an
+// invalid state transition. The supported state
+// (../sites.versions#versionstatus) transitions for a version are from
+// `CREATED` to `FINALIZED`. Use `DeleteVersion` (delete) to set the
+// status of a version to `DELETED`.
+//
+//   - name: The fully-qualified resource name for the version, in the
+//     format: sites/ SITE_ID/versions/VERSION_ID This name is provided in
+//     the response body when you call `CreateVersion`
+//     (sites.versions/create).
+func (r *ProjectsSitesVersionsService) Patch(name string, version *Version) *ProjectsSitesVersionsPatchCall {
 	c := &ProjectsSitesVersionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.nameid = nameid
+	c.name = name
 	c.version = version
 	return c
 }
 
 // UpdateMask sets the optional parameter "updateMask": A set of field
-// names from your [version](../sites.versions) that you want
-// to update.
-// <br>A field will be overwritten if, and only if, it's in the
-// mask.
-// <br>If a mask is not provided then a default mask of
-// only
-// [`status`](../sites.versions#Version.FIELDS.status) will be used.
+// names from your version (../sites.versions) that you want to update.
+// A field will be overwritten if, and only if, it's in the mask. If a
+// mask is not provided then a default mask of only `status`
+// (../sites.versions#Version.FIELDS.status) will be used.
 func (c *ProjectsSitesVersionsPatchCall) UpdateMask(updateMask string) *ProjectsSitesVersionsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -4132,7 +6096,7 @@ func (c *ProjectsSitesVersionsPatchCall) Header() http.Header {
 
 func (c *ProjectsSitesVersionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4153,7 +6117,7 @@ func (c *ProjectsSitesVersionsPatchCall) doRequest(alt string) (*http.Response, 
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"name": c.nameid,
+		"name": c.name,
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
@@ -4172,17 +6136,17 @@ func (c *ProjectsSitesVersionsPatchCall) Do(opts ...googleapi.CallOption) (*Vers
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Version{
 		ServerResponse: googleapi.ServerResponse{
@@ -4196,7 +6160,7 @@ func (c *ProjectsSitesVersionsPatchCall) Do(opts ...googleapi.CallOption) (*Vers
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the specified metadata for a version. Note that this method will\nfail with `FAILED_PRECONDITION` in the event of an invalid state\ntransition. The only valid transition for a version is currently from a\n`CREATED` status to a `FINALIZED` status.\nUse [`DeleteVersion`](../sites.versions/delete) to set the status of a\nversion to `DELETED`.",
+	//   "description": " Updates the specified metadata for the specified version. This method will fail with `FAILED_PRECONDITION` in the event of an invalid state transition. The supported [state](../sites.versions#versionstatus) transitions for a version are from `CREATED` to `FINALIZED`. Use [`DeleteVersion`](delete) to set the status of a version to `DELETED`.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/sites/{sitesId}/versions/{versionsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "firebasehosting.projects.sites.versions.patch",
@@ -4205,14 +6169,14 @@ func (c *ProjectsSitesVersionsPatchCall) Do(opts ...googleapi.CallOption) (*Vers
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The unique identifier for a version, in the format:\n\u003ccode\u003esites/\u003cvar\u003esite-name\u003c/var\u003e/versions/\u003cvar\u003eversionID\u003c/var\u003e\u003c/code\u003e\nThis name is provided in the response body when you call the\n[`CreateVersion`](../sites.versions/create) endpoint.",
+	//       "description": "The fully-qualified resource name for the version, in the format: sites/ SITE_ID/versions/VERSION_ID This name is provided in the response body when you call [`CreateVersion`](sites.versions/create).",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/sites/[^/]+/versions/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "A set of field names from your [version](../sites.versions) that you want\nto update.\n\u003cbr\u003eA field will be overwritten if, and only if, it's in the mask.\n\u003cbr\u003eIf a mask is not provided then a default mask of only\n[`status`](../sites.versions#Version.FIELDS.status) will be used.",
+	//       "description": "A set of field names from your [version](../sites.versions) that you want to update. A field will be overwritten if, and only if, it's in the mask. If a mask is not provided then a default mask of only [`status`](../sites.versions#Version.FIELDS.status) will be used.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -4244,7 +6208,11 @@ type ProjectsSitesVersionsPopulateFilesCall struct {
 	header_                     http.Header
 }
 
-// PopulateFiles: Adds content files to a version.
+// PopulateFiles:  Adds content files to the specified version. Each
+// file must be under 2 GB.
+//
+//   - parent: The version to which to add files, in the format:
+//     sites/SITE_ID /versions/VERSION_ID.
 func (r *ProjectsSitesVersionsService) PopulateFiles(parent string, populateversionfilesrequest *PopulateVersionFilesRequest) *ProjectsSitesVersionsPopulateFilesCall {
 	c := &ProjectsSitesVersionsPopulateFilesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4279,7 +6247,7 @@ func (c *ProjectsSitesVersionsPopulateFilesCall) Header() http.Header {
 
 func (c *ProjectsSitesVersionsPopulateFilesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4319,17 +6287,17 @@ func (c *ProjectsSitesVersionsPopulateFilesCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &PopulateVersionFilesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4343,7 +6311,7 @@ func (c *ProjectsSitesVersionsPopulateFilesCall) Do(opts ...googleapi.CallOption
 	}
 	return ret, nil
 	// {
-	//   "description": "Adds content files to a version.",
+	//   "description": " Adds content files to the specified version. Each file must be under 2 GB.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/sites/{sitesId}/versions/{versionsId}:populateFiles",
 	//   "httpMethod": "POST",
 	//   "id": "firebasehosting.projects.sites.versions.populateFiles",
@@ -4352,7 +6320,7 @@ func (c *ProjectsSitesVersionsPopulateFilesCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The version to add files to, in the format:\n\u003ccode\u003esites/\u003cvar\u003esite-name\u003c/var\u003e/versions/\u003cvar\u003eversionID\u003c/var\u003e\u003c/code\u003e",
+	//       "description": "Required. The version to which to add files, in the format: sites/SITE_ID /versions/VERSION_ID",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/sites/[^/]+/versions/[^/]+$",
 	//       "required": true,
@@ -4387,36 +6355,46 @@ type ProjectsSitesVersionsFilesListCall struct {
 
 // List: Lists the remaining files to be uploaded for the specified
 // version.
+//
+//   - parent: The version for which to list files, in the format:
+//     sites/SITE_ID /versions/VERSION_ID.
 func (r *ProjectsSitesVersionsFilesService) List(parent string) *ProjectsSitesVersionsFilesListCall {
 	c := &ProjectsSitesVersionsFilesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The page size to
-// return. Defaults to 1000.
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of version files to return. The service may return a lower number if
+// fewer version files exist than this maximum number. If unspecified,
+// defaults to 1000.
 func (c *ProjectsSitesVersionsFilesListCall) PageSize(pageSize int64) *ProjectsSitesVersionsFilesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The
-// next_page_token from a previous request, if provided. This will be
-// the
-// encoded version of a
-// firebase.hosting.proto.metadata.ListFilesPageToken.
+// PageToken sets the optional parameter "pageToken": A token from a
+// previous call to `ListVersionFiles` that tells the server where to
+// resume listing.
 func (c *ProjectsSitesVersionsFilesListCall) PageToken(pageToken string) *ProjectsSitesVersionsFilesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// Status sets the optional parameter "status": The type of files in the
-// version that should be listed.
+// Status sets the optional parameter "status": The type of files that
+// should be listed for the specified version.
 //
 // Possible values:
-//   "STATUS_UNSPECIFIED"
-//   "EXPECTED"
-//   "ACTIVE"
+//
+//	"STATUS_UNSPECIFIED" - The default status; should not be
+//
+// intentionally used.
+//
+//	"EXPECTED" - The file has been included in the version and is
+//
+// expected to be uploaded in the near future.
+//
+//	"ACTIVE" - The file has already been uploaded to Firebase Hosting.
 func (c *ProjectsSitesVersionsFilesListCall) Status(status string) *ProjectsSitesVersionsFilesListCall {
 	c.urlParams_.Set("status", status)
 	return c
@@ -4459,7 +6437,7 @@ func (c *ProjectsSitesVersionsFilesListCall) Header() http.Header {
 
 func (c *ProjectsSitesVersionsFilesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4497,17 +6475,17 @@ func (c *ProjectsSitesVersionsFilesListCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListVersionFilesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4530,29 +6508,34 @@ func (c *ProjectsSitesVersionsFilesListCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "The page size to return. Defaults to 1000.",
+	//       "description": "The maximum number of version files to return. The service may return a lower number if fewer version files exist than this maximum number. If unspecified, defaults to 1000.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The next_page_token from a previous request, if provided. This will be the\nencoded version of a firebase.hosting.proto.metadata.ListFilesPageToken.",
+	//       "description": "A token from a previous call to `ListVersionFiles` that tells the server where to resume listing.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent to list files for, in the format:\n\u003ccode\u003esites/\u003cvar\u003esite-name\u003c/var\u003e/versions/\u003cvar\u003eversionID\u003c/var\u003e\u003c/code\u003e",
+	//       "description": "Required. The version for which to list files, in the format: sites/SITE_ID /versions/VERSION_ID",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/sites/[^/]+/versions/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "status": {
-	//       "description": "The type of files in the version that should be listed.",
+	//       "description": " The type of files that should be listed for the specified version.",
 	//       "enum": [
 	//         "STATUS_UNSPECIFIED",
 	//         "EXPECTED",
 	//         "ACTIVE"
+	//       ],
+	//       "enumDescriptions": [
+	//         "The default status; should not be intentionally used.",
+	//         "The file has been included in the version and is expected to be uploaded in the near future.",
+	//         "The file has already been uploaded to Firebase Hosting."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -4605,6 +6588,9 @@ type SitesGetConfigCall struct {
 }
 
 // GetConfig: Gets the Hosting metadata for a specific site.
+//
+//   - name: The site for which to get the SiteConfig, in the format:
+//     sites/ site-name/config.
 func (r *SitesService) GetConfig(name string) *SitesGetConfigCall {
 	c := &SitesGetConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4648,7 +6634,7 @@ func (c *SitesGetConfigCall) Header() http.Header {
 
 func (c *SitesGetConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4686,17 +6672,17 @@ func (c *SitesGetConfigCall) Do(opts ...googleapi.CallOption) (*SiteConfig, erro
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &SiteConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -4719,7 +6705,7 @@ func (c *SitesGetConfigCall) Do(opts ...googleapi.CallOption) (*SiteConfig, erro
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The site for which to get the SiteConfig, in the format:\n\u003ccode\u003esites/\u003cvar\u003esite-name\u003c/var\u003e/config\u003c/code\u003e",
+	//       "description": "Required. The site for which to get the SiteConfig, in the format: sites/ site-name/config",
 	//       "location": "path",
 	//       "pattern": "^sites/[^/]+/config$",
 	//       "required": true,
@@ -4752,6 +6738,9 @@ type SitesUpdateConfigCall struct {
 }
 
 // UpdateConfig: Sets the Hosting metadata for a specific site.
+//
+//   - name: The site for which to update the SiteConfig, in the format:
+//     sites/ site-name/config.
 func (r *SitesService) UpdateConfig(name string, siteconfig *SiteConfig) *SitesUpdateConfigCall {
 	c := &SitesUpdateConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4760,13 +6749,10 @@ func (r *SitesService) UpdateConfig(name string, siteconfig *SiteConfig) *SitesU
 }
 
 // UpdateMask sets the optional parameter "updateMask": A set of field
-// names from your [site configuration](../sites.SiteConfig)
-// that you want to update.
-// <br>A field will be overwritten if, and only if, it's in the
-// mask.
-// <br>If a mask is not provided then a default mask of
-// only
-// [`max_versions`](../sites.SiteConfig.max_versions) will be used.
+// names from your site configuration (../sites.SiteConfig) that you
+// want to update. A field will be overwritten if, and only if, it's in
+// the mask. If a mask is not provided then a default mask of only
+// `max_versions` (../sites.SiteConfig.max_versions) will be used.
 func (c *SitesUpdateConfigCall) UpdateMask(updateMask string) *SitesUpdateConfigCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -4799,7 +6785,7 @@ func (c *SitesUpdateConfigCall) Header() http.Header {
 
 func (c *SitesUpdateConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4839,17 +6825,17 @@ func (c *SitesUpdateConfigCall) Do(opts ...googleapi.CallOption) (*SiteConfig, e
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &SiteConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -4872,14 +6858,14 @@ func (c *SitesUpdateConfigCall) Do(opts ...googleapi.CallOption) (*SiteConfig, e
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The site for which to update the SiteConfig, in the format:\n\u003ccode\u003esites/\u003cvar\u003esite-name\u003c/var\u003e/config\u003c/code\u003e",
+	//       "description": "Required. The site for which to update the SiteConfig, in the format: sites/ site-name/config",
 	//       "location": "path",
 	//       "pattern": "^sites/[^/]+/config$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "A set of field names from your [site configuration](../sites.SiteConfig)\nthat you want to update.\n\u003cbr\u003eA field will be overwritten if, and only if, it's in the mask.\n\u003cbr\u003eIf a mask is not provided then a default mask of only\n[`max_versions`](../sites.SiteConfig.max_versions) will be used.",
+	//       "description": "A set of field names from your [site configuration](../sites.SiteConfig) that you want to update. A field will be overwritten if, and only if, it's in the mask. If a mask is not provided then a default mask of only [`max_versions`](../sites.SiteConfig.max_versions) will be used.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -4900,6 +6886,807 @@ func (c *SitesUpdateConfigCall) Do(opts ...googleapi.CallOption) (*SiteConfig, e
 
 }
 
+// method id "firebasehosting.sites.channels.create":
+
+type SitesChannelsCreateCall struct {
+	s          *Service
+	parent     string
+	channel    *Channel
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Create: Creates a new channel in the specified site.
+//
+//   - parent: The site in which to create this channel, in the format:
+//     sites/ SITE_ID.
+func (r *SitesChannelsService) Create(parent string, channel *Channel) *SitesChannelsCreateCall {
+	c := &SitesChannelsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.channel = channel
+	return c
+}
+
+// ChannelId sets the optional parameter "channelId": Required.
+// Immutable. A unique ID within the site that identifies the channel.
+func (c *SitesChannelsCreateCall) ChannelId(channelId string) *SitesChannelsCreateCall {
+	c.urlParams_.Set("channelId", channelId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SitesChannelsCreateCall) Fields(s ...googleapi.Field) *SitesChannelsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *SitesChannelsCreateCall) Context(ctx context.Context) *SitesChannelsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *SitesChannelsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *SitesChannelsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channel)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/channels")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebasehosting.sites.channels.create" call.
+// Exactly one of *Channel or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Channel.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *SitesChannelsCreateCall) Do(opts ...googleapi.CallOption) (*Channel, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Channel{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new channel in the specified site.",
+	//   "flatPath": "v1beta1/sites/{sitesId}/channels",
+	//   "httpMethod": "POST",
+	//   "id": "firebasehosting.sites.channels.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "channelId": {
+	//       "description": "Required. Immutable. A unique ID within the site that identifies the channel.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The site in which to create this channel, in the format: sites/ SITE_ID",
+	//       "location": "path",
+	//       "pattern": "^sites/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+parent}/channels",
+	//   "request": {
+	//     "$ref": "Channel"
+	//   },
+	//   "response": {
+	//     "$ref": "Channel"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/firebase"
+	//   ]
+	// }
+
+}
+
+// method id "firebasehosting.sites.channels.delete":
+
+type SitesChannelsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes the specified channel of the specified site. The
+// `live` channel cannot be deleted.
+//
+//   - name: The fully-qualified resource name for the channel, in the
+//     format: sites/SITE_ID/channels/CHANNEL_ID.
+func (r *SitesChannelsService) Delete(name string) *SitesChannelsDeleteCall {
+	c := &SitesChannelsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SitesChannelsDeleteCall) Fields(s ...googleapi.Field) *SitesChannelsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *SitesChannelsDeleteCall) Context(ctx context.Context) *SitesChannelsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *SitesChannelsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *SitesChannelsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebasehosting.sites.channels.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *SitesChannelsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes the specified channel of the specified site. The `live` channel cannot be deleted.",
+	//   "flatPath": "v1beta1/sites/{sitesId}/channels/{channelsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "firebasehosting.sites.channels.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The fully-qualified resource name for the channel, in the format: sites/SITE_ID/channels/CHANNEL_ID",
+	//       "location": "path",
+	//       "pattern": "^sites/[^/]+/channels/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+name}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/firebase"
+	//   ]
+	// }
+
+}
+
+// method id "firebasehosting.sites.channels.get":
+
+type SitesChannelsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Retrieves information for the specified channel of the specified
+// site.
+//
+//   - name: The fully-qualified resource name for the channel, in the
+//     format: sites/SITE_ID/channels/CHANNEL_ID.
+func (r *SitesChannelsService) Get(name string) *SitesChannelsGetCall {
+	c := &SitesChannelsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SitesChannelsGetCall) Fields(s ...googleapi.Field) *SitesChannelsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *SitesChannelsGetCall) IfNoneMatch(entityTag string) *SitesChannelsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *SitesChannelsGetCall) Context(ctx context.Context) *SitesChannelsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *SitesChannelsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *SitesChannelsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebasehosting.sites.channels.get" call.
+// Exactly one of *Channel or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Channel.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *SitesChannelsGetCall) Do(opts ...googleapi.CallOption) (*Channel, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Channel{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves information for the specified channel of the specified site.",
+	//   "flatPath": "v1beta1/sites/{sitesId}/channels/{channelsId}",
+	//   "httpMethod": "GET",
+	//   "id": "firebasehosting.sites.channels.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The fully-qualified resource name for the channel, in the format: sites/SITE_ID/channels/CHANNEL_ID",
+	//       "location": "path",
+	//       "pattern": "^sites/[^/]+/channels/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+name}",
+	//   "response": {
+	//     "$ref": "Channel"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
+	//     "https://www.googleapis.com/auth/firebase",
+	//     "https://www.googleapis.com/auth/firebase.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "firebasehosting.sites.channels.list":
+
+type SitesChannelsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists the channels for the specified site. All sites have a
+// default `live` channel.
+//
+//   - parent: The site for which to list channels, in the format:
+//     sites/SITE_ID.
+func (r *SitesChannelsService) List(parent string) *SitesChannelsListCall {
+	c := &SitesChannelsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of channels to return. The service may return a lower number if fewer
+// channels exist than this maximum number. If unspecified, defaults to
+// 10. The maximum value is 100; values above 100 will be coerced to
+// 100.
+func (c *SitesChannelsListCall) PageSize(pageSize int64) *SitesChannelsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token from a
+// previous call to `ListChannels` that tells the server where to resume
+// listing.
+func (c *SitesChannelsListCall) PageToken(pageToken string) *SitesChannelsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SitesChannelsListCall) Fields(s ...googleapi.Field) *SitesChannelsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *SitesChannelsListCall) IfNoneMatch(entityTag string) *SitesChannelsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *SitesChannelsListCall) Context(ctx context.Context) *SitesChannelsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *SitesChannelsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *SitesChannelsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/channels")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebasehosting.sites.channels.list" call.
+// Exactly one of *ListChannelsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListChannelsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *SitesChannelsListCall) Do(opts ...googleapi.CallOption) (*ListChannelsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListChannelsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists the channels for the specified site. All sites have a default `live` channel.",
+	//   "flatPath": "v1beta1/sites/{sitesId}/channels",
+	//   "httpMethod": "GET",
+	//   "id": "firebasehosting.sites.channels.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The maximum number of channels to return. The service may return a lower number if fewer channels exist than this maximum number. If unspecified, defaults to 10. The maximum value is 100; values above 100 will be coerced to 100.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A token from a previous call to `ListChannels` that tells the server where to resume listing.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The site for which to list channels, in the format: sites/SITE_ID",
+	//       "location": "path",
+	//       "pattern": "^sites/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+parent}/channels",
+	//   "response": {
+	//     "$ref": "ListChannelsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
+	//     "https://www.googleapis.com/auth/firebase",
+	//     "https://www.googleapis.com/auth/firebase.readonly"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *SitesChannelsListCall) Pages(ctx context.Context, f func(*ListChannelsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "firebasehosting.sites.channels.patch":
+
+type SitesChannelsPatchCall struct {
+	s          *Service
+	name       string
+	channel    *Channel
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Updates information for the specified channel of the specified
+// site. Implicitly creates the channel if it doesn't already exist.
+//
+//   - name: The fully-qualified resource name for the channel, in the
+//     format: sites/ SITE_ID/channels/CHANNEL_ID.
+func (r *SitesChannelsService) Patch(name string, channel *Channel) *SitesChannelsPatchCall {
+	c := &SitesChannelsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.channel = channel
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": A
+// comma-separated list of fields to be updated in this request.
+func (c *SitesChannelsPatchCall) UpdateMask(updateMask string) *SitesChannelsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SitesChannelsPatchCall) Fields(s ...googleapi.Field) *SitesChannelsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *SitesChannelsPatchCall) Context(ctx context.Context) *SitesChannelsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *SitesChannelsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *SitesChannelsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channel)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebasehosting.sites.channels.patch" call.
+// Exactly one of *Channel or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Channel.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *SitesChannelsPatchCall) Do(opts ...googleapi.CallOption) (*Channel, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Channel{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates information for the specified channel of the specified site. Implicitly creates the channel if it doesn't already exist.",
+	//   "flatPath": "v1beta1/sites/{sitesId}/channels/{channelsId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "firebasehosting.sites.channels.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The fully-qualified resource name for the channel, in the format: sites/ SITE_ID/channels/CHANNEL_ID",
+	//       "location": "path",
+	//       "pattern": "^sites/[^/]+/channels/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "A comma-separated list of fields to be updated in this request.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+name}",
+	//   "request": {
+	//     "$ref": "Channel"
+	//   },
+	//   "response": {
+	//     "$ref": "Channel"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/firebase"
+	//   ]
+	// }
+
+}
+
 // method id "firebasehosting.sites.channels.releases.create":
 
 type SitesChannelsReleasesCreateCall struct {
@@ -4911,9 +7698,12 @@ type SitesChannelsReleasesCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates a new release which makes the content of the
-// specified version
-// actively display on the appropriate URL(s).
+// Create: Creates a new release, which makes the content of the
+// specified version actively display on the appropriate URL(s).
+//
+//   - parent: The site or channel to which the release belongs, in either
+//     of the following formats: - sites/SITE_ID -
+//     sites/SITE_ID/channels/CHANNEL_ID.
 func (r *SitesChannelsReleasesService) Create(parent string, release *Release) *SitesChannelsReleasesCreateCall {
 	c := &SitesChannelsReleasesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4922,17 +7712,10 @@ func (r *SitesChannelsReleasesService) Create(parent string, release *Release) *
 }
 
 // VersionName sets the optional parameter "versionName": The unique
-// identifier for a version, in the
-// format:
-// <code>/sites/<var>site-name</var>/versions/<var>versionID</var
-// ></code>
-// The <var>site-name</var> in this version identifier must match
-// the
-// <var>site-name</var> in the `parent` parameter.
-// <br>
-// <br>This query parameter must be empty if the `type` field in
-// the
-// request body is `SITE_DISABLE`.
+// identifier for a version, in the format: sites/SITE_ID/versions/
+// VERSION_ID The SITE_ID in this version identifier must match the
+// SITE_ID in the `parent` parameter. This query parameter must be empty
+// if the `type` field in the request body is `SITE_DISABLE`.
 func (c *SitesChannelsReleasesCreateCall) VersionName(versionName string) *SitesChannelsReleasesCreateCall {
 	c.urlParams_.Set("versionName", versionName)
 	return c
@@ -4965,7 +7748,7 @@ func (c *SitesChannelsReleasesCreateCall) Header() http.Header {
 
 func (c *SitesChannelsReleasesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5005,17 +7788,17 @@ func (c *SitesChannelsReleasesCreateCall) Do(opts ...googleapi.CallOption) (*Rel
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Release{
 		ServerResponse: googleapi.ServerResponse{
@@ -5029,7 +7812,7 @@ func (c *SitesChannelsReleasesCreateCall) Do(opts ...googleapi.CallOption) (*Rel
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new release which makes the content of the specified version\nactively display on the appropriate URL(s).",
+	//   "description": "Creates a new release, which makes the content of the specified version actively display on the appropriate URL(s).",
 	//   "flatPath": "v1beta1/sites/{sitesId}/channels/{channelsId}/releases",
 	//   "httpMethod": "POST",
 	//   "id": "firebasehosting.sites.channels.releases.create",
@@ -5038,14 +7821,14 @@ func (c *SitesChannelsReleasesCreateCall) Do(opts ...googleapi.CallOption) (*Rel
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The site that the release belongs to, in the format:\n\u003ccode\u003esites/\u003cvar\u003esite-name\u003c/var\u003e\u003c/code\u003e",
+	//       "description": "Required. The site or channel to which the release belongs, in either of the following formats: - sites/SITE_ID - sites/SITE_ID/channels/CHANNEL_ID",
 	//       "location": "path",
 	//       "pattern": "^sites/[^/]+/channels/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "versionName": {
-	//       "description": "The unique identifier for a version, in the format:\n\u003ccode\u003e/sites/\u003cvar\u003esite-name\u003c/var\u003e/versions/\u003cvar\u003eversionID\u003c/var\u003e\u003c/code\u003e\nThe \u003cvar\u003esite-name\u003c/var\u003e in this version identifier must match the\n\u003cvar\u003esite-name\u003c/var\u003e in the `parent` parameter.\n\u003cbr\u003e\n\u003cbr\u003eThis query parameter must be empty if the `type` field in the\nrequest body is `SITE_DISABLE`.",
+	//       "description": " The unique identifier for a version, in the format: sites/SITE_ID/versions/ VERSION_ID The SITE_ID in this version identifier must match the SITE_ID in the `parent` parameter. This query parameter must be empty if the `type` field in the request body is `SITE_DISABLE`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -5076,23 +7859,32 @@ type SitesChannelsReleasesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the releases that have been created on the specified
-// site.
+// List: Lists the releases that have been created for the specified
+// site or channel. When used to list releases for a site, this list
+// includes releases for both the default `live` channel and any active
+// preview channels for the specified site.
+//
+//   - parent: The site or channel for which to list releases, in either
+//     of the following formats: - sites/SITE_ID -
+//     sites/SITE_ID/channels/CHANNEL_ID.
 func (r *SitesChannelsReleasesService) List(parent string) *SitesChannelsReleasesListCall {
 	c := &SitesChannelsReleasesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The page size to
-// return. Defaults to 100.
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of releases to return. The service may return a lower number if fewer
+// releases exist than this maximum number. If unspecified, defaults to
+// 100.
 func (c *SitesChannelsReleasesListCall) PageSize(pageSize int64) *SitesChannelsReleasesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The
-// next_page_token from a previous request, if provided.
+// PageToken sets the optional parameter "pageToken": A token from a
+// previous call to `releases.list` or `channels.releases.list` that
+// tells the server where to resume listing.
 func (c *SitesChannelsReleasesListCall) PageToken(pageToken string) *SitesChannelsReleasesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -5135,7 +7927,7 @@ func (c *SitesChannelsReleasesListCall) Header() http.Header {
 
 func (c *SitesChannelsReleasesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5173,17 +7965,17 @@ func (c *SitesChannelsReleasesListCall) Do(opts ...googleapi.CallOption) (*ListR
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListReleasesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -5197,7 +7989,7 @@ func (c *SitesChannelsReleasesListCall) Do(opts ...googleapi.CallOption) (*ListR
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the releases that have been created on the specified site.",
+	//   "description": "Lists the releases that have been created for the specified site or channel. When used to list releases for a site, this list includes releases for both the default `live` channel and any active preview channels for the specified site.",
 	//   "flatPath": "v1beta1/sites/{sitesId}/channels/{channelsId}/releases",
 	//   "httpMethod": "GET",
 	//   "id": "firebasehosting.sites.channels.releases.list",
@@ -5206,18 +7998,18 @@ func (c *SitesChannelsReleasesListCall) Do(opts ...googleapi.CallOption) (*ListR
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "The page size to return. Defaults to 100.",
+	//       "description": "The maximum number of releases to return. The service may return a lower number if fewer releases exist than this maximum number. If unspecified, defaults to 100.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The next_page_token from a previous request, if provided.",
+	//       "description": "A token from a previous call to `releases.list` or `channels.releases.list` that tells the server where to resume listing.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent for which to list files, in the format:\n\u003ccode\u003esites/\u003cvar\u003esite-name\u003c/var\u003e\u003c/code\u003e",
+	//       "description": "Required. The site or channel for which to list releases, in either of the following formats: - sites/SITE_ID - sites/SITE_ID/channels/CHANNEL_ID ",
 	//       "location": "path",
 	//       "pattern": "^sites/[^/]+/channels/[^/]+$",
 	//       "required": true,
@@ -5271,6 +8063,9 @@ type SitesDomainsCreateCall struct {
 }
 
 // Create: Creates a domain mapping on the specified site.
+//
+//   - parent: The parent to create the domain association for, in the
+//     format: sites/site-name.
 func (r *SitesDomainsService) Create(parent string, domain *Domain) *SitesDomainsCreateCall {
 	c := &SitesDomainsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5305,7 +8100,7 @@ func (c *SitesDomainsCreateCall) Header() http.Header {
 
 func (c *SitesDomainsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5345,17 +8140,17 @@ func (c *SitesDomainsCreateCall) Do(opts ...googleapi.CallOption) (*Domain, erro
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Domain{
 		ServerResponse: googleapi.ServerResponse{
@@ -5378,7 +8173,7 @@ func (c *SitesDomainsCreateCall) Do(opts ...googleapi.CallOption) (*Domain, erro
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The parent to create the domain association for, in the format:\n\u003ccode\u003esites/\u003cvar\u003esite-name\u003c/var\u003e\u003c/code\u003e",
+	//       "description": "Required. The parent to create the domain association for, in the format: sites/site-name",
 	//       "location": "path",
 	//       "pattern": "^sites/[^/]+$",
 	//       "required": true,
@@ -5411,6 +8206,8 @@ type SitesDomainsDeleteCall struct {
 }
 
 // Delete: Deletes the existing domain mapping on the specified site.
+//
+// - name: The name of the domain association to delete.
 func (r *SitesDomainsService) Delete(name string) *SitesDomainsDeleteCall {
 	c := &SitesDomainsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5444,7 +8241,7 @@ func (c *SitesDomainsDeleteCall) Header() http.Header {
 
 func (c *SitesDomainsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5479,17 +8276,17 @@ func (c *SitesDomainsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -5543,6 +8340,8 @@ type SitesDomainsGetCall struct {
 }
 
 // Get: Gets a domain mapping on the specified site.
+//
+// - name: The name of the domain configuration to get.
 func (r *SitesDomainsService) Get(name string) *SitesDomainsGetCall {
 	c := &SitesDomainsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5586,7 +8385,7 @@ func (c *SitesDomainsGetCall) Header() http.Header {
 
 func (c *SitesDomainsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5624,17 +8423,17 @@ func (c *SitesDomainsGetCall) Do(opts ...googleapi.CallOption) (*Domain, error) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Domain{
 		ServerResponse: googleapi.ServerResponse{
@@ -5690,6 +8489,9 @@ type SitesDomainsListCall struct {
 }
 
 // List: Lists the domains for the specified site.
+//
+//   - parent: The parent for which to list domains, in the format: sites/
+//     site-name.
 func (r *SitesDomainsService) List(parent string) *SitesDomainsListCall {
 	c := &SitesDomainsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5747,7 +8549,7 @@ func (c *SitesDomainsListCall) Header() http.Header {
 
 func (c *SitesDomainsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5785,17 +8587,17 @@ func (c *SitesDomainsListCall) Do(opts ...googleapi.CallOption) (*ListDomainsRes
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListDomainsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -5829,7 +8631,7 @@ func (c *SitesDomainsListCall) Do(opts ...googleapi.CallOption) (*ListDomainsRes
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent for which to list domains, in the format:\n\u003ccode\u003esites/\u003cvar\u003esite-name\u003c/var\u003e\u003c/code\u003e",
+	//       "description": "Required. The parent for which to list domains, in the format: sites/ site-name",
 	//       "location": "path",
 	//       "pattern": "^sites/[^/]+$",
 	//       "required": true,
@@ -5883,8 +8685,10 @@ type SitesDomainsUpdateCall struct {
 }
 
 // Update: Updates the specified domain mapping, creating the mapping as
-// if it does
-// not exist.
+// if it does not exist.
+//
+//   - name: The name of the domain association to update or create, if an
+//     association doesn't already exist.
 func (r *SitesDomainsService) Update(name string, domain *Domain) *SitesDomainsUpdateCall {
 	c := &SitesDomainsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5919,7 +8723,7 @@ func (c *SitesDomainsUpdateCall) Header() http.Header {
 
 func (c *SitesDomainsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5959,17 +8763,17 @@ func (c *SitesDomainsUpdateCall) Do(opts ...googleapi.CallOption) (*Domain, erro
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Domain{
 		ServerResponse: googleapi.ServerResponse{
@@ -5983,7 +8787,7 @@ func (c *SitesDomainsUpdateCall) Do(opts ...googleapi.CallOption) (*Domain, erro
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the specified domain mapping, creating the mapping as if it does\nnot exist.",
+	//   "description": "Updates the specified domain mapping, creating the mapping as if it does not exist.",
 	//   "flatPath": "v1beta1/sites/{sitesId}/domains/{domainsId}",
 	//   "httpMethod": "PUT",
 	//   "id": "firebasehosting.sites.domains.update",
@@ -5992,7 +8796,7 @@ func (c *SitesDomainsUpdateCall) Do(opts ...googleapi.CallOption) (*Domain, erro
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the domain association to update or create, if an\nassociation doesn't already exist.",
+	//       "description": "Required. The name of the domain association to update or create, if an association doesn't already exist.",
 	//       "location": "path",
 	//       "pattern": "^sites/[^/]+/domains/[^/]+$",
 	//       "required": true,
@@ -6025,9 +8829,12 @@ type SitesReleasesCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates a new release which makes the content of the
-// specified version
-// actively display on the appropriate URL(s).
+// Create: Creates a new release, which makes the content of the
+// specified version actively display on the appropriate URL(s).
+//
+//   - parent: The site or channel to which the release belongs, in either
+//     of the following formats: - sites/SITE_ID -
+//     sites/SITE_ID/channels/CHANNEL_ID.
 func (r *SitesReleasesService) Create(parent string, release *Release) *SitesReleasesCreateCall {
 	c := &SitesReleasesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6036,17 +8843,10 @@ func (r *SitesReleasesService) Create(parent string, release *Release) *SitesRel
 }
 
 // VersionName sets the optional parameter "versionName": The unique
-// identifier for a version, in the
-// format:
-// <code>/sites/<var>site-name</var>/versions/<var>versionID</var
-// ></code>
-// The <var>site-name</var> in this version identifier must match
-// the
-// <var>site-name</var> in the `parent` parameter.
-// <br>
-// <br>This query parameter must be empty if the `type` field in
-// the
-// request body is `SITE_DISABLE`.
+// identifier for a version, in the format: sites/SITE_ID/versions/
+// VERSION_ID The SITE_ID in this version identifier must match the
+// SITE_ID in the `parent` parameter. This query parameter must be empty
+// if the `type` field in the request body is `SITE_DISABLE`.
 func (c *SitesReleasesCreateCall) VersionName(versionName string) *SitesReleasesCreateCall {
 	c.urlParams_.Set("versionName", versionName)
 	return c
@@ -6079,7 +8879,7 @@ func (c *SitesReleasesCreateCall) Header() http.Header {
 
 func (c *SitesReleasesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6119,17 +8919,17 @@ func (c *SitesReleasesCreateCall) Do(opts ...googleapi.CallOption) (*Release, er
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Release{
 		ServerResponse: googleapi.ServerResponse{
@@ -6143,7 +8943,7 @@ func (c *SitesReleasesCreateCall) Do(opts ...googleapi.CallOption) (*Release, er
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new release which makes the content of the specified version\nactively display on the appropriate URL(s).",
+	//   "description": "Creates a new release, which makes the content of the specified version actively display on the appropriate URL(s).",
 	//   "flatPath": "v1beta1/sites/{sitesId}/releases",
 	//   "httpMethod": "POST",
 	//   "id": "firebasehosting.sites.releases.create",
@@ -6152,14 +8952,14 @@ func (c *SitesReleasesCreateCall) Do(opts ...googleapi.CallOption) (*Release, er
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The site that the release belongs to, in the format:\n\u003ccode\u003esites/\u003cvar\u003esite-name\u003c/var\u003e\u003c/code\u003e",
+	//       "description": "Required. The site or channel to which the release belongs, in either of the following formats: - sites/SITE_ID - sites/SITE_ID/channels/CHANNEL_ID",
 	//       "location": "path",
 	//       "pattern": "^sites/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "versionName": {
-	//       "description": "The unique identifier for a version, in the format:\n\u003ccode\u003e/sites/\u003cvar\u003esite-name\u003c/var\u003e/versions/\u003cvar\u003eversionID\u003c/var\u003e\u003c/code\u003e\nThe \u003cvar\u003esite-name\u003c/var\u003e in this version identifier must match the\n\u003cvar\u003esite-name\u003c/var\u003e in the `parent` parameter.\n\u003cbr\u003e\n\u003cbr\u003eThis query parameter must be empty if the `type` field in the\nrequest body is `SITE_DISABLE`.",
+	//       "description": " The unique identifier for a version, in the format: sites/SITE_ID/versions/ VERSION_ID The SITE_ID in this version identifier must match the SITE_ID in the `parent` parameter. This query parameter must be empty if the `type` field in the request body is `SITE_DISABLE`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -6190,23 +8990,32 @@ type SitesReleasesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the releases that have been created on the specified
-// site.
+// List: Lists the releases that have been created for the specified
+// site or channel. When used to list releases for a site, this list
+// includes releases for both the default `live` channel and any active
+// preview channels for the specified site.
+//
+//   - parent: The site or channel for which to list releases, in either
+//     of the following formats: - sites/SITE_ID -
+//     sites/SITE_ID/channels/CHANNEL_ID.
 func (r *SitesReleasesService) List(parent string) *SitesReleasesListCall {
 	c := &SitesReleasesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The page size to
-// return. Defaults to 100.
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of releases to return. The service may return a lower number if fewer
+// releases exist than this maximum number. If unspecified, defaults to
+// 100.
 func (c *SitesReleasesListCall) PageSize(pageSize int64) *SitesReleasesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The
-// next_page_token from a previous request, if provided.
+// PageToken sets the optional parameter "pageToken": A token from a
+// previous call to `releases.list` or `channels.releases.list` that
+// tells the server where to resume listing.
 func (c *SitesReleasesListCall) PageToken(pageToken string) *SitesReleasesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -6249,7 +9058,7 @@ func (c *SitesReleasesListCall) Header() http.Header {
 
 func (c *SitesReleasesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6287,17 +9096,17 @@ func (c *SitesReleasesListCall) Do(opts ...googleapi.CallOption) (*ListReleasesR
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListReleasesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -6311,7 +9120,7 @@ func (c *SitesReleasesListCall) Do(opts ...googleapi.CallOption) (*ListReleasesR
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the releases that have been created on the specified site.",
+	//   "description": "Lists the releases that have been created for the specified site or channel. When used to list releases for a site, this list includes releases for both the default `live` channel and any active preview channels for the specified site.",
 	//   "flatPath": "v1beta1/sites/{sitesId}/releases",
 	//   "httpMethod": "GET",
 	//   "id": "firebasehosting.sites.releases.list",
@@ -6320,18 +9129,18 @@ func (c *SitesReleasesListCall) Do(opts ...googleapi.CallOption) (*ListReleasesR
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "The page size to return. Defaults to 100.",
+	//       "description": "The maximum number of releases to return. The service may return a lower number if fewer releases exist than this maximum number. If unspecified, defaults to 100.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The next_page_token from a previous request, if provided.",
+	//       "description": "A token from a previous call to `releases.list` or `channels.releases.list` that tells the server where to resume listing.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent for which to list files, in the format:\n\u003ccode\u003esites/\u003cvar\u003esite-name\u003c/var\u003e\u003c/code\u003e",
+	//       "description": "Required. The site or channel for which to list releases, in either of the following formats: - sites/SITE_ID - sites/SITE_ID/channels/CHANNEL_ID ",
 	//       "location": "path",
 	//       "pattern": "^sites/[^/]+$",
 	//       "required": true,
@@ -6373,6 +9182,151 @@ func (c *SitesReleasesListCall) Pages(ctx context.Context, f func(*ListReleasesR
 	}
 }
 
+// method id "firebasehosting.sites.versions.clone":
+
+type SitesVersionsCloneCall struct {
+	s                   *Service
+	parent              string
+	cloneversionrequest *CloneVersionRequest
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// Clone: Creates a new version on the specified target site using the
+// content of the specified version.
+//
+//   - parent: The target site for the cloned version, in the format:
+//     sites/ SITE_ID.
+func (r *SitesVersionsService) Clone(parent string, cloneversionrequest *CloneVersionRequest) *SitesVersionsCloneCall {
+	c := &SitesVersionsCloneCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.cloneversionrequest = cloneversionrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SitesVersionsCloneCall) Fields(s ...googleapi.Field) *SitesVersionsCloneCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *SitesVersionsCloneCall) Context(ctx context.Context) *SitesVersionsCloneCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *SitesVersionsCloneCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *SitesVersionsCloneCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.cloneversionrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/versions:clone")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebasehosting.sites.versions.clone" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *SitesVersionsCloneCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new version on the specified target site using the content of the specified version.",
+	//   "flatPath": "v1beta1/sites/{sitesId}/versions:clone",
+	//   "httpMethod": "POST",
+	//   "id": "firebasehosting.sites.versions.clone",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The target site for the cloned version, in the format: sites/ SITE_ID",
+	//       "location": "path",
+	//       "pattern": "^sites/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+parent}/versions:clone",
+	//   "request": {
+	//     "$ref": "CloneVersionRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/firebase"
+	//   ]
+	// }
+
+}
+
 // method id "firebasehosting.sites.versions.create":
 
 type SitesVersionsCreateCall struct {
@@ -6384,7 +9338,10 @@ type SitesVersionsCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates a new version for a site.
+// Create: Creates a new version for the specified site.
+//
+//   - parent: The site in which to create the version, in the format:
+//     sites/ SITE_ID.
 func (r *SitesVersionsService) Create(parent string, version *Version) *SitesVersionsCreateCall {
 	c := &SitesVersionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6393,16 +9350,16 @@ func (r *SitesVersionsService) Create(parent string, version *Version) *SitesVer
 }
 
 // SizeBytes sets the optional parameter "sizeBytes": The self-reported
-// size of the version. This value is used for a pre-emptive
-// quota check for legacy version uploads.
+// size of the version. This value is used for a pre-emptive quota check
+// for legacy version uploads.
 func (c *SitesVersionsCreateCall) SizeBytes(sizeBytes int64) *SitesVersionsCreateCall {
 	c.urlParams_.Set("sizeBytes", fmt.Sprint(sizeBytes))
 	return c
 }
 
 // VersionId sets the optional parameter "versionId": A unique id for
-// the new version. This is only specified for legacy version
-// creations.
+// the new version. This is was only specified for legacy version
+// creations, and should be blank.
 func (c *SitesVersionsCreateCall) VersionId(versionId string) *SitesVersionsCreateCall {
 	c.urlParams_.Set("versionId", versionId)
 	return c
@@ -6435,7 +9392,7 @@ func (c *SitesVersionsCreateCall) Header() http.Header {
 
 func (c *SitesVersionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6475,17 +9432,17 @@ func (c *SitesVersionsCreateCall) Do(opts ...googleapi.CallOption) (*Version, er
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Version{
 		ServerResponse: googleapi.ServerResponse{
@@ -6499,7 +9456,7 @@ func (c *SitesVersionsCreateCall) Do(opts ...googleapi.CallOption) (*Version, er
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new version for a site.",
+	//   "description": "Creates a new version for the specified site.",
 	//   "flatPath": "v1beta1/sites/{sitesId}/versions",
 	//   "httpMethod": "POST",
 	//   "id": "firebasehosting.sites.versions.create",
@@ -6508,20 +9465,20 @@ func (c *SitesVersionsCreateCall) Do(opts ...googleapi.CallOption) (*Version, er
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The parent to create the version for, in the format:\n\u003ccode\u003esites/\u003cvar\u003esite-name\u003c/var\u003e\u003c/code\u003e",
+	//       "description": "Required. The site in which to create the version, in the format: sites/ SITE_ID",
 	//       "location": "path",
 	//       "pattern": "^sites/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "sizeBytes": {
-	//       "description": "The self-reported size of the version. This value is used for a pre-emptive\nquota check for legacy version uploads.",
+	//       "description": "The self-reported size of the version. This value is used for a pre-emptive quota check for legacy version uploads.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "versionId": {
-	//       "description": "A unique id for the new version. This is only specified for legacy version\ncreations.",
+	//       "description": "A unique id for the new version. This is was only specified for legacy version creations, and should be blank.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -6552,6 +9509,9 @@ type SitesVersionsDeleteCall struct {
 }
 
 // Delete: Deletes the specified version.
+//
+//   - name: The fully-qualified resource name for the version, in the
+//     format: sites/SITE_ID/versions/VERSION_ID.
 func (r *SitesVersionsService) Delete(name string) *SitesVersionsDeleteCall {
 	c := &SitesVersionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6585,7 +9545,7 @@ func (c *SitesVersionsDeleteCall) Header() http.Header {
 
 func (c *SitesVersionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6620,17 +9580,17 @@ func (c *SitesVersionsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, erro
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -6653,7 +9613,7 @@ func (c *SitesVersionsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, erro
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the version to be deleted, in the format:\n\u003ccode\u003esites/\u003cvar\u003esite-name\u003c/var\u003e/versions/\u003cvar\u003eversionID\u003c/var\u003e\u003c/code\u003e",
+	//       "description": "Required. The fully-qualified resource name for the version, in the format: sites/SITE_ID/versions/VERSION_ID",
 	//       "location": "path",
 	//       "pattern": "^sites/[^/]+/versions/[^/]+$",
 	//       "required": true,
@@ -6683,38 +9643,42 @@ type SitesVersionsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the versions that have been created on the specified
-// site.
-// Will include filtering in the future.
+// List: Lists the versions that have been created for the specified
+// site. This list includes versions for both the default `live` channel
+// and any active preview channels for the specified site.
+//
+//   - parent: The site or channel for which to list versions, in either
+//     of the following formats: - sites/SITE_ID -
+//     sites/SITE_ID/channels/CHANNEL_ID.
 func (r *SitesVersionsService) List(parent string) *SitesVersionsListCall {
 	c := &SitesVersionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": The filter string used
-// to return a subset of versions in the response.
-// Currently supported fields for filtering are: name, status,
-// and create_time. Filter processing will be implemented in
-// accordance
-// with go/filtering.
+// Filter sets the optional parameter "filter": A filter string used to
+// return a subset of versions in the response. The currently supported
+// fields for filtering are: `name`, `status`, and `create_time`. Learn
+// more about filtering in Google's AIP 160 standard
+// (https://google.aip.dev/160).
 func (c *SitesVersionsListCall) Filter(filter string) *SitesVersionsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of versions to return. The service may return fewer than
-// this value.
-// If unspecified, at most 25 versions will be returned.
-// The maximum value is 100; values above 100 will be coerced to 100
+// of versions to return. The service may return a lower number if fewer
+// versions exist than this maximum number. If unspecified, defaults to
+// 25. The maximum value is 100; values above 100 will be coerced to
+// 100.
 func (c *SitesVersionsListCall) PageSize(pageSize int64) *SitesVersionsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The
-// next_page_token from a previous request, if provided.
+// PageToken sets the optional parameter "pageToken": A token from a
+// previous call to `ListVersions` that tells the server where to resume
+// listing.
 func (c *SitesVersionsListCall) PageToken(pageToken string) *SitesVersionsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -6757,7 +9721,7 @@ func (c *SitesVersionsListCall) Header() http.Header {
 
 func (c *SitesVersionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6795,17 +9759,17 @@ func (c *SitesVersionsListCall) Do(opts ...googleapi.CallOption) (*ListVersionsR
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListVersionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -6819,7 +9783,7 @@ func (c *SitesVersionsListCall) Do(opts ...googleapi.CallOption) (*ListVersionsR
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the versions that have been created on the specified site.\nWill include filtering in the future.",
+	//   "description": "Lists the versions that have been created for the specified site. This list includes versions for both the default `live` channel and any active preview channels for the specified site.",
 	//   "flatPath": "v1beta1/sites/{sitesId}/versions",
 	//   "httpMethod": "GET",
 	//   "id": "firebasehosting.sites.versions.list",
@@ -6828,23 +9792,23 @@ func (c *SitesVersionsListCall) Do(opts ...googleapi.CallOption) (*ListVersionsR
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "The filter string used to return a subset of versions in the response.\nCurrently supported fields for filtering are: name, status,\nand create_time. Filter processing will be implemented in accordance\nwith go/filtering.",
+	//       "description": "A filter string used to return a subset of versions in the response. The currently supported fields for filtering are: `name`, `status`, and `create_time`. Learn more about filtering in Google's [AIP 160 standard](https://google.aip.dev/160).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The maximum number of versions to return. The service may return fewer than\nthis value.\nIf unspecified, at most 25 versions will be returned.\nThe maximum value is 100; values above 100 will be coerced to 100",
+	//       "description": "The maximum number of versions to return. The service may return a lower number if fewer versions exist than this maximum number. If unspecified, defaults to 25. The maximum value is 100; values above 100 will be coerced to 100.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The next_page_token from a previous request, if provided.",
+	//       "description": "A token from a previous call to `ListVersions` that tells the server where to resume listing.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent for which to list files, in the format:\n\u003ccode\u003esites/\u003cvar\u003esite-name\u003c/var\u003e\u003c/code\u003e",
+	//       "description": "Required. The site or channel for which to list versions, in either of the following formats: - sites/SITE_ID - sites/SITE_ID/channels/CHANNEL_ID ",
 	//       "location": "path",
 	//       "pattern": "^sites/[^/]+$",
 	//       "required": true,
@@ -6890,38 +9854,36 @@ func (c *SitesVersionsListCall) Pages(ctx context.Context, f func(*ListVersionsR
 
 type SitesVersionsPatchCall struct {
 	s          *Service
-	nameid     string
+	name       string
 	version    *Version
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
 	header_    http.Header
 }
 
-// Patch: Updates the specified metadata for a version. Note that this
-// method will
-// fail with `FAILED_PRECONDITION` in the event of an invalid
-// state
-// transition. The only valid transition for a version is currently from
-// a
-// `CREATED` status to a `FINALIZED` status.
-// Use [`DeleteVersion`](../sites.versions/delete) to set the status of
-// a
-// version to `DELETED`.
-func (r *SitesVersionsService) Patch(nameid string, version *Version) *SitesVersionsPatchCall {
+// Patch:  Updates the specified metadata for the specified version.
+// This method will fail with `FAILED_PRECONDITION` in the event of an
+// invalid state transition. The supported state
+// (../sites.versions#versionstatus) transitions for a version are from
+// `CREATED` to `FINALIZED`. Use `DeleteVersion` (delete) to set the
+// status of a version to `DELETED`.
+//
+//   - name: The fully-qualified resource name for the version, in the
+//     format: sites/ SITE_ID/versions/VERSION_ID This name is provided in
+//     the response body when you call `CreateVersion`
+//     (sites.versions/create).
+func (r *SitesVersionsService) Patch(name string, version *Version) *SitesVersionsPatchCall {
 	c := &SitesVersionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.nameid = nameid
+	c.name = name
 	c.version = version
 	return c
 }
 
 // UpdateMask sets the optional parameter "updateMask": A set of field
-// names from your [version](../sites.versions) that you want
-// to update.
-// <br>A field will be overwritten if, and only if, it's in the
-// mask.
-// <br>If a mask is not provided then a default mask of
-// only
-// [`status`](../sites.versions#Version.FIELDS.status) will be used.
+// names from your version (../sites.versions) that you want to update.
+// A field will be overwritten if, and only if, it's in the mask. If a
+// mask is not provided then a default mask of only `status`
+// (../sites.versions#Version.FIELDS.status) will be used.
 func (c *SitesVersionsPatchCall) UpdateMask(updateMask string) *SitesVersionsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -6954,7 +9916,7 @@ func (c *SitesVersionsPatchCall) Header() http.Header {
 
 func (c *SitesVersionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6975,7 +9937,7 @@ func (c *SitesVersionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"name": c.nameid,
+		"name": c.name,
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
@@ -6994,17 +9956,17 @@ func (c *SitesVersionsPatchCall) Do(opts ...googleapi.CallOption) (*Version, err
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Version{
 		ServerResponse: googleapi.ServerResponse{
@@ -7018,7 +9980,7 @@ func (c *SitesVersionsPatchCall) Do(opts ...googleapi.CallOption) (*Version, err
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the specified metadata for a version. Note that this method will\nfail with `FAILED_PRECONDITION` in the event of an invalid state\ntransition. The only valid transition for a version is currently from a\n`CREATED` status to a `FINALIZED` status.\nUse [`DeleteVersion`](../sites.versions/delete) to set the status of a\nversion to `DELETED`.",
+	//   "description": " Updates the specified metadata for the specified version. This method will fail with `FAILED_PRECONDITION` in the event of an invalid state transition. The supported [state](../sites.versions#versionstatus) transitions for a version are from `CREATED` to `FINALIZED`. Use [`DeleteVersion`](delete) to set the status of a version to `DELETED`.",
 	//   "flatPath": "v1beta1/sites/{sitesId}/versions/{versionsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "firebasehosting.sites.versions.patch",
@@ -7027,14 +9989,14 @@ func (c *SitesVersionsPatchCall) Do(opts ...googleapi.CallOption) (*Version, err
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The unique identifier for a version, in the format:\n\u003ccode\u003esites/\u003cvar\u003esite-name\u003c/var\u003e/versions/\u003cvar\u003eversionID\u003c/var\u003e\u003c/code\u003e\nThis name is provided in the response body when you call the\n[`CreateVersion`](../sites.versions/create) endpoint.",
+	//       "description": "The fully-qualified resource name for the version, in the format: sites/ SITE_ID/versions/VERSION_ID This name is provided in the response body when you call [`CreateVersion`](sites.versions/create).",
 	//       "location": "path",
 	//       "pattern": "^sites/[^/]+/versions/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "A set of field names from your [version](../sites.versions) that you want\nto update.\n\u003cbr\u003eA field will be overwritten if, and only if, it's in the mask.\n\u003cbr\u003eIf a mask is not provided then a default mask of only\n[`status`](../sites.versions#Version.FIELDS.status) will be used.",
+	//       "description": "A set of field names from your [version](../sites.versions) that you want to update. A field will be overwritten if, and only if, it's in the mask. If a mask is not provided then a default mask of only [`status`](../sites.versions#Version.FIELDS.status) will be used.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -7066,7 +10028,11 @@ type SitesVersionsPopulateFilesCall struct {
 	header_                     http.Header
 }
 
-// PopulateFiles: Adds content files to a version.
+// PopulateFiles:  Adds content files to the specified version. Each
+// file must be under 2 GB.
+//
+//   - parent: The version to which to add files, in the format:
+//     sites/SITE_ID /versions/VERSION_ID.
 func (r *SitesVersionsService) PopulateFiles(parent string, populateversionfilesrequest *PopulateVersionFilesRequest) *SitesVersionsPopulateFilesCall {
 	c := &SitesVersionsPopulateFilesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7101,7 +10067,7 @@ func (c *SitesVersionsPopulateFilesCall) Header() http.Header {
 
 func (c *SitesVersionsPopulateFilesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7141,17 +10107,17 @@ func (c *SitesVersionsPopulateFilesCall) Do(opts ...googleapi.CallOption) (*Popu
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &PopulateVersionFilesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -7165,7 +10131,7 @@ func (c *SitesVersionsPopulateFilesCall) Do(opts ...googleapi.CallOption) (*Popu
 	}
 	return ret, nil
 	// {
-	//   "description": "Adds content files to a version.",
+	//   "description": " Adds content files to the specified version. Each file must be under 2 GB.",
 	//   "flatPath": "v1beta1/sites/{sitesId}/versions/{versionsId}:populateFiles",
 	//   "httpMethod": "POST",
 	//   "id": "firebasehosting.sites.versions.populateFiles",
@@ -7174,7 +10140,7 @@ func (c *SitesVersionsPopulateFilesCall) Do(opts ...googleapi.CallOption) (*Popu
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The version to add files to, in the format:\n\u003ccode\u003esites/\u003cvar\u003esite-name\u003c/var\u003e/versions/\u003cvar\u003eversionID\u003c/var\u003e\u003c/code\u003e",
+	//       "description": "Required. The version to which to add files, in the format: sites/SITE_ID /versions/VERSION_ID",
 	//       "location": "path",
 	//       "pattern": "^sites/[^/]+/versions/[^/]+$",
 	//       "required": true,
@@ -7209,36 +10175,46 @@ type SitesVersionsFilesListCall struct {
 
 // List: Lists the remaining files to be uploaded for the specified
 // version.
+//
+//   - parent: The version for which to list files, in the format:
+//     sites/SITE_ID /versions/VERSION_ID.
 func (r *SitesVersionsFilesService) List(parent string) *SitesVersionsFilesListCall {
 	c := &SitesVersionsFilesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The page size to
-// return. Defaults to 1000.
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of version files to return. The service may return a lower number if
+// fewer version files exist than this maximum number. If unspecified,
+// defaults to 1000.
 func (c *SitesVersionsFilesListCall) PageSize(pageSize int64) *SitesVersionsFilesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The
-// next_page_token from a previous request, if provided. This will be
-// the
-// encoded version of a
-// firebase.hosting.proto.metadata.ListFilesPageToken.
+// PageToken sets the optional parameter "pageToken": A token from a
+// previous call to `ListVersionFiles` that tells the server where to
+// resume listing.
 func (c *SitesVersionsFilesListCall) PageToken(pageToken string) *SitesVersionsFilesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// Status sets the optional parameter "status": The type of files in the
-// version that should be listed.
+// Status sets the optional parameter "status": The type of files that
+// should be listed for the specified version.
 //
 // Possible values:
-//   "STATUS_UNSPECIFIED"
-//   "EXPECTED"
-//   "ACTIVE"
+//
+//	"STATUS_UNSPECIFIED" - The default status; should not be
+//
+// intentionally used.
+//
+//	"EXPECTED" - The file has been included in the version and is
+//
+// expected to be uploaded in the near future.
+//
+//	"ACTIVE" - The file has already been uploaded to Firebase Hosting.
 func (c *SitesVersionsFilesListCall) Status(status string) *SitesVersionsFilesListCall {
 	c.urlParams_.Set("status", status)
 	return c
@@ -7281,7 +10257,7 @@ func (c *SitesVersionsFilesListCall) Header() http.Header {
 
 func (c *SitesVersionsFilesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7319,17 +10295,17 @@ func (c *SitesVersionsFilesListCall) Do(opts ...googleapi.CallOption) (*ListVers
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListVersionFilesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -7352,29 +10328,34 @@ func (c *SitesVersionsFilesListCall) Do(opts ...googleapi.CallOption) (*ListVers
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "The page size to return. Defaults to 1000.",
+	//       "description": "The maximum number of version files to return. The service may return a lower number if fewer version files exist than this maximum number. If unspecified, defaults to 1000.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The next_page_token from a previous request, if provided. This will be the\nencoded version of a firebase.hosting.proto.metadata.ListFilesPageToken.",
+	//       "description": "A token from a previous call to `ListVersionFiles` that tells the server where to resume listing.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent to list files for, in the format:\n\u003ccode\u003esites/\u003cvar\u003esite-name\u003c/var\u003e/versions/\u003cvar\u003eversionID\u003c/var\u003e\u003c/code\u003e",
+	//       "description": "Required. The version for which to list files, in the format: sites/SITE_ID /versions/VERSION_ID",
 	//       "location": "path",
 	//       "pattern": "^sites/[^/]+/versions/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "status": {
-	//       "description": "The type of files in the version that should be listed.",
+	//       "description": " The type of files that should be listed for the specified version.",
 	//       "enum": [
 	//         "STATUS_UNSPECIFIED",
 	//         "EXPECTED",
 	//         "ACTIVE"
+	//       ],
+	//       "enumDescriptions": [
+	//         "The default status; should not be intentionally used.",
+	//         "The file has been included in the version and is expected to be uploaded in the near future.",
+	//         "The file has already been uploaded to Firebase Hosting."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"

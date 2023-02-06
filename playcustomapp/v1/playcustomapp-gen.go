@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -6,33 +6,33 @@
 
 // Package playcustomapp provides access to the Google Play Custom App Publishing API.
 //
-// For product documentation, see: https://developers.google.com/android/work/play/custom-app-api
+// For product documentation, see: https://developers.google.com/android/work/play/custom-app-api/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/playcustomapp/v1"
-//   ...
-//   ctx := context.Background()
-//   playcustomappService, err := playcustomapp.NewService(ctx)
+//	import "google.golang.org/api/playcustomapp/v1"
+//	...
+//	ctx := context.Background()
+//	playcustomappService, err := playcustomapp.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   playcustomappService, err := playcustomapp.NewService(ctx, option.WithAPIKey("AIza..."))
+//	playcustomappService, err := playcustomapp.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   playcustomappService, err := playcustomapp.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	playcustomappService, err := playcustomapp.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package playcustomapp // import "google.golang.org/api/playcustomapp/v1"
@@ -50,6 +50,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -74,7 +75,8 @@ var _ = internaloption.WithDefaultEndpoint
 const apiId = "playcustomapp:v1"
 const apiName = "playcustomapp"
 const apiVersion = "v1"
-const basePath = "https://www.googleapis.com/playcustomapp/v1/accounts/"
+const basePath = "https://playcustomapp.googleapis.com/"
+const mtlsBasePath = "https://playcustomapp.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
@@ -84,12 +86,13 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/androidpublisher",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -159,6 +162,19 @@ type CustomApp struct {
 	// LanguageCode: Default listing language in BCP 47 format.
 	LanguageCode string `json:"languageCode,omitempty"`
 
+	// Organizations: Organizations to which the custom app should be made
+	// available. If the request contains any organizations, then the app
+	// will be restricted to only these organizations. To support the
+	// organization linked to the developer account, the organization ID
+	// should be provided explicitly together with other organizations. If
+	// no organizations are provided, then the app is only available to the
+	// organization linked to the developer account.
+	Organizations []*Organization `json:"organizations,omitempty"`
+
+	// PackageName: Output only. Package name of the created Android app.
+	// Only present in the API response.
+	PackageName string `json:"packageName,omitempty"`
+
 	// Title: Title for the Android app.
 	Title string `json:"title,omitempty"`
 
@@ -168,10 +184,10 @@ type CustomApp struct {
 
 	// ForceSendFields is a list of field names (e.g. "LanguageCode") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "LanguageCode") to include
@@ -189,6 +205,40 @@ func (s *CustomApp) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Organization: Represents an organization that can access a custom
+// app.
+type Organization struct {
+	// OrganizationId: Required. ID of the organization.
+	OrganizationId string `json:"organizationId,omitempty"`
+
+	// OrganizationName: Optional. A human-readable name of the
+	// organization, to help recognize the organization.
+	OrganizationName string `json:"organizationName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "OrganizationId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "OrganizationId") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Organization) MarshalJSON() ([]byte, error) {
+	type NoMethod Organization
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // method id "playcustomapp.accounts.customApps.create":
 
 type AccountsCustomAppsCreateCall struct {
@@ -201,7 +251,9 @@ type AccountsCustomAppsCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Create and publish a new custom app.
+// Create: Creates a new custom app.
+//
+// - account: Developer account ID.
 func (r *AccountsCustomAppsService) Create(account int64, customapp *CustomApp) *AccountsCustomAppsCreateCall {
 	c := &AccountsCustomAppsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.account = account
@@ -275,7 +327,7 @@ func (c *AccountsCustomAppsCreateCall) Header() http.Header {
 
 func (c *AccountsCustomAppsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -288,7 +340,7 @@ func (c *AccountsCustomAppsCreateCall) doRequest(alt string) (*http.Response, er
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "{account}/customApps")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "playcustomapp/v1/accounts/{account}/customApps")
 	if c.mediaInfo_ != nil {
 		urls = googleapi.ResolveRelative(c.s.BasePath, "/upload/playcustomapp/v1/accounts/{account}/customApps")
 		c.urlParams_.Set("uploadType", c.mediaInfo_.UploadType())
@@ -326,17 +378,17 @@ func (c *AccountsCustomAppsCreateCall) Do(opts ...googleapi.CallOption) (*Custom
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	rx := c.mediaInfo_.ResumableUpload(res.Header.Get("Location"))
 	if rx != nil {
@@ -352,7 +404,7 @@ func (c *AccountsCustomAppsCreateCall) Do(opts ...googleapi.CallOption) (*Custom
 		}
 		defer res.Body.Close()
 		if err := googleapi.CheckResponse(res); err != nil {
-			return nil, err
+			return nil, gensupport.WrapError(err)
 		}
 	}
 	ret := &CustomApp{
@@ -367,14 +419,15 @@ func (c *AccountsCustomAppsCreateCall) Do(opts ...googleapi.CallOption) (*Custom
 	}
 	return ret, nil
 	// {
-	//   "description": "Create and publish a new custom app.",
+	//   "description": "Creates a new custom app.",
+	//   "flatPath": "playcustomapp/v1/accounts/{account}/customApps",
 	//   "httpMethod": "POST",
 	//   "id": "playcustomapp.accounts.customApps.create",
 	//   "mediaUpload": {
 	//     "accept": [
 	//       "*/*"
 	//     ],
-	//     "maxSize": "100MB",
+	//     "maxSize": "10737418240",
 	//     "protocols": {
 	//       "resumable": {
 	//         "multipart": true,
@@ -398,7 +451,7 @@ func (c *AccountsCustomAppsCreateCall) Do(opts ...googleapi.CallOption) (*Custom
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{account}/customApps",
+	//   "path": "playcustomapp/v1/accounts/{account}/customApps",
 	//   "request": {
 	//     "$ref": "CustomApp"
 	//   },

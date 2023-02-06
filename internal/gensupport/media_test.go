@@ -11,141 +11,12 @@ import (
 	"io/ioutil"
 	mathrand "math/rand"
 	"net/http"
-	"reflect"
 	"strings"
 	"testing"
+	"time"
 
 	"google.golang.org/api/googleapi"
 )
-
-func TestContentSniffing(t *testing.T) {
-	type testCase struct {
-		data     []byte // the data to read from the Reader
-		finalErr error  // error to return after data has been read
-
-		wantContentType       string
-		wantContentTypeResult bool
-	}
-
-	for _, tc := range []testCase{
-		{
-			data:                  []byte{0, 0, 0, 0},
-			finalErr:              nil,
-			wantContentType:       "application/octet-stream",
-			wantContentTypeResult: true,
-		},
-		{
-			data:                  []byte(""),
-			finalErr:              nil,
-			wantContentType:       "text/plain; charset=utf-8",
-			wantContentTypeResult: true,
-		},
-		{
-			data:                  []byte(""),
-			finalErr:              io.ErrUnexpectedEOF,
-			wantContentType:       "text/plain; charset=utf-8",
-			wantContentTypeResult: false,
-		},
-		{
-			data:                  []byte("abc"),
-			finalErr:              nil,
-			wantContentType:       "text/plain; charset=utf-8",
-			wantContentTypeResult: true,
-		},
-		{
-			data:                  []byte("abc"),
-			finalErr:              io.ErrUnexpectedEOF,
-			wantContentType:       "text/plain; charset=utf-8",
-			wantContentTypeResult: false,
-		},
-		// The following examples contain more bytes than are buffered for sniffing.
-		{
-			data:                  bytes.Repeat([]byte("a"), 513),
-			finalErr:              nil,
-			wantContentType:       "text/plain; charset=utf-8",
-			wantContentTypeResult: true,
-		},
-		{
-			data:                  bytes.Repeat([]byte("a"), 513),
-			finalErr:              io.ErrUnexpectedEOF,
-			wantContentType:       "text/plain; charset=utf-8",
-			wantContentTypeResult: true, // true because error is after first 512 bytes.
-		},
-	} {
-		er := &errReader{buf: tc.data, err: tc.finalErr}
-
-		sct := newContentSniffer(er)
-
-		// Even if was an error during the first 512 bytes, we should still be able to read those bytes.
-		buf, err := ioutil.ReadAll(sct)
-
-		if !reflect.DeepEqual(buf, tc.data) {
-			t.Fatalf("Failed reading buffer: got: %q; want:%q", buf, tc.data)
-		}
-
-		if err != tc.finalErr {
-			t.Fatalf("Reading buffer error: got: %v; want: %v", err, tc.finalErr)
-		}
-
-		ct, ok := sct.ContentType()
-		if ok != tc.wantContentTypeResult {
-			t.Fatalf("Content type result got: %v; want: %v", ok, tc.wantContentTypeResult)
-		}
-		if ok && ct != tc.wantContentType {
-			t.Fatalf("Content type got: %q; want: %q", ct, tc.wantContentType)
-		}
-	}
-}
-
-type staticContentTyper struct {
-	io.Reader
-}
-
-func (sct staticContentTyper) ContentType() string {
-	return "static content type"
-}
-
-func TestDetermineContentType(t *testing.T) {
-	data := []byte("abc")
-	rdr := func() io.Reader {
-		return bytes.NewBuffer(data)
-	}
-
-	type testCase struct {
-		r                  io.Reader
-		explicitConentType string
-		wantContentType    string
-	}
-
-	for _, tc := range []testCase{
-		{
-			r:               rdr(),
-			wantContentType: "text/plain; charset=utf-8",
-		},
-		{
-			r:               staticContentTyper{rdr()},
-			wantContentType: "static content type",
-		},
-		{
-			r:                  staticContentTyper{rdr()},
-			explicitConentType: "explicit",
-			wantContentType:    "explicit",
-		},
-	} {
-		r, ctype := DetermineContentType(tc.r, tc.explicitConentType)
-		got, err := ioutil.ReadAll(r)
-		if err != nil {
-			t.Fatalf("Failed reading buffer: %v", err)
-		}
-		if !reflect.DeepEqual(got, data) {
-			t.Fatalf("Failed reading buffer: got: %q; want:%q", got, data)
-		}
-
-		if ctype != tc.wantContentType {
-			t.Fatalf("Content type got: %q; want: %q", ctype, tc.wantContentType)
-		}
-	}
-}
 
 func TestNewInfoFromMedia(t *testing.T) {
 	const textType = "text/plain; charset=utf-8"
@@ -155,6 +26,7 @@ func TestNewInfoFromMedia(t *testing.T) {
 		opts                                   []googleapi.MediaOption
 		wantType                               string
 		wantMedia, wantBuffer, wantSingleChunk bool
+		wantDeadline                           time.Duration
 	}{
 		{
 			desc:            "an empty reader results in a MediaBuffer with a single, empty chunk",
@@ -171,6 +43,15 @@ func TestNewInfoFromMedia(t *testing.T) {
 			wantType:        "xyz",
 			wantBuffer:      true,
 			wantSingleChunk: true,
+		},
+		{
+			desc:            "ChunkRetryDeadline is observed",
+			r:               new(bytes.Buffer),
+			opts:            []googleapi.MediaOption{googleapi.ChunkRetryDeadline(time.Second)},
+			wantType:        textType,
+			wantBuffer:      true,
+			wantSingleChunk: true,
+			wantDeadline:    time.Second,
 		},
 		{
 			desc:            "chunk size of zero: don't use a MediaBuffer; upload as a single chunk",
@@ -219,6 +100,9 @@ func TestNewInfoFromMedia(t *testing.T) {
 		}
 		if got, want := mi.singleChunk, test.wantSingleChunk; got != want {
 			t.Errorf("%s: singleChunk: got %t, want %t", test.desc, got, want)
+		}
+		if got, want := mi.chunkRetryDeadline, test.wantDeadline; got != want {
+			t.Errorf("%s: chunkRetryDeadline: got %v, want %v", test.desc, got, want)
 		}
 	}
 }
@@ -295,12 +179,11 @@ func TestUploadRequestGetBody(t *testing.T) {
 			wantGetBody: true,
 		},
 		{
-			desc: "chunk size < data size: MediaBuffer, >1 chunk, no getBody",
-			// No getBody here, because the initial request contains no media data
+			desc: "chunk size < data size: MediaBuffer, >1 chunk, getBody",
 			// Note that ChunkSize = 1 is rounded up to googleapi.MinUploadChunkSize.
 			r:           &nullReader{2 * googleapi.MinUploadChunkSize},
 			chunkSize:   1,
-			wantGetBody: false,
+			wantGetBody: true,
 		},
 	} {
 		cryptorand.Reader = mathrand.New(mathrand.NewSource(int64(i)))
@@ -341,6 +224,7 @@ func TestResumableUpload(t *testing.T) {
 		chunkSize           int
 		wantUploadType      string
 		wantResumableUpload bool
+		chunkRetryDeadline  time.Duration
 	}{
 		{
 			desc:                "chunk size of zero: don't use a MediaBuffer; upload as a single chunk",
@@ -372,13 +256,34 @@ func TestResumableUpload(t *testing.T) {
 			wantUploadType:      "resumable",
 			wantResumableUpload: true,
 		},
+		{
+			desc:                "confirm that ChunkRetryDeadline is carried to ResumableUpload",
+			r:                   &nullReader{2 * googleapi.MinUploadChunkSize},
+			chunkSize:           1,
+			wantUploadType:      "resumable",
+			wantResumableUpload: true,
+			chunkRetryDeadline:  1 * time.Second,
+		},
 	} {
-		mi := NewInfoFromMedia(test.r, []googleapi.MediaOption{googleapi.ChunkSize(test.chunkSize)})
+		opts := []googleapi.MediaOption{googleapi.ChunkSize(test.chunkSize)}
+		if test.chunkRetryDeadline != 0 {
+			opts = append(opts, googleapi.ChunkRetryDeadline(test.chunkRetryDeadline))
+		}
+		mi := NewInfoFromMedia(test.r, opts)
 		if got, want := mi.UploadType(), test.wantUploadType; got != want {
 			t.Errorf("%s: upload type: got %q, want %q", test.desc, got, want)
 		}
 		if got, want := mi.ResumableUpload("") != nil, test.wantResumableUpload; got != want {
 			t.Errorf("%s: resumable upload non-nil: got %t, want %t", test.desc, got, want)
+		}
+		if test.chunkRetryDeadline != 0 {
+			if got := mi.ResumableUpload(""); got != nil {
+				if got.ChunkRetryDeadline != test.chunkRetryDeadline {
+					t.Errorf("%s: ChunkRetryDeadline: got %v, want %v", test.desc, got.ChunkRetryDeadline, test.chunkRetryDeadline)
+				}
+			} else {
+				t.Errorf("%s: test case invalid; resumable upload is nil", test.desc)
+			}
 		}
 	}
 }

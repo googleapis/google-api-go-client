@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -8,31 +8,35 @@
 //
 // For product documentation, see: https://cloud.google.com/billing/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/cloudbilling/v1"
-//   ...
-//   ctx := context.Background()
-//   cloudbillingService, err := cloudbilling.NewService(ctx)
+//	import "google.golang.org/api/cloudbilling/v1"
+//	...
+//	ctx := context.Background()
+//	cloudbillingService, err := cloudbilling.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
+//
+// By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
+//
+//	cloudbillingService, err := cloudbilling.NewService(ctx, option.WithScopes(cloudbilling.CloudPlatformScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   cloudbillingService, err := cloudbilling.NewService(ctx, option.WithAPIKey("AIza..."))
+//	cloudbillingService, err := cloudbilling.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   cloudbillingService, err := cloudbilling.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	cloudbillingService, err := cloudbilling.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package cloudbilling // import "google.golang.org/api/cloudbilling/v1"
@@ -50,6 +54,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -75,21 +80,32 @@ const apiId = "cloudbilling:v1"
 const apiName = "cloudbilling"
 const apiVersion = "v1"
 const basePath = "https://cloudbilling.googleapis.com/"
+const mtlsBasePath = "https://cloudbilling.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// View and manage your Google Cloud Platform billing accounts
+	CloudBillingScope = "https://www.googleapis.com/auth/cloud-billing"
+
+	// View your Google Cloud Platform billing accounts
+	CloudBillingReadonlyScope = "https://www.googleapis.com/auth/cloud-billing.readonly"
+
+	// See, edit, configure, and delete your Google Cloud data and see the
+	// email address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
 // NewService creates a new APIService.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*APIService, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
+		"https://www.googleapis.com/auth/cloud-billing",
+		"https://www.googleapis.com/auth/cloud-billing.readonly",
 		"https://www.googleapis.com/auth/cloud-platform",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -193,9 +209,8 @@ type ServicesSkusService struct {
 // AggregationInfo: Represents the aggregation level and interval for
 // pricing of a single SKU.
 type AggregationInfo struct {
-	// AggregationCount: The number of intervals to aggregate over.
-	// Example: If aggregation_level is "DAILY" and aggregation_count is
-	// 14,
+	// AggregationCount: The number of intervals to aggregate over. Example:
+	// If aggregation_level is "DAILY" and aggregation_count is 14,
 	// aggregation will be over 14 days.
 	AggregationCount int64 `json:"aggregationCount,omitempty"`
 
@@ -213,10 +228,10 @@ type AggregationInfo struct {
 
 	// ForceSendFields is a list of field names (e.g. "AggregationCount") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AggregationCount") to
@@ -235,81 +250,40 @@ func (s *AggregationInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// AuditConfig: Specifies the audit configuration for a service.
-// The configuration determines which permission types are logged, and
-// what
-// identities, if any, are exempted from logging.
-// An AuditConfig must have one or more AuditLogConfigs.
-//
-// If there are AuditConfigs for both `allServices` and a specific
-// service,
-// the union of the two AuditConfigs is used for that service: the
-// log_types
-// specified in each AuditConfig are enabled, and the exempted_members
-// in each
-// AuditLogConfig are exempted.
-//
-// Example Policy with multiple AuditConfigs:
-//
-//     {
-//       "audit_configs": [
-//         {
-//           "service": "allServices"
-//           "audit_log_configs": [
-//             {
-//               "log_type": "DATA_READ",
-//               "exempted_members": [
-//                 "user:jose@example.com"
-//               ]
-//             },
-//             {
-//               "log_type": "DATA_WRITE",
-//             },
-//             {
-//               "log_type": "ADMIN_READ",
-//             }
-//           ]
-//         },
-//         {
-//           "service": "sampleservice.googleapis.com"
-//           "audit_log_configs": [
-//             {
-//               "log_type": "DATA_READ",
-//             },
-//             {
-//               "log_type": "DATA_WRITE",
-//               "exempted_members": [
-//                 "user:aliya@example.com"
-//               ]
-//             }
-//           ]
-//         }
-//       ]
-//     }
-//
-// For sampleservice, this policy enables DATA_READ, DATA_WRITE and
-// ADMIN_READ
-// logging. It also exempts jose@example.com from DATA_READ logging,
-// and
-// aliya@example.com from DATA_WRITE logging.
+// AuditConfig: Specifies the audit configuration for a service. The
+// configuration determines which permission types are logged, and what
+// identities, if any, are exempted from logging. An AuditConfig must
+// have one or more AuditLogConfigs. If there are AuditConfigs for both
+// `allServices` and a specific service, the union of the two
+// AuditConfigs is used for that service: the log_types specified in
+// each AuditConfig are enabled, and the exempted_members in each
+// AuditLogConfig are exempted. Example Policy with multiple
+// AuditConfigs: { "audit_configs": [ { "service": "allServices",
+// "audit_log_configs": [ { "log_type": "DATA_READ", "exempted_members":
+// [ "user:jose@example.com" ] }, { "log_type": "DATA_WRITE" }, {
+// "log_type": "ADMIN_READ" } ] }, { "service":
+// "sampleservice.googleapis.com", "audit_log_configs": [ { "log_type":
+// "DATA_READ" }, { "log_type": "DATA_WRITE", "exempted_members": [
+// "user:aliya@example.com" ] } ] } ] } For sampleservice, this policy
+// enables DATA_READ, DATA_WRITE and ADMIN_READ logging. It also exempts
+// `jose@example.com` from DATA_READ logging, and `aliya@example.com`
+// from DATA_WRITE logging.
 type AuditConfig struct {
 	// AuditLogConfigs: The configuration for logging of each type of
 	// permission.
 	AuditLogConfigs []*AuditLogConfig `json:"auditLogConfigs,omitempty"`
 
-	// Service: Specifies a service that will be enabled for audit
-	// logging.
-	// For example, `storage.googleapis.com`,
-	// `cloudsql.googleapis.com`.
+	// Service: Specifies a service that will be enabled for audit logging.
+	// For example, `storage.googleapis.com`, `cloudsql.googleapis.com`.
 	// `allServices` is a special value that covers all services.
 	Service string `json:"service,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AuditLogConfigs") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AuditLogConfigs") to
@@ -329,31 +303,15 @@ func (s *AuditConfig) MarshalJSON() ([]byte, error) {
 }
 
 // AuditLogConfig: Provides the configuration for logging a type of
-// permissions.
-// Example:
-//
-//     {
-//       "audit_log_configs": [
-//         {
-//           "log_type": "DATA_READ",
-//           "exempted_members": [
-//             "user:jose@example.com"
-//           ]
-//         },
-//         {
-//           "log_type": "DATA_WRITE",
-//         }
-//       ]
-//     }
-//
-// This enables 'DATA_READ' and 'DATA_WRITE' logging, while
-// exempting
-// jose@example.com from DATA_READ logging.
+// permissions. Example: { "audit_log_configs": [ { "log_type":
+// "DATA_READ", "exempted_members": [ "user:jose@example.com" ] }, {
+// "log_type": "DATA_WRITE" } ] } This enables 'DATA_READ' and
+// 'DATA_WRITE' logging, while exempting jose@example.com from DATA_READ
+// logging.
 type AuditLogConfig struct {
 	// ExemptedMembers: Specifies the identities that do not cause logging
-	// for this type of
-	// permission.
-	// Follows the same format of Binding.members.
+	// for this type of permission. Follows the same format of
+	// Binding.members.
 	ExemptedMembers []string `json:"exemptedMembers,omitempty"`
 
 	// LogType: The log type that this config enables.
@@ -367,10 +325,10 @@ type AuditLogConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "ExemptedMembers") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ExemptedMembers") to
@@ -389,40 +347,31 @@ func (s *AuditLogConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// BillingAccount: A billing account in [GCP
-// Console](https://console.cloud.google.com/).
-// You can assign a billing account to one or more projects.
+// BillingAccount: A billing account in the Google Cloud Console
+// (https://console.cloud.google.com/). You can assign a billing account
+// to one or more projects.
 type BillingAccount struct {
 	// DisplayName: The display name given to the billing account, such as
-	// `My Billing
-	// Account`. This name is displayed in the GCP Console.
+	// `My Billing Account`. This name is displayed in the Google Cloud
+	// Console.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// MasterBillingAccount: If this account is
-	// a
-	// [subaccount](https://cloud.google.com/billing/docs/concepts), then
-	// this
-	// will be the resource name of the master billing account that it is
-	// being
-	// resold through.
-	// Otherwise this will be empty.
+	// MasterBillingAccount: If this account is a subaccount
+	// (https://cloud.google.com/billing/docs/concepts), then this will be
+	// the resource name of the parent billing account that it is being
+	// resold through. Otherwise this will be empty.
 	MasterBillingAccount string `json:"masterBillingAccount,omitempty"`
 
-	// Name: The resource name of the billing account. The resource name has
-	// the form
-	// `billingAccounts/{billing_account_id}`. For
-	// example,
-	// `billingAccounts/012345-567890-ABCDEF` would be the resource name
-	// for
-	// billing account `012345-567890-ABCDEF`.
+	// Name: Output only. The resource name of the billing account. The
+	// resource name has the form `billingAccounts/{billing_account_id}`.
+	// For example, `billingAccounts/012345-567890-ABCDEF` would be the
+	// resource name for billing account `012345-567890-ABCDEF`.
 	Name string `json:"name,omitempty"`
 
 	// Open: Output only. True if the billing account is open, and will
-	// therefore be charged for any
-	// usage on associated projects. False if the billing account is closed,
-	// and
-	// therefore projects associated with it will be unable to use paid
-	// services.
+	// therefore be charged for any usage on associated projects. False if
+	// the billing account is closed, and therefore projects associated with
+	// it will be unable to use paid services.
 	Open bool `json:"open,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -431,10 +380,10 @@ type BillingAccount struct {
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DisplayName") to include
@@ -452,105 +401,67 @@ func (s *BillingAccount) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Binding: Associates `members` with a `role`.
+// Binding: Associates `members`, or principals, with a `role`.
 type Binding struct {
-	// Condition: The condition that is associated with this binding.
-	//
-	// If the condition evaluates to `true`, then this binding applies to
-	// the
-	// current request.
-	//
-	// If the condition evaluates to `false`, then this binding does not
-	// apply to
-	// the current request. However, a different role binding might grant
-	// the same
-	// role to one or more of the members in this binding.
-	//
-	// To learn which resources support conditions in their IAM policies,
-	// see
-	// the
-	// [IAM
-	// documentation](https://cloud.google.com/iam/help/conditions/r
-	// esource-policies).
+	// Condition: The condition that is associated with this binding. If the
+	// condition evaluates to `true`, then this binding applies to the
+	// current request. If the condition evaluates to `false`, then this
+	// binding does not apply to the current request. However, a different
+	// role binding might grant the same role to one or more of the
+	// principals in this binding. To learn which resources support
+	// conditions in their IAM policies, see the IAM documentation
+	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Condition *Expr `json:"condition,omitempty"`
 
-	// Members: Specifies the identities requesting access for a Cloud
-	// Platform resource.
-	// `members` can have the following values:
-	//
-	// * `allUsers`: A special identifier that represents anyone who is
-	//    on the internet; with or without a Google account.
-	//
-	// * `allAuthenticatedUsers`: A special identifier that represents
-	// anyone
-	//    who is authenticated with a Google account or a service
-	// account.
-	//
-	// * `user:{emailid}`: An email address that represents a specific
-	// Google
-	//    account. For example, `alice@example.com` .
-	//
-	//
-	// * `serviceAccount:{emailid}`: An email address that represents a
-	// service
-	//    account. For example,
-	// `my-other-app@appspot.gserviceaccount.com`.
-	//
-	// * `group:{emailid}`: An email address that represents a Google
-	// group.
-	//    For example, `admins@example.com`.
-	//
-	// * `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
-	// unique
-	//    identifier) representing a user that has been recently deleted.
-	// For
-	//    example, `alice@example.com?uid=123456789012345678901`. If the
-	// user is
-	//    recovered, this value reverts to `user:{emailid}` and the
-	// recovered user
-	//    retains the role in the binding.
-	//
-	// * `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
-	// (plus
-	//    unique identifier) representing a service account that has been
-	// recently
-	//    deleted. For example,
-	//
+	// Members: Specifies the principals requesting access for a Google
+	// Cloud resource. `members` can have the following values: *
+	// `allUsers`: A special identifier that represents anyone who is on the
+	// internet; with or without a Google account. *
+	// `allAuthenticatedUsers`: A special identifier that represents anyone
+	// who is authenticated with a Google account or a service account. Does
+	// not include identities that come from external identity providers
+	// (IdPs) through identity federation. * `user:{emailid}`: An email
+	// address that represents a specific Google account. For example,
+	// `alice@example.com` . * `serviceAccount:{emailid}`: An email address
+	// that represents a Google service account. For example,
+	// `my-other-app@appspot.gserviceaccount.com`. *
+	// `serviceAccount:{projectid}.svc.id.goog[{namespace}/{kubernetes-sa}]`:
+	//  An identifier for a Kubernetes service account
+	// (https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts).
+	// For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`.
+	// * `group:{emailid}`: An email address that represents a Google group.
+	// For example, `admins@example.com`. *
+	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
+	// unique identifier) representing a user that has been recently
+	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
+	// If the user is recovered, this value reverts to `user:{emailid}` and
+	// the recovered user retains the role in the binding. *
+	// `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
+	// (plus unique identifier) representing a service account that has been
+	// recently deleted. For example,
 	// `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`.
-	//
-	//    If the service account is undeleted, this value reverts to
-	//    `serviceAccount:{emailid}` and the undeleted service account
-	// retains the
-	//    role in the binding.
-	//
-	// * `deleted:group:{emailid}?uid={uniqueid}`: An email address (plus
-	// unique
-	//    identifier) representing a Google group that has been recently
-	//    deleted. For example,
-	// `admins@example.com?uid=123456789012345678901`. If
-	//    the group is recovered, this value reverts to `group:{emailid}`
-	// and the
-	//    recovered group retains the role in the binding.
-	//
-	//
-	// * `domain:{domain}`: The G Suite domain (primary) that represents all
-	// the
-	//    users of that domain. For example, `google.com` or
-	// `example.com`.
-	//
-	//
+	// If the service account is undeleted, this value reverts to
+	// `serviceAccount:{emailid}` and the undeleted service account retains
+	// the role in the binding. * `deleted:group:{emailid}?uid={uniqueid}`:
+	// An email address (plus unique identifier) representing a Google group
+	// that has been recently deleted. For example,
+	// `admins@example.com?uid=123456789012345678901`. If the group is
+	// recovered, this value reverts to `group:{emailid}` and the recovered
+	// group retains the role in the binding. * `domain:{domain}`: The G
+	// Suite domain (primary) that represents all the users of that domain.
+	// For example, `google.com` or `example.com`.
 	Members []string `json:"members,omitempty"`
 
-	// Role: Role that is assigned to `members`.
+	// Role: Role that is assigned to the list of `members`, or principals.
 	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`.
 	Role string `json:"role,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Condition") to include in
@@ -570,28 +481,28 @@ func (s *Binding) MarshalJSON() ([]byte, error) {
 
 // Category: Represents the category hierarchy of a SKU.
 type Category struct {
-	// ResourceFamily: The type of product the SKU refers to.
-	// Example: "Compute", "Storage", "Network", "ApplicationServices" etc.
+	// ResourceFamily: The type of product the SKU refers to. Example:
+	// "Compute", "Storage", "Network", "ApplicationServices" etc.
 	ResourceFamily string `json:"resourceFamily,omitempty"`
 
-	// ResourceGroup: A group classification for related SKUs.
-	// Example: "RAM", "GPU", "Prediction", "Ops", "GoogleEgress" etc.
+	// ResourceGroup: A group classification for related SKUs. Example:
+	// "RAM", "GPU", "Prediction", "Ops", "GoogleEgress" etc.
 	ResourceGroup string `json:"resourceGroup,omitempty"`
 
 	// ServiceDisplayName: The display name of the service this SKU belongs
 	// to.
 	ServiceDisplayName string `json:"serviceDisplayName,omitempty"`
 
-	// UsageType: Represents how the SKU is consumed.
-	// Example: "OnDemand", "Preemptible", "Commit1Mo", "Commit1Yr" etc.
+	// UsageType: Represents how the SKU is consumed. Example: "OnDemand",
+	// "Preemptible", "Commit1Mo", "Commit1Yr" etc.
 	UsageType string `json:"usageType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ResourceFamily") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ResourceFamily") to
@@ -611,73 +522,48 @@ func (s *Category) MarshalJSON() ([]byte, error) {
 }
 
 // Expr: Represents a textual expression in the Common Expression
-// Language (CEL)
-// syntax. CEL is a C-like expression language. The syntax and semantics
-// of CEL
-// are documented at https://github.com/google/cel-spec.
-//
-// Example (Comparison):
-//
-//     title: "Summary size limit"
-//     description: "Determines if a summary is less than 100 chars"
-//     expression: "document.summary.size() < 100"
-//
-// Example (Equality):
-//
-//     title: "Requestor is owner"
-//     description: "Determines if requestor is the document owner"
-//     expression: "document.owner ==
-// request.auth.claims.email"
-//
-// Example (Logic):
-//
-//     title: "Public documents"
-//     description: "Determine whether the document should be publicly
-// visible"
-//     expression: "document.type != 'private' && document.type !=
-// 'internal'"
-//
-// Example (Data Manipulation):
-//
-//     title: "Notification string"
-//     description: "Create a notification string with a timestamp."
-//     expression: "'New message received at ' +
-// string(document.create_time)"
-//
-// The exact variables and functions that may be referenced within an
-// expression
-// are determined by the service that evaluates it. See the
-// service
-// documentation for additional information.
+// Language (CEL) syntax. CEL is a C-like expression language. The
+// syntax and semantics of CEL are documented at
+// https://github.com/google/cel-spec. Example (Comparison): title:
+// "Summary size limit" description: "Determines if a summary is less
+// than 100 chars" expression: "document.summary.size() < 100" Example
+// (Equality): title: "Requestor is owner" description: "Determines if
+// requestor is the document owner" expression: "document.owner ==
+// request.auth.claims.email" Example (Logic): title: "Public documents"
+// description: "Determine whether the document should be publicly
+// visible" expression: "document.type != 'private' && document.type !=
+// 'internal'" Example (Data Manipulation): title: "Notification string"
+// description: "Create a notification string with a timestamp."
+// expression: "'New message received at ' +
+// string(document.create_time)" The exact variables and functions that
+// may be referenced within an expression are determined by the service
+// that evaluates it. See the service documentation for additional
+// information.
 type Expr struct {
 	// Description: Optional. Description of the expression. This is a
-	// longer text which
-	// describes the expression, e.g. when hovered over it in a UI.
+	// longer text which describes the expression, e.g. when hovered over it
+	// in a UI.
 	Description string `json:"description,omitempty"`
 
 	// Expression: Textual representation of an expression in Common
-	// Expression Language
-	// syntax.
+	// Expression Language syntax.
 	Expression string `json:"expression,omitempty"`
 
 	// Location: Optional. String indicating the location of the expression
-	// for error
-	// reporting, e.g. a file name and a position in the file.
+	// for error reporting, e.g. a file name and a position in the file.
 	Location string `json:"location,omitempty"`
 
 	// Title: Optional. Title for the expression, i.e. a short string
-	// describing
-	// its purpose. This can be used e.g. in UIs which allow to enter
-	// the
-	// expression.
+	// describing its purpose. This can be used e.g. in UIs which allow to
+	// enter the expression.
 	Title string `json:"title,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Description") to include
@@ -695,6 +581,47 @@ func (s *Expr) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GeoTaxonomy: Encapsulates the geographic taxonomy data for a sku.
+type GeoTaxonomy struct {
+	// Regions: The list of regions associated with a sku. Empty for Global
+	// skus, which are associated with all Google Cloud regions.
+	Regions []string `json:"regions,omitempty"`
+
+	// Type: The type of Geo Taxonomy: GLOBAL, REGIONAL, or MULTI_REGIONAL.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - The type is not specified.
+	//   "GLOBAL" - The sku is global in nature, e.g. a license sku. Global
+	// skus are available in all regions, and so have an empty region list.
+	//   "REGIONAL" - The sku is available in a specific region, e.g.
+	// "us-west2".
+	//   "MULTI_REGIONAL" - The sku is associated with multiple regions,
+	// e.g. "us-west2" and "us-east1".
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Regions") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Regions") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GeoTaxonomy) MarshalJSON() ([]byte, error) {
+	type NoMethod GeoTaxonomy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ListBillingAccountsResponse: Response message for
 // `ListBillingAccounts`.
 type ListBillingAccountsResponse struct {
@@ -702,10 +629,9 @@ type ListBillingAccountsResponse struct {
 	BillingAccounts []*BillingAccount `json:"billingAccounts,omitempty"`
 
 	// NextPageToken: A token to retrieve the next page of results. To
-	// retrieve the next page,
-	// call `ListBillingAccounts` again with the `page_token` field set to
-	// this
-	// value. This field is empty if there are no more results to retrieve.
+	// retrieve the next page, call `ListBillingAccounts` again with the
+	// `page_token` field set to this value. This field is empty if there
+	// are no more results to retrieve.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -714,10 +640,10 @@ type ListBillingAccountsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "BillingAccounts") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BillingAccounts") to
@@ -740,15 +666,13 @@ func (s *ListBillingAccountsResponse) MarshalJSON() ([]byte, error) {
 // `ListProjectBillingInfoResponse`.
 type ListProjectBillingInfoResponse struct {
 	// NextPageToken: A token to retrieve the next page of results. To
-	// retrieve the next page,
-	// call `ListProjectBillingInfo` again with the `page_token` field set
-	// to this
-	// value. This field is empty if there are no more results to retrieve.
+	// retrieve the next page, call `ListProjectBillingInfo` again with the
+	// `page_token` field set to this value. This field is empty if there
+	// are no more results to retrieve.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ProjectBillingInfo: A list of `ProjectBillingInfo` resources
-	// representing the projects
-	// associated with the billing account.
+	// representing the projects associated with the billing account.
 	ProjectBillingInfo []*ProjectBillingInfo `json:"projectBillingInfo,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -757,10 +681,10 @@ type ListProjectBillingInfoResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -781,10 +705,9 @@ func (s *ListProjectBillingInfoResponse) MarshalJSON() ([]byte, error) {
 // ListServicesResponse: Response message for `ListServices`.
 type ListServicesResponse struct {
 	// NextPageToken: A token to retrieve the next page of results. To
-	// retrieve the next page,
-	// call `ListServices` again with the `page_token` field set to
-	// this
-	// value. This field is empty if there are no more results to retrieve.
+	// retrieve the next page, call `ListServices` again with the
+	// `page_token` field set to this value. This field is empty if there
+	// are no more results to retrieve.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// Services: A list of services.
@@ -796,10 +719,10 @@ type ListServicesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -820,9 +743,9 @@ func (s *ListServicesResponse) MarshalJSON() ([]byte, error) {
 // ListSkusResponse: Response message for `ListSkus`.
 type ListSkusResponse struct {
 	// NextPageToken: A token to retrieve the next page of results. To
-	// retrieve the next page,
-	// call `ListSkus` again with the `page_token` field set to this
-	// value. This field is empty if there are no more results to retrieve.
+	// retrieve the next page, call `ListSkus` again with the `page_token`
+	// field set to this value. This field is empty if there are no more
+	// results to retrieve.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// Skus: The list of public SKUs of the given service.
@@ -834,10 +757,10 @@ type ListSkusResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -857,29 +780,27 @@ func (s *ListSkusResponse) MarshalJSON() ([]byte, error) {
 
 // Money: Represents an amount of money with its currency type.
 type Money struct {
-	// CurrencyCode: The 3-letter currency code defined in ISO 4217.
+	// CurrencyCode: The three-letter currency code defined in ISO 4217.
 	CurrencyCode string `json:"currencyCode,omitempty"`
 
-	// Nanos: Number of nano (10^-9) units of the amount.
-	// The value must be between -999,999,999 and +999,999,999 inclusive.
-	// If `units` is positive, `nanos` must be positive or zero.
-	// If `units` is zero, `nanos` can be positive, zero, or negative.
-	// If `units` is negative, `nanos` must be negative or zero.
-	// For example $-1.75 is represented as `units`=-1 and
-	// `nanos`=-750,000,000.
+	// Nanos: Number of nano (10^-9) units of the amount. The value must be
+	// between -999,999,999 and +999,999,999 inclusive. If `units` is
+	// positive, `nanos` must be positive or zero. If `units` is zero,
+	// `nanos` can be positive, zero, or negative. If `units` is negative,
+	// `nanos` must be negative or zero. For example $-1.75 is represented
+	// as `units`=-1 and `nanos`=-750,000,000.
 	Nanos int64 `json:"nanos,omitempty"`
 
-	// Units: The whole units of the amount.
-	// For example if `currencyCode` is "USD", then 1 unit is one US
-	// dollar.
+	// Units: The whole units of the amount. For example if `currencyCode`
+	// is "USD", then 1 unit is one US dollar.
 	Units int64 `json:"units,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "CurrencyCode") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CurrencyCode") to include
@@ -898,156 +819,86 @@ func (s *Money) MarshalJSON() ([]byte, error) {
 }
 
 // Policy: An Identity and Access Management (IAM) policy, which
-// specifies access
-// controls for Google Cloud resources.
-//
-//
-// A `Policy` is a collection of `bindings`. A `binding` binds one or
-// more
-// `members` to a single `role`. Members can be user accounts, service
-// accounts,
-// Google groups, and domains (such as G Suite). A `role` is a named
-// list of
-// permissions; each `role` can be an IAM predefined role or a
-// user-created
-// custom role.
-//
-// For some types of Google Cloud resources, a `binding` can also
-// specify a
-// `condition`, which is a logical expression that allows access to a
-// resource
-// only if the expression evaluates to `true`. A condition can add
-// constraints
-// based on attributes of the request, the resource, or both. To learn
-// which
-// resources support conditions in their IAM policies, see the
-// [IAM
-// documentation](https://cloud.google.com/iam/help/conditions/resource-p
-// olicies).
-//
-// **JSON example:**
-//
-//     {
-//       "bindings": [
-//         {
-//           "role": "roles/resourcemanager.organizationAdmin",
-//           "members": [
-//             "user:mike@example.com",
-//             "group:admins@example.com",
-//             "domain:google.com",
-//
-// "serviceAccount:my-project-id@appspot.gserviceaccount.com"
-//           ]
-//         },
-//         {
-//           "role": "roles/resourcemanager.organizationViewer",
-//           "members": [
-//             "user:eve@example.com"
-//           ],
-//           "condition": {
-//             "title": "expirable access",
-//             "description": "Does not grant access after Sep 2020",
-//             "expression": "request.time <
-// timestamp('2020-10-01T00:00:00.000Z')",
-//           }
-//         }
-//       ],
-//       "etag": "BwWWja0YfJA=",
-//       "version": 3
-//     }
-//
-// **YAML example:**
-//
-//     bindings:
-//     - members:
-//       - user:mike@example.com
-//       - group:admins@example.com
-//       - domain:google.com
-//       - serviceAccount:my-project-id@appspot.gserviceaccount.com
-//       role: roles/resourcemanager.organizationAdmin
-//     - members:
-//       - user:eve@example.com
-//       role: roles/resourcemanager.organizationViewer
-//       condition:
-//         title: expirable access
-//         description: Does not grant access after Sep 2020
-//         expression: request.time <
-// timestamp('2020-10-01T00:00:00.000Z')
-//     - etag: BwWWja0YfJA=
-//     - version: 3
-//
-// For a description of IAM and its features, see the
-// [IAM documentation](https://cloud.google.com/iam/docs/).
+// specifies access controls for Google Cloud resources. A `Policy` is a
+// collection of `bindings`. A `binding` binds one or more `members`, or
+// principals, to a single `role`. Principals can be user accounts,
+// service accounts, Google groups, and domains (such as G Suite). A
+// `role` is a named list of permissions; each `role` can be an IAM
+// predefined role or a user-created custom role. For some types of
+// Google Cloud resources, a `binding` can also specify a `condition`,
+// which is a logical expression that allows access to a resource only
+// if the expression evaluates to `true`. A condition can add
+// constraints based on attributes of the request, the resource, or
+// both. To learn which resources support conditions in their IAM
+// policies, see the IAM documentation
+// (https://cloud.google.com/iam/help/conditions/resource-policies).
+// **JSON example:** { "bindings": [ { "role":
+// "roles/resourcemanager.organizationAdmin", "members": [
+// "user:mike@example.com", "group:admins@example.com",
+// "domain:google.com",
+// "serviceAccount:my-project-id@appspot.gserviceaccount.com" ] }, {
+// "role": "roles/resourcemanager.organizationViewer", "members": [
+// "user:eve@example.com" ], "condition": { "title": "expirable access",
+// "description": "Does not grant access after Sep 2020", "expression":
+// "request.time < timestamp('2020-10-01T00:00:00.000Z')", } } ],
+// "etag": "BwWWja0YfJA=", "version": 3 } **YAML example:** bindings: -
+// members: - user:mike@example.com - group:admins@example.com -
+// domain:google.com -
+// serviceAccount:my-project-id@appspot.gserviceaccount.com role:
+// roles/resourcemanager.organizationAdmin - members: -
+// user:eve@example.com role: roles/resourcemanager.organizationViewer
+// condition: title: expirable access description: Does not grant access
+// after Sep 2020 expression: request.time <
+// timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3
+// For a description of IAM and its features, see the IAM documentation
+// (https://cloud.google.com/iam/docs/).
 type Policy struct {
 	// AuditConfigs: Specifies cloud audit logging configuration for this
 	// policy.
 	AuditConfigs []*AuditConfig `json:"auditConfigs,omitempty"`
 
-	// Bindings: Associates a list of `members` to a `role`. Optionally, may
-	// specify a
-	// `condition` that determines how and when the `bindings` are applied.
-	// Each
-	// of the `bindings` must contain at least one member.
+	// Bindings: Associates a list of `members`, or principals, with a
+	// `role`. Optionally, may specify a `condition` that determines how and
+	// when the `bindings` are applied. Each of the `bindings` must contain
+	// at least one principal. The `bindings` in a `Policy` can refer to up
+	// to 1,500 principals; up to 250 of these principals can be Google
+	// groups. Each occurrence of a principal counts towards these limits.
+	// For example, if the `bindings` grant 50 different roles to
+	// `user:alice@example.com`, and not to any other principal, then you
+	// can add another 1,450 principals to the `bindings` in the `Policy`.
 	Bindings []*Binding `json:"bindings,omitempty"`
 
 	// Etag: `etag` is used for optimistic concurrency control as a way to
-	// help
-	// prevent simultaneous updates of a policy from overwriting each
-	// other.
-	// It is strongly suggested that systems make use of the `etag` in
-	// the
-	// read-modify-write cycle to perform policy updates in order to avoid
-	// race
-	// conditions: An `etag` is returned in the response to `getIamPolicy`,
-	// and
-	// systems are expected to put that etag in the request to
-	// `setIamPolicy` to
-	// ensure that their change will be applied to the same version of the
-	// policy.
-	//
-	// **Important:** If you use IAM Conditions, you must include the `etag`
-	// field
-	// whenever you call `setIamPolicy`. If you omit this field, then IAM
-	// allows
-	// you to overwrite a version `3` policy with a version `1` policy, and
-	// all of
+	// help prevent simultaneous updates of a policy from overwriting each
+	// other. It is strongly suggested that systems make use of the `etag`
+	// in the read-modify-write cycle to perform policy updates in order to
+	// avoid race conditions: An `etag` is returned in the response to
+	// `getIamPolicy`, and systems are expected to put that etag in the
+	// request to `setIamPolicy` to ensure that their change will be applied
+	// to the same version of the policy. **Important:** If you use IAM
+	// Conditions, you must include the `etag` field whenever you call
+	// `setIamPolicy`. If you omit this field, then IAM allows you to
+	// overwrite a version `3` policy with a version `1` policy, and all of
 	// the conditions in the version `3` policy are lost.
 	Etag string `json:"etag,omitempty"`
 
-	// Version: Specifies the format of the policy.
-	//
-	// Valid values are `0`, `1`, and `3`. Requests that specify an invalid
-	// value
-	// are rejected.
-	//
+	// Version: Specifies the format of the policy. Valid values are `0`,
+	// `1`, and `3`. Requests that specify an invalid value are rejected.
 	// Any operation that affects conditional role bindings must specify
-	// version
-	// `3`. This requirement applies to the following operations:
-	//
-	// * Getting a policy that includes a conditional role binding
-	// * Adding a conditional role binding to a policy
-	// * Changing a conditional role binding in a policy
-	// * Removing any role binding, with or without a condition, from a
-	// policy
-	//   that includes conditions
-	//
-	// **Important:** If you use IAM Conditions, you must include the `etag`
-	// field
-	// whenever you call `setIamPolicy`. If you omit this field, then IAM
-	// allows
-	// you to overwrite a version `3` policy with a version `1` policy, and
-	// all of
-	// the conditions in the version `3` policy are lost.
-	//
-	// If a policy does not include any conditions, operations on that
-	// policy may
-	// specify any valid version or leave the field unset.
-	//
-	// To learn which resources support conditions in their IAM policies,
-	// see the
-	// [IAM
-	// documentation](https://cloud.google.com/iam/help/conditions/resource-p
-	// olicies).
+	// version `3`. This requirement applies to the following operations: *
+	// Getting a policy that includes a conditional role binding * Adding a
+	// conditional role binding to a policy * Changing a conditional role
+	// binding in a policy * Removing any role binding, with or without a
+	// condition, from a policy that includes conditions **Important:** If
+	// you use IAM Conditions, you must include the `etag` field whenever
+	// you call `setIamPolicy`. If you omit this field, then IAM allows you
+	// to overwrite a version `3` policy with a version `1` policy, and all
+	// of the conditions in the version `3` policy are lost. If a policy
+	// does not include any conditions, operations on that policy may
+	// specify any valid version or leave the field unset. To learn which
+	// resources support conditions in their IAM policies, see the IAM
+	// documentation
+	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Version int64 `json:"version,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1056,10 +907,10 @@ type Policy struct {
 
 	// ForceSendFields is a list of field names (e.g. "AuditConfigs") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AuditConfigs") to include
@@ -1078,77 +929,57 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 }
 
 // PricingExpression: Expresses a mathematical pricing formula. For
-// Example:-
-//
-// `usage_unit: GBy`
-// `tiered_rates:`
-//    `[start_usage_amount: 20, unit_price: $10]`
-//    `[start_usage_amount: 100, unit_price: $5]`
-//
-// The above expresses a pricing formula where the first 20GB is free,
-// the
+// Example:- `usage_unit: GBy` `tiered_rates:` `[start_usage_amount: 20,
+// unit_price: $10]` `[start_usage_amount: 100, unit_price: $5]` The
+// above expresses a pricing formula where the first 20GB is free, the
 // next 80GB is priced at $10 per GB followed by $5 per GB for
-// additional
-// usage.
+// additional usage.
 type PricingExpression struct {
 	// BaseUnit: The base unit for the SKU which is the unit used in usage
-	// exports.
-	// Example: "By"
+	// exports. Example: "By"
 	BaseUnit string `json:"baseUnit,omitempty"`
 
 	// BaseUnitConversionFactor: Conversion factor for converting from price
-	// per usage_unit to price per
-	// base_unit, and start_usage_amount to start_usage_amount in
-	// base_unit.
-	// unit_price / base_unit_conversion_factor = price per
-	// base_unit.
-	// start_usage_amount * base_unit_conversion_factor = start_usage_amount
-	// in
-	// base_unit.
+	// per usage_unit to price per base_unit, and start_usage_amount to
+	// start_usage_amount in base_unit. unit_price /
+	// base_unit_conversion_factor = price per base_unit. start_usage_amount
+	// * base_unit_conversion_factor = start_usage_amount in base_unit.
 	BaseUnitConversionFactor float64 `json:"baseUnitConversionFactor,omitempty"`
 
-	// BaseUnitDescription: The base unit in human readable form.
-	// Example: "byte".
+	// BaseUnitDescription: The base unit in human readable form. Example:
+	// "byte".
 	BaseUnitDescription string `json:"baseUnitDescription,omitempty"`
 
 	// DisplayQuantity: The recommended quantity of units for displaying
-	// pricing info. When
-	// displaying pricing info it is recommended to display:
-	// (unit_price * display_quantity) per display_quantity usage_unit.
-	// This field does not affect the pricing formula and is for display
-	// purposes
-	// only.
-	// Example: If the unit_price is "0.0001 USD", the usage_unit is "GB"
-	// and
-	// the display_quantity is "1000" then the recommended way of displaying
-	// the
-	// pricing info is "0.10 USD per 1000 GB"
+	// pricing info. When displaying pricing info it is recommended to
+	// display: (unit_price * display_quantity) per display_quantity
+	// usage_unit. This field does not affect the pricing formula and is for
+	// display purposes only. Example: If the unit_price is "0.0001 USD",
+	// the usage_unit is "GB" and the display_quantity is "1000" then the
+	// recommended way of displaying the pricing info is "0.10 USD per 1000
+	// GB"
 	DisplayQuantity float64 `json:"displayQuantity,omitempty"`
 
 	// TieredRates: The list of tiered rates for this pricing. The total
-	// cost is computed by
-	// applying each of the tiered rates on usage. This repeated list is
-	// sorted
-	// by ascending order of start_usage_amount.
+	// cost is computed by applying each of the tiered rates on usage. This
+	// repeated list is sorted by ascending order of start_usage_amount.
 	TieredRates []*TierRate `json:"tieredRates,omitempty"`
 
 	// UsageUnit: The short hand for unit of usage this pricing is specified
-	// in.
-	// Example: usage_unit of "GiBy" means that usage is specified in "Gibi
-	// Byte".
+	// in. Example: usage_unit of "GiBy" means that usage is specified in
+	// "Gibi Byte".
 	UsageUnit string `json:"usageUnit,omitempty"`
 
-	// UsageUnitDescription: The unit of usage in human readable
-	// form.
+	// UsageUnitDescription: The unit of usage in human readable form.
 	// Example: "gibi byte".
 	UsageUnitDescription string `json:"usageUnitDescription,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BaseUnit") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BaseUnit") to include in
@@ -1186,31 +1017,22 @@ func (s *PricingExpression) UnmarshalJSON(data []byte) error {
 // point of time.
 type PricingInfo struct {
 	// AggregationInfo: Aggregation Info. This can be left unspecified if
-	// the pricing expression
-	// doesn't require aggregation.
+	// the pricing expression doesn't require aggregation.
 	AggregationInfo *AggregationInfo `json:"aggregationInfo,omitempty"`
 
 	// CurrencyConversionRate: Conversion rate used for currency conversion,
-	// from USD to the currency
-	// specified in the request. This includes any surcharge collected for
-	// billing
-	// in non USD currency. If a currency is not specified in the request
-	// this
-	// defaults to 1.0.
-	// Example: USD * currency_conversion_rate = JPY
+	// from USD to the currency specified in the request. This includes any
+	// surcharge collected for billing in non USD currency. If a currency is
+	// not specified in the request this defaults to 1.0. Example: USD *
+	// currency_conversion_rate = JPY
 	CurrencyConversionRate float64 `json:"currencyConversionRate,omitempty"`
 
 	// EffectiveTime: The timestamp from which this pricing was effective
-	// within the requested
-	// time range. This is guaranteed to be greater than or equal to
-	// the
-	// start_time field in the request and less than the end_time field in
-	// the
-	// request. If a time range was not specified in the request this field
-	// will
-	// be equivalent to a time within the last 12 hours, indicating the
-	// latest
-	// pricing info.
+	// within the requested time range. This is guaranteed to be greater
+	// than or equal to the start_time field in the request and less than
+	// the end_time field in the request. If a time range was not specified
+	// in the request this field will be equivalent to a time within the
+	// last 12 hours, indicating the latest pricing info.
 	EffectiveTime string `json:"effectiveTime,omitempty"`
 
 	// PricingExpression: Expresses the pricing formula. See
@@ -1218,16 +1040,15 @@ type PricingInfo struct {
 	PricingExpression *PricingExpression `json:"pricingExpression,omitempty"`
 
 	// Summary: An optional human readable summary of the pricing
-	// information, has a
-	// maximum length of 256 characters.
+	// information, has a maximum length of 256 characters.
 	Summary string `json:"summary,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AggregationInfo") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AggregationInfo") to
@@ -1260,41 +1081,33 @@ func (s *PricingInfo) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// ProjectBillingInfo: Encapsulation of billing information for a GCP
-// Console project. A project
-// has at most one associated billing account at a time (but a billing
-// account
-// can be assigned to multiple projects).
+// ProjectBillingInfo: Encapsulation of billing information for a Google
+// Cloud Console project. A project has at most one associated billing
+// account at a time (but a billing account can be assigned to multiple
+// projects).
 type ProjectBillingInfo struct {
 	// BillingAccountName: The resource name of the billing account
-	// associated with the project, if
-	// any. For example, `billingAccounts/012345-567890-ABCDEF`.
+	// associated with the project, if any. For example,
+	// `billingAccounts/012345-567890-ABCDEF`.
 	BillingAccountName string `json:"billingAccountName,omitempty"`
 
 	// BillingEnabled: True if the project is associated with an open
-	// billing account, to which
-	// usage on the project is charged. False if the project is associated
-	// with a
-	// closed billing account, or no billing account at all, and therefore
-	// cannot
-	// use paid services. This field is read-only.
+	// billing account, to which usage on the project is charged. False if
+	// the project is associated with a closed billing account, or no
+	// billing account at all, and therefore cannot use paid services. This
+	// field is read-only.
 	BillingEnabled bool `json:"billingEnabled,omitempty"`
 
-	// Name: The resource name for the `ProjectBillingInfo`; has the
-	// form
+	// Name: The resource name for the `ProjectBillingInfo`; has the form
 	// `projects/{project_id}/billingInfo`. For example, the resource name
-	// for the
-	// billing information for project `tokyo-rain-123` would
-	// be
+	// for the billing information for project `tokyo-rain-123` would be
 	// `projects/tokyo-rain-123/billingInfo`. This field is read-only.
 	Name string `json:"name,omitempty"`
 
 	// ProjectId: The ID of the project that this `ProjectBillingInfo`
-	// represents, such as
-	// `tokyo-rain-123`. This is a convenience field so that you don't need
-	// to
-	// parse the `name` field to obtain a project ID. This field is
-	// read-only.
+	// represents, such as `tokyo-rain-123`. This is a convenience field so
+	// that you don't need to parse the `name` field to obtain a project ID.
+	// This field is read-only.
 	ProjectId string `json:"projectId,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1303,10 +1116,10 @@ type ProjectBillingInfo struct {
 
 	// ForceSendFields is a list of field names (e.g. "BillingAccountName")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BillingAccountName") to
@@ -1327,28 +1140,26 @@ func (s *ProjectBillingInfo) MarshalJSON() ([]byte, error) {
 
 // Service: Encapsulates a single service in Google Cloud Platform.
 type Service struct {
-	// BusinessEntityName: The business under which the service is
-	// offered.
+	// BusinessEntityName: The business under which the service is offered.
 	// Ex. "businessEntities/GCP", "businessEntities/Maps"
 	BusinessEntityName string `json:"businessEntityName,omitempty"`
 
 	// DisplayName: A human readable display name for this service.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Name: The resource name for the service.
-	// Example: "services/DA34-426B-A397"
+	// Name: The resource name for the service. Example:
+	// "services/DA34-426B-A397"
 	Name string `json:"name,omitempty"`
 
-	// ServiceId: The identifier for the service.
-	// Example: "DA34-426B-A397"
+	// ServiceId: The identifier for the service. Example: "DA34-426B-A397"
 	ServiceId string `json:"serviceId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BusinessEntityName")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BusinessEntityName") to
@@ -1370,28 +1181,23 @@ func (s *Service) MarshalJSON() ([]byte, error) {
 // SetIamPolicyRequest: Request message for `SetIamPolicy` method.
 type SetIamPolicyRequest struct {
 	// Policy: REQUIRED: The complete policy to be applied to the
-	// `resource`. The size of
-	// the policy is limited to a few 10s of KB. An empty policy is a
-	// valid policy but certain Cloud Platform services (such as
-	// Projects)
-	// might reject them.
+	// `resource`. The size of the policy is limited to a few 10s of KB. An
+	// empty policy is a valid policy but certain Google Cloud services
+	// (such as Projects) might reject them.
 	Policy *Policy `json:"policy,omitempty"`
 
 	// UpdateMask: OPTIONAL: A FieldMask specifying which fields of the
-	// policy to modify. Only
-	// the fields in the mask will be modified. If no mask is provided,
-	// the
-	// following default mask is used:
-	//
-	// `paths: "bindings, etag"
+	// policy to modify. Only the fields in the mask will be modified. If no
+	// mask is provided, the following default mask is used: `paths:
+	// "bindings, etag"
 	UpdateMask string `json:"updateMask,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Policy") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Policy") to include in API
@@ -1416,39 +1222,38 @@ type Sku struct {
 	Category *Category `json:"category,omitempty"`
 
 	// Description: A human readable description of the SKU, has a maximum
-	// length of 256
-	// characters.
+	// length of 256 characters.
 	Description string `json:"description,omitempty"`
 
-	// Name: The resource name for the SKU.
-	// Example: "services/DA34-426B-A397/skus/AA95-CD31-42FE"
+	// GeoTaxonomy: The geographic taxonomy for this sku.
+	GeoTaxonomy *GeoTaxonomy `json:"geoTaxonomy,omitempty"`
+
+	// Name: The resource name for the SKU. Example:
+	// "services/DA34-426B-A397/skus/AA95-CD31-42FE"
 	Name string `json:"name,omitempty"`
 
 	// PricingInfo: A timeline of pricing info for this SKU in chronological
 	// order.
 	PricingInfo []*PricingInfo `json:"pricingInfo,omitempty"`
 
-	// ServiceProviderName: Identifies the service provider.
-	// This is 'Google' for first party services in Google Cloud Platform.
+	// ServiceProviderName: Identifies the service provider. This is
+	// 'Google' for first party services in Google Cloud Platform.
 	ServiceProviderName string `json:"serviceProviderName,omitempty"`
 
-	// ServiceRegions: List of service regions this SKU is offered
-	// at.
-	// Example: "asia-east1"
-	// Service regions can be found at
+	// ServiceRegions: List of service regions this SKU is offered at.
+	// Example: "asia-east1" Service regions can be found at
 	// https://cloud.google.com/about/locations/
 	ServiceRegions []string `json:"serviceRegions,omitempty"`
 
-	// SkuId: The identifier for the SKU.
-	// Example: "AA95-CD31-42FE"
+	// SkuId: The identifier for the SKU. Example: "AA95-CD31-42FE"
 	SkuId string `json:"skuId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Category") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Category") to include in
@@ -1470,20 +1275,17 @@ func (s *Sku) MarshalJSON() ([]byte, error) {
 // method.
 type TestIamPermissionsRequest struct {
 	// Permissions: The set of permissions to check for the `resource`.
-	// Permissions with
-	// wildcards (such as '*' or 'storage.*') are not allowed. For
-	// more
-	// information see
-	// [IAM
-	// Overview](https://cloud.google.com/iam/docs/overview#permissions).
+	// Permissions with wildcards (such as `*` or `storage.*`) are not
+	// allowed. For more information see IAM Overview
+	// (https://cloud.google.com/iam/docs/overview#permissions).
 	Permissions []string `json:"permissions,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Permissions") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Permissions") to include
@@ -1505,8 +1307,7 @@ func (s *TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
 // method.
 type TestIamPermissionsResponse struct {
 	// Permissions: A subset of `TestPermissionsRequest.permissions` that
-	// the caller is
-	// allowed.
+	// the caller is allowed.
 	Permissions []string `json:"permissions,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1515,10 +1316,10 @@ type TestIamPermissionsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Permissions") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Permissions") to include
@@ -1540,23 +1341,20 @@ func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 // corresponding price.
 type TierRate struct {
 	// StartUsageAmount: Usage is priced at this rate only after this
-	// amount.
-	// Example: start_usage_amount of 10 indicates that the usage will be
-	// priced
-	// at the unit_price after the first 10 usage_units.
+	// amount. Example: start_usage_amount of 10 indicates that the usage
+	// will be priced at the unit_price after the first 10 usage_units.
 	StartUsageAmount float64 `json:"startUsageAmount,omitempty"`
 
-	// UnitPrice: The price per unit of usage.
-	// Example: unit_price of amount $10 indicates that each unit will cost
-	// $10.
+	// UnitPrice: The price per unit of usage. Example: unit_price of amount
+	// $10 indicates that each unit will cost $10.
 	UnitPrice *Money `json:"unitPrice,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "StartUsageAmount") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "StartUsageAmount") to
@@ -1599,21 +1397,18 @@ type BillingAccountsCreateCall struct {
 	header_        http.Header
 }
 
-// Create: Creates a billing account.
-// This method can only be used to create
-// [billing
-// subaccounts](https://cloud.google.com/billing/docs/concepts)
-// by GCP resellers.
+// Create: This method creates billing subaccounts
+// (https://cloud.google.com/billing/docs/concepts#subaccounts). Google
+// Cloud resellers should use the Channel Services APIs,
+// accounts.customers.create
+// (https://cloud.google.com/channel/docs/reference/rest/v1/accounts.customers/create)
+// and accounts.customers.entitlements.create
+// (https://cloud.google.com/channel/docs/reference/rest/v1/accounts.customers.entitlements/create).
 // When creating a subaccount, the current authenticated user must have
-// the
-// `billing.accounts.update` IAM permission on the master account, which
-// is
-// typically given to billing
-// account
-// [administrators](https://cloud.google.com/billing/docs/how-to/
-// billing-access).
-// This method will return an error if the master account has not
-// been
+// the `billing.accounts.update` IAM permission on the parent account,
+// which is typically given to billing account administrators
+// (https://cloud.google.com/billing/docs/how-to/billing-access). This
+// method will return an error if the parent account has not been
 // provisioned as a reseller account.
 func (r *BillingAccountsService) Create(billingaccount *BillingAccount) *BillingAccountsCreateCall {
 	c := &BillingAccountsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -1648,7 +1443,7 @@ func (c *BillingAccountsCreateCall) Header() http.Header {
 
 func (c *BillingAccountsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1685,17 +1480,17 @@ func (c *BillingAccountsCreateCall) Do(opts ...googleapi.CallOption) (*BillingAc
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &BillingAccount{
 		ServerResponse: googleapi.ServerResponse{
@@ -1709,7 +1504,7 @@ func (c *BillingAccountsCreateCall) Do(opts ...googleapi.CallOption) (*BillingAc
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a billing account.\nThis method can only be used to create\n[billing subaccounts](https://cloud.google.com/billing/docs/concepts)\nby GCP resellers.\nWhen creating a subaccount, the current authenticated user must have the\n`billing.accounts.update` IAM permission on the master account, which is\ntypically given to billing account\n[administrators](https://cloud.google.com/billing/docs/how-to/billing-access).\nThis method will return an error if the master account has not been\nprovisioned as a reseller account.",
+	//   "description": "This method creates [billing subaccounts](https://cloud.google.com/billing/docs/concepts#subaccounts). Google Cloud resellers should use the Channel Services APIs, [accounts.customers.create](https://cloud.google.com/channel/docs/reference/rest/v1/accounts.customers/create) and [accounts.customers.entitlements.create](https://cloud.google.com/channel/docs/reference/rest/v1/accounts.customers.entitlements/create). When creating a subaccount, the current authenticated user must have the `billing.accounts.update` IAM permission on the parent account, which is typically given to billing account [administrators](https://cloud.google.com/billing/docs/how-to/billing-access). This method will return an error if the parent account has not been provisioned as a reseller account.",
 	//   "flatPath": "v1/billingAccounts",
 	//   "httpMethod": "POST",
 	//   "id": "cloudbilling.billingAccounts.create",
@@ -1723,6 +1518,7 @@ func (c *BillingAccountsCreateCall) Do(opts ...googleapi.CallOption) (*BillingAc
 	//     "$ref": "BillingAccount"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-billing",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -1741,11 +1537,11 @@ type BillingAccountsGetCall struct {
 }
 
 // Get: Gets information about a billing account. The current
-// authenticated user
-// must be a [viewer of the
-// billing
-// account](https://cloud.google.com/billing/docs/how-to/billing-
-// access).
+// authenticated user must be a viewer of the billing account
+// (https://cloud.google.com/billing/docs/how-to/billing-access).
+//
+//   - name: The resource name of the billing account to retrieve. For
+//     example, `billingAccounts/012345-567890-ABCDEF`.
 func (r *BillingAccountsService) Get(name string) *BillingAccountsGetCall {
 	c := &BillingAccountsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1789,7 +1585,7 @@ func (c *BillingAccountsGetCall) Header() http.Header {
 
 func (c *BillingAccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1827,17 +1623,17 @@ func (c *BillingAccountsGetCall) Do(opts ...googleapi.CallOption) (*BillingAccou
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &BillingAccount{
 		ServerResponse: googleapi.ServerResponse{
@@ -1851,7 +1647,7 @@ func (c *BillingAccountsGetCall) Do(opts ...googleapi.CallOption) (*BillingAccou
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets information about a billing account. The current authenticated user\nmust be a [viewer of the billing\naccount](https://cloud.google.com/billing/docs/how-to/billing-access).",
+	//   "description": "Gets information about a billing account. The current authenticated user must be a [viewer of the billing account](https://cloud.google.com/billing/docs/how-to/billing-access).",
 	//   "flatPath": "v1/billingAccounts/{billingAccountsId}",
 	//   "httpMethod": "GET",
 	//   "id": "cloudbilling.billingAccounts.get",
@@ -1860,7 +1656,7 @@ func (c *BillingAccountsGetCall) Do(opts ...googleapi.CallOption) (*BillingAccou
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the billing account to retrieve. For example,\n`billingAccounts/012345-567890-ABCDEF`.",
+	//       "description": "Required. The resource name of the billing account to retrieve. For example, `billingAccounts/012345-567890-ABCDEF`.",
 	//       "location": "path",
 	//       "pattern": "^billingAccounts/[^/]+$",
 	//       "required": true,
@@ -1872,6 +1668,8 @@ func (c *BillingAccountsGetCall) Do(opts ...googleapi.CallOption) (*BillingAccou
 	//     "$ref": "BillingAccount"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-billing",
+	//     "https://www.googleapis.com/auth/cloud-billing.readonly",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -1889,14 +1687,15 @@ type BillingAccountsGetIamPolicyCall struct {
 	header_      http.Header
 }
 
-// GetIamPolicy: Gets the access control policy for a billing
-// account.
+// GetIamPolicy: Gets the access control policy for a billing account.
 // The caller must have the `billing.accounts.getIamPolicy` permission
-// on the
-// account, which is often given to billing
-// account
-// [viewers](https://cloud.google.com/billing/docs/how-to/billing
-// -access).
+// on the account, which is often given to billing account viewers
+// (https://cloud.google.com/billing/docs/how-to/billing-access).
+//
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *BillingAccountsService) GetIamPolicy(resource string) *BillingAccountsGetIamPolicyCall {
 	c := &BillingAccountsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -1904,25 +1703,18 @@ func (r *BillingAccountsService) GetIamPolicy(resource string) *BillingAccountsG
 }
 
 // OptionsRequestedPolicyVersion sets the optional parameter
-// "options.requestedPolicyVersion": The policy format version to be
-// returned.
-//
-// Valid values are 0, 1, and 3. Requests specifying an invalid value
-// will be
-// rejected.
-//
-// Requests for policies with any conditional bindings must specify
-// version 3.
-// Policies without any conditional bindings may specify any valid value
-// or
-// leave the field unset.
-//
-// To learn which resources support conditions in their IAM policies,
-// see
-// the
-// [IAM
-// documentation](https://cloud.google.com/iam/help/conditions/r
-// esource-policies).
+// "options.requestedPolicyVersion": The maximum policy version that
+// will be used to format the policy. Valid values are 0, 1, and 3.
+// Requests specifying an invalid value will be rejected. Requests for
+// policies with any conditional role bindings must specify version 3.
+// Policies with no conditional role bindings may specify any valid
+// value or leave the field unset. The policy in the response might use
+// the policy version that you specified, or it might use a lower policy
+// version. For example, if you specify version 3, but the policy has no
+// conditional role bindings, the response uses version 1. To learn
+// which resources support conditions in their IAM policies, see the IAM
+// documentation
+// (https://cloud.google.com/iam/help/conditions/resource-policies).
 func (c *BillingAccountsGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *BillingAccountsGetIamPolicyCall {
 	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
 	return c
@@ -1965,7 +1757,7 @@ func (c *BillingAccountsGetIamPolicyCall) Header() http.Header {
 
 func (c *BillingAccountsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2003,17 +1795,17 @@ func (c *BillingAccountsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Pol
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -2027,7 +1819,7 @@ func (c *BillingAccountsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Pol
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the access control policy for a billing account.\nThe caller must have the `billing.accounts.getIamPolicy` permission on the\naccount, which is often given to billing account\n[viewers](https://cloud.google.com/billing/docs/how-to/billing-access).",
+	//   "description": "Gets the access control policy for a billing account. The caller must have the `billing.accounts.getIamPolicy` permission on the account, which is often given to billing account [viewers](https://cloud.google.com/billing/docs/how-to/billing-access).",
 	//   "flatPath": "v1/billingAccounts/{billingAccountsId}:getIamPolicy",
 	//   "httpMethod": "GET",
 	//   "id": "cloudbilling.billingAccounts.getIamPolicy",
@@ -2036,13 +1828,13 @@ func (c *BillingAccountsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Pol
 	//   ],
 	//   "parameters": {
 	//     "options.requestedPolicyVersion": {
-	//       "description": "Optional. The policy format version to be returned.\n\nValid values are 0, 1, and 3. Requests specifying an invalid value will be\nrejected.\n\nRequests for policies with any conditional bindings must specify version 3.\nPolicies without any conditional bindings may specify any valid value or\nleave the field unset.\n\nTo learn which resources support conditions in their IAM policies, see the\n[IAM\ndocumentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
+	//       "description": "Optional. The maximum policy version that will be used to format the policy. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional role bindings must specify version 3. Policies with no conditional role bindings may specify any valid value or leave the field unset. The policy in the response might use the policy version that you specified, or it might use a lower policy version. For example, if you specify version 3, but the policy has no conditional role bindings, the response uses version 1. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested.\nSee the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^billingAccounts/[^/]+$",
 	//       "required": true,
@@ -2054,6 +1846,8 @@ func (c *BillingAccountsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Pol
 	//     "$ref": "Policy"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-billing",
+	//     "https://www.googleapis.com/auth/cloud-billing.readonly",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -2071,46 +1865,37 @@ type BillingAccountsListCall struct {
 }
 
 // List: Lists the billing accounts that the current authenticated user
-// has
-// permission
-// to
-// [view](https://cloud.google.com/billing/docs/how-to/billing-access)
-// .
+// has permission to view
+// (https://cloud.google.com/billing/docs/how-to/billing-access).
 func (r *BillingAccountsService) List() *BillingAccountsListCall {
 	c := &BillingAccountsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
 }
 
 // Filter sets the optional parameter "filter": Options for how to
-// filter the returned billing accounts.
-// Currently this only supports filtering
-// for
-// [subaccounts](https://cloud.google.com/billing/docs/concepts) under
-// a
-// single provided reseller billing account.
-// (e.g.
+// filter the returned billing accounts. Currently this only supports
+// filtering for subaccounts
+// (https://cloud.google.com/billing/docs/concepts) under a single
+// provided reseller billing account. (e.g.
 // "master_billing_account=billingAccounts/012345-678901-ABCDEF").
-// Boolea
-// n algebra and other fields are not currently supported.
+// Boolean algebra and other fields are not currently supported.
 func (c *BillingAccountsListCall) Filter(filter string) *BillingAccountsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// The maximum page size is 100; this is also the
-// default.
+// The maximum page size is 100; this is also the default.
 func (c *BillingAccountsListCall) PageSize(pageSize int64) *BillingAccountsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results to return. This should be
-// a
+// identifying a page of results to return. This should be a
 // `next_page_token` value returned from a previous
-// `ListBillingAccounts`
-// call. If unspecified, the first page of results is returned.
+// `ListBillingAccounts` call. If unspecified, the first page of results
+// is returned.
 func (c *BillingAccountsListCall) PageToken(pageToken string) *BillingAccountsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -2153,7 +1938,7 @@ func (c *BillingAccountsListCall) Header() http.Header {
 
 func (c *BillingAccountsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2188,17 +1973,17 @@ func (c *BillingAccountsListCall) Do(opts ...googleapi.CallOption) (*ListBilling
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListBillingAccountsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2212,25 +1997,25 @@ func (c *BillingAccountsListCall) Do(opts ...googleapi.CallOption) (*ListBilling
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the billing accounts that the current authenticated user has\npermission to\n[view](https://cloud.google.com/billing/docs/how-to/billing-access).",
+	//   "description": "Lists the billing accounts that the current authenticated user has permission to [view](https://cloud.google.com/billing/docs/how-to/billing-access).",
 	//   "flatPath": "v1/billingAccounts",
 	//   "httpMethod": "GET",
 	//   "id": "cloudbilling.billingAccounts.list",
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Options for how to filter the returned billing accounts.\nCurrently this only supports filtering for\n[subaccounts](https://cloud.google.com/billing/docs/concepts) under a\nsingle provided reseller billing account.\n(e.g. \"master_billing_account=billingAccounts/012345-678901-ABCDEF\").\nBoolean algebra and other fields are not currently supported.",
+	//       "description": "Options for how to filter the returned billing accounts. Currently this only supports filtering for [subaccounts](https://cloud.google.com/billing/docs/concepts) under a single provided reseller billing account. (e.g. \"master_billing_account=billingAccounts/012345-678901-ABCDEF\"). Boolean algebra and other fields are not currently supported.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. The maximum page size is 100; this is also the\ndefault.",
+	//       "description": "Requested page size. The maximum page size is 100; this is also the default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token identifying a page of results to return. This should be a\n`next_page_token` value returned from a previous `ListBillingAccounts`\ncall. If unspecified, the first page of results is returned.",
+	//       "description": "A token identifying a page of results to return. This should be a `next_page_token` value returned from a previous `ListBillingAccounts` call. If unspecified, the first page of results is returned.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -2240,6 +2025,8 @@ func (c *BillingAccountsListCall) Do(opts ...googleapi.CallOption) (*ListBilling
 	//     "$ref": "ListBillingAccountsResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-billing",
+	//     "https://www.googleapis.com/auth/cloud-billing.readonly",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -2278,15 +2065,14 @@ type BillingAccountsPatchCall struct {
 	header_        http.Header
 }
 
-// Patch: Updates a billing account's fields.
-// Currently the only field that can be edited is `display_name`.
-// The current authenticated user must have the
-// `billing.accounts.update`
-// IAM permission, which is typically given to
-// the
-// [administrator](https://cloud.google.com/billing/docs/how-to/billi
-// ng-access)
-// of the billing account.
+// Patch: Updates a billing account's fields. Currently the only field
+// that can be edited is `display_name`. The current authenticated user
+// must have the `billing.accounts.update` IAM permission, which is
+// typically given to the administrator
+// (https://cloud.google.com/billing/docs/how-to/billing-access) of the
+// billing account.
+//
+// - name: The name of the billing account resource to be updated.
 func (r *BillingAccountsService) Patch(name string, billingaccount *BillingAccount) *BillingAccountsPatchCall {
 	c := &BillingAccountsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2295,8 +2081,7 @@ func (r *BillingAccountsService) Patch(name string, billingaccount *BillingAccou
 }
 
 // UpdateMask sets the optional parameter "updateMask": The update mask
-// applied to the resource.
-// Only "display_name" is currently supported.
+// applied to the resource. Only "display_name" is currently supported.
 func (c *BillingAccountsPatchCall) UpdateMask(updateMask string) *BillingAccountsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -2329,7 +2114,7 @@ func (c *BillingAccountsPatchCall) Header() http.Header {
 
 func (c *BillingAccountsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2369,17 +2154,17 @@ func (c *BillingAccountsPatchCall) Do(opts ...googleapi.CallOption) (*BillingAcc
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &BillingAccount{
 		ServerResponse: googleapi.ServerResponse{
@@ -2393,7 +2178,7 @@ func (c *BillingAccountsPatchCall) Do(opts ...googleapi.CallOption) (*BillingAcc
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a billing account's fields.\nCurrently the only field that can be edited is `display_name`.\nThe current authenticated user must have the `billing.accounts.update`\nIAM permission, which is typically given to the\n[administrator](https://cloud.google.com/billing/docs/how-to/billing-access)\nof the billing account.",
+	//   "description": "Updates a billing account's fields. Currently the only field that can be edited is `display_name`. The current authenticated user must have the `billing.accounts.update` IAM permission, which is typically given to the [administrator](https://cloud.google.com/billing/docs/how-to/billing-access) of the billing account.",
 	//   "flatPath": "v1/billingAccounts/{billingAccountsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "cloudbilling.billingAccounts.patch",
@@ -2409,7 +2194,7 @@ func (c *BillingAccountsPatchCall) Do(opts ...googleapi.CallOption) (*BillingAcc
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "The update mask applied to the resource.\nOnly \"display_name\" is currently supported.",
+	//       "description": "The update mask applied to the resource. Only \"display_name\" is currently supported.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -2423,6 +2208,7 @@ func (c *BillingAccountsPatchCall) Do(opts ...googleapi.CallOption) (*BillingAcc
 	//     "$ref": "BillingAccount"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-billing",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -2441,14 +2227,15 @@ type BillingAccountsSetIamPolicyCall struct {
 }
 
 // SetIamPolicy: Sets the access control policy for a billing account.
-// Replaces any existing
-// policy.
-// The caller must have the `billing.accounts.setIamPolicy` permission
-// on the
-// account, which is often given to billing
-// account
-// [administrators](https://cloud.google.com/billing/docs/how-to/
-// billing-access).
+// Replaces any existing policy. The caller must have the
+// `billing.accounts.setIamPolicy` permission on the account, which is
+// often given to billing account administrators
+// (https://cloud.google.com/billing/docs/how-to/billing-access).
+//
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *BillingAccountsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *BillingAccountsSetIamPolicyCall {
 	c := &BillingAccountsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2483,7 +2270,7 @@ func (c *BillingAccountsSetIamPolicyCall) Header() http.Header {
 
 func (c *BillingAccountsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2523,17 +2310,17 @@ func (c *BillingAccountsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Pol
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -2547,7 +2334,7 @@ func (c *BillingAccountsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Pol
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets the access control policy for a billing account. Replaces any existing\npolicy.\nThe caller must have the `billing.accounts.setIamPolicy` permission on the\naccount, which is often given to billing account\n[administrators](https://cloud.google.com/billing/docs/how-to/billing-access).",
+	//   "description": "Sets the access control policy for a billing account. Replaces any existing policy. The caller must have the `billing.accounts.setIamPolicy` permission on the account, which is often given to billing account [administrators](https://cloud.google.com/billing/docs/how-to/billing-access).",
 	//   "flatPath": "v1/billingAccounts/{billingAccountsId}:setIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "cloudbilling.billingAccounts.setIamPolicy",
@@ -2556,7 +2343,7 @@ func (c *BillingAccountsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Pol
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified.\nSee the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^billingAccounts/[^/]+$",
 	//       "required": true,
@@ -2571,6 +2358,7 @@ func (c *BillingAccountsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Pol
 	//     "$ref": "Policy"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-billing",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -2589,10 +2377,14 @@ type BillingAccountsTestIamPermissionsCall struct {
 }
 
 // TestIamPermissions: Tests the access control policy for a billing
-// account. This method takes
-// the resource and a set of permissions as input and returns the subset
-// of
-// the input permissions that the caller is allowed for that resource.
+// account. This method takes the resource and a set of permissions as
+// input and returns the subset of the input permissions that the caller
+// is allowed for that resource.
+//
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *BillingAccountsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *BillingAccountsTestIamPermissionsCall {
 	c := &BillingAccountsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2627,7 +2419,7 @@ func (c *BillingAccountsTestIamPermissionsCall) Header() http.Header {
 
 func (c *BillingAccountsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2667,17 +2459,17 @@ func (c *BillingAccountsTestIamPermissionsCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TestIamPermissionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2691,7 +2483,7 @@ func (c *BillingAccountsTestIamPermissionsCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "Tests the access control policy for a billing account. This method takes\nthe resource and a set of permissions as input and returns the subset of\nthe input permissions that the caller is allowed for that resource.",
+	//   "description": "Tests the access control policy for a billing account. This method takes the resource and a set of permissions as input and returns the subset of the input permissions that the caller is allowed for that resource.",
 	//   "flatPath": "v1/billingAccounts/{billingAccountsId}:testIamPermissions",
 	//   "httpMethod": "POST",
 	//   "id": "cloudbilling.billingAccounts.testIamPermissions",
@@ -2700,7 +2492,7 @@ func (c *BillingAccountsTestIamPermissionsCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested.\nSee the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^billingAccounts/[^/]+$",
 	//       "required": true,
@@ -2715,6 +2507,8 @@ func (c *BillingAccountsTestIamPermissionsCall) Do(opts ...googleapi.CallOption)
 	//     "$ref": "TestIamPermissionsResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-billing",
+	//     "https://www.googleapis.com/auth/cloud-billing.readonly",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -2733,13 +2527,14 @@ type BillingAccountsProjectsListCall struct {
 }
 
 // List: Lists the projects associated with a billing account. The
-// current
-// authenticated user must have the `billing.resourceAssociations.list`
-// IAM
-// permission, which is often given to billing
-// account
-// [viewers](https://cloud.google.com/billing/docs/how-to/billing
-// -access).
+// current authenticated user must have the
+// `billing.resourceAssociations.list` IAM permission, which is often
+// given to billing account viewers
+// (https://cloud.google.com/billing/docs/how-to/billing-access).
+//
+//   - name: The resource name of the billing account associated with the
+//     projects that you want to list. For example,
+//     `billingAccounts/012345-567890-ABCDEF`.
 func (r *BillingAccountsProjectsService) List(name string) *BillingAccountsProjectsListCall {
 	c := &BillingAccountsProjectsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2747,19 +2542,17 @@ func (r *BillingAccountsProjectsService) List(name string) *BillingAccountsProje
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// The maximum page size is 100; this is also the
-// default.
+// The maximum page size is 100; this is also the default.
 func (c *BillingAccountsProjectsListCall) PageSize(pageSize int64) *BillingAccountsProjectsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results to be returned. This should be
-// a
+// identifying a page of results to be returned. This should be a
 // `next_page_token` value returned from a previous
-// `ListProjectBillingInfo`
-// call. If unspecified, the first page of results is returned.
+// `ListProjectBillingInfo` call. If unspecified, the first page of
+// results is returned.
 func (c *BillingAccountsProjectsListCall) PageToken(pageToken string) *BillingAccountsProjectsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -2802,7 +2595,7 @@ func (c *BillingAccountsProjectsListCall) Header() http.Header {
 
 func (c *BillingAccountsProjectsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2840,17 +2633,17 @@ func (c *BillingAccountsProjectsListCall) Do(opts ...googleapi.CallOption) (*Lis
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListProjectBillingInfoResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2864,7 +2657,7 @@ func (c *BillingAccountsProjectsListCall) Do(opts ...googleapi.CallOption) (*Lis
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the projects associated with a billing account. The current\nauthenticated user must have the `billing.resourceAssociations.list` IAM\npermission, which is often given to billing account\n[viewers](https://cloud.google.com/billing/docs/how-to/billing-access).",
+	//   "description": "Lists the projects associated with a billing account. The current authenticated user must have the `billing.resourceAssociations.list` IAM permission, which is often given to billing account [viewers](https://cloud.google.com/billing/docs/how-to/billing-access).",
 	//   "flatPath": "v1/billingAccounts/{billingAccountsId}/projects",
 	//   "httpMethod": "GET",
 	//   "id": "cloudbilling.billingAccounts.projects.list",
@@ -2873,20 +2666,20 @@ func (c *BillingAccountsProjectsListCall) Do(opts ...googleapi.CallOption) (*Lis
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the billing account associated with the projects that\nyou want to list. For example, `billingAccounts/012345-567890-ABCDEF`.",
+	//       "description": "Required. The resource name of the billing account associated with the projects that you want to list. For example, `billingAccounts/012345-567890-ABCDEF`.",
 	//       "location": "path",
 	//       "pattern": "^billingAccounts/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. The maximum page size is 100; this is also the\ndefault.",
+	//       "description": "Requested page size. The maximum page size is 100; this is also the default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token identifying a page of results to be returned. This should be a\n`next_page_token` value returned from a previous `ListProjectBillingInfo`\ncall. If unspecified, the first page of results is returned.",
+	//       "description": "A token identifying a page of results to be returned. This should be a `next_page_token` value returned from a previous `ListProjectBillingInfo` call. If unspecified, the first page of results is returned.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -2896,6 +2689,8 @@ func (c *BillingAccountsProjectsListCall) Do(opts ...googleapi.CallOption) (*Lis
 	//     "$ref": "ListProjectBillingInfoResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-billing",
+	//     "https://www.googleapis.com/auth/cloud-billing.readonly",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -2935,12 +2730,14 @@ type ProjectsGetBillingInfoCall struct {
 }
 
 // GetBillingInfo: Gets the billing information for a project. The
-// current authenticated user
-// must have [permission to view
-// the
-// project](https://cloud.google.com/docs/permissions-overview#h.bgs0
-// oxofvnoo
-// ).
+// current authenticated user must have the
+// `resourcemanager.projects.get` permission for the project, which can
+// be granted by assigning the Project Viewer
+// (https://cloud.google.com/iam/docs/understanding-roles#predefined_roles)
+// role.
+//
+//   - name: The resource name of the project for which billing
+//     information is retrieved. For example, `projects/tokyo-rain-123`.
 func (r *ProjectsService) GetBillingInfo(name string) *ProjectsGetBillingInfoCall {
 	c := &ProjectsGetBillingInfoCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2984,7 +2781,7 @@ func (c *ProjectsGetBillingInfoCall) Header() http.Header {
 
 func (c *ProjectsGetBillingInfoCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3022,17 +2819,17 @@ func (c *ProjectsGetBillingInfoCall) Do(opts ...googleapi.CallOption) (*ProjectB
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ProjectBillingInfo{
 		ServerResponse: googleapi.ServerResponse{
@@ -3046,7 +2843,7 @@ func (c *ProjectsGetBillingInfoCall) Do(opts ...googleapi.CallOption) (*ProjectB
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the billing information for a project. The current authenticated user\nmust have [permission to view the\nproject](https://cloud.google.com/docs/permissions-overview#h.bgs0oxofvnoo\n).",
+	//   "description": "Gets the billing information for a project. The current authenticated user must have the `resourcemanager.projects.get` permission for the project, which can be granted by assigning the [Project Viewer](https://cloud.google.com/iam/docs/understanding-roles#predefined_roles) role.",
 	//   "flatPath": "v1/projects/{projectsId}/billingInfo",
 	//   "httpMethod": "GET",
 	//   "id": "cloudbilling.projects.getBillingInfo",
@@ -3055,7 +2852,7 @@ func (c *ProjectsGetBillingInfoCall) Do(opts ...googleapi.CallOption) (*ProjectB
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the project for which billing information is\nretrieved. For example, `projects/tokyo-rain-123`.",
+	//       "description": "Required. The resource name of the project for which billing information is retrieved. For example, `projects/tokyo-rain-123`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -3067,6 +2864,8 @@ func (c *ProjectsGetBillingInfoCall) Do(opts ...googleapi.CallOption) (*ProjectB
 	//     "$ref": "ProjectBillingInfo"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-billing",
+	//     "https://www.googleapis.com/auth/cloud-billing.readonly",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -3085,61 +2884,37 @@ type ProjectsUpdateBillingInfoCall struct {
 }
 
 // UpdateBillingInfo: Sets or updates the billing account associated
-// with a project. You specify
-// the new billing account by setting the `billing_account_name` in
-// the
-// `ProjectBillingInfo` resource to the resource name of a billing
-// account.
-// Associating a project with an open billing account enables billing on
-// the
-// project and allows charges for resource usage. If the project already
-// had a
-// billing account, this method changes the billing account used for
-// resource
-// usage charges.
-//
-// *Note:* Incurred charges that have not yet been reported in the
-// transaction
-// history of the GCP Console might be billed to the new
-// billing
-// account, even if the charge occurred before the new billing account
-// was
-// assigned to the project.
-//
-// The current authenticated user must have ownership privileges for
-// both
-// the
-// [project](https://cloud.google.com/docs/permissions-overview#h.bgs
-// 0oxofvnoo
-// ) and the
-// [billing
-// account](https://cloud.google.com/billing/docs/how-to/billing
-// -access).
-//
-// You can disable billing on the project by setting
-// the
-// `billing_account_name` field to empty. This action disassociates
-// the
+// with a project. You specify the new billing account by setting the
+// `billing_account_name` in the `ProjectBillingInfo` resource to the
+// resource name of a billing account. Associating a project with an
+// open billing account enables billing on the project and allows
+// charges for resource usage. If the project already had a billing
+// account, this method changes the billing account used for resource
+// usage charges. *Note:* Incurred charges that have not yet been
+// reported in the transaction history of the Google Cloud Console might
+// be billed to the new billing account, even if the charge occurred
+// before the new billing account was assigned to the project. The
+// current authenticated user must have ownership privileges for both
+// the project
+// (https://cloud.google.com/docs/permissions-overview#h.bgs0oxofvnoo )
+// and the billing account
+// (https://cloud.google.com/billing/docs/how-to/billing-access). You
+// can disable billing on the project by setting the
+// `billing_account_name` field to empty. This action disassociates the
 // current billing account from the project. Any billable activity of
-// your
-// in-use services will stop, and your application could stop
-// functioning as
-// expected. Any unbilled charges to date will be billed to the
-// previously
-// associated account. The current authenticated user must be either an
-// owner
-// of the project or an owner of the billing account for the
-// project.
+// your in-use services will stop, and your application could stop
+// functioning as expected. Any unbilled charges to date will be billed
+// to the previously associated account. The current authenticated user
+// must be either an owner of the project or an owner of the billing
+// account for the project. Note that associating a project with a
+// *closed* billing account will have much the same effect as disabling
+// billing on the project: any paid resources used by the project will
+// be shut down. Thus, unless you wish to disable billing, you should
+// always call this method with the name of an *open* billing account.
 //
-// Note that associating a project with a *closed* billing account will
-// have
-// much the same effect as disabling billing on the project: any
-// paid
-// resources used by the project will be shut down. Thus, unless you
-// wish to
-// disable billing, you should always call this method with the name of
-// an
-// *open* billing account.
+//   - name: The resource name of the project associated with the billing
+//     information that you want to update. For example,
+//     `projects/tokyo-rain-123`.
 func (r *ProjectsService) UpdateBillingInfo(name string, projectbillinginfo *ProjectBillingInfo) *ProjectsUpdateBillingInfoCall {
 	c := &ProjectsUpdateBillingInfoCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3174,7 +2949,7 @@ func (c *ProjectsUpdateBillingInfoCall) Header() http.Header {
 
 func (c *ProjectsUpdateBillingInfoCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3214,17 +2989,17 @@ func (c *ProjectsUpdateBillingInfoCall) Do(opts ...googleapi.CallOption) (*Proje
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ProjectBillingInfo{
 		ServerResponse: googleapi.ServerResponse{
@@ -3238,7 +3013,7 @@ func (c *ProjectsUpdateBillingInfoCall) Do(opts ...googleapi.CallOption) (*Proje
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets or updates the billing account associated with a project. You specify\nthe new billing account by setting the `billing_account_name` in the\n`ProjectBillingInfo` resource to the resource name of a billing account.\nAssociating a project with an open billing account enables billing on the\nproject and allows charges for resource usage. If the project already had a\nbilling account, this method changes the billing account used for resource\nusage charges.\n\n*Note:* Incurred charges that have not yet been reported in the transaction\nhistory of the GCP Console might be billed to the new billing\naccount, even if the charge occurred before the new billing account was\nassigned to the project.\n\nThe current authenticated user must have ownership privileges for both the\n[project](https://cloud.google.com/docs/permissions-overview#h.bgs0oxofvnoo\n) and the [billing\naccount](https://cloud.google.com/billing/docs/how-to/billing-access).\n\nYou can disable billing on the project by setting the\n`billing_account_name` field to empty. This action disassociates the\ncurrent billing account from the project. Any billable activity of your\nin-use services will stop, and your application could stop functioning as\nexpected. Any unbilled charges to date will be billed to the previously\nassociated account. The current authenticated user must be either an owner\nof the project or an owner of the billing account for the project.\n\nNote that associating a project with a *closed* billing account will have\nmuch the same effect as disabling billing on the project: any paid\nresources used by the project will be shut down. Thus, unless you wish to\ndisable billing, you should always call this method with the name of an\n*open* billing account.",
+	//   "description": "Sets or updates the billing account associated with a project. You specify the new billing account by setting the `billing_account_name` in the `ProjectBillingInfo` resource to the resource name of a billing account. Associating a project with an open billing account enables billing on the project and allows charges for resource usage. If the project already had a billing account, this method changes the billing account used for resource usage charges. *Note:* Incurred charges that have not yet been reported in the transaction history of the Google Cloud Console might be billed to the new billing account, even if the charge occurred before the new billing account was assigned to the project. The current authenticated user must have ownership privileges for both the [project](https://cloud.google.com/docs/permissions-overview#h.bgs0oxofvnoo ) and the [billing account](https://cloud.google.com/billing/docs/how-to/billing-access). You can disable billing on the project by setting the `billing_account_name` field to empty. This action disassociates the current billing account from the project. Any billable activity of your in-use services will stop, and your application could stop functioning as expected. Any unbilled charges to date will be billed to the previously associated account. The current authenticated user must be either an owner of the project or an owner of the billing account for the project. Note that associating a project with a *closed* billing account will have much the same effect as disabling billing on the project: any paid resources used by the project will be shut down. Thus, unless you wish to disable billing, you should always call this method with the name of an *open* billing account.",
 	//   "flatPath": "v1/projects/{projectsId}/billingInfo",
 	//   "httpMethod": "PUT",
 	//   "id": "cloudbilling.projects.updateBillingInfo",
@@ -3247,7 +3022,7 @@ func (c *ProjectsUpdateBillingInfoCall) Do(opts ...googleapi.CallOption) (*Proje
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the project associated with the billing information\nthat you want to update. For example, `projects/tokyo-rain-123`.",
+	//       "description": "Required. The resource name of the project associated with the billing information that you want to update. For example, `projects/tokyo-rain-123`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -3262,6 +3037,7 @@ func (c *ProjectsUpdateBillingInfoCall) Do(opts ...googleapi.CallOption) (*Proje
 	//     "$ref": "ProjectBillingInfo"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-billing",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -3292,10 +3068,9 @@ func (c *ServicesListCall) PageSize(pageSize int64) *ServicesListCall {
 }
 
 // PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results to return. This should be
-// a
-// `next_page_token` value returned from a previous `ListServices`
-// call. If unspecified, the first page of results is returned.
+// identifying a page of results to return. This should be a
+// `next_page_token` value returned from a previous `ListServices` call.
+// If unspecified, the first page of results is returned.
 func (c *ServicesListCall) PageToken(pageToken string) *ServicesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -3338,7 +3113,7 @@ func (c *ServicesListCall) Header() http.Header {
 
 func (c *ServicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3373,17 +3148,17 @@ func (c *ServicesListCall) Do(opts ...googleapi.CallOption) (*ListServicesRespon
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListServicesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3410,7 +3185,7 @@ func (c *ServicesListCall) Do(opts ...googleapi.CallOption) (*ListServicesRespon
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token identifying a page of results to return. This should be a\n`next_page_token` value returned from a previous `ListServices`\ncall. If unspecified, the first page of results is returned.",
+	//       "description": "A token identifying a page of results to return. This should be a `next_page_token` value returned from a previous `ListServices` call. If unspecified, the first page of results is returned.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -3420,6 +3195,8 @@ func (c *ServicesListCall) Do(opts ...googleapi.CallOption) (*ListServicesRespon
 	//     "$ref": "ListServicesResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-billing",
+	//     "https://www.googleapis.com/auth/cloud-billing.readonly",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -3459,6 +3236,8 @@ type ServicesSkusListCall struct {
 }
 
 // List: Lists all publicly available SKUs for a given cloud service.
+//
+// - parent: The name of the service. Example: "services/DA34-426B-A397".
 func (r *ServicesSkusService) List(parent string) *ServicesSkusListCall {
 	c := &ServicesSkusListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3466,25 +3245,20 @@ func (r *ServicesSkusService) List(parent string) *ServicesSkusListCall {
 }
 
 // CurrencyCode sets the optional parameter "currencyCode": The ISO 4217
-// currency code for the pricing info in the response proto.
-// Will use the conversion rate as of start_time.
-//  If not specified USD will be used.
+// currency code for the pricing info in the response proto. Will use
+// the conversion rate as of start_time.  If not specified USD will be
+// used.
 func (c *ServicesSkusListCall) CurrencyCode(currencyCode string) *ServicesSkusListCall {
 	c.urlParams_.Set("currencyCode", currencyCode)
 	return c
 }
 
 // EndTime sets the optional parameter "endTime": Optional exclusive end
-// time of the time range for which the pricing
-// versions will be returned. Timestamps in the future are not
-// allowed.
-// The time range has to be within a single calendar month
-// in
-// America/Los_Angeles timezone. Time range as a whole is optional. If
-// not
-// specified, the latest pricing will be returned (up to 12 hours old
-// at
-// most).
+// time of the time range for which the pricing versions will be
+// returned. Timestamps in the future are not allowed. The time range
+// has to be within a single calendar month in America/Los_Angeles
+// timezone. Time range as a whole is optional. If not specified, the
+// latest pricing will be returned (up to 12 hours old at most).
 func (c *ServicesSkusListCall) EndTime(endTime string) *ServicesSkusListCall {
 	c.urlParams_.Set("endTime", endTime)
 	return c
@@ -3498,26 +3272,20 @@ func (c *ServicesSkusListCall) PageSize(pageSize int64) *ServicesSkusListCall {
 }
 
 // PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results to return. This should be
-// a
-// `next_page_token` value returned from a previous `ListSkus`
-// call. If unspecified, the first page of results is returned.
+// identifying a page of results to return. This should be a
+// `next_page_token` value returned from a previous `ListSkus` call. If
+// unspecified, the first page of results is returned.
 func (c *ServicesSkusListCall) PageToken(pageToken string) *ServicesSkusListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // StartTime sets the optional parameter "startTime": Optional inclusive
-// start time of the time range for which the pricing
-// versions will be returned. Timestamps in the future are not
-// allowed.
-// The time range has to be within a single calendar month
-// in
-// America/Los_Angeles timezone. Time range as a whole is optional. If
-// not
-// specified, the latest pricing will be returned (up to 12 hours old
-// at
-// most).
+// start time of the time range for which the pricing versions will be
+// returned. Timestamps in the future are not allowed. The time range
+// has to be within a single calendar month in America/Los_Angeles
+// timezone. Time range as a whole is optional. If not specified, the
+// latest pricing will be returned (up to 12 hours old at most).
 func (c *ServicesSkusListCall) StartTime(startTime string) *ServicesSkusListCall {
 	c.urlParams_.Set("startTime", startTime)
 	return c
@@ -3560,7 +3328,7 @@ func (c *ServicesSkusListCall) Header() http.Header {
 
 func (c *ServicesSkusListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3598,17 +3366,17 @@ func (c *ServicesSkusListCall) Do(opts ...googleapi.CallOption) (*ListSkusRespon
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListSkusResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3631,12 +3399,12 @@ func (c *ServicesSkusListCall) Do(opts ...googleapi.CallOption) (*ListSkusRespon
 	//   ],
 	//   "parameters": {
 	//     "currencyCode": {
-	//       "description": "The ISO 4217 currency code for the pricing info in the response proto.\nWill use the conversion rate as of start_time.\nOptional. If not specified USD will be used.",
+	//       "description": "The ISO 4217 currency code for the pricing info in the response proto. Will use the conversion rate as of start_time. Optional. If not specified USD will be used.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "endTime": {
-	//       "description": "Optional exclusive end time of the time range for which the pricing\nversions will be returned. Timestamps in the future are not allowed.\nThe time range has to be within a single calendar month in\nAmerica/Los_Angeles timezone. Time range as a whole is optional. If not\nspecified, the latest pricing will be returned (up to 12 hours old at\nmost).",
+	//       "description": "Optional exclusive end time of the time range for which the pricing versions will be returned. Timestamps in the future are not allowed. The time range has to be within a single calendar month in America/Los_Angeles timezone. Time range as a whole is optional. If not specified, the latest pricing will be returned (up to 12 hours old at most).",
 	//       "format": "google-datetime",
 	//       "location": "query",
 	//       "type": "string"
@@ -3648,19 +3416,19 @@ func (c *ServicesSkusListCall) Do(opts ...googleapi.CallOption) (*ListSkusRespon
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token identifying a page of results to return. This should be a\n`next_page_token` value returned from a previous `ListSkus`\ncall. If unspecified, the first page of results is returned.",
+	//       "description": "A token identifying a page of results to return. This should be a `next_page_token` value returned from a previous `ListSkus` call. If unspecified, the first page of results is returned.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The name of the service.\nExample: \"services/DA34-426B-A397\"",
+	//       "description": "Required. The name of the service. Example: \"services/DA34-426B-A397\"",
 	//       "location": "path",
 	//       "pattern": "^services/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "startTime": {
-	//       "description": "Optional inclusive start time of the time range for which the pricing\nversions will be returned. Timestamps in the future are not allowed.\nThe time range has to be within a single calendar month in\nAmerica/Los_Angeles timezone. Time range as a whole is optional. If not\nspecified, the latest pricing will be returned (up to 12 hours old at\nmost).",
+	//       "description": "Optional inclusive start time of the time range for which the pricing versions will be returned. Timestamps in the future are not allowed. The time range has to be within a single calendar month in America/Los_Angeles timezone. Time range as a whole is optional. If not specified, the latest pricing will be returned (up to 12 hours old at most).",
 	//       "format": "google-datetime",
 	//       "location": "query",
 	//       "type": "string"
@@ -3671,6 +3439,8 @@ func (c *ServicesSkusListCall) Do(opts ...googleapi.CallOption) (*ListSkusRespon
 	//     "$ref": "ListSkusResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-billing",
+	//     "https://www.googleapis.com/auth/cloud-billing.readonly",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }

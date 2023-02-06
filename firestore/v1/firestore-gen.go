@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -10,35 +10,35 @@
 //
 // For product documentation, see: https://cloud.google.com/firestore
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/firestore/v1"
-//   ...
-//   ctx := context.Background()
-//   firestoreService, err := firestore.NewService(ctx)
+//	import "google.golang.org/api/firestore/v1"
+//	...
+//	ctx := context.Background()
+//	firestoreService, err := firestore.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//   firestoreService, err := firestore.NewService(ctx, option.WithScopes(firestore.DatastoreScope))
+//	firestoreService, err := firestore.NewService(ctx, option.WithScopes(firestore.DatastoreScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   firestoreService, err := firestore.NewService(ctx, option.WithAPIKey("AIza..."))
+//	firestoreService, err := firestore.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   firestoreService, err := firestore.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	firestoreService, err := firestore.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package firestore // import "google.golang.org/api/firestore/v1"
@@ -56,6 +56,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -81,10 +82,12 @@ const apiId = "firestore:v1"
 const apiName = "firestore"
 const apiVersion = "v1"
 const basePath = "https://firestore.googleapis.com/"
+const mtlsBasePath = "https://firestore.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud data and see the
+	// email address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
 	// View and manage your Google Cloud Datastore data
@@ -93,13 +96,14 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
 		"https://www.googleapis.com/auth/datastore",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -236,6 +240,80 @@ type ProjectsLocationsService struct {
 	s *Service
 }
 
+// Aggregation: Defines a aggregation that produces a single result.
+type Aggregation struct {
+	// Alias: Optional. Optional name of the field to store the result of
+	// the aggregation into. If not provided, Firestore will pick a default
+	// name following the format `field_`. For example: ``` AGGREGATE
+	// COUNT_UP_TO(1) AS count_up_to_1, COUNT_UP_TO(2), COUNT_UP_TO(3) AS
+	// count_up_to_3, COUNT_UP_TO(4) OVER ( ... ); ``` becomes: ```
+	// AGGREGATE COUNT_UP_TO(1) AS count_up_to_1, COUNT_UP_TO(2) AS field_1,
+	// COUNT_UP_TO(3) AS count_up_to_3, COUNT_UP_TO(4) AS field_2 OVER ( ...
+	// ); ``` Requires: * Must be unique across all aggregation aliases. *
+	// Conform to document field name limitations.
+	Alias string `json:"alias,omitempty"`
+
+	// Count: Count aggregator.
+	Count *Count `json:"count,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Alias") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Alias") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Aggregation) MarshalJSON() ([]byte, error) {
+	type NoMethod Aggregation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AggregationResult: The result of a single bucket from a Firestore
+// aggregation query. The keys of `aggregate_fields` are the same for
+// all results in an aggregation query, unlike document queries which
+// can have different fields present for each result.
+type AggregationResult struct {
+	// AggregateFields: The result of the aggregation functions, ex:
+	// `COUNT(*) AS total_docs`. The key is the alias assigned to the
+	// aggregation function on input and the size of this map equals the
+	// number of aggregation functions in the query.
+	AggregateFields map[string]Value `json:"aggregateFields,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AggregateFields") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AggregateFields") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AggregationResult) MarshalJSON() ([]byte, error) {
+	type NoMethod AggregationResult
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ArrayValue: An array value.
 type ArrayValue struct {
 	// Values: Values in the array.
@@ -243,10 +321,10 @@ type ArrayValue struct {
 
 	// ForceSendFields is a list of field names (e.g. "Values") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Values") to include in API
@@ -267,32 +345,24 @@ func (s *ArrayValue) MarshalJSON() ([]byte, error) {
 // BatchGetDocumentsRequest: The request for
 // Firestore.BatchGetDocuments.
 type BatchGetDocumentsRequest struct {
-	// Documents: The names of the documents to retrieve. In the
-	// format:
-	// `projects/{project_id}/databases/{database_id}/documents/{docu
-	// ment_path}`.
-	// The request will fail if any of the document is not a child resource
-	// of the
-	// given `database`. Duplicate names will be elided.
+	// Documents: The names of the documents to retrieve. In the format:
+	// `projects/{project_id}/databases/{database_id}/documents/{document_pat
+	// h}`. The request will fail if any of the document is not a child
+	// resource of the given `database`. Duplicate names will be elided.
 	Documents []string `json:"documents,omitempty"`
 
-	// Mask: The fields to return. If not set, returns all fields.
-	//
-	// If a document has a field that is not present in this mask, that
-	// field will
-	// not be returned in the response.
+	// Mask: The fields to return. If not set, returns all fields. If a
+	// document has a field that is not present in this mask, that field
+	// will not be returned in the response.
 	Mask *DocumentMask `json:"mask,omitempty"`
 
-	// NewTransaction: Starts a new transaction and reads the
-	// documents.
-	// Defaults to a read-only transaction.
-	// The new transaction ID will be returned as the first response in
-	// the
-	// stream.
+	// NewTransaction: Starts a new transaction and reads the documents.
+	// Defaults to a read-only transaction. The new transaction ID will be
+	// returned as the first response in the stream.
 	NewTransaction *TransactionOptions `json:"newTransaction,omitempty"`
 
-	// ReadTime: Reads documents as they were at the given time.
-	// This may not be older than 270 seconds.
+	// ReadTime: Reads documents as they were at the given time. This may
+	// not be older than 270 seconds.
 	ReadTime string `json:"readTime,omitempty"`
 
 	// Transaction: Reads documents in a transaction.
@@ -300,10 +370,10 @@ type BatchGetDocumentsRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "Documents") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Documents") to include in
@@ -328,24 +398,19 @@ type BatchGetDocumentsResponse struct {
 	Found *Document `json:"found,omitempty"`
 
 	// Missing: A document name that was requested but does not exist. In
-	// the
-	// format:
-	// `projects/{project_id}/databases/{database_id}/documents/{docu
-	// ment_path}`.
+	// the format:
+	// `projects/{project_id}/databases/{database_id}/documents/{document_pat
+	// h}`.
 	Missing string `json:"missing,omitempty"`
 
-	// ReadTime: The time at which the document was read.
-	// This may be monotically increasing, in this case the previous
-	// documents in
-	// the result stream are guaranteed not to have changed between
-	// their
+	// ReadTime: The time at which the document was read. This may be
+	// monotically increasing, in this case the previous documents in the
+	// result stream are guaranteed not to have changed between their
 	// read_time and this one.
 	ReadTime string `json:"readTime,omitempty"`
 
 	// Transaction: The transaction that was started as part of this
-	// request.
-	// Will only be set in the first response, and only
-	// if
+	// request. Will only be set in the first response, and only if
 	// BatchGetDocumentsRequest.new_transaction was set in the request.
 	Transaction string `json:"transaction,omitempty"`
 
@@ -355,10 +420,10 @@ type BatchGetDocumentsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Found") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Found") to include in API
@@ -376,18 +441,89 @@ func (s *BatchGetDocumentsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// BatchWriteRequest: The request for Firestore.BatchWrite.
+type BatchWriteRequest struct {
+	// Labels: Labels associated with this batch write.
+	Labels map[string]string `json:"labels,omitempty"`
+
+	// Writes: The writes to apply. Method does not apply writes atomically
+	// and does not guarantee ordering. Each write succeeds or fails
+	// independently. You cannot write to the same document more than once
+	// per request.
+	Writes []*Write `json:"writes,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Labels") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Labels") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BatchWriteRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchWriteRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BatchWriteResponse: The response from Firestore.BatchWrite.
+type BatchWriteResponse struct {
+	// Status: The status of applying the writes. This i-th write status
+	// corresponds to the i-th write in the request.
+	Status []*Status `json:"status,omitempty"`
+
+	// WriteResults: The result of applying the writes. This i-th write
+	// result corresponds to the i-th write in the request.
+	WriteResults []*WriteResult `json:"writeResults,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Status") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Status") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BatchWriteResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchWriteResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // BeginTransactionRequest: The request for Firestore.BeginTransaction.
 type BeginTransactionRequest struct {
-	// Options: The options for the transaction.
-	// Defaults to a read-write transaction.
+	// Options: The options for the transaction. Defaults to a read-write
+	// transaction.
 	Options *TransactionOptions `json:"options,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Options") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Options") to include in
@@ -417,10 +553,10 @@ type BeginTransactionResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Transaction") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Transaction") to include
@@ -442,21 +578,20 @@ func (s *BeginTransactionResponse) MarshalJSON() ([]byte, error) {
 // m1`.
 type CollectionSelector struct {
 	// AllDescendants: When false, selects only collections that are
-	// immediate children of
-	// the `parent` specified in the containing `RunQueryRequest`.
-	// When true, selects all descendant collections.
+	// immediate children of the `parent` specified in the containing
+	// `RunQueryRequest`. When true, selects all descendant collections.
 	AllDescendants bool `json:"allDescendants,omitempty"`
 
-	// CollectionId: The collection ID.
-	// When set, selects only collections with this ID.
+	// CollectionId: The collection ID. When set, selects only collections
+	// with this ID.
 	CollectionId string `json:"collectionId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AllDescendants") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AllDescendants") to
@@ -481,17 +616,15 @@ type CommitRequest struct {
 	// commits it.
 	Transaction string `json:"transaction,omitempty"`
 
-	// Writes: The writes to apply.
-	//
-	// Always executed atomically and in order.
+	// Writes: The writes to apply. Always executed atomically and in order.
 	Writes []*Write `json:"writes,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Transaction") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Transaction") to include
@@ -512,14 +645,12 @@ func (s *CommitRequest) MarshalJSON() ([]byte, error) {
 // CommitResponse: The response for Firestore.Commit.
 type CommitResponse struct {
 	// CommitTime: The time at which the commit occurred. Any read with an
-	// equal or greater
-	// `read_time` is guaranteed to see the effects of the commit.
+	// equal or greater `read_time` is guaranteed to see the effects of the
+	// commit.
 	CommitTime string `json:"commitTime,omitempty"`
 
-	// WriteResults: The result of applying the writes.
-	//
-	// This i-th write result corresponds to the i-th write in the
-	// request.
+	// WriteResults: The result of applying the writes. This i-th write
+	// result corresponds to the i-th write in the request.
 	WriteResults []*WriteResult `json:"writeResults,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -528,10 +659,10 @@ type CommitResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "CommitTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CommitTime") to include in
@@ -552,24 +683,24 @@ func (s *CommitResponse) MarshalJSON() ([]byte, error) {
 // CompositeFilter: A filter that merges multiple other filters using
 // the given operator.
 type CompositeFilter struct {
-	// Filters: The list of filters to combine.
-	// Must contain at least one filter.
+	// Filters: The list of filters to combine. Requires: * At least one
+	// filter is present.
 	Filters []*Filter `json:"filters,omitempty"`
 
 	// Op: The operator for combining multiple filters.
 	//
 	// Possible values:
 	//   "OPERATOR_UNSPECIFIED" - Unspecified. This value must not be used.
-	//   "AND" - The results are required to satisfy each of the combined
+	//   "AND" - Documents are required to satisfy all of the combined
 	// filters.
 	Op string `json:"op,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Filters") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Filters") to include in
@@ -587,26 +718,58 @@ func (s *CompositeFilter) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Count: Count of documents that match the query. The `COUNT(*)`
+// aggregation function operates on the entire document so it does not
+// require a field reference.
+type Count struct {
+	// UpTo: Optional. Optional constraint on the maximum number of
+	// documents to count. This provides a way to set an upper bound on the
+	// number of documents to scan, limiting latency and cost. Unspecified
+	// is interpreted as no bound. High-Level Example: ``` AGGREGATE
+	// COUNT_UP_TO(1000) OVER ( SELECT * FROM k ); ``` Requires: * Must be
+	// greater than zero when present.
+	UpTo int64 `json:"upTo,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "UpTo") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "UpTo") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Count) MarshalJSON() ([]byte, error) {
+	type NoMethod Count
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Cursor: A position in a query result set.
 type Cursor struct {
 	// Before: If the position is just before or just after the given
-	// values, relative
-	// to the sort order defined by the query.
+	// values, relative to the sort order defined by the query.
 	Before bool `json:"before,omitempty"`
 
 	// Values: The values that represent a position, in the order they
-	// appear in
-	// the order by clause of a query.
-	//
-	// Can contain fewer values than specified in the order by clause.
+	// appear in the order by clause of a query. Can contain fewer values
+	// than specified in the order by clause.
 	Values []*Value `json:"values,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Before") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Before") to include in API
@@ -624,71 +787,41 @@ func (s *Cursor) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Document: A Firestore document.
-//
-// Must not exceed 1 MiB - 4 bytes.
+// Document: A Firestore document. Must not exceed 1 MiB - 4 bytes.
 type Document struct {
-	// CreateTime: Output only. The time at which the document was
-	// created.
-	//
-	// This value increases monotonically when a document is deleted
-	// then
-	// recreated. It can also be compared to values from other documents
-	// and
+	// CreateTime: Output only. The time at which the document was created.
+	// This value increases monotonically when a document is deleted then
+	// recreated. It can also be compared to values from other documents and
 	// the `read_time` of a query.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// Fields: The document's fields.
-	//
-	// The map keys represent field names.
-	//
-	// A simple field name contains only characters `a` to `z`, `A` to
-	// `Z`,
-	// `0` to `9`, or `_`, and must not start with `0` to `9`. For
-	// example,
-	// `foo_bar_17`.
-	//
-	// Field names matching the regular expression `__.*__` are reserved.
-	// Reserved
-	// field names are forbidden except in certain documented contexts. The
-	// map
-	// keys, represented as UTF-8, must not exceed 1,500 bytes and cannot
-	// be
-	// empty.
-	//
-	// Field paths may be used in other contexts to refer to structured
-	// fields
-	// defined here. For `map_value`, the field path is represented by the
-	// simple
-	// or quoted field names of the containing fields, delimited by `.`.
-	// For
-	// example, the structured field
-	// "foo" : { map_value: { "x&y" : { string_value: "hello" }}}` would
-	// be
-	// represented by the field path `foo.x&y`.
-	//
-	// Within a field path, a quoted field name starts and ends with `` ` ``
-	// and
+	// Fields: The document's fields. The map keys represent field names. A
+	// simple field name contains only characters `a` to `z`, `A` to `Z`,
+	// `0` to `9`, or `_`, and must not start with `0` to `9`. For example,
+	// `foo_bar_17`. Field names matching the regular expression `__.*__`
+	// are reserved. Reserved field names are forbidden except in certain
+	// documented contexts. The map keys, represented as UTF-8, must not
+	// exceed 1,500 bytes and cannot be empty. Field paths may be used in
+	// other contexts to refer to structured fields defined here. For
+	// `map_value`, the field path is represented by the simple or quoted
+	// field names of the containing fields, delimited by `.`. For example,
+	// the structured field "foo" : { map_value: { "x&y" : { string_value:
+	// "hello" }}}` would be represented by the field path `foo.x&y`. Within
+	// a field path, a quoted field name starts and ends with `` ` `` and
 	// may contain any character. Some characters, including `` ` ``, must
-	// be
-	// escaped using a `\`. For example, `` `x&y` `` represents `x&y` and
+	// be escaped using a `\`. For example, `` `x&y` `` represents `x&y` and
 	// `` `bak\`tik` `` represents `` bak`tik ``.
 	Fields map[string]Value `json:"fields,omitempty"`
 
-	// Name: The resource name of the document, for
-	// example
-	// `projects/{project_id}/databases/{database_id}/documents/{docu
-	// ment_path}`.
+	// Name: The resource name of the document, for example
+	// `projects/{project_id}/databases/{database_id}/documents/{document_pat
+	// h}`.
 	Name string `json:"name,omitempty"`
 
 	// UpdateTime: Output only. The time at which the document was last
-	// changed.
-	//
-	// This value is initially set to the `create_time` then
-	// increases
-	// monotonically with each change to the document. It can also
-	// be
-	// compared to values from other documents and the `read_time` of a
+	// changed. This value is initially set to the `create_time` then
+	// increases monotonically with each change to the document. It can also
+	// be compared to values from other documents and the `read_time` of a
 	// query.
 	UpdateTime string `json:"updateTime,omitempty"`
 
@@ -698,10 +831,10 @@ type Document struct {
 
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CreateTime") to include in
@@ -719,19 +852,13 @@ func (s *Document) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DocumentChange: A Document has changed.
-//
-// May be the result of multiple writes, including deletes,
-// that
-// ultimately resulted in a new value for the Document.
-//
-// Multiple DocumentChange messages may be returned for the same
-// logical
-// change, if multiple targets are affected.
+// DocumentChange: A Document has changed. May be the result of multiple
+// writes, including deletes, that ultimately resulted in a new value
+// for the Document. Multiple DocumentChange messages may be returned
+// for the same logical change, if multiple targets are affected.
 type DocumentChange struct {
-	// Document: The new state of the Document.
-	//
-	// If `mask` is set, contains only fields that were updated or added.
+	// Document: The new state of the Document. If `mask` is set, contains
+	// only fields that were updated or added.
 	Document *Document `json:"document,omitempty"`
 
 	// RemovedTargetIds: A set of target IDs for targets that no longer
@@ -743,10 +870,10 @@ type DocumentChange struct {
 
 	// ForceSendFields is a list of field names (e.g. "Document") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Document") to include in
@@ -764,21 +891,15 @@ func (s *DocumentChange) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DocumentDelete: A Document has been deleted.
-//
-// May be the result of multiple writes, including updates, the
-// last of which deleted the Document.
-//
-// Multiple DocumentDelete messages may be returned for the same
-// logical
-// delete, if multiple targets are affected.
+// DocumentDelete: A Document has been deleted. May be the result of
+// multiple writes, including updates, the last of which deleted the
+// Document. Multiple DocumentDelete messages may be returned for the
+// same logical delete, if multiple targets are affected.
 type DocumentDelete struct {
 	// Document: The resource name of the Document that was deleted.
 	Document string `json:"document,omitempty"`
 
-	// ReadTime: The read timestamp at which the delete was
-	// observed.
-	//
+	// ReadTime: The read timestamp at which the delete was observed.
 	// Greater or equal to the `commit_time` of the delete.
 	ReadTime string `json:"readTime,omitempty"`
 
@@ -788,10 +909,10 @@ type DocumentDelete struct {
 
 	// ForceSendFields is a list of field names (e.g. "Document") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Document") to include in
@@ -809,25 +930,21 @@ func (s *DocumentDelete) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DocumentMask: A set of field paths on a document.
-// Used to restrict a get or update operation on a document to a subset
-// of its
-// fields.
-// This is different from standard field masks, as this is always scoped
-// to a
+// DocumentMask: A set of field paths on a document. Used to restrict a
+// get or update operation on a document to a subset of its fields. This
+// is different from standard field masks, as this is always scoped to a
 // Document, and takes in account the dynamic nature of Value.
 type DocumentMask struct {
 	// FieldPaths: The list of field paths in the mask. See Document.fields
-	// for a field
-	// path syntax reference.
+	// for a field path syntax reference.
 	FieldPaths []string `json:"fieldPaths,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FieldPaths") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "FieldPaths") to include in
@@ -846,25 +963,17 @@ func (s *DocumentMask) MarshalJSON() ([]byte, error) {
 }
 
 // DocumentRemove: A Document has been removed from the view of the
-// targets.
-//
-// Sent if the document is no longer relevant to a target and is out of
-// view.
-// Can be sent instead of a DocumentDelete or a DocumentChange if the
-// server
-// can not send the new value of the document.
-//
-// Multiple DocumentRemove messages may be returned for the same
-// logical
-// write or delete, if multiple targets are affected.
+// targets. Sent if the document is no longer relevant to a target and
+// is out of view. Can be sent instead of a DocumentDelete or a
+// DocumentChange if the server can not send the new value of the
+// document. Multiple DocumentRemove messages may be returned for the
+// same logical write or delete, if multiple targets are affected.
 type DocumentRemove struct {
 	// Document: The resource name of the Document that has gone out of
 	// view.
 	Document string `json:"document,omitempty"`
 
-	// ReadTime: The read timestamp at which the remove was
-	// observed.
-	//
+	// ReadTime: The read timestamp at which the remove was observed.
 	// Greater or equal to the `commit_time` of the change/delete/remove.
 	ReadTime string `json:"readTime,omitempty"`
 
@@ -874,10 +983,10 @@ type DocumentRemove struct {
 
 	// ForceSendFields is a list of field names (e.g. "Document") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Document") to include in
@@ -901,17 +1010,15 @@ type DocumentTransform struct {
 	Document string `json:"document,omitempty"`
 
 	// FieldTransforms: The list of transformations to apply to the fields
-	// of the document, in
-	// order.
-	// This must not be empty.
+	// of the document, in order. This must not be empty.
 	FieldTransforms []*FieldTransform `json:"fieldTransforms,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Document") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Document") to include in
@@ -931,21 +1038,18 @@ func (s *DocumentTransform) MarshalJSON() ([]byte, error) {
 
 // DocumentsTarget: A target specified by a set of documents names.
 type DocumentsTarget struct {
-	// Documents: The names of the documents to retrieve. In the
-	// format:
-	// `projects/{project_id}/databases/{database_id}/documents/{docu
-	// ment_path}`.
-	// The request will fail if any of the document is not a child resource
-	// of
-	// the given `database`. Duplicate names will be elided.
+	// Documents: The names of the documents to retrieve. In the format:
+	// `projects/{project_id}/databases/{database_id}/documents/{document_pat
+	// h}`. The request will fail if any of the document is not a child
+	// resource of the given `database`. Duplicate names will be elided.
 	Documents []string `json:"documents,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Documents") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Documents") to include in
@@ -964,17 +1068,10 @@ func (s *DocumentsTarget) MarshalJSON() ([]byte, error) {
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
-// duplicated
-// empty messages in your APIs. A typical example is to use it as the
-// request
-// or the response type of an API method. For instance:
-//
-//     service Foo {
-//       rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty);
-//     }
-//
-// The JSON representation for `Empty` is empty JSON object `{}`.
+// duplicated empty messages in your APIs. A typical example is to use
+// it as the request or the response type of an API method. For
+// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); }
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -984,10 +1081,8 @@ type Empty struct {
 // ExistenceFilter: A digest of all the documents that match a given
 // target.
 type ExistenceFilter struct {
-	// Count: The total count of documents that match target_id.
-	//
-	// If different from the count of documents in the client that match,
-	// the
+	// Count: The total count of documents that match target_id. If
+	// different from the count of documents in the client that match, the
 	// client must manually determine which documents no longer match the
 	// target.
 	Count int64 `json:"count,omitempty"`
@@ -997,10 +1092,10 @@ type ExistenceFilter struct {
 
 	// ForceSendFields is a list of field names (e.g. "Count") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Count") to include in API
@@ -1027,23 +1122,34 @@ type FieldFilter struct {
 	//
 	// Possible values:
 	//   "OPERATOR_UNSPECIFIED" - Unspecified. This value must not be used.
-	//   "LESS_THAN" - Less than. Requires that the field come first in
+	//   "LESS_THAN" - The given `field` is less than the given `value`.
+	// Requires: * That `field` come first in `order_by`.
+	//   "LESS_THAN_OR_EQUAL" - The given `field` is less than or equal to
+	// the given `value`. Requires: * That `field` come first in `order_by`.
+	//   "GREATER_THAN" - The given `field` is greater than the given
+	// `value`. Requires: * That `field` come first in `order_by`.
+	//   "GREATER_THAN_OR_EQUAL" - The given `field` is greater than or
+	// equal to the given `value`. Requires: * That `field` come first in
 	// `order_by`.
-	//   "LESS_THAN_OR_EQUAL" - Less than or equal. Requires that the field
-	// come first in `order_by`.
-	//   "GREATER_THAN" - Greater than. Requires that the field come first
-	// in `order_by`.
-	//   "GREATER_THAN_OR_EQUAL" - Greater than or equal. Requires that the
-	// field come first in
+	//   "EQUAL" - The given `field` is equal to the given `value`.
+	//   "NOT_EQUAL" - The given `field` is not equal to the given `value`.
+	// Requires: * No other `NOT_EQUAL`, `NOT_IN`, `IS_NOT_NULL`, or
+	// `IS_NOT_NAN`. * That `field` comes first in the `order_by`.
+	//   "ARRAY_CONTAINS" - The given `field` is an array that contains the
+	// given `value`.
+	//   "IN" - The given `field` is equal to at least one value in the
+	// given array. Requires: * That `value` is a non-empty `ArrayValue`
+	// with at most 10 values. * No other `IN` or `ARRAY_CONTAINS_ANY` or
+	// `NOT_IN`.
+	//   "ARRAY_CONTAINS_ANY" - The given `field` is an array that contains
+	// any of the values in the given array. Requires: * That `value` is a
+	// non-empty `ArrayValue` with at most 10 values. * No other `IN` or
+	// `ARRAY_CONTAINS_ANY` or `NOT_IN`.
+	//   "NOT_IN" - The value of the `field` is not in the given array.
+	// Requires: * That `value` is a non-empty `ArrayValue` with at most 10
+	// values. * No other `IN`, `ARRAY_CONTAINS_ANY`, `NOT_IN`, `NOT_EQUAL`,
+	// `IS_NOT_NULL`, or `IS_NOT_NAN`. * That `field` comes first in the
 	// `order_by`.
-	//   "EQUAL" - Equal.
-	//   "ARRAY_CONTAINS" - Contains. Requires that the field is an array.
-	//   "IN" - In. Requires that `value` is a non-empty ArrayValue with at
-	// most 10
-	// values.
-	//   "ARRAY_CONTAINS_ANY" - Contains any. Requires that the field is an
-	// array and
-	// `value` is a non-empty ArrayValue with at most 10 values.
 	Op string `json:"op,omitempty"`
 
 	// Value: The value to compare to.
@@ -1051,10 +1157,10 @@ type FieldFilter struct {
 
 	// ForceSendFields is a list of field names (e.g. "Field") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Field") to include in API
@@ -1072,17 +1178,19 @@ func (s *FieldFilter) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// FieldReference: A reference to a field, such as `max(messages.time)
-// as max_time`.
+// FieldReference: A reference to a field in a document, ex:
+// `stats.operations`.
 type FieldReference struct {
+	// FieldPath: The relative path of the document being referenced.
+	// Requires: * Conform to document field name limitations.
 	FieldPath string `json:"fieldPath,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FieldPath") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "FieldPath") to include in
@@ -1103,98 +1211,64 @@ func (s *FieldReference) MarshalJSON() ([]byte, error) {
 // FieldTransform: A transformation of a field of the document.
 type FieldTransform struct {
 	// AppendMissingElements: Append the given elements in order if they are
-	// not already present in
-	// the current field value.
-	// If the field is not an array, or if the field does not yet exist, it
-	// is
-	// first set to the empty array.
-	//
-	// Equivalent numbers of different types (e.g. 3L and 3.0)
-	// are
-	// considered equal when checking if a value is missing.
-	// NaN is equal to NaN, and Null is equal to Null.
-	// If the input contains multiple equivalent values, only the first
-	// will
-	// be considered.
-	//
-	// The corresponding transform_result will be the null value.
+	// not already present in the current field value. If the field is not
+	// an array, or if the field does not yet exist, it is first set to the
+	// empty array. Equivalent numbers of different types (e.g. 3L and 3.0)
+	// are considered equal when checking if a value is missing. NaN is
+	// equal to NaN, and Null is equal to Null. If the input contains
+	// multiple equivalent values, only the first will be considered. The
+	// corresponding transform_result will be the null value.
 	AppendMissingElements *ArrayValue `json:"appendMissingElements,omitempty"`
 
 	// FieldPath: The path of the field. See Document.fields for the field
-	// path syntax
-	// reference.
+	// path syntax reference.
 	FieldPath string `json:"fieldPath,omitempty"`
 
-	// Increment: Adds the given value to the field's current value.
-	//
-	// This must be an integer or a double value.
-	// If the field is not an integer or double, or if the field does not
-	// yet
-	// exist, the transformation will set the field to the given value.
-	// If either of the given value or the current field value are
-	// doubles,
-	// both values will be interpreted as doubles. Double arithmetic
-	// and
-	// representation of double values follow IEEE 754 semantics.
-	// If there is positive/negative integer overflow, the field is
-	// resolved
-	// to the largest magnitude positive/negative integer.
+	// Increment: Adds the given value to the field's current value. This
+	// must be an integer or a double value. If the field is not an integer
+	// or double, or if the field does not yet exist, the transformation
+	// will set the field to the given value. If either of the given value
+	// or the current field value are doubles, both values will be
+	// interpreted as doubles. Double arithmetic and representation of
+	// double values follow IEEE 754 semantics. If there is
+	// positive/negative integer overflow, the field is resolved to the
+	// largest magnitude positive/negative integer.
 	Increment *Value `json:"increment,omitempty"`
 
 	// Maximum: Sets the field to the maximum of its current value and the
-	// given value.
-	//
-	// This must be an integer or a double value.
-	// If the field is not an integer or double, or if the field does not
-	// yet
-	// exist, the transformation will set the field to the given value.
-	// If a maximum operation is applied where the field and the input
-	// value
-	// are of mixed types (that is - one is an integer and one is a
-	// double)
-	// the field takes on the type of the larger operand. If the operands
-	// are
-	// equivalent (e.g. 3 and 3.0), the field does not change.
-	// 0, 0.0, and -0.0 are all zero. The maximum of a zero stored value
-	// and
-	// zero input value is always the stored value.
-	// The maximum of any numeric value x and NaN is NaN.
+	// given value. This must be an integer or a double value. If the field
+	// is not an integer or double, or if the field does not yet exist, the
+	// transformation will set the field to the given value. If a maximum
+	// operation is applied where the field and the input value are of mixed
+	// types (that is - one is an integer and one is a double) the field
+	// takes on the type of the larger operand. If the operands are
+	// equivalent (e.g. 3 and 3.0), the field does not change. 0, 0.0, and
+	// -0.0 are all zero. The maximum of a zero stored value and zero input
+	// value is always the stored value. The maximum of any numeric value x
+	// and NaN is NaN.
 	Maximum *Value `json:"maximum,omitempty"`
 
 	// Minimum: Sets the field to the minimum of its current value and the
-	// given value.
-	//
-	// This must be an integer or a double value.
-	// If the field is not an integer or double, or if the field does not
-	// yet
-	// exist, the transformation will set the field to the input value.
-	// If a minimum operation is applied where the field and the input
-	// value
-	// are of mixed types (that is - one is an integer and one is a
-	// double)
-	// the field takes on the type of the smaller operand. If the operands
-	// are
-	// equivalent (e.g. 3 and 3.0), the field does not change.
-	// 0, 0.0, and -0.0 are all zero. The minimum of a zero stored value
-	// and
-	// zero input value is always the stored value.
-	// The minimum of any numeric value x and NaN is NaN.
+	// given value. This must be an integer or a double value. If the field
+	// is not an integer or double, or if the field does not yet exist, the
+	// transformation will set the field to the input value. If a minimum
+	// operation is applied where the field and the input value are of mixed
+	// types (that is - one is an integer and one is a double) the field
+	// takes on the type of the smaller operand. If the operands are
+	// equivalent (e.g. 3 and 3.0), the field does not change. 0, 0.0, and
+	// -0.0 are all zero. The minimum of a zero stored value and zero input
+	// value is always the stored value. The minimum of any numeric value x
+	// and NaN is NaN.
 	Minimum *Value `json:"minimum,omitempty"`
 
 	// RemoveAllFromArray: Remove all of the given elements from the array
-	// in the field.
-	// If the field is not an array, or if the field does not yet exist, it
-	// is
-	// set to the empty array.
-	//
-	// Equivalent numbers of the different types (e.g. 3L and 3.0)
-	// are
-	// considered equal when deciding whether an element should be
-	// removed.
-	// NaN is equal to NaN, and Null is equal to Null.
-	// This will remove all equivalent values if there are duplicates.
-	//
-	// The corresponding transform_result will be the null value.
+	// in the field. If the field is not an array, or if the field does not
+	// yet exist, it is set to the empty array. Equivalent numbers of the
+	// different types (e.g. 3L and 3.0) are considered equal when deciding
+	// whether an element should be removed. NaN is equal to NaN, and Null
+	// is equal to Null. This will remove all equivalent values if there are
+	// duplicates. The corresponding transform_result will be the null
+	// value.
 	RemoveAllFromArray *ArrayValue `json:"removeAllFromArray,omitempty"`
 
 	// SetToServerValue: Sets the field to the given server value.
@@ -1203,14 +1277,15 @@ type FieldTransform struct {
 	//   "SERVER_VALUE_UNSPECIFIED" - Unspecified. This value must not be
 	// used.
 	//   "REQUEST_TIME" - The time at which the server processed the
-	// request, with millisecond
-	// precision.
+	// request, with millisecond precision. If used on multiple fields (same
+	// or different documents) in a transaction, all the fields will get the
+	// same server timestamp.
 	SetToServerValue string `json:"setToServerValue,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "AppendMissingElements") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -1245,10 +1320,10 @@ type Filter struct {
 
 	// ForceSendFields is a list of field names (e.g. "CompositeFilter") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CompositeFilter") to
@@ -1267,18 +1342,113 @@ func (s *Filter) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleFirestoreAdminV1Database: A Cloud Firestore Database. Currently
+// only one database is allowed per cloud project; this database must
+// have a `database_id` of '(default)'.
+type GoogleFirestoreAdminV1Database struct {
+	// AppEngineIntegrationMode: The App Engine integration mode to use for
+	// this database.
+	//
+	// Possible values:
+	//   "APP_ENGINE_INTEGRATION_MODE_UNSPECIFIED" - Not used.
+	//   "ENABLED" - If an App Engine application exists in the same region
+	// as this database, App Engine configuration will impact this database.
+	// This includes disabling of the application & database, as well as
+	// disabling writes to the database.
+	//   "DISABLED" - Appengine has no affect on the ability of this
+	// database to serve requests.
+	AppEngineIntegrationMode string `json:"appEngineIntegrationMode,omitempty"`
+
+	// ConcurrencyMode: The concurrency control mode to use for this
+	// database.
+	//
+	// Possible values:
+	//   "CONCURRENCY_MODE_UNSPECIFIED" - Not used.
+	//   "OPTIMISTIC" - Use optimistic concurrency control by default. This
+	// mode is available for Cloud Firestore databases.
+	//   "PESSIMISTIC" - Use pessimistic concurrency control by default.
+	// This mode is available for Cloud Firestore databases. This is the
+	// default setting for Cloud Firestore.
+	//   "OPTIMISTIC_WITH_ENTITY_GROUPS" - Use optimistic concurrency
+	// control with entity groups by default. This is the only available
+	// mode for Cloud Datastore. This mode is also available for Cloud
+	// Firestore with Datastore Mode but is not recommended.
+	ConcurrencyMode string `json:"concurrencyMode,omitempty"`
+
+	// Etag: This checksum is computed by the server based on the value of
+	// other fields, and may be sent on update and delete requests to ensure
+	// the client has an up-to-date value before proceeding.
+	Etag string `json:"etag,omitempty"`
+
+	// KeyPrefix: Output only. The key_prefix for this database. This
+	// key_prefix is used, in combination with the project id ("~") to
+	// construct the application id that is returned from the Cloud
+	// Datastore APIs in Google App Engine first generation runtimes. This
+	// value may be empty in which case the appid to use for URL-encoded
+	// keys is the project_id (eg: foo instead of v~foo).
+	KeyPrefix string `json:"keyPrefix,omitempty"`
+
+	// LocationId: The location of the database. Available databases are
+	// listed at https://cloud.google.com/firestore/docs/locations.
+	LocationId string `json:"locationId,omitempty"`
+
+	// Name: The resource name of the Database. Format:
+	// `projects/{project}/databases/{database}`
+	Name string `json:"name,omitempty"`
+
+	// Type: The type of the database. See
+	// https://cloud.google.com/datastore/docs/firestore-or-datastore for
+	// information about how to choose.
+	//
+	// Possible values:
+	//   "DATABASE_TYPE_UNSPECIFIED" - The default value. This value is used
+	// if the database type is omitted.
+	//   "FIRESTORE_NATIVE" - Firestore Native Mode
+	//   "DATASTORE_MODE" - Firestore in Datastore Mode.
+	Type string `json:"type,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AppEngineIntegrationMode") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AppEngineIntegrationMode")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleFirestoreAdminV1Database) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirestoreAdminV1Database
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleFirestoreAdminV1ExportDocumentsMetadata: Metadata for
-// google.longrunning.Operation results
-// from
+// google.longrunning.Operation results from
 // FirestoreAdmin.ExportDocuments.
 type GoogleFirestoreAdminV1ExportDocumentsMetadata struct {
 	// CollectionIds: Which collection ids are being exported.
 	CollectionIds []string `json:"collectionIds,omitempty"`
 
 	// EndTime: The time this operation completed. Will be unset if
-	// operation still in
-	// progress.
+	// operation still in progress.
 	EndTime string `json:"endTime,omitempty"`
+
+	// NamespaceIds: Which namespace ids are being exported.
+	NamespaceIds []string `json:"namespaceIds,omitempty"`
 
 	// OperationState: The state of the export operation.
 	//
@@ -1287,19 +1457,18 @@ type GoogleFirestoreAdminV1ExportDocumentsMetadata struct {
 	//   "INITIALIZING" - Request is being prepared for processing.
 	//   "PROCESSING" - Request is actively being processed.
 	//   "CANCELLING" - Request is in the process of being cancelled after
-	// user called
-	// google.longrunning.Operations.CancelOperation on the operation.
+	// user called google.longrunning.Operations.CancelOperation on the
+	// operation.
 	//   "FINALIZING" - Request has been processed and is in its
 	// finalization stage.
 	//   "SUCCESSFUL" - Request has completed successfully.
 	//   "FAILED" - Request has finished being processed, but encountered an
 	// error.
 	//   "CANCELLED" - Request has finished being cancelled after user
-	// called
-	// google.longrunning.Operations.CancelOperation.
+	// called google.longrunning.Operations.CancelOperation.
 	OperationState string `json:"operationState,omitempty"`
 
-	// OutputUriPrefix: Where the entities are being exported to.
+	// OutputUriPrefix: Where the documents are being exported to.
 	OutputUriPrefix string `json:"outputUriPrefix,omitempty"`
 
 	// ProgressBytes: The progress, in bytes, of this operation.
@@ -1313,10 +1482,10 @@ type GoogleFirestoreAdminV1ExportDocumentsMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "CollectionIds") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CollectionIds") to include
@@ -1341,27 +1510,29 @@ type GoogleFirestoreAdminV1ExportDocumentsRequest struct {
 	// collections.
 	CollectionIds []string `json:"collectionIds,omitempty"`
 
+	// NamespaceIds: An empty list represents all namespaces. This is the
+	// preferred usage for databases that don't use namespaces. An empty
+	// string element represents the default namespace. This should be used
+	// if the database has data in non-default namespaces, but doesn't want
+	// to include them. Each namespace in this list must be unique.
+	NamespaceIds []string `json:"namespaceIds,omitempty"`
+
 	// OutputUriPrefix: The output URI. Currently only supports Google Cloud
-	// Storage URIs of the
-	// form: `gs://BUCKET_NAME[/NAMESPACE_PATH]`, where `BUCKET_NAME` is the
-	// name
-	// of the Google Cloud Storage bucket and `NAMESPACE_PATH` is an
-	// optional
-	// Google Cloud Storage namespace path. When
-	// choosing a name, be sure to consider Google Cloud Storage
-	// naming
-	// guidelines: https://cloud.google.com/storage/docs/naming.
-	// If the URI is a bucket (without a namespace path), a prefix will
-	// be
-	// generated based on the start time.
+	// Storage URIs of the form: `gs://BUCKET_NAME[/NAMESPACE_PATH]`, where
+	// `BUCKET_NAME` is the name of the Google Cloud Storage bucket and
+	// `NAMESPACE_PATH` is an optional Google Cloud Storage namespace path.
+	// When choosing a name, be sure to consider Google Cloud Storage naming
+	// guidelines: https://cloud.google.com/storage/docs/naming. If the URI
+	// is a bucket (without a namespace path), a prefix will be generated
+	// based on the start time.
 	OutputUriPrefix string `json:"outputUriPrefix,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CollectionIds") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CollectionIds") to include
@@ -1383,18 +1554,16 @@ func (s *GoogleFirestoreAdminV1ExportDocumentsRequest) MarshalJSON() ([]byte, er
 // google.longrunning.Operation response field.
 type GoogleFirestoreAdminV1ExportDocumentsResponse struct {
 	// OutputUriPrefix: Location of the output files. This can be used to
-	// begin an import
-	// into Cloud Firestore (this project or another project) after the
-	// operation
-	// completes successfully.
+	// begin an import into Cloud Firestore (this project or another
+	// project) after the operation completes successfully.
 	OutputUriPrefix string `json:"outputUriPrefix,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "OutputUriPrefix") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "OutputUriPrefix") to
@@ -1414,62 +1583,41 @@ func (s *GoogleFirestoreAdminV1ExportDocumentsResponse) MarshalJSON() ([]byte, e
 }
 
 // GoogleFirestoreAdminV1Field: Represents a single field in the
-// database.
-//
-// Fields are grouped by their "Collection Group", which represent
-// all
-// collections in the database with the same id.
+// database. Fields are grouped by their "Collection Group", which
+// represent all collections in the database with the same id.
 type GoogleFirestoreAdminV1Field struct {
 	// IndexConfig: The index configuration for this field. If unset, field
-	// indexing will
-	// revert to the configuration defined by the `ancestor_field`.
-	// To
-	// explicitly remove all indexes for this field, specify an index
-	// config
-	// with an empty list of indexes.
+	// indexing will revert to the configuration defined by the
+	// `ancestor_field`. To explicitly remove all indexes for this field,
+	// specify an index config with an empty list of indexes.
 	IndexConfig *GoogleFirestoreAdminV1IndexConfig `json:"indexConfig,omitempty"`
 
-	// Name: A field name of the
-	// form
-	// `projects/{project_id}/databases/{database_id}/collectionGroups/{
-	// collection_id}/fields/{field_path}`
-	//
-	// A field path may be a simple field name, e.g. `address` or a path to
-	// fields
-	// within map_value , e.g. `address.city`,
-	// or a special field path. The only valid special field is `*`,
-	// which
-	// represents any field.
-	//
-	// Field paths may be quoted using ` (backtick). The only character that
-	// needs
-	// to be escaped within a quoted field path is the backtick character
-	// itself,
-	// escaped using a backslash. Special characters in field paths
-	// that
-	// must be quoted include: `*`, `.`,
-	// ``` (backtick), `[`, `]`, as well as any ascii symbolic
-	// characters.
-	//
-	// Examples:
-	// (Note: Comments here are written in markdown syntax, so there is an
-	//  additional layer of backticks to represent a code
-	// block)
-	// `\`address.city\`` represents a field named `address.city`, not the
-	// map key
-	// `city` in the field `address`.
-	// `\`*\`` represents a field named `*`, not any field.
-	//
-	// A special `Field` contains the default indexing settings for all
-	// fields.
-	// This field's resource name
-	// is:
-	// `projects/{project_id}/databases/{database_id}/collectionGroups/__
-	// default__/fields/*`
-	// Indexes defined on this `Field` will be applied to all fields which
-	// do not
-	// have their own `Field` index configuration.
+	// Name: Required. A field name of the form
+	// `projects/{project_id}/databases/{database_id}/collectionGroups/{colle
+	// ction_id}/fields/{field_path}` A field path may be a simple field
+	// name, e.g. `address` or a path to fields within map_value , e.g.
+	// `address.city`, or a special field path. The only valid special field
+	// is `*`, which represents any field. Field paths may be quoted using `
+	// (backtick). The only character that needs to be escaped within a
+	// quoted field path is the backtick character itself, escaped using a
+	// backslash. Special characters in field paths that must be quoted
+	// include: `*`, `.`, ``` (backtick), `[`, `]`, as well as any ascii
+	// symbolic characters. Examples: (Note: Comments here are written in
+	// markdown syntax, so there is an additional layer of backticks to
+	// represent a code block) `\`address.city\`` represents a field named
+	// `address.city`, not the map key `city` in the field `address`.
+	// `\`*\`` represents a field named `*`, not any field. A special
+	// `Field` contains the default indexing settings for all fields. This
+	// field's resource name is:
+	// `projects/{project_id}/databases/{database_id}/collectionGroups/__defa
+	// ult__/fields/*` Indexes defined on this `Field` will be applied to
+	// all fields which do not have their own `Field` index configuration.
 	Name string `json:"name,omitempty"`
+
+	// TtlConfig: The TTL configuration for this `Field`. Setting or
+	// unsetting this will enable or disable the TTL for documents that have
+	// this `Field`.
+	TtlConfig *GoogleFirestoreAdminV1TtlConfig `json:"ttlConfig,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -1477,10 +1625,10 @@ type GoogleFirestoreAdminV1Field struct {
 
 	// ForceSendFields is a list of field names (e.g. "IndexConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "IndexConfig") to include
@@ -1499,23 +1647,20 @@ func (s *GoogleFirestoreAdminV1Field) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleFirestoreAdminV1FieldOperationMetadata: Metadata for
-// google.longrunning.Operation results from
-// FirestoreAdmin.UpdateField.
+// google.longrunning.Operation results from FirestoreAdmin.UpdateField.
 type GoogleFirestoreAdminV1FieldOperationMetadata struct {
 	// EndTime: The time this operation completed. Will be unset if
-	// operation still in
-	// progress.
+	// operation still in progress.
 	EndTime string `json:"endTime,omitempty"`
 
 	// Field: The field resource that this operation is acting on. For
 	// example:
-	// `projects/{project_id}/databases/{database_id}/collectionGrou
-	// ps/{collection_id}/fields/{field_path}`
+	// `projects/{project_id}/databases/{database_id}/collectionGroups/{colle
+	// ction_id}/fields/{field_path}`
 	Field string `json:"field,omitempty"`
 
 	// IndexConfigDeltas: A list of IndexConfigDelta, which describe the
-	// intent of this
-	// operation.
+	// intent of this operation.
 	IndexConfigDeltas []*GoogleFirestoreAdminV1IndexConfigDelta `json:"indexConfigDeltas,omitempty"`
 
 	// ProgressBytes: The progress, in bytes, of this operation.
@@ -1534,24 +1679,26 @@ type GoogleFirestoreAdminV1FieldOperationMetadata struct {
 	//   "INITIALIZING" - Request is being prepared for processing.
 	//   "PROCESSING" - Request is actively being processed.
 	//   "CANCELLING" - Request is in the process of being cancelled after
-	// user called
-	// google.longrunning.Operations.CancelOperation on the operation.
+	// user called google.longrunning.Operations.CancelOperation on the
+	// operation.
 	//   "FINALIZING" - Request has been processed and is in its
 	// finalization stage.
 	//   "SUCCESSFUL" - Request has completed successfully.
 	//   "FAILED" - Request has finished being processed, but encountered an
 	// error.
 	//   "CANCELLED" - Request has finished being cancelled after user
-	// called
-	// google.longrunning.Operations.CancelOperation.
+	// called google.longrunning.Operations.CancelOperation.
 	State string `json:"state,omitempty"`
+
+	// TtlConfigDelta: Describes the deltas of TTL configuration.
+	TtlConfigDelta *GoogleFirestoreAdminV1TtlConfigDelta `json:"ttlConfigDelta,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EndTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "EndTime") to include in
@@ -1570,20 +1717,21 @@ func (s *GoogleFirestoreAdminV1FieldOperationMetadata) MarshalJSON() ([]byte, er
 }
 
 // GoogleFirestoreAdminV1ImportDocumentsMetadata: Metadata for
-// google.longrunning.Operation results
-// from
+// google.longrunning.Operation results from
 // FirestoreAdmin.ImportDocuments.
 type GoogleFirestoreAdminV1ImportDocumentsMetadata struct {
 	// CollectionIds: Which collection ids are being imported.
 	CollectionIds []string `json:"collectionIds,omitempty"`
 
 	// EndTime: The time this operation completed. Will be unset if
-	// operation still in
-	// progress.
+	// operation still in progress.
 	EndTime string `json:"endTime,omitempty"`
 
 	// InputUriPrefix: The location of the documents being imported.
 	InputUriPrefix string `json:"inputUriPrefix,omitempty"`
+
+	// NamespaceIds: Which namespace ids are being imported.
+	NamespaceIds []string `json:"namespaceIds,omitempty"`
 
 	// OperationState: The state of the import operation.
 	//
@@ -1592,16 +1740,15 @@ type GoogleFirestoreAdminV1ImportDocumentsMetadata struct {
 	//   "INITIALIZING" - Request is being prepared for processing.
 	//   "PROCESSING" - Request is actively being processed.
 	//   "CANCELLING" - Request is in the process of being cancelled after
-	// user called
-	// google.longrunning.Operations.CancelOperation on the operation.
+	// user called google.longrunning.Operations.CancelOperation on the
+	// operation.
 	//   "FINALIZING" - Request has been processed and is in its
 	// finalization stage.
 	//   "SUCCESSFUL" - Request has completed successfully.
 	//   "FAILED" - Request has finished being processed, but encountered an
 	// error.
 	//   "CANCELLED" - Request has finished being cancelled after user
-	// called
-	// google.longrunning.Operations.CancelOperation.
+	// called google.longrunning.Operations.CancelOperation.
 	OperationState string `json:"operationState,omitempty"`
 
 	// ProgressBytes: The progress, in bytes, of this operation.
@@ -1615,10 +1762,10 @@ type GoogleFirestoreAdminV1ImportDocumentsMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "CollectionIds") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CollectionIds") to include
@@ -1640,26 +1787,28 @@ func (s *GoogleFirestoreAdminV1ImportDocumentsMetadata) MarshalJSON() ([]byte, e
 // FirestoreAdmin.ImportDocuments.
 type GoogleFirestoreAdminV1ImportDocumentsRequest struct {
 	// CollectionIds: Which collection ids to import. Unspecified means all
-	// collections included
-	// in the import.
+	// collections included in the import.
 	CollectionIds []string `json:"collectionIds,omitempty"`
 
-	// InputUriPrefix: Location of the exported files.
-	// This must match the output_uri_prefix of an ExportDocumentsResponse
-	// from
-	// an export that has completed
-	// successfully.
-	// See:
-	// google.firestore.admin.v1.ExportDocumentsResponse.o
-	// utput_uri_prefix.
+	// InputUriPrefix: Location of the exported files. This must match the
+	// output_uri_prefix of an ExportDocumentsResponse from an export that
+	// has completed successfully. See:
+	// google.firestore.admin.v1.ExportDocumentsResponse.output_uri_prefix.
 	InputUriPrefix string `json:"inputUriPrefix,omitempty"`
+
+	// NamespaceIds: An empty list represents all namespaces. This is the
+	// preferred usage for databases that don't use namespaces. An empty
+	// string element represents the default namespace. This should be used
+	// if the database has data in non-default namespaces, but doesn't want
+	// to include them. Each namespace in this list must be unique.
+	NamespaceIds []string `json:"namespaceIds,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CollectionIds") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CollectionIds") to include
@@ -1678,100 +1827,91 @@ func (s *GoogleFirestoreAdminV1ImportDocumentsRequest) MarshalJSON() ([]byte, er
 }
 
 // GoogleFirestoreAdminV1Index: Cloud Firestore indexes enable simple
-// and complex queries against
-// documents in a database.
+// and complex queries against documents in a database.
 type GoogleFirestoreAdminV1Index struct {
-	// Fields: The fields supported by this index.
+	// ApiScope: The API scope supported by this index.
 	//
-	// For composite indexes, this is always 2 or more fields.
-	// The last field entry is always for the field path `__name__`. If,
-	// on
-	// creation, `__name__` was not specified as the last field, it will be
-	// added
+	// Possible values:
+	//   "ANY_API" - The index can be used by both Firestore Native and
+	// Firestore in Datastore Mode query API. This is the default.
+	//   "DATASTORE_MODE_API" - The index can only be used by the Firestore
+	// in Datastore Mode query API.
+	ApiScope string `json:"apiScope,omitempty"`
+
+	// Fields: The fields supported by this index. For composite indexes,
+	// this requires a minimum of 2 and a maximum of 100 fields. The last
+	// field entry is always for the field path `__name__`. If, on creation,
+	// `__name__` was not specified as the last field, it will be added
 	// automatically with the same direction as that of the last field
-	// defined. If
-	// the final field in a composite index is not directional, the
-	// `__name__`
-	// will be ordered ASCENDING (unless explicitly specified).
-	//
-	// For single field indexes, this will always be exactly one entry with
-	// a
-	// field path equal to the field path of the associated field.
+	// defined. If the final field in a composite index is not directional,
+	// the `__name__` will be ordered ASCENDING (unless explicitly
+	// specified). For single field indexes, this will always be exactly one
+	// entry with a field path equal to the field path of the associated
+	// field.
 	Fields []*GoogleFirestoreAdminV1IndexField `json:"fields,omitempty"`
 
-	// Name: Output only. A server defined name for this index.
-	// The form of this name for composite indexes will
-	// be:
-	// `projects/{project_id}/databases/{database_id}/collectionGroups/{c
-	// ollection_id}/indexes/{composite_index_id}`
-	// For single field indexes, this field will be empty.
+	// Name: Output only. A server defined name for this index. The form of
+	// this name for composite indexes will be:
+	// `projects/{project_id}/databases/{database_id}/collectionGroups/{colle
+	// ction_id}/indexes/{composite_index_id}` For single field indexes,
+	// this field will be empty.
 	Name string `json:"name,omitempty"`
 
 	// QueryScope: Indexes with a collection query scope specified allow
-	// queries
-	// against a collection that is the child of a specific document,
-	// specified at
-	// query time, and that has the same collection id.
-	//
-	// Indexes with a collection group query scope specified allow queries
-	// against
-	// all collections descended from a specific document, specified at
-	// query
-	// time, and that have the same collection id as this index.
+	// queries against a collection that is the child of a specific
+	// document, specified at query time, and that has the same collection
+	// id. Indexes with a collection group query scope specified allow
+	// queries against all collections descended from a specific document,
+	// specified at query time, and that have the same collection id as this
+	// index.
 	//
 	// Possible values:
 	//   "QUERY_SCOPE_UNSPECIFIED" - The query scope is unspecified. Not a
 	// valid option.
 	//   "COLLECTION" - Indexes with a collection query scope specified
-	// allow queries
-	// against a collection that is the child of a specific document,
-	// specified
-	// at query time, and that has the collection id specified by the index.
+	// allow queries against a collection that is the child of a specific
+	// document, specified at query time, and that has the collection id
+	// specified by the index.
 	//   "COLLECTION_GROUP" - Indexes with a collection group query scope
-	// specified allow queries
-	// against all collections that has the collection id specified by
-	// the
-	// index.
+	// specified allow queries against all collections that has the
+	// collection id specified by the index.
+	//   "COLLECTION_RECURSIVE" - Include all the collections's ancestor in
+	// the index. Only available for Datastore Mode databases.
 	QueryScope string `json:"queryScope,omitempty"`
 
 	// State: Output only. The serving state of the index.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - The state is unspecified.
-	//   "CREATING" - The index is being created.
-	// There is an active long-running operation for the index.
-	// The index is updated when writing a document.
-	// Some index data may exist.
-	//   "READY" - The index is ready to be used.
-	// The index is updated when writing a document.
-	// The index is fully populated from all stored documents it applies to.
+	//   "CREATING" - The index is being created. There is an active
+	// long-running operation for the index. The index is updated when
+	// writing a document. Some index data may exist.
+	//   "READY" - The index is ready to be used. The index is updated when
+	// writing a document. The index is fully populated from all stored
+	// documents it applies to.
 	//   "NEEDS_REPAIR" - The index was being created, but something went
-	// wrong.
-	// There is no active long-running operation for the index,
-	// and the most recently finished long-running operation failed.
-	// The index is not updated when writing a document.
-	// Some index data may exist.
+	// wrong. There is no active long-running operation for the index, and
+	// the most recently finished long-running operation failed. The index
+	// is not updated when writing a document. Some index data may exist.
 	// Use the google.longrunning.Operations API to determine why the
-	// operation
-	// that last attempted to create this index failed, then re-create
-	// the
-	// index.
+	// operation that last attempted to create this index failed, then
+	// re-create the index.
 	State string `json:"state,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Fields") to
+	// ForceSendFields is a list of field names (e.g. "ApiScope") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Fields") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "ApiScope") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -1789,39 +1929,34 @@ func (s *GoogleFirestoreAdminV1Index) MarshalJSON() ([]byte, error) {
 // field.
 type GoogleFirestoreAdminV1IndexConfig struct {
 	// AncestorField: Output only. Specifies the resource name of the
-	// `Field` from which this field's
-	// index configuration is set (when `uses_ancestor_config` is true),
-	// or from which it *would* be set if this field had no index
-	// configuration
-	// (when `uses_ancestor_config` is false).
+	// `Field` from which this field's index configuration is set (when
+	// `uses_ancestor_config` is true), or from which it *would* be set if
+	// this field had no index configuration (when `uses_ancestor_config` is
+	// false).
 	AncestorField string `json:"ancestorField,omitempty"`
 
 	// Indexes: The indexes supported for this field.
 	Indexes []*GoogleFirestoreAdminV1Index `json:"indexes,omitempty"`
 
-	// Reverting: Output only
-	// When true, the `Field`'s index configuration is in the process of
-	// being
-	// reverted. Once complete, the index config will transition to the
-	// same
-	// state as the field specified by `ancestor_field`, at which
-	// point
-	// `uses_ancestor_config` will be `true` and `reverting` will be
-	// `false`.
+	// Reverting: Output only When true, the `Field`'s index configuration
+	// is in the process of being reverted. Once complete, the index config
+	// will transition to the same state as the field specified by
+	// `ancestor_field`, at which point `uses_ancestor_config` will be
+	// `true` and `reverting` will be `false`.
 	Reverting bool `json:"reverting,omitempty"`
 
 	// UsesAncestorConfig: Output only. When true, the `Field`'s index
-	// configuration is set from the
-	// configuration specified by the `ancestor_field`.
-	// When false, the `Field`'s index configuration is defined explicitly.
+	// configuration is set from the configuration specified by the
+	// `ancestor_field`. When false, the `Field`'s index configuration is
+	// defined explicitly.
 	UsesAncestorConfig bool `json:"usesAncestorConfig,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AncestorField") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AncestorField") to include
@@ -1856,10 +1991,10 @@ type GoogleFirestoreAdminV1IndexConfigDelta struct {
 
 	// ForceSendFields is a list of field names (e.g. "ChangeType") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ChangeType") to include in
@@ -1877,10 +2012,9 @@ func (s *GoogleFirestoreAdminV1IndexConfigDelta) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleFirestoreAdminV1IndexField: A field in an index.
-// The field_path describes which field is indexed, the value_mode
-// describes
-// how the field value is indexed.
+// GoogleFirestoreAdminV1IndexField: A field in an index. The field_path
+// describes which field is indexed, the value_mode describes how the
+// field value is indexed.
 type GoogleFirestoreAdminV1IndexField struct {
 	// ArrayConfig: Indicates that this field supports operations on
 	// `array_value`s.
@@ -1891,15 +2025,12 @@ type GoogleFirestoreAdminV1IndexField struct {
 	//   "CONTAINS" - The index supports array containment queries.
 	ArrayConfig string `json:"arrayConfig,omitempty"`
 
-	// FieldPath: Can be __name__.
-	// For single field indexes, this must match the name of the field or
-	// may
-	// be omitted.
+	// FieldPath: Can be __name__. For single field indexes, this must match
+	// the name of the field or may be omitted.
 	FieldPath string `json:"fieldPath,omitempty"`
 
 	// Order: Indicates that this field supports ordering by the specified
-	// order or
-	// comparing using =, <, <=, >, >=.
+	// order or comparing using =, !=, <, <=, >, >=.
 	//
 	// Possible values:
 	//   "ORDER_UNSPECIFIED" - The ordering is unspecified. Not a valid
@@ -1910,10 +2041,10 @@ type GoogleFirestoreAdminV1IndexField struct {
 
 	// ForceSendFields is a list of field names (e.g. "ArrayConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ArrayConfig") to include
@@ -1932,18 +2063,16 @@ func (s *GoogleFirestoreAdminV1IndexField) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleFirestoreAdminV1IndexOperationMetadata: Metadata for
-// google.longrunning.Operation results from
-// FirestoreAdmin.CreateIndex.
+// google.longrunning.Operation results from FirestoreAdmin.CreateIndex.
 type GoogleFirestoreAdminV1IndexOperationMetadata struct {
 	// EndTime: The time this operation completed. Will be unset if
-	// operation still in
-	// progress.
+	// operation still in progress.
 	EndTime string `json:"endTime,omitempty"`
 
 	// Index: The index resource that this operation is acting on. For
 	// example:
-	// `projects/{project_id}/databases/{database_id}/collectionGrou
-	// ps/{collection_id}/indexes/{index_id}`
+	// `projects/{project_id}/databases/{database_id}/collectionGroups/{colle
+	// ction_id}/indexes/{index_id}`
 	Index string `json:"index,omitempty"`
 
 	// ProgressBytes: The progress, in bytes, of this operation.
@@ -1962,24 +2091,23 @@ type GoogleFirestoreAdminV1IndexOperationMetadata struct {
 	//   "INITIALIZING" - Request is being prepared for processing.
 	//   "PROCESSING" - Request is actively being processed.
 	//   "CANCELLING" - Request is in the process of being cancelled after
-	// user called
-	// google.longrunning.Operations.CancelOperation on the operation.
+	// user called google.longrunning.Operations.CancelOperation on the
+	// operation.
 	//   "FINALIZING" - Request has been processed and is in its
 	// finalization stage.
 	//   "SUCCESSFUL" - Request has completed successfully.
 	//   "FAILED" - Request has finished being processed, but encountered an
 	// error.
 	//   "CANCELLED" - Request has finished being cancelled after user
-	// called
-	// google.longrunning.Operations.CancelOperation.
+	// called google.longrunning.Operations.CancelOperation.
 	State string `json:"state,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EndTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "EndTime") to include in
@@ -1997,6 +2125,39 @@ func (s *GoogleFirestoreAdminV1IndexOperationMetadata) MarshalJSON() ([]byte, er
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleFirestoreAdminV1ListDatabasesResponse: The list of databases
+// for a project.
+type GoogleFirestoreAdminV1ListDatabasesResponse struct {
+	// Databases: The databases in the project.
+	Databases []*GoogleFirestoreAdminV1Database `json:"databases,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Databases") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Databases") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleFirestoreAdminV1ListDatabasesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirestoreAdminV1ListDatabasesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleFirestoreAdminV1ListFieldsResponse: The response for
 // FirestoreAdmin.ListFields.
 type GoogleFirestoreAdminV1ListFieldsResponse struct {
@@ -2004,8 +2165,7 @@ type GoogleFirestoreAdminV1ListFieldsResponse struct {
 	Fields []*GoogleFirestoreAdminV1Field `json:"fields,omitempty"`
 
 	// NextPageToken: A page token that may be used to request another page
-	// of results. If blank,
-	// this is the last page.
+	// of results. If blank, this is the last page.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2014,10 +2174,10 @@ type GoogleFirestoreAdminV1ListFieldsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Fields") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Fields") to include in API
@@ -2042,8 +2202,7 @@ type GoogleFirestoreAdminV1ListIndexesResponse struct {
 	Indexes []*GoogleFirestoreAdminV1Index `json:"indexes,omitempty"`
 
 	// NextPageToken: A page token that may be used to request another page
-	// of results. If blank,
-	// this is the last page.
+	// of results. If blank, this is the last page.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2052,10 +2211,10 @@ type GoogleFirestoreAdminV1ListIndexesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Indexes") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Indexes") to include in
@@ -2079,10 +2238,8 @@ type GoogleFirestoreAdminV1LocationMetadata struct {
 }
 
 // GoogleFirestoreAdminV1Progress: Describes the progress of the
-// operation.
-// Unit of work is generic and must be interpreted based on where
-// Progress
-// is used.
+// operation. Unit of work is generic and must be interpreted based on
+// where Progress is used.
 type GoogleFirestoreAdminV1Progress struct {
 	// CompletedWork: The amount of work completed.
 	CompletedWork int64 `json:"completedWork,omitempty,string"`
@@ -2092,10 +2249,10 @@ type GoogleFirestoreAdminV1Progress struct {
 
 	// ForceSendFields is a list of field names (e.g. "CompletedWork") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CompletedWork") to include
@@ -2111,6 +2268,93 @@ func (s *GoogleFirestoreAdminV1Progress) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirestoreAdminV1Progress
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleFirestoreAdminV1TtlConfig: The TTL (time-to-live) configuration
+// for documents that have this `Field` set. Storing a timestamp value
+// into a TTL-enabled field will be treated as the document's absolute
+// expiration time. Timestamp values in the past indicate that the
+// document is eligible for immediate expiration. Using any other data
+// type or leaving the field absent will disable expiration for the
+// individual document.
+type GoogleFirestoreAdminV1TtlConfig struct {
+	// State: Output only. The state of the TTL configuration.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The state is unspecified or unknown.
+	//   "CREATING" - The TTL is being applied. There is an active
+	// long-running operation to track the change. Newly written documents
+	// will have TTLs applied as requested. Requested TTLs on existing
+	// documents are still being processed. When TTLs on all existing
+	// documents have been processed, the state will move to 'ACTIVE'.
+	//   "ACTIVE" - The TTL is active for all documents.
+	//   "NEEDS_REPAIR" - The TTL configuration could not be enabled for all
+	// existing documents. Newly written documents will continue to have
+	// their TTL applied. The LRO returned when last attempting to enable
+	// TTL for this `Field` has failed, and may have more details.
+	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "State") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "State") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleFirestoreAdminV1TtlConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirestoreAdminV1TtlConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleFirestoreAdminV1TtlConfigDelta: Information about an TTL
+// configuration change.
+type GoogleFirestoreAdminV1TtlConfigDelta struct {
+	// ChangeType: Specifies how the TTL configuration is changing.
+	//
+	// Possible values:
+	//   "CHANGE_TYPE_UNSPECIFIED" - The type of change is not specified or
+	// known.
+	//   "ADD" - The TTL config is being added.
+	//   "REMOVE" - The TTL config is being removed.
+	ChangeType string `json:"changeType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ChangeType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ChangeType") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleFirestoreAdminV1TtlConfigDelta) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirestoreAdminV1TtlConfigDelta
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleFirestoreAdminV1UpdateDatabaseMetadata: Metadata related to the
+// update database operation.
+type GoogleFirestoreAdminV1UpdateDatabaseMetadata struct {
 }
 
 // GoogleLongrunningCancelOperationRequest: The request message for
@@ -2134,10 +2378,10 @@ type GoogleLongrunningListOperationsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -2156,52 +2400,38 @@ func (s *GoogleLongrunningListOperationsResponse) MarshalJSON() ([]byte, error) 
 }
 
 // GoogleLongrunningOperation: This resource represents a long-running
-// operation that is the result of a
-// network API call.
+// operation that is the result of a network API call.
 type GoogleLongrunningOperation struct {
 	// Done: If the value is `false`, it means the operation is still in
-	// progress.
-	// If `true`, the operation is completed, and either `error` or
-	// `response` is
-	// available.
+	// progress. If `true`, the operation is completed, and either `error`
+	// or `response` is available.
 	Done bool `json:"done,omitempty"`
 
 	// Error: The error result of the operation in case of failure or
 	// cancellation.
 	Error *Status `json:"error,omitempty"`
 
-	// Metadata: Service-specific metadata associated with the operation.
-	// It typically
-	// contains progress information and common metadata such as create
-	// time.
-	// Some services might not provide such metadata.  Any method that
-	// returns a
-	// long-running operation should document the metadata type, if any.
+	// Metadata: Service-specific metadata associated with the operation. It
+	// typically contains progress information and common metadata such as
+	// create time. Some services might not provide such metadata. Any
+	// method that returns a long-running operation should document the
+	// metadata type, if any.
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
 
 	// Name: The server-assigned name, which is only unique within the same
-	// service that
-	// originally returns it. If you use the default HTTP mapping,
-	// the
-	// `name` should be a resource name ending with
+	// service that originally returns it. If you use the default HTTP
+	// mapping, the `name` should be a resource name ending with
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success.
-	// If the original
-	// method returns no data on success, such as `Delete`, the response
-	// is
-	// `google.protobuf.Empty`.  If the original method is
-	// standard
-	// `Get`/`Create`/`Update`, the response should be the resource.  For
-	// other
-	// methods, the response should have the type `XxxResponse`, where
-	// `Xxx`
-	// is the original method name.  For example, if the original method
-	// name
-	// is `TakeSnapshot()`, the inferred response type
-	// is
-	// `TakeSnapshotResponse`.
+	// Response: The normal response of the operation in case of success. If
+	// the original method returns no data on success, such as `Delete`, the
+	// response is `google.protobuf.Empty`. If the original method is
+	// standard `Get`/`Create`/`Update`, the response should be the
+	// resource. For other methods, the response should have the type
+	// `XxxResponse`, where `Xxx` is the original method name. For example,
+	// if the original method name is `TakeSnapshot()`, the inferred
+	// response type is `TakeSnapshotResponse`.
 	Response googleapi.RawMessage `json:"response,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2210,10 +2440,10 @@ type GoogleLongrunningOperation struct {
 
 	// ForceSendFields is a list of field names (e.g. "Done") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Done") to include in API
@@ -2231,15 +2461,11 @@ func (s *GoogleLongrunningOperation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// LatLng: An object representing a latitude/longitude pair. This is
-// expressed as a pair
-// of doubles representing degrees latitude and degrees longitude.
-// Unless
-// specified otherwise, this must conform to the
-// <a
-// href="http://www.unoosa.org/pdf/icg/2012/template/WGS_84.pdf">WGS84
-// st
-// andard</a>. Values must be within normalized ranges.
+// LatLng: An object that represents a latitude/longitude pair. This is
+// expressed as a pair of doubles to represent degrees latitude and
+// degrees longitude. Unless specified otherwise, this object must
+// conform to the WGS84 standard. Values must be within normalized
+// ranges.
 type LatLng struct {
 	// Latitude: The latitude in degrees. It must be in the range [-90.0,
 	// +90.0].
@@ -2251,10 +2477,10 @@ type LatLng struct {
 
 	// ForceSendFields is a list of field names (e.g. "Latitude") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Latitude") to include in
@@ -2294,17 +2520,20 @@ type ListCollectionIdsRequest struct {
 	// PageSize: The maximum number of results to return.
 	PageSize int64 `json:"pageSize,omitempty"`
 
-	// PageToken: A page token. Must be a value
-	// from
+	// PageToken: A page token. Must be a value from
 	// ListCollectionIdsResponse.
 	PageToken string `json:"pageToken,omitempty"`
 
+	// ReadTime: Reads documents as they were at the given time. This may
+	// not be older than 270 seconds.
+	ReadTime string `json:"readTime,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "PageSize") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "PageSize") to include in
@@ -2337,10 +2566,10 @@ type ListCollectionIdsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "CollectionIds") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CollectionIds") to include
@@ -2363,7 +2592,8 @@ type ListDocumentsResponse struct {
 	// Documents: The Documents found.
 	Documents []*Document `json:"documents,omitempty"`
 
-	// NextPageToken: The next page token.
+	// NextPageToken: A token to retrieve the next page of documents. If
+	// this field is omitted, there are no subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2372,10 +2602,10 @@ type ListDocumentsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Documents") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Documents") to include in
@@ -2409,10 +2639,10 @@ type ListLocationsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Locations") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Locations") to include in
@@ -2443,10 +2673,10 @@ type ListenRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "AddTarget") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AddTarget") to include in
@@ -2473,17 +2703,12 @@ type ListenResponse struct {
 	DocumentDelete *DocumentDelete `json:"documentDelete,omitempty"`
 
 	// DocumentRemove: A Document has been removed from a target (because it
-	// is no longer
-	// relevant to that target).
+	// is no longer relevant to that target).
 	DocumentRemove *DocumentRemove `json:"documentRemove,omitempty"`
 
 	// Filter: A filter to apply to the set of documents previously returned
-	// for the
-	// given target.
-	//
-	// Returned when documents may have been removed from the given target,
-	// but
-	// the exact documents are unknown.
+	// for the given target. Returned when documents may have been removed
+	// from the given target, but the exact documents are unknown.
 	Filter *ExistenceFilter `json:"filter,omitempty"`
 
 	// TargetChange: Targets have changed.
@@ -2495,10 +2720,10 @@ type ListenResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "DocumentChange") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DocumentChange") to
@@ -2520,13 +2745,11 @@ func (s *ListenResponse) MarshalJSON() ([]byte, error) {
 // Location: A resource that represents Google Cloud Platform location.
 type Location struct {
 	// DisplayName: The friendly name for this location, typically a nearby
-	// city name.
-	// For example, "Tokyo".
+	// city name. For example, "Tokyo".
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Labels: Cross-service attributes for the location. For example
-	//
-	//     {"cloud.googleapis.com/region": "us-east1"}
+	// {"cloud.googleapis.com/region": "us-east1"}
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// LocationId: The canonical id for this location. For example:
@@ -2534,13 +2757,12 @@ type Location struct {
 	LocationId string `json:"locationId,omitempty"`
 
 	// Metadata: Service-specific metadata. For example the available
-	// capacity at the given
-	// location.
+	// capacity at the given location.
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
 
 	// Name: Resource name for the location, which may vary between
-	// implementations.
-	// For example: "projects/example-project/locations/us-east1"
+	// implementations. For example:
+	// "projects/example-project/locations/us-east1"
 	Name string `json:"name,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2549,10 +2771,10 @@ type Location struct {
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DisplayName") to include
@@ -2572,23 +2794,19 @@ func (s *Location) MarshalJSON() ([]byte, error) {
 
 // MapValue: A map value.
 type MapValue struct {
-	// Fields: The map's fields.
-	//
-	// The map keys represent field names. Field names matching the
-	// regular
-	// expression `__.*__` are reserved. Reserved field names are forbidden
-	// except
-	// in certain documented contexts. The map keys, represented as UTF-8,
-	// must
-	// not exceed 1,500 bytes and cannot be empty.
+	// Fields: The map's fields. The map keys represent field names. Field
+	// names matching the regular expression `__.*__` are reserved. Reserved
+	// field names are forbidden except in certain documented contexts. The
+	// map keys, represented as UTF-8, must not exceed 1,500 bytes and
+	// cannot be empty.
 	Fields map[string]Value `json:"fields,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Fields") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Fields") to include in API
@@ -2621,10 +2839,10 @@ type Order struct {
 
 	// ForceSendFields is a list of field names (e.g. "Direction") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Direction") to include in
@@ -2642,24 +2860,132 @@ func (s *Order) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// PartitionQueryRequest: The request for Firestore.PartitionQuery.
+type PartitionQueryRequest struct {
+	// PageSize: The maximum number of partitions to return in this call,
+	// subject to `partition_count`. For example, if `partition_count` = 10
+	// and `page_size` = 8, the first call to PartitionQuery will return up
+	// to 8 partitions and a `next_page_token` if more results exist. A
+	// second call to PartitionQuery will return up to 2 partitions, to
+	// complete the total of 10 specified in `partition_count`.
+	PageSize int64 `json:"pageSize,omitempty"`
+
+	// PageToken: The `next_page_token` value returned from a previous call
+	// to PartitionQuery that may be used to get an additional set of
+	// results. There are no ordering guarantees between sets of results.
+	// Thus, using multiple sets of results will require merging the
+	// different result sets. For example, two subsequent calls using a
+	// page_token may return: * cursor B, cursor M, cursor Q * cursor A,
+	// cursor U, cursor W To obtain a complete result set ordered with
+	// respect to the results of the query supplied to PartitionQuery, the
+	// results sets should be merged: cursor A, cursor B, cursor M, cursor
+	// Q, cursor U, cursor W
+	PageToken string `json:"pageToken,omitempty"`
+
+	// PartitionCount: The desired maximum number of partition points. The
+	// partitions may be returned across multiple pages of results. The
+	// number must be positive. The actual number of partitions returned may
+	// be fewer. For example, this may be set to one fewer than the number
+	// of parallel queries to be run, or in running a data pipeline job, one
+	// fewer than the number of workers or compute instances available.
+	PartitionCount int64 `json:"partitionCount,omitempty,string"`
+
+	// ReadTime: Reads documents as they were at the given time. This may
+	// not be older than 270 seconds.
+	ReadTime string `json:"readTime,omitempty"`
+
+	// StructuredQuery: A structured query. Query must specify collection
+	// with all descendants and be ordered by name ascending. Other filters,
+	// order bys, limits, offsets, and start/end cursors are not supported.
+	StructuredQuery *StructuredQuery `json:"structuredQuery,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PageSize") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PageSize") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PartitionQueryRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod PartitionQueryRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PartitionQueryResponse: The response for Firestore.PartitionQuery.
+type PartitionQueryResponse struct {
+	// NextPageToken: A page token that may be used to request an additional
+	// set of results, up to the number specified by `partition_count` in
+	// the PartitionQuery request. If blank, there are no more results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Partitions: Partition results. Each partition is a split point that
+	// can be used by RunQuery as a starting or end point for the query
+	// results. The RunQuery requests must be made with the same query
+	// supplied to this PartitionQuery request. The partition cursors will
+	// be ordered according to same ordering as the results of the query
+	// supplied to PartitionQuery. For example, if a PartitionQuery request
+	// returns partition cursors A and B, running the following three
+	// queries will return the entire result set of the original query: *
+	// query, end_at A * query, start_at A, end_at B * query, start_at B An
+	// empty result may indicate that the query has too few results to be
+	// partitioned.
+	Partitions []*Cursor `json:"partitions,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PartitionQueryResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod PartitionQueryResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Precondition: A precondition on a document, used for conditional
 // operations.
 type Precondition struct {
-	// Exists: When set to `true`, the target document must exist.
-	// When set to `false`, the target document must not exist.
+	// Exists: When set to `true`, the target document must exist. When set
+	// to `false`, the target document must not exist.
 	Exists bool `json:"exists,omitempty"`
 
 	// UpdateTime: When set, the target document must exist and have been
-	// last updated at
-	// that time.
+	// last updated at that time. Timestamp must be microsecond aligned.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Exists") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Exists") to include in API
@@ -2679,18 +3005,16 @@ func (s *Precondition) MarshalJSON() ([]byte, error) {
 
 // Projection: The projection of document's fields to return.
 type Projection struct {
-	// Fields: The fields to return.
-	//
-	// If empty, all fields are returned. To only return the name
-	// of the document, use `['__name__']`.
+	// Fields: The fields to return. If empty, all fields are returned. To
+	// only return the name of the document, use `['__name__']`.
 	Fields []*FieldReference `json:"fields,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Fields") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Fields") to include in API
@@ -2710,17 +3034,13 @@ func (s *Projection) MarshalJSON() ([]byte, error) {
 
 // QueryTarget: A target specified by a query.
 type QueryTarget struct {
-	// Parent: The parent resource name. In the
-	// format:
-	// `projects/{project_id}/databases/{database_id}/documents`
-	// or
-	// `projects/{project_id}/databases/{database_id}/documents/{document_
-	// path}`.
-	// For example:
-	// `projects/my-project/databases/my-database/documents`
-	// or
-	// `projects/my-project/databases/my-database/documents/chatrooms/my-c
-	// hatroom`
+	// Parent: The parent resource name. In the format:
+	// `projects/{project_id}/databases/{database_id}/documents` or
+	// `projects/{project_id}/databases/{database_id}/documents/{document_pat
+	// h}`. For example:
+	// `projects/my-project/databases/my-database/documents` or
+	// `projects/my-project/databases/my-database/documents/chatrooms/my-chat
+	// room`
 	Parent string `json:"parent,omitempty"`
 
 	// StructuredQuery: A structured query.
@@ -2728,10 +3048,10 @@ type QueryTarget struct {
 
 	// ForceSendFields is a list of field names (e.g. "Parent") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Parent") to include in API
@@ -2752,16 +3072,16 @@ func (s *QueryTarget) MarshalJSON() ([]byte, error) {
 // ReadOnly: Options for a transaction that can only be used to read
 // documents.
 type ReadOnly struct {
-	// ReadTime: Reads documents at the given time.
-	// This may not be older than 60 seconds.
+	// ReadTime: Reads documents at the given time. This may not be older
+	// than 60 seconds.
 	ReadTime string `json:"readTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ReadTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ReadTime") to include in
@@ -2787,10 +3107,10 @@ type ReadWrite struct {
 
 	// ForceSendFields is a list of field names (e.g. "RetryTransaction") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "RetryTransaction") to
@@ -2816,10 +3136,10 @@ type RollbackRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "Transaction") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Transaction") to include
@@ -2837,32 +3157,116 @@ func (s *RollbackRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// RunQueryRequest: The request for Firestore.RunQuery.
-type RunQueryRequest struct {
-	// NewTransaction: Starts a new transaction and reads the
-	// documents.
-	// Defaults to a read-only transaction.
-	// The new transaction ID will be returned as the first response in
-	// the
-	// stream.
+// RunAggregationQueryRequest: The request for
+// Firestore.RunAggregationQuery.
+type RunAggregationQueryRequest struct {
+	// NewTransaction: Starts a new transaction as part of the query,
+	// defaulting to read-only. The new transaction ID will be returned as
+	// the first response in the stream.
 	NewTransaction *TransactionOptions `json:"newTransaction,omitempty"`
 
-	// ReadTime: Reads documents as they were at the given time.
-	// This may not be older than 270 seconds.
+	// ReadTime: Executes the query at the given timestamp. Requires: *
+	// Cannot be more than 270 seconds in the past.
+	ReadTime string `json:"readTime,omitempty"`
+
+	// StructuredAggregationQuery: An aggregation query.
+	StructuredAggregationQuery *StructuredAggregationQuery `json:"structuredAggregationQuery,omitempty"`
+
+	// Transaction: Run the aggregation within an already active
+	// transaction. The value here is the opaque transaction ID to execute
+	// the query in.
+	Transaction string `json:"transaction,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "NewTransaction") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NewTransaction") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RunAggregationQueryRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod RunAggregationQueryRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RunAggregationQueryResponse: The response for
+// Firestore.RunAggregationQuery.
+type RunAggregationQueryResponse struct {
+	// ReadTime: The time at which the aggregate value is valid for.
+	ReadTime string `json:"readTime,omitempty"`
+
+	// Result: A single aggregation result. Not present when reporting
+	// partial progress.
+	Result *AggregationResult `json:"result,omitempty"`
+
+	// Transaction: The transaction that was started as part of this
+	// request. Only present on the first response when the request
+	// requested to start a new transaction.
+	Transaction string `json:"transaction,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "ReadTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ReadTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RunAggregationQueryResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod RunAggregationQueryResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RunQueryRequest: The request for Firestore.RunQuery.
+type RunQueryRequest struct {
+	// NewTransaction: Starts a new transaction and reads the documents.
+	// Defaults to a read-only transaction. The new transaction ID will be
+	// returned as the first response in the stream.
+	NewTransaction *TransactionOptions `json:"newTransaction,omitempty"`
+
+	// ReadTime: Reads documents as they were at the given time. This may
+	// not be older than 270 seconds.
 	ReadTime string `json:"readTime,omitempty"`
 
 	// StructuredQuery: A structured query.
 	StructuredQuery *StructuredQuery `json:"structuredQuery,omitempty"`
 
-	// Transaction: Reads documents in a transaction.
+	// Transaction: Run the query within an already active transaction. The
+	// value here is the opaque transaction ID to execute the query in.
 	Transaction string `json:"transaction,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "NewTransaction") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NewTransaction") to
@@ -2883,35 +3287,29 @@ func (s *RunQueryRequest) MarshalJSON() ([]byte, error) {
 
 // RunQueryResponse: The response for Firestore.RunQuery.
 type RunQueryResponse struct {
-	// Document: A query result.
-	// Not set when reporting partial progress.
+	// Document: A query result, not set when reporting partial progress.
 	Document *Document `json:"document,omitempty"`
 
+	// Done: If present, Firestore has completely finished the request and
+	// no more documents will be returned.
+	Done bool `json:"done,omitempty"`
+
 	// ReadTime: The time at which the document was read. This may be
-	// monotonically
-	// increasing; in this case, the previous documents in the result stream
-	// are
-	// guaranteed not to have changed between their `read_time` and this
-	// one.
-	//
-	// If the query returns no results, a response with `read_time` and
-	// no
-	// `document` will be sent, and this represents the time at which the
-	// query
-	// was run.
+	// monotonically increasing; in this case, the previous documents in the
+	// result stream are guaranteed not to have changed between their
+	// `read_time` and this one. If the query returns no results, a response
+	// with `read_time` and no `document` will be sent, and this represents
+	// the time at which the query was run.
 	ReadTime string `json:"readTime,omitempty"`
 
 	// SkippedResults: The number of results that have been skipped due to
-	// an offset between
-	// the last response and the current response.
+	// an offset between the last response and the current response.
 	SkippedResults int64 `json:"skippedResults,omitempty"`
 
 	// Transaction: The transaction that was started as part of this
-	// request.
-	// Can only be set in the first response, and only
-	// if
-	// RunQueryRequest.new_transaction was set in the request.
-	// If set, no other fields will be set in this response.
+	// request. Can only be set in the first response, and only if
+	// RunQueryRequest.new_transaction was set in the request. If set, no
+	// other fields will be set in this response.
 	Transaction string `json:"transaction,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2920,10 +3318,10 @@ type RunQueryResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Document") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Document") to include in
@@ -2942,40 +3340,32 @@ func (s *RunQueryResponse) MarshalJSON() ([]byte, error) {
 }
 
 // Status: The `Status` type defines a logical error model that is
-// suitable for
-// different programming environments, including REST APIs and RPC APIs.
-// It is
-// used by [gRPC](https://github.com/grpc). Each `Status` message
-// contains
-// three pieces of data: error code, error message, and error
-// details.
-//
-// You can find out more about this error model and how to work with it
-// in the
-// [API Design Guide](https://cloud.google.com/apis/design/errors).
+// suitable for different programming environments, including REST APIs
+// and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
+// `Status` message contains three pieces of data: error code, error
+// message, and error details. You can find out more about this error
+// model and how to work with it in the API Design Guide
+// (https://cloud.google.com/apis/design/errors).
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
 	Code int64 `json:"code,omitempty"`
 
-	// Details: A list of messages that carry the error details.  There is a
-	// common set of
-	// message types for APIs to use.
+	// Details: A list of messages that carry the error details. There is a
+	// common set of message types for APIs to use.
 	Details []googleapi.RawMessage `json:"details,omitempty"`
 
 	// Message: A developer-facing error message, which should be in
-	// English. Any
-	// user-facing error message should be localized and sent in
-	// the
-	// google.rpc.Status.details field, or localized by the client.
+	// English. Any user-facing error message should be localized and sent
+	// in the google.rpc.Status.details field, or localized by the client.
 	Message string `json:"message,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Code") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Code") to include in API
@@ -2993,54 +3383,100 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// StructuredAggregationQuery: Firestore query for running an
+// aggregation over a StructuredQuery.
+type StructuredAggregationQuery struct {
+	// Aggregations: Optional. Series of aggregations to apply over the
+	// results of the `structured_query`. Requires: * A minimum of one and
+	// maximum of five aggregations per query.
+	Aggregations []*Aggregation `json:"aggregations,omitempty"`
+
+	// StructuredQuery: Nested structured query.
+	StructuredQuery *StructuredQuery `json:"structuredQuery,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Aggregations") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Aggregations") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *StructuredAggregationQuery) MarshalJSON() ([]byte, error) {
+	type NoMethod StructuredAggregationQuery
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // StructuredQuery: A Firestore query.
 type StructuredQuery struct {
-	// EndAt: A end point for the query results.
+	// EndAt: A potential prefix of a position in the result set to end the
+	// query at. This is similar to `START_AT` but with it controlling the
+	// end position rather than the start position. Requires: * The number
+	// of values cannot be greater than the number of fields specified in
+	// the `ORDER BY` clause.
 	EndAt *Cursor `json:"endAt,omitempty"`
 
 	// From: The collections to query.
 	From []*CollectionSelector `json:"from,omitempty"`
 
-	// Limit: The maximum number of results to return.
-	//
-	// Applies after all other constraints.
-	// Must be >= 0 if specified.
+	// Limit: The maximum number of results to return. Applies after all
+	// other constraints. Requires: * The value must be greater than or
+	// equal to zero if specified.
 	Limit int64 `json:"limit,omitempty"`
 
-	// Offset: The number of results to skip.
-	//
-	// Applies before limit, but after all other constraints. Must be >= 0
-	// if
-	// specified.
+	// Offset: The number of documents to skip before returning the first
+	// result. This applies after the constraints specified by the `WHERE`,
+	// `START AT`, & `END AT` but before the `LIMIT` clause. Requires: * The
+	// value must be greater than or equal to zero if specified.
 	Offset int64 `json:"offset,omitempty"`
 
-	// OrderBy: The order to apply to the query results.
-	//
-	// Firestore guarantees a stable ordering through the following rules:
-	//
-	//  * Any field required to appear in `order_by`, that is not already
-	//    specified in `order_by`, is appended to the order in field name
-	// order
-	//    by default.
-	//  * If an order on `__name__` is not specified, it is appended by
-	// default.
-	//
-	// Fields are appended with the same sort direction as the last
-	// order
-	// specified, or 'ASCENDING' if no order was specified. For example:
-	//
-	//  * `SELECT * FROM Foo ORDER BY A` becomes
-	//    `SELECT * FROM Foo ORDER BY A, __name__`
-	//  * `SELECT * FROM Foo ORDER BY A DESC` becomes
-	//    `SELECT * FROM Foo ORDER BY A DESC, __name__ DESC`
-	//  * `SELECT * FROM Foo WHERE A > 1` becomes
-	//    `SELECT * FROM Foo WHERE A > 1 ORDER BY A, __name__`
+	// OrderBy: The order to apply to the query results. Firestore allows
+	// callers to provide a full ordering, a partial ordering, or no
+	// ordering at all. In all cases, Firestore guarantees a stable ordering
+	// through the following rules: * The `order_by` is required to
+	// reference all fields used with an inequality filter. * All fields
+	// that are required to be in the `order_by` but are not already present
+	// are appended in lexicographical ordering of the field name. * If an
+	// order on `__name__` is not specified, it is appended by default.
+	// Fields are appended with the same sort direction as the last order
+	// specified, or 'ASCENDING' if no order was specified. For example: *
+	// `ORDER BY a` becomes `ORDER BY a ASC, __name__ ASC` * `ORDER BY a
+	// DESC` becomes `ORDER BY a DESC, __name__ DESC` * `WHERE a > 1`
+	// becomes `WHERE a > 1 ORDER BY a ASC, __name__ ASC` * `WHERE __name__
+	// > ... AND a > 1` becomes `WHERE __name__ > ... AND a > 1 ORDER BY a
+	// ASC, __name__ ASC`
 	OrderBy []*Order `json:"orderBy,omitempty"`
 
 	// Select: The projection to return.
 	Select *Projection `json:"select,omitempty"`
 
-	// StartAt: A starting point for the query results.
+	// StartAt: A potential prefix of a position in the result set to start
+	// the query at. The ordering of the result set is based on the `ORDER
+	// BY` clause of the original query. ``` SELECT * FROM k WHERE a = 1 AND
+	// b > 2 ORDER BY b ASC, __name__ ASC; ``` This query's results are
+	// ordered by `(b ASC, __name__ ASC)`. Cursors can reference either the
+	// full ordering or a prefix of the location, though it cannot reference
+	// more fields than what are in the provided `ORDER BY`. Continuing off
+	// the example above, attaching the following start cursors will have
+	// varying impact: - `START BEFORE (2, /k/123)`: start the query right
+	// before `a = 1 AND b > 2 AND __name__ > /k/123`. - `START AFTER (10)`:
+	// start the query right after `a = 1 AND b > 10`. Unlike `OFFSET` which
+	// requires scanning over the first N results to skip, a start cursor
+	// allows the query to begin at a logical position. This position is not
+	// required to match an actual result, it will scan forward from this
+	// position to find the next document. Requires: * The number of values
+	// cannot be greater than the number of fields specified in the `ORDER
+	// BY` clause.
 	StartAt *Cursor `json:"startAt,omitempty"`
 
 	// Where: The filter to apply.
@@ -3048,10 +3484,10 @@ type StructuredQuery struct {
 
 	// ForceSendFields is a list of field names (e.g. "EndAt") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "EndAt") to include in API
@@ -3081,29 +3517,25 @@ type Target struct {
 	// Query: A target specified by a query.
 	Query *QueryTarget `json:"query,omitempty"`
 
-	// ReadTime: Start listening after a specific `read_time`.
-	//
-	// The client must know the state of matching documents at this time.
+	// ReadTime: Start listening after a specific `read_time`. The client
+	// must know the state of matching documents at this time.
 	ReadTime string `json:"readTime,omitempty"`
 
 	// ResumeToken: A resume token from a prior TargetChange for an
-	// identical target.
-	//
-	// Using a resume token with a different target is unsupported and may
-	// fail.
+	// identical target. Using a resume token with a different target is
+	// unsupported and may fail.
 	ResumeToken string `json:"resumeToken,omitempty"`
 
 	// TargetId: The target ID that identifies the target on the stream.
-	// Must be a positive
-	// number and non-zero.
+	// Must be a positive number and non-zero.
 	TargetId int64 `json:"targetId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Documents") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Documents") to include in
@@ -3127,28 +3559,18 @@ type TargetChange struct {
 	Cause *Status `json:"cause,omitempty"`
 
 	// ReadTime: The consistent `read_time` for the given `target_ids`
-	// (omitted when the
-	// target_ids are not at a consistent snapshot).
-	//
-	// The stream is guaranteed to send a `read_time` with `target_ids`
-	// empty
-	// whenever the entire stream reaches a new consistent snapshot.
-	// ADD,
+	// (omitted when the target_ids are not at a consistent snapshot). The
+	// stream is guaranteed to send a `read_time` with `target_ids` empty
+	// whenever the entire stream reaches a new consistent snapshot. ADD,
 	// CURRENT, and RESET messages are guaranteed to (eventually) result in
-	// a
-	// new consistent snapshot (while NO_CHANGE and REMOVE messages are
-	// not).
-	//
-	// For a given stream, `read_time` is guaranteed to be
-	// monotonically
-	// increasing.
+	// a new consistent snapshot (while NO_CHANGE and REMOVE messages are
+	// not). For a given stream, `read_time` is guaranteed to be
+	// monotonically increasing.
 	ReadTime string `json:"readTime,omitempty"`
 
 	// ResumeToken: A token that can be used to resume the stream for the
-	// given `target_ids`,
-	// or all targets if `target_ids` is empty.
-	//
-	// Not set on every target change.
+	// given `target_ids`, or all targets if `target_ids` is empty. Not set
+	// on every target change.
 	ResumeToken string `json:"resumeToken,omitempty"`
 
 	// TargetChangeType: The type of change that occurred.
@@ -3159,37 +3581,27 @@ type TargetChange struct {
 	//   "ADD" - The targets have been added.
 	//   "REMOVE" - The targets have been removed.
 	//   "CURRENT" - The targets reflect all changes committed before the
-	// targets were added
-	// to the stream.
-	//
-	// This will be sent after or with a `read_time` that is greater than
-	// or
-	// equal to the time at which the targets were added.
-	//
-	// Listeners can wait for this change if read-after-write semantics
-	// are desired.
+	// targets were added to the stream. This will be sent after or with a
+	// `read_time` that is greater than or equal to the time at which the
+	// targets were added. Listeners can wait for this change if
+	// read-after-write semantics are desired.
 	//   "RESET" - The targets have been reset, and a new initial state for
-	// the targets
-	// will be returned in subsequent changes.
-	//
-	// After the initial state is complete, `CURRENT` will be returned
-	// even
-	// if the target was previously indicated to be `CURRENT`.
+	// the targets will be returned in subsequent changes. After the initial
+	// state is complete, `CURRENT` will be returned even if the target was
+	// previously indicated to be `CURRENT`.
 	TargetChangeType string `json:"targetChangeType,omitempty"`
 
-	// TargetIds: The target IDs of targets that have changed.
-	//
-	// If empty, the change applies to all targets.
-	//
-	// The order of the target IDs is not defined.
+	// TargetIds: The target IDs of targets that have changed. If empty, the
+	// change applies to all targets. The order of the target IDs is not
+	// defined.
 	TargetIds []int64 `json:"targetIds,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Cause") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Cause") to include in API
@@ -3218,10 +3630,10 @@ type TransactionOptions struct {
 
 	// ForceSendFields is a list of field names (e.g. "ReadOnly") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ReadOnly") to include in
@@ -3248,16 +3660,22 @@ type UnaryFilter struct {
 	//
 	// Possible values:
 	//   "OPERATOR_UNSPECIFIED" - Unspecified. This value must not be used.
-	//   "IS_NAN" - Test if a field is equal to NaN.
-	//   "IS_NULL" - Test if an expression evaluates to Null.
+	//   "IS_NAN" - The given `field` is equal to `NaN`.
+	//   "IS_NULL" - The given `field` is equal to `NULL`.
+	//   "IS_NOT_NAN" - The given `field` is not equal to `NaN`. Requires: *
+	// No other `NOT_EQUAL`, `NOT_IN`, `IS_NOT_NULL`, or `IS_NOT_NAN`. *
+	// That `field` comes first in the `order_by`.
+	//   "IS_NOT_NULL" - The given `field` is not equal to `NULL`. Requires:
+	// * A single `NOT_EQUAL`, `NOT_IN`, `IS_NOT_NULL`, or `IS_NOT_NAN`. *
+	// That `field` comes first in the `order_by`.
 	Op string `json:"op,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Field") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Field") to include in API
@@ -3277,20 +3695,15 @@ func (s *UnaryFilter) MarshalJSON() ([]byte, error) {
 
 // Value: A message that can hold any of the supported value types.
 type Value struct {
-	// ArrayValue: An array value.
-	//
-	// Cannot directly contain another array value, though can contain
-	// an
-	// map which contains another array.
+	// ArrayValue: An array value. Cannot directly contain another array
+	// value, though can contain an map which contains another array.
 	ArrayValue *ArrayValue `json:"arrayValue,omitempty"`
 
 	// BooleanValue: A boolean value.
 	BooleanValue bool `json:"booleanValue,omitempty"`
 
-	// BytesValue: A bytes value.
-	//
-	// Must not exceed 1 MiB - 89 bytes.
-	// Only the first 1,500 bytes are considered by queries.
+	// BytesValue: A bytes value. Must not exceed 1 MiB - 89 bytes. Only the
+	// first 1,500 bytes are considered by queries.
 	BytesValue string `json:"bytesValue,omitempty"`
 
 	// DoubleValue: A double value.
@@ -3312,34 +3725,26 @@ type Value struct {
 	//   "NULL_VALUE" - Null value.
 	NullValue string `json:"nullValue,omitempty"`
 
-	// ReferenceValue: A reference to a document. For
-	// example:
-	// `projects/{project_id}/databases/{database_id}/documents/{doc
-	// ument_path}`.
+	// ReferenceValue: A reference to a document. For example:
+	// `projects/{project_id}/databases/{database_id}/documents/{document_pat
+	// h}`.
 	ReferenceValue string `json:"referenceValue,omitempty"`
 
-	// StringValue: A string value.
-	//
-	// The string, represented as UTF-8, must not exceed 1 MiB - 89
-	// bytes.
-	// Only the first 1,500 bytes of the UTF-8 representation are considered
-	// by
-	// queries.
+	// StringValue: A string value. The string, represented as UTF-8, must
+	// not exceed 1 MiB - 89 bytes. Only the first 1,500 bytes of the UTF-8
+	// representation are considered by queries.
 	StringValue string `json:"stringValue,omitempty"`
 
-	// TimestampValue: A timestamp value.
-	//
-	// Precise only to microseconds. When stored, any additional precision
-	// is
-	// rounded down.
+	// TimestampValue: A timestamp value. Precise only to microseconds. When
+	// stored, any additional precision is rounded down.
 	TimestampValue string `json:"timestampValue,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ArrayValue") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ArrayValue") to include in
@@ -3373,16 +3778,13 @@ func (s *Value) UnmarshalJSON(data []byte) error {
 
 // Write: A write on a document.
 type Write struct {
-	// CurrentDocument: An optional precondition on the document.
-	//
-	// The write will fail if this is set and not met by the target
-	// document.
+	// CurrentDocument: An optional precondition on the document. The write
+	// will fail if this is set and not met by the target document.
 	CurrentDocument *Precondition `json:"currentDocument,omitempty"`
 
-	// Delete: A document name to delete. In the
-	// format:
-	// `projects/{project_id}/databases/{database_id}/documents/{docu
-	// ment_path}`.
+	// Delete: A document name to delete. In the format:
+	// `projects/{project_id}/databases/{database_id}/documents/{document_pat
+	// h}`.
 	Delete string `json:"delete,omitempty"`
 
 	// Transform: Applies a transformation to a document.
@@ -3391,36 +3793,28 @@ type Write struct {
 	// Update: A document to write.
 	Update *Document `json:"update,omitempty"`
 
-	// UpdateMask: The fields to update in this write.
-	//
-	// This field can be set only when the operation is `update`.
-	// If the mask is not set for an `update` and the document exists,
-	// any
-	// existing data will be overwritten.
-	// If the mask is set and the document on the server has fields not
-	// covered by
-	// the mask, they are left unchanged.
-	// Fields referenced in the mask, but not present in the input document,
-	// are
-	// deleted from the document on the server.
-	// The field paths in this mask must not contain a reserved field name.
+	// UpdateMask: The fields to update in this write. This field can be set
+	// only when the operation is `update`. If the mask is not set for an
+	// `update` and the document exists, any existing data will be
+	// overwritten. If the mask is set and the document on the server has
+	// fields not covered by the mask, they are left unchanged. Fields
+	// referenced in the mask, but not present in the input document, are
+	// deleted from the document on the server. The field paths in this mask
+	// must not contain a reserved field name.
 	UpdateMask *DocumentMask `json:"updateMask,omitempty"`
 
-	// UpdateTransforms: The transforms to perform after update.
-	//
-	// This field can be set only when the operation is `update`. If
-	// present, this
+	// UpdateTransforms: The transforms to perform after update. This field
+	// can be set only when the operation is `update`. If present, this
 	// write is equivalent to performing `update` and `transform` to the
-	// same
-	// document atomically and in order.
+	// same document atomically and in order.
 	UpdateTransforms []*FieldTransform `json:"updateTransforms,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CurrentDocument") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CurrentDocument") to
@@ -3439,66 +3833,44 @@ func (s *Write) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// WriteRequest: The request for Firestore.Write.
-//
-// The first request creates a stream, or resumes an existing one from a
-// token.
-//
-// When creating a new stream, the server replies with a response
-// containing
-// only an ID and a token, to use in the next request.
-//
-// When resuming a stream, the server first streams any responses later
-// than the
-// given token, then a response containing only an up-to-date token, to
-// use in
+// WriteRequest: The request for Firestore.Write. The first request
+// creates a stream, or resumes an existing one from a token. When
+// creating a new stream, the server replies with a response containing
+// only an ID and a token, to use in the next request. When resuming a
+// stream, the server first streams any responses later than the given
+// token, then a response containing only an up-to-date token, to use in
 // the next request.
 type WriteRequest struct {
 	// Labels: Labels associated with this write request.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// StreamId: The ID of the write stream to resume.
-	// This may only be set in the first message. When left empty, a new
-	// write
-	// stream will be created.
+	// StreamId: The ID of the write stream to resume. This may only be set
+	// in the first message. When left empty, a new write stream will be
+	// created.
 	StreamId string `json:"streamId,omitempty"`
 
-	// StreamToken: A stream token that was previously sent by the
-	// server.
-	//
-	// The client should set this field to the token from the most
-	// recent
-	// WriteResponse it has received. This acknowledges that the client
-	// has
+	// StreamToken: A stream token that was previously sent by the server.
+	// The client should set this field to the token from the most recent
+	// WriteResponse it has received. This acknowledges that the client has
 	// received responses up to this token. After sending this token,
-	// earlier
-	// tokens may not be used anymore.
-	//
-	// The server may close the stream if there are too many
-	// unacknowledged
-	// responses.
-	//
-	// Leave this field unset when creating a new stream. To resume a stream
-	// at
-	// a specific point, set this field and the `stream_id` field.
-	//
-	// Leave this field unset when creating a new stream.
+	// earlier tokens may not be used anymore. The server may close the
+	// stream if there are too many unacknowledged responses. Leave this
+	// field unset when creating a new stream. To resume a stream at a
+	// specific point, set this field and the `stream_id` field. Leave this
+	// field unset when creating a new stream.
 	StreamToken string `json:"streamToken,omitempty"`
 
-	// Writes: The writes to apply.
-	//
-	// Always executed atomically and in order.
-	// This must be empty on the first request.
-	// This may be empty on the last request.
-	// This must not be empty on all other requests.
+	// Writes: The writes to apply. Always executed atomically and in order.
+	// This must be empty on the first request. This may be empty on the
+	// last request. This must not be empty on all other requests.
 	Writes []*Write `json:"writes,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Labels") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Labels") to include in API
@@ -3519,26 +3891,21 @@ func (s *WriteRequest) MarshalJSON() ([]byte, error) {
 // WriteResponse: The response for Firestore.Write.
 type WriteResponse struct {
 	// CommitTime: The time at which the commit occurred. Any read with an
-	// equal or greater
-	// `read_time` is guaranteed to see the effects of the write.
+	// equal or greater `read_time` is guaranteed to see the effects of the
+	// write.
 	CommitTime string `json:"commitTime,omitempty"`
 
-	// StreamId: The ID of the stream.
-	// Only set on the first message, when a new stream was created.
+	// StreamId: The ID of the stream. Only set on the first message, when a
+	// new stream was created.
 	StreamId string `json:"streamId,omitempty"`
 
 	// StreamToken: A token that represents the position of this response in
-	// the stream.
-	// This can be used by a client to resume the stream at this
-	// point.
-	//
-	// This field is always set.
+	// the stream. This can be used by a client to resume the stream at this
+	// point. This field is always set.
 	StreamToken string `json:"streamToken,omitempty"`
 
-	// WriteResults: The result of applying the writes.
-	//
-	// This i-th write result corresponds to the i-th write in the
-	// request.
+	// WriteResults: The result of applying the writes. This i-th write
+	// result corresponds to the i-th write in the request.
 	WriteResults []*WriteResult `json:"writeResults,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -3547,10 +3914,10 @@ type WriteResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "CommitTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CommitTime") to include in
@@ -3571,25 +3938,20 @@ func (s *WriteResponse) MarshalJSON() ([]byte, error) {
 // WriteResult: The result of applying a write.
 type WriteResult struct {
 	// TransformResults: The results of applying each
-	// DocumentTransform.FieldTransform, in the
-	// same order.
+	// DocumentTransform.FieldTransform, in the same order.
 	TransformResults []*Value `json:"transformResults,omitempty"`
 
 	// UpdateTime: The last update time of the document after applying the
-	// write. Not set
-	// after a `delete`.
-	//
-	// If the write did not actually change the document, this will be
-	// the
-	// previous update_time.
+	// write. Not set after a `delete`. If the write did not actually change
+	// the document, this will be the previous update_time.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "TransformResults") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "TransformResults") to
@@ -3608,6 +3970,353 @@ func (s *WriteResult) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// method id "firestore.projects.databases.create":
+
+type ProjectsDatabasesCreateCall struct {
+	s                              *Service
+	parent                         string
+	googlefirestoreadminv1database *GoogleFirestoreAdminV1Database
+	urlParams_                     gensupport.URLParams
+	ctx_                           context.Context
+	header_                        http.Header
+}
+
+// Create: Create a database.
+//
+// - parent: A parent name of the form `projects/{project_id}`.
+func (r *ProjectsDatabasesService) Create(parent string, googlefirestoreadminv1database *GoogleFirestoreAdminV1Database) *ProjectsDatabasesCreateCall {
+	c := &ProjectsDatabasesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlefirestoreadminv1database = googlefirestoreadminv1database
+	return c
+}
+
+// DatabaseId sets the optional parameter "databaseId": Required. The ID
+// to use for the database, which will become the final component of the
+// database's resource name. This value should be 4-63 characters. Valid
+// characters are /a-z-/ with first character a letter and the last a
+// letter or a number. Must not be UUID-like
+// /[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}/. "(default)" database id
+// is also valid.
+func (c *ProjectsDatabasesCreateCall) DatabaseId(databaseId string) *ProjectsDatabasesCreateCall {
+	c.urlParams_.Set("databaseId", databaseId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsDatabasesCreateCall) Fields(s ...googleapi.Field) *ProjectsDatabasesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsDatabasesCreateCall) Context(ctx context.Context) *ProjectsDatabasesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsDatabasesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsDatabasesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlefirestoreadminv1database)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/databases")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firestore.projects.databases.create" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsDatabasesCreateCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Create a database.",
+	//   "flatPath": "v1/projects/{projectsId}/databases",
+	//   "httpMethod": "POST",
+	//   "id": "firestore.projects.databases.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "databaseId": {
+	//       "description": "Required. The ID to use for the database, which will become the final component of the database's resource name. This value should be 4-63 characters. Valid characters are /a-z-/ with first character a letter and the last a letter or a number. Must not be UUID-like /[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}/. \"(default)\" database id is also valid.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. A parent name of the form `projects/{project_id}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/databases",
+	//   "request": {
+	//     "$ref": "GoogleFirestoreAdminV1Database"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/datastore"
+	//   ]
+	// }
+
+}
+
+// method id "firestore.projects.databases.delete":
+
+type ProjectsDatabasesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a database.
+//
+//   - name: A name of the form
+//     `projects/{project_id}/databases/{database_id}`.
+func (r *ProjectsDatabasesService) Delete(name string) *ProjectsDatabasesDeleteCall {
+	c := &ProjectsDatabasesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// AllowMissing sets the optional parameter "allowMissing": If set to
+// true and the Database is not found, the request will succeed but no
+// action will be taken.
+func (c *ProjectsDatabasesDeleteCall) AllowMissing(allowMissing bool) *ProjectsDatabasesDeleteCall {
+	c.urlParams_.Set("allowMissing", fmt.Sprint(allowMissing))
+	return c
+}
+
+// Etag sets the optional parameter "etag": The current etag of the
+// Database. If an etag is provided and does not match the current etag
+// of the database, deletion will be blocked and a FAILED_PRECONDITION
+// error will be returned.
+func (c *ProjectsDatabasesDeleteCall) Etag(etag string) *ProjectsDatabasesDeleteCall {
+	c.urlParams_.Set("etag", etag)
+	return c
+}
+
+// FreeId sets the optional parameter "freeId": If set, will free the
+// database_id associated with this database. uid will be used as the
+// resource id to identify this deleted database.
+func (c *ProjectsDatabasesDeleteCall) FreeId(freeId bool) *ProjectsDatabasesDeleteCall {
+	c.urlParams_.Set("freeId", fmt.Sprint(freeId))
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": If set,
+// validate the request and preview the response, but do not actually
+// delete the database.
+func (c *ProjectsDatabasesDeleteCall) ValidateOnly(validateOnly bool) *ProjectsDatabasesDeleteCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsDatabasesDeleteCall) Fields(s ...googleapi.Field) *ProjectsDatabasesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsDatabasesDeleteCall) Context(ctx context.Context) *ProjectsDatabasesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsDatabasesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsDatabasesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firestore.projects.databases.delete" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsDatabasesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a database.",
+	//   "flatPath": "v1/projects/{projectsId}/databases/{databasesId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "firestore.projects.databases.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "allowMissing": {
+	//       "description": "If set to true and the Database is not found, the request will succeed but no action will be taken.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "etag": {
+	//       "description": "The current etag of the Database. If an etag is provided and does not match the current etag of the database, deletion will be blocked and a FAILED_PRECONDITION error will be returned.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "freeId": {
+	//       "description": "If set, will free the database_id associated with this database. uid will be used as the resource id to identify this deleted database.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "name": {
+	//       "description": "Required. A name of the form `projects/{project_id}/databases/{database_id}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/databases/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "validateOnly": {
+	//       "description": "If set, validate the request and preview the response, but do not actually delete the database.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/datastore"
+	//   ]
+	// }
+
+}
+
 // method id "firestore.projects.databases.exportDocuments":
 
 type ProjectsDatabasesExportDocumentsCall struct {
@@ -3620,20 +4329,18 @@ type ProjectsDatabasesExportDocumentsCall struct {
 }
 
 // ExportDocuments: Exports a copy of all or a subset of documents from
-// Google Cloud Firestore
-// to another storage system, such as Google Cloud Storage. Recent
-// updates to
-// documents may not be reflected in the export. The export occurs in
-// the
-// background and its progress can be monitored and managed via
-// the
-// Operation resource that is created. The output of an export may only
-// be
-// used once the associated operation is done. If an export operation
-// is
-// cancelled before completion it may leave partial data behind in
-// Google
-// Cloud Storage.
+// Google Cloud Firestore to another storage system, such as Google
+// Cloud Storage. Recent updates to documents may not be reflected in
+// the export. The export occurs in the background and its progress can
+// be monitored and managed via the Operation resource that is created.
+// The output of an export may only be used once the associated
+// operation is done. If an export operation is cancelled before
+// completion it may leave partial data behind in Google Cloud Storage.
+// For more details on export behavior and output format, refer to:
+// https://cloud.google.com/firestore/docs/manage-data/export-import
+//
+//   - name: Database to export. Should be of the form:
+//     `projects/{project_id}/databases/{database_id}`.
 func (r *ProjectsDatabasesService) ExportDocuments(name string, googlefirestoreadminv1exportdocumentsrequest *GoogleFirestoreAdminV1ExportDocumentsRequest) *ProjectsDatabasesExportDocumentsCall {
 	c := &ProjectsDatabasesExportDocumentsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3668,7 +4375,7 @@ func (c *ProjectsDatabasesExportDocumentsCall) Header() http.Header {
 
 func (c *ProjectsDatabasesExportDocumentsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3708,17 +4415,17 @@ func (c *ProjectsDatabasesExportDocumentsCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -3732,7 +4439,7 @@ func (c *ProjectsDatabasesExportDocumentsCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Exports a copy of all or a subset of documents from Google Cloud Firestore\nto another storage system, such as Google Cloud Storage. Recent updates to\ndocuments may not be reflected in the export. The export occurs in the\nbackground and its progress can be monitored and managed via the\nOperation resource that is created. The output of an export may only be\nused once the associated operation is done. If an export operation is\ncancelled before completion it may leave partial data behind in Google\nCloud Storage.",
+	//   "description": "Exports a copy of all or a subset of documents from Google Cloud Firestore to another storage system, such as Google Cloud Storage. Recent updates to documents may not be reflected in the export. The export occurs in the background and its progress can be monitored and managed via the Operation resource that is created. The output of an export may only be used once the associated operation is done. If an export operation is cancelled before completion it may leave partial data behind in Google Cloud Storage. For more details on export behavior and output format, refer to: https://cloud.google.com/firestore/docs/manage-data/export-import",
 	//   "flatPath": "v1/projects/{projectsId}/databases/{databasesId}:exportDocuments",
 	//   "httpMethod": "POST",
 	//   "id": "firestore.projects.databases.exportDocuments",
@@ -3741,7 +4448,7 @@ func (c *ProjectsDatabasesExportDocumentsCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Database to export. Should be of the form:\n`projects/{project_id}/databases/{database_id}`.",
+	//       "description": "Required. Database to export. Should be of the form: `projects/{project_id}/databases/{database_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/databases/[^/]+$",
 	//       "required": true,
@@ -3763,6 +4470,154 @@ func (c *ProjectsDatabasesExportDocumentsCall) Do(opts ...googleapi.CallOption) 
 
 }
 
+// method id "firestore.projects.databases.get":
+
+type ProjectsDatabasesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets information about a database.
+//
+//   - name: A name of the form
+//     `projects/{project_id}/databases/{database_id}`.
+func (r *ProjectsDatabasesService) Get(name string) *ProjectsDatabasesGetCall {
+	c := &ProjectsDatabasesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsDatabasesGetCall) Fields(s ...googleapi.Field) *ProjectsDatabasesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsDatabasesGetCall) IfNoneMatch(entityTag string) *ProjectsDatabasesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsDatabasesGetCall) Context(ctx context.Context) *ProjectsDatabasesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsDatabasesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsDatabasesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firestore.projects.databases.get" call.
+// Exactly one of *GoogleFirestoreAdminV1Database or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleFirestoreAdminV1Database.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsDatabasesGetCall) Do(opts ...googleapi.CallOption) (*GoogleFirestoreAdminV1Database, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleFirestoreAdminV1Database{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets information about a database.",
+	//   "flatPath": "v1/projects/{projectsId}/databases/{databasesId}",
+	//   "httpMethod": "GET",
+	//   "id": "firestore.projects.databases.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. A name of the form `projects/{project_id}/databases/{database_id}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/databases/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleFirestoreAdminV1Database"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/datastore"
+	//   ]
+	// }
+
+}
+
 // method id "firestore.projects.databases.importDocuments":
 
 type ProjectsDatabasesImportDocumentsCall struct {
@@ -3775,15 +4630,14 @@ type ProjectsDatabasesImportDocumentsCall struct {
 }
 
 // ImportDocuments: Imports documents into Google Cloud Firestore.
-// Existing documents with the
-// same name are overwritten. The import occurs in the background and
-// its
-// progress can be monitored and managed via the Operation resource that
-// is
-// created. If an ImportDocuments operation is cancelled, it is
-// possible
-// that a subset of the data has already been imported to Cloud
-// Firestore.
+// Existing documents with the same name are overwritten. The import
+// occurs in the background and its progress can be monitored and
+// managed via the Operation resource that is created. If an
+// ImportDocuments operation is cancelled, it is possible that a subset
+// of the data has already been imported to Cloud Firestore.
+//
+//   - name: Database to import into. Should be of the form:
+//     `projects/{project_id}/databases/{database_id}`.
 func (r *ProjectsDatabasesService) ImportDocuments(name string, googlefirestoreadminv1importdocumentsrequest *GoogleFirestoreAdminV1ImportDocumentsRequest) *ProjectsDatabasesImportDocumentsCall {
 	c := &ProjectsDatabasesImportDocumentsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3818,7 +4672,7 @@ func (c *ProjectsDatabasesImportDocumentsCall) Header() http.Header {
 
 func (c *ProjectsDatabasesImportDocumentsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3858,17 +4712,17 @@ func (c *ProjectsDatabasesImportDocumentsCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -3882,7 +4736,7 @@ func (c *ProjectsDatabasesImportDocumentsCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Imports documents into Google Cloud Firestore. Existing documents with the\nsame name are overwritten. The import occurs in the background and its\nprogress can be monitored and managed via the Operation resource that is\ncreated. If an ImportDocuments operation is cancelled, it is possible\nthat a subset of the data has already been imported to Cloud Firestore.",
+	//   "description": "Imports documents into Google Cloud Firestore. Existing documents with the same name are overwritten. The import occurs in the background and its progress can be monitored and managed via the Operation resource that is created. If an ImportDocuments operation is cancelled, it is possible that a subset of the data has already been imported to Cloud Firestore.",
 	//   "flatPath": "v1/projects/{projectsId}/databases/{databasesId}:importDocuments",
 	//   "httpMethod": "POST",
 	//   "id": "firestore.projects.databases.importDocuments",
@@ -3891,7 +4745,7 @@ func (c *ProjectsDatabasesImportDocumentsCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Database to import into. Should be of the form:\n`projects/{project_id}/databases/{database_id}`.",
+	//       "description": "Required. Database to import into. Should be of the form: `projects/{project_id}/databases/{database_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/databases/[^/]+$",
 	//       "required": true,
@@ -3901,6 +4755,312 @@ func (c *ProjectsDatabasesImportDocumentsCall) Do(opts ...googleapi.CallOption) 
 	//   "path": "v1/{+name}:importDocuments",
 	//   "request": {
 	//     "$ref": "GoogleFirestoreAdminV1ImportDocumentsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/datastore"
+	//   ]
+	// }
+
+}
+
+// method id "firestore.projects.databases.list":
+
+type ProjectsDatabasesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: List all the databases in the project.
+//
+// - parent: A parent name of the form `projects/{project_id}`.
+func (r *ProjectsDatabasesService) List(parent string) *ProjectsDatabasesListCall {
+	c := &ProjectsDatabasesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsDatabasesListCall) Fields(s ...googleapi.Field) *ProjectsDatabasesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsDatabasesListCall) IfNoneMatch(entityTag string) *ProjectsDatabasesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsDatabasesListCall) Context(ctx context.Context) *ProjectsDatabasesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsDatabasesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsDatabasesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/databases")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firestore.projects.databases.list" call.
+// Exactly one of *GoogleFirestoreAdminV1ListDatabasesResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleFirestoreAdminV1ListDatabasesResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsDatabasesListCall) Do(opts ...googleapi.CallOption) (*GoogleFirestoreAdminV1ListDatabasesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleFirestoreAdminV1ListDatabasesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List all the databases in the project.",
+	//   "flatPath": "v1/projects/{projectsId}/databases",
+	//   "httpMethod": "GET",
+	//   "id": "firestore.projects.databases.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. A parent name of the form `projects/{project_id}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/databases",
+	//   "response": {
+	//     "$ref": "GoogleFirestoreAdminV1ListDatabasesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/datastore"
+	//   ]
+	// }
+
+}
+
+// method id "firestore.projects.databases.patch":
+
+type ProjectsDatabasesPatchCall struct {
+	s                              *Service
+	name                           string
+	googlefirestoreadminv1database *GoogleFirestoreAdminV1Database
+	urlParams_                     gensupport.URLParams
+	ctx_                           context.Context
+	header_                        http.Header
+}
+
+// Patch: Updates a database.
+//
+//   - name: The resource name of the Database. Format:
+//     `projects/{project}/databases/{database}`.
+func (r *ProjectsDatabasesService) Patch(name string, googlefirestoreadminv1database *GoogleFirestoreAdminV1Database) *ProjectsDatabasesPatchCall {
+	c := &ProjectsDatabasesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlefirestoreadminv1database = googlefirestoreadminv1database
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of
+// fields to be updated.
+func (c *ProjectsDatabasesPatchCall) UpdateMask(updateMask string) *ProjectsDatabasesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsDatabasesPatchCall) Fields(s ...googleapi.Field) *ProjectsDatabasesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsDatabasesPatchCall) Context(ctx context.Context) *ProjectsDatabasesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsDatabasesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsDatabasesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlefirestoreadminv1database)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firestore.projects.databases.patch" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsDatabasesPatchCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a database.",
+	//   "flatPath": "v1/projects/{projectsId}/databases/{databasesId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "firestore.projects.databases.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The resource name of the Database. Format: `projects/{project}/databases/{database}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/databases/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "The list of fields to be updated.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "GoogleFirestoreAdminV1Database"
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleLongrunningOperation"
@@ -3925,6 +5085,10 @@ type ProjectsDatabasesCollectionGroupsFieldsGetCall struct {
 }
 
 // Get: Gets the metadata and configuration for a Field.
+//
+//   - name: A name of the form
+//     `projects/{project_id}/databases/{database_id}/collectionGroups/{col
+//     lection_id}/fields/{field_id}`.
 func (r *ProjectsDatabasesCollectionGroupsFieldsService) Get(name string) *ProjectsDatabasesCollectionGroupsFieldsGetCall {
 	c := &ProjectsDatabasesCollectionGroupsFieldsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3968,7 +5132,7 @@ func (c *ProjectsDatabasesCollectionGroupsFieldsGetCall) Header() http.Header {
 
 func (c *ProjectsDatabasesCollectionGroupsFieldsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4006,17 +5170,17 @@ func (c *ProjectsDatabasesCollectionGroupsFieldsGetCall) Do(opts ...googleapi.Ca
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleFirestoreAdminV1Field{
 		ServerResponse: googleapi.ServerResponse{
@@ -4039,7 +5203,7 @@ func (c *ProjectsDatabasesCollectionGroupsFieldsGetCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. A name of the form\n`projects/{project_id}/databases/{database_id}/collectionGroups/{collection_id}/fields/{field_id}`",
+	//       "description": "Required. A name of the form `projects/{project_id}/databases/{database_id}/collectionGroups/{collection_id}/fields/{field_id}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/databases/[^/]+/collectionGroups/[^/]+/fields/[^/]+$",
 	//       "required": true,
@@ -4069,16 +5233,15 @@ type ProjectsDatabasesCollectionGroupsFieldsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the field configuration and metadata for this
-// database.
+// List: Lists the field configuration and metadata for this database.
+// Currently, FirestoreAdmin.ListFields only supports listing fields
+// that have been explicitly overridden. To issue this query, call
+// FirestoreAdmin.ListFields with the filter set to
+// `indexConfig.usesAncestorConfig:false` .
 //
-// Currently, FirestoreAdmin.ListFields only supports listing
-// fields
-// that have been explicitly overridden. To issue this query,
-// call
-// FirestoreAdmin.ListFields with the filter set
-// to
-// `indexConfig.usesAncestorConfig:false`.
+//   - parent: A parent name of the form
+//     `projects/{project_id}/databases/{database_id}/collectionGroups/{col
+//     lection_id}`.
 func (r *ProjectsDatabasesCollectionGroupsFieldsService) List(parent string) *ProjectsDatabasesCollectionGroupsFieldsListCall {
 	c := &ProjectsDatabasesCollectionGroupsFieldsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4086,13 +5249,10 @@ func (r *ProjectsDatabasesCollectionGroupsFieldsService) List(parent string) *Pr
 }
 
 // Filter sets the optional parameter "filter": The filter to apply to
-// list results. Currently,
-// FirestoreAdmin.ListFields only supports listing fields
-// that have been explicitly overridden. To issue this query,
-// call
-// FirestoreAdmin.ListFields with the filter set
-// to
-// `indexConfig.usesAncestorConfig:false`.
+// list results. Currently, FirestoreAdmin.ListFields only supports
+// listing fields that have been explicitly overridden. To issue this
+// query, call FirestoreAdmin.ListFields with a filter that includes
+// `indexConfig.usesAncestorConfig:false` .
 func (c *ProjectsDatabasesCollectionGroupsFieldsListCall) Filter(filter string) *ProjectsDatabasesCollectionGroupsFieldsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -4106,9 +5266,8 @@ func (c *ProjectsDatabasesCollectionGroupsFieldsListCall) PageSize(pageSize int6
 }
 
 // PageToken sets the optional parameter "pageToken": A page token,
-// returned from a previous call to
-// FirestoreAdmin.ListFields, that may be used to get the next
-// page of results.
+// returned from a previous call to FirestoreAdmin.ListFields, that may
+// be used to get the next page of results.
 func (c *ProjectsDatabasesCollectionGroupsFieldsListCall) PageToken(pageToken string) *ProjectsDatabasesCollectionGroupsFieldsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -4151,7 +5310,7 @@ func (c *ProjectsDatabasesCollectionGroupsFieldsListCall) Header() http.Header {
 
 func (c *ProjectsDatabasesCollectionGroupsFieldsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4191,17 +5350,17 @@ func (c *ProjectsDatabasesCollectionGroupsFieldsListCall) Do(opts ...googleapi.C
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleFirestoreAdminV1ListFieldsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4215,7 +5374,7 @@ func (c *ProjectsDatabasesCollectionGroupsFieldsListCall) Do(opts ...googleapi.C
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the field configuration and metadata for this database.\n\nCurrently, FirestoreAdmin.ListFields only supports listing fields\nthat have been explicitly overridden. To issue this query, call\nFirestoreAdmin.ListFields with the filter set to\n`indexConfig.usesAncestorConfig:false`.",
+	//   "description": "Lists the field configuration and metadata for this database. Currently, FirestoreAdmin.ListFields only supports listing fields that have been explicitly overridden. To issue this query, call FirestoreAdmin.ListFields with the filter set to `indexConfig.usesAncestorConfig:false` .",
 	//   "flatPath": "v1/projects/{projectsId}/databases/{databasesId}/collectionGroups/{collectionGroupsId}/fields",
 	//   "httpMethod": "GET",
 	//   "id": "firestore.projects.databases.collectionGroups.fields.list",
@@ -4224,7 +5383,7 @@ func (c *ProjectsDatabasesCollectionGroupsFieldsListCall) Do(opts ...googleapi.C
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "The filter to apply to list results. Currently,\nFirestoreAdmin.ListFields only supports listing fields\nthat have been explicitly overridden. To issue this query, call\nFirestoreAdmin.ListFields with the filter set to\n`indexConfig.usesAncestorConfig:false`.",
+	//       "description": "The filter to apply to list results. Currently, FirestoreAdmin.ListFields only supports listing fields that have been explicitly overridden. To issue this query, call FirestoreAdmin.ListFields with a filter that includes `indexConfig.usesAncestorConfig:false` .",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4235,12 +5394,12 @@ func (c *ProjectsDatabasesCollectionGroupsFieldsListCall) Do(opts ...googleapi.C
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A page token, returned from a previous call to\nFirestoreAdmin.ListFields, that may be used to get the next\npage of results.",
+	//       "description": "A page token, returned from a previous call to FirestoreAdmin.ListFields, that may be used to get the next page of results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. A parent name of the form\n`projects/{project_id}/databases/{database_id}/collectionGroups/{collection_id}`",
+	//       "description": "Required. A parent name of the form `projects/{project_id}/databases/{database_id}/collectionGroups/{collection_id}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/databases/[^/]+/collectionGroups/[^/]+$",
 	//       "required": true,
@@ -4292,25 +5451,39 @@ type ProjectsDatabasesCollectionGroupsFieldsPatchCall struct {
 }
 
 // Patch: Updates a field configuration. Currently, field updates apply
-// only to
-// single field index configuration. However, calls
-// to
-// FirestoreAdmin.UpdateField should provide a field mask to
-// avoid
+// only to single field index configuration. However, calls to
+// FirestoreAdmin.UpdateField should provide a field mask to avoid
 // changing any configuration that the caller isn't aware of. The field
-// mask
-// should be specified as: `{ paths: "index_config" }`.
-//
-// This call returns a google.longrunning.Operation which may be used
-// to
-// track the status of the field update. The metadata for
-// the operation will be the type FieldOperationMetadata.
-//
-// To configure the default field settings for the database, use
-// the special `Field` with resource
+// mask should be specified as: `{ paths: "index_config" }`. This call
+// returns a google.longrunning.Operation which may be used to track the
+// status of the field update. The metadata for the operation will be
+// the type FieldOperationMetadata. To configure the default field
+// settings for the database, use the special `Field` with resource
 // name:
-// `projects/{project_id}/databases/{database_id}/collectionGroups/
-// __default__/fields/*`.
+// `projects/{project_id}/databases/{database_id}/collectionGroups/__defa
+// ult__/fields/*`.
+//
+//   - name: A field name of the form
+//     `projects/{project_id}/databases/{database_id}/collectionGroups/{col
+//     lection_id}/fields/{field_path}` A field path may be a simple field
+//     name, e.g. `address` or a path to fields within map_value , e.g.
+//     `address.city`, or a special field path. The only valid special
+//     field is `*`, which represents any field. Field paths may be quoted
+//     using ` (backtick). The only character that needs to be escaped
+//     within a quoted field path is the backtick character itself,
+//     escaped using a backslash. Special characters in field paths that
+//     must be quoted include: `*`, `.`, ``` (backtick), `[`, `]`, as well
+//     as any ascii symbolic characters. Examples: (Note: Comments here
+//     are written in markdown syntax, so there is an additional layer of
+//     backticks to represent a code block) `\`address.city\“ represents
+//     a field named `address.city`, not the map key `city` in the field
+//     `address`. `\`*\“ represents a field named `*`, not any field. A
+//     special `Field` contains the default indexing settings for all
+//     fields. This field's resource name is:
+//     `projects/{project_id}/databases/{database_id}/collectionGroups/__de
+//     fault__/fields/*` Indexes defined on this `Field` will be applied
+//     to all fields which do not have their own `Field` index
+//     configuration.
 func (r *ProjectsDatabasesCollectionGroupsFieldsService) Patch(name string, googlefirestoreadminv1field *GoogleFirestoreAdminV1Field) *ProjectsDatabasesCollectionGroupsFieldsPatchCall {
 	c := &ProjectsDatabasesCollectionGroupsFieldsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4319,8 +5492,8 @@ func (r *ProjectsDatabasesCollectionGroupsFieldsService) Patch(name string, goog
 }
 
 // UpdateMask sets the optional parameter "updateMask": A mask, relative
-// to the field. If specified, only configuration specified
-// by this field_mask will be updated in the field.
+// to the field. If specified, only configuration specified by this
+// field_mask will be updated in the field.
 func (c *ProjectsDatabasesCollectionGroupsFieldsPatchCall) UpdateMask(updateMask string) *ProjectsDatabasesCollectionGroupsFieldsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -4353,7 +5526,7 @@ func (c *ProjectsDatabasesCollectionGroupsFieldsPatchCall) Header() http.Header 
 
 func (c *ProjectsDatabasesCollectionGroupsFieldsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4393,17 +5566,17 @@ func (c *ProjectsDatabasesCollectionGroupsFieldsPatchCall) Do(opts ...googleapi.
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -4417,7 +5590,7 @@ func (c *ProjectsDatabasesCollectionGroupsFieldsPatchCall) Do(opts ...googleapi.
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a field configuration. Currently, field updates apply only to\nsingle field index configuration. However, calls to\nFirestoreAdmin.UpdateField should provide a field mask to avoid\nchanging any configuration that the caller isn't aware of. The field mask\nshould be specified as: `{ paths: \"index_config\" }`.\n\nThis call returns a google.longrunning.Operation which may be used to\ntrack the status of the field update. The metadata for\nthe operation will be the type FieldOperationMetadata.\n\nTo configure the default field settings for the database, use\nthe special `Field` with resource name:\n`projects/{project_id}/databases/{database_id}/collectionGroups/__default__/fields/*`.",
+	//   "description": "Updates a field configuration. Currently, field updates apply only to single field index configuration. However, calls to FirestoreAdmin.UpdateField should provide a field mask to avoid changing any configuration that the caller isn't aware of. The field mask should be specified as: `{ paths: \"index_config\" }`. This call returns a google.longrunning.Operation which may be used to track the status of the field update. The metadata for the operation will be the type FieldOperationMetadata. To configure the default field settings for the database, use the special `Field` with resource name: `projects/{project_id}/databases/{database_id}/collectionGroups/__default__/fields/*`.",
 	//   "flatPath": "v1/projects/{projectsId}/databases/{databasesId}/collectionGroups/{collectionGroupsId}/fields/{fieldsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "firestore.projects.databases.collectionGroups.fields.patch",
@@ -4426,14 +5599,14 @@ func (c *ProjectsDatabasesCollectionGroupsFieldsPatchCall) Do(opts ...googleapi.
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "A field name of the form\n`projects/{project_id}/databases/{database_id}/collectionGroups/{collection_id}/fields/{field_path}`\n\nA field path may be a simple field name, e.g. `address` or a path to fields\nwithin map_value , e.g. `address.city`,\nor a special field path. The only valid special field is `*`, which\nrepresents any field.\n\nField paths may be quoted using ` (backtick). The only character that needs\nto be escaped within a quoted field path is the backtick character itself,\nescaped using a backslash. Special characters in field paths that\nmust be quoted include: `*`, `.`,\n``` (backtick), `[`, `]`, as well as any ascii symbolic characters.\n\nExamples:\n(Note: Comments here are written in markdown syntax, so there is an\n additional layer of backticks to represent a code block)\n`\\`address.city\\`` represents a field named `address.city`, not the map key\n`city` in the field `address`.\n`\\`*\\`` represents a field named `*`, not any field.\n\nA special `Field` contains the default indexing settings for all fields.\nThis field's resource name is:\n`projects/{project_id}/databases/{database_id}/collectionGroups/__default__/fields/*`\nIndexes defined on this `Field` will be applied to all fields which do not\nhave their own `Field` index configuration.",
+	//       "description": "Required. A field name of the form `projects/{project_id}/databases/{database_id}/collectionGroups/{collection_id}/fields/{field_path}` A field path may be a simple field name, e.g. `address` or a path to fields within map_value , e.g. `address.city`, or a special field path. The only valid special field is `*`, which represents any field. Field paths may be quoted using ` (backtick). The only character that needs to be escaped within a quoted field path is the backtick character itself, escaped using a backslash. Special characters in field paths that must be quoted include: `*`, `.`, ``` (backtick), `[`, `]`, as well as any ascii symbolic characters. Examples: (Note: Comments here are written in markdown syntax, so there is an additional layer of backticks to represent a code block) `\\`address.city\\`` represents a field named `address.city`, not the map key `city` in the field `address`. `\\`*\\`` represents a field named `*`, not any field. A special `Field` contains the default indexing settings for all fields. This field's resource name is: `projects/{project_id}/databases/{database_id}/collectionGroups/__default__/fields/*` Indexes defined on this `Field` will be applied to all fields which do not have their own `Field` index configuration.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/databases/[^/]+/collectionGroups/[^/]+/fields/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "A mask, relative to the field. If specified, only configuration specified\nby this field_mask will be updated in the field.",
+	//       "description": "A mask, relative to the field. If specified, only configuration specified by this field_mask will be updated in the field.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -4466,10 +5639,13 @@ type ProjectsDatabasesCollectionGroupsIndexesCreateCall struct {
 }
 
 // Create: Creates a composite index. This returns a
-// google.longrunning.Operation
-// which may be used to track the status of the creation. The metadata
-// for
-// the operation will be the type IndexOperationMetadata.
+// google.longrunning.Operation which may be used to track the status of
+// the creation. The metadata for the operation will be the type
+// IndexOperationMetadata.
+//
+//   - parent: A parent name of the form
+//     `projects/{project_id}/databases/{database_id}/collectionGroups/{col
+//     lection_id}`.
 func (r *ProjectsDatabasesCollectionGroupsIndexesService) Create(parent string, googlefirestoreadminv1index *GoogleFirestoreAdminV1Index) *ProjectsDatabasesCollectionGroupsIndexesCreateCall {
 	c := &ProjectsDatabasesCollectionGroupsIndexesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4504,7 +5680,7 @@ func (c *ProjectsDatabasesCollectionGroupsIndexesCreateCall) Header() http.Heade
 
 func (c *ProjectsDatabasesCollectionGroupsIndexesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4544,17 +5720,17 @@ func (c *ProjectsDatabasesCollectionGroupsIndexesCreateCall) Do(opts ...googleap
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -4568,7 +5744,7 @@ func (c *ProjectsDatabasesCollectionGroupsIndexesCreateCall) Do(opts ...googleap
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a composite index. This returns a google.longrunning.Operation\nwhich may be used to track the status of the creation. The metadata for\nthe operation will be the type IndexOperationMetadata.",
+	//   "description": "Creates a composite index. This returns a google.longrunning.Operation which may be used to track the status of the creation. The metadata for the operation will be the type IndexOperationMetadata.",
 	//   "flatPath": "v1/projects/{projectsId}/databases/{databasesId}/collectionGroups/{collectionGroupsId}/indexes",
 	//   "httpMethod": "POST",
 	//   "id": "firestore.projects.databases.collectionGroups.indexes.create",
@@ -4577,7 +5753,7 @@ func (c *ProjectsDatabasesCollectionGroupsIndexesCreateCall) Do(opts ...googleap
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. A parent name of the form\n`projects/{project_id}/databases/{database_id}/collectionGroups/{collection_id}`",
+	//       "description": "Required. A parent name of the form `projects/{project_id}/databases/{database_id}/collectionGroups/{collection_id}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/databases/[^/]+/collectionGroups/[^/]+$",
 	//       "required": true,
@@ -4610,6 +5786,10 @@ type ProjectsDatabasesCollectionGroupsIndexesDeleteCall struct {
 }
 
 // Delete: Deletes a composite index.
+//
+//   - name: A name of the form
+//     `projects/{project_id}/databases/{database_id}/collectionGroups/{col
+//     lection_id}/indexes/{index_id}`.
 func (r *ProjectsDatabasesCollectionGroupsIndexesService) Delete(name string) *ProjectsDatabasesCollectionGroupsIndexesDeleteCall {
 	c := &ProjectsDatabasesCollectionGroupsIndexesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4643,7 +5823,7 @@ func (c *ProjectsDatabasesCollectionGroupsIndexesDeleteCall) Header() http.Heade
 
 func (c *ProjectsDatabasesCollectionGroupsIndexesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4678,17 +5858,17 @@ func (c *ProjectsDatabasesCollectionGroupsIndexesDeleteCall) Do(opts ...googleap
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -4711,7 +5891,7 @@ func (c *ProjectsDatabasesCollectionGroupsIndexesDeleteCall) Do(opts ...googleap
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. A name of the form\n`projects/{project_id}/databases/{database_id}/collectionGroups/{collection_id}/indexes/{index_id}`",
+	//       "description": "Required. A name of the form `projects/{project_id}/databases/{database_id}/collectionGroups/{collection_id}/indexes/{index_id}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/databases/[^/]+/collectionGroups/[^/]+/indexes/[^/]+$",
 	//       "required": true,
@@ -4742,6 +5922,10 @@ type ProjectsDatabasesCollectionGroupsIndexesGetCall struct {
 }
 
 // Get: Gets a composite index.
+//
+//   - name: A name of the form
+//     `projects/{project_id}/databases/{database_id}/collectionGroups/{col
+//     lection_id}/indexes/{index_id}`.
 func (r *ProjectsDatabasesCollectionGroupsIndexesService) Get(name string) *ProjectsDatabasesCollectionGroupsIndexesGetCall {
 	c := &ProjectsDatabasesCollectionGroupsIndexesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4785,7 +5969,7 @@ func (c *ProjectsDatabasesCollectionGroupsIndexesGetCall) Header() http.Header {
 
 func (c *ProjectsDatabasesCollectionGroupsIndexesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4823,17 +6007,17 @@ func (c *ProjectsDatabasesCollectionGroupsIndexesGetCall) Do(opts ...googleapi.C
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleFirestoreAdminV1Index{
 		ServerResponse: googleapi.ServerResponse{
@@ -4856,7 +6040,7 @@ func (c *ProjectsDatabasesCollectionGroupsIndexesGetCall) Do(opts ...googleapi.C
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. A name of the form\n`projects/{project_id}/databases/{database_id}/collectionGroups/{collection_id}/indexes/{index_id}`",
+	//       "description": "Required. A name of the form `projects/{project_id}/databases/{database_id}/collectionGroups/{collection_id}/indexes/{index_id}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/databases/[^/]+/collectionGroups/[^/]+/indexes/[^/]+$",
 	//       "required": true,
@@ -4887,6 +6071,10 @@ type ProjectsDatabasesCollectionGroupsIndexesListCall struct {
 }
 
 // List: Lists composite indexes.
+//
+//   - parent: A parent name of the form
+//     `projects/{project_id}/databases/{database_id}/collectionGroups/{col
+//     lection_id}`.
 func (r *ProjectsDatabasesCollectionGroupsIndexesService) List(parent string) *ProjectsDatabasesCollectionGroupsIndexesListCall {
 	c := &ProjectsDatabasesCollectionGroupsIndexesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4908,9 +6096,8 @@ func (c *ProjectsDatabasesCollectionGroupsIndexesListCall) PageSize(pageSize int
 }
 
 // PageToken sets the optional parameter "pageToken": A page token,
-// returned from a previous call to
-// FirestoreAdmin.ListIndexes, that may be used to get the next
-// page of results.
+// returned from a previous call to FirestoreAdmin.ListIndexes, that may
+// be used to get the next page of results.
 func (c *ProjectsDatabasesCollectionGroupsIndexesListCall) PageToken(pageToken string) *ProjectsDatabasesCollectionGroupsIndexesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -4953,7 +6140,7 @@ func (c *ProjectsDatabasesCollectionGroupsIndexesListCall) Header() http.Header 
 
 func (c *ProjectsDatabasesCollectionGroupsIndexesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4993,17 +6180,17 @@ func (c *ProjectsDatabasesCollectionGroupsIndexesListCall) Do(opts ...googleapi.
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleFirestoreAdminV1ListIndexesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -5037,12 +6224,12 @@ func (c *ProjectsDatabasesCollectionGroupsIndexesListCall) Do(opts ...googleapi.
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A page token, returned from a previous call to\nFirestoreAdmin.ListIndexes, that may be used to get the next\npage of results.",
+	//       "description": "A page token, returned from a previous call to FirestoreAdmin.ListIndexes, that may be used to get the next page of results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. A parent name of the form\n`projects/{project_id}/databases/{database_id}/collectionGroups/{collection_id}`",
+	//       "description": "Required. A parent name of the form `projects/{project_id}/databases/{database_id}/collectionGroups/{collection_id}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/databases/[^/]+/collectionGroups/[^/]+$",
 	//       "required": true,
@@ -5093,11 +6280,12 @@ type ProjectsDatabasesDocumentsBatchGetCall struct {
 	header_                  http.Header
 }
 
-// BatchGet: Gets multiple documents.
+// BatchGet: Gets multiple documents. Documents returned by this method
+// are not guaranteed to be returned in the same order that they were
+// requested.
 //
-// Documents returned by this method are not guaranteed to be returned
-// in the
-// same order that they were requested.
+//   - database: The database name. In the format:
+//     `projects/{project_id}/databases/{database_id}`.
 func (r *ProjectsDatabasesDocumentsService) BatchGet(database string, batchgetdocumentsrequest *BatchGetDocumentsRequest) *ProjectsDatabasesDocumentsBatchGetCall {
 	c := &ProjectsDatabasesDocumentsBatchGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.database = database
@@ -5132,7 +6320,7 @@ func (c *ProjectsDatabasesDocumentsBatchGetCall) Header() http.Header {
 
 func (c *ProjectsDatabasesDocumentsBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5172,17 +6360,17 @@ func (c *ProjectsDatabasesDocumentsBatchGetCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &BatchGetDocumentsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -5196,7 +6384,7 @@ func (c *ProjectsDatabasesDocumentsBatchGetCall) Do(opts ...googleapi.CallOption
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets multiple documents.\n\nDocuments returned by this method are not guaranteed to be returned in the\nsame order that they were requested.",
+	//   "description": "Gets multiple documents. Documents returned by this method are not guaranteed to be returned in the same order that they were requested.",
 	//   "flatPath": "v1/projects/{projectsId}/databases/{databasesId}/documents:batchGet",
 	//   "httpMethod": "POST",
 	//   "id": "firestore.projects.databases.documents.batchGet",
@@ -5205,7 +6393,7 @@ func (c *ProjectsDatabasesDocumentsBatchGetCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "database": {
-	//       "description": "Required. The database name. In the format:\n`projects/{project_id}/databases/{database_id}`.",
+	//       "description": "Required. The database name. In the format: `projects/{project_id}/databases/{database_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/databases/[^/]+$",
 	//       "required": true,
@@ -5227,6 +6415,155 @@ func (c *ProjectsDatabasesDocumentsBatchGetCall) Do(opts ...googleapi.CallOption
 
 }
 
+// method id "firestore.projects.databases.documents.batchWrite":
+
+type ProjectsDatabasesDocumentsBatchWriteCall struct {
+	s                 *Service
+	database          string
+	batchwriterequest *BatchWriteRequest
+	urlParams_        gensupport.URLParams
+	ctx_              context.Context
+	header_           http.Header
+}
+
+// BatchWrite: Applies a batch of write operations. The BatchWrite
+// method does not apply the write operations atomically and can apply
+// them out of order. Method does not allow more than one write per
+// document. Each write succeeds or fails independently. See the
+// BatchWriteResponse for the success status of each write. If you
+// require an atomically applied set of writes, use Commit instead.
+//
+//   - database: The database name. In the format:
+//     `projects/{project_id}/databases/{database_id}`.
+func (r *ProjectsDatabasesDocumentsService) BatchWrite(database string, batchwriterequest *BatchWriteRequest) *ProjectsDatabasesDocumentsBatchWriteCall {
+	c := &ProjectsDatabasesDocumentsBatchWriteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.database = database
+	c.batchwriterequest = batchwriterequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsDatabasesDocumentsBatchWriteCall) Fields(s ...googleapi.Field) *ProjectsDatabasesDocumentsBatchWriteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsDatabasesDocumentsBatchWriteCall) Context(ctx context.Context) *ProjectsDatabasesDocumentsBatchWriteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsDatabasesDocumentsBatchWriteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsDatabasesDocumentsBatchWriteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.batchwriterequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+database}/documents:batchWrite")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"database": c.database,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firestore.projects.databases.documents.batchWrite" call.
+// Exactly one of *BatchWriteResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *BatchWriteResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsDatabasesDocumentsBatchWriteCall) Do(opts ...googleapi.CallOption) (*BatchWriteResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &BatchWriteResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Applies a batch of write operations. The BatchWrite method does not apply the write operations atomically and can apply them out of order. Method does not allow more than one write per document. Each write succeeds or fails independently. See the BatchWriteResponse for the success status of each write. If you require an atomically applied set of writes, use Commit instead.",
+	//   "flatPath": "v1/projects/{projectsId}/databases/{databasesId}/documents:batchWrite",
+	//   "httpMethod": "POST",
+	//   "id": "firestore.projects.databases.documents.batchWrite",
+	//   "parameterOrder": [
+	//     "database"
+	//   ],
+	//   "parameters": {
+	//     "database": {
+	//       "description": "Required. The database name. In the format: `projects/{project_id}/databases/{database_id}`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/databases/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+database}/documents:batchWrite",
+	//   "request": {
+	//     "$ref": "BatchWriteRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "BatchWriteResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/datastore"
+	//   ]
+	// }
+
+}
+
 // method id "firestore.projects.databases.documents.beginTransaction":
 
 type ProjectsDatabasesDocumentsBeginTransactionCall struct {
@@ -5239,6 +6576,9 @@ type ProjectsDatabasesDocumentsBeginTransactionCall struct {
 }
 
 // BeginTransaction: Starts a new transaction.
+//
+//   - database: The database name. In the format:
+//     `projects/{project_id}/databases/{database_id}`.
 func (r *ProjectsDatabasesDocumentsService) BeginTransaction(database string, begintransactionrequest *BeginTransactionRequest) *ProjectsDatabasesDocumentsBeginTransactionCall {
 	c := &ProjectsDatabasesDocumentsBeginTransactionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.database = database
@@ -5273,7 +6613,7 @@ func (c *ProjectsDatabasesDocumentsBeginTransactionCall) Header() http.Header {
 
 func (c *ProjectsDatabasesDocumentsBeginTransactionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5313,17 +6653,17 @@ func (c *ProjectsDatabasesDocumentsBeginTransactionCall) Do(opts ...googleapi.Ca
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &BeginTransactionResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -5346,7 +6686,7 @@ func (c *ProjectsDatabasesDocumentsBeginTransactionCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "database": {
-	//       "description": "Required. The database name. In the format:\n`projects/{project_id}/databases/{database_id}`.",
+	//       "description": "Required. The database name. In the format: `projects/{project_id}/databases/{database_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/databases/[^/]+$",
 	//       "required": true,
@@ -5380,6 +6720,9 @@ type ProjectsDatabasesDocumentsCommitCall struct {
 }
 
 // Commit: Commits a transaction, while optionally updating documents.
+//
+//   - database: The database name. In the format:
+//     `projects/{project_id}/databases/{database_id}`.
 func (r *ProjectsDatabasesDocumentsService) Commit(database string, commitrequest *CommitRequest) *ProjectsDatabasesDocumentsCommitCall {
 	c := &ProjectsDatabasesDocumentsCommitCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.database = database
@@ -5414,7 +6757,7 @@ func (c *ProjectsDatabasesDocumentsCommitCall) Header() http.Header {
 
 func (c *ProjectsDatabasesDocumentsCommitCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5454,17 +6797,17 @@ func (c *ProjectsDatabasesDocumentsCommitCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &CommitResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -5487,7 +6830,7 @@ func (c *ProjectsDatabasesDocumentsCommitCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "database": {
-	//       "description": "Required. The database name. In the format:\n`projects/{project_id}/databases/{database_id}`.",
+	//       "description": "Required. The database name. In the format: `projects/{project_id}/databases/{database_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/databases/[^/]+$",
 	//       "required": true,
@@ -5522,6 +6865,13 @@ type ProjectsDatabasesDocumentsCreateDocumentCall struct {
 }
 
 // CreateDocument: Creates a new document.
+//
+//   - collectionId: The collection ID, relative to `parent`, to list. For
+//     example: `chatrooms`.
+//   - parent: The parent resource. For example:
+//     `projects/{project_id}/databases/{database_id}/documents` or
+//     `projects/{project_id}/databases/{database_id}/documents/chatrooms/{
+//     chatroom_id}`.
 func (r *ProjectsDatabasesDocumentsService) CreateDocument(parent string, collectionId string, document *Document) *ProjectsDatabasesDocumentsCreateDocumentCall {
 	c := &ProjectsDatabasesDocumentsCreateDocumentCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5531,17 +6881,16 @@ func (r *ProjectsDatabasesDocumentsService) CreateDocument(parent string, collec
 }
 
 // DocumentId sets the optional parameter "documentId": The
-// client-assigned document ID to use for this document.
-//
-//  If not specified, an ID will be assigned by the service.
+// client-assigned document ID to use for this document.  If not
+// specified, an ID will be assigned by the service.
 func (c *ProjectsDatabasesDocumentsCreateDocumentCall) DocumentId(documentId string) *ProjectsDatabasesDocumentsCreateDocumentCall {
 	c.urlParams_.Set("documentId", documentId)
 	return c
 }
 
 // MaskFieldPaths sets the optional parameter "mask.fieldPaths": The
-// list of field paths in the mask. See Document.fields for a field
-// path syntax reference.
+// list of field paths in the mask. See Document.fields for a field path
+// syntax reference.
 func (c *ProjectsDatabasesDocumentsCreateDocumentCall) MaskFieldPaths(maskFieldPaths ...string) *ProjectsDatabasesDocumentsCreateDocumentCall {
 	c.urlParams_.SetMulti("mask.fieldPaths", append([]string{}, maskFieldPaths...))
 	return c
@@ -5574,7 +6923,7 @@ func (c *ProjectsDatabasesDocumentsCreateDocumentCall) Header() http.Header {
 
 func (c *ProjectsDatabasesDocumentsCreateDocumentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5615,17 +6964,17 @@ func (c *ProjectsDatabasesDocumentsCreateDocumentCall) Do(opts ...googleapi.Call
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Document{
 		ServerResponse: googleapi.ServerResponse{
@@ -5655,18 +7004,18 @@ func (c *ProjectsDatabasesDocumentsCreateDocumentCall) Do(opts ...googleapi.Call
 	//       "type": "string"
 	//     },
 	//     "documentId": {
-	//       "description": "The client-assigned document ID to use for this document.\n\nOptional. If not specified, an ID will be assigned by the service.",
+	//       "description": "The client-assigned document ID to use for this document. Optional. If not specified, an ID will be assigned by the service.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "mask.fieldPaths": {
-	//       "description": "The list of field paths in the mask. See Document.fields for a field\npath syntax reference.",
+	//       "description": "The list of field paths in the mask. See Document.fields for a field path syntax reference.",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent resource. For example:\n`projects/{project_id}/databases/{database_id}/documents` or\n`projects/{project_id}/databases/{database_id}/documents/chatrooms/{chatroom_id}`",
+	//       "description": "Required. The parent resource. For example: `projects/{project_id}/databases/{database_id}/documents` or `projects/{project_id}/databases/{database_id}/documents/chatrooms/{chatroom_id}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/databases/[^/]+/documents/.*$",
 	//       "required": true,
@@ -5699,6 +7048,10 @@ type ProjectsDatabasesDocumentsDeleteCall struct {
 }
 
 // Delete: Deletes a document.
+//
+//   - name: The resource name of the Document to delete. In the format:
+//     `projects/{project_id}/databases/{database_id}/documents/{document_p
+//     ath}`.
 func (r *ProjectsDatabasesDocumentsService) Delete(name string) *ProjectsDatabasesDocumentsDeleteCall {
 	c := &ProjectsDatabasesDocumentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5707,8 +7060,7 @@ func (r *ProjectsDatabasesDocumentsService) Delete(name string) *ProjectsDatabas
 
 // CurrentDocumentExists sets the optional parameter
 // "currentDocument.exists": When set to `true`, the target document
-// must exist.
-// When set to `false`, the target document must not exist.
+// must exist. When set to `false`, the target document must not exist.
 func (c *ProjectsDatabasesDocumentsDeleteCall) CurrentDocumentExists(currentDocumentExists bool) *ProjectsDatabasesDocumentsDeleteCall {
 	c.urlParams_.Set("currentDocument.exists", fmt.Sprint(currentDocumentExists))
 	return c
@@ -5716,8 +7068,8 @@ func (c *ProjectsDatabasesDocumentsDeleteCall) CurrentDocumentExists(currentDocu
 
 // CurrentDocumentUpdateTime sets the optional parameter
 // "currentDocument.updateTime": When set, the target document must
-// exist and have been last updated at
-// that time.
+// exist and have been last updated at that time. Timestamp must be
+// microsecond aligned.
 func (c *ProjectsDatabasesDocumentsDeleteCall) CurrentDocumentUpdateTime(currentDocumentUpdateTime string) *ProjectsDatabasesDocumentsDeleteCall {
 	c.urlParams_.Set("currentDocument.updateTime", currentDocumentUpdateTime)
 	return c
@@ -5750,7 +7102,7 @@ func (c *ProjectsDatabasesDocumentsDeleteCall) Header() http.Header {
 
 func (c *ProjectsDatabasesDocumentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5785,17 +7137,17 @@ func (c *ProjectsDatabasesDocumentsDeleteCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -5818,18 +7170,18 @@ func (c *ProjectsDatabasesDocumentsDeleteCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "currentDocument.exists": {
-	//       "description": "When set to `true`, the target document must exist.\nWhen set to `false`, the target document must not exist.",
+	//       "description": "When set to `true`, the target document must exist. When set to `false`, the target document must not exist.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "currentDocument.updateTime": {
-	//       "description": "When set, the target document must exist and have been last updated at\nthat time.",
+	//       "description": "When set, the target document must exist and have been last updated at that time. Timestamp must be microsecond aligned.",
 	//       "format": "google-datetime",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. The resource name of the Document to delete. In the format:\n`projects/{project_id}/databases/{database_id}/documents/{document_path}`.",
+	//       "description": "Required. The resource name of the Document to delete. In the format: `projects/{project_id}/databases/{database_id}/documents/{document_path}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/databases/[^/]+/documents/[^/]+/.*$",
 	//       "required": true,
@@ -5860,6 +7212,10 @@ type ProjectsDatabasesDocumentsGetCall struct {
 }
 
 // Get: Gets a single document.
+//
+//   - name: The resource name of the Document to get. In the format:
+//     `projects/{project_id}/databases/{database_id}/documents/{document_p
+//     ath}`.
 func (r *ProjectsDatabasesDocumentsService) Get(name string) *ProjectsDatabasesDocumentsGetCall {
 	c := &ProjectsDatabasesDocumentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5867,16 +7223,16 @@ func (r *ProjectsDatabasesDocumentsService) Get(name string) *ProjectsDatabasesD
 }
 
 // MaskFieldPaths sets the optional parameter "mask.fieldPaths": The
-// list of field paths in the mask. See Document.fields for a field
-// path syntax reference.
+// list of field paths in the mask. See Document.fields for a field path
+// syntax reference.
 func (c *ProjectsDatabasesDocumentsGetCall) MaskFieldPaths(maskFieldPaths ...string) *ProjectsDatabasesDocumentsGetCall {
 	c.urlParams_.SetMulti("mask.fieldPaths", append([]string{}, maskFieldPaths...))
 	return c
 }
 
 // ReadTime sets the optional parameter "readTime": Reads the version of
-// the document at the given time.
-// This may not be older than 270 seconds.
+// the document at the given time. This may not be older than 270
+// seconds.
 func (c *ProjectsDatabasesDocumentsGetCall) ReadTime(readTime string) *ProjectsDatabasesDocumentsGetCall {
 	c.urlParams_.Set("readTime", readTime)
 	return c
@@ -5926,7 +7282,7 @@ func (c *ProjectsDatabasesDocumentsGetCall) Header() http.Header {
 
 func (c *ProjectsDatabasesDocumentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5964,17 +7320,17 @@ func (c *ProjectsDatabasesDocumentsGetCall) Do(opts ...googleapi.CallOption) (*D
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Document{
 		ServerResponse: googleapi.ServerResponse{
@@ -5997,20 +7353,20 @@ func (c *ProjectsDatabasesDocumentsGetCall) Do(opts ...googleapi.CallOption) (*D
 	//   ],
 	//   "parameters": {
 	//     "mask.fieldPaths": {
-	//       "description": "The list of field paths in the mask. See Document.fields for a field\npath syntax reference.",
+	//       "description": "The list of field paths in the mask. See Document.fields for a field path syntax reference.",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. The resource name of the Document to get. In the format:\n`projects/{project_id}/databases/{database_id}/documents/{document_path}`.",
+	//       "description": "Required. The resource name of the Document to get. In the format: `projects/{project_id}/databases/{database_id}/documents/{document_path}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/databases/[^/]+/documents/[^/]+/.*$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "readTime": {
-	//       "description": "Reads the version of the document at the given time.\nThis may not be older than 270 seconds.",
+	//       "description": "Reads the version of the document at the given time. This may not be older than 270 seconds.",
 	//       "format": "google-datetime",
 	//       "location": "query",
 	//       "type": "string"
@@ -6047,6 +7403,18 @@ type ProjectsDatabasesDocumentsListCall struct {
 }
 
 // List: Lists documents.
+//
+//   - collectionId: Optional. The collection ID, relative to `parent`, to
+//     list. For example: `chatrooms` or `messages`. This is optional, and
+//     when not provided, Firestore will list documents from all
+//     collections under the provided `parent`.
+//   - parent: The parent resource name. In the format:
+//     `projects/{project_id}/databases/{database_id}/documents` or
+//     `projects/{project_id}/databases/{database_id}/documents/{document_p
+//     ath}`. For example:
+//     `projects/my-project/databases/my-database/documents` or
+//     `projects/my-project/databases/my-database/documents/chatrooms/my-ch
+//     atroom`.
 func (r *ProjectsDatabasesDocumentsService) List(parent string, collectionId string) *ProjectsDatabasesDocumentsListCall {
 	c := &ProjectsDatabasesDocumentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6055,60 +7423,61 @@ func (r *ProjectsDatabasesDocumentsService) List(parent string, collectionId str
 }
 
 // MaskFieldPaths sets the optional parameter "mask.fieldPaths": The
-// list of field paths in the mask. See Document.fields for a field
-// path syntax reference.
+// list of field paths in the mask. See Document.fields for a field path
+// syntax reference.
 func (c *ProjectsDatabasesDocumentsListCall) MaskFieldPaths(maskFieldPaths ...string) *ProjectsDatabasesDocumentsListCall {
 	c.urlParams_.SetMulti("mask.fieldPaths", append([]string{}, maskFieldPaths...))
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": The order to sort
-// results by. For example: `priority desc, name`.
+// OrderBy sets the optional parameter "orderBy": The optional ordering
+// of the documents to return. For example: `priority desc, __name__
+// desc`. This mirrors the `ORDER BY` used in Firestore queries but in a
+// string representation. When absent, documents are ordered based on
+// `__name__ ASC`.
 func (c *ProjectsDatabasesDocumentsListCall) OrderBy(orderBy string) *ProjectsDatabasesDocumentsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of documents to return.
+// of documents to return in a single response. Firestore may return
+// fewer than this value.
 func (c *ProjectsDatabasesDocumentsListCall) PageSize(pageSize int64) *ProjectsDatabasesDocumentsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The
-// `next_page_token` value returned from a previous List request, if
-// any.
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `ListDocuments` response. Provide this to
+// retrieve the subsequent page. When paginating, all other parameters
+// (with the exception of `page_size`) must match the values set in the
+// request that generated the page token.
 func (c *ProjectsDatabasesDocumentsListCall) PageToken(pageToken string) *ProjectsDatabasesDocumentsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// ReadTime sets the optional parameter "readTime": Reads documents as
-// they were at the given time.
-// This may not be older than 270 seconds.
+// ReadTime sets the optional parameter "readTime": Perform the read at
+// the provided time. This may not be older than 270 seconds.
 func (c *ProjectsDatabasesDocumentsListCall) ReadTime(readTime string) *ProjectsDatabasesDocumentsListCall {
 	c.urlParams_.Set("readTime", readTime)
 	return c
 }
 
 // ShowMissing sets the optional parameter "showMissing": If the list
-// should show missing documents. A missing document is a
-// document that does not exist but has sub-documents. These documents
-// will
-// be returned with a key but will not have fields,
-// Document.create_time,
-// or Document.update_time set.
-//
-// Requests with `show_missing` may not specify `where` or
-// `order_by`.
+// should show missing documents. A document is missing if it does not
+// exist, but there are sub-documents nested underneath it. When true,
+// such missing documents will be returned with a key but will not have
+// fields, `create_time`, or `update_time` set. Requests with
+// `show_missing` may not specify `where` or `order_by`.
 func (c *ProjectsDatabasesDocumentsListCall) ShowMissing(showMissing bool) *ProjectsDatabasesDocumentsListCall {
 	c.urlParams_.Set("showMissing", fmt.Sprint(showMissing))
 	return c
 }
 
-// Transaction sets the optional parameter "transaction": Reads
-// documents in a transaction.
+// Transaction sets the optional parameter "transaction": Perform the
+// read as part of an already active transaction.
 func (c *ProjectsDatabasesDocumentsListCall) Transaction(transaction string) *ProjectsDatabasesDocumentsListCall {
 	c.urlParams_.Set("transaction", transaction)
 	return c
@@ -6151,7 +7520,7 @@ func (c *ProjectsDatabasesDocumentsListCall) Header() http.Header {
 
 func (c *ProjectsDatabasesDocumentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6190,17 +7559,17 @@ func (c *ProjectsDatabasesDocumentsListCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListDocumentsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -6224,53 +7593,53 @@ func (c *ProjectsDatabasesDocumentsListCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "collectionId": {
-	//       "description": "Required. The collection ID, relative to `parent`, to list. For example: `chatrooms`\nor `messages`.",
+	//       "description": "Optional. The collection ID, relative to `parent`, to list. For example: `chatrooms` or `messages`. This is optional, and when not provided, Firestore will list documents from all collections under the provided `parent`.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "mask.fieldPaths": {
-	//       "description": "The list of field paths in the mask. See Document.fields for a field\npath syntax reference.",
+	//       "description": "The list of field paths in the mask. See Document.fields for a field path syntax reference.",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "The order to sort results by. For example: `priority desc, name`.",
+	//       "description": "Optional. The optional ordering of the documents to return. For example: `priority desc, __name__ desc`. This mirrors the `ORDER BY` used in Firestore queries but in a string representation. When absent, documents are ordered based on `__name__ ASC`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The maximum number of documents to return.",
+	//       "description": "Optional. The maximum number of documents to return in a single response. Firestore may return fewer than this value.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The `next_page_token` value returned from a previous List request, if any.",
+	//       "description": "Optional. A page token, received from a previous `ListDocuments` response. Provide this to retrieve the subsequent page. When paginating, all other parameters (with the exception of `page_size`) must match the values set in the request that generated the page token.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent resource name. In the format:\n`projects/{project_id}/databases/{database_id}/documents` or\n`projects/{project_id}/databases/{database_id}/documents/{document_path}`.\nFor example:\n`projects/my-project/databases/my-database/documents` or\n`projects/my-project/databases/my-database/documents/chatrooms/my-chatroom`",
+	//       "description": "Required. The parent resource name. In the format: `projects/{project_id}/databases/{database_id}/documents` or `projects/{project_id}/databases/{database_id}/documents/{document_path}`. For example: `projects/my-project/databases/my-database/documents` or `projects/my-project/databases/my-database/documents/chatrooms/my-chatroom`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/databases/[^/]+/documents/[^/]+/.*$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "readTime": {
-	//       "description": "Reads documents as they were at the given time.\nThis may not be older than 270 seconds.",
+	//       "description": "Perform the read at the provided time. This may not be older than 270 seconds.",
 	//       "format": "google-datetime",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "showMissing": {
-	//       "description": "If the list should show missing documents. A missing document is a\ndocument that does not exist but has sub-documents. These documents will\nbe returned with a key but will not have fields, Document.create_time,\nor Document.update_time set.\n\nRequests with `show_missing` may not specify `where` or\n`order_by`.",
+	//       "description": "If the list should show missing documents. A document is missing if it does not exist, but there are sub-documents nested underneath it. When true, such missing documents will be returned with a key but will not have fields, `create_time`, or `update_time` set. Requests with `show_missing` may not specify `where` or `order_by`.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "transaction": {
-	//       "description": "Reads documents in a transaction.",
+	//       "description": "Perform the read as part of an already active transaction.",
 	//       "format": "byte",
 	//       "location": "query",
 	//       "type": "string"
@@ -6322,6 +7691,12 @@ type ProjectsDatabasesDocumentsListCollectionIdsCall struct {
 
 // ListCollectionIds: Lists all the collection IDs underneath a
 // document.
+//
+//   - parent: The parent document. In the format:
+//     `projects/{project_id}/databases/{database_id}/documents/{document_p
+//     ath}`. For example:
+//     `projects/my-project/databases/my-database/documents/chatrooms/my-ch
+//     atroom`.
 func (r *ProjectsDatabasesDocumentsService) ListCollectionIds(parent string, listcollectionidsrequest *ListCollectionIdsRequest) *ProjectsDatabasesDocumentsListCollectionIdsCall {
 	c := &ProjectsDatabasesDocumentsListCollectionIdsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6356,7 +7731,7 @@ func (c *ProjectsDatabasesDocumentsListCollectionIdsCall) Header() http.Header {
 
 func (c *ProjectsDatabasesDocumentsListCollectionIdsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6396,17 +7771,17 @@ func (c *ProjectsDatabasesDocumentsListCollectionIdsCall) Do(opts ...googleapi.C
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListCollectionIdsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -6429,7 +7804,7 @@ func (c *ProjectsDatabasesDocumentsListCollectionIdsCall) Do(opts ...googleapi.C
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The parent document. In the format:\n`projects/{project_id}/databases/{database_id}/documents/{document_path}`.\nFor example:\n`projects/my-project/databases/my-database/documents/chatrooms/my-chatroom`",
+	//       "description": "Required. The parent document. In the format: `projects/{project_id}/databases/{database_id}/documents/{document_path}`. For example: `projects/my-project/databases/my-database/documents/chatrooms/my-chatroom`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/databases/[^/]+/documents/[^/]+/.*$",
 	//       "required": true,
@@ -6472,6 +7847,294 @@ func (c *ProjectsDatabasesDocumentsListCollectionIdsCall) Pages(ctx context.Cont
 	}
 }
 
+// method id "firestore.projects.databases.documents.listDocuments":
+
+type ProjectsDatabasesDocumentsListDocumentsCall struct {
+	s            *Service
+	parent       string
+	collectionId string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// ListDocuments: Lists documents.
+//
+//   - collectionId: Optional. The collection ID, relative to `parent`, to
+//     list. For example: `chatrooms` or `messages`. This is optional, and
+//     when not provided, Firestore will list documents from all
+//     collections under the provided `parent`.
+//   - parent: The parent resource name. In the format:
+//     `projects/{project_id}/databases/{database_id}/documents` or
+//     `projects/{project_id}/databases/{database_id}/documents/{document_p
+//     ath}`. For example:
+//     `projects/my-project/databases/my-database/documents` or
+//     `projects/my-project/databases/my-database/documents/chatrooms/my-ch
+//     atroom`.
+func (r *ProjectsDatabasesDocumentsService) ListDocuments(parent string, collectionId string) *ProjectsDatabasesDocumentsListDocumentsCall {
+	c := &ProjectsDatabasesDocumentsListDocumentsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.collectionId = collectionId
+	return c
+}
+
+// MaskFieldPaths sets the optional parameter "mask.fieldPaths": The
+// list of field paths in the mask. See Document.fields for a field path
+// syntax reference.
+func (c *ProjectsDatabasesDocumentsListDocumentsCall) MaskFieldPaths(maskFieldPaths ...string) *ProjectsDatabasesDocumentsListDocumentsCall {
+	c.urlParams_.SetMulti("mask.fieldPaths", append([]string{}, maskFieldPaths...))
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": The optional ordering
+// of the documents to return. For example: `priority desc, __name__
+// desc`. This mirrors the `ORDER BY` used in Firestore queries but in a
+// string representation. When absent, documents are ordered based on
+// `__name__ ASC`.
+func (c *ProjectsDatabasesDocumentsListDocumentsCall) OrderBy(orderBy string) *ProjectsDatabasesDocumentsListDocumentsCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of documents to return in a single response. Firestore may return
+// fewer than this value.
+func (c *ProjectsDatabasesDocumentsListDocumentsCall) PageSize(pageSize int64) *ProjectsDatabasesDocumentsListDocumentsCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `ListDocuments` response. Provide this to
+// retrieve the subsequent page. When paginating, all other parameters
+// (with the exception of `page_size`) must match the values set in the
+// request that generated the page token.
+func (c *ProjectsDatabasesDocumentsListDocumentsCall) PageToken(pageToken string) *ProjectsDatabasesDocumentsListDocumentsCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReadTime sets the optional parameter "readTime": Perform the read at
+// the provided time. This may not be older than 270 seconds.
+func (c *ProjectsDatabasesDocumentsListDocumentsCall) ReadTime(readTime string) *ProjectsDatabasesDocumentsListDocumentsCall {
+	c.urlParams_.Set("readTime", readTime)
+	return c
+}
+
+// ShowMissing sets the optional parameter "showMissing": If the list
+// should show missing documents. A document is missing if it does not
+// exist, but there are sub-documents nested underneath it. When true,
+// such missing documents will be returned with a key but will not have
+// fields, `create_time`, or `update_time` set. Requests with
+// `show_missing` may not specify `where` or `order_by`.
+func (c *ProjectsDatabasesDocumentsListDocumentsCall) ShowMissing(showMissing bool) *ProjectsDatabasesDocumentsListDocumentsCall {
+	c.urlParams_.Set("showMissing", fmt.Sprint(showMissing))
+	return c
+}
+
+// Transaction sets the optional parameter "transaction": Perform the
+// read as part of an already active transaction.
+func (c *ProjectsDatabasesDocumentsListDocumentsCall) Transaction(transaction string) *ProjectsDatabasesDocumentsListDocumentsCall {
+	c.urlParams_.Set("transaction", transaction)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsDatabasesDocumentsListDocumentsCall) Fields(s ...googleapi.Field) *ProjectsDatabasesDocumentsListDocumentsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsDatabasesDocumentsListDocumentsCall) IfNoneMatch(entityTag string) *ProjectsDatabasesDocumentsListDocumentsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsDatabasesDocumentsListDocumentsCall) Context(ctx context.Context) *ProjectsDatabasesDocumentsListDocumentsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsDatabasesDocumentsListDocumentsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsDatabasesDocumentsListDocumentsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/{collectionId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent":       c.parent,
+		"collectionId": c.collectionId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firestore.projects.databases.documents.listDocuments" call.
+// Exactly one of *ListDocumentsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListDocumentsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsDatabasesDocumentsListDocumentsCall) Do(opts ...googleapi.CallOption) (*ListDocumentsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListDocumentsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists documents.",
+	//   "flatPath": "v1/projects/{projectsId}/databases/{databasesId}/documents/{collectionId}",
+	//   "httpMethod": "GET",
+	//   "id": "firestore.projects.databases.documents.listDocuments",
+	//   "parameterOrder": [
+	//     "parent",
+	//     "collectionId"
+	//   ],
+	//   "parameters": {
+	//     "collectionId": {
+	//       "description": "Optional. The collection ID, relative to `parent`, to list. For example: `chatrooms` or `messages`. This is optional, and when not provided, Firestore will list documents from all collections under the provided `parent`.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "mask.fieldPaths": {
+	//       "description": "The list of field paths in the mask. See Document.fields for a field path syntax reference.",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Optional. The optional ordering of the documents to return. For example: `priority desc, __name__ desc`. This mirrors the `ORDER BY` used in Firestore queries but in a string representation. When absent, documents are ordered based on `__name__ ASC`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. The maximum number of documents to return in a single response. Firestore may return fewer than this value.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. A page token, received from a previous `ListDocuments` response. Provide this to retrieve the subsequent page. When paginating, all other parameters (with the exception of `page_size`) must match the values set in the request that generated the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The parent resource name. In the format: `projects/{project_id}/databases/{database_id}/documents` or `projects/{project_id}/databases/{database_id}/documents/{document_path}`. For example: `projects/my-project/databases/my-database/documents` or `projects/my-project/databases/my-database/documents/chatrooms/my-chatroom`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/databases/[^/]+/documents$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "readTime": {
+	//       "description": "Perform the read at the provided time. This may not be older than 270 seconds.",
+	//       "format": "google-datetime",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "showMissing": {
+	//       "description": "If the list should show missing documents. A document is missing if it does not exist, but there are sub-documents nested underneath it. When true, such missing documents will be returned with a key but will not have fields, `create_time`, or `update_time` set. Requests with `show_missing` may not specify `where` or `order_by`.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "transaction": {
+	//       "description": "Perform the read as part of an already active transaction.",
+	//       "format": "byte",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/{collectionId}",
+	//   "response": {
+	//     "$ref": "ListDocumentsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/datastore"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsDatabasesDocumentsListDocumentsCall) Pages(ctx context.Context, f func(*ListDocumentsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "firestore.projects.databases.documents.listen":
 
 type ProjectsDatabasesDocumentsListenCall struct {
@@ -6484,6 +8147,9 @@ type ProjectsDatabasesDocumentsListenCall struct {
 }
 
 // Listen: Listens to changes.
+//
+//   - database: The database name. In the format:
+//     `projects/{project_id}/databases/{database_id}`.
 func (r *ProjectsDatabasesDocumentsService) Listen(database string, listenrequest *ListenRequest) *ProjectsDatabasesDocumentsListenCall {
 	c := &ProjectsDatabasesDocumentsListenCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.database = database
@@ -6518,7 +8184,7 @@ func (c *ProjectsDatabasesDocumentsListenCall) Header() http.Header {
 
 func (c *ProjectsDatabasesDocumentsListenCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6558,17 +8224,17 @@ func (c *ProjectsDatabasesDocumentsListenCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListenResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -6591,7 +8257,7 @@ func (c *ProjectsDatabasesDocumentsListenCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "database": {
-	//       "description": "Required. The database name. In the format:\n`projects/{project_id}/databases/{database_id}`.",
+	//       "description": "Required. The database name. In the format: `projects/{project_id}/databases/{database_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/databases/[^/]+$",
 	//       "required": true,
@@ -6613,6 +8279,176 @@ func (c *ProjectsDatabasesDocumentsListenCall) Do(opts ...googleapi.CallOption) 
 
 }
 
+// method id "firestore.projects.databases.documents.partitionQuery":
+
+type ProjectsDatabasesDocumentsPartitionQueryCall struct {
+	s                     *Service
+	parent                string
+	partitionqueryrequest *PartitionQueryRequest
+	urlParams_            gensupport.URLParams
+	ctx_                  context.Context
+	header_               http.Header
+}
+
+// PartitionQuery: Partitions a query by returning partition cursors
+// that can be used to run the query in parallel. The returned partition
+// cursors are split points that can be used by RunQuery as starting/end
+// points for the query results.
+//
+//   - parent: The parent resource name. In the format:
+//     `projects/{project_id}/databases/{database_id}/documents`. Document
+//     resource names are not supported; only database resource names can
+//     be specified.
+func (r *ProjectsDatabasesDocumentsService) PartitionQuery(parent string, partitionqueryrequest *PartitionQueryRequest) *ProjectsDatabasesDocumentsPartitionQueryCall {
+	c := &ProjectsDatabasesDocumentsPartitionQueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.partitionqueryrequest = partitionqueryrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsDatabasesDocumentsPartitionQueryCall) Fields(s ...googleapi.Field) *ProjectsDatabasesDocumentsPartitionQueryCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsDatabasesDocumentsPartitionQueryCall) Context(ctx context.Context) *ProjectsDatabasesDocumentsPartitionQueryCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsDatabasesDocumentsPartitionQueryCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsDatabasesDocumentsPartitionQueryCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.partitionqueryrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}:partitionQuery")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firestore.projects.databases.documents.partitionQuery" call.
+// Exactly one of *PartitionQueryResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *PartitionQueryResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsDatabasesDocumentsPartitionQueryCall) Do(opts ...googleapi.CallOption) (*PartitionQueryResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &PartitionQueryResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Partitions a query by returning partition cursors that can be used to run the query in parallel. The returned partition cursors are split points that can be used by RunQuery as starting/end points for the query results.",
+	//   "flatPath": "v1/projects/{projectsId}/databases/{databasesId}/documents/{documentsId}/{documentsId1}:partitionQuery",
+	//   "httpMethod": "POST",
+	//   "id": "firestore.projects.databases.documents.partitionQuery",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The parent resource name. In the format: `projects/{project_id}/databases/{database_id}/documents`. Document resource names are not supported; only database resource names can be specified.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/databases/[^/]+/documents/[^/]+/.*$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}:partitionQuery",
+	//   "request": {
+	//     "$ref": "PartitionQueryRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "PartitionQueryResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/datastore"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsDatabasesDocumentsPartitionQueryCall) Pages(ctx context.Context, f func(*PartitionQueryResponse) error) error {
+	c.ctx_ = ctx
+	defer func(pt string) { c.partitionqueryrequest.PageToken = pt }(c.partitionqueryrequest.PageToken) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.partitionqueryrequest.PageToken = x.NextPageToken
+	}
+}
+
 // method id "firestore.projects.databases.documents.patch":
 
 type ProjectsDatabasesDocumentsPatchCall struct {
@@ -6625,6 +8461,10 @@ type ProjectsDatabasesDocumentsPatchCall struct {
 }
 
 // Patch: Updates or inserts a document.
+//
+//   - name: The resource name of the document, for example
+//     `projects/{project_id}/databases/{database_id}/documents/{document_p
+//     ath}`.
 func (r *ProjectsDatabasesDocumentsService) Patch(name string, document *Document) *ProjectsDatabasesDocumentsPatchCall {
 	c := &ProjectsDatabasesDocumentsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6634,8 +8474,7 @@ func (r *ProjectsDatabasesDocumentsService) Patch(name string, document *Documen
 
 // CurrentDocumentExists sets the optional parameter
 // "currentDocument.exists": When set to `true`, the target document
-// must exist.
-// When set to `false`, the target document must not exist.
+// must exist. When set to `false`, the target document must not exist.
 func (c *ProjectsDatabasesDocumentsPatchCall) CurrentDocumentExists(currentDocumentExists bool) *ProjectsDatabasesDocumentsPatchCall {
 	c.urlParams_.Set("currentDocument.exists", fmt.Sprint(currentDocumentExists))
 	return c
@@ -6643,16 +8482,16 @@ func (c *ProjectsDatabasesDocumentsPatchCall) CurrentDocumentExists(currentDocum
 
 // CurrentDocumentUpdateTime sets the optional parameter
 // "currentDocument.updateTime": When set, the target document must
-// exist and have been last updated at
-// that time.
+// exist and have been last updated at that time. Timestamp must be
+// microsecond aligned.
 func (c *ProjectsDatabasesDocumentsPatchCall) CurrentDocumentUpdateTime(currentDocumentUpdateTime string) *ProjectsDatabasesDocumentsPatchCall {
 	c.urlParams_.Set("currentDocument.updateTime", currentDocumentUpdateTime)
 	return c
 }
 
 // MaskFieldPaths sets the optional parameter "mask.fieldPaths": The
-// list of field paths in the mask. See Document.fields for a field
-// path syntax reference.
+// list of field paths in the mask. See Document.fields for a field path
+// syntax reference.
 func (c *ProjectsDatabasesDocumentsPatchCall) MaskFieldPaths(maskFieldPaths ...string) *ProjectsDatabasesDocumentsPatchCall {
 	c.urlParams_.SetMulti("mask.fieldPaths", append([]string{}, maskFieldPaths...))
 	return c
@@ -6660,8 +8499,7 @@ func (c *ProjectsDatabasesDocumentsPatchCall) MaskFieldPaths(maskFieldPaths ...s
 
 // UpdateMaskFieldPaths sets the optional parameter
 // "updateMask.fieldPaths": The list of field paths in the mask. See
-// Document.fields for a field
-// path syntax reference.
+// Document.fields for a field path syntax reference.
 func (c *ProjectsDatabasesDocumentsPatchCall) UpdateMaskFieldPaths(updateMaskFieldPaths ...string) *ProjectsDatabasesDocumentsPatchCall {
 	c.urlParams_.SetMulti("updateMask.fieldPaths", append([]string{}, updateMaskFieldPaths...))
 	return c
@@ -6694,7 +8532,7 @@ func (c *ProjectsDatabasesDocumentsPatchCall) Header() http.Header {
 
 func (c *ProjectsDatabasesDocumentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6734,17 +8572,17 @@ func (c *ProjectsDatabasesDocumentsPatchCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Document{
 		ServerResponse: googleapi.ServerResponse{
@@ -6767,31 +8605,31 @@ func (c *ProjectsDatabasesDocumentsPatchCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "currentDocument.exists": {
-	//       "description": "When set to `true`, the target document must exist.\nWhen set to `false`, the target document must not exist.",
+	//       "description": "When set to `true`, the target document must exist. When set to `false`, the target document must not exist.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "currentDocument.updateTime": {
-	//       "description": "When set, the target document must exist and have been last updated at\nthat time.",
+	//       "description": "When set, the target document must exist and have been last updated at that time. Timestamp must be microsecond aligned.",
 	//       "format": "google-datetime",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "mask.fieldPaths": {
-	//       "description": "The list of field paths in the mask. See Document.fields for a field\npath syntax reference.",
+	//       "description": "The list of field paths in the mask. See Document.fields for a field path syntax reference.",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The resource name of the document, for example\n`projects/{project_id}/databases/{database_id}/documents/{document_path}`.",
+	//       "description": "The resource name of the document, for example `projects/{project_id}/databases/{database_id}/documents/{document_path}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/databases/[^/]+/documents/[^/]+/.*$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "updateMask.fieldPaths": {
-	//       "description": "The list of field paths in the mask. See Document.fields for a field\npath syntax reference.",
+	//       "description": "The list of field paths in the mask. See Document.fields for a field path syntax reference.",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
@@ -6824,6 +8662,9 @@ type ProjectsDatabasesDocumentsRollbackCall struct {
 }
 
 // Rollback: Rolls back a transaction.
+//
+//   - database: The database name. In the format:
+//     `projects/{project_id}/databases/{database_id}`.
 func (r *ProjectsDatabasesDocumentsService) Rollback(database string, rollbackrequest *RollbackRequest) *ProjectsDatabasesDocumentsRollbackCall {
 	c := &ProjectsDatabasesDocumentsRollbackCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.database = database
@@ -6858,7 +8699,7 @@ func (c *ProjectsDatabasesDocumentsRollbackCall) Header() http.Header {
 
 func (c *ProjectsDatabasesDocumentsRollbackCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6898,17 +8739,17 @@ func (c *ProjectsDatabasesDocumentsRollbackCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -6931,7 +8772,7 @@ func (c *ProjectsDatabasesDocumentsRollbackCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "database": {
-	//       "description": "Required. The database name. In the format:\n`projects/{project_id}/databases/{database_id}`.",
+	//       "description": "Required. The database name. In the format: `projects/{project_id}/databases/{database_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/databases/[^/]+$",
 	//       "required": true,
@@ -6953,6 +8794,160 @@ func (c *ProjectsDatabasesDocumentsRollbackCall) Do(opts ...googleapi.CallOption
 
 }
 
+// method id "firestore.projects.databases.documents.runAggregationQuery":
+
+type ProjectsDatabasesDocumentsRunAggregationQueryCall struct {
+	s                          *Service
+	parent                     string
+	runaggregationqueryrequest *RunAggregationQueryRequest
+	urlParams_                 gensupport.URLParams
+	ctx_                       context.Context
+	header_                    http.Header
+}
+
+// RunAggregationQuery: Runs an aggregation query. Rather than producing
+// Document results like Firestore.RunQuery, this API allows running an
+// aggregation to produce a series of AggregationResult server-side.
+// High-Level Example: ``` -- Return the number of documents in table
+// given a filter. SELECT COUNT(*) FROM ( SELECT * FROM k where a = true
+// ); ```
+//
+//   - parent: The parent resource name. In the format:
+//     `projects/{project_id}/databases/{database_id}/documents` or
+//     `projects/{project_id}/databases/{database_id}/documents/{document_p
+//     ath}`. For example:
+//     `projects/my-project/databases/my-database/documents` or
+//     `projects/my-project/databases/my-database/documents/chatrooms/my-ch
+//     atroom`.
+func (r *ProjectsDatabasesDocumentsService) RunAggregationQuery(parent string, runaggregationqueryrequest *RunAggregationQueryRequest) *ProjectsDatabasesDocumentsRunAggregationQueryCall {
+	c := &ProjectsDatabasesDocumentsRunAggregationQueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.runaggregationqueryrequest = runaggregationqueryrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsDatabasesDocumentsRunAggregationQueryCall) Fields(s ...googleapi.Field) *ProjectsDatabasesDocumentsRunAggregationQueryCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsDatabasesDocumentsRunAggregationQueryCall) Context(ctx context.Context) *ProjectsDatabasesDocumentsRunAggregationQueryCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsDatabasesDocumentsRunAggregationQueryCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsDatabasesDocumentsRunAggregationQueryCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.runaggregationqueryrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}:runAggregationQuery")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firestore.projects.databases.documents.runAggregationQuery" call.
+// Exactly one of *RunAggregationQueryResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *RunAggregationQueryResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsDatabasesDocumentsRunAggregationQueryCall) Do(opts ...googleapi.CallOption) (*RunAggregationQueryResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &RunAggregationQueryResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Runs an aggregation query. Rather than producing Document results like Firestore.RunQuery, this API allows running an aggregation to produce a series of AggregationResult server-side. High-Level Example: ``` -- Return the number of documents in table given a filter. SELECT COUNT(*) FROM ( SELECT * FROM k where a = true ); ```",
+	//   "flatPath": "v1/projects/{projectsId}/databases/{databasesId}/documents/{documentsId}/{documentsId1}:runAggregationQuery",
+	//   "httpMethod": "POST",
+	//   "id": "firestore.projects.databases.documents.runAggregationQuery",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The parent resource name. In the format: `projects/{project_id}/databases/{database_id}/documents` or `projects/{project_id}/databases/{database_id}/documents/{document_path}`. For example: `projects/my-project/databases/my-database/documents` or `projects/my-project/databases/my-database/documents/chatrooms/my-chatroom`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/databases/[^/]+/documents/[^/]+/.*$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}:runAggregationQuery",
+	//   "request": {
+	//     "$ref": "RunAggregationQueryRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "RunAggregationQueryResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/datastore"
+	//   ]
+	// }
+
+}
+
 // method id "firestore.projects.databases.documents.runQuery":
 
 type ProjectsDatabasesDocumentsRunQueryCall struct {
@@ -6965,6 +8960,14 @@ type ProjectsDatabasesDocumentsRunQueryCall struct {
 }
 
 // RunQuery: Runs a query.
+//
+//   - parent: The parent resource name. In the format:
+//     `projects/{project_id}/databases/{database_id}/documents` or
+//     `projects/{project_id}/databases/{database_id}/documents/{document_p
+//     ath}`. For example:
+//     `projects/my-project/databases/my-database/documents` or
+//     `projects/my-project/databases/my-database/documents/chatrooms/my-ch
+//     atroom`.
 func (r *ProjectsDatabasesDocumentsService) RunQuery(parent string, runqueryrequest *RunQueryRequest) *ProjectsDatabasesDocumentsRunQueryCall {
 	c := &ProjectsDatabasesDocumentsRunQueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6999,7 +9002,7 @@ func (c *ProjectsDatabasesDocumentsRunQueryCall) Header() http.Header {
 
 func (c *ProjectsDatabasesDocumentsRunQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7039,17 +9042,17 @@ func (c *ProjectsDatabasesDocumentsRunQueryCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &RunQueryResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -7072,7 +9075,7 @@ func (c *ProjectsDatabasesDocumentsRunQueryCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The parent resource name. In the format:\n`projects/{project_id}/databases/{database_id}/documents` or\n`projects/{project_id}/databases/{database_id}/documents/{document_path}`.\nFor example:\n`projects/my-project/databases/my-database/documents` or\n`projects/my-project/databases/my-database/documents/chatrooms/my-chatroom`",
+	//       "description": "Required. The parent resource name. In the format: `projects/{project_id}/databases/{database_id}/documents` or `projects/{project_id}/databases/{database_id}/documents/{document_path}`. For example: `projects/my-project/databases/my-database/documents` or `projects/my-project/databases/my-database/documents/chatrooms/my-chatroom`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/databases/[^/]+/documents/[^/]+/.*$",
 	//       "required": true,
@@ -7106,6 +9109,10 @@ type ProjectsDatabasesDocumentsWriteCall struct {
 }
 
 // Write: Streams batches of document updates and deletes, in order.
+//
+//   - database: The database name. In the format:
+//     `projects/{project_id}/databases/{database_id}`. This is only
+//     required in the first message.
 func (r *ProjectsDatabasesDocumentsService) Write(database string, writerequest *WriteRequest) *ProjectsDatabasesDocumentsWriteCall {
 	c := &ProjectsDatabasesDocumentsWriteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.database = database
@@ -7140,7 +9147,7 @@ func (c *ProjectsDatabasesDocumentsWriteCall) Header() http.Header {
 
 func (c *ProjectsDatabasesDocumentsWriteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7180,17 +9187,17 @@ func (c *ProjectsDatabasesDocumentsWriteCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &WriteResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -7213,7 +9220,7 @@ func (c *ProjectsDatabasesDocumentsWriteCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "database": {
-	//       "description": "Required. The database name. In the format:\n`projects/{project_id}/databases/{database_id}`.\nThis is only required in the first message.",
+	//       "description": "Required. The database name. In the format: `projects/{project_id}/databases/{database_id}`. This is only required in the first message.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/databases/[^/]+$",
 	//       "required": true,
@@ -7247,23 +9254,17 @@ type ProjectsDatabasesOperationsCancelCall struct {
 }
 
 // Cancel: Starts asynchronous cancellation on a long-running operation.
-//  The server
-// makes a best effort to cancel the operation, but success is
-// not
-// guaranteed.  If the server doesn't support this method, it
-// returns
-// `google.rpc.Code.UNIMPLEMENTED`.  Clients can
-// use
-// Operations.GetOperation or
-// other methods to check whether the cancellation succeeded or whether
-// the
-// operation completed despite cancellation. On successful
-// cancellation,
-// the operation is not deleted; instead, it becomes an operation
-// with
-// an Operation.error value with a google.rpc.Status.code of
-// 1,
-// corresponding to `Code.CANCELLED`.
+// The server makes a best effort to cancel the operation, but success
+// is not guaranteed. If the server doesn't support this method, it
+// returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use
+// Operations.GetOperation or other methods to check whether the
+// cancellation succeeded or whether the operation completed despite
+// cancellation. On successful cancellation, the operation is not
+// deleted; instead, it becomes an operation with an Operation.error
+// value with a google.rpc.Status.code of 1, corresponding to
+// `Code.CANCELLED`.
+//
+// - name: The name of the operation resource to be cancelled.
 func (r *ProjectsDatabasesOperationsService) Cancel(name string, googlelongrunningcanceloperationrequest *GoogleLongrunningCancelOperationRequest) *ProjectsDatabasesOperationsCancelCall {
 	c := &ProjectsDatabasesOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7298,7 +9299,7 @@ func (c *ProjectsDatabasesOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsDatabasesOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7338,17 +9339,17 @@ func (c *ProjectsDatabasesOperationsCancelCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -7362,7 +9363,7 @@ func (c *ProjectsDatabasesOperationsCancelCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "Starts asynchronous cancellation on a long-running operation.  The server\nmakes a best effort to cancel the operation, but success is not\nguaranteed.  If the server doesn't support this method, it returns\n`google.rpc.Code.UNIMPLEMENTED`.  Clients can use\nOperations.GetOperation or\nother methods to check whether the cancellation succeeded or whether the\noperation completed despite cancellation. On successful cancellation,\nthe operation is not deleted; instead, it becomes an operation with\nan Operation.error value with a google.rpc.Status.code of 1,\ncorresponding to `Code.CANCELLED`.",
+	//   "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
 	//   "flatPath": "v1/projects/{projectsId}/databases/{databasesId}/operations/{operationsId}:cancel",
 	//   "httpMethod": "POST",
 	//   "id": "firestore.projects.databases.operations.cancel",
@@ -7404,12 +9405,11 @@ type ProjectsDatabasesOperationsDeleteCall struct {
 }
 
 // Delete: Deletes a long-running operation. This method indicates that
-// the client is
-// no longer interested in the operation result. It does not cancel
-// the
-// operation. If the server doesn't support this method, it
-// returns
-// `google.rpc.Code.UNIMPLEMENTED`.
+// the client is no longer interested in the operation result. It does
+// not cancel the operation. If the server doesn't support this method,
+// it returns `google.rpc.Code.UNIMPLEMENTED`.
+//
+// - name: The name of the operation resource to be deleted.
 func (r *ProjectsDatabasesOperationsService) Delete(name string) *ProjectsDatabasesOperationsDeleteCall {
 	c := &ProjectsDatabasesOperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7443,7 +9443,7 @@ func (c *ProjectsDatabasesOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsDatabasesOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7478,17 +9478,17 @@ func (c *ProjectsDatabasesOperationsDeleteCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -7502,7 +9502,7 @@ func (c *ProjectsDatabasesOperationsDeleteCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a long-running operation. This method indicates that the client is\nno longer interested in the operation result. It does not cancel the\noperation. If the server doesn't support this method, it returns\n`google.rpc.Code.UNIMPLEMENTED`.",
+	//   "description": "Deletes a long-running operation. This method indicates that the client is no longer interested in the operation result. It does not cancel the operation. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`.",
 	//   "flatPath": "v1/projects/{projectsId}/databases/{databasesId}/operations/{operationsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "firestore.projects.databases.operations.delete",
@@ -7541,11 +9541,11 @@ type ProjectsDatabasesOperationsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets the latest state of a long-running operation.  Clients can
-// use this
-// method to poll the operation result at intervals as recommended by
-// the API
-// service.
+// Get: Gets the latest state of a long-running operation. Clients can
+// use this method to poll the operation result at intervals as
+// recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsDatabasesOperationsService) Get(name string) *ProjectsDatabasesOperationsGetCall {
 	c := &ProjectsDatabasesOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7589,7 +9589,7 @@ func (c *ProjectsDatabasesOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsDatabasesOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7627,17 +9627,17 @@ func (c *ProjectsDatabasesOperationsGetCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -7651,7 +9651,7 @@ func (c *ProjectsDatabasesOperationsGetCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the latest state of a long-running operation.  Clients can use this\nmethod to poll the operation result at intervals as recommended by the API\nservice.",
+	//   "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
 	//   "flatPath": "v1/projects/{projectsId}/databases/{databasesId}/operations/{operationsId}",
 	//   "httpMethod": "GET",
 	//   "id": "firestore.projects.databases.operations.get",
@@ -7691,22 +9691,17 @@ type ProjectsDatabasesOperationsListCall struct {
 }
 
 // List: Lists operations that match the specified filter in the
-// request. If the
-// server doesn't support this method, it returns
-// `UNIMPLEMENTED`.
+// request. If the server doesn't support this method, it returns
+// `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to
+// override the binding to use different resource name schemes, such as
+// `users/*/operations`. To override the binding, API services can add a
+// binding such as "/v1/{name=users/*}/operations" to their service
+// configuration. For backwards compatibility, the default name includes
+// the operations collection id, however overriding users must ensure
+// the name binding is the parent resource, without the operations
+// collection id.
 //
-// NOTE: the `name` binding allows API services to override the
-// binding
-// to use different resource name schemes, such as `users/*/operations`.
-// To
-// override the binding, API services can add a binding such
-// as
-// "/v1/{name=users/*}/operations" to their service configuration.
-// For backwards compatibility, the default name includes the
-// operations
-// collection id, however overriding users must ensure the name
-// binding
-// is the parent resource, without the operations collection id.
+// - name: The name of the operation's parent resource.
 func (r *ProjectsDatabasesOperationsService) List(name string) *ProjectsDatabasesOperationsListCall {
 	c := &ProjectsDatabasesOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7771,7 +9766,7 @@ func (c *ProjectsDatabasesOperationsListCall) Header() http.Header {
 
 func (c *ProjectsDatabasesOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7810,17 +9805,17 @@ func (c *ProjectsDatabasesOperationsListCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningListOperationsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -7834,7 +9829,7 @@ func (c *ProjectsDatabasesOperationsListCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the\nserver doesn't support this method, it returns `UNIMPLEMENTED`.\n\nNOTE: the `name` binding allows API services to override the binding\nto use different resource name schemes, such as `users/*/operations`. To\noverride the binding, API services can add a binding such as\n`\"/v1/{name=users/*}/operations\"` to their service configuration.\nFor backwards compatibility, the default name includes the operations\ncollection id, however overriding users must ensure the name binding\nis the parent resource, without the operations collection id.",
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
 	//   "flatPath": "v1/projects/{projectsId}/databases/{databasesId}/operations",
 	//   "httpMethod": "GET",
 	//   "id": "firestore.projects.databases.operations.list",
@@ -7911,6 +9906,8 @@ type ProjectsLocationsGetCall struct {
 }
 
 // Get: Gets information about a location.
+//
+// - name: Resource name for the location.
 func (r *ProjectsLocationsService) Get(name string) *ProjectsLocationsGetCall {
 	c := &ProjectsLocationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7954,7 +9951,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7992,17 +9989,17 @@ func (c *ProjectsLocationsGetCall) Do(opts ...googleapi.CallOption) (*Location, 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Location{
 		ServerResponse: googleapi.ServerResponse{
@@ -8057,28 +10054,34 @@ type ProjectsLocationsListCall struct {
 
 // List: Lists information about the supported locations for this
 // service.
+//
+//   - name: The resource that owns the locations collection, if
+//     applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
 
-// Filter sets the optional parameter "filter": The standard list
-// filter.
+// Filter sets the optional parameter "filter": A filter to narrow down
+// results to a preferred subset. The filtering language accepts strings
+// like "displayName=tokyo", and is documented in more detail in
+// AIP-160 (https://google.aip.dev/160).
 func (c *ProjectsLocationsListCall) Filter(filter string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The standard list
-// page size.
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return. If not set, the service selects a default.
 func (c *ProjectsLocationsListCall) PageSize(pageSize int64) *ProjectsLocationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The standard list
-// page token.
+// PageToken sets the optional parameter "pageToken": A page token
+// received from the `next_page_token` field in the response. Send that
+// page token to receive the subsequent page.
 func (c *ProjectsLocationsListCall) PageToken(pageToken string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -8121,7 +10124,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8159,17 +10162,17 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListLocationsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -8192,7 +10195,7 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "The standard list filter.",
+	//       "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like `\"displayName=tokyo\"`, and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -8204,13 +10207,13 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The standard list page size.",
+	//       "description": "The maximum number of results to return. If not set, the service selects a default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The standard list page token.",
+	//       "description": "A page token received from the `next_page_token` field in the response. Send that page token to receive the subsequent page.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }

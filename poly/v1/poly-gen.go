@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://developers.google.com/poly/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/poly/v1"
-//   ...
-//   ctx := context.Background()
-//   polyService, err := poly.NewService(ctx)
+//	import "google.golang.org/api/poly/v1"
+//	...
+//	ctx := context.Background()
+//	polyService, err := poly.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   polyService, err := poly.NewService(ctx, option.WithAPIKey("AIza..."))
+//	polyService, err := poly.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   polyService, err := poly.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	polyService, err := poly.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package poly // import "google.golang.org/api/poly/v1"
@@ -50,6 +50,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -75,10 +76,12 @@ const apiId = "poly:v1"
 const apiName = "poly"
 const apiVersion = "v1"
 const basePath = "https://poly.googleapis.com/"
+const mtlsBasePath = "https://poly.mtls.googleapis.com/"
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -168,22 +171,18 @@ type UsersLikedassetsService struct {
 }
 
 // Asset: Represents and describes an asset in the Poly library. An
-// asset is a 3D model
-// or scene created using [Tilt
-// Brush](//www.tiltbrush.com),
-// [Blocks](//vr.google.com/blocks/), or any 3D program that produces a
-// file
-// that can be upload to Poly.
+// asset is a 3D model or scene created using Tilt Brush
+// (//www.tiltbrush.com), Blocks (//vr.google.com/blocks/), or any 3D
+// program that produces a file that can be upload to Poly.
 type Asset struct {
 	// AuthorName: The author's publicly visible name. Use this name when
-	// giving credit to the
-	// author. For more information, see
-	// [Licensing](/poly/discover/licensing).
+	// giving credit to the author. For more information, see Licensing
+	// (/poly/discover/licensing).
 	AuthorName string `json:"authorName,omitempty"`
 
 	// CreateTime: For published assets, the time when the asset was
-	// published.
-	// For unpublished assets, the time when the asset was created.
+	// published. For unpublished assets, the time when the asset was
+	// created.
 	CreateTime string `json:"createTime,omitempty"`
 
 	// Description: The human-readable description, set by the asset's
@@ -193,43 +192,38 @@ type Asset struct {
 	// DisplayName: The human-readable name, set by the asset's author.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Formats: A list of Formats where each
-	// format describes one representation of the asset.
+	// Formats: A list of Formats where each format describes one
+	// representation of the asset.
 	Formats []*Format `json:"formats,omitempty"`
 
 	// IsCurated: Whether this asset has been curated by the Poly team.
 	IsCurated bool `json:"isCurated,omitempty"`
 
 	// License: The license under which the author has made the asset
-	// available
-	// for use, if any.
+	// available for use, if any.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown license value.
 	//   "CREATIVE_COMMONS_BY" - Creative Commons CC-BY 3.0.
 	// https://creativecommons.org/licenses/by/3.0/
 	//   "ALL_RIGHTS_RESERVED" - Unlicensed: All Rights Reserved by the
-	// author. Unlicensed assets are
-	// **not** returned by List Assets.
+	// author. Unlicensed assets are **not** returned by List Assets.
 	License string `json:"license,omitempty"`
 
 	// Metadata: Application-defined opaque metadata for this asset. This
-	// field is only
-	// returned when querying for the signed-in user's own assets, not for
-	// public
-	// assets. This string is limited to 1K chars. It is up to the creator
-	// of
-	// the asset to define the format for this string (for example, JSON).
+	// field is only returned when querying for the signed-in user's own
+	// assets, not for public assets. This string is limited to 1K chars. It
+	// is up to the creator of the asset to define the format for this
+	// string (for example, JSON).
 	Metadata string `json:"metadata,omitempty"`
 
-	// Name: The unique identifier for the asset in the
-	// form:
+	// Name: The unique identifier for the asset in the form:
 	// `assets/{ASSET_ID}`.
 	Name string `json:"name,omitempty"`
 
 	// PresentationParams: Hints for displaying the asset. Note that these
-	// parameters are not
-	// immutable; the author of an asset may change them post-publication.
+	// parameters are not immutable; the author of an asset may change them
+	// post-publication.
 	PresentationParams *PresentationParams `json:"presentationParams,omitempty"`
 
 	// RemixInfo: The remix info for the asset.
@@ -239,10 +233,8 @@ type Asset struct {
 	Thumbnail *File `json:"thumbnail,omitempty"`
 
 	// UpdateTime: The time when the asset was last modified. For published
-	// assets, whose
-	// contents are immutable, the update time changes only when
-	// metadata
-	// properties, such as visibility, are updated.
+	// assets, whose contents are immutable, the update time changes only
+	// when metadata properties, such as visibility, are updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// Visibility: The visibility of the asset and who can access it.
@@ -250,18 +242,13 @@ type Asset struct {
 	// Possible values:
 	//   "VISIBILITY_UNSPECIFIED" - Unknown (and invalid) visibility.
 	//   "PRIVATE" - Access to the asset and its underlying files and
-	// resources is restricted to
-	// the author.
-	// **Authentication:** You must supply an OAuth token that corresponds
-	// to the
-	// author's account.
+	// resources is restricted to the author. **Authentication:** You must
+	// supply an OAuth token that corresponds to the author's account.
 	//   "UNLISTED" - Access to the asset and its underlying files and
-	// resources is available to
-	// anyone with the asset's name. Unlisted assets are **not**
-	// returned by List Assets.
+	// resources is available to anyone with the asset's name. Unlisted
+	// assets are **not** returned by List Assets.
 	//   "PUBLIC" - Access to the asset and its underlying files and
-	// resources is available
-	// to anyone.
+	// resources is available to anyone.
 	Visibility string `json:"visibility,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -270,10 +257,10 @@ type Asset struct {
 
 	// ForceSendFields is a list of field names (e.g. "AuthorName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AuthorName") to include in
@@ -298,39 +285,30 @@ type AssetImportMessage struct {
 	// Possible values:
 	//   "CODE_UNSPECIFIED" - Unknown error code.
 	//   "NO_IMPORTABLE_FILE" - The asset import did not include any file
-	// that we can import (i.e. an OBJ
-	// file).
+	// that we can import (i.e. an OBJ file).
 	//   "EMPTY_MODEL" - When generating the preview for the import, no
 	// geometry was found.
 	//   "OBJ_PARSE_ERROR" - A problem was encountered while parsing the OBJ
-	// file. The converter makes
-	// a 'best effort' attempt to continue when encountering such issues.
-	// In
-	// some cases the resulting preview model may still be acceptable.
-	// The
-	// details can be found in the parse error message.
+	// file. The converter makes a 'best effort' attempt to continue when
+	// encountering such issues. In some cases the resulting preview model
+	// may still be acceptable. The details can be found in the parse error
+	// message.
 	//   "EXPIRED" - The importer was not able to import the model before
 	// the expiration time.
 	//   "IMAGE_ERROR" - The importer encountered a problem reading an image
 	// file.
 	//   "EXTRA_FILES_WITH_ARCHIVE" - Multiple files were encountered in
-	// addition to a ZIP archive. When
-	// uploading an archive only one file is permitted.
+	// addition to a ZIP archive. When uploading an archive only one file is
+	// permitted.
 	//   "DEFAULT_MATERIALS" - Default materials are used in the model. This
-	// means that one or more
-	// faces is using default materials either because no usemtl statement
-	// was
-	// specified or because the requested material was not found due to
-	// a
-	// missing material file or bad material name. This does not cover the
-	// case
-	// of missing textures.
+	// means that one or more faces is using default materials either
+	// because no usemtl statement was specified or because the requested
+	// material was not found due to a missing material file or bad material
+	// name. This does not cover the case of missing textures.
 	//   "FATAL_ERROR" - The importer encountered a fatal error and was
-	// unable to import the
-	// model.
+	// unable to import the model.
 	//   "INVALID_ELEMENT_TYPE" - The import includes a file of an
-	// unsupported element type. The file path
-	// is specified.
+	// unsupported element type. The file path is specified.
 	Code string `json:"code,omitempty"`
 
 	// FilePath: An optional file path. Only present for those error codes
@@ -347,10 +325,10 @@ type AssetImportMessage struct {
 
 	// ForceSendFields is a list of field names (e.g. "Code") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Code") to include in API
@@ -368,20 +346,17 @@ func (s *AssetImportMessage) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// File: Represents a file in Poly, which can be a root,
-// resource, or thumbnail file.
+// File: Represents a file in Poly, which can be a root, resource, or
+// thumbnail file.
 type File struct {
-	// ContentType: The MIME content-type, such as `image/png`.
-	// For more information,
-	// see
-	// [MIME
-	// types](//developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of
-	// _HTTP/MIME_types).
+	// ContentType: The MIME content-type, such as `image/png`. For more
+	// information, see MIME types
+	// (//developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types
+	// ).
 	ContentType string `json:"contentType,omitempty"`
 
-	// RelativePath: The path of the resource file relative to the
-	// root file. For root or thumbnail files,
-	// this is just the filename.
+	// RelativePath: The path of the resource file relative to the root
+	// file. For root or thumbnail files, this is just the filename.
 	RelativePath string `json:"relativePath,omitempty"`
 
 	// Url: The URL where the file data can be retrieved.
@@ -389,10 +364,10 @@ type File struct {
 
 	// ForceSendFields is a list of field names (e.g. "ContentType") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ContentType") to include
@@ -411,47 +386,39 @@ func (s *File) MarshalJSON() ([]byte, error) {
 }
 
 // Format: The same asset can be represented in different formats, for
-// example,
-// a [WaveFront .obj](//en.wikipedia.org/wiki/Wavefront_.obj_file) file
-// with its
-// corresponding .mtl file or a [Khronos glTF](//www.khronos.org/gltf)
-// file
-// with its corresponding .glb binary data. A format refers to a
-// specific
-// representation of an asset and contains all information needed
-// to
-// retrieve and describe this representation.
+// example, a WaveFront .obj
+// (//en.wikipedia.org/wiki/Wavefront_.obj_file) file with its
+// corresponding .mtl file or a Khronos glTF (//www.khronos.org/gltf)
+// file with its corresponding .glb binary data. A format refers to a
+// specific representation of an asset and contains all information
+// needed to retrieve and describe this representation.
 type Format struct {
 	// FormatComplexity: Complexity stats about this representation of the
 	// asset.
 	FormatComplexity *FormatComplexity `json:"formatComplexity,omitempty"`
 
 	// FormatType: A short string that identifies the format type of this
-	// representation.
-	// Possible values are: `FBX`, `GLTF`, `GLTF2`, `OBJ`, and `TILT`.
+	// representation. Possible values are: `FBX`, `GLTF`, `GLTF2`, `OBJ`,
+	// and `TILT`.
 	FormatType string `json:"formatType,omitempty"`
 
 	// Resources: A list of dependencies of the root element. May include,
-	// but is not
-	// limited to, materials, textures, and shader programs.
+	// but is not limited to, materials, textures, and shader programs.
 	Resources []*File `json:"resources,omitempty"`
 
-	// Root: The root of the file hierarchy. This will always be
-	// populated.
-	// For some format_types - such as `TILT`, which are
-	// self-contained - this is all of the data.
-	//
-	// Other types - such as `OBJ` - often reference other data
-	// elements.
-	// These are contained in the resources field.
+	// Root: The root of the file hierarchy. This will always be populated.
+	// For some format_types - such as `TILT`, which are self-contained -
+	// this is all of the data. Other types - such as `OBJ` - often
+	// reference other data elements. These are contained in the resources
+	// field.
 	Root *File `json:"root,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FormatComplexity") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "FormatComplexity") to
@@ -473,13 +440,9 @@ func (s *Format) MarshalJSON() ([]byte, error) {
 // FormatComplexity: Information on the complexity of this Format.
 type FormatComplexity struct {
 	// LodHint: A non-negative integer that represents the level of detail
-	// (LOD) of this
-	// format relative to other formats of the same asset with the
-	// same
-	// format_type.
-	// This hint allows you to sort formats from the most-detailed (0)
-	// to
-	// least-detailed (integers greater than 0).
+	// (LOD) of this format relative to other formats of the same asset with
+	// the same format_type. This hint allows you to sort formats from the
+	// most-detailed (0) to least-detailed (integers greater than 0).
 	LodHint int64 `json:"lodHint,omitempty"`
 
 	// TriangleCount: The estimated number of triangles.
@@ -487,10 +450,10 @@ type FormatComplexity struct {
 
 	// ForceSendFields is a list of field names (e.g. "LodHint") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "LodHint") to include in
@@ -526,10 +489,10 @@ type ImageError struct {
 
 	// ForceSendFields is a list of field names (e.g. "Code") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Code") to include in API
@@ -554,10 +517,8 @@ type ListAssetsResponse struct {
 	Assets []*Asset `json:"assets,omitempty"`
 
 	// NextPageToken: The continuation token for retrieving the next page.
-	// If empty,
-	// indicates that there are no more pages. To get the next page, submit
-	// the
-	// same request specifying this value as the
+	// If empty, indicates that there are no more pages. To get the next
+	// page, submit the same request specifying this value as the
 	// page_token.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
@@ -571,10 +532,10 @@ type ListAssetsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Assets") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Assets") to include in API
@@ -599,10 +560,8 @@ type ListLikedAssetsResponse struct {
 	Assets []*Asset `json:"assets,omitempty"`
 
 	// NextPageToken: The continuation token for retrieving the next page.
-	// If empty,
-	// indicates that there are no more pages. To get the next page, submit
-	// the
-	// same request specifying this value as the
+	// If empty, indicates that there are no more pages. To get the next
+	// page, submit the same request specifying this value as the
 	// page_token.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
@@ -616,10 +575,10 @@ type ListLikedAssetsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Assets") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Assets") to include in API
@@ -640,10 +599,8 @@ func (s *ListLikedAssetsResponse) MarshalJSON() ([]byte, error) {
 // ListUserAssetsResponse: A response message from a request to list.
 type ListUserAssetsResponse struct {
 	// NextPageToken: The continuation token for retrieving the next page.
-	// If empty,
-	// indicates that there are no more pages. To get the next page, submit
-	// the
-	// same request specifying this value as the
+	// If empty, indicates that there are no more pages. To get the next
+	// page, submit the same request specifying this value as the
 	// page_token.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
@@ -660,10 +617,10 @@ type ListUserAssetsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -688,8 +645,8 @@ type ObjParseError struct {
 	// Possible values:
 	//   "CODE_UNSPECIFIED" - Unknown error code.
 	//   "INCONSISTENT_VERTEX_REFS" - Vertex references are specified in an
-	// inconsistent style for a face (e.g.
-	// some vertices specify texture vertices but some don't).
+	// inconsistent style for a face (e.g. some vertices specify texture
+	// vertices but some don't).
 	//   "INVALID_COMMAND" - The command is invalid.
 	//   "INVALID_NUMBER" - A invalid number was specified.
 	//   "INVALID_VERTEX_REF" - An invalid vertex reference was specified.
@@ -702,8 +659,8 @@ type ObjParseError struct {
 	//   "TOO_MANY_DIMENSIONS" - The vertex specified too many dimensions
 	// for its usage.
 	//   "UNSUPPORTED_COMMAND" - This command is a valid OBJ command but is
-	// not supported. This error is
-	// only generated for the first instance of such a command.
+	// not supported. This error is only generated for the first instance of
+	// such a command.
 	//   "UNUSED_TOKENS" - This line ended with unparsed token characters.
 	//   "VERTEX_NOT_FOUND" - The specified vertex was not found.
 	//   "NUMBER_OUT_OF_RANGE" - The specified number was too large or small
@@ -712,13 +669,11 @@ type ObjParseError struct {
 	//   "INVALID_TEXTURE_OPTION" - The specified texture option is not
 	// valid.
 	//   "TOO_MANY_PROBLEMS" - The maximum number of problems to report was
-	// reached. Parsing continues,
-	// but further problems will be ignored.
+	// reached. Parsing continues, but further problems will be ignored.
 	//   "MISSING_FILE_NAME" - An expected file name was not specified.
 	//   "FILE_NOT_FOUND" - The specified file was not found in the import.
 	//   "UNKNOWN_MATERIAL" - The specified material was not found in any
-	// material definition in the
-	// import.
+	// material definition in the import.
 	//   "NO_MATERIAL_DEFINED" - Material parameters were specified before
 	// the first material definition.
 	//   "INVALID_SMOOTHING_GROUP" - The smoothing group is not valid.
@@ -739,9 +694,8 @@ type ObjParseError struct {
 	FilePath string `json:"filePath,omitempty"`
 
 	// Line: The text of the line. Note that this may be truncated if the
-	// line was very
-	// long. This may not include the error if it occurs after line
-	// truncation.
+	// line was very long. This may not include the error if it occurs after
+	// line truncation.
 	Line string `json:"line,omitempty"`
 
 	// LineNumber: Line number at which the problem was found.
@@ -753,10 +707,10 @@ type ObjParseError struct {
 
 	// ForceSendFields is a list of field names (e.g. "Code") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Code") to include in API
@@ -775,23 +729,18 @@ func (s *ObjParseError) MarshalJSON() ([]byte, error) {
 }
 
 // PresentationParams: Hints for displaying the asset, based on
-// information available when the asset
-// was uploaded.
+// information available when the asset was uploaded.
 type PresentationParams struct {
 	// BackgroundColor: A background color which could be used for
-	// displaying the 3D asset in a
-	// 'thumbnail' or 'palette' style view. Authors have the option to set
-	// this
-	// background color when publishing or editing their asset.
-	//
-	// This is represented as a six-digit hexademical triplet specifying
-	// the
-	// RGB components of the background color, e.g. #FF0000 for Red.
+	// displaying the 3D asset in a 'thumbnail' or 'palette' style view.
+	// Authors have the option to set this background color when publishing
+	// or editing their asset. This is represented as a six-digit
+	// hexademical triplet specifying the RGB components of the background
+	// color, e.g. #FF0000 for Red.
 	BackgroundColor string `json:"backgroundColor,omitempty"`
 
 	// ColorSpace: The materials' diffuse/albedo color. This does not apply
-	// to vertex colors
-	// or texture maps.
+	// to vertex colors or texture maps.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Invalid color value.
@@ -801,40 +750,27 @@ type PresentationParams struct {
 	ColorSpace string `json:"colorSpace,omitempty"`
 
 	// OrientingRotation: A rotation that should be applied to the object
-	// root to make it upright.
-	// More precisely, this quaternion transforms from "object space" (the
-	// space
-	// in which the object is defined) to "presentation space", a
-	// coordinate
-	// system where +Y is up, +X is right, -Z is forward. For example,
-	// if
-	// the object is the Eiffel Tower, in its local coordinate system
-	// the
-	// object might be laid out such that the base of the tower is on the
-	// YZ plane and the tip of the tower is towards positive X. In this
-	// case
-	// this quaternion would specify a rotation (of 90 degrees about the
-	// Z
-	// axis) such that in the presentation space the base of the tower
-	// is
-	// aligned with the XZ plane, and the tip of the tower lies towards
-	// +Y.
-	//
-	// This rotation is unrelated to the object's pose in the web
-	// preview,
-	// which is just a camera position setting and is *not* reflected in
-	// this
-	// rotation.
-	//
+	// root to make it upright. More precisely, this quaternion transforms
+	// from "object space" (the space in which the object is defined) to
+	// "presentation space", a coordinate system where +Y is up, +X is
+	// right, -Z is forward. For example, if the object is the Eiffel Tower,
+	// in its local coordinate system the object might be laid out such that
+	// the base of the tower is on the YZ plane and the tip of the tower is
+	// towards positive X. In this case this quaternion would specify a
+	// rotation (of 90 degrees about the Z axis) such that in the
+	// presentation space the base of the tower is aligned with the XZ
+	// plane, and the tip of the tower lies towards +Y. This rotation is
+	// unrelated to the object's pose in the web preview, which is just a
+	// camera position setting and is *not* reflected in this rotation.
 	// Please note: this is applicable only to the gLTF.
 	OrientingRotation *Quaternion `json:"orientingRotation,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BackgroundColor") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BackgroundColor") to
@@ -853,11 +789,9 @@ func (s *PresentationParams) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Quaternion: A [Quaternion](//en.wikipedia.org/wiki/Quaternion).
-// Please note: if in the
-// response you see "w: 1" and nothing else this is the default value
-// of
-// [0, 0, 0, 1] where x,y, and z are 0.
+// Quaternion: A Quaternion (//en.wikipedia.org/wiki/Quaternion). Please
+// note: if in the response you see "w: 1" and nothing else this is the
+// default value of [0, 0, 0, 1] where x,y, and z are 0.
 type Quaternion struct {
 	// W: The scalar component.
 	W float64 `json:"w,omitempty"`
@@ -873,10 +807,10 @@ type Quaternion struct {
 
 	// ForceSendFields is a list of field names (e.g. "W") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "W") to include in API
@@ -915,20 +849,18 @@ func (s *Quaternion) UnmarshalJSON(data []byte) error {
 }
 
 // RemixInfo: Info about the sources of this asset (i.e. assets that
-// were remixed to
-// create this asset).
+// were remixed to create this asset).
 type RemixInfo struct {
-	// SourceAsset: Resource ids for the sources of this remix, of the
-	// form:
+	// SourceAsset: Resource ids for the sources of this remix, of the form:
 	// `assets/{ASSET_ID}`
 	SourceAsset []string `json:"sourceAsset,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "SourceAsset") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "SourceAsset") to include
@@ -946,15 +878,11 @@ func (s *RemixInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// StartAssetImportResponse: A response message from a request
-// to
-// startImport. This is returned in the response
-// field of the Operation.
+// StartAssetImportResponse: A response message from a request to
+// startImport. This is returned in the response field of the Operation.
 type StartAssetImportResponse struct {
 	// AssetId: The id of newly created asset. If this is empty when the
-	// operation is
-	// complete it means the import failed. Please refer to
-	// the
+	// operation is complete it means the import failed. Please refer to the
 	// assetImportMessages field to understand what went wrong.
 	AssetId string `json:"assetId,omitempty"`
 
@@ -962,8 +890,8 @@ type StartAssetImportResponse struct {
 	AssetImportId string `json:"assetImportId,omitempty"`
 
 	// AssetImportMessages: The message from the asset import. This will
-	// contain any warnings
-	// (or - in the case of failure - errors) that occurred during import.
+	// contain any warnings (or - in the case of failure - errors) that
+	// occurred during import.
 	AssetImportMessages []*AssetImportMessage `json:"assetImportMessages,omitempty"`
 
 	// PublishUrl: The publish URL for the asset.
@@ -971,10 +899,10 @@ type StartAssetImportResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "AssetId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AssetId") to include in
@@ -999,10 +927,10 @@ type UserAsset struct {
 
 	// ForceSendFields is a list of field names (e.g. "Asset") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Asset") to include in API
@@ -1031,12 +959,11 @@ type AssetsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Returns detailed information about an asset given its
-// name.
-// PRIVATE assets are returned only if
-//  the currently authenticated user (via OAuth token) is the author of
-// the
-//  asset.
+// Get: Returns detailed information about an asset given its name.
+// PRIVATE assets are returned only if the currently authenticated user
+// (via OAuth token) is the author of the asset.
+//
+// - name: An asset's name in the form `assets/{ASSET_ID}`.
 func (r *AssetsService) Get(name string) *AssetsGetCall {
 	c := &AssetsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1080,7 +1007,7 @@ func (c *AssetsGetCall) Header() http.Header {
 
 func (c *AssetsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1118,17 +1045,17 @@ func (c *AssetsGetCall) Do(opts ...googleapi.CallOption) (*Asset, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Asset{
 		ServerResponse: googleapi.ServerResponse{
@@ -1142,7 +1069,7 @@ func (c *AssetsGetCall) Do(opts ...googleapi.CallOption) (*Asset, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns detailed information about an asset given its name.\nPRIVATE assets are returned only if\n the currently authenticated user (via OAuth token) is the author of the\n asset.",
+	//   "description": "Returns detailed information about an asset given its name. PRIVATE assets are returned only if the currently authenticated user (via OAuth token) is the author of the asset.",
 	//   "flatPath": "v1/assets/{assetsId}",
 	//   "httpMethod": "GET",
 	//   "id": "poly.assets.get",
@@ -1177,18 +1104,15 @@ type AssetsListCall struct {
 }
 
 // List: Lists all public, remixable assets. These are assets with an
-// access level
-// of PUBLIC and published under the
-// CC-By license.
+// access level of PUBLIC and published under the CC-By license.
 func (r *AssetsService) List() *AssetsListCall {
 	c := &AssetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
 }
 
 // Category sets the optional parameter "category": Filter assets based
-// on the specified category. Supported values are:
-// `animals`, `architecture`, `art`, `food`, `nature`, `objects`,
-// `people`,
+// on the specified category. Supported values are: `animals`,
+// `architecture`, `art`, `food`, `nature`, `objects`, `people`,
 // `scenes`, `technology`, and `transport`.
 func (c *AssetsListCall) Category(category string) *AssetsListCall {
 	c.urlParams_.Set("category", category)
@@ -1203,64 +1127,62 @@ func (c *AssetsListCall) Curated(curated bool) *AssetsListCall {
 }
 
 // Format sets the optional parameter "format": Return only assets with
-// the matching format. Acceptable values are:
-// `BLOCKS`, `FBX`, `GLTF`, `GLTF2`, `OBJ`, `TILT`.
+// the matching format. Acceptable values are: `BLOCKS`, `FBX`, `GLTF`,
+// `GLTF2`, `OBJ`, `TILT`.
 func (c *AssetsListCall) Format(format string) *AssetsListCall {
 	c.urlParams_.Set("format", format)
 	return c
 }
 
 // Keywords sets the optional parameter "keywords": One or more search
-// terms to be matched against all text that Poly has
-// indexed for assets, which includes display_name,
-// description, and tags. Multiple keywords should be
-// separated by spaces.
+// terms to be matched against all text that Poly has indexed for
+// assets, which includes display_name, description, and tags. Multiple
+// keywords should be separated by spaces.
 func (c *AssetsListCall) Keywords(keywords string) *AssetsListCall {
 	c.urlParams_.Set("keywords", keywords)
 	return c
 }
 
 // MaxComplexity sets the optional parameter "maxComplexity": Returns
-// assets that are of the specified complexity or less. Defaults
-// to
-// COMPLEX. For example, a request for
-// MEDIUM assets also includes
+// assets that are of the specified complexity or less. Defaults to
+// COMPLEX. For example, a request for MEDIUM assets also includes
 // SIMPLE assets.
 //
 // Possible values:
-//   "COMPLEXITY_UNSPECIFIED"
-//   "COMPLEX"
-//   "MEDIUM"
-//   "SIMPLE"
+//
+//	"COMPLEXITY_UNSPECIFIED" - No complexity specified. This is
+//
+// equivalent to omitting the filter.
+//
+//	"COMPLEX" - Highly-complex.
+//	"MEDIUM" - Averagely-complex.
+//	"SIMPLE" - Simple.
 func (c *AssetsListCall) MaxComplexity(maxComplexity string) *AssetsListCall {
 	c.urlParams_.Set("maxComplexity", maxComplexity)
 	return c
 }
 
 // OrderBy sets the optional parameter "orderBy": Specifies an ordering
-// for assets. Acceptable values are:
-// `BEST`, `NEWEST`, `OLDEST`. Defaults to `BEST`, which ranks
-// assets
-// based on a combination of popularity and other features.
+// for assets. Acceptable values are: `BEST`, `NEWEST`, `OLDEST`.
+// Defaults to `BEST`, which ranks assets based on a combination of
+// popularity and other features.
 func (c *AssetsListCall) OrderBy(orderBy string) *AssetsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of assets to be returned. This value must be between `1`
-// and `100`. Defaults to `20`.
+// of assets to be returned. This value must be between `1` and `100`.
+// Defaults to `20`.
 func (c *AssetsListCall) PageSize(pageSize int64) *AssetsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Specifies a
-// continuation token from a previous search whose results were
-// split into multiple pages. To get the next page, submit the same
-// request
-// specifying the value from
-// next_page_token.
+// continuation token from a previous search whose results were split
+// into multiple pages. To get the next page, submit the same request
+// specifying the value from next_page_token.
 func (c *AssetsListCall) PageToken(pageToken string) *AssetsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -1303,7 +1225,7 @@ func (c *AssetsListCall) Header() http.Header {
 
 func (c *AssetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1338,17 +1260,17 @@ func (c *AssetsListCall) Do(opts ...googleapi.CallOption) (*ListAssetsResponse, 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListAssetsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1362,14 +1284,14 @@ func (c *AssetsListCall) Do(opts ...googleapi.CallOption) (*ListAssetsResponse, 
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists all public, remixable assets. These are assets with an access level\nof PUBLIC and published under the\nCC-By license.",
+	//   "description": "Lists all public, remixable assets. These are assets with an access level of PUBLIC and published under the CC-By license.",
 	//   "flatPath": "v1/assets",
 	//   "httpMethod": "GET",
 	//   "id": "poly.assets.list",
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "category": {
-	//       "description": "Filter assets based on the specified category. Supported values are:\n`animals`, `architecture`, `art`, `food`, `nature`, `objects`, `people`,\n`scenes`, `technology`, and `transport`.",
+	//       "description": "Filter assets based on the specified category. Supported values are: `animals`, `architecture`, `art`, `food`, `nature`, `objects`, `people`, `scenes`, `technology`, and `transport`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -1379,39 +1301,45 @@ func (c *AssetsListCall) Do(opts ...googleapi.CallOption) (*ListAssetsResponse, 
 	//       "type": "boolean"
 	//     },
 	//     "format": {
-	//       "description": "Return only assets with the matching format. Acceptable values are:\n`BLOCKS`, `FBX`, `GLTF`, `GLTF2`, `OBJ`, `TILT`.",
+	//       "description": "Return only assets with the matching format. Acceptable values are: `BLOCKS`, `FBX`, `GLTF`, `GLTF2`, `OBJ`, `TILT`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "keywords": {
-	//       "description": "One or more search terms to be matched against all text that Poly has\nindexed for assets, which includes display_name,\ndescription, and tags. Multiple keywords should be\nseparated by spaces.",
+	//       "description": "One or more search terms to be matched against all text that Poly has indexed for assets, which includes display_name, description, and tags. Multiple keywords should be separated by spaces.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxComplexity": {
-	//       "description": "Returns assets that are of the specified complexity or less. Defaults to\nCOMPLEX. For example, a request for\nMEDIUM assets also includes\nSIMPLE assets.",
+	//       "description": "Returns assets that are of the specified complexity or less. Defaults to COMPLEX. For example, a request for MEDIUM assets also includes SIMPLE assets.",
 	//       "enum": [
 	//         "COMPLEXITY_UNSPECIFIED",
 	//         "COMPLEX",
 	//         "MEDIUM",
 	//         "SIMPLE"
 	//       ],
+	//       "enumDescriptions": [
+	//         "No complexity specified. This is equivalent to omitting the filter.",
+	//         "Highly-complex.",
+	//         "Averagely-complex.",
+	//         "Simple."
+	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Specifies an ordering for assets. Acceptable values are:\n`BEST`, `NEWEST`, `OLDEST`. Defaults to `BEST`, which ranks assets\nbased on a combination of popularity and other features.",
+	//       "description": "Specifies an ordering for assets. Acceptable values are: `BEST`, `NEWEST`, `OLDEST`. Defaults to `BEST`, which ranks assets based on a combination of popularity and other features.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The maximum number of assets to be returned. This value must be between `1`\nand `100`. Defaults to `20`.",
+	//       "description": "The maximum number of assets to be returned. This value must be between `1` and `100`. Defaults to `20`.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Specifies a continuation token from a previous search whose results were\nsplit into multiple pages. To get the next page, submit the same request\nspecifying the value from\nnext_page_token.",
+	//       "description": "Specifies a continuation token from a previous search whose results were split into multiple pages. To get the next page, submit the same request specifying the value from next_page_token.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -1457,13 +1385,13 @@ type UsersAssetsListCall struct {
 }
 
 // List: Lists assets authored by the given user. Only the value 'me',
-// representing
-// the currently-authenticated user, is supported. May include assets
-// with an
-// access level of PRIVATE or
-// UNLISTED and assets which are
-// All Rights Reserved for the
-// currently-authenticated user.
+// representing the currently-authenticated user, is supported. May
+// include assets with an access level of PRIVATE or UNLISTED and assets
+// which are All Rights Reserved for the currently-authenticated user.
+//
+//   - name: A valid user id. Currently, only the special value 'me',
+//     representing the currently-authenticated user is supported. To use
+//     'me', you must pass an OAuth token with the request.
 func (r *UsersAssetsService) List(name string) *UsersAssetsListCall {
 	c := &UsersAssetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1471,52 +1399,51 @@ func (r *UsersAssetsService) List(name string) *UsersAssetsListCall {
 }
 
 // Format sets the optional parameter "format": Return only assets with
-// the matching format. Acceptable values are:
-// `BLOCKS`, `FBX`, `GLTF`, `GLTF2`, `OBJ`, and `TILT`.
+// the matching format. Acceptable values are: `BLOCKS`, `FBX`, `GLTF`,
+// `GLTF2`, `OBJ`, and `TILT`.
 func (c *UsersAssetsListCall) Format(format string) *UsersAssetsListCall {
 	c.urlParams_.Set("format", format)
 	return c
 }
 
 // OrderBy sets the optional parameter "orderBy": Specifies an ordering
-// for assets. Acceptable values are:
-// `BEST`, `NEWEST`, `OLDEST`. Defaults to `BEST`, which ranks
-// assets
-// based on a combination of popularity and other features.
+// for assets. Acceptable values are: `BEST`, `NEWEST`, `OLDEST`.
+// Defaults to `BEST`, which ranks assets based on a combination of
+// popularity and other features.
 func (c *UsersAssetsListCall) OrderBy(orderBy string) *UsersAssetsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of assets to be returned. This value must be between `1`
-// and `100`. Defaults to `20`.
+// of assets to be returned. This value must be between `1` and `100`.
+// Defaults to `20`.
 func (c *UsersAssetsListCall) PageSize(pageSize int64) *UsersAssetsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Specifies a
-// continuation token from a previous search whose results were
-// split into multiple pages. To get the next page, submit the same
-// request
-// specifying the value from
-// next_page_token.
+// continuation token from a previous search whose results were split
+// into multiple pages. To get the next page, submit the same request
+// specifying the value from next_page_token.
 func (c *UsersAssetsListCall) PageToken(pageToken string) *UsersAssetsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Visibility sets the optional parameter "visibility": The visibility
-// of the assets to be returned.
-// Defaults to
-// VISIBILITY_UNSPECIFIED
+// of the assets to be returned. Defaults to VISIBILITY_UNSPECIFIED
 // which returns all assets.
 //
 // Possible values:
-//   "VISIBILITY_UNSPECIFIED"
-//   "PUBLISHED"
-//   "PRIVATE"
+//
+//	"VISIBILITY_UNSPECIFIED" - No visibility specified. Returns all
+//
+// assets.
+//
+//	"PUBLISHED" - Returns only published assets.
+//	"PRIVATE" - Returns only private assets.
 func (c *UsersAssetsListCall) Visibility(visibility string) *UsersAssetsListCall {
 	c.urlParams_.Set("visibility", visibility)
 	return c
@@ -1559,7 +1486,7 @@ func (c *UsersAssetsListCall) Header() http.Header {
 
 func (c *UsersAssetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1597,17 +1524,17 @@ func (c *UsersAssetsListCall) Do(opts ...googleapi.CallOption) (*ListUserAssetsR
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListUserAssetsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1621,7 +1548,7 @@ func (c *UsersAssetsListCall) Do(opts ...googleapi.CallOption) (*ListUserAssetsR
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists assets authored by the given user. Only the value 'me', representing\nthe currently-authenticated user, is supported. May include assets with an\naccess level of PRIVATE or\nUNLISTED and assets which are\nAll Rights Reserved for the\ncurrently-authenticated user.",
+	//   "description": "Lists assets authored by the given user. Only the value 'me', representing the currently-authenticated user, is supported. May include assets with an access level of PRIVATE or UNLISTED and assets which are All Rights Reserved for the currently-authenticated user.",
 	//   "flatPath": "v1/users/{usersId}/assets",
 	//   "httpMethod": "GET",
 	//   "id": "poly.users.assets.list",
@@ -1630,39 +1557,44 @@ func (c *UsersAssetsListCall) Do(opts ...googleapi.CallOption) (*ListUserAssetsR
 	//   ],
 	//   "parameters": {
 	//     "format": {
-	//       "description": "Return only assets with the matching format. Acceptable values are:\n`BLOCKS`, `FBX`, `GLTF`, `GLTF2`, `OBJ`, and `TILT`.",
+	//       "description": "Return only assets with the matching format. Acceptable values are: `BLOCKS`, `FBX`, `GLTF`, `GLTF2`, `OBJ`, and `TILT`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "A valid user id. Currently, only the special value 'me', representing the\ncurrently-authenticated user is supported. To use 'me', you must pass\nan OAuth token with the request.",
+	//       "description": "A valid user id. Currently, only the special value 'me', representing the currently-authenticated user is supported. To use 'me', you must pass an OAuth token with the request.",
 	//       "location": "path",
 	//       "pattern": "^users/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Specifies an ordering for assets. Acceptable values are:\n`BEST`, `NEWEST`, `OLDEST`. Defaults to `BEST`, which ranks assets\nbased on a combination of popularity and other features.",
+	//       "description": "Specifies an ordering for assets. Acceptable values are: `BEST`, `NEWEST`, `OLDEST`. Defaults to `BEST`, which ranks assets based on a combination of popularity and other features.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The maximum number of assets to be returned. This value must be between `1`\nand `100`. Defaults to `20`.",
+	//       "description": "The maximum number of assets to be returned. This value must be between `1` and `100`. Defaults to `20`.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Specifies a continuation token from a previous search whose results were\nsplit into multiple pages. To get the next page, submit the same request\nspecifying the value from\nnext_page_token.",
+	//       "description": "Specifies a continuation token from a previous search whose results were split into multiple pages. To get the next page, submit the same request specifying the value from next_page_token.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "visibility": {
-	//       "description": "The visibility of the assets to be returned.\nDefaults to\nVISIBILITY_UNSPECIFIED\nwhich returns all assets.",
+	//       "description": "The visibility of the assets to be returned. Defaults to VISIBILITY_UNSPECIFIED which returns all assets.",
 	//       "enum": [
 	//         "VISIBILITY_UNSPECIFIED",
 	//         "PUBLISHED",
 	//         "PRIVATE"
+	//       ],
+	//       "enumDescriptions": [
+	//         "No visibility specified. Returns all assets.",
+	//         "Returns only published assets.",
+	//         "Returns only private assets."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -1709,10 +1641,12 @@ type UsersLikedassetsListCall struct {
 }
 
 // List: Lists assets that the user has liked. Only the value 'me',
-// representing
-// the currently-authenticated user, is supported. May include assets
-// with an
-// access level of UNLISTED.
+// representing the currently-authenticated user, is supported. May
+// include assets with an access level of UNLISTED.
+//
+//   - name: A valid user id. Currently, only the special value 'me',
+//     representing the currently-authenticated user is supported. To use
+//     'me', you must pass an OAuth token with the request.
 func (r *UsersLikedassetsService) List(name string) *UsersLikedassetsListCall {
 	c := &UsersLikedassetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1720,37 +1654,34 @@ func (r *UsersLikedassetsService) List(name string) *UsersLikedassetsListCall {
 }
 
 // Format sets the optional parameter "format": Return only assets with
-// the matching format. Acceptable values are:
-// `BLOCKS`, `FBX`, `GLTF`, `GLTF2`, `OBJ`, `TILT`.
+// the matching format. Acceptable values are: `BLOCKS`, `FBX`, `GLTF`,
+// `GLTF2`, `OBJ`, `TILT`.
 func (c *UsersLikedassetsListCall) Format(format string) *UsersLikedassetsListCall {
 	c.urlParams_.Set("format", format)
 	return c
 }
 
 // OrderBy sets the optional parameter "orderBy": Specifies an ordering
-// for assets. Acceptable values are:
-// `BEST`, `NEWEST`, `OLDEST`, 'LIKED_TIME'. Defaults to `LIKED_TIME`,
-// which
-// ranks assets based on how recently they were liked.
+// for assets. Acceptable values are: `BEST`, `NEWEST`, `OLDEST`,
+// 'LIKED_TIME'. Defaults to `LIKED_TIME`, which ranks assets based on
+// how recently they were liked.
 func (c *UsersLikedassetsListCall) OrderBy(orderBy string) *UsersLikedassetsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of assets to be returned. This value must be between `1`
-// and `100`. Defaults to `20`.
+// of assets to be returned. This value must be between `1` and `100`.
+// Defaults to `20`.
 func (c *UsersLikedassetsListCall) PageSize(pageSize int64) *UsersLikedassetsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Specifies a
-// continuation token from a previous search whose results were
-// split into multiple pages. To get the next page, submit the same
-// request
-// specifying the value from
-// next_page_token.
+// continuation token from a previous search whose results were split
+// into multiple pages. To get the next page, submit the same request
+// specifying the value from next_page_token.
 func (c *UsersLikedassetsListCall) PageToken(pageToken string) *UsersLikedassetsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -1793,7 +1724,7 @@ func (c *UsersLikedassetsListCall) Header() http.Header {
 
 func (c *UsersLikedassetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1831,17 +1762,17 @@ func (c *UsersLikedassetsListCall) Do(opts ...googleapi.CallOption) (*ListLikedA
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListLikedAssetsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1855,7 +1786,7 @@ func (c *UsersLikedassetsListCall) Do(opts ...googleapi.CallOption) (*ListLikedA
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists assets that the user has liked. Only the value 'me', representing\nthe currently-authenticated user, is supported. May include assets with an\naccess level of UNLISTED.",
+	//   "description": "Lists assets that the user has liked. Only the value 'me', representing the currently-authenticated user, is supported. May include assets with an access level of UNLISTED.",
 	//   "flatPath": "v1/users/{usersId}/likedassets",
 	//   "httpMethod": "GET",
 	//   "id": "poly.users.likedassets.list",
@@ -1864,30 +1795,30 @@ func (c *UsersLikedassetsListCall) Do(opts ...googleapi.CallOption) (*ListLikedA
 	//   ],
 	//   "parameters": {
 	//     "format": {
-	//       "description": "Return only assets with the matching format. Acceptable values are:\n`BLOCKS`, `FBX`, `GLTF`, `GLTF2`, `OBJ`, `TILT`.",
+	//       "description": "Return only assets with the matching format. Acceptable values are: `BLOCKS`, `FBX`, `GLTF`, `GLTF2`, `OBJ`, `TILT`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "A valid user id. Currently, only the special value 'me', representing the\ncurrently-authenticated user is supported. To use 'me', you must pass\nan OAuth token with the request.",
+	//       "description": "A valid user id. Currently, only the special value 'me', representing the currently-authenticated user is supported. To use 'me', you must pass an OAuth token with the request.",
 	//       "location": "path",
 	//       "pattern": "^users/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Specifies an ordering for assets. Acceptable values are:\n`BEST`, `NEWEST`, `OLDEST`, 'LIKED_TIME'. Defaults to `LIKED_TIME`, which\nranks assets based on how recently they were liked.",
+	//       "description": "Specifies an ordering for assets. Acceptable values are: `BEST`, `NEWEST`, `OLDEST`, 'LIKED_TIME'. Defaults to `LIKED_TIME`, which ranks assets based on how recently they were liked.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The maximum number of assets to be returned. This value must be between `1`\nand `100`. Defaults to `20`.",
+	//       "description": "The maximum number of assets to be returned. This value must be between `1` and `100`. Defaults to `20`.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Specifies a continuation token from a previous search whose results were\nsplit into multiple pages. To get the next page, submit the same request\nspecifying the value from\nnext_page_token.",
+	//       "description": "Specifies a continuation token from a previous search whose results were split into multiple pages. To get the next page, submit the same request specifying the value from next_page_token.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }

@@ -8,35 +8,35 @@
 //
 // For product documentation, see: https://developers.google.com/blogger/docs/3.0/getting_started
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/blogger/v3"
-//   ...
-//   ctx := context.Background()
-//   bloggerService, err := blogger.NewService(ctx)
+//	import "google.golang.org/api/blogger/v3"
+//	...
+//	ctx := context.Background()
+//	bloggerService, err := blogger.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//   bloggerService, err := blogger.NewService(ctx, option.WithScopes(blogger.BloggerReadonlyScope))
+//	bloggerService, err := blogger.NewService(ctx, option.WithScopes(blogger.BloggerReadonlyScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   bloggerService, err := blogger.NewService(ctx, option.WithAPIKey("AIza..."))
+//	bloggerService, err := blogger.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   bloggerService, err := blogger.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	bloggerService, err := blogger.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package blogger // import "google.golang.org/api/blogger/v3"
@@ -54,6 +54,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -79,6 +80,7 @@ const apiId = "blogger:v3"
 const apiName = "blogger"
 const apiVersion = "v3"
 const basePath = "https://www.googleapis.com/blogger/v3/"
+const mtlsBasePath = "https://www.mtls.googleapis.com/blogger/v3/"
 
 // OAuth2 scopes used by this API.
 const (
@@ -91,13 +93,14 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/blogger",
 		"https://www.googleapis.com/auth/blogger.readonly",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -279,10 +282,10 @@ type Blog struct {
 
 	// ForceSendFields is a list of field names (e.g. "CustomMetaData") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CustomMetaData") to
@@ -314,10 +317,10 @@ type BlogLocale struct {
 
 	// ForceSendFields is a list of field names (e.g. "Country") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Country") to include in
@@ -345,10 +348,10 @@ type BlogPages struct {
 
 	// ForceSendFields is a list of field names (e.g. "SelfLink") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "SelfLink") to include in
@@ -379,10 +382,10 @@ type BlogPosts struct {
 
 	// ForceSendFields is a list of field names (e.g. "Items") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Items") to include in API
@@ -417,10 +420,10 @@ type BlogList struct {
 
 	// ForceSendFields is a list of field names (e.g. "BlogUserInfos") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BlogUserInfos") to include
@@ -457,10 +460,10 @@ type BlogPerUserInfo struct {
 
 	// ForceSendFields is a list of field names (e.g. "BlogId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BlogId") to include in API
@@ -494,10 +497,10 @@ type BlogUserInfo struct {
 
 	// ForceSendFields is a list of field names (e.g. "Blog") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Blog") to include in API
@@ -555,10 +558,10 @@ type Comment struct {
 
 	// ForceSendFields is a list of field names (e.g. "Author") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Author") to include in API
@@ -592,10 +595,10 @@ type CommentAuthor struct {
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DisplayName") to include
@@ -620,10 +623,10 @@ type CommentAuthorImage struct {
 
 	// ForceSendFields is a list of field names (e.g. "Url") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Url") to include in API
@@ -648,10 +651,10 @@ type CommentBlog struct {
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Id") to include in API
@@ -676,10 +679,10 @@ type CommentInReplyTo struct {
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Id") to include in API
@@ -704,10 +707,10 @@ type CommentPost struct {
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Id") to include in API
@@ -746,10 +749,10 @@ type CommentList struct {
 
 	// ForceSendFields is a list of field names (e.g. "Items") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Items") to include in API
@@ -809,10 +812,10 @@ type Page struct {
 
 	// ForceSendFields is a list of field names (e.g. "Author") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Author") to include in API
@@ -846,10 +849,10 @@ type PageAuthor struct {
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DisplayName") to include
@@ -874,10 +877,10 @@ type PageAuthorImage struct {
 
 	// ForceSendFields is a list of field names (e.g. "Url") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Url") to include in API
@@ -902,10 +905,10 @@ type PageBlog struct {
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Id") to include in API
@@ -936,10 +939,10 @@ type PageList struct {
 
 	// ForceSendFields is a list of field names (e.g. "Items") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Items") to include in API
@@ -973,10 +976,10 @@ type Pageviews struct {
 
 	// ForceSendFields is a list of field names (e.g. "BlogId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BlogId") to include in API
@@ -1003,10 +1006,10 @@ type PageviewsCounts struct {
 
 	// ForceSendFields is a list of field names (e.g. "Count") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Count") to include in API
@@ -1082,10 +1085,10 @@ type Post struct {
 
 	// ForceSendFields is a list of field names (e.g. "Author") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Author") to include in API
@@ -1119,10 +1122,10 @@ type PostAuthor struct {
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DisplayName") to include
@@ -1147,10 +1150,10 @@ type PostAuthorImage struct {
 
 	// ForceSendFields is a list of field names (e.g. "Url") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Url") to include in API
@@ -1175,10 +1178,10 @@ type PostBlog struct {
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Id") to include in API
@@ -1201,10 +1204,10 @@ type PostImages struct {
 
 	// ForceSendFields is a list of field names (e.g. "Url") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Url") to include in API
@@ -1239,10 +1242,10 @@ type PostLocation struct {
 
 	// ForceSendFields is a list of field names (e.g. "Lat") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Lat") to include in API
@@ -1289,10 +1292,10 @@ type PostReplies struct {
 
 	// ForceSendFields is a list of field names (e.g. "Items") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Items") to include in API
@@ -1327,10 +1330,10 @@ type PostList struct {
 
 	// ForceSendFields is a list of field names (e.g. "Items") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Items") to include in API
@@ -1366,10 +1369,10 @@ type PostPerUserInfo struct {
 
 	// ForceSendFields is a list of field names (e.g. "BlogId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BlogId") to include in API
@@ -1403,10 +1406,10 @@ type PostUserInfo struct {
 
 	// ForceSendFields is a list of field names (e.g. "Kind") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Kind") to include in API
@@ -1442,10 +1445,10 @@ type PostUserInfosList struct {
 
 	// ForceSendFields is a list of field names (e.g. "Items") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Items") to include in API
@@ -1498,10 +1501,10 @@ type User struct {
 
 	// ForceSendFields is a list of field names (e.g. "About") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "About") to include in API
@@ -1526,10 +1529,10 @@ type UserBlogs struct {
 
 	// ForceSendFields is a list of field names (e.g. "SelfLink") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "SelfLink") to include in
@@ -1560,10 +1563,10 @@ type UserLocale struct {
 
 	// ForceSendFields is a list of field names (e.g. "Country") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Country") to include in
@@ -1594,6 +1597,10 @@ type BlogUserInfosGetCall struct {
 }
 
 // Get: Gets one blog and user info pair by blogId and userId.
+//
+//   - blogId: The ID of the blog to get.
+//   - userId: ID of the user whose blogs are to be fetched. Either the
+//     word 'self' (sans quote marks) or the user's profile identifier.
 func (r *BlogUserInfosService) Get(userId string, blogId string) *BlogUserInfosGetCall {
 	c := &BlogUserInfosGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -1645,7 +1652,7 @@ func (c *BlogUserInfosGetCall) Header() http.Header {
 
 func (c *BlogUserInfosGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/00000000")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1684,17 +1691,17 @@ func (c *BlogUserInfosGetCall) Do(opts ...googleapi.CallOption) (*BlogUserInfo, 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &BlogUserInfo{
 		ServerResponse: googleapi.ServerResponse{
@@ -1759,6 +1766,8 @@ type BlogsGetCall struct {
 }
 
 // Get: Gets one blog by id.
+//
+// - blogId: The ID of the blog to get.
 func (r *BlogsService) Get(blogId string) *BlogsGetCall {
 	c := &BlogsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -1809,7 +1818,7 @@ func (c *BlogsGetCall) Header() http.Header {
 
 func (c *BlogsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/00000000")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1847,17 +1856,17 @@ func (c *BlogsGetCall) Do(opts ...googleapi.CallOption) (*Blog, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Blog{
 		ServerResponse: googleapi.ServerResponse{
@@ -1914,6 +1923,8 @@ type BlogsGetByUrlCall struct {
 }
 
 // GetByUrl: Retrieve a Blog by URL.
+//
+// - url: The URL of the blog to retrieve.
 func (r *BlogsService) GetByUrl(url string) *BlogsGetByUrlCall {
 	c := &BlogsGetByUrlCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("url", url)
@@ -1957,7 +1968,7 @@ func (c *BlogsGetByUrlCall) Header() http.Header {
 
 func (c *BlogsGetByUrlCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/00000000")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1992,17 +2003,17 @@ func (c *BlogsGetByUrlCall) Do(opts ...googleapi.CallOption) (*Blog, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Blog{
 		ServerResponse: googleapi.ServerResponse{
@@ -2054,6 +2065,9 @@ type BlogsListByUserCall struct {
 }
 
 // ListByUser: Retrieves a list of blogs, possibly filtered.
+//
+//   - userId: ID of the user whose blogs are to be fetched. Either the
+//     word 'self' (sans quote marks) or the user's profile identifier.
 func (r *BlogsService) ListByUser(userId string) *BlogsListByUserCall {
 	c := &BlogsListByUserCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -2071,9 +2085,10 @@ func (c *BlogsListByUserCall) FetchUserInfo(fetchUserInfo bool) *BlogsListByUser
 // View sets the optional parameter "view":
 //
 // Possible values:
-//   "ADMIN" - Admin level detail
-//   "AUTHOR" - Author level detail
-//   "READER" - Admin level detail
+//
+//	"ADMIN" - Admin level detail
+//	"AUTHOR" - Author level detail
+//	"READER" - Admin level detail
 func (c *BlogsListByUserCall) View(view string) *BlogsListByUserCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -2116,7 +2131,7 @@ func (c *BlogsListByUserCall) Header() http.Header {
 
 func (c *BlogsListByUserCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/00000000")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2154,17 +2169,17 @@ func (c *BlogsListByUserCall) Do(opts ...googleapi.CallOption) (*BlogList, error
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &BlogList{
 		ServerResponse: googleapi.ServerResponse{
@@ -2236,6 +2251,10 @@ type CommentsApproveCall struct {
 }
 
 // Approve: Marks a comment as not spam.
+//
+// - blogId: The Id of the Blog.
+// - commentId: The ID of the comment to mark as not spam.
+// - postId: The ID of the Post.
 func (r *CommentsService) Approve(blogId string, postId string, commentId string) *CommentsApproveCall {
 	c := &CommentsApproveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -2271,7 +2290,7 @@ func (c *CommentsApproveCall) Header() http.Header {
 
 func (c *CommentsApproveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/00000000")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2308,17 +2327,17 @@ func (c *CommentsApproveCall) Do(opts ...googleapi.CallOption) (*Comment, error)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Comment{
 		ServerResponse: googleapi.ServerResponse{
@@ -2384,6 +2403,10 @@ type CommentsDeleteCall struct {
 }
 
 // Delete: Delete a comment by id.
+//
+// - blogId: The Id of the Blog.
+// - commentId: The ID of the comment to delete.
+// - postId: The ID of the Post.
 func (r *CommentsService) Delete(blogId string, postId string, commentId string) *CommentsDeleteCall {
 	c := &CommentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -2419,7 +2442,7 @@ func (c *CommentsDeleteCall) Header() http.Header {
 
 func (c *CommentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/00000000")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2451,7 +2474,7 @@ func (c *CommentsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return gensupport.WrapError(err)
 	}
 	return nil
 	// {
@@ -2505,6 +2528,10 @@ type CommentsGetCall struct {
 }
 
 // Get: Gets one comment by id.
+//
+// - blogId: ID of the blog to containing the comment.
+// - commentId: The ID of the comment to get.
+// - postId: ID of the post to fetch posts from.
 func (r *CommentsService) Get(blogId string, postId string, commentId string) *CommentsGetCall {
 	c := &CommentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -2550,7 +2577,7 @@ func (c *CommentsGetCall) Header() http.Header {
 
 func (c *CommentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/00000000")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2590,17 +2617,17 @@ func (c *CommentsGetCall) Do(opts ...googleapi.CallOption) (*Comment, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Comment{
 		ServerResponse: googleapi.ServerResponse{
@@ -2667,6 +2694,9 @@ type CommentsListCall struct {
 }
 
 // List: Retrieves the comments for a post, possibly filtered.
+//
+// - blogId: ID of the blog to fetch comments from.
+// - postId: ID of the post to fetch posts from.
 func (r *CommentsService) List(blogId string, postId string) *CommentsListCall {
 	c := &CommentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -2712,10 +2742,11 @@ func (c *CommentsListCall) StartDate(startDate string) *CommentsListCall {
 // Statuses sets the optional parameter "statuses":
 //
 // Possible values:
-//   "emptied" - Comments that have had their content removed
-//   "live" - Comments that are publicly visible
-//   "pending" - Comments that are awaiting administrator approval
-//   "spam" - Comments marked as spam by the administrator
+//
+//	"emptied" - Comments that have had their content removed
+//	"live" - Comments that are publicly visible
+//	"pending" - Comments that are awaiting administrator approval
+//	"spam" - Comments marked as spam by the administrator
 func (c *CommentsListCall) Statuses(statuses ...string) *CommentsListCall {
 	c.urlParams_.SetMulti("statuses", append([]string{}, statuses...))
 	return c
@@ -2724,9 +2755,10 @@ func (c *CommentsListCall) Statuses(statuses ...string) *CommentsListCall {
 // View sets the optional parameter "view":
 //
 // Possible values:
-//   "ADMIN" - Admin level detail
-//   "AUTHOR" - Author level detail
-//   "READER" - Admin level detail
+//
+//	"ADMIN" - Admin level detail
+//	"AUTHOR" - Author level detail
+//	"READER" - Admin level detail
 func (c *CommentsListCall) View(view string) *CommentsListCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -2769,7 +2801,7 @@ func (c *CommentsListCall) Header() http.Header {
 
 func (c *CommentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/00000000")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2808,17 +2840,17 @@ func (c *CommentsListCall) Do(opts ...googleapi.CallOption) (*CommentList, error
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &CommentList{
 		ServerResponse: googleapi.ServerResponse{
@@ -2958,6 +2990,8 @@ type CommentsListByBlogCall struct {
 
 // ListByBlog: Retrieves the comments for a blog, across all posts,
 // possibly filtered.
+//
+// - blogId: ID of the blog to fetch comments from.
 func (r *CommentsService) ListByBlog(blogId string) *CommentsListByBlogCall {
 	c := &CommentsListByBlogCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -3036,7 +3070,7 @@ func (c *CommentsListByBlogCall) Header() http.Header {
 
 func (c *CommentsListByBlogCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/00000000")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3074,17 +3108,17 @@ func (c *CommentsListByBlogCall) Do(opts ...googleapi.CallOption) (*CommentList,
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &CommentList{
 		ServerResponse: googleapi.ServerResponse{
@@ -3186,6 +3220,10 @@ type CommentsMarkAsSpamCall struct {
 }
 
 // MarkAsSpam: Marks a comment as spam.
+//
+// - blogId: The Id of the Blog.
+// - commentId: The ID of the comment to mark as spam.
+// - postId: The ID of the Post.
 func (r *CommentsService) MarkAsSpam(blogId string, postId string, commentId string) *CommentsMarkAsSpamCall {
 	c := &CommentsMarkAsSpamCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -3221,7 +3259,7 @@ func (c *CommentsMarkAsSpamCall) Header() http.Header {
 
 func (c *CommentsMarkAsSpamCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/00000000")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3258,17 +3296,17 @@ func (c *CommentsMarkAsSpamCall) Do(opts ...googleapi.CallOption) (*Comment, err
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Comment{
 		ServerResponse: googleapi.ServerResponse{
@@ -3334,6 +3372,10 @@ type CommentsRemoveContentCall struct {
 }
 
 // RemoveContent: Removes the content of a comment.
+//
+// - blogId: The Id of the Blog.
+// - commentId: The ID of the comment to delete content from.
+// - postId: The ID of the Post.
 func (r *CommentsService) RemoveContent(blogId string, postId string, commentId string) *CommentsRemoveContentCall {
 	c := &CommentsRemoveContentCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -3369,7 +3411,7 @@ func (c *CommentsRemoveContentCall) Header() http.Header {
 
 func (c *CommentsRemoveContentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/00000000")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3406,17 +3448,17 @@ func (c *CommentsRemoveContentCall) Do(opts ...googleapi.CallOption) (*Comment, 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Comment{
 		ServerResponse: googleapi.ServerResponse{
@@ -3481,6 +3523,8 @@ type PageViewsGetCall struct {
 }
 
 // Get: Retrieve pageview stats for a Blog.
+//
+// - blogId: The ID of the blog to get.
 func (r *PageViewsService) Get(blogId string) *PageViewsGetCall {
 	c := &PageViewsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -3490,9 +3534,10 @@ func (r *PageViewsService) Get(blogId string) *PageViewsGetCall {
 // Range sets the optional parameter "range":
 //
 // Possible values:
-//   "30DAYS" - Page view counts from the last thirty days.
-//   "7DAYS" - Page view counts from the last seven days.
-//   "all" - Total page view counts from all time.
+//
+//	"30DAYS" - Page view counts from the last thirty days.
+//	"7DAYS" - Page view counts from the last seven days.
+//	"all" - Total page view counts from all time.
 func (c *PageViewsGetCall) Range(range_ ...string) *PageViewsGetCall {
 	c.urlParams_.SetMulti("range", append([]string{}, range_...))
 	return c
@@ -3535,7 +3580,7 @@ func (c *PageViewsGetCall) Header() http.Header {
 
 func (c *PageViewsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/00000000")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3573,17 +3618,17 @@ func (c *PageViewsGetCall) Do(opts ...googleapi.CallOption) (*Pageviews, error) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Pageviews{
 		ServerResponse: googleapi.ServerResponse{
@@ -3649,6 +3694,9 @@ type PagesDeleteCall struct {
 }
 
 // Delete: Delete a page by id.
+//
+// - blogId: The Id of the Blog.
+// - pageId: The ID of the Page.
 func (r *PagesService) Delete(blogId string, pageId string) *PagesDeleteCall {
 	c := &PagesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -3683,7 +3731,7 @@ func (c *PagesDeleteCall) Header() http.Header {
 
 func (c *PagesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/00000000")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3714,7 +3762,7 @@ func (c *PagesDeleteCall) Do(opts ...googleapi.CallOption) error {
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return gensupport.WrapError(err)
 	}
 	return nil
 	// {
@@ -3760,6 +3808,9 @@ type PagesGetCall struct {
 }
 
 // Get: Gets one blog page by id.
+//
+// - blogId: ID of the blog containing the page.
+// - pageId: The ID of the page to get.
 func (r *PagesService) Get(blogId string, pageId string) *PagesGetCall {
 	c := &PagesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -3770,9 +3821,10 @@ func (r *PagesService) Get(blogId string, pageId string) *PagesGetCall {
 // View sets the optional parameter "view":
 //
 // Possible values:
-//   "ADMIN" - Admin level detail
-//   "AUTHOR" - Author level detail
-//   "READER" - Admin level detail
+//
+//	"ADMIN" - Admin level detail
+//	"AUTHOR" - Author level detail
+//	"READER" - Admin level detail
 func (c *PagesGetCall) View(view string) *PagesGetCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -3815,7 +3867,7 @@ func (c *PagesGetCall) Header() http.Header {
 
 func (c *PagesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/00000000")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3854,17 +3906,17 @@ func (c *PagesGetCall) Do(opts ...googleapi.CallOption) (*Page, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Page{
 		ServerResponse: googleapi.ServerResponse{
@@ -3937,6 +3989,8 @@ type PagesInsertCall struct {
 }
 
 // Insert: Add a page.
+//
+// - blogId: ID of the blog to add the page to.
 func (r *PagesService) Insert(blogId string, page *Page) *PagesInsertCall {
 	c := &PagesInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -3971,7 +4025,7 @@ func (c *PagesInsertCall) Header() http.Header {
 
 func (c *PagesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/00000000")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4011,17 +4065,17 @@ func (c *PagesInsertCall) Do(opts ...googleapi.CallOption) (*Page, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Page{
 		ServerResponse: googleapi.ServerResponse{
@@ -4076,6 +4130,8 @@ type PagesListCall struct {
 
 // List: Retrieves the pages for a blog, optionally including non-LIVE
 // statuses.
+//
+// - blogId: ID of the blog to fetch pages from.
 func (r *PagesService) List(blogId string) *PagesListCall {
 	c := &PagesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -4092,9 +4148,10 @@ func (c *PagesListCall) FetchBodies(fetchBodies bool) *PagesListCall {
 // Statuses sets the optional parameter "statuses":
 //
 // Possible values:
-//   "draft" - Draft (unpublished) Pages
-//   "imported" - Pages that have had their content removed
-//   "live" - Pages that are publicly visible
+//
+//	"draft" - Draft (unpublished) Pages
+//	"imported" - Pages that have had their content removed
+//	"live" - Pages that are publicly visible
 func (c *PagesListCall) Statuses(statuses ...string) *PagesListCall {
 	c.urlParams_.SetMulti("statuses", append([]string{}, statuses...))
 	return c
@@ -4103,9 +4160,10 @@ func (c *PagesListCall) Statuses(statuses ...string) *PagesListCall {
 // View sets the optional parameter "view":
 //
 // Possible values:
-//   "ADMIN" - Admin level detail
-//   "AUTHOR" - Author level detail
-//   "READER" - Admin level detail
+//
+//	"ADMIN" - Admin level detail
+//	"AUTHOR" - Author level detail
+//	"READER" - Admin level detail
 func (c *PagesListCall) View(view string) *PagesListCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -4148,7 +4206,7 @@ func (c *PagesListCall) Header() http.Header {
 
 func (c *PagesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/00000000")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4186,17 +4244,17 @@ func (c *PagesListCall) Do(opts ...googleapi.CallOption) (*PageList, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &PageList{
 		ServerResponse: googleapi.ServerResponse{
@@ -4283,6 +4341,9 @@ type PagesPatchCall struct {
 }
 
 // Patch: Update a page. This method supports patch semantics.
+//
+// - blogId: The ID of the Blog.
+// - pageId: The ID of the Page.
 func (r *PagesService) Patch(blogId string, pageId string, page *Page) *PagesPatchCall {
 	c := &PagesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -4318,7 +4379,7 @@ func (c *PagesPatchCall) Header() http.Header {
 
 func (c *PagesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/00000000")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4359,17 +4420,17 @@ func (c *PagesPatchCall) Do(opts ...googleapi.CallOption) (*Page, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Page{
 		ServerResponse: googleapi.ServerResponse{
@@ -4431,6 +4492,9 @@ type PagesUpdateCall struct {
 }
 
 // Update: Update a page.
+//
+// - blogId: The ID of the Blog.
+// - pageId: The ID of the Page.
 func (r *PagesService) Update(blogId string, pageId string, page *Page) *PagesUpdateCall {
 	c := &PagesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -4466,7 +4530,7 @@ func (c *PagesUpdateCall) Header() http.Header {
 
 func (c *PagesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/00000000")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4507,17 +4571,17 @@ func (c *PagesUpdateCall) Do(opts ...googleapi.CallOption) (*Page, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Page{
 		ServerResponse: googleapi.ServerResponse{
@@ -4580,6 +4644,12 @@ type PostUserInfosGetCall struct {
 }
 
 // Get: Gets one post and user info pair by postId and userId.
+//
+//   - blogId: The ID of the blog.
+//   - postId: The ID of the post to get.
+//   - userId: ID of the user for the per-user information to be fetched.
+//     Either the word 'self' (sans quote marks) or the user's profile
+//     identifier.
 func (r *PostUserInfosService) Get(userId string, blogId string, postId string) *PostUserInfosGetCall {
 	c := &PostUserInfosGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -4632,7 +4702,7 @@ func (c *PostUserInfosGetCall) Header() http.Header {
 
 func (c *PostUserInfosGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/00000000")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4672,17 +4742,17 @@ func (c *PostUserInfosGetCall) Do(opts ...googleapi.CallOption) (*PostUserInfo, 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &PostUserInfo{
 		ServerResponse: googleapi.ServerResponse{
@@ -4756,6 +4826,11 @@ type PostUserInfosListCall struct {
 
 // List: Retrieves a list of post and user info pairs, possibly
 // filtered.
+//
+//   - blogId: ID of the blog to fetch posts from.
+//   - userId: ID of the user for the per-user information to be fetched.
+//     Either the word 'self' (sans quote marks) or the user's profile
+//     identifier.
 func (r *PostUserInfosService) List(userId string, blogId string) *PostUserInfosListCall {
 	c := &PostUserInfosListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -4794,8 +4869,9 @@ func (c *PostUserInfosListCall) MaxResults(maxResults int64) *PostUserInfosListC
 // OrderBy sets the optional parameter "orderBy": Sort search results
 //
 // Possible values:
-//   "published" - Order by the date the post was published
-//   "updated" - Order by the date the post was last updated
+//
+//	"published" - Order by the date the post was published
+//	"updated" - Order by the date the post was last updated
 func (c *PostUserInfosListCall) OrderBy(orderBy string) *PostUserInfosListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -4818,9 +4894,10 @@ func (c *PostUserInfosListCall) StartDate(startDate string) *PostUserInfosListCa
 // Statuses sets the optional parameter "statuses":
 //
 // Possible values:
-//   "draft" - Draft posts
-//   "live" - Published posts
-//   "scheduled" - Posts that are scheduled to publish in future.
+//
+//	"draft" - Draft posts
+//	"live" - Published posts
+//	"scheduled" - Posts that are scheduled to publish in future.
 func (c *PostUserInfosListCall) Statuses(statuses ...string) *PostUserInfosListCall {
 	c.urlParams_.SetMulti("statuses", append([]string{}, statuses...))
 	return c
@@ -4829,9 +4906,10 @@ func (c *PostUserInfosListCall) Statuses(statuses ...string) *PostUserInfosListC
 // View sets the optional parameter "view":
 //
 // Possible values:
-//   "ADMIN" - Admin level detail
-//   "AUTHOR" - Author level detail
-//   "READER" - Reader level detail
+//
+//	"ADMIN" - Admin level detail
+//	"AUTHOR" - Author level detail
+//	"READER" - Reader level detail
 func (c *PostUserInfosListCall) View(view string) *PostUserInfosListCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -4874,7 +4952,7 @@ func (c *PostUserInfosListCall) Header() http.Header {
 
 func (c *PostUserInfosListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/00000000")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4913,17 +4991,17 @@ func (c *PostUserInfosListCall) Do(opts ...googleapi.CallOption) (*PostUserInfos
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &PostUserInfosList{
 		ServerResponse: googleapi.ServerResponse{
@@ -5079,6 +5157,9 @@ type PostsDeleteCall struct {
 }
 
 // Delete: Delete a post by id.
+//
+// - blogId: The Id of the Blog.
+// - postId: The ID of the Post.
 func (r *PostsService) Delete(blogId string, postId string) *PostsDeleteCall {
 	c := &PostsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -5113,7 +5194,7 @@ func (c *PostsDeleteCall) Header() http.Header {
 
 func (c *PostsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/00000000")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5144,7 +5225,7 @@ func (c *PostsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return gensupport.WrapError(err)
 	}
 	return nil
 	// {
@@ -5190,6 +5271,9 @@ type PostsGetCall struct {
 }
 
 // Get: Get a post by id.
+//
+// - blogId: ID of the blog to fetch the post from.
+// - postId: The ID of the post.
 func (r *PostsService) Get(blogId string, postId string) *PostsGetCall {
 	c := &PostsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -5207,9 +5291,10 @@ func (c *PostsGetCall) MaxComments(maxComments int64) *PostsGetCall {
 // View sets the optional parameter "view":
 //
 // Possible values:
-//   "ADMIN" - Admin level detail
-//   "AUTHOR" - Author level detail
-//   "READER" - Admin level detail
+//
+//	"ADMIN" - Admin level detail
+//	"AUTHOR" - Author level detail
+//	"READER" - Admin level detail
 func (c *PostsGetCall) View(view string) *PostsGetCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -5252,7 +5337,7 @@ func (c *PostsGetCall) Header() http.Header {
 
 func (c *PostsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/00000000")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5291,17 +5376,17 @@ func (c *PostsGetCall) Do(opts ...googleapi.CallOption) (*Post, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Post{
 		ServerResponse: googleapi.ServerResponse{
@@ -5380,6 +5465,9 @@ type PostsGetByPathCall struct {
 }
 
 // GetByPath: Retrieve a Post by Path.
+//
+// - blogId: ID of the blog to fetch the post from.
+// - path: Path of the Post to retrieve.
 func (r *PostsService) GetByPath(blogId string, path string) *PostsGetByPathCall {
 	c := &PostsGetByPathCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -5397,9 +5485,10 @@ func (c *PostsGetByPathCall) MaxComments(maxComments int64) *PostsGetByPathCall 
 // View sets the optional parameter "view":
 //
 // Possible values:
-//   "ADMIN" - Admin level detail
-//   "AUTHOR" - Author level detail
-//   "READER" - Admin level detail
+//
+//	"ADMIN" - Admin level detail
+//	"AUTHOR" - Author level detail
+//	"READER" - Admin level detail
 func (c *PostsGetByPathCall) View(view string) *PostsGetByPathCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -5442,7 +5531,7 @@ func (c *PostsGetByPathCall) Header() http.Header {
 
 func (c *PostsGetByPathCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/00000000")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5480,17 +5569,17 @@ func (c *PostsGetByPathCall) Do(opts ...googleapi.CallOption) (*Post, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Post{
 		ServerResponse: googleapi.ServerResponse{
@@ -5569,6 +5658,8 @@ type PostsInsertCall struct {
 }
 
 // Insert: Add a post.
+//
+// - blogId: ID of the blog to add the post to.
 func (r *PostsService) Insert(blogId string, post *Post) *PostsInsertCall {
 	c := &PostsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -5610,7 +5701,7 @@ func (c *PostsInsertCall) Header() http.Header {
 
 func (c *PostsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/00000000")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5650,17 +5741,17 @@ func (c *PostsInsertCall) Do(opts ...googleapi.CallOption) (*Post, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Post{
 		ServerResponse: googleapi.ServerResponse{
@@ -5719,6 +5810,8 @@ type PostsListCall struct {
 }
 
 // List: Retrieves a list of posts, possibly filtered.
+//
+// - blogId: ID of the blog to fetch posts from.
 func (r *PostsService) List(blogId string) *PostsListCall {
 	c := &PostsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -5765,8 +5858,9 @@ func (c *PostsListCall) MaxResults(maxResults int64) *PostsListCall {
 // OrderBy sets the optional parameter "orderBy": Sort search results
 //
 // Possible values:
-//   "published" - Order by the date the post was published
-//   "updated" - Order by the date the post was last updated
+//
+//	"published" - Order by the date the post was published
+//	"updated" - Order by the date the post was last updated
 func (c *PostsListCall) OrderBy(orderBy string) *PostsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -5789,9 +5883,10 @@ func (c *PostsListCall) StartDate(startDate string) *PostsListCall {
 // Statuses sets the optional parameter "statuses":
 //
 // Possible values:
-//   "draft" - Draft posts
-//   "live" - Published posts
-//   "scheduled" - Posts that are scheduled to publish in future.
+//
+//	"draft" - Draft posts
+//	"live" - Published posts
+//	"scheduled" - Posts that are scheduled to publish in future.
 func (c *PostsListCall) Statuses(statuses ...string) *PostsListCall {
 	c.urlParams_.SetMulti("statuses", append([]string{}, statuses...))
 	return c
@@ -5800,9 +5895,10 @@ func (c *PostsListCall) Statuses(statuses ...string) *PostsListCall {
 // View sets the optional parameter "view":
 //
 // Possible values:
-//   "ADMIN" - Admin level detail
-//   "AUTHOR" - Author level detail
-//   "READER" - Reader level detail
+//
+//	"ADMIN" - Admin level detail
+//	"AUTHOR" - Author level detail
+//	"READER" - Reader level detail
 func (c *PostsListCall) View(view string) *PostsListCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -5845,7 +5941,7 @@ func (c *PostsListCall) Header() http.Header {
 
 func (c *PostsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/00000000")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5883,17 +5979,17 @@ func (c *PostsListCall) Do(opts ...googleapi.CallOption) (*PostList, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &PostList{
 		ServerResponse: googleapi.ServerResponse{
@@ -6049,6 +6145,9 @@ type PostsPatchCall struct {
 }
 
 // Patch: Update a post. This method supports patch semantics.
+//
+// - blogId: The ID of the Blog.
+// - postId: The ID of the Post.
 func (r *PostsService) Patch(blogId string, postId string, post *Post) *PostsPatchCall {
 	c := &PostsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -6084,7 +6183,7 @@ func (c *PostsPatchCall) Header() http.Header {
 
 func (c *PostsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/00000000")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6125,17 +6224,17 @@ func (c *PostsPatchCall) Do(opts ...googleapi.CallOption) (*Post, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Post{
 		ServerResponse: googleapi.ServerResponse{
@@ -6196,6 +6295,9 @@ type PostsPublishCall struct {
 }
 
 // Publish: Publish a draft post.
+//
+// - blogId: The ID of the Blog.
+// - postId: The ID of the Post.
 func (r *PostsService) Publish(blogId string, postId string) *PostsPublishCall {
 	c := &PostsPublishCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -6237,7 +6339,7 @@ func (c *PostsPublishCall) Header() http.Header {
 
 func (c *PostsPublishCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/00000000")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6273,17 +6375,17 @@ func (c *PostsPublishCall) Do(opts ...googleapi.CallOption) (*Post, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Post{
 		ServerResponse: googleapi.ServerResponse{
@@ -6347,6 +6449,9 @@ type PostsRevertCall struct {
 }
 
 // Revert: Revert a published or scheduled post to draft state.
+//
+// - blogId: The ID of the Blog.
+// - postId: The ID of the Post.
 func (r *PostsService) Revert(blogId string, postId string) *PostsRevertCall {
 	c := &PostsRevertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -6381,7 +6486,7 @@ func (c *PostsRevertCall) Header() http.Header {
 
 func (c *PostsRevertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/00000000")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6417,17 +6522,17 @@ func (c *PostsRevertCall) Do(opts ...googleapi.CallOption) (*Post, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Post{
 		ServerResponse: googleapi.ServerResponse{
@@ -6485,6 +6590,9 @@ type PostsSearchCall struct {
 }
 
 // Search: Search for a post.
+//
+// - blogId: ID of the blog to fetch the post from.
+// - q: Query terms to search this blog for matching posts.
 func (r *PostsService) Search(blogId string, q string) *PostsSearchCall {
 	c := &PostsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -6504,8 +6612,9 @@ func (c *PostsSearchCall) FetchBodies(fetchBodies bool) *PostsSearchCall {
 // OrderBy sets the optional parameter "orderBy": Sort search results
 //
 // Possible values:
-//   "published" - Order by the date the post was published
-//   "updated" - Order by the date the post was last updated
+//
+//	"published" - Order by the date the post was published
+//	"updated" - Order by the date the post was last updated
 func (c *PostsSearchCall) OrderBy(orderBy string) *PostsSearchCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -6548,7 +6657,7 @@ func (c *PostsSearchCall) Header() http.Header {
 
 func (c *PostsSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/00000000")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6586,17 +6695,17 @@ func (c *PostsSearchCall) Do(opts ...googleapi.CallOption) (*PostList, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &PostList{
 		ServerResponse: googleapi.ServerResponse{
@@ -6676,6 +6785,9 @@ type PostsUpdateCall struct {
 }
 
 // Update: Update a post.
+//
+// - blogId: The ID of the Blog.
+// - postId: The ID of the Post.
 func (r *PostsService) Update(blogId string, postId string, post *Post) *PostsUpdateCall {
 	c := &PostsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -6711,7 +6823,7 @@ func (c *PostsUpdateCall) Header() http.Header {
 
 func (c *PostsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/00000000")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6752,17 +6864,17 @@ func (c *PostsUpdateCall) Do(opts ...googleapi.CallOption) (*Post, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Post{
 		ServerResponse: googleapi.ServerResponse{
@@ -6823,6 +6935,8 @@ type UsersGetCall struct {
 }
 
 // Get: Gets one user by id.
+//
+// - userId: The ID of the user to get.
 func (r *UsersService) Get(userId string) *UsersGetCall {
 	c := &UsersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -6866,7 +6980,7 @@ func (c *UsersGetCall) Header() http.Header {
 
 func (c *UsersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/00000000")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6904,17 +7018,17 @@ func (c *UsersGetCall) Do(opts ...googleapi.CallOption) (*User, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &User{
 		ServerResponse: googleapi.ServerResponse{

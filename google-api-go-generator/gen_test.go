@@ -2,6 +2,9 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
+//go:build go1.19
+// +build go1.19
+
 package main
 
 import (
@@ -14,7 +17,7 @@ import (
 	"testing"
 
 	"google.golang.org/api/google-api-go-generator/internal/disco"
-	"google.golang.org/api/internal/version"
+	"google.golang.org/api/internal"
 )
 
 var updateGolden = flag.Bool("update_golden", false, "If true, causes TestAPIs to update golden files")
@@ -59,7 +62,7 @@ func TestAPIs(t *testing.T) {
 			}
 			goldenFile := filepath.Join("testdata", name+".want")
 			if *updateGolden {
-				clean := strings.Replace(string(clean), fmt.Sprintf("gdcl/%s", version.Repo), "gdcl/00000000", -1)
+				clean := strings.Replace(string(clean), fmt.Sprintf("gdcl/%s", internal.Version), "gdcl/00000000", -1)
 				if err := ioutil.WriteFile(goldenFile, []byte(clean), 0644); err != nil {
 					t.Fatal(err)
 				}
@@ -68,7 +71,7 @@ func TestAPIs(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
-			wantStr := strings.Replace(string(want), "gdcl/00000000", fmt.Sprintf("gdcl/%s", version.Repo), -1)
+			wantStr := strings.Replace(string(want), "gdcl/00000000", fmt.Sprintf("gdcl/%s", internal.Version), -1)
 			if !bytes.Equal([]byte(wantStr), clean) {
 				tf, _ := ioutil.TempFile("", "api-"+name+"-got-json.")
 				if _, err := tf.Write(clean); err != nil {
@@ -248,5 +251,45 @@ func TestIsNewerRevision(t *testing.T) {
 	}
 	if err != errOldRevision {
 		t.Fatalf("got %v, want %v", err, errOldRevision)
+	}
+}
+
+func TestRemoveMarkdownLinks(t *testing.T) {
+	tests := []struct {
+		name  string
+		input string
+		want  string
+	}{
+		{name: "basic", input: "[name](link)", want: "name (link)"},
+		{name: "no link", input: "name", want: "name"},
+		{name: "empty string", input: "", want: ""},
+		{name: "sentence", input: "This [is](link) a test.", want: "This is (link) a test."},
+		{name: "two links", input: "This [is](link) a [test](link).", want: "This is (link) a test (link)."},
+		{name: "first incomplete link", input: "This [is] a [test](link).", want: "This [is] a test (link)."},
+		{name: "second incomplete link", input: "This [is](link) a (test).", want: "This is (link) a (test)."},
+		{name: "seperated", input: "This [is] (a) test.", want: "This [is] (a) test."},
+		{name: "don't process code blocks", input: "This is `[a](link)` test.", want: "This is `[a](link)` test."},
+		{name: "At start", input: "[This](link) is a test.", want: "This (link) is a test."},
+		{name: "At end ", input: "This is a [test.](link)", want: "This is a test. (link)"},
+	}
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			if got := removeMarkdownLinks(tc.input); got != tc.want {
+				t.Errorf("removeMarkdownLinks(%q) = %q, want %q", tc.input, got, tc.want)
+			}
+		})
+	}
+}
+
+func TestAsComment_LongLink(t *testing.T) {
+	//input := "The specification of cohorts for a cohort report. Cohort reports create a time series of user retention for the cohort. For example, you could select the cohort of users that were acquired in the first week of September and follow that cohort for the next six weeks. Selecting the users acquired in the first week of September cohort is specified in the `cohort` object. Following that cohort for the next six weeks is specified in the `cohortsRange` object. For examples, see [Cohort Report Examples](https://developers.google.com/analytics/devguides/reporting/data/v1/advanced#cohort_report_examples). The report response could show a weekly time series where say your app has retained 60% of this cohort after three weeks and 25% of this cohort after six weeks. These two percentages can be calculated by the metric `cohortActiveUsers/cohortTotalUsers` and will be separate rows in the report."
+	input := "This make sure we don't split long links (http://example.com/really/really/really/really/really/really/really/really/really/really/really/long). We want them to show up well in godoc."
+	want := `// This make sure we don't split long links
+// (http://example.com/really/really/really/really/really/really/really/really/really/really/really/long).
+// We want them to show up well in godoc.
+`
+	got := asComment("", input)
+	if got != want {
+		t.Errorf("got %q, want %q", got, want)
 	}
 }

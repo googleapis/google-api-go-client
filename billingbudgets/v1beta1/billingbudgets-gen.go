@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -8,31 +8,35 @@
 //
 // For product documentation, see: https://cloud.google.com/billing/docs/how-to/budget-api-overview
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/billingbudgets/v1beta1"
-//   ...
-//   ctx := context.Background()
-//   billingbudgetsService, err := billingbudgets.NewService(ctx)
+//	import "google.golang.org/api/billingbudgets/v1beta1"
+//	...
+//	ctx := context.Background()
+//	billingbudgetsService, err := billingbudgets.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
+//
+// By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
+//
+//	billingbudgetsService, err := billingbudgets.NewService(ctx, option.WithScopes(billingbudgets.CloudPlatformScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   billingbudgetsService, err := billingbudgets.NewService(ctx, option.WithAPIKey("AIza..."))
+//	billingbudgetsService, err := billingbudgets.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   billingbudgetsService, err := billingbudgets.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	billingbudgetsService, err := billingbudgets.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package billingbudgets // import "google.golang.org/api/billingbudgets/v1beta1"
@@ -50,6 +54,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -75,21 +80,28 @@ const apiId = "billingbudgets:v1beta1"
 const apiName = "billingbudgets"
 const apiVersion = "v1beta1"
 const basePath = "https://billingbudgets.googleapis.com/"
+const mtlsBasePath = "https://billingbudgets.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// View and manage your Google Cloud Platform billing accounts
+	CloudBillingScope = "https://www.googleapis.com/auth/cloud-billing"
+
+	// See, edit, configure, and delete your Google Cloud data and see the
+	// email address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
+		"https://www.googleapis.com/auth/cloud-billing",
 		"https://www.googleapis.com/auth/cloud-platform",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -155,52 +167,62 @@ type BillingAccountsBudgetsService struct {
 }
 
 // GoogleCloudBillingBudgetsV1beta1AllUpdatesRule: AllUpdatesRule
-// defines notifications that are sent on every update to the
-// billing account's spend, regardless of the thresholds defined
-// using
-// threshold rules.
+// defines notifications that are sent based on budget spend and
+// thresholds.
 type GoogleCloudBillingBudgetsV1beta1AllUpdatesRule struct {
-	// PubsubTopic: Required. The name of the Cloud Pub/Sub topic where
-	// budget related messages will be
-	// published, in the form `projects/{project_id}/topics/{topic_id}`.
-	// Updates
-	// are sent at regular intervals to the topic.
-	// The topic needs to be created before the budget is created;
-	// see
-	// https://cloud.google.com/billing/docs/how-to/budgets#manage-notifi
-	// cations
+	// DisableDefaultIamRecipients: Optional. When set to true, disables
+	// default notifications sent when a threshold is exceeded. Default
+	// notifications are sent to those with Billing Account Administrator
+	// and Billing Account User IAM roles for the target account.
+	DisableDefaultIamRecipients bool `json:"disableDefaultIamRecipients,omitempty"`
+
+	// MonitoringNotificationChannels: Optional. Targets to send
+	// notifications to when a threshold is exceeded. This is in addition to
+	// default recipients who have billing account IAM roles. The value is
+	// the full REST resource name of a monitoring notification channel with
+	// the form `projects/{project_id}/notificationChannels/{channel_id}`. A
+	// maximum of 5 channels are allowed. See
+	// https://cloud.google.com/billing/docs/how-to/budgets-notification-recipients
 	// for more details.
-	// Caller is expected to have
+	MonitoringNotificationChannels []string `json:"monitoringNotificationChannels,omitempty"`
+
+	// PubsubTopic: Optional. The name of the Pub/Sub topic where budget
+	// related messages will be published, in the form
+	// `projects/{project_id}/topics/{topic_id}`. Updates are sent at
+	// regular intervals to the topic. The topic needs to be created before
+	// the budget is created; see
+	// https://cloud.google.com/billing/docs/how-to/budgets-programmatic-notifications
+	// for more details. Caller is expected to have
 	// `pubsub.topics.setIamPolicy` permission on the topic when it's set
-	// for a
-	// budget, otherwise, the API call will fail with PERMISSION_DENIED.
-	// See
-	// https://cloud.google.com/pubsub/docs/access-control for more details
-	// on
-	// Pub/Sub roles and permissions.
+	// for a budget, otherwise, the API call will fail with
+	// PERMISSION_DENIED. See
+	// https://cloud.google.com/billing/docs/how-to/budgets-programmatic-notifications#permissions_required_for_this_task
+	// for more details on Pub/Sub roles and permissions.
 	PubsubTopic string `json:"pubsubTopic,omitempty"`
 
-	// SchemaVersion: Required. The schema version of the notification.
-	// Only "1.0" is accepted. It represents the JSON schema as defined
-	// in
-	// https://cloud.google.com/billing/docs/how-to/budgets#notification_f
-	// ormat
+	// SchemaVersion: Optional. Required when AllUpdatesRule.pubsub_topic is
+	// set. The schema version of the notification sent to
+	// AllUpdatesRule.pubsub_topic. Only "1.0" is accepted. It represents
+	// the JSON schema as defined in
+	// https://cloud.google.com/billing/docs/how-to/budgets-programmatic-notifications#notification_format.
 	SchemaVersion string `json:"schemaVersion,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "PubsubTopic") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "DisableDefaultIamRecipients") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "PubsubTopic") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g.
+	// "DisableDefaultIamRecipients") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -211,48 +233,43 @@ func (s *GoogleCloudBillingBudgetsV1beta1AllUpdatesRule) MarshalJSON() ([]byte, 
 }
 
 // GoogleCloudBillingBudgetsV1beta1Budget: A budget is a plan that
-// describes what you expect to spend on Cloud
-// projects, plus the rules to execute as spend is tracked against that
-// plan,
-// (for example, send an alert when 90% of the target spend is
-// met).
-// Currently all plans are monthly budgets so the usage period(s)
-// tracked are
-// implied (calendar months of usage back-to-back).
+// describes what you expect to spend on Cloud projects, plus the rules
+// to execute as spend is tracked against that plan, (for example, send
+// an alert when 90% of the target spend is met). The budget time period
+// is configurable, with options such as month (default), quarter, year,
+// or custom time period.
 type GoogleCloudBillingBudgetsV1beta1Budget struct {
-	// AllUpdatesRule: Optional. Rules to apply to all updates to the actual
-	// spend, regardless
-	// of the thresholds set in `threshold_rules`.
+	// AllUpdatesRule: Optional. Rules to apply to notifications sent based
+	// on budget spend and thresholds.
 	AllUpdatesRule *GoogleCloudBillingBudgetsV1beta1AllUpdatesRule `json:"allUpdatesRule,omitempty"`
 
 	// Amount: Required. Budgeted amount.
 	Amount *GoogleCloudBillingBudgetsV1beta1BudgetAmount `json:"amount,omitempty"`
 
 	// BudgetFilter: Optional. Filters that define which resources are used
-	// to compute
-	// the actual spend against the budget.
+	// to compute the actual spend against the budget amount, such as
+	// projects, services, and the budget's time period, as well as other
+	// filters.
 	BudgetFilter *GoogleCloudBillingBudgetsV1beta1Filter `json:"budgetFilter,omitempty"`
 
-	// DisplayName: User data for display name in UI.
-	// Validation: <= 60 chars.
+	// DisplayName: User data for display name in UI. Validation: <= 60
+	// chars.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Etag: Optional. Etag to validate that the object is unchanged for
-	// a
-	// read-modify-write operation.
-	// An empty etag will cause an update to overwrite other changes.
+	// Etag: Optional. Etag to validate that the object is unchanged for a
+	// read-modify-write operation. An empty etag will cause an update to
+	// overwrite other changes.
 	Etag string `json:"etag,omitempty"`
 
-	// Name: Output only. Resource name of the budget.
-	// The resource name implies the scope of a budget. Values are of the
-	// form
+	// Name: Output only. Resource name of the budget. The resource name
+	// implies the scope of a budget. Values are of the form
 	// `billingAccounts/{billingAccountId}/budgets/{budgetId}`.
 	Name string `json:"name,omitempty"`
 
 	// ThresholdRules: Optional. Rules that trigger alerts (notifications of
-	// thresholds
-	// being crossed) when spend exceeds the specified percentages of the
-	// budget.
+	// thresholds being crossed) when spend exceeds the specified
+	// percentages of the budget. Optional for `pubsubTopic` notifications.
+	// Required if using email notifications.
 	ThresholdRules []*GoogleCloudBillingBudgetsV1beta1ThresholdRule `json:"thresholdRules,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -261,10 +278,10 @@ type GoogleCloudBillingBudgetsV1beta1Budget struct {
 
 	// ForceSendFields is a list of field names (e.g. "AllUpdatesRule") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AllUpdatesRule") to
@@ -287,23 +304,24 @@ func (s *GoogleCloudBillingBudgetsV1beta1Budget) MarshalJSON() ([]byte, error) {
 // each usage period.
 type GoogleCloudBillingBudgetsV1beta1BudgetAmount struct {
 	// LastPeriodAmount: Use the last period's actual spend as the budget
-	// for the present period.
+	// for the present period. LastPeriodAmount can only be set when the
+	// budget's time period is a Filter.calendar_period. It cannot be set in
+	// combination with Filter.custom_period.
 	LastPeriodAmount *GoogleCloudBillingBudgetsV1beta1LastPeriodAmount `json:"lastPeriodAmount,omitempty"`
 
-	// SpecifiedAmount: A specified amount to use as the
-	// budget.
-	// `currency_code` is optional. If specified, it must match the
-	// currency of the billing account. The `currency_code` is provided
-	// on
-	// output.
+	// SpecifiedAmount: A specified amount to use as the budget.
+	// `currency_code` is optional. If specified when creating a budget, it
+	// must match the currency of the billing account. If specified when
+	// updating a budget, it must match the currency_code of the existing
+	// budget. The `currency_code` is provided on output.
 	SpecifiedAmount *GoogleTypeMoney `json:"specifiedAmount,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LastPeriodAmount") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "LastPeriodAmount") to
@@ -330,10 +348,10 @@ type GoogleCloudBillingBudgetsV1beta1CreateBudgetRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "Budget") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Budget") to include in API
@@ -351,55 +369,130 @@ func (s *GoogleCloudBillingBudgetsV1beta1CreateBudgetRequest) MarshalJSON() ([]b
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudBillingBudgetsV1beta1CustomPeriod: All date times begin at
+// 12 AM US and Canadian Pacific Time (UTC-8).
+type GoogleCloudBillingBudgetsV1beta1CustomPeriod struct {
+	// EndDate: Optional. The end date of the time period. Budgets with
+	// elapsed end date won't be processed. If unset, specifies to track all
+	// usage incurred since the start_date.
+	EndDate *GoogleTypeDate `json:"endDate,omitempty"`
+
+	// StartDate: Required. The start date must be after January 1, 2017.
+	StartDate *GoogleTypeDate `json:"startDate,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EndDate") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EndDate") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudBillingBudgetsV1beta1CustomPeriod) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudBillingBudgetsV1beta1CustomPeriod
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudBillingBudgetsV1beta1Filter: A filter for a budget,
 // limiting the scope of the cost to calculate.
 type GoogleCloudBillingBudgetsV1beta1Filter struct {
+	// CalendarPeriod: Optional. Specifies to track usage for recurring
+	// calendar period. For example, assume that CalendarPeriod.QUARTER is
+	// set. The budget will track usage from April 1 to June 30, when the
+	// current calendar month is April, May, June. After that, it will track
+	// usage from July 1 to September 30 when the current calendar month is
+	// July, August, September, so on.
+	//
+	// Possible values:
+	//   "CALENDAR_PERIOD_UNSPECIFIED" - Calendar period is unset. This is
+	// the default if the budget is for a custom time period (CustomPeriod).
+	//   "MONTH" - A month. Month starts on the first day of each month,
+	// such as January 1, February 1, March 1, and so on.
+	//   "QUARTER" - A quarter. Quarters start on dates January 1, April 1,
+	// July 1, and October 1 of each year.
+	//   "YEAR" - A year. Year starts on January 1.
+	CalendarPeriod string `json:"calendarPeriod,omitempty"`
+
+	// CreditTypes: Optional. If Filter.credit_types_treatment is
+	// INCLUDE_SPECIFIED_CREDITS, this is a list of credit types to be
+	// subtracted from gross cost to determine the spend for threshold
+	// calculations. See a list of acceptable credit type values
+	// (https://cloud.google.com/billing/docs/how-to/export-data-bigquery-tables#credits-type).
+	// If Filter.credit_types_treatment is **not**
+	// INCLUDE_SPECIFIED_CREDITS, this field must be empty.
+	CreditTypes []string `json:"creditTypes,omitempty"`
+
 	// CreditTypesTreatment: Optional. If not set, default behavior is
 	// `INCLUDE_ALL_CREDITS`.
 	//
 	// Possible values:
 	//   "CREDIT_TYPES_TREATMENT_UNSPECIFIED"
 	//   "INCLUDE_ALL_CREDITS" - All types of credit are subtracted from the
-	// gross cost to determine the
-	// spend for threshold calculations.
+	// gross cost to determine the spend for threshold calculations.
 	//   "EXCLUDE_ALL_CREDITS" - All types of credit are added to the net
-	// cost to determine the spend for
-	// threshold calculations.
+	// cost to determine the spend for threshold calculations.
+	//   "INCLUDE_SPECIFIED_CREDITS" - [Credit
+	// types](https://cloud.google.com/billing/docs/how-to/export-data-bigque
+	// ry-tables#credits-type) specified in the credit_types field are
+	// subtracted from the gross cost to determine the spend for threshold
+	// calculations.
 	CreditTypesTreatment string `json:"creditTypesTreatment,omitempty"`
 
+	// CustomPeriod: Optional. Specifies to track usage from any start date
+	// (required) to any end date (optional). This time period is static, it
+	// does not recur.
+	CustomPeriod *GoogleCloudBillingBudgetsV1beta1CustomPeriod `json:"customPeriod,omitempty"`
+
+	// Labels: Optional. A single label and value pair specifying that usage
+	// from only this set of labeled resources should be included in the
+	// budget. If omitted, the report will include all labeled and unlabeled
+	// usage. An object containing a single "key": value` pair. Example: `{
+	// "name": "wrench" }`. _Currently, multiple entries or multiple values
+	// per entry are not allowed._
+	Labels map[string][]interface{} `json:"labels,omitempty"`
+
 	// Projects: Optional. A set of projects of the form
-	// `projects/{project}`,
-	// specifying that usage from only this set of projects should
-	// be
-	// included in the budget. If omitted, the report will include all usage
-	// for
-	// the billing account, regardless of which project the usage occurred
-	// on.
-	// Only zero or one project can be specified currently.
+	// `projects/{project}`, specifying that usage from only this set of
+	// projects should be included in the budget. If omitted, the report
+	// will include all usage for the billing account, regardless of which
+	// project the usage occurred on.
 	Projects []string `json:"projects,omitempty"`
 
 	// Services: Optional. A set of services of the form
-	// `services/{service_id}`,
-	// specifying that usage from only this set of services should
-	// be
-	// included in the budget. If omitted, the report will include usage
-	// for
-	// all the services.
-	// The service names are available through the Catalog
-	// API:
+	// `services/{service_id}`, specifying that usage from only this set of
+	// services should be included in the budget. If omitted, the report
+	// will include usage for all the services. The service names are
+	// available through the Catalog API:
 	// https://cloud.google.com/billing/v1/how-tos/catalog-api.
 	Services []string `json:"services,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g.
-	// "CreditTypesTreatment") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// Subaccounts: Optional. A set of subaccounts of the form
+	// `billingAccounts/{account_id}`, specifying that usage from only this
+	// set of subaccounts should be included in the budget. If a subaccount
+	// is set to the name of the parent account, usage from the parent
+	// account will be included. If omitted, the report will include usage
+	// from the parent account and all subaccounts, if they exist.
+	Subaccounts []string `json:"subaccounts,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CalendarPeriod") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CreditTypesTreatment") to
+	// NullFields is a list of field names (e.g. "CalendarPeriod") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -416,13 +509,12 @@ func (s *GoogleCloudBillingBudgetsV1beta1Filter) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudBillingBudgetsV1beta1LastPeriodAmount: Describes a budget
-// amount targeted to last period's spend.
-// At this time, the amount is automatically 100% of last period's
-// spend;
-// that is, there are no other options yet.
-// Future configuration will be described here (for example, configuring
-// a
-// percentage of last period's spend).
+// amount targeted to the last Filter.calendar_period spend. At this
+// time, the amount is automatically 100% of the last calendar period's
+// spend; that is, there are no other options yet. Future configuration
+// options will be described here (for example, configuring a percentage
+// of last period's spend). LastPeriodAmount cannot be set for a budget
+// configured with a Filter.custom_period.
 type GoogleCloudBillingBudgetsV1beta1LastPeriodAmount struct {
 }
 
@@ -433,8 +525,8 @@ type GoogleCloudBillingBudgetsV1beta1ListBudgetsResponse struct {
 	Budgets []*GoogleCloudBillingBudgetsV1beta1Budget `json:"budgets,omitempty"`
 
 	// NextPageToken: If not empty, indicates that there may be more budgets
-	// that match the
-	// request; this value should be passed in a new `ListBudgetsRequest`.
+	// that match the request; this value should be passed in a new
+	// `ListBudgetsRequest`.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -443,10 +535,10 @@ type GoogleCloudBillingBudgetsV1beta1ListBudgetsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Budgets") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Budgets") to include in
@@ -465,42 +557,45 @@ func (s *GoogleCloudBillingBudgetsV1beta1ListBudgetsResponse) MarshalJSON() ([]b
 }
 
 // GoogleCloudBillingBudgetsV1beta1ThresholdRule: ThresholdRule contains
-// a definition of a threshold which triggers
-// an alert (a notification of a threshold being crossed) to be sent
-// when
-// spend goes above the specified amount.
-// Alerts are automatically e-mailed to users with the Billing
-// Account
-// Administrator role or the Billing Account User role.
-// The thresholds here have no effect on notifications sent to
-// anything
-// configured under `Budget.all_updates_rule`.
+// the definition of a threshold. Threshold rules define the triggering
+// events used to generate a budget notification email. When a threshold
+// is crossed (spend exceeds the specified percentages of the budget),
+// budget alert emails are sent to the email recipients you specify in
+// the NotificationsRule (#notificationsrule). Threshold rules also
+// affect the fields included in the JSON data object
+// (https://cloud.google.com/billing/docs/how-to/budgets-programmatic-notifications#notification_format)
+// sent to a Pub/Sub topic. Threshold rules are _required_ if using
+// email notifications. Threshold rules are _optional_ if only setting a
+// `pubsubTopic` NotificationsRule (#NotificationsRule), unless you want
+// your JSON data object to include data about the thresholds you set.
+// For more information, see set budget threshold rules and actions
+// (https://cloud.google.com/billing/docs/how-to/budgets#budget-actions).
 type GoogleCloudBillingBudgetsV1beta1ThresholdRule struct {
 	// SpendBasis: Optional. The type of basis used to determine if spend
-	// has passed the
-	// threshold. Behavior defaults to CURRENT_SPEND if not set.
+	// has passed the threshold. Behavior defaults to CURRENT_SPEND if not
+	// set.
 	//
 	// Possible values:
 	//   "BASIS_UNSPECIFIED" - Unspecified threshold basis.
 	//   "CURRENT_SPEND" - Use current spend as the basis for comparison
 	// against the threshold.
 	//   "FORECASTED_SPEND" - Use forecasted spend for the period as the
-	// basis for comparison against
-	// the threshold.
+	// basis for comparison against the threshold. FORECASTED_SPEND can only
+	// be set when the budget's time period is a Filter.calendar_period. It
+	// cannot be set in combination with Filter.custom_period.
 	SpendBasis string `json:"spendBasis,omitempty"`
 
 	// ThresholdPercent: Required. Send an alert when this threshold is
-	// exceeded.
-	// This is a 1.0-based percentage, so 0.5 = 50%.
-	// Validation: non-negative number.
+	// exceeded. This is a 1.0-based percentage, so 0.5 = 50%. Validation:
+	// non-negative number.
 	ThresholdPercent float64 `json:"thresholdPercent,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "SpendBasis") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "SpendBasis") to include in
@@ -535,29 +630,24 @@ func (s *GoogleCloudBillingBudgetsV1beta1ThresholdRule) UnmarshalJSON(data []byt
 // GoogleCloudBillingBudgetsV1beta1UpdateBudgetRequest: Request for
 // UpdateBudget
 type GoogleCloudBillingBudgetsV1beta1UpdateBudgetRequest struct {
-	// Budget: Required. The updated budget object.
-	// The budget to update is specified by the budget name in the budget.
+	// Budget: Required. The updated budget object. The budget to update is
+	// specified by the budget name in the budget.
 	Budget *GoogleCloudBillingBudgetsV1beta1Budget `json:"budget,omitempty"`
 
 	// UpdateMask: Optional. Indicates which fields in the provided budget
-	// to update.
-	// Read-only fields (such as `name`) cannot be changed. If this is
-	// not
-	// provided, then only fields with non-default values from the request
-	// are
-	// updated.
-	// See
+	// to update. Read-only fields (such as `name`) cannot be changed. If
+	// this is not provided, then only fields with non-default values from
+	// the request are updated. See
 	// https://developers.google.com/protocol-buffers/docs/proto3#default
-	//  for more
-	// details about default values.
+	// for more details about default values.
 	UpdateMask string `json:"updateMask,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Budget") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Budget") to include in API
@@ -576,49 +666,87 @@ func (s *GoogleCloudBillingBudgetsV1beta1UpdateBudgetRequest) MarshalJSON() ([]b
 }
 
 // GoogleProtobufEmpty: A generic empty message that you can re-use to
-// avoid defining duplicated
-// empty messages in your APIs. A typical example is to use it as the
-// request
-// or the response type of an API method. For instance:
-//
-//     service Foo {
-//       rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty);
-//     }
-//
-// The JSON representation for `Empty` is empty JSON object `{}`.
+// avoid defining duplicated empty messages in your APIs. A typical
+// example is to use it as the request or the response type of an API
+// method. For instance: service Foo { rpc Bar(google.protobuf.Empty)
+// returns (google.protobuf.Empty); }
 type GoogleProtobufEmpty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
 }
 
+// GoogleTypeDate: Represents a whole or partial calendar date, such as
+// a birthday. The time of day and time zone are either specified
+// elsewhere or are insignificant. The date is relative to the Gregorian
+// Calendar. This can represent one of the following: * A full date,
+// with non-zero year, month, and day values. * A month and day, with a
+// zero year (for example, an anniversary). * A year on its own, with a
+// zero month and a zero day. * A year and month, with a zero day (for
+// example, a credit card expiration date). Related types: *
+// google.type.TimeOfDay * google.type.DateTime *
+// google.protobuf.Timestamp
+type GoogleTypeDate struct {
+	// Day: Day of a month. Must be from 1 to 31 and valid for the year and
+	// month, or 0 to specify a year by itself or a year and month where the
+	// day isn't significant.
+	Day int64 `json:"day,omitempty"`
+
+	// Month: Month of a year. Must be from 1 to 12, or 0 to specify a year
+	// without a month and day.
+	Month int64 `json:"month,omitempty"`
+
+	// Year: Year of the date. Must be from 1 to 9999, or 0 to specify a
+	// date without a year.
+	Year int64 `json:"year,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Day") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Day") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleTypeDate) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleTypeDate
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleTypeMoney: Represents an amount of money with its currency
 // type.
 type GoogleTypeMoney struct {
-	// CurrencyCode: The 3-letter currency code defined in ISO 4217.
+	// CurrencyCode: The three-letter currency code defined in ISO 4217.
 	CurrencyCode string `json:"currencyCode,omitempty"`
 
-	// Nanos: Number of nano (10^-9) units of the amount.
-	// The value must be between -999,999,999 and +999,999,999 inclusive.
-	// If `units` is positive, `nanos` must be positive or zero.
-	// If `units` is zero, `nanos` can be positive, zero, or negative.
-	// If `units` is negative, `nanos` must be negative or zero.
-	// For example $-1.75 is represented as `units`=-1 and
-	// `nanos`=-750,000,000.
+	// Nanos: Number of nano (10^-9) units of the amount. The value must be
+	// between -999,999,999 and +999,999,999 inclusive. If `units` is
+	// positive, `nanos` must be positive or zero. If `units` is zero,
+	// `nanos` can be positive, zero, or negative. If `units` is negative,
+	// `nanos` must be negative or zero. For example $-1.75 is represented
+	// as `units`=-1 and `nanos`=-750,000,000.
 	Nanos int64 `json:"nanos,omitempty"`
 
-	// Units: The whole units of the amount.
-	// For example if `currencyCode` is "USD", then 1 unit is one US
-	// dollar.
+	// Units: The whole units of the amount. For example if `currencyCode`
+	// is "USD", then 1 unit is one US dollar.
 	Units int64 `json:"units,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "CurrencyCode") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CurrencyCode") to include
@@ -647,11 +775,12 @@ type BillingAccountsBudgetsCreateCall struct {
 	header_                                             http.Header
 }
 
-// Create: Creates a new budget. See
-// <a href="https://cloud.google.com/billing/quotas">Quotas and
-// limits</a>
-// for more information on the limits of the number of budgets you can
-// create.
+// Create: Creates a new budget. See Quotas and limits
+// (https://cloud.google.com/billing/quotas) for more information on the
+// limits of the number of budgets you can create.
+//
+//   - parent: The name of the billing account to create the budget in.
+//     Values are of the form `billingAccounts/{billingAccountId}`.
 func (r *BillingAccountsBudgetsService) Create(parent string, googlecloudbillingbudgetsv1beta1createbudgetrequest *GoogleCloudBillingBudgetsV1beta1CreateBudgetRequest) *BillingAccountsBudgetsCreateCall {
 	c := &BillingAccountsBudgetsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -686,7 +815,7 @@ func (c *BillingAccountsBudgetsCreateCall) Header() http.Header {
 
 func (c *BillingAccountsBudgetsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -727,17 +856,17 @@ func (c *BillingAccountsBudgetsCreateCall) Do(opts ...googleapi.CallOption) (*Go
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudBillingBudgetsV1beta1Budget{
 		ServerResponse: googleapi.ServerResponse{
@@ -751,7 +880,7 @@ func (c *BillingAccountsBudgetsCreateCall) Do(opts ...googleapi.CallOption) (*Go
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new budget. See\n\u003ca href=\"https://cloud.google.com/billing/quotas\"\u003eQuotas and limits\u003c/a\u003e\nfor more information on the limits of the number of budgets you can create.",
+	//   "description": "Creates a new budget. See [Quotas and limits](https://cloud.google.com/billing/quotas) for more information on the limits of the number of budgets you can create.",
 	//   "flatPath": "v1beta1/billingAccounts/{billingAccountsId}/budgets",
 	//   "httpMethod": "POST",
 	//   "id": "billingbudgets.billingAccounts.budgets.create",
@@ -760,7 +889,7 @@ func (c *BillingAccountsBudgetsCreateCall) Do(opts ...googleapi.CallOption) (*Go
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The name of the billing account to create the budget in. Values\nare of the form `billingAccounts/{billingAccountId}`.",
+	//       "description": "Required. The name of the billing account to create the budget in. Values are of the form `billingAccounts/{billingAccountId}`.",
 	//       "location": "path",
 	//       "pattern": "^billingAccounts/[^/]+$",
 	//       "required": true,
@@ -775,6 +904,7 @@ func (c *BillingAccountsBudgetsCreateCall) Do(opts ...googleapi.CallOption) (*Go
 	//     "$ref": "GoogleCloudBillingBudgetsV1beta1Budget"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-billing",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -792,6 +922,9 @@ type BillingAccountsBudgetsDeleteCall struct {
 }
 
 // Delete: Deletes a budget. Returns successfully if already deleted.
+//
+//   - name: Name of the budget to delete. Values are of the form
+//     `billingAccounts/{billingAccountId}/budgets/{budgetId}`.
 func (r *BillingAccountsBudgetsService) Delete(name string) *BillingAccountsBudgetsDeleteCall {
 	c := &BillingAccountsBudgetsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -825,7 +958,7 @@ func (c *BillingAccountsBudgetsDeleteCall) Header() http.Header {
 
 func (c *BillingAccountsBudgetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -860,17 +993,17 @@ func (c *BillingAccountsBudgetsDeleteCall) Do(opts ...googleapi.CallOption) (*Go
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleProtobufEmpty{
 		ServerResponse: googleapi.ServerResponse{
@@ -893,7 +1026,7 @@ func (c *BillingAccountsBudgetsDeleteCall) Do(opts ...googleapi.CallOption) (*Go
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the budget to delete. Values are of the form\n`billingAccounts/{billingAccountId}/budgets/{budgetId}`.",
+	//       "description": "Required. Name of the budget to delete. Values are of the form `billingAccounts/{billingAccountId}/budgets/{budgetId}`.",
 	//       "location": "path",
 	//       "pattern": "^billingAccounts/[^/]+/budgets/[^/]+$",
 	//       "required": true,
@@ -905,6 +1038,7 @@ func (c *BillingAccountsBudgetsDeleteCall) Do(opts ...googleapi.CallOption) (*Go
 	//     "$ref": "GoogleProtobufEmpty"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-billing",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -922,15 +1056,13 @@ type BillingAccountsBudgetsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Returns a budget.
+// Get: Returns a budget. WARNING: There are some fields exposed on the
+// Google Cloud Console that aren't available on this API. When reading
+// from the API, you will not see these fields in the return value,
+// though they may have been set in the Cloud Console.
 //
-// WARNING: There are some fields exposed on the Google Cloud Console
-// that
-// aren't available on this API. When reading from the API, you will
-// not
-// see these fields in the return value, though they may have been
-// set
-// in the Cloud Console.
+//   - name: Name of budget to get. Values are of the form
+//     `billingAccounts/{billingAccountId}/budgets/{budgetId}`.
 func (r *BillingAccountsBudgetsService) Get(name string) *BillingAccountsBudgetsGetCall {
 	c := &BillingAccountsBudgetsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -974,7 +1106,7 @@ func (c *BillingAccountsBudgetsGetCall) Header() http.Header {
 
 func (c *BillingAccountsBudgetsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1013,17 +1145,17 @@ func (c *BillingAccountsBudgetsGetCall) Do(opts ...googleapi.CallOption) (*Googl
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudBillingBudgetsV1beta1Budget{
 		ServerResponse: googleapi.ServerResponse{
@@ -1037,7 +1169,7 @@ func (c *BillingAccountsBudgetsGetCall) Do(opts ...googleapi.CallOption) (*Googl
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns a budget.\n\nWARNING: There are some fields exposed on the Google Cloud Console that\naren't available on this API. When reading from the API, you will not\nsee these fields in the return value, though they may have been set\nin the Cloud Console.",
+	//   "description": "Returns a budget. WARNING: There are some fields exposed on the Google Cloud Console that aren't available on this API. When reading from the API, you will not see these fields in the return value, though they may have been set in the Cloud Console.",
 	//   "flatPath": "v1beta1/billingAccounts/{billingAccountsId}/budgets/{budgetsId}",
 	//   "httpMethod": "GET",
 	//   "id": "billingbudgets.billingAccounts.budgets.get",
@@ -1046,7 +1178,7 @@ func (c *BillingAccountsBudgetsGetCall) Do(opts ...googleapi.CallOption) (*Googl
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of budget to get. Values are of the form\n`billingAccounts/{billingAccountId}/budgets/{budgetId}`.",
+	//       "description": "Required. Name of budget to get. Values are of the form `billingAccounts/{billingAccountId}/budgets/{budgetId}`.",
 	//       "location": "path",
 	//       "pattern": "^billingAccounts/[^/]+/budgets/[^/]+$",
 	//       "required": true,
@@ -1058,6 +1190,7 @@ func (c *BillingAccountsBudgetsGetCall) Do(opts ...googleapi.CallOption) (*Googl
 	//     "$ref": "GoogleCloudBillingBudgetsV1beta1Budget"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-billing",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -1075,15 +1208,14 @@ type BillingAccountsBudgetsListCall struct {
 	header_      http.Header
 }
 
-// List: Returns a list of budgets for a billing account.
+// List: Returns a list of budgets for a billing account. WARNING: There
+// are some fields exposed on the Google Cloud Console that aren't
+// available on this API. When reading from the API, you will not see
+// these fields in the return value, though they may have been set in
+// the Cloud Console.
 //
-// WARNING: There are some fields exposed on the Google Cloud Console
-// that
-// aren't available on this API. When reading from the API, you will
-// not
-// see these fields in the return value, though they may have been
-// set
-// in the Cloud Console.
+//   - parent: Name of billing account to list budgets under. Values are
+//     of the form `billingAccounts/{billingAccountId}`.
 func (r *BillingAccountsBudgetsService) List(parent string) *BillingAccountsBudgetsListCall {
 	c := &BillingAccountsBudgetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1091,18 +1223,16 @@ func (r *BillingAccountsBudgetsService) List(parent string) *BillingAccountsBudg
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of budgets to return per page.
-// The default and maximum value are 100.
+// of budgets to return per page. The default and maximum value are 100.
 func (c *BillingAccountsBudgetsListCall) PageSize(pageSize int64) *BillingAccountsBudgetsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": The value returned
-// by the last `ListBudgetsResponse` which
-// indicates that this is a continuation of a prior `ListBudgets`
-// call,
-// and that the system should return the next page of data.
+// by the last `ListBudgetsResponse` which indicates that this is a
+// continuation of a prior `ListBudgets` call, and that the system
+// should return the next page of data.
 func (c *BillingAccountsBudgetsListCall) PageToken(pageToken string) *BillingAccountsBudgetsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -1145,7 +1275,7 @@ func (c *BillingAccountsBudgetsListCall) Header() http.Header {
 
 func (c *BillingAccountsBudgetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1185,17 +1315,17 @@ func (c *BillingAccountsBudgetsListCall) Do(opts ...googleapi.CallOption) (*Goog
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudBillingBudgetsV1beta1ListBudgetsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1209,7 +1339,7 @@ func (c *BillingAccountsBudgetsListCall) Do(opts ...googleapi.CallOption) (*Goog
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns a list of budgets for a billing account.\n\nWARNING: There are some fields exposed on the Google Cloud Console that\naren't available on this API. When reading from the API, you will not\nsee these fields in the return value, though they may have been set\nin the Cloud Console.",
+	//   "description": "Returns a list of budgets for a billing account. WARNING: There are some fields exposed on the Google Cloud Console that aren't available on this API. When reading from the API, you will not see these fields in the return value, though they may have been set in the Cloud Console.",
 	//   "flatPath": "v1beta1/billingAccounts/{billingAccountsId}/budgets",
 	//   "httpMethod": "GET",
 	//   "id": "billingbudgets.billingAccounts.budgets.list",
@@ -1218,18 +1348,18 @@ func (c *BillingAccountsBudgetsListCall) Do(opts ...googleapi.CallOption) (*Goog
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "Optional. The maximum number of budgets to return per page.\nThe default and maximum value are 100.",
+	//       "description": "Optional. The maximum number of budgets to return per page. The default and maximum value are 100.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. The value returned by the last `ListBudgetsResponse` which\nindicates that this is a continuation of a prior `ListBudgets` call,\nand that the system should return the next page of data.",
+	//       "description": "Optional. The value returned by the last `ListBudgetsResponse` which indicates that this is a continuation of a prior `ListBudgets` call, and that the system should return the next page of data.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Name of billing account to list budgets under. Values\nare of the form `billingAccounts/{billingAccountId}`.",
+	//       "description": "Required. Name of billing account to list budgets under. Values are of the form `billingAccounts/{billingAccountId}`.",
 	//       "location": "path",
 	//       "pattern": "^billingAccounts/[^/]+$",
 	//       "required": true,
@@ -1241,6 +1371,7 @@ func (c *BillingAccountsBudgetsListCall) Do(opts ...googleapi.CallOption) (*Goog
 	//     "$ref": "GoogleCloudBillingBudgetsV1beta1ListBudgetsResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-billing",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -1279,13 +1410,14 @@ type BillingAccountsBudgetsPatchCall struct {
 	header_                                             http.Header
 }
 
-// Patch: Updates a budget and returns the updated budget.
+// Patch: Updates a budget and returns the updated budget. WARNING:
+// There are some fields exposed on the Google Cloud Console that aren't
+// available on this API. Budget fields that are not exposed in this API
+// will not be changed by this method.
 //
-// WARNING: There are some fields exposed on the Google Cloud Console
-// that
-// aren't available on this API. Budget fields that are not exposed
-// in
-// this API will not be changed by this method.
+//   - name: Output only. Resource name of the budget. The resource name
+//     implies the scope of a budget. Values are of the form
+//     `billingAccounts/{billingAccountId}/budgets/{budgetId}`.
 func (r *BillingAccountsBudgetsService) Patch(name string, googlecloudbillingbudgetsv1beta1updatebudgetrequest *GoogleCloudBillingBudgetsV1beta1UpdateBudgetRequest) *BillingAccountsBudgetsPatchCall {
 	c := &BillingAccountsBudgetsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1320,7 +1452,7 @@ func (c *BillingAccountsBudgetsPatchCall) Header() http.Header {
 
 func (c *BillingAccountsBudgetsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1361,17 +1493,17 @@ func (c *BillingAccountsBudgetsPatchCall) Do(opts ...googleapi.CallOption) (*Goo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudBillingBudgetsV1beta1Budget{
 		ServerResponse: googleapi.ServerResponse{
@@ -1385,7 +1517,7 @@ func (c *BillingAccountsBudgetsPatchCall) Do(opts ...googleapi.CallOption) (*Goo
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a budget and returns the updated budget.\n\nWARNING: There are some fields exposed on the Google Cloud Console that\naren't available on this API. Budget fields that are not exposed in\nthis API will not be changed by this method.",
+	//   "description": "Updates a budget and returns the updated budget. WARNING: There are some fields exposed on the Google Cloud Console that aren't available on this API. Budget fields that are not exposed in this API will not be changed by this method.",
 	//   "flatPath": "v1beta1/billingAccounts/{billingAccountsId}/budgets/{budgetsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "billingbudgets.billingAccounts.budgets.patch",
@@ -1394,7 +1526,7 @@ func (c *BillingAccountsBudgetsPatchCall) Do(opts ...googleapi.CallOption) (*Goo
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Output only. Resource name of the budget.\nThe resource name implies the scope of a budget. Values are of the form\n`billingAccounts/{billingAccountId}/budgets/{budgetId}`.",
+	//       "description": "Output only. Resource name of the budget. The resource name implies the scope of a budget. Values are of the form `billingAccounts/{billingAccountId}/budgets/{budgetId}`.",
 	//       "location": "path",
 	//       "pattern": "^billingAccounts/[^/]+/budgets/[^/]+$",
 	//       "required": true,
@@ -1409,6 +1541,7 @@ func (c *BillingAccountsBudgetsPatchCall) Do(opts ...googleapi.CallOption) (*Goo
 	//     "$ref": "GoogleCloudBillingBudgetsV1beta1Budget"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-billing",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }

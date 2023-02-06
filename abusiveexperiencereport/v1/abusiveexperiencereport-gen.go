@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://developers.google.com/abusive-experience-report/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/abusiveexperiencereport/v1"
-//   ...
-//   ctx := context.Background()
-//   abusiveexperiencereportService, err := abusiveexperiencereport.NewService(ctx)
+//	import "google.golang.org/api/abusiveexperiencereport/v1"
+//	...
+//	ctx := context.Background()
+//	abusiveexperiencereportService, err := abusiveexperiencereport.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   abusiveexperiencereportService, err := abusiveexperiencereport.NewService(ctx, option.WithAPIKey("AIza..."))
+//	abusiveexperiencereportService, err := abusiveexperiencereport.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   abusiveexperiencereportService, err := abusiveexperiencereport.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	abusiveexperiencereportService, err := abusiveexperiencereport.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package abusiveexperiencereport // import "google.golang.org/api/abusiveexperiencereport/v1"
@@ -50,6 +50,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -75,10 +76,12 @@ const apiId = "abusiveexperiencereport:v1"
 const apiName = "abusiveexperiencereport"
 const apiVersion = "v1"
 const basePath = "https://abusiveexperiencereport.googleapis.com/"
+const mtlsBasePath = "https://abusiveexperiencereport.mtls.googleapis.com/"
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -153,21 +156,13 @@ type SiteSummaryResponse struct {
 	//   "FAILING" - Failing.
 	AbusiveStatus string `json:"abusiveStatus,omitempty"`
 
-	// EnforcementTime: The time at
-	// which
-	// [enforcement](https://support.google.com/webtools/answer/7538608
-	// ) against
-	// the site began or will begin.
-	//
-	// Not set when the
-	// filter_status
-	// is OFF.
+	// EnforcementTime: The time at which enforcement
+	// (https://support.google.com/webtools/answer/7538608) against the site
+	// began or will begin. Not set when the filter_status is OFF.
 	EnforcementTime string `json:"enforcementTime,omitempty"`
 
-	// FilterStatus: The site's
-	// [enforcement
-	// status](https://support.google.com/webtools/answer/753860
-	// 8).
+	// FilterStatus: The site's enforcement status
+	// (https://support.google.com/webtools/answer/7538608).
 	//
 	// Possible values:
 	//   "UNKNOWN" - N/A.
@@ -180,16 +175,10 @@ type SiteSummaryResponse struct {
 	// LastChangeTime: The time at which the site's status last changed.
 	LastChangeTime string `json:"lastChangeTime,omitempty"`
 
-	// ReportUrl: A link to the full Abusive Experience Report for the
-	// site.
-	//
-	// Not set in
-	// ViolatingSitesResponse.
-	//
-	// Note that you must complete the [Search Console
-	// verification
-	// process](https://support.google.com/webmasters/answer/900
-	// 8080) for the site
+	// ReportUrl: A link to the full Abusive Experience Report for the site.
+	// Not set in ViolatingSitesResponse. Note that you must complete the
+	// Search Console verification process
+	// (https://support.google.com/webmasters/answer/9008080) for the site
 	// before you can access the full report.
 	ReportUrl string `json:"reportUrl,omitempty"`
 
@@ -205,10 +194,10 @@ type SiteSummaryResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "AbusiveStatus") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AbusiveStatus") to include
@@ -237,10 +226,10 @@ type ViolatingSitesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "ViolatingSites") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ViolatingSites") to
@@ -271,6 +260,9 @@ type SitesGetCall struct {
 }
 
 // Get: Gets a site's Abusive Experience Report summary.
+//
+//   - name: The name of the site whose summary to get, e.g.
+//     `sites/http%3A%2F%2Fwww.google.com%2F`. Format: `sites/{site}`.
 func (r *SitesService) Get(name string) *SitesGetCall {
 	c := &SitesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -314,7 +306,7 @@ func (c *SitesGetCall) Header() http.Header {
 
 func (c *SitesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -352,17 +344,17 @@ func (c *SitesGetCall) Do(opts ...googleapi.CallOption) (*SiteSummaryResponse, e
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &SiteSummaryResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -385,7 +377,7 @@ func (c *SitesGetCall) Do(opts ...googleapi.CallOption) (*SiteSummaryResponse, e
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the site whose summary to get, e.g.\n`sites/http%3A%2F%2Fwww.google.com%2F`.\n\nFormat: `sites/{site}`",
+	//       "description": "Required. The name of the site whose summary to get, e.g. `sites/http%3A%2F%2Fwww.google.com%2F`. Format: `sites/{site}`",
 	//       "location": "path",
 	//       "pattern": "^sites/[^/]+$",
 	//       "required": true,
@@ -453,7 +445,7 @@ func (c *ViolatingSitesListCall) Header() http.Header {
 
 func (c *ViolatingSitesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -488,17 +480,17 @@ func (c *ViolatingSitesListCall) Do(opts ...googleapi.CallOption) (*ViolatingSit
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ViolatingSitesResponse{
 		ServerResponse: googleapi.ServerResponse{

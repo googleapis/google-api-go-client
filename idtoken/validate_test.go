@@ -18,13 +18,20 @@ import (
 	"math/big"
 	"net/http"
 	"testing"
+	"time"
 
 	"google.golang.org/api/option"
 )
 
 const (
-	keyID        = "1234"
-	testAudience = "test-audience"
+	keyID              = "1234"
+	testAudience       = "test-audience"
+	expiry       int64 = 233431200
+)
+
+var (
+	beforeExp = func() time.Time { return time.Unix(expiry-1, 0) }
+	afterExp  = func() time.Time { return time.Unix(expiry+1, 0) }
 )
 
 func TestValidateRS256(t *testing.T) {
@@ -34,12 +41,43 @@ func TestValidateRS256(t *testing.T) {
 		keyID   string
 		n       *big.Int
 		e       int
+		nowFunc func() time.Time
 		wantErr bool
 	}{
-		{name: "works", keyID: keyID, n: pk.N, e: pk.E, wantErr: false},
-		{name: "no matching key", keyID: "5678", n: pk.N, e: pk.E, wantErr: true},
-		{name: "sig does not match", keyID: keyID, n: new(big.Int).SetBytes([]byte("42")), e: 42, wantErr: true},
+		{
+			name:    "works",
+			keyID:   keyID,
+			n:       pk.N,
+			e:       pk.E,
+			nowFunc: beforeExp,
+			wantErr: false,
+		},
+		{
+			name:    "no matching key",
+			keyID:   "5678",
+			n:       pk.N,
+			e:       pk.E,
+			nowFunc: beforeExp,
+			wantErr: true,
+		},
+		{
+			name:    "sig does not match",
+			keyID:   keyID,
+			n:       new(big.Int).SetBytes([]byte("42")),
+			e:       42,
+			nowFunc: beforeExp,
+			wantErr: true,
+		},
+		{
+			name:    "token expired",
+			keyID:   keyID,
+			n:       pk.N,
+			e:       pk.E,
+			nowFunc: afterExp,
+			wantErr: true,
+		},
 	}
+
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			client := &http.Client{
@@ -64,17 +102,44 @@ func TestValidateRS256(t *testing.T) {
 					}
 				}),
 			}
+			oldNow := now
+			defer func() { now = oldNow }()
+			now = tt.nowFunc
 
 			v, err := NewValidator(context.Background(), option.WithHTTPClient(client))
 			if err != nil {
 				t.Fatalf("NewValidator(...) = %q, want nil", err)
 			}
 			payload, err := v.Validate(context.Background(), idToken, testAudience)
-			if !tt.wantErr && err != nil {
-				t.Fatalf("Validate(ctx, %s, %s) = %q, want nil", idToken, testAudience, err)
+			if tt.wantErr && err != nil {
+				// Got the error we wanted.
+				return
 			}
-			if !tt.wantErr && payload.Audience != testAudience {
-				t.Fatalf("got %v, want %v", payload.Audience, testAudience)
+			if !tt.wantErr && err != nil {
+				t.Fatalf("Validate(ctx, %s, %s): got err %q, want nil", idToken, testAudience, err)
+			}
+			if tt.wantErr && err == nil {
+				t.Fatalf("Validate(ctx, %s, %s): got nil err, want err", idToken, testAudience)
+			}
+			if payload == nil {
+				t.Fatalf("Got nil payload, err: %v", err)
+			}
+			if payload.Audience != testAudience {
+				t.Fatalf("Validate(ctx, %s, %s): got %v, want %v", idToken, testAudience, payload.Audience, testAudience)
+			}
+			if len(payload.Claims) == 0 {
+				t.Fatalf("Validate(ctx, %s, %s): missing Claims map. payload.Claims = %+v", idToken, testAudience, payload.Claims)
+			}
+			if got, ok := payload.Claims["aud"]; !ok {
+				t.Fatalf("Validate(ctx, %s, %s): missing aud claim. payload.Claims = %+v", idToken, testAudience, payload.Claims)
+			} else {
+				got, ok := got.(string)
+				if !ok {
+					t.Fatalf("Validate(ctx, %s, %s): aud wasn't a string. payload.Claims = %+v", idToken, testAudience, payload.Claims)
+				}
+				if got != testAudience {
+					t.Fatalf("Validate(ctx, %s, %s): Payload[aud] want %v got %v", idToken, testAudience, testAudience, got)
+				}
 			}
 		})
 	}
@@ -87,11 +152,41 @@ func TestValidateES256(t *testing.T) {
 		keyID   string
 		x       *big.Int
 		y       *big.Int
+		nowFunc func() time.Time
 		wantErr bool
 	}{
-		{name: "works", keyID: keyID, x: pk.X, y: pk.Y, wantErr: false},
-		{name: "no matching key", keyID: "5678", x: pk.X, y: pk.Y, wantErr: true},
-		{name: "sig does not match", keyID: keyID, x: new(big.Int), y: new(big.Int), wantErr: true},
+		{
+			name:    "works",
+			keyID:   keyID,
+			x:       pk.X,
+			y:       pk.Y,
+			nowFunc: beforeExp,
+			wantErr: false,
+		},
+		{
+			name:    "no matching key",
+			keyID:   "5678",
+			x:       pk.X,
+			y:       pk.Y,
+			nowFunc: beforeExp,
+			wantErr: true,
+		},
+		{
+			name:    "sig does not match",
+			keyID:   keyID,
+			x:       new(big.Int),
+			y:       new(big.Int),
+			nowFunc: beforeExp,
+			wantErr: true,
+		},
+		{
+			name:    "token expired",
+			keyID:   keyID,
+			x:       pk.X,
+			y:       pk.Y,
+			nowFunc: afterExp,
+			wantErr: true,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -117,6 +212,9 @@ func TestValidateES256(t *testing.T) {
 					}
 				}),
 			}
+			oldNow := now
+			defer func() { now = oldNow }()
+			now = tt.nowFunc
 
 			v, err := NewValidator(context.Background(), option.WithHTTPClient(client))
 			if err != nil {
@@ -144,8 +242,11 @@ func createES256JWT(t *testing.T) (string, ecdsa.PublicKey) {
 	if err != nil {
 		t.Fatalf("unable to sign content: %v", err)
 	}
+	rb := r.Bytes()
+	lPadded := make([]byte, es256KeySize)
+	copy(lPadded[es256KeySize-len(rb):], rb)
 	var sig []byte
-	sig = append(sig, r.Bytes()...)
+	sig = append(sig, lPadded...)
 	sig = append(sig, s.Bytes()...)
 	token.signature = base64.RawURLEncoding.EncodeToString(sig)
 	return token.String(), privateKey.PublicKey
@@ -176,6 +277,7 @@ func commonToken(t *testing.T, alg string) *jwt {
 	payload := Payload{
 		Issuer:   "example.com",
 		Audience: testAudience,
+		Expires:  expiry,
 	}
 
 	hb, err := json.Marshal(&header)

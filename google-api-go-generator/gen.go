@@ -27,7 +27,6 @@ import (
 	"unicode"
 
 	"google.golang.org/api/google-api-go-generator/internal/disco"
-	"google.golang.org/api/internal/version"
 )
 
 const (
@@ -50,6 +49,7 @@ var (
 	baseURL        = flag.String("base_url", "", "(optional) Override the default service API URL. If empty, the service's root URL will be used.")
 	headerPath     = flag.String("header_path", "", "If non-empty, prepend the contents of this file to generated services.")
 
+	internalPkg       = flag.String("internal_pkg", "google.golang.org/api/internal", "Go package path of the 'internal' support package.")
 	gensupportPkg     = flag.String("gensupport_pkg", "google.golang.org/api/internal/gensupport", "Go package path of the 'api/internal/gensupport' support package.")
 	googleapiPkg      = flag.String("googleapi_pkg", "google.golang.org/api/googleapi", "Go package path of the 'api/googleapi' support package.")
 	optionPkg         = flag.String("option_pkg", "google.golang.org/api/option", "Go package path of the 'api/option' support package.")
@@ -65,6 +65,11 @@ var (
 	errOldRevision = errors.New("revision pulled older than local cached revision")
 	errNoDoc       = errors.New("could not read discovery doc")
 )
+
+// skipAPIGeneration is a set of APIs to not generate when generating all clients.
+var skipAPIGeneration = map[string]bool{
+	"sql:v1beta4": true,
+}
 
 // API represents an API to generate, as well as its state while it's
 // generating.
@@ -120,12 +125,6 @@ type compileError struct {
 
 func (e *compileError) Error() string {
 	return fmt.Sprintf("API %s failed to compile:\n%v", e.api.ID, e.output)
-}
-
-// skipAPIGeneration is a set of APIs to not generate when generating all clients.
-var skipAPIGeneration = map[string]bool{
-	"customsearch:v1": true,
-	"sql:v1beta4":     true,
 }
 
 func main() {
@@ -393,7 +392,9 @@ var oddVersionRE = regexp.MustCompile(`^(.+)_(v[\d\.]+)$`)
 // that the final path component of the import path doesn't look
 // like a Go identifier. This keeps the consistency that import paths
 // for the generated Go packages look like:
-//     google.golang.org/api/NAME/v<version>
+//
+//	google.golang.org/api/NAME/v<version>
+//
 // and have package NAME.
 // See https://github.com/google/google-api-go-client/issues/78
 func renameVersion(version string) string {
@@ -494,6 +495,18 @@ func (a *API) apiBaseURL() string {
 		base, rel = *apisURL, a.doc.BasePath
 	}
 	return resolveRelative(base, rel)
+}
+
+func (a *API) mtlsAPIBaseURL() string {
+	if a.doc.MTLSRootURL != "" {
+		return resolveRelative(a.doc.MTLSRootURL, a.doc.ServicePath)
+	}
+	// TODO(andyrzhao): Remove the workaround below when MTLSRootURL becomes available in
+	// compute discovery doc, after compute migrates to OP discovery doc gen (ETA 2021).
+	if a.doc.MTLSRootURL == "" && a.doc.RootURL == "https://compute.googleapis.com/" {
+		return resolveRelative("https://compute.mtls.googleapis.com/", a.doc.ServicePath)
+	}
+	return ""
 }
 
 func (a *API) needsDataWrapper() bool {
@@ -626,7 +639,7 @@ func (a *API) GenerateCode() ([]byte, error) {
 `, *copyrightYear)
 
 	pn("// Package %s provides access to the %s.", pkg, a.doc.Title)
-	if r := replacementPackage[pkg]; r != "" {
+	if r := replacementPackage.Get(pkg, a.Version); r != "" {
 		pn("//")
 		pn("// This package is DEPRECATED. Use package %s instead.", r)
 	}
@@ -688,10 +701,14 @@ func (a *API) GenerateCode() ([]byte, error) {
 		pn("  %q", imp)
 	}
 	pn("")
+	if a.Name == "storage" {
+		pn("  %q", "github.com/googleapis/gax-go/v2")
+	}
 	for _, imp := range []struct {
 		pkg   string
 		lname string
 	}{
+		{*internalPkg, "internal"},
 		{*gensupportPkg, "gensupport"},
 		{*googleapiPkg, "googleapi"},
 		{*optionPkg, "option"},
@@ -720,6 +737,9 @@ func (a *API) GenerateCode() ([]byte, error) {
 	pn("const apiName = %q", a.doc.Name)
 	pn("const apiVersion = %q", a.doc.Version)
 	pn("const basePath = %q", a.apiBaseURL())
+	if mtlsBase := a.mtlsAPIBaseURL(); mtlsBase != "" {
+		pn("const mtlsBasePath = %q", mtlsBase)
+	}
 
 	a.generateScopeConstants()
 	a.PopulateSchemas()
@@ -733,7 +753,7 @@ func (a *API) GenerateCode() ([]byte, error) {
 	pn("// NewService creates a new %s.", service)
 	pn("func NewService(ctx context.Context, opts ...option.ClientOption) (*%s, error) {", service)
 	if len(a.doc.Auth.OAuth2Scopes) != 0 {
-		pn("scopesOption := option.WithScopes(")
+		pn("scopesOption := internaloption.WithDefaultScopes(")
 		for _, scope := range a.doc.Auth.OAuth2Scopes {
 			pn("%q,", scope.ID)
 		}
@@ -742,6 +762,9 @@ func (a *API) GenerateCode() ([]byte, error) {
 		pn("opts = append([]option.ClientOption{scopesOption}, opts...)")
 	}
 	pn("opts = append(opts, internaloption.WithDefaultEndpoint(basePath))")
+	if a.mtlsAPIBaseURL() != "" {
+		pn("opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))")
+	}
 	pn("client, endpoint, err := htransport.NewClient(ctx, opts...)")
 	pn("if err != nil { return nil, err }")
 	pn("s, err := New(client)")
@@ -826,7 +849,7 @@ func (a *API) generateScopeConstants() {
 		n++
 		ident := scopeIdentifier(scope)
 		if scope.Description != "" {
-			a.p("%s", asComment("\t", scope.Description))
+			a.p("%s", asComment("\t", removeMarkdownLinks(scope.Description)))
 		}
 		a.pn("\t%s = %q", ident, scope.ID)
 	}
@@ -889,7 +912,7 @@ func (p *Property) Default() string {
 }
 
 func (p *Property) Description() string {
-	return p.p.Schema.Description
+	return removeMarkdownLinks(p.p.Schema.Description)
 }
 
 func (p *Property) Enum() ([]string, bool) {
@@ -943,6 +966,7 @@ var pointerFields = []fieldName{
 	{api: "androidpublisher:v3", schema: "ProductPurchase", field: "PurchaseType"},
 	{api: "androidpublisher:v2", schema: "SubscriptionPurchase", field: "CancelReason"},
 	{api: "androidpublisher:v2", schema: "SubscriptionPurchase", field: "PaymentState"},
+	{api: "androidpublisher:v3", schema: "SubscriptionPurchase", field: "PaymentState"},
 	{api: "androidpublisher:v2", schema: "SubscriptionPurchase", field: "PurchaseType"},
 	{api: "androidpublisher:v3", schema: "SubscriptionPurchase", field: "PurchaseType"},
 	{api: "cloudmonitoring:v2beta2", schema: "Point", field: "BoolValue"},
@@ -950,6 +974,7 @@ var pointerFields = []fieldName{
 	{api: "cloudmonitoring:v2beta2", schema: "Point", field: "Int64Value"},
 	{api: "cloudmonitoring:v2beta2", schema: "Point", field: "StringValue"},
 	{api: "compute:alpha", schema: "ExternalVpnGateway", field: "Id"},
+	{api: "compute:alpha", schema: "MetadataItems", field: "Value"},
 	{api: "compute:alpha", schema: "Scheduling", field: "AutomaticRestart"},
 	{api: "compute:beta", schema: "ExternalVpnGateway", field: "Id"},
 	{api: "compute:beta", schema: "MetadataItems", field: "Value"},
@@ -990,6 +1015,7 @@ var pointerFields = []fieldName{
 	{api: "sqladmin:v1beta4", schema: "Settings", field: "StorageAutoResize"},
 	{api: "sqladmin:v1", schema: "Settings", field: "StorageAutoResize"},
 	{api: "storage:v1", schema: "BucketLifecycleRuleCondition", field: "IsLive"},
+	{api: "storage:v1", schema: "BucketLifecycleRuleCondition", field: "Age"},
 	{api: "storage:v1beta2", schema: "BucketLifecycleRuleCondition", field: "IsLive"},
 	{api: "tasks:v1", schema: "Task", field: "Completed"},
 	{api: "youtube:v3", schema: "ChannelSectionSnippet", field: "Position"},
@@ -1329,7 +1355,7 @@ func (s *Schema) writeVariant(api *API, v *disco.Variant) {
 }
 
 func (s *Schema) Description() string {
-	return s.typ.Description
+	return removeMarkdownLinks(s.typ.Description)
 }
 
 func (s *Schema) writeSchemaStruct(api *API) {
@@ -1365,7 +1391,12 @@ func (s *Schema) writeSchemaStruct(api *API) {
 		p.assignedGoName = pname
 		des := p.Description()
 		if des != "" {
-			s.api.p("%s", asComment("\t", fmt.Sprintf("%s: %s", pname, des)))
+			if pname == "Deprecated" {
+				// Workaround to not trip up linters on fields named Deprecated.
+				s.api.p("%s", asComment("\t", fmt.Sprintf("%s -- %s", pname, des)))
+			} else {
+				s.api.p("%s", asComment("\t", fmt.Sprintf("%s: %s", pname, des)))
+			}
 		}
 		addFieldValueComments(s.api.p, p, "\t", des != "")
 
@@ -1402,7 +1433,7 @@ func (s *Schema) writeSchemaStruct(api *API) {
 
 	commentFmtStr := "%s is a list of field names (e.g. %q) to " +
 		"unconditionally include in API requests. By default, fields " +
-		"with empty values are omitted from API requests. However, " +
+		"with empty or default values are omitted from API requests. However, " +
 		"any non-pointer, non-interface field appearing in %s will " +
 		"be sent to the server regardless of whether the field is " +
 		"empty or not. This may be used to include empty fields in " +
@@ -1755,6 +1786,12 @@ func (m *Method) OptParams() []*Param {
 	})
 }
 
+func (m *Method) ReqParams() []*Param {
+	return m.grepParams(func(p *Param) bool {
+		return p.p.Required
+	})
+}
+
 func (meth *Method) cacheResponseTypes(api *API) {
 	if retType := responseType(api, meth.m); retType != "" && strings.HasPrefix(retType, "*") {
 		api.responseTypes[retType] = true
@@ -1810,12 +1847,29 @@ func (meth *Method) generateCode() {
 
 	if meth.supportsMediaUpload() {
 		pn(" mediaInfo_ *gensupport.MediaInfo")
+		if meth.api.Name == "storage" {
+			pn("	retry *gensupport.RetryConfig")
+		}
 	}
 	pn(" ctx_ context.Context")
 	pn(" header_ http.Header")
 	pn("}")
 
-	p("\n%s", asComment("", methodName+": "+meth.m.Description))
+	p("\n%s", asComment("", methodName+": "+removeMarkdownLinks(meth.m.Description)))
+
+	// Add required parameter docs.
+	params := meth.ReqParams()
+	// Sort to the same order params are listed in method.
+	sort.Slice(params, func(i, j int) bool { return params[i].p.Name < params[j].p.Name })
+	for i, v := range params {
+		if i == 0 {
+			p("//\n")
+		}
+		des := v.p.Description
+		des = strings.Replace(des, "Required.", "", 1)
+		des = strings.TrimSpace(des)
+		p("%s", asFuncParmeterComment("", fmt.Sprintf("- %s: %s", depunct(v.p.Name, false), removeMarkdownLinks(des)), true))
+	}
 	if res != nil {
 		if url := canonicalDocsURL[fmt.Sprintf("%v%v/%v", docsLink, res.Name, meth.m.Name)]; url != "" {
 			pn("// For details, see %v", url)
@@ -1868,7 +1922,7 @@ func (meth *Method) generateCode() {
 		des := opt.p.Description
 		des = strings.Replace(des, "Optional.", "", 1)
 		des = strings.TrimSpace(des)
-		p("\n%s", asComment("", fmt.Sprintf("%s sets the optional parameter %q: %s", setter, opt.p.Name, des)))
+		p("\n%s", asComment("", fmt.Sprintf("%s sets the optional parameter %q: %s", setter, opt.p.Name, removeMarkdownLinks(des))))
 		addFieldValueComments(p, opt, "", true)
 		np := new(namePool)
 		np.Get("c") // take the receiver's name
@@ -1944,6 +1998,32 @@ func (meth *Method) generateCode() {
 		pn("}")
 	}
 
+	if meth.supportsMediaUpload() && meth.api.Name == "storage" {
+		comment := "WithRetry causes the library to retry the initial request of the upload" +
+			"(for resumable uploads) or the entire upload (for multipart uploads) if" +
+			"a transient error occurs. This is contingent on ChunkSize being > 0 (so" +
+			"that the input data may be buffered). The backoff argument will be used to" +
+			"determine exponential backoff timing, and the errorFunc is used to determine" +
+			"which errors are considered retryable. By default, exponetial backoff will be" +
+			"applied using gax defaults, and the following errors are retried:" +
+			"\n\n" +
+			"- HTTP responses with codes 408, 429, 502, 503, and 504." +
+			"\n\n" +
+			"- Transient network errors such as connection reset and io.ErrUnexpectedEOF." +
+			"\n\n" +
+			"- Errors which are considered transient using the Temporary() interface." +
+			"\n\n" +
+			"- Wrapped versions of these errors."
+		p("\n%s", asComment("", comment))
+		pn("func (c *%s) WithRetry(bo *gax.Backoff, errorFunc func(err error) bool) *%s {", callName, callName)
+		pn("	c.retry = &gensupport.RetryConfig{")
+		pn("		Backoff:     bo,")
+		pn("		ShouldRetry: errorFunc,")
+		pn("	}")
+		pn("	return c")
+		pn("}")
+	}
+
 	comment := "Fields allows partial responses to be retrieved. " +
 		"See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse " +
 		"for more information."
@@ -1997,7 +2077,7 @@ func (meth *Method) generateCode() {
 
 	pn("\nfunc (c *%s) doRequest(alt string) (*http.Response, error) {", callName)
 	pn(`reqHeaders := make(http.Header)`)
-	pn(`reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/%s")`, version.Repo)
+	pn(`reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)`)
 	pn("for k, v := range c.header_ {")
 	pn(" reqHeaders[k] = v")
 	pn("}")
@@ -2063,8 +2143,14 @@ func (meth *Method) generateCode() {
 		}
 		pn(`})`)
 	}
-
-	pn("return gensupport.SendRequest(c.ctx_, c.s.client, req)")
+	if meth.supportsMediaUpload() && meth.api.Name == "storage" {
+		pn("if c.retry != nil {")
+		pn("	return gensupport.SendRequestWithRetry(c.ctx_, c.s.client, req, c.retry)")
+		pn("}")
+		pn("return gensupport.SendRequest(c.ctx_, c.s.client, req)")
+	} else {
+		pn("return gensupport.SendRequest(c.ctx_, c.s.client, req)")
+	}
 	pn("}")
 
 	if meth.supportsMediaDownload() {
@@ -2075,9 +2161,13 @@ func (meth *Method) generateCode() {
 		pn(`gensupport.SetOptions(c.urlParams_, opts...)`)
 		pn(`res, err := c.doRequest("media")`)
 		pn("if err != nil { return nil, err }")
-		pn("if err := googleapi.CheckMediaResponse(res); err != nil {")
+		if meth.api.Name == "storage" {
+			pn("if err := googleapi.CheckMediaResponse(res); err != nil {")
+		} else {
+			pn("if err := googleapi.CheckResponse(res); err != nil {")
+		}
 		pn("res.Body.Close()")
-		pn("return nil, err")
+		pn("return nil, gensupport.WrapError(err)")
 		pn("}")
 		pn("return res, nil")
 		pn("}")
@@ -2109,20 +2199,23 @@ func (meth *Method) generateCode() {
 		if retTypeComma != "" && !mapRetType {
 			pn("if res != nil && res.StatusCode == http.StatusNotModified {")
 			pn(" if res.Body != nil { res.Body.Close() }")
-			pn(" return nil, &googleapi.Error{")
+			pn(" return nil, gensupport.WrapError(&googleapi.Error{")
 			pn("  Code: res.StatusCode,")
 			pn("  Header: res.Header,")
-			pn(" }")
+			pn(" })")
 			pn("}")
 		}
 		pn("if err != nil { return %serr }", nilRet)
 		pn("defer googleapi.CloseBody(res)")
-		pn("if err := googleapi.CheckResponse(res); err != nil { return %serr }", nilRet)
+		pn("if err := googleapi.CheckResponse(res); err != nil { return %sgensupport.WrapError(err) }", nilRet)
 		if meth.supportsMediaUpload() {
 			pn(`rx := c.mediaInfo_.ResumableUpload(res.Header.Get("Location"))`)
 			pn("if rx != nil {")
 			pn(" rx.Client = c.s.client")
 			pn(" rx.UserAgent = c.s.userAgent()")
+			if meth.api.Name == "storage" {
+				pn("	rx.Retry = c.retry")
+			}
 			pn(" ctx := c.ctx_")
 			pn(" if ctx == nil {")
 			// TODO(mcgreevy): Require context when calling Media, or Do.
@@ -2131,7 +2224,7 @@ func (meth *Method) generateCode() {
 			pn(" res, err = rx.Upload(ctx)")
 			pn(" if err != nil { return %serr }", nilRet)
 			pn(" defer res.Body.Close()")
-			pn(" if err := googleapi.CheckResponse(res); err != nil { return %serr }", nilRet)
+			pn(" if err := googleapi.CheckResponse(res); err != nil { return %sgensupport.WrapError(err) }", nilRet)
 			pn("}")
 		}
 		if retTypeComma == "" {
@@ -2310,7 +2403,7 @@ func (meth *Method) NewArguments() *arguments {
 	pnames := meth.m.ParameterOrder
 	if len(pnames) == 0 {
 		// No parameterOrder; collect required parameters and sort by name.
-		for _, reqParam := range meth.grepParams(func(p *Param) bool { return p.p.Required }) {
+		for _, reqParam := range meth.ReqParams() {
 			pnames = append(pnames, reqParam.p.Name)
 		}
 		sort.Strings(pnames)
@@ -2447,40 +2540,60 @@ func (a *arguments) String() string {
 	return buf.String()
 }
 
-var urlRE = regexp.MustCompile(`^http\S+$`)
+var urlRE = regexp.MustCompile(`^\(?http\S+$`)
 
 func asComment(pfx, c string) string {
+	return asFuncParmeterComment(pfx, c, false)
+}
+
+func asFuncParmeterComment(pfx, c string, addPadding bool) string {
 	var buf bytes.Buffer
-	const maxLen = 70
+	var maxLen = 70
+	var padding string
 	r := strings.NewReplacer(
 		"\n", "\n"+pfx+"// ",
 		"`\"", `"`,
 		"\"`", `"`,
 	)
+	lineNum := 0
 	for len(c) > 0 {
+		// Adjust padding for the second line if needed.
+		if addPadding && lineNum == 1 {
+			padding = "  "
+			maxLen = 68
+		}
 		line := c
 		if len(line) < maxLen {
-			fmt.Fprintf(&buf, "%s// %s\n", pfx, r.Replace(line))
+			fmt.Fprintf(&buf, "%s// %s%s\n", pfx, padding, r.Replace(line))
 			break
 		}
 		// Don't break URLs.
+		var si int
 		if !urlRE.MatchString(line[:maxLen]) {
 			line = line[:maxLen]
+			si = strings.LastIndex(line, " ")
+		} else {
+			si = strings.Index(line, " ")
 		}
-		si := strings.LastIndex(line, " ")
-		if nl := strings.Index(line, "\n"); nl != -1 && nl < si {
+		if nl := strings.Index(line, "\n"); nl != -1 && (nl < si || si == -1) {
 			si = nl
 		}
 		if si != -1 {
 			line = line[:si]
 		}
-		fmt.Fprintf(&buf, "%s// %s\n", pfx, r.Replace(line))
+		fmt.Fprintf(&buf, "%s// %s%s\n", pfx, padding, r.Replace(line))
 		c = c[len(line):]
 		if si != -1 {
 			c = c[1:]
 		}
+		lineNum++
 	}
-	return buf.String()
+	// Add a period at the end if there is not one.
+	str := buf.String()
+	if addPadding && len(str) > 1 && str[len(str)-2:] != ".\n" {
+		str = str[:len(str)-1] + ".\n"
+	}
+	return str
 }
 
 func simpleTypeConvert(apiType, format string) (gotype string, ok bool) {
@@ -2612,4 +2725,20 @@ func addFieldValueComments(p func(format string, args ...interface{}), field Fie
 	for _, l := range lines {
 		p("%s", l)
 	}
+}
+
+// markdownLinkRe is a non-greedy regex meant to find markdown style links. It
+// also captures the name of the link.
+var markdownLinkRe = regexp.MustCompile("([^`]|\\A)(\\[([^\\[]*?)]\\((.*?)\\))([^`]|\\z)")
+
+func removeMarkdownLinks(input string) string {
+	out := input
+	sm := markdownLinkRe.FindAllStringSubmatch(input, -1)
+	if len(sm) == 0 {
+		return out
+	}
+	for _, match := range sm {
+		out = strings.Replace(out, match[2], fmt.Sprintf("%s (%s)", match[3], match[4]), 1)
+	}
+	return out
 }

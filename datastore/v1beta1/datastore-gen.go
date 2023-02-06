@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -10,35 +10,35 @@
 //
 // For product documentation, see: https://cloud.google.com/datastore/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/datastore/v1beta1"
-//   ...
-//   ctx := context.Background()
-//   datastoreService, err := datastore.NewService(ctx)
+//	import "google.golang.org/api/datastore/v1beta1"
+//	...
+//	ctx := context.Background()
+//	datastoreService, err := datastore.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//   datastoreService, err := datastore.NewService(ctx, option.WithScopes(datastore.DatastoreScope))
+//	datastoreService, err := datastore.NewService(ctx, option.WithScopes(datastore.DatastoreScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   datastoreService, err := datastore.NewService(ctx, option.WithAPIKey("AIza..."))
+//	datastoreService, err := datastore.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   datastoreService, err := datastore.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	datastoreService, err := datastore.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package datastore // import "google.golang.org/api/datastore/v1beta1"
@@ -56,6 +56,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -81,10 +82,12 @@ const apiId = "datastore:v1beta1"
 const apiName = "datastore"
 const apiVersion = "v1beta1"
 const basePath = "https://datastore.googleapis.com/"
+const mtlsBasePath = "https://datastore.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud data and see the
+	// email address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
 	// View and manage your Google Cloud Datastore data
@@ -93,13 +96,14 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
 		"https://www.googleapis.com/auth/datastore",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -160,12 +164,10 @@ type GoogleDatastoreAdminV1CommonMetadata struct {
 	EndTime string `json:"endTime,omitempty"`
 
 	// Labels: The client-assigned labels which were provided when the
-	// operation was
-	// created. May also include additional labels.
+	// operation was created. May also include additional labels.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// OperationType: The type of the operation. Can be used as a filter
-	// in
+	// OperationType: The type of the operation. Can be used as a filter in
 	// ListOperationsRequest.
 	//
 	// Possible values:
@@ -186,24 +188,23 @@ type GoogleDatastoreAdminV1CommonMetadata struct {
 	//   "INITIALIZING" - Request is being prepared for processing.
 	//   "PROCESSING" - Request is actively being processed.
 	//   "CANCELLING" - Request is in the process of being cancelled after
-	// user called
-	// google.longrunning.Operations.CancelOperation on the operation.
+	// user called google.longrunning.Operations.CancelOperation on the
+	// operation.
 	//   "FINALIZING" - Request has been processed and is in its
 	// finalization stage.
 	//   "SUCCESSFUL" - Request has completed successfully.
 	//   "FAILED" - Request has finished being processed, but encountered an
 	// error.
 	//   "CANCELLED" - Request has finished being cancelled after user
-	// called
-	// google.longrunning.Operations.CancelOperation.
+	// called google.longrunning.Operations.CancelOperation.
 	State string `json:"state,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EndTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "EndTime") to include in
@@ -221,49 +222,92 @@ func (s *GoogleDatastoreAdminV1CommonMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleDatastoreAdminV1DatastoreFirestoreMigrationMetadata: Metadata
+// for Datastore to Firestore migration operations. The
+// DatastoreFirestoreMigration operation is not started by the end-user
+// via an explicit "creation" method. This is an intentional deviation
+// from the LRO design pattern. This singleton resource can be accessed
+// at: "projects/{project_id}/operations/datastore-firestore-migration"
+type GoogleDatastoreAdminV1DatastoreFirestoreMigrationMetadata struct {
+	// MigrationState: The current state of migration from Cloud Datastore
+	// to Cloud Firestore in Datastore mode.
+	//
+	// Possible values:
+	//   "MIGRATION_STATE_UNSPECIFIED" - Unspecified.
+	//   "RUNNING" - The migration is running.
+	//   "PAUSED" - The migration is paused.
+	//   "COMPLETE" - The migration is complete.
+	MigrationState string `json:"migrationState,omitempty"`
+
+	// MigrationStep: The current step of migration from Cloud Datastore to
+	// Cloud Firestore in Datastore mode.
+	//
+	// Possible values:
+	//   "MIGRATION_STEP_UNSPECIFIED" - Unspecified.
+	//   "PREPARE" - Pre-migration: the database is prepared for migration.
+	//   "START" - Start of migration.
+	//   "APPLY_WRITES_SYNCHRONOUSLY" - Writes are applied synchronously to
+	// at least one replica.
+	//   "COPY_AND_VERIFY" - Data is copied to Cloud Firestore and then
+	// verified to match the data in Cloud Datastore.
+	//   "REDIRECT_EVENTUALLY_CONSISTENT_READS" - Eventually-consistent
+	// reads are redirected to Cloud Firestore.
+	//   "REDIRECT_STRONGLY_CONSISTENT_READS" - Strongly-consistent reads
+	// are redirected to Cloud Firestore.
+	//   "REDIRECT_WRITES" - Writes are redirected to Cloud Firestore.
+	MigrationStep string `json:"migrationStep,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MigrationState") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MigrationState") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleDatastoreAdminV1DatastoreFirestoreMigrationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleDatastoreAdminV1DatastoreFirestoreMigrationMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleDatastoreAdminV1EntityFilter: Identifies a subset of entities
-// in a project. This is specified as
-// combinations of kinds and namespaces (either or both of which may be
-// all, as
-// described in the following examples).
-// Example usage:
-//
-// Entire project:
-//   kinds=[], namespace_ids=[]
-//
-// Kinds Foo and Bar in all namespaces:
-//   kinds=['Foo', 'Bar'], namespace_ids=[]
-//
-// Kinds Foo and Bar only in the default namespace:
-//   kinds=['Foo', 'Bar'], namespace_ids=['']
-//
-// Kinds Foo and Bar in both the default and Baz namespaces:
-//   kinds=['Foo', 'Bar'], namespace_ids=['', 'Baz']
-//
-// The entire Baz namespace:
-//   kinds=[], namespace_ids=['Baz']
+// in a project. This is specified as combinations of kinds and
+// namespaces (either or both of which may be all, as described in the
+// following examples). Example usage: Entire project: kinds=[],
+// namespace_ids=[] Kinds Foo and Bar in all namespaces: kinds=['Foo',
+// 'Bar'], namespace_ids=[] Kinds Foo and Bar only in the default
+// namespace: kinds=['Foo', 'Bar'], namespace_ids=[”] Kinds Foo and Bar
+// in both the default and Baz namespaces: kinds=['Foo', 'Bar'],
+// namespace_ids=[”, 'Baz'] The entire Baz namespace: kinds=[],
+// namespace_ids=['Baz']
 type GoogleDatastoreAdminV1EntityFilter struct {
 	// Kinds: If empty, then this represents all kinds.
 	Kinds []string `json:"kinds,omitempty"`
 
 	// NamespaceIds: An empty list represents all namespaces. This is the
-	// preferred
-	// usage for projects that don't use namespaces.
-	//
-	// An empty string element represents the default namespace. This should
-	// be
-	// used if the project has data in non-default namespaces, but doesn't
-	// want to
-	// include them.
-	// Each namespace in this list must be unique.
+	// preferred usage for projects that don't use namespaces. An empty
+	// string element represents the default namespace. This should be used
+	// if the project has data in non-default namespaces, but doesn't want
+	// to include them. Each namespace in this list must be unique.
 	NamespaceIds []string `json:"namespaceIds,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Kinds") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Kinds") to include in API
@@ -291,13 +335,9 @@ type GoogleDatastoreAdminV1ExportEntitiesMetadata struct {
 	EntityFilter *GoogleDatastoreAdminV1EntityFilter `json:"entityFilter,omitempty"`
 
 	// OutputUrlPrefix: Location for the export metadata and data files.
-	// This will be the same
-	// value as
-	// the
+	// This will be the same value as the
 	// google.datastore.admin.v1.ExportEntitiesRequest.output_url_prefix
-	//
-	// field. The final output location is provided
-	// in
+	// field. The final output location is provided in
 	// google.datastore.admin.v1.ExportEntitiesResponse.output_url.
 	OutputUrlPrefix string `json:"outputUrlPrefix,omitempty"`
 
@@ -309,10 +349,10 @@ type GoogleDatastoreAdminV1ExportEntitiesMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "Common") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Common") to include in API
@@ -330,24 +370,22 @@ func (s *GoogleDatastoreAdminV1ExportEntitiesMetadata) MarshalJSON() ([]byte, er
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleDatastoreAdminV1ExportEntitiesResponse: The response
-// for
+// GoogleDatastoreAdminV1ExportEntitiesResponse: The response for
 // google.datastore.admin.v1.DatastoreAdmin.ExportEntities.
 type GoogleDatastoreAdminV1ExportEntitiesResponse struct {
 	// OutputUrl: Location of the output metadata file. This can be used to
-	// begin an import
-	// into Cloud Datastore (this project or another project).
-	// See
-	// google.datastore.admin.v1.ImportEntitiesRequest.input_url.
-	// Only present if the operation completed successfully.
+	// begin an import into Cloud Datastore (this project or another
+	// project). See
+	// google.datastore.admin.v1.ImportEntitiesRequest.input_url. Only
+	// present if the operation completed successfully.
 	OutputUrl string `json:"outputUrl,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "OutputUrl") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "OutputUrl") to include in
@@ -375,9 +413,8 @@ type GoogleDatastoreAdminV1ImportEntitiesMetadata struct {
 	EntityFilter *GoogleDatastoreAdminV1EntityFilter `json:"entityFilter,omitempty"`
 
 	// InputUrl: The location of the import metadata file. This will be the
-	// same value as
-	// the google.datastore.admin.v1.ExportEntitiesResponse.output_url
-	// field.
+	// same value as the
+	// google.datastore.admin.v1.ExportEntitiesResponse.output_url field.
 	InputUrl string `json:"inputUrl,omitempty"`
 
 	// ProgressBytes: An estimate of the number of bytes processed.
@@ -388,10 +425,10 @@ type GoogleDatastoreAdminV1ImportEntitiesMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "Common") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Common") to include in API
@@ -423,10 +460,10 @@ type GoogleDatastoreAdminV1IndexOperationMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "Common") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Common") to include in API
@@ -444,25 +481,152 @@ func (s *GoogleDatastoreAdminV1IndexOperationMetadata) MarshalJSON() ([]byte, er
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleDatastoreAdminV1MigrationProgressEvent: An event signifying the
+// start of a new step in a migration from Cloud Datastore to Cloud
+// Firestore in Datastore mode
+// (https://cloud.google.com/datastore/docs/upgrade-to-firestore).
+type GoogleDatastoreAdminV1MigrationProgressEvent struct {
+	// PrepareStepDetails: Details for the `PREPARE` step.
+	PrepareStepDetails *GoogleDatastoreAdminV1PrepareStepDetails `json:"prepareStepDetails,omitempty"`
+
+	// RedirectWritesStepDetails: Details for the `REDIRECT_WRITES` step.
+	RedirectWritesStepDetails *GoogleDatastoreAdminV1RedirectWritesStepDetails `json:"redirectWritesStepDetails,omitempty"`
+
+	// Step: The step that is starting. An event with step set to `START`
+	// indicates that the migration has been reverted back to the initial
+	// pre-migration state.
+	//
+	// Possible values:
+	//   "MIGRATION_STEP_UNSPECIFIED" - Unspecified.
+	//   "PREPARE" - Pre-migration: the database is prepared for migration.
+	//   "START" - Start of migration.
+	//   "APPLY_WRITES_SYNCHRONOUSLY" - Writes are applied synchronously to
+	// at least one replica.
+	//   "COPY_AND_VERIFY" - Data is copied to Cloud Firestore and then
+	// verified to match the data in Cloud Datastore.
+	//   "REDIRECT_EVENTUALLY_CONSISTENT_READS" - Eventually-consistent
+	// reads are redirected to Cloud Firestore.
+	//   "REDIRECT_STRONGLY_CONSISTENT_READS" - Strongly-consistent reads
+	// are redirected to Cloud Firestore.
+	//   "REDIRECT_WRITES" - Writes are redirected to Cloud Firestore.
+	Step string `json:"step,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PrepareStepDetails")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PrepareStepDetails") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleDatastoreAdminV1MigrationProgressEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleDatastoreAdminV1MigrationProgressEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleDatastoreAdminV1MigrationStateEvent: An event signifying a
+// change in state of a migration from Cloud Datastore to Cloud
+// Firestore in Datastore mode
+// (https://cloud.google.com/datastore/docs/upgrade-to-firestore).
+type GoogleDatastoreAdminV1MigrationStateEvent struct {
+	// State: The new state of the migration.
+	//
+	// Possible values:
+	//   "MIGRATION_STATE_UNSPECIFIED" - Unspecified.
+	//   "RUNNING" - The migration is running.
+	//   "PAUSED" - The migration is paused.
+	//   "COMPLETE" - The migration is complete.
+	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "State") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "State") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleDatastoreAdminV1MigrationStateEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleDatastoreAdminV1MigrationStateEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleDatastoreAdminV1PrepareStepDetails: Details for the `PREPARE`
+// step.
+type GoogleDatastoreAdminV1PrepareStepDetails struct {
+	// ConcurrencyMode: The concurrency mode this database will use when it
+	// reaches the `REDIRECT_WRITES` step.
+	//
+	// Possible values:
+	//   "CONCURRENCY_MODE_UNSPECIFIED" - Unspecified.
+	//   "PESSIMISTIC" - Pessimistic concurrency.
+	//   "OPTIMISTIC" - Optimistic concurrency.
+	//   "OPTIMISTIC_WITH_ENTITY_GROUPS" - Optimistic concurrency with
+	// entity groups.
+	ConcurrencyMode string `json:"concurrencyMode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConcurrencyMode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConcurrencyMode") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleDatastoreAdminV1PrepareStepDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleDatastoreAdminV1PrepareStepDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleDatastoreAdminV1Progress: Measures the progress of a particular
 // metric.
 type GoogleDatastoreAdminV1Progress struct {
 	// WorkCompleted: The amount of work that has been completed. Note that
-	// this may be greater
-	// than work_estimated.
+	// this may be greater than work_estimated.
 	WorkCompleted int64 `json:"workCompleted,omitempty,string"`
 
 	// WorkEstimated: An estimate of how much work needs to be performed.
-	// May be zero if the
-	// work estimate is unavailable.
+	// May be zero if the work estimate is unavailable.
 	WorkEstimated int64 `json:"workEstimated,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "WorkCompleted") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "WorkCompleted") to include
@@ -480,6 +644,43 @@ func (s *GoogleDatastoreAdminV1Progress) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleDatastoreAdminV1RedirectWritesStepDetails: Details for the
+// `REDIRECT_WRITES` step.
+type GoogleDatastoreAdminV1RedirectWritesStepDetails struct {
+	// ConcurrencyMode: Ths concurrency mode for this database.
+	//
+	// Possible values:
+	//   "CONCURRENCY_MODE_UNSPECIFIED" - Unspecified.
+	//   "PESSIMISTIC" - Pessimistic concurrency.
+	//   "OPTIMISTIC" - Optimistic concurrency.
+	//   "OPTIMISTIC_WITH_ENTITY_GROUPS" - Optimistic concurrency with
+	// entity groups.
+	ConcurrencyMode string `json:"concurrencyMode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConcurrencyMode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConcurrencyMode") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleDatastoreAdminV1RedirectWritesStepDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleDatastoreAdminV1RedirectWritesStepDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleDatastoreAdminV1beta1CommonMetadata: Metadata common to all
 // Datastore Admin operations.
 type GoogleDatastoreAdminV1beta1CommonMetadata struct {
@@ -488,12 +689,10 @@ type GoogleDatastoreAdminV1beta1CommonMetadata struct {
 	EndTime string `json:"endTime,omitempty"`
 
 	// Labels: The client-assigned labels which were provided when the
-	// operation was
-	// created. May also include additional labels.
+	// operation was created. May also include additional labels.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// OperationType: The type of the operation. Can be used as a filter
-	// in
+	// OperationType: The type of the operation. Can be used as a filter in
 	// ListOperationsRequest.
 	//
 	// Possible values:
@@ -512,24 +711,23 @@ type GoogleDatastoreAdminV1beta1CommonMetadata struct {
 	//   "INITIALIZING" - Request is being prepared for processing.
 	//   "PROCESSING" - Request is actively being processed.
 	//   "CANCELLING" - Request is in the process of being cancelled after
-	// user called
-	// google.longrunning.Operations.CancelOperation on the operation.
+	// user called google.longrunning.Operations.CancelOperation on the
+	// operation.
 	//   "FINALIZING" - Request has been processed and is in its
 	// finalization stage.
 	//   "SUCCESSFUL" - Request has completed successfully.
 	//   "FAILED" - Request has finished being processed, but encountered an
 	// error.
 	//   "CANCELLED" - Request has finished being cancelled after user
-	// called
-	// google.longrunning.Operations.CancelOperation.
+	// called google.longrunning.Operations.CancelOperation.
 	State string `json:"state,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EndTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "EndTime") to include in
@@ -548,48 +746,32 @@ func (s *GoogleDatastoreAdminV1beta1CommonMetadata) MarshalJSON() ([]byte, error
 }
 
 // GoogleDatastoreAdminV1beta1EntityFilter: Identifies a subset of
-// entities in a project. This is specified as
-// combinations of kinds and namespaces (either or both of which may be
-// all, as
-// described in the following examples).
-// Example usage:
-//
-// Entire project:
-//   kinds=[], namespace_ids=[]
-//
-// Kinds Foo and Bar in all namespaces:
-//   kinds=['Foo', 'Bar'], namespace_ids=[]
-//
-// Kinds Foo and Bar only in the default namespace:
-//   kinds=['Foo', 'Bar'], namespace_ids=['']
-//
-// Kinds Foo and Bar in both the default and Baz namespaces:
-//   kinds=['Foo', 'Bar'], namespace_ids=['', 'Baz']
-//
-// The entire Baz namespace:
-//   kinds=[], namespace_ids=['Baz']
+// entities in a project. This is specified as combinations of kinds and
+// namespaces (either or both of which may be all, as described in the
+// following examples). Example usage: Entire project: kinds=[],
+// namespace_ids=[] Kinds Foo and Bar in all namespaces: kinds=['Foo',
+// 'Bar'], namespace_ids=[] Kinds Foo and Bar only in the default
+// namespace: kinds=['Foo', 'Bar'], namespace_ids=[”] Kinds Foo and Bar
+// in both the default and Baz namespaces: kinds=['Foo', 'Bar'],
+// namespace_ids=[”, 'Baz'] The entire Baz namespace: kinds=[],
+// namespace_ids=['Baz']
 type GoogleDatastoreAdminV1beta1EntityFilter struct {
 	// Kinds: If empty, then this represents all kinds.
 	Kinds []string `json:"kinds,omitempty"`
 
 	// NamespaceIds: An empty list represents all namespaces. This is the
-	// preferred
-	// usage for projects that don't use namespaces.
-	//
-	// An empty string element represents the default namespace. This should
-	// be
-	// used if the project has data in non-default namespaces, but doesn't
-	// want to
-	// include them.
-	// Each namespace in this list must be unique.
+	// preferred usage for projects that don't use namespaces. An empty
+	// string element represents the default namespace. This should be used
+	// if the project has data in non-default namespaces, but doesn't want
+	// to include them. Each namespace in this list must be unique.
 	NamespaceIds []string `json:"namespaceIds,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Kinds") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Kinds") to include in API
@@ -617,13 +799,9 @@ type GoogleDatastoreAdminV1beta1ExportEntitiesMetadata struct {
 	EntityFilter *GoogleDatastoreAdminV1beta1EntityFilter `json:"entityFilter,omitempty"`
 
 	// OutputUrlPrefix: Location for the export metadata and data files.
-	// This will be the same
-	// value as
-	// the
-	// google.datastore.admin.v1beta1.ExportEntitiesRequest.output_url_pr
-	// efix
-	// field. The final output location is provided
-	// in
+	// This will be the same value as the
+	// google.datastore.admin.v1beta1.ExportEntitiesRequest.output_url_prefix
+	//  field. The final output location is provided in
 	// google.datastore.admin.v1beta1.ExportEntitiesResponse.output_url.
 	OutputUrlPrefix string `json:"outputUrlPrefix,omitempty"`
 
@@ -635,10 +813,10 @@ type GoogleDatastoreAdminV1beta1ExportEntitiesMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "Common") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Common") to include in API
@@ -656,8 +834,7 @@ func (s *GoogleDatastoreAdminV1beta1ExportEntitiesMetadata) MarshalJSON() ([]byt
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleDatastoreAdminV1beta1ExportEntitiesRequest: The request
-// for
+// GoogleDatastoreAdminV1beta1ExportEntitiesRequest: The request for
 // google.datastore.admin.v1beta1.DatastoreAdmin.ExportEntities.
 type GoogleDatastoreAdminV1beta1ExportEntitiesRequest struct {
 	// EntityFilter: Description of what data from the project is included
@@ -667,45 +844,30 @@ type GoogleDatastoreAdminV1beta1ExportEntitiesRequest struct {
 	// Labels: Client-assigned labels.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// OutputUrlPrefix: Location for the export metadata and data
-	// files.
-	//
-	// The full resource URL of the external storage location. Currently,
-	// only
+	// OutputUrlPrefix: Location for the export metadata and data files. The
+	// full resource URL of the external storage location. Currently, only
 	// Google Cloud Storage is supported. So output_url_prefix should be of
-	// the
-	// form: `gs://BUCKET_NAME[/NAMESPACE_PATH]`, where `BUCKET_NAME` is
-	// the
-	// name of the Cloud Storage bucket and `NAMESPACE_PATH` is an optional
-	// Cloud
-	// Storage namespace path (this is not a Cloud Datastore namespace). For
-	// more
-	// information about Cloud Storage namespace paths, see
-	// [Object
-	// name
-	// considerations](https://cloud.google.com/storage/docs/naming#obje
-	// ct-considerations).
-	//
+	// the form: `gs://BUCKET_NAME[/NAMESPACE_PATH]`, where `BUCKET_NAME` is
+	// the name of the Cloud Storage bucket and `NAMESPACE_PATH` is an
+	// optional Cloud Storage namespace path (this is not a Cloud Datastore
+	// namespace). For more information about Cloud Storage namespace paths,
+	// see Object name considerations
+	// (https://cloud.google.com/storage/docs/naming#object-considerations).
 	// The resulting files will be nested deeper than the specified URL
-	// prefix.
-	// The final output URL will be provided in
-	// the
+	// prefix. The final output URL will be provided in the
 	// google.datastore.admin.v1beta1.ExportEntitiesResponse.output_url
-	// f
-	// ield. That value should be used for subsequent ImportEntities
-	// operations.
-	//
-	// By nesting the data files deeper, the same Cloud Storage bucket can
-	// be used
-	// in multiple ExportEntities operations without conflict.
+	// field. That value should be used for subsequent ImportEntities
+	// operations. By nesting the data files deeper, the same Cloud Storage
+	// bucket can be used in multiple ExportEntities operations without
+	// conflict.
 	OutputUrlPrefix string `json:"outputUrlPrefix,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EntityFilter") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "EntityFilter") to include
@@ -723,25 +885,22 @@ func (s *GoogleDatastoreAdminV1beta1ExportEntitiesRequest) MarshalJSON() ([]byte
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleDatastoreAdminV1beta1ExportEntitiesResponse: The response
-// for
+// GoogleDatastoreAdminV1beta1ExportEntitiesResponse: The response for
 // google.datastore.admin.v1beta1.DatastoreAdmin.ExportEntities.
 type GoogleDatastoreAdminV1beta1ExportEntitiesResponse struct {
 	// OutputUrl: Location of the output metadata file. This can be used to
-	// begin an import
-	// into Cloud Datastore (this project or another project).
-	// See
-	// google.datastore.admin.v1beta1.ImportEntitiesRequest.input_url.
-	// On
-	// ly present if the operation completed successfully.
+	// begin an import into Cloud Datastore (this project or another
+	// project). See
+	// google.datastore.admin.v1beta1.ImportEntitiesRequest.input_url. Only
+	// present if the operation completed successfully.
 	OutputUrl string `json:"outputUrl,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "OutputUrl") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "OutputUrl") to include in
@@ -769,11 +928,9 @@ type GoogleDatastoreAdminV1beta1ImportEntitiesMetadata struct {
 	EntityFilter *GoogleDatastoreAdminV1beta1EntityFilter `json:"entityFilter,omitempty"`
 
 	// InputUrl: The location of the import metadata file. This will be the
-	// same value as
-	// the
+	// same value as the
 	// google.datastore.admin.v1beta1.ExportEntitiesResponse.output_url
-	// field
-	// .
+	// field.
 	InputUrl string `json:"inputUrl,omitempty"`
 
 	// ProgressBytes: An estimate of the number of bytes processed.
@@ -784,10 +941,10 @@ type GoogleDatastoreAdminV1beta1ImportEntitiesMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "Common") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Common") to include in API
@@ -805,41 +962,28 @@ func (s *GoogleDatastoreAdminV1beta1ImportEntitiesMetadata) MarshalJSON() ([]byt
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleDatastoreAdminV1beta1ImportEntitiesRequest: The request
-// for
+// GoogleDatastoreAdminV1beta1ImportEntitiesRequest: The request for
 // google.datastore.admin.v1beta1.DatastoreAdmin.ImportEntities.
 type GoogleDatastoreAdminV1beta1ImportEntitiesRequest struct {
 	// EntityFilter: Optionally specify which kinds/namespaces are to be
-	// imported. If provided,
-	// the list must be a subset of the EntityFilter used in creating the
-	// export,
-	// otherwise a FAILED_PRECONDITION error will be returned. If no filter
-	// is
-	// specified then all entities from the export are imported.
+	// imported. If provided, the list must be a subset of the EntityFilter
+	// used in creating the export, otherwise a FAILED_PRECONDITION error
+	// will be returned. If no filter is specified then all entities from
+	// the export are imported.
 	EntityFilter *GoogleDatastoreAdminV1beta1EntityFilter `json:"entityFilter,omitempty"`
 
 	// InputUrl: The full resource URL of the external storage location.
-	// Currently, only
-	// Google Cloud Storage is supported. So input_url should be of the
-	// form:
-	// `gs://BUCKET_NAME[/NAMESPACE_PATH]/OVERALL_EXPORT_METADATA_FILE`
-	// , where
-	// `BUCKET_NAME` is the name of the Cloud Storage bucket,
-	// `NAMESPACE_PATH` is
-	// an optional Cloud Storage namespace path (this is not a Cloud
-	// Datastore
-	// namespace), and `OVERALL_EXPORT_METADATA_FILE` is the metadata file
-	// written
-	// by the ExportEntities operation. For more information about Cloud
-	// Storage
-	// namespace paths, see
-	// [Object
-	// name
-	// considerations](https://cloud.google.com/storage/docs/naming#obje
-	// ct-considerations).
-	//
-	// For more information,
-	// see
+	// Currently, only Google Cloud Storage is supported. So input_url
+	// should be of the form:
+	// `gs://BUCKET_NAME[/NAMESPACE_PATH]/OVERALL_EXPORT_METADATA_FILE`,
+	// where `BUCKET_NAME` is the name of the Cloud Storage bucket,
+	// `NAMESPACE_PATH` is an optional Cloud Storage namespace path (this is
+	// not a Cloud Datastore namespace), and `OVERALL_EXPORT_METADATA_FILE`
+	// is the metadata file written by the ExportEntities operation. For
+	// more information about Cloud Storage namespace paths, see Object name
+	// considerations
+	// (https://cloud.google.com/storage/docs/naming#object-considerations).
+	// For more information, see
 	// google.datastore.admin.v1beta1.ExportEntitiesResponse.output_url.
 	InputUrl string `json:"inputUrl,omitempty"`
 
@@ -848,10 +992,10 @@ type GoogleDatastoreAdminV1beta1ImportEntitiesRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "EntityFilter") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "EntityFilter") to include
@@ -873,21 +1017,19 @@ func (s *GoogleDatastoreAdminV1beta1ImportEntitiesRequest) MarshalJSON() ([]byte
 // particular metric.
 type GoogleDatastoreAdminV1beta1Progress struct {
 	// WorkCompleted: The amount of work that has been completed. Note that
-	// this may be greater
-	// than work_estimated.
+	// this may be greater than work_estimated.
 	WorkCompleted int64 `json:"workCompleted,omitempty,string"`
 
 	// WorkEstimated: An estimate of how much work needs to be performed.
-	// May be zero if the
-	// work estimate is unavailable.
+	// May be zero if the work estimate is unavailable.
 	WorkEstimated int64 `json:"workEstimated,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "WorkCompleted") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "WorkCompleted") to include
@@ -906,52 +1048,38 @@ func (s *GoogleDatastoreAdminV1beta1Progress) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleLongrunningOperation: This resource represents a long-running
-// operation that is the result of a
-// network API call.
+// operation that is the result of a network API call.
 type GoogleLongrunningOperation struct {
 	// Done: If the value is `false`, it means the operation is still in
-	// progress.
-	// If `true`, the operation is completed, and either `error` or
-	// `response` is
-	// available.
+	// progress. If `true`, the operation is completed, and either `error`
+	// or `response` is available.
 	Done bool `json:"done,omitempty"`
 
 	// Error: The error result of the operation in case of failure or
 	// cancellation.
 	Error *Status `json:"error,omitempty"`
 
-	// Metadata: Service-specific metadata associated with the operation.
-	// It typically
-	// contains progress information and common metadata such as create
-	// time.
-	// Some services might not provide such metadata.  Any method that
-	// returns a
-	// long-running operation should document the metadata type, if any.
+	// Metadata: Service-specific metadata associated with the operation. It
+	// typically contains progress information and common metadata such as
+	// create time. Some services might not provide such metadata. Any
+	// method that returns a long-running operation should document the
+	// metadata type, if any.
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
 
 	// Name: The server-assigned name, which is only unique within the same
-	// service that
-	// originally returns it. If you use the default HTTP mapping,
-	// the
-	// `name` should be a resource name ending with
+	// service that originally returns it. If you use the default HTTP
+	// mapping, the `name` should be a resource name ending with
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success.
-	// If the original
-	// method returns no data on success, such as `Delete`, the response
-	// is
-	// `google.protobuf.Empty`.  If the original method is
-	// standard
-	// `Get`/`Create`/`Update`, the response should be the resource.  For
-	// other
-	// methods, the response should have the type `XxxResponse`, where
-	// `Xxx`
-	// is the original method name.  For example, if the original method
-	// name
-	// is `TakeSnapshot()`, the inferred response type
-	// is
-	// `TakeSnapshotResponse`.
+	// Response: The normal response of the operation in case of success. If
+	// the original method returns no data on success, such as `Delete`, the
+	// response is `google.protobuf.Empty`. If the original method is
+	// standard `Get`/`Create`/`Update`, the response should be the
+	// resource. For other methods, the response should have the type
+	// `XxxResponse`, where `Xxx` is the original method name. For example,
+	// if the original method name is `TakeSnapshot()`, the inferred
+	// response type is `TakeSnapshotResponse`.
 	Response googleapi.RawMessage `json:"response,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -960,10 +1088,10 @@ type GoogleLongrunningOperation struct {
 
 	// ForceSendFields is a list of field names (e.g. "Done") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Done") to include in API
@@ -982,40 +1110,32 @@ func (s *GoogleLongrunningOperation) MarshalJSON() ([]byte, error) {
 }
 
 // Status: The `Status` type defines a logical error model that is
-// suitable for
-// different programming environments, including REST APIs and RPC APIs.
-// It is
-// used by [gRPC](https://github.com/grpc). Each `Status` message
-// contains
-// three pieces of data: error code, error message, and error
-// details.
-//
-// You can find out more about this error model and how to work with it
-// in the
-// [API Design Guide](https://cloud.google.com/apis/design/errors).
+// suitable for different programming environments, including REST APIs
+// and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
+// `Status` message contains three pieces of data: error code, error
+// message, and error details. You can find out more about this error
+// model and how to work with it in the API Design Guide
+// (https://cloud.google.com/apis/design/errors).
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
 	Code int64 `json:"code,omitempty"`
 
-	// Details: A list of messages that carry the error details.  There is a
-	// common set of
-	// message types for APIs to use.
+	// Details: A list of messages that carry the error details. There is a
+	// common set of message types for APIs to use.
 	Details []googleapi.RawMessage `json:"details,omitempty"`
 
 	// Message: A developer-facing error message, which should be in
-	// English. Any
-	// user-facing error message should be localized and sent in
-	// the
-	// google.rpc.Status.details field, or localized by the client.
+	// English. Any user-facing error message should be localized and sent
+	// in the google.rpc.Status.details field, or localized by the client.
 	Message string `json:"message,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Code") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Code") to include in API
@@ -1045,20 +1165,15 @@ type ProjectsExportCall struct {
 }
 
 // Export: Exports a copy of all or a subset of entities from Google
-// Cloud Datastore
-// to another storage system, such as Google Cloud Storage. Recent
-// updates to
-// entities may not be reflected in the export. The export occurs in
-// the
-// background and its progress can be monitored and managed via
-// the
-// Operation resource that is created. The output of an export may only
-// be
-// used once the associated operation is done. If an export operation
-// is
-// cancelled before completion it may leave partial data behind in
-// Google
-// Cloud Storage.
+// Cloud Datastore to another storage system, such as Google Cloud
+// Storage. Recent updates to entities may not be reflected in the
+// export. The export occurs in the background and its progress can be
+// monitored and managed via the Operation resource that is created. The
+// output of an export may only be used once the associated operation is
+// done. If an export operation is cancelled before completion it may
+// leave partial data behind in Google Cloud Storage.
+//
+// - projectId: Project ID against which to make the request.
 func (r *ProjectsService) Export(projectId string, googledatastoreadminv1beta1exportentitiesrequest *GoogleDatastoreAdminV1beta1ExportEntitiesRequest) *ProjectsExportCall {
 	c := &ProjectsExportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -1093,7 +1208,7 @@ func (c *ProjectsExportCall) Header() http.Header {
 
 func (c *ProjectsExportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1133,17 +1248,17 @@ func (c *ProjectsExportCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunnin
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -1157,7 +1272,7 @@ func (c *ProjectsExportCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunnin
 	}
 	return ret, nil
 	// {
-	//   "description": "Exports a copy of all or a subset of entities from Google Cloud Datastore\nto another storage system, such as Google Cloud Storage. Recent updates to\nentities may not be reflected in the export. The export occurs in the\nbackground and its progress can be monitored and managed via the\nOperation resource that is created. The output of an export may only be\nused once the associated operation is done. If an export operation is\ncancelled before completion it may leave partial data behind in Google\nCloud Storage.",
+	//   "description": "Exports a copy of all or a subset of entities from Google Cloud Datastore to another storage system, such as Google Cloud Storage. Recent updates to entities may not be reflected in the export. The export occurs in the background and its progress can be monitored and managed via the Operation resource that is created. The output of an export may only be used once the associated operation is done. If an export operation is cancelled before completion it may leave partial data behind in Google Cloud Storage.",
 	//   "flatPath": "v1beta1/projects/{projectId}:export",
 	//   "httpMethod": "POST",
 	//   "id": "datastore.projects.export",
@@ -1199,15 +1314,13 @@ type ProjectsImportCall struct {
 }
 
 // Import: Imports entities into Google Cloud Datastore. Existing
-// entities with the
-// same key are overwritten. The import occurs in the background and
-// its
-// progress can be monitored and managed via the Operation resource that
-// is
-// created. If an ImportEntities operation is cancelled, it is
-// possible
-// that a subset of the data has already been imported to Cloud
-// Datastore.
+// entities with the same key are overwritten. The import occurs in the
+// background and its progress can be monitored and managed via the
+// Operation resource that is created. If an ImportEntities operation is
+// cancelled, it is possible that a subset of the data has already been
+// imported to Cloud Datastore.
+//
+// - projectId: Project ID against which to make the request.
 func (r *ProjectsService) Import(projectId string, googledatastoreadminv1beta1importentitiesrequest *GoogleDatastoreAdminV1beta1ImportEntitiesRequest) *ProjectsImportCall {
 	c := &ProjectsImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -1242,7 +1355,7 @@ func (c *ProjectsImportCall) Header() http.Header {
 
 func (c *ProjectsImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1282,17 +1395,17 @@ func (c *ProjectsImportCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunnin
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -1306,7 +1419,7 @@ func (c *ProjectsImportCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunnin
 	}
 	return ret, nil
 	// {
-	//   "description": "Imports entities into Google Cloud Datastore. Existing entities with the\nsame key are overwritten. The import occurs in the background and its\nprogress can be monitored and managed via the Operation resource that is\ncreated. If an ImportEntities operation is cancelled, it is possible\nthat a subset of the data has already been imported to Cloud Datastore.",
+	//   "description": "Imports entities into Google Cloud Datastore. Existing entities with the same key are overwritten. The import occurs in the background and its progress can be monitored and managed via the Operation resource that is created. If an ImportEntities operation is cancelled, it is possible that a subset of the data has already been imported to Cloud Datastore.",
 	//   "flatPath": "v1beta1/projects/{projectId}:import",
 	//   "httpMethod": "POST",
 	//   "id": "datastore.projects.import",

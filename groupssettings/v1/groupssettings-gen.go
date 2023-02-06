@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://developers.google.com/google-apps/groups-settings/get_started
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/groupssettings/v1"
-//   ...
-//   ctx := context.Background()
-//   groupssettingsService, err := groupssettings.NewService(ctx)
+//	import "google.golang.org/api/groupssettings/v1"
+//	...
+//	ctx := context.Background()
+//	groupssettingsService, err := groupssettings.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   groupssettingsService, err := groupssettings.NewService(ctx, option.WithAPIKey("AIza..."))
+//	groupssettingsService, err := groupssettings.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   groupssettingsService, err := groupssettings.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	groupssettingsService, err := groupssettings.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package groupssettings // import "google.golang.org/api/groupssettings/v1"
@@ -50,6 +50,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -84,7 +85,7 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/apps.groups.settings",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
@@ -210,6 +211,12 @@ type Groups struct {
 	// true.
 	DefaultMessageDenyNotificationText string `json:"defaultMessageDenyNotificationText,omitempty"`
 
+	// DefaultSender: Default sender for members who can post messages as
+	// the group. Possible values are: - `DEFAULT_SELF`: By default messages
+	// will be sent from the user - `GROUP`: By default messages will be
+	// sent from the group
+	DefaultSender string `json:"default_sender,omitempty"`
+
 	// Description: Description of the group. This property value may be an
 	// empty string if no group description has been entered. If entered,
 	// the maximum group description is no more than 300 characters.
@@ -305,8 +312,8 @@ type Groups struct {
 	// found at G Suite Email Settings API Email Language Tags.
 	PrimaryLanguage string `json:"primaryLanguage,omitempty"`
 
-	// ReplyTo: Specifies who should the default reply go to. Possible
-	// values are:
+	// ReplyTo: Specifies who receives the default reply. Possible values
+	// are:
 	// - REPLY_TO_CUSTOM: For replies to messages, use the group's custom
 	// email address.
 	// When the group's ReplyTo property is set to REPLY_TO_CUSTOM, the
@@ -421,6 +428,7 @@ type Groups struct {
 	// - ALL_MANAGERS_CAN_CONTACT
 	// - ALL_MEMBERS_CAN_CONTACT
 	// - ANYONE_CAN_CONTACT
+	// - ALL_OWNERS_CAN_CONTACT
 	WhoCanContactOwner string `json:"whoCanContactOwner,omitempty"`
 
 	// WhoCanDeleteAnyPost: Deprecated. This is merged into the new
@@ -703,8 +711,8 @@ type Groups struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "AllowExternalMembers") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -738,6 +746,8 @@ type GroupsGetCall struct {
 }
 
 // Get: Gets one resource by id.
+//
+// - groupUniqueId: The group's email address.
 func (r *GroupsService) Get(groupUniqueId string) *GroupsGetCall {
 	c := &GroupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.groupUniqueId = groupUniqueId
@@ -781,7 +791,7 @@ func (c *GroupsGetCall) Header() http.Header {
 
 func (c *GroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -819,17 +829,17 @@ func (c *GroupsGetCall) Do(opts ...googleapi.CallOption) (*Groups, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Groups{
 		ServerResponse: googleapi.ServerResponse{
@@ -881,6 +891,8 @@ type GroupsPatchCall struct {
 
 // Patch: Updates an existing resource. This method supports patch
 // semantics.
+//
+// - groupUniqueId: The group's email address.
 func (r *GroupsService) Patch(groupUniqueId string, groups *Groups) *GroupsPatchCall {
 	c := &GroupsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.groupUniqueId = groupUniqueId
@@ -915,7 +927,7 @@ func (c *GroupsPatchCall) Header() http.Header {
 
 func (c *GroupsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -955,17 +967,17 @@ func (c *GroupsPatchCall) Do(opts ...googleapi.CallOption) (*Groups, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Groups{
 		ServerResponse: googleapi.ServerResponse{
@@ -1019,6 +1031,8 @@ type GroupsUpdateCall struct {
 }
 
 // Update: Updates an existing resource.
+//
+// - groupUniqueId: The group's email address.
 func (r *GroupsService) Update(groupUniqueId string, groups *Groups) *GroupsUpdateCall {
 	c := &GroupsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.groupUniqueId = groupUniqueId
@@ -1053,7 +1067,7 @@ func (c *GroupsUpdateCall) Header() http.Header {
 
 func (c *GroupsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1093,17 +1107,17 @@ func (c *GroupsUpdateCall) Do(opts ...googleapi.CallOption) (*Groups, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Groups{
 		ServerResponse: googleapi.ServerResponse{

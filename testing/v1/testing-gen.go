@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -8,35 +8,35 @@
 //
 // For product documentation, see: https://developers.google.com/cloud-test-lab/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/testing/v1"
-//   ...
-//   ctx := context.Background()
-//   testingService, err := testing.NewService(ctx)
+//	import "google.golang.org/api/testing/v1"
+//	...
+//	ctx := context.Background()
+//	testingService, err := testing.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//   testingService, err := testing.NewService(ctx, option.WithScopes(testing.CloudPlatformReadOnlyScope))
+//	testingService, err := testing.NewService(ctx, option.WithScopes(testing.CloudPlatformReadOnlyScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   testingService, err := testing.NewService(ctx, option.WithAPIKey("AIza..."))
+//	testingService, err := testing.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   testingService, err := testing.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	testingService, err := testing.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package testing // import "google.golang.org/api/testing/v1"
@@ -54,6 +54,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -79,25 +80,29 @@ const apiId = "testing:v1"
 const apiName = "testing"
 const apiVersion = "v1"
 const basePath = "https://testing.googleapis.com/"
+const mtlsBasePath = "https://testing.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud data and see the
+	// email address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
-	// View your data across Google Cloud Platform services
+	// View your data across Google Cloud services and see the email address
+	// of your Google Account
 	CloudPlatformReadOnlyScope = "https://www.googleapis.com/auth/cloud-platform.read-only"
 )
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
 		"https://www.googleapis.com/auth/cloud-platform.read-only",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -193,10 +198,10 @@ type Account struct {
 
 	// ForceSendFields is a list of field names (e.g. "GoogleAuto") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "GoogleAuto") to include in
@@ -216,31 +221,29 @@ func (s *Account) MarshalJSON() ([]byte, error) {
 
 // AndroidDevice: A single Android device.
 type AndroidDevice struct {
-	// AndroidModelId: Required. The id of the Android device to be
-	// used.
+	// AndroidModelId: Required. The id of the Android device to be used.
 	// Use the TestEnvironmentDiscoveryService to get supported options.
 	AndroidModelId string `json:"androidModelId,omitempty"`
 
 	// AndroidVersionId: Required. The id of the Android OS version to be
-	// used.
-	// Use the TestEnvironmentDiscoveryService to get supported options.
+	// used. Use the TestEnvironmentDiscoveryService to get supported
+	// options.
 	AndroidVersionId string `json:"androidVersionId,omitempty"`
 
-	// Locale: Required. The locale the test device used for testing.
-	// Use the TestEnvironmentDiscoveryService to get supported options.
+	// Locale: Required. The locale the test device used for testing. Use
+	// the TestEnvironmentDiscoveryService to get supported options.
 	Locale string `json:"locale,omitempty"`
 
-	// Orientation: Required. How the device is oriented during the
-	// test.
+	// Orientation: Required. How the device is oriented during the test.
 	// Use the TestEnvironmentDiscoveryService to get supported options.
 	Orientation string `json:"orientation,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AndroidModelId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AndroidModelId") to
@@ -272,10 +275,10 @@ type AndroidDeviceCatalog struct {
 
 	// ForceSendFields is a list of field names (e.g. "Models") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Models") to include in API
@@ -301,10 +304,10 @@ type AndroidDeviceList struct {
 
 	// ForceSendFields is a list of field names (e.g. "AndroidDevices") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AndroidDevices") to
@@ -324,19 +327,13 @@ func (s *AndroidDeviceList) MarshalJSON() ([]byte, error) {
 }
 
 // AndroidInstrumentationTest: A test of an Android application that can
-// control an Android component
-// independently of its normal lifecycle.
+// control an Android component independently of its normal lifecycle.
 // Android instrumentation tests run an application APK and test APK
-// inside the
-// same process on a virtual or physical AndroidDevice.  They also
-// specify
-// a test runner class, such as com.google.GoogleTestRunner, which can
-// vary
-// on the specific instrumentation framework chosen.
-//
-// See <http://developer.android.com/tools/testing/testing_android.html>
-// for
-// more information on types of Android tests.
+// inside the same process on a virtual or physical AndroidDevice. They
+// also specify a test runner class, such as
+// com.google.GoogleTestRunner, which can vary on the specific
+// instrumentation framework chosen. See for more information on types
+// of Android tests.
 type AndroidInstrumentationTest struct {
 	// AppApk: The APK for the application under test.
 	AppApk *FileReference `json:"appApk,omitempty"`
@@ -344,41 +341,26 @@ type AndroidInstrumentationTest struct {
 	// AppBundle: A multi-apk app bundle for the application under test.
 	AppBundle *AppBundle `json:"appBundle,omitempty"`
 
-	// AppPackageId: The java package for the application under test.
-	// The default value is determined by examining the application's
-	// manifest.
+	// AppPackageId: The java package for the application under test. The
+	// default value is determined by examining the application's manifest.
 	AppPackageId string `json:"appPackageId,omitempty"`
 
 	// OrchestratorOption: The option of whether running each test within
-	// its own invocation of
-	// instrumentation with Android Test Orchestrator or not.
-	// ** Orchestrator is only compatible with AndroidJUnitRunner version
-	// 1.0 or
-	// higher! **
-	// Orchestrator offers the following benefits:
-	//  - No shared state
-	//  - Crashes are isolated
-	//  - Logs are scoped per
-	// test
-	//
-	// See
-	// <https://developer.android.com/training/testing/junit-runner
-	// .html#using-android-test-orchestrator>
-	// for more information about Android Test Orchestrator.
-	//
-	// If not set, the test will be run without the orchestrator.
+	// its own invocation of instrumentation with Android Test Orchestrator
+	// or not. ** Orchestrator is only compatible with AndroidJUnitRunner
+	// version 1.1 or higher! ** Orchestrator offers the following benefits:
+	// - No shared state - Crashes are isolated - Logs are scoped per test
+	// See for more information about Android Test Orchestrator. If not set,
+	// the test will be run without the orchestrator.
 	//
 	// Possible values:
 	//   "ORCHESTRATOR_OPTION_UNSPECIFIED" - Default value: the server will
-	// choose the mode. Currently implies that
-	// the test will run without the orchestrator. In the future,
-	// all instrumentation tests will be run with the orchestrator.
-	// Using the orchestrator is highly encouraged because of all the
-	// benefits it
-	// offers.
-	//   "USE_ORCHESTRATOR" - Run test using orchestrator.
-	// ** Only compatible with AndroidJUnitRunner version 1.0 or higher!
-	// **
+	// choose the mode. Currently implies that the test will run without the
+	// orchestrator. In the future, all instrumentation tests will be run
+	// with the orchestrator. Using the orchestrator is highly encouraged
+	// because of all the benefits it offers.
+	//   "USE_ORCHESTRATOR" - Run test using orchestrator. ** Only
+	// compatible with AndroidJUnitRunner version 1.1 or higher! **
 	// Recommended.
 	//   "DO_NOT_USE_ORCHESTRATOR" - Run test without using orchestrator.
 	OrchestratorOption string `json:"orchestratorOption,omitempty"`
@@ -390,32 +372,27 @@ type AndroidInstrumentationTest struct {
 	// TestApk: Required. The APK containing the test code to be executed.
 	TestApk *FileReference `json:"testApk,omitempty"`
 
-	// TestPackageId: The java package for the test to be executed.
-	// The default value is determined by examining the application's
-	// manifest.
+	// TestPackageId: The java package for the test to be executed. The
+	// default value is determined by examining the application's manifest.
 	TestPackageId string `json:"testPackageId,omitempty"`
 
-	// TestRunnerClass: The InstrumentationTestRunner class.
-	// The default value is determined by examining the application's
-	// manifest.
+	// TestRunnerClass: The InstrumentationTestRunner class. The default
+	// value is determined by examining the application's manifest.
 	TestRunnerClass string `json:"testRunnerClass,omitempty"`
 
 	// TestTargets: Each target must be fully qualified with the package
-	// name or class name,
-	// in one of these formats:
-	//  - "package package_name"
-	//  - "class package_name.class_name"
-	//  - "class package_name.class_name#method_name"
-	//
-	// If empty, all targets in the module will be run.
+	// name or class name, in one of these formats: - "package package_name"
+	// - "class package_name.class_name" - "class
+	// package_name.class_name#method_name" If empty, all targets in the
+	// module will be run.
 	TestTargets []string `json:"testTargets,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AppApk") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AppApk") to include in API
@@ -434,40 +411,36 @@ func (s *AndroidInstrumentationTest) MarshalJSON() ([]byte, error) {
 }
 
 // AndroidMatrix: A set of Android device configuration permutations is
-// defined by the
-// the cross-product of the given axes. Internally, the given
-// AndroidMatrix
-// will be expanded into a set of AndroidDevices.
-//
-// Only supported permutations will be instantiated.  Invalid
-// permutations
-// (e.g., incompatible models/versions) are ignored.
+// defined by the the cross-product of the given axes. Internally, the
+// given AndroidMatrix will be expanded into a set of AndroidDevices.
+// Only supported permutations will be instantiated. Invalid
+// permutations (e.g., incompatible models/versions) are ignored.
 type AndroidMatrix struct {
 	// AndroidModelIds: Required. The ids of the set of Android device to be
-	// used.
-	// Use the TestEnvironmentDiscoveryService to get supported options.
+	// used. Use the TestEnvironmentDiscoveryService to get supported
+	// options.
 	AndroidModelIds []string `json:"androidModelIds,omitempty"`
 
 	// AndroidVersionIds: Required. The ids of the set of Android OS version
-	// to be used.
-	// Use the TestEnvironmentDiscoveryService to get supported options.
+	// to be used. Use the TestEnvironmentDiscoveryService to get supported
+	// options.
 	AndroidVersionIds []string `json:"androidVersionIds,omitempty"`
 
 	// Locales: Required. The set of locales the test device will enable for
-	// testing.
-	// Use the TestEnvironmentDiscoveryService to get supported options.
+	// testing. Use the TestEnvironmentDiscoveryService to get supported
+	// options.
 	Locales []string `json:"locales,omitempty"`
 
-	// Orientations: Required. The set of orientations to test with.
-	// Use the TestEnvironmentDiscoveryService to get supported options.
+	// Orientations: Required. The set of orientations to test with. Use the
+	// TestEnvironmentDiscoveryService to get supported options.
 	Orientations []string `json:"orientations,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AndroidModelIds") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AndroidModelIds") to
@@ -488,20 +461,23 @@ func (s *AndroidMatrix) MarshalJSON() ([]byte, error) {
 
 // AndroidModel: A description of an Android device tests may be run on.
 type AndroidModel struct {
-	// Brand: The company that this device is branded with.
-	// Example: "Google", "Samsung".
+	// Brand: The company that this device is branded with. Example:
+	// "Google", "Samsung".
 	Brand string `json:"brand,omitempty"`
 
-	// Codename: The name of the industrial design.
-	// This corresponds to android.os.Build.DEVICE.
+	// Codename: The name of the industrial design. This corresponds to
+	// android.os.Build.DEVICE.
 	Codename string `json:"codename,omitempty"`
 
 	// Form: Whether this device is virtual or physical.
 	//
 	// Possible values:
-	//   "DEVICE_FORM_UNSPECIFIED" - Do not use.  For proto versioning only.
-	//   "VIRTUAL" - A software stack that simulates the device.
+	//   "DEVICE_FORM_UNSPECIFIED" - Do not use. For proto versioning only.
+	//   "VIRTUAL" - Android virtual device using Compute Engine native
+	// virtualization. Firebase Test Lab only.
 	//   "PHYSICAL" - Actual hardware.
+	//   "EMULATOR" - Android virtual device using emulator in nested
+	// virtualization. Equivalent to Android Studio.
 	Form string `json:"form,omitempty"`
 
 	// FormFactor: Whether this device is a phone, tablet, wearable, etc.
@@ -515,26 +491,27 @@ type AndroidModel struct {
 	// wearable.
 	FormFactor string `json:"formFactor,omitempty"`
 
-	// Id: The unique opaque id for this model.
-	// Use this for invoking the TestExecutionService.
+	// Id: The unique opaque id for this model. Use this for invoking the
+	// TestExecutionService.
 	Id string `json:"id,omitempty"`
 
 	// LowFpsVideoRecording: True if and only if tests with this model are
-	// recorded by stitching
-	// together screenshots. See use_low_spec_video_recording in device
-	// config.
+	// recorded by stitching together screenshots. See
+	// use_low_spec_video_recording in device config.
 	LowFpsVideoRecording bool `json:"lowFpsVideoRecording,omitempty"`
 
 	// Manufacturer: The manufacturer of this device.
 	Manufacturer string `json:"manufacturer,omitempty"`
 
-	// Name: The human-readable marketing name for this device
-	// model.
+	// Name: The human-readable marketing name for this device model.
 	// Examples: "Nexus 5", "Galaxy S5".
 	Name string `json:"name,omitempty"`
 
-	// ScreenDensity: Screen density in DPI.
-	// This corresponds to ro.sf.lcd_density
+	// PerVersionInfo: Version-specific information of an Android model.
+	PerVersionInfo []*PerAndroidVersionInfo `json:"perVersionInfo,omitempty"`
+
+	// ScreenDensity: Screen density in DPI. This corresponds to
+	// ro.sf.lcd_density
 	ScreenDensity int64 `json:"screenDensity,omitempty"`
 
 	// ScreenX: Screen size in the horizontal (X) dimension measured in
@@ -545,38 +522,32 @@ type AndroidModel struct {
 	// pixels.
 	ScreenY int64 `json:"screenY,omitempty"`
 
-	// SupportedAbis: The list of supported ABIs for this device.
-	// This corresponds to either android.os.Build.SUPPORTED_ABIS (for API
-	// level
-	// 21 and above) or android.os.Build.CPU_ABI/CPU_ABI2.
-	// The most preferred ABI is the first element in the list.
-	//
-	// Elements are optionally prefixed by "version_id:" (where version_id
-	// is
-	// the id of an AndroidVersion), denoting an ABI that is supported only
-	// on
-	// a particular version.
+	// SupportedAbis: The list of supported ABIs for this device. This
+	// corresponds to either android.os.Build.SUPPORTED_ABIS (for API level
+	// 21 and above) or android.os.Build.CPU_ABI/CPU_ABI2. The most
+	// preferred ABI is the first element in the list. Elements are
+	// optionally prefixed by "version_id:" (where version_id is the id of
+	// an AndroidVersion), denoting an ABI that is supported only on a
+	// particular version.
 	SupportedAbis []string `json:"supportedAbis,omitempty"`
 
 	// SupportedVersionIds: The set of Android versions this device
 	// supports.
 	SupportedVersionIds []string `json:"supportedVersionIds,omitempty"`
 
-	// Tags: Tags for this dimension.
-	// Examples: "default", "preview", "deprecated".
+	// Tags: Tags for this dimension. Examples: "default", "preview",
+	// "deprecated".
 	Tags []string `json:"tags,omitempty"`
 
 	// ThumbnailUrl: URL of a thumbnail image (photo) of the device.
-	// e.g.
-	// https://lh3.googleusercontent.com/90WcauuJiCYABEl8U0lcZeuS5STUbf2yW...
 	ThumbnailUrl string `json:"thumbnailUrl,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Brand") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Brand") to include in API
@@ -595,8 +566,8 @@ func (s *AndroidModel) MarshalJSON() ([]byte, error) {
 }
 
 // AndroidRoboTest: A test of an android application that explores the
-// application on a virtual
-// or physical Android Device, finding culprits and crashes as it goes.
+// application on a virtual or physical Android Device, finding culprits
+// and crashes as it goes.
 type AndroidRoboTest struct {
 	// AppApk: The APK for the application under test.
 	AppApk *FileReference `json:"appApk,omitempty"`
@@ -608,46 +579,52 @@ type AndroidRoboTest struct {
 	// the app.
 	AppInitialActivity string `json:"appInitialActivity,omitempty"`
 
-	// AppPackageId: The java package for the application under test.
-	// The default value is determined by examining the application's
-	// manifest.
+	// AppPackageId: The java package for the application under test. The
+	// default value is determined by examining the application's manifest.
 	AppPackageId string `json:"appPackageId,omitempty"`
 
 	// MaxDepth: The max depth of the traversal stack Robo can explore.
-	// Needs to be at least
-	// 2 to make Robo explore the app beyond the first activity.
-	// Default is 50.
+	// Needs to be at least 2 to make Robo explore the app beyond the first
+	// activity. Default is 50.
 	MaxDepth int64 `json:"maxDepth,omitempty"`
 
-	// MaxSteps: The max number of steps Robo can execute.
-	// Default is no limit.
+	// MaxSteps: The max number of steps Robo can execute. Default is no
+	// limit.
 	MaxSteps int64 `json:"maxSteps,omitempty"`
 
 	// RoboDirectives: A set of directives Robo should apply during the
-	// crawl.
-	// This allows users to customize the crawl. For example, the username
-	// and
-	// password for a test account can be provided.
+	// crawl. This allows users to customize the crawl. For example, the
+	// username and password for a test account can be provided.
 	RoboDirectives []*RoboDirective `json:"roboDirectives,omitempty"`
 
+	// RoboMode: The mode in which Robo should run. Most clients should
+	// allow the server to populate this field automatically.
+	//
+	// Possible values:
+	//   "ROBO_MODE_UNSPECIFIED" - This means that the server should choose
+	// the mode. Recommended.
+	//   "ROBO_VERSION_1" - Runs Robo in UIAutomator-only mode without app
+	// resigning
+	//   "ROBO_VERSION_2" - Runs Robo in standard Espresso with UIAutomator
+	// fallback
+	RoboMode string `json:"roboMode,omitempty"`
+
 	// RoboScript: A JSON file with a sequence of actions Robo should
-	// perform as a prologue
-	// for the crawl.
+	// perform as a prologue for the crawl.
 	RoboScript *FileReference `json:"roboScript,omitempty"`
 
-	// StartingIntents: The intents used to launch the app for the crawl.
-	// If none are provided, then the main launcher activity is launched.
-	// If some are provided, then only those provided are launched (the
-	// main
+	// StartingIntents: The intents used to launch the app for the crawl. If
+	// none are provided, then the main launcher activity is launched. If
+	// some are provided, then only those provided are launched (the main
 	// launcher activity must be provided explicitly).
 	StartingIntents []*RoboStartingIntent `json:"startingIntents,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AppApk") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AppApk") to include in API
@@ -676,10 +653,10 @@ type AndroidRuntimeConfiguration struct {
 
 	// ForceSendFields is a list of field names (e.g. "Locales") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Locales") to include in
@@ -697,11 +674,9 @@ func (s *AndroidRuntimeConfiguration) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// AndroidTestLoop: A test of an Android Application with a Test
-// Loop.
-// The intent \<intent-name\> will be implicitly added, since Games is
-// the only
-// user of this api, for the time being.
+// AndroidTestLoop: A test of an Android Application with a Test Loop.
+// The intent \ will be implicitly added, since Games is the only user
+// of this api, for the time being.
 type AndroidTestLoop struct {
 	// AppApk: The APK for the application under test.
 	AppApk *FileReference `json:"appApk,omitempty"`
@@ -709,37 +684,30 @@ type AndroidTestLoop struct {
 	// AppBundle: A multi-apk app bundle for the application under test.
 	AppBundle *AppBundle `json:"appBundle,omitempty"`
 
-	// AppPackageId: The java package for the application under test.
-	// The default is determined by examining the application's manifest.
+	// AppPackageId: The java package for the application under test. The
+	// default is determined by examining the application's manifest.
 	AppPackageId string `json:"appPackageId,omitempty"`
 
 	// ScenarioLabels: The list of scenario labels that should be run during
-	// the test.
-	// The scenario labels should map to labels defined in the
-	// application's
-	// manifest. For example, player_experience
-	// and
+	// the test. The scenario labels should map to labels defined in the
+	// application's manifest. For example, player_experience and
 	// com.google.test.loops.player_experience add all of the loops labeled
-	// in the
-	// manifest with the com.google.test.loops.player_experience name to
-	// the
-	// execution.
-	// Scenarios can also be specified in the scenarios field.
+	// in the manifest with the com.google.test.loops.player_experience name
+	// to the execution. Scenarios can also be specified in the scenarios
+	// field.
 	ScenarioLabels []string `json:"scenarioLabels,omitempty"`
 
-	// Scenarios: The list of scenarios that should be run during the
-	// test.
-	// The default is all test loops, derived from the
-	// application's
+	// Scenarios: The list of scenarios that should be run during the test.
+	// The default is all test loops, derived from the application's
 	// manifest.
 	Scenarios []int64 `json:"scenarios,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AppApk") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AppApk") to include in API
@@ -759,40 +727,38 @@ func (s *AndroidTestLoop) MarshalJSON() ([]byte, error) {
 
 // AndroidVersion: A version of the Android OS.
 type AndroidVersion struct {
-	// ApiLevel: The API level for this Android version.
-	// Examples: 18, 19.
+	// ApiLevel: The API level for this Android version. Examples: 18, 19.
 	ApiLevel int64 `json:"apiLevel,omitempty"`
 
-	// CodeName: The code name for this Android version.
-	// Examples: "JellyBean", "KitKat".
+	// CodeName: The code name for this Android version. Examples:
+	// "JellyBean", "KitKat".
 	CodeName string `json:"codeName,omitempty"`
 
 	// Distribution: Market share for this version.
 	Distribution *Distribution `json:"distribution,omitempty"`
 
-	// Id: An opaque id for this Android version.
-	// Use this id to invoke the TestExecutionService.
+	// Id: An opaque id for this Android version. Use this id to invoke the
+	// TestExecutionService.
 	Id string `json:"id,omitempty"`
 
 	// ReleaseDate: The date this Android version became available in the
 	// market.
 	ReleaseDate *Date `json:"releaseDate,omitempty"`
 
-	// Tags: Tags for this dimension.
-	// Examples: "default", "preview", "deprecated".
+	// Tags: Tags for this dimension. Examples: "default", "preview",
+	// "deprecated".
 	Tags []string `json:"tags,omitempty"`
 
-	// VersionString: A string representing this version of the Android
-	// OS.
+	// VersionString: A string representing this version of the Android OS.
 	// Examples: "4.3", "4.4".
 	VersionString string `json:"versionString,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ApiLevel") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ApiLevel") to include in
@@ -816,16 +782,16 @@ type Apk struct {
 	// test begins.
 	Location *FileReference `json:"location,omitempty"`
 
-	// PackageName: The java package for the APK to be installed.
-	// Value is determined by examining the application's manifest.
+	// PackageName: The java package for the APK to be installed. Value is
+	// determined by examining the application's manifest.
 	PackageName string `json:"packageName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Location") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Location") to include in
@@ -844,17 +810,16 @@ func (s *Apk) MarshalJSON() ([]byte, error) {
 }
 
 // ApkDetail: Android application details based on application manifest
-// and apk archive
-// contents.
+// and apk archive contents.
 type ApkDetail struct {
 	ApkManifest *ApkManifest `json:"apkManifest,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ApkManifest") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ApkManifest") to include
@@ -872,10 +837,8 @@ func (s *ApkDetail) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ApkManifest: An Android app manifest.
-// See
-// http://developer.android.com/guide/topics/manifest/manifest-intro.
-// html
+// ApkManifest: An Android app manifest. See
+// http://developer.android.com/guide/topics/manifest/manifest-intro.html
 type ApkManifest struct {
 	// ApplicationLabel: User-readable name for the application.
 	ApplicationLabel string `json:"applicationLabel,omitempty"`
@@ -886,11 +849,13 @@ type ApkManifest struct {
 	// to run.
 	MaxSdkVersion int64 `json:"maxSdkVersion,omitempty"`
 
+	// Metadata: Meta-data tags defined in the manifest.
+	Metadata []*Metadata `json:"metadata,omitempty"`
+
 	// MinSdkVersion: Minimum API level required for the application to run.
 	MinSdkVersion int64 `json:"minSdkVersion,omitempty"`
 
-	// PackageName: Full Java-style package name for this application,
-	// e.g.
+	// PackageName: Full Java-style package name for this application, e.g.
 	// "com.example.foo".
 	PackageName string `json:"packageName,omitempty"`
 
@@ -898,12 +863,24 @@ type ApkManifest struct {
 	// designed to run.
 	TargetSdkVersion int64 `json:"targetSdkVersion,omitempty"`
 
+	// UsesFeature: Feature usage tags defined in the manifest.
+	UsesFeature []*UsesFeature `json:"usesFeature,omitempty"`
+
+	// UsesPermission: Permissions declared to be used by the application
+	UsesPermission []string `json:"usesPermission,omitempty"`
+
+	// VersionCode: Version number used internally by the app.
+	VersionCode int64 `json:"versionCode,omitempty,string"`
+
+	// VersionName: Version number shown to users.
+	VersionName string `json:"versionName,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "ApplicationLabel") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ApplicationLabel") to
@@ -923,11 +900,9 @@ func (s *ApkManifest) MarshalJSON() ([]byte, error) {
 }
 
 // AppBundle: An Android App Bundle file format, containing a
-// BundleConfig.pb file,
-// a base module directory, zero or more dynamic feature module
-// directories.
-// <p>See https://developer.android.com/guide/app-bundle/build for
-// guidance on
+// BundleConfig.pb file, a base module directory, zero or more dynamic
+// feature module directories. See
+// https://developer.android.com/guide/app-bundle/build for guidance on
 // building App Bundles.
 type AppBundle struct {
 	// BundleLocation: .aab file representing the app bundle under test.
@@ -935,10 +910,10 @@ type AppBundle struct {
 
 	// ForceSendFields is a list of field names (e.g. "BundleLocation") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BundleLocation") to
@@ -960,59 +935,38 @@ func (s *AppBundle) MarshalJSON() ([]byte, error) {
 // CancelTestMatrixResponse: Response containing the current state of
 // the specified test matrix.
 type CancelTestMatrixResponse struct {
-	// TestState: The current rolled-up state of the test matrix.
-	// If this state is already final, then the cancelation request
-	// will
-	// have no effect.
+	// TestState: The current rolled-up state of the test matrix. If this
+	// state is already final, then the cancelation request will have no
+	// effect.
 	//
 	// Possible values:
-	//   "TEST_STATE_UNSPECIFIED" - Do not use.  For proto versioning only.
+	//   "TEST_STATE_UNSPECIFIED" - Do not use. For proto versioning only.
 	//   "VALIDATING" - The execution or matrix is being validated.
 	//   "PENDING" - The execution or matrix is waiting for resources to
 	// become available.
-	//   "RUNNING" - The execution is currently being processed.
-	//
-	// Can only be set on an execution.
-	//   "FINISHED" - The execution or matrix has terminated normally.
-	//
-	// On a matrix this means that the matrix level processing completed
-	// normally,
-	// but individual executions may be in an ERROR state.
+	//   "RUNNING" - The execution is currently being processed. Can only be
+	// set on an execution.
+	//   "FINISHED" - The execution or matrix has terminated normally. On a
+	// matrix this means that the matrix level processing completed
+	// normally, but individual executions may be in an ERROR state.
 	//   "ERROR" - The execution or matrix has stopped because it
-	// encountered an
-	// infrastructure failure.
+	// encountered an infrastructure failure.
 	//   "UNSUPPORTED_ENVIRONMENT" - The execution was not run because it
-	// corresponds to a unsupported
-	// environment.
-	//
-	// Can only be set on an execution.
+	// corresponds to a unsupported environment. Can only be set on an
+	// execution.
 	//   "INCOMPATIBLE_ENVIRONMENT" - The execution was not run because the
-	// provided inputs are incompatible with
-	// the requested environment.
-	//
-	// Example: requested AndroidVersion is lower than APK's
-	// minSdkVersion
-	//
+	// provided inputs are incompatible with the requested environment.
+	// Example: requested AndroidVersion is lower than APK's minSdkVersion
 	// Can only be set on an execution.
 	//   "INCOMPATIBLE_ARCHITECTURE" - The execution was not run because the
-	// provided inputs are incompatible with
-	// the requested architecture.
-	//
-	// Example: requested device does not support running the native code
-	// in
-	// the supplied APK
-	//
-	// Can only be set on an execution.
-	//   "CANCELLED" - The user cancelled the execution.
-	//
-	// Can only be set on an execution.
+	// provided inputs are incompatible with the requested architecture.
+	// Example: requested device does not support running the native code in
+	// the supplied APK Can only be set on an execution.
+	//   "CANCELLED" - The user cancelled the execution. Can only be set on
+	// an execution.
 	//   "INVALID" - The execution or matrix was not run because the
-	// provided inputs are not
-	// valid.
-	//
-	// Examples: input file is not of the expected type, is
-	// malformed/corrupt, or
-	// was flagged as malware
+	// provided inputs are not valid. Examples: input file is not of the
+	// expected type, is malformed/corrupt, or was flagged as malware
 	TestState string `json:"testState,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1021,10 +975,10 @@ type CancelTestMatrixResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "TestState") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "TestState") to include in
@@ -1052,10 +1006,10 @@ type ClientInfo struct {
 
 	// ForceSendFields is a list of field names (e.g. "ClientInfoDetails")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ClientInfoDetails") to
@@ -1075,8 +1029,8 @@ func (s *ClientInfo) MarshalJSON() ([]byte, error) {
 }
 
 // ClientInfoDetail: Key-value pair of detailed information about the
-// client which invoked the
-// test. Examples: {'Version', '1.0'}, {'Release Track', 'BETA'}.
+// client which invoked the test. Examples: {'Version', '1.0'},
+// {'Release Track', 'BETA'}.
 type ClientInfoDetail struct {
 	// Key: Required. The key of detailed client information.
 	Key string `json:"key,omitempty"`
@@ -1086,10 +1040,10 @@ type ClientInfoDetail struct {
 
 	// ForceSendFields is a list of field names (e.g. "Key") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Key") to include in API
@@ -1107,45 +1061,36 @@ func (s *ClientInfoDetail) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Date: Represents a whole or partial calendar date, e.g. a birthday.
-// The time of day
-// and time zone are either specified elsewhere or are not significant.
-// The date
-// is relative to the Proleptic Gregorian Calendar. This can
-// represent:
-//
-// * A full date, with non-zero year, month and day values
-// * A month and day value, with a zero year, e.g. an anniversary
-// * A year on its own, with zero month and day values
-// * A year and month value, with a zero day, e.g. a credit card
-// expiration date
-//
-// Related types are google.type.TimeOfDay and
-// `google.protobuf.Timestamp`.
+// Date: Represents a whole or partial calendar date, such as a
+// birthday. The time of day and time zone are either specified
+// elsewhere or are insignificant. The date is relative to the Gregorian
+// Calendar. This can represent one of the following: * A full date,
+// with non-zero year, month, and day values. * A month and day, with a
+// zero year (for example, an anniversary). * A year on its own, with a
+// zero month and a zero day. * A year and month, with a zero day (for
+// example, a credit card expiration date). Related types: *
+// google.type.TimeOfDay * google.type.DateTime *
+// google.protobuf.Timestamp
 type Date struct {
-	// Day: Day of month. Must be from 1 to 31 and valid for the year and
-	// month, or 0
-	// if specifying a year by itself or a year and month where the day is
-	// not
-	// significant.
+	// Day: Day of a month. Must be from 1 to 31 and valid for the year and
+	// month, or 0 to specify a year by itself or a year and month where the
+	// day isn't significant.
 	Day int64 `json:"day,omitempty"`
 
-	// Month: Month of year. Must be from 1 to 12, or 0 if specifying a year
-	// without a
-	// month and day.
+	// Month: Month of a year. Must be from 1 to 12, or 0 to specify a year
+	// without a month and day.
 	Month int64 `json:"month,omitempty"`
 
-	// Year: Year of date. Must be from 1 to 9999, or 0 if specifying a date
-	// without
-	// a year.
+	// Year: Year of the date. Must be from 1 to 9999, or 0 to specify a
+	// date without a year.
 	Year int64 `json:"year,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Day") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Day") to include in API
@@ -1173,10 +1118,10 @@ type DeviceFile struct {
 
 	// ForceSendFields is a list of field names (e.g. "ObbFile") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ObbFile") to include in
@@ -1194,13 +1139,81 @@ func (s *DeviceFile) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Distribution: Data about the relative number of devices running
-// a
+// DeviceIpBlock: A single device IP block
+type DeviceIpBlock struct {
+	// AddedDate: The date this block was added to Firebase Test Lab
+	AddedDate *Date `json:"addedDate,omitempty"`
+
+	// Block: An IP address block in CIDR notation eg: 34.68.194.64/29
+	Block string `json:"block,omitempty"`
+
+	// Form: Whether this block is used by physical or virtual devices
+	//
+	// Possible values:
+	//   "DEVICE_FORM_UNSPECIFIED" - Do not use. For proto versioning only.
+	//   "VIRTUAL" - Android virtual device using Compute Engine native
+	// virtualization. Firebase Test Lab only.
+	//   "PHYSICAL" - Actual hardware.
+	//   "EMULATOR" - Android virtual device using emulator in nested
+	// virtualization. Equivalent to Android Studio.
+	Form string `json:"form,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AddedDate") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AddedDate") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DeviceIpBlock) MarshalJSON() ([]byte, error) {
+	type NoMethod DeviceIpBlock
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DeviceIpBlockCatalog: List of IP blocks used by the Firebase Test Lab
+type DeviceIpBlockCatalog struct {
+	// IpBlocks: The device IP blocks used by Firebase Test Lab
+	IpBlocks []*DeviceIpBlock `json:"ipBlocks,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IpBlocks") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IpBlocks") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DeviceIpBlockCatalog) MarshalJSON() ([]byte, error) {
+	type NoMethod DeviceIpBlockCatalog
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Distribution: Data about the relative number of devices running a
 // given configuration of the Android platform.
 type Distribution struct {
 	// MarketShare: Output only. The estimated fraction (0-1) of the total
-	// market with this
-	// configuration.
+	// market with this configuration.
 	MarketShare float64 `json:"marketShare,omitempty"`
 
 	// MeasurementTime: Output only. The time this distribution was
@@ -1209,10 +1222,10 @@ type Distribution struct {
 
 	// ForceSendFields is a list of field names (e.g. "MarketShare") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "MarketShare") to include
@@ -1255,10 +1268,10 @@ type Environment struct {
 
 	// ForceSendFields is a list of field names (e.g. "AndroidDevice") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AndroidDevice") to include
@@ -1280,8 +1293,7 @@ func (s *Environment) MarshalJSON() ([]byte, error) {
 // be executed.
 type EnvironmentMatrix struct {
 	// AndroidDeviceList: A list of Android devices; the test will be run
-	// only on the specified
-	// devices.
+	// only on the specified devices.
 	AndroidDeviceList *AndroidDeviceList `json:"androidDeviceList,omitempty"`
 
 	// AndroidMatrix: A matrix of Android devices.
@@ -1292,10 +1304,10 @@ type EnvironmentMatrix struct {
 
 	// ForceSendFields is a list of field names (e.g. "AndroidDeviceList")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AndroidDeviceList") to
@@ -1325,10 +1337,10 @@ type EnvironmentVariable struct {
 
 	// ForceSendFields is a list of field names (e.g. "Key") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Key") to include in API
@@ -1348,16 +1360,17 @@ func (s *EnvironmentVariable) MarshalJSON() ([]byte, error) {
 
 // FileReference: A reference to a file, used for user inputs.
 type FileReference struct {
-	// GcsPath: A path to a file in Google Cloud Storage.
-	// Example: gs://build-app-1414623860166/app-debug-unaligned.apk
+	// GcsPath: A path to a file in Google Cloud Storage. Example:
+	// gs://build-app-1414623860166/app%40debug-unaligned.apk These paths
+	// are expected to be url encoded (percent encoding)
 	GcsPath string `json:"gcsPath,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "GcsPath") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "GcsPath") to include in
@@ -1387,10 +1400,10 @@ type GetApkDetailsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "ApkDetail") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ApkDetail") to include in
@@ -1408,37 +1421,29 @@ func (s *GetApkDetailsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAuto: Enables automatic Google account login.
-// If set, the service automatically generates a Google test account and
-// adds
-// it to the device, before executing the test. Note that test accounts
-// might be
-// reused.
-// Many applications show their full set of functionalities when an
-// account is
-// present on the device. Logging into the device with these generated
-// accounts
-// allows testing more functionalities.
+// GoogleAuto: Enables automatic Google account login. If set, the
+// service automatically generates a Google test account and adds it to
+// the device, before executing the test. Note that test accounts might
+// be reused. Many applications show their full set of functionalities
+// when an account is present on the device. Logging into the device
+// with these generated accounts allows testing more functionalities.
 type GoogleAuto struct {
 }
 
 // GoogleCloudStorage: A storage location within Google cloud storage
 // (GCS).
 type GoogleCloudStorage struct {
-	// GcsPath: Required. The path to a directory in GCS that
-	// will
-	// eventually contain the results for this test.
-	// The requesting user must have write access on the bucket in the
-	// supplied
-	// path.
+	// GcsPath: Required. The path to a directory in GCS that will
+	// eventually contain the results for this test. The requesting user
+	// must have write access on the bucket in the supplied path.
 	GcsPath string `json:"gcsPath,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "GcsPath") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "GcsPath") to include in
@@ -1456,26 +1461,24 @@ func (s *GoogleCloudStorage) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// IntentFilter: The <intent-filter> section of an <activity>
-// tag.
-// https://developer.android.com/guide/topics/manifest/intent-filter
-// -element.html
+// IntentFilter: The section of an tag.
+// https://developer.android.com/guide/topics/manifest/intent-filter-element.html
 type IntentFilter struct {
-	// ActionNames: The android:name value of the <action> tag.
+	// ActionNames: The android:name value of the tag.
 	ActionNames []string `json:"actionNames,omitempty"`
 
-	// CategoryNames: The android:name value of the <category> tag.
+	// CategoryNames: The android:name value of the tag.
 	CategoryNames []string `json:"categoryNames,omitempty"`
 
-	// MimeType: The android:mimeType value of the <data> tag.
+	// MimeType: The android:mimeType value of the tag.
 	MimeType string `json:"mimeType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ActionNames") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ActionNames") to include
@@ -1495,30 +1498,29 @@ func (s *IntentFilter) MarshalJSON() ([]byte, error) {
 
 // IosDevice: A single iOS device.
 type IosDevice struct {
-	// IosModelId: Required. The id of the iOS device to be used.
-	// Use the TestEnvironmentDiscoveryService to get supported options.
+	// IosModelId: Required. The id of the iOS device to be used. Use the
+	// TestEnvironmentDiscoveryService to get supported options.
 	IosModelId string `json:"iosModelId,omitempty"`
 
 	// IosVersionId: Required. The id of the iOS major software version to
-	// be used.
-	// Use the TestEnvironmentDiscoveryService to get supported options.
+	// be used. Use the TestEnvironmentDiscoveryService to get supported
+	// options.
 	IosVersionId string `json:"iosVersionId,omitempty"`
 
-	// Locale: Required. The locale the test device used for testing.
-	// Use the TestEnvironmentDiscoveryService to get supported options.
+	// Locale: Required. The locale the test device used for testing. Use
+	// the TestEnvironmentDiscoveryService to get supported options.
 	Locale string `json:"locale,omitempty"`
 
-	// Orientation: Required. How the device is oriented during the
-	// test.
+	// Orientation: Required. How the device is oriented during the test.
 	// Use the TestEnvironmentDiscoveryService to get supported options.
 	Orientation string `json:"orientation,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "IosModelId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "IosModelId") to include in
@@ -1552,10 +1554,10 @@ type IosDeviceCatalog struct {
 
 	// ForceSendFields is a list of field names (e.g. "Models") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Models") to include in API
@@ -1573,6 +1575,44 @@ func (s *IosDeviceCatalog) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// IosDeviceFile: A file or directory to install on the device before
+// the test starts.
+type IosDeviceFile struct {
+	// BundleId: The bundle id of the app where this file lives. iOS apps
+	// sandbox their own filesystem, so app files must specify which app
+	// installed on the device.
+	BundleId string `json:"bundleId,omitempty"`
+
+	// Content: The source file
+	Content *FileReference `json:"content,omitempty"`
+
+	// DevicePath: Location of the file on the device, inside the app's
+	// sandboxed filesystem
+	DevicePath string `json:"devicePath,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BundleId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BundleId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IosDeviceFile) MarshalJSON() ([]byte, error) {
+	type NoMethod IosDeviceFile
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // IosDeviceList: A list of iOS device configurations in which the test
 // is to be executed.
 type IosDeviceList struct {
@@ -1581,10 +1621,10 @@ type IosDeviceList struct {
 
 	// ForceSendFields is a list of field names (e.g. "IosDevices") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "IosDevices") to include in
@@ -1603,14 +1643,9 @@ func (s *IosDeviceList) MarshalJSON() ([]byte, error) {
 }
 
 // IosModel: A description of an iOS device tests may be run on.
-// Next tag: 13
 type IosModel struct {
-	// DeviceCapabilities: Device capabilities.
-	// Copied
-	// from
-	// https://developer.apple.com/library/archive/documentation/DeviceI
-	// nformation/Reference/iOSDeviceCompatibility/DeviceCompatibilityMatrix/
-	// DeviceCompatibilityMatrix.html
+	// DeviceCapabilities: Device capabilities. Copied from
+	// https://developer.apple.com/library/archive/documentation/DeviceInformation/Reference/iOSDeviceCompatibility/DeviceCompatibilityMatrix/DeviceCompatibilityMatrix.html
 	DeviceCapabilities []string `json:"deviceCapabilities,omitempty"`
 
 	// FormFactor: Whether this device is a phone, tablet, wearable, etc.
@@ -1624,13 +1659,16 @@ type IosModel struct {
 	// wearable.
 	FormFactor string `json:"formFactor,omitempty"`
 
-	// Id: The unique opaque id for this model.
-	// Use this for invoking the TestExecutionService.
+	// Id: The unique opaque id for this model. Use this for invoking the
+	// TestExecutionService.
 	Id string `json:"id,omitempty"`
 
-	// Name: The human-readable name for this device model.
-	// Examples: "iPhone 4s", "iPad Mini 2".
+	// Name: The human-readable name for this device model. Examples:
+	// "iPhone 4s", "iPad Mini 2".
 	Name string `json:"name,omitempty"`
+
+	// PerVersionInfo: Version-specific information of an iOS model.
+	PerVersionInfo []*PerIosVersionInfo `json:"perVersionInfo,omitempty"`
 
 	// ScreenDensity: Screen density in DPI.
 	ScreenDensity int64 `json:"screenDensity,omitempty"`
@@ -1647,16 +1685,16 @@ type IosModel struct {
 	// device supports.
 	SupportedVersionIds []string `json:"supportedVersionIds,omitempty"`
 
-	// Tags: Tags for this dimension.
-	// Examples: "default", "preview", "deprecated".
+	// Tags: Tags for this dimension. Examples: "default", "preview",
+	// "deprecated".
 	Tags []string `json:"tags,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DeviceCapabilities")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DeviceCapabilities") to
@@ -1686,10 +1724,10 @@ type IosRuntimeConfiguration struct {
 
 	// ForceSendFields is a list of field names (e.g. "Locales") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Locales") to include in
@@ -1708,10 +1746,9 @@ func (s *IosRuntimeConfiguration) MarshalJSON() ([]byte, error) {
 }
 
 // IosTestLoop: A test of an iOS application that implements one or more
-// game loop scenarios.
-// This test type accepts an archived application (.ipa file) and a list
-// of
-// integer scenarios that will be executed on the app sequentially.
+// game loop scenarios. This test type accepts an archived application
+// (.ipa file) and a list of integer scenarios that will be executed on
+// the app sequentially.
 type IosTestLoop struct {
 	// AppBundleId: Output only. The bundle id for the application under
 	// test.
@@ -1721,16 +1758,15 @@ type IosTestLoop struct {
 	AppIpa *FileReference `json:"appIpa,omitempty"`
 
 	// Scenarios: The list of scenarios that should be run during the test.
-	// Defaults to the
-	// single scenario 0 if unspecified.
+	// Defaults to the single scenario 0 if unspecified.
 	Scenarios []int64 `json:"scenarios,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AppBundleId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AppBundleId") to include
@@ -1751,24 +1787,36 @@ func (s *IosTestLoop) MarshalJSON() ([]byte, error) {
 // IosTestSetup: A description of how to set up an iOS device prior to
 // running the test.
 type IosTestSetup struct {
+	// AdditionalIpas: iOS apps to install in addition to those being
+	// directly tested.
+	AdditionalIpas []*FileReference `json:"additionalIpas,omitempty"`
+
 	// NetworkProfile: The network traffic profile used for running the
-	// test.
-	// Available network profiles can be queried by using
-	// the
-	// NETWORK_CONFIGURATION environment type when
-	// calling
+	// test. Available network profiles can be queried by using the
+	// NETWORK_CONFIGURATION environment type when calling
 	// TestEnvironmentDiscoveryService.GetTestEnvironmentCatalog.
 	NetworkProfile string `json:"networkProfile,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "NetworkProfile") to
+	// PullDirectories: List of directories on the device to upload to Cloud
+	// Storage at the end of the test. Directories should either be in a
+	// shared directory (such as /private/var/mobile/Media) or within an
+	// accessible directory inside the app's filesystem (such as /Documents)
+	// by specifying the bundle ID.
+	PullDirectories []*IosDeviceFile `json:"pullDirectories,omitempty"`
+
+	// PushFiles: List of files to push to the device before starting the
+	// test.
+	PushFiles []*IosDeviceFile `json:"pushFiles,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AdditionalIpas") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "NetworkProfile") to
+	// NullFields is a list of field names (e.g. "AdditionalIpas") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -1786,17 +1834,15 @@ func (s *IosTestSetup) MarshalJSON() ([]byte, error) {
 
 // IosVersion: An iOS version.
 type IosVersion struct {
-	// Id: An opaque id for this iOS version.
-	// Use this id to invoke the TestExecutionService.
+	// Id: An opaque id for this iOS version. Use this id to invoke the
+	// TestExecutionService.
 	Id string `json:"id,omitempty"`
 
-	// MajorVersion: An integer representing the major iOS
-	// version.
+	// MajorVersion: An integer representing the major iOS version.
 	// Examples: "8", "9".
 	MajorVersion int64 `json:"majorVersion,omitempty"`
 
-	// MinorVersion: An integer representing the minor iOS
-	// version.
+	// MinorVersion: An integer representing the minor iOS version.
 	// Examples: "1", "2".
 	MinorVersion int64 `json:"minorVersion,omitempty"`
 
@@ -1804,16 +1850,16 @@ type IosVersion struct {
 	// version.
 	SupportedXcodeVersionIds []string `json:"supportedXcodeVersionIds,omitempty"`
 
-	// Tags: Tags for this dimension.
-	// Examples: "default", "preview", "deprecated".
+	// Tags: Tags for this dimension. Examples: "default", "preview",
+	// "deprecated".
 	Tags []string `json:"tags,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Id") to include in API
@@ -1832,57 +1878,45 @@ func (s *IosVersion) MarshalJSON() ([]byte, error) {
 }
 
 // IosXcTest: A test of an iOS application that uses the XCTest
-// framework.
-// Xcode supports the option to "build for testing", which generates
-// an
-// .xctestrun file that contains a test specification (arguments, test
-// methods,
-// etc). This test type accepts a zip file containing the .xctestrun
-// file and
-// the corresponding contents of the Build/Products directory that
-// contains all
-// the binaries needed to run the tests.
+// framework. Xcode supports the option to "build for testing", which
+// generates an .xctestrun file that contains a test specification
+// (arguments, test methods, etc). This test type accepts a zip file
+// containing the .xctestrun file and the corresponding contents of the
+// Build/Products directory that contains all the binaries needed to run
+// the tests.
 type IosXcTest struct {
 	// AppBundleId: Output only. The bundle id for the application under
 	// test.
 	AppBundleId string `json:"appBundleId,omitempty"`
 
 	// TestSpecialEntitlements: The option to test special app entitlements.
-	// Setting this would re-sign the
-	// app having special entitlements with an explicit
-	// application-identifier.
-	// Currently supports testing aps-environment entitlement.
+	// Setting this would re-sign the app having special entitlements with
+	// an explicit application-identifier. Currently supports testing
+	// aps-environment entitlement.
 	TestSpecialEntitlements bool `json:"testSpecialEntitlements,omitempty"`
 
 	// TestsZip: Required. The .zip containing the .xctestrun file and the
-	// contents of the
-	// DerivedData/Build/Products directory.
-	// The .xctestrun file in this zip is ignored if the xctestrun field
-	// is
-	// specified.
+	// contents of the DerivedData/Build/Products directory. The .xctestrun
+	// file in this zip is ignored if the xctestrun field is specified.
 	TestsZip *FileReference `json:"testsZip,omitempty"`
 
-	// XcodeVersion: The Xcode version that should be used for the test.
-	// Use the TestEnvironmentDiscoveryService to get supported
-	// options.
+	// XcodeVersion: The Xcode version that should be used for the test. Use
+	// the TestEnvironmentDiscoveryService to get supported options.
 	// Defaults to the latest Xcode version Firebase Test Lab supports.
 	XcodeVersion string `json:"xcodeVersion,omitempty"`
 
 	// Xctestrun: An .xctestrun file that will override the .xctestrun file
-	// in the
-	// tests zip. Because the .xctestrun file contains environment variables
-	// along
-	// with test methods to run and/or ignore, this can be useful for
-	// sharding
-	// tests. Default is taken from the tests zip.
+	// in the tests zip. Because the .xctestrun file contains environment
+	// variables along with test methods to run and/or ignore, this can be
+	// useful for sharding tests. Default is taken from the tests zip.
 	Xctestrun *FileReference `json:"xctestrun,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AppBundleId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AppBundleId") to include
@@ -1907,29 +1941,26 @@ type LauncherActivityIntent struct {
 
 // Locale: A location/region designation for language.
 type Locale struct {
-	// Id: The id for this locale.
-	// Example: "en_US".
+	// Id: The id for this locale. Example: "en_US".
 	Id string `json:"id,omitempty"`
 
-	// Name: A human-friendly name for this language/locale.
-	// Example: "English".
+	// Name: A human-friendly name for this language/locale. Example:
+	// "English".
 	Name string `json:"name,omitempty"`
 
-	// Region: A human-friendly string representing the region for
-	// this
+	// Region: A human-friendly string representing the region for this
 	// locale. Example: "United States". Not present for every locale.
 	Region string `json:"region,omitempty"`
 
-	// Tags: Tags for this dimension.
-	// Example: "default".
+	// Tags: Tags for this dimension. Example: "default".
 	Tags []string `json:"tags,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Id") to include in API
@@ -1948,24 +1979,25 @@ func (s *Locale) MarshalJSON() ([]byte, error) {
 }
 
 // ManualSharding: Shards test cases into the specified groups of
-// packages, classes, and/or
-// methods.
-//
-// With manual sharding enabled, specifying test targets
-// via
-// environment_variables or in InstrumentationTest is invalid.
+// packages, classes, and/or methods. With manual sharding enabled,
+// specifying test targets via environment_variables or in
+// InstrumentationTest is invalid.
 type ManualSharding struct {
 	// TestTargetsForShard: Required. Group of packages, classes, and/or
-	// test methods to be run for
-	// each shard. The number of shard_test_targets must be >= 1 and <= 50.
+	// test methods to be run for each manually-created shard. You must
+	// specify at least one shard if this field is present. When you select
+	// one or more physical devices, the number of repeated
+	// test_targets_for_shard must be <= 50. When you select one or more ARM
+	// virtual devices, it must be <= 100. When you select only x86 virtual
+	// devices, it must be <= 500.
 	TestTargetsForShard []*TestTargetsForShard `json:"testTargetsForShard,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "TestTargetsForShard")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "TestTargetsForShard") to
@@ -1984,6 +2016,38 @@ func (s *ManualSharding) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Metadata: A tag within a manifest.
+// https://developer.android.com/guide/topics/manifest/meta-data-element.html
+type Metadata struct {
+	// Name: The android:name value
+	Name string `json:"name,omitempty"`
+
+	// Value: The android:value value
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Metadata) MarshalJSON() ([]byte, error) {
+	type NoMethod Metadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type NetworkConfiguration struct {
 	// DownRule: The emulation rule applying to the download traffic.
 	DownRule *TrafficRule `json:"downRule,omitempty"`
@@ -1996,10 +2060,10 @@ type NetworkConfiguration struct {
 
 	// ForceSendFields is a list of field names (e.g. "DownRule") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DownRule") to include in
@@ -2022,10 +2086,10 @@ type NetworkConfigurationCatalog struct {
 
 	// ForceSendFields is a list of field names (e.g. "Configurations") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Configurations") to
@@ -2052,20 +2116,17 @@ type ObbFile struct {
 	Obb *FileReference `json:"obb,omitempty"`
 
 	// ObbFileName: Required. OBB file name which must conform to the format
-	// as specified by
-	// Android
-	// e.g. [main|patch].0300110.com.example.android.obb
-	// which will be installed into
-	//   \<shared-storage\>/Android/obb/\<package-name\>/
-	// on the device.
+	// as specified by Android e.g.
+	// [main|patch].0300110.com.example.android.obb which will be installed
+	// into \/Android/obb/\/ on the device.
 	ObbFileName string `json:"obbFileName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Obb") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Obb") to include in API
@@ -2085,24 +2146,22 @@ func (s *ObbFile) MarshalJSON() ([]byte, error) {
 
 // Orientation: Screen orientation of the device.
 type Orientation struct {
-	// Id: The id for this orientation.
-	// Example: "portrait".
+	// Id: The id for this orientation. Example: "portrait".
 	Id string `json:"id,omitempty"`
 
-	// Name: A human-friendly name for this orientation.
-	// Example: "portrait".
+	// Name: A human-friendly name for this orientation. Example:
+	// "portrait".
 	Name string `json:"name,omitempty"`
 
-	// Tags: Tags for this dimension.
-	// Example: "default".
+	// Tags: Tags for this dimension. Example: "default".
 	Tags []string `json:"tags,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Id") to include in API
@@ -2120,30 +2179,157 @@ func (s *Orientation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ProvidedSoftwareCatalog: The currently provided software environment
-// on the devices under test.
-type ProvidedSoftwareCatalog struct {
-	// OrchestratorVersion: A string representing the current version of
-	// Android Test
-	// Orchestrator that is provided by TestExecutionService.
-	// Example: "1.0.2 beta".
-	OrchestratorVersion string `json:"orchestratorVersion,omitempty"`
+// PerAndroidVersionInfo: A version-specific information of an Android
+// model.
+type PerAndroidVersionInfo struct {
+	// DeviceCapacity: The number of online devices for an Android version.
+	//
+	// Possible values:
+	//   "DEVICE_CAPACITY_UNSPECIFIED" - The value of device capacity is
+	// unknown or unset.
+	//   "DEVICE_CAPACITY_HIGH" - Devices that are high in capacity (The lab
+	// has a large number of these devices). These devices are generally
+	// suggested for running a large number of simultaneous tests (e.g. more
+	// than 100 tests). Please note that high capacity devices do not
+	// guarantee short wait times due to several factors: 1. Traffic (how
+	// heavily they are used at any given moment) 2. High capacity devices
+	// are prioritized for certain usages, which may cause user tests to be
+	// slower than selecting other similar device types.
+	//   "DEVICE_CAPACITY_MEDIUM" - Devices that are medium in capacity (The
+	// lab has a decent number of these devices, though not as many as high
+	// capacity devices). These devices are suitable for fewer test runs
+	// (e.g. fewer than 100 tests) and only for low shard counts (e.g. less
+	// than 10 shards).
+	//   "DEVICE_CAPACITY_LOW" - Devices that are low in capacity (The lab
+	// has a small number of these devices). These devices may be used if
+	// users need to test on this specific device model and version. Please
+	// note that due to low capacity, the tests may take much longer to
+	// finish, especially if a large number of tests are invoked at once.
+	// These devices are not suitable for test sharding.
+	//   "DEVICE_CAPACITY_NONE" - Devices that are completely missing from
+	// the lab. These devices are unavailable either temporarily or
+	// permanently and should not be requested. If the device is also marked
+	// as deprecated, this state is very likely permanent.
+	DeviceCapacity string `json:"deviceCapacity,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "OrchestratorVersion")
-	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// VersionId: An Android version.
+	VersionId string `json:"versionId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DeviceCapacity") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "OrchestratorVersion") to
+	// NullFields is a list of field names (e.g. "DeviceCapacity") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
 	// server as null. It is an error if a field in this list has a
 	// non-empty value. This may be used to include null fields in Patch
 	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PerAndroidVersionInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod PerAndroidVersionInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PerIosVersionInfo: A version-specific information of an iOS model.
+type PerIosVersionInfo struct {
+	// DeviceCapacity: The number of online devices for an iOS version.
+	//
+	// Possible values:
+	//   "DEVICE_CAPACITY_UNSPECIFIED" - The value of device capacity is
+	// unknown or unset.
+	//   "DEVICE_CAPACITY_HIGH" - Devices that are high in capacity (The lab
+	// has a large number of these devices). These devices are generally
+	// suggested for running a large number of simultaneous tests (e.g. more
+	// than 100 tests). Please note that high capacity devices do not
+	// guarantee short wait times due to several factors: 1. Traffic (how
+	// heavily they are used at any given moment) 2. High capacity devices
+	// are prioritized for certain usages, which may cause user tests to be
+	// slower than selecting other similar device types.
+	//   "DEVICE_CAPACITY_MEDIUM" - Devices that are medium in capacity (The
+	// lab has a decent number of these devices, though not as many as high
+	// capacity devices). These devices are suitable for fewer test runs
+	// (e.g. fewer than 100 tests) and only for low shard counts (e.g. less
+	// than 10 shards).
+	//   "DEVICE_CAPACITY_LOW" - Devices that are low in capacity (The lab
+	// has a small number of these devices). These devices may be used if
+	// users need to test on this specific device model and version. Please
+	// note that due to low capacity, the tests may take much longer to
+	// finish, especially if a large number of tests are invoked at once.
+	// These devices are not suitable for test sharding.
+	//   "DEVICE_CAPACITY_NONE" - Devices that are completely missing from
+	// the lab. These devices are unavailable either temporarily or
+	// permanently and should not be requested. If the device is also marked
+	// as deprecated, this state is very likely permanent.
+	DeviceCapacity string `json:"deviceCapacity,omitempty"`
+
+	// VersionId: An iOS version.
+	VersionId string `json:"versionId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DeviceCapacity") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DeviceCapacity") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PerIosVersionInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod PerIosVersionInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ProvidedSoftwareCatalog: The currently provided software environment
+// on the devices under test.
+type ProvidedSoftwareCatalog struct {
+	// AndroidxOrchestratorVersion: A string representing the current
+	// version of AndroidX Test Orchestrator that is used in the
+	// environment. The package is available at
+	// https://maven.google.com/web/index.html#androidx.test:orchestrator.
+	AndroidxOrchestratorVersion string `json:"androidxOrchestratorVersion,omitempty"`
+
+	// OrchestratorVersion: Deprecated: Use AndroidX Test Orchestrator going
+	// forward. A string representing the current version of Android Test
+	// Orchestrator that is used in the environment. The package is
+	// available at
+	// https://maven.google.com/web/index.html#com.android.support.test:orchestrator.
+	OrchestratorVersion string `json:"orchestratorVersion,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AndroidxOrchestratorVersion") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "AndroidxOrchestratorVersion") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -2160,39 +2346,25 @@ type RegularFile struct {
 	Content *FileReference `json:"content,omitempty"`
 
 	// DevicePath: Required. Where to put the content on the device. Must be
-	// an absolute,
-	// whitelisted path. If the file exists, it will be replaced.
-	// The following device-side directories and any of their subdirectories
-	// are
-	// whitelisted:
-	// <p>${EXTERNAL_STORAGE}, or /sdcard</p>
-	// <p>${ANDROID_DATA}/local/tmp, or /data/local/tmp</p>
-	// <p>Specifying a path outside of these directory trees is
-	// invalid.
-	//
-	// <p> The paths /sdcard and /data will be made available and treated
-	// as
-	// implicit path substitutions. E.g. if /sdcard on a particular device
-	// does
-	// not map to external storage, the system will replace it with the
-	// external
-	// storage path prefix for that device and copy the file there.
-	//
-	// <p> It is strongly advised to use the <a
-	// href=
-	// "http://developer.android.com/reference/android/os/Environment.h
-	// tml">
-	// Environment API</a> in app and test code to access files on the
-	// device in a
-	// portable way.
+	// an absolute, allowlisted path. If the file exists, it will be
+	// replaced. The following device-side directories and any of their
+	// subdirectories are allowlisted: ${EXTERNAL_STORAGE}, /sdcard, or
+	// /storage ${ANDROID_DATA}/local/tmp, or /data/local/tmp Specifying a
+	// path outside of these directory trees is invalid. The paths /sdcard
+	// and /data will be made available and treated as implicit path
+	// substitutions. E.g. if /sdcard on a particular device does not map to
+	// external storage, the system will replace it with the external
+	// storage path prefix for that device and copy the file there. It is
+	// strongly advised to use the Environment API in app and test code to
+	// access files on the device in a portable way.
 	DevicePath string `json:"devicePath,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Content") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Content") to include in
@@ -2225,18 +2397,16 @@ type ResultStorage struct {
 	ToolResultsExecution *ToolResultsExecution `json:"toolResultsExecution,omitempty"`
 
 	// ToolResultsHistory: The tool results history that contains the tool
-	// results execution that
-	// results are written to.
-	//
-	// If not provided, the service will choose an appropriate value.
+	// results execution that results are written to. If not provided, the
+	// service will choose an appropriate value.
 	ToolResultsHistory *ToolResultsHistory `json:"toolResultsHistory,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "GoogleCloudStorage")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "GoogleCloudStorage") to
@@ -2256,49 +2426,40 @@ func (s *ResultStorage) MarshalJSON() ([]byte, error) {
 }
 
 // RoboDirective: Directs Robo to interact with a specific UI element if
-// it is encountered
-// during the crawl. Currently, Robo can perform text entry or element
-// click.
+// it is encountered during the crawl. Currently, Robo can perform text
+// entry or element click.
 type RoboDirective struct {
 	// ActionType: Required. The type of action that Robo should perform on
-	// the specified
-	// element.
+	// the specified element.
 	//
 	// Possible values:
 	//   "ACTION_TYPE_UNSPECIFIED" - DO NOT USE. For proto versioning only.
 	//   "SINGLE_CLICK" - Direct Robo to click on the specified element.
-	// No-op if specified element
-	// is not clickable.
+	// No-op if specified element is not clickable.
 	//   "ENTER_TEXT" - Direct Robo to enter text on the specified element.
-	// No-op if specified
-	// element is not enabled or does not allow text entry.
+	// No-op if specified element is not enabled or does not allow text
+	// entry.
 	//   "IGNORE" - Direct Robo to ignore interactions with a specific
 	// element.
 	ActionType string `json:"actionType,omitempty"`
 
 	// InputText: The text that Robo is directed to set. If left empty, the
-	// directive will be
-	// treated as a CLICK on the element matching the resource_name.
+	// directive will be treated as a CLICK on the element matching the
+	// resource_name.
 	InputText string `json:"inputText,omitempty"`
 
 	// ResourceName: Required. The android resource name of the target UI
-	// element.
-	// For example,
-	//    in Java: R.string.foo
-	//    in xml: @string/foo
-	// Only the "foo" part is needed.
-	// Reference
-	// doc:
-	// https://developer.android.com/guide/topics/resources/accessing-re
-	// sources.html
+	// element. For example, in Java: R.string.foo in xml: @string/foo Only
+	// the "foo" part is needed. Reference doc:
+	// https://developer.android.com/guide/topics/resources/accessing-resources.html
 	ResourceName string `json:"resourceName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ActionType") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ActionType") to include in
@@ -2331,10 +2492,10 @@ type RoboStartingIntent struct {
 
 	// ForceSendFields is a list of field names (e.g. "LauncherActivity") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "LauncherActivity") to
@@ -2361,15 +2522,16 @@ type Shard struct {
 	// ShardIndex: Output only. The index of the shard among all the shards.
 	ShardIndex int64 `json:"shardIndex,omitempty"`
 
-	// TestTargetsForShard: Output only. Test targets for each shard.
+	// TestTargetsForShard: Output only. Test targets for each shard. Only
+	// set for manual sharding.
 	TestTargetsForShard *TestTargetsForShard `json:"testTargetsForShard,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "NumShards") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NumShards") to include in
@@ -2390,8 +2552,7 @@ func (s *Shard) MarshalJSON() ([]byte, error) {
 // ShardingOption: Options for enabling sharding.
 type ShardingOption struct {
 	// ManualSharding: Shards test cases into the specified groups of
-	// packages, classes, and/or
-	// methods.
+	// packages, classes, and/or methods.
 	ManualSharding *ManualSharding `json:"manualSharding,omitempty"`
 
 	// UniformSharding: Uniformly shards test cases given a total number of
@@ -2400,10 +2561,10 @@ type ShardingOption struct {
 
 	// ForceSendFields is a list of field names (e.g. "ManualSharding") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ManualSharding") to
@@ -2425,8 +2586,7 @@ func (s *ShardingOption) MarshalJSON() ([]byte, error) {
 // StartActivityIntent: A starting intent specified by an action, uri,
 // and categories.
 type StartActivityIntent struct {
-	// Action: Action name.
-	// Required for START_ACTIVITY.
+	// Action: Action name. Required for START_ACTIVITY.
 	Action string `json:"action,omitempty"`
 
 	// Categories: Intent categories to set on the intent.
@@ -2437,10 +2597,10 @@ type StartActivityIntent struct {
 
 	// ForceSendFields is a list of field names (e.g. "Action") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Action") to include in API
@@ -2459,16 +2619,16 @@ func (s *StartActivityIntent) MarshalJSON() ([]byte, error) {
 }
 
 type SystraceSetup struct {
-	// DurationSeconds: Systrace duration in seconds.
-	// Should be between 1 and 30 seconds. 0 disables systrace.
+	// DurationSeconds: Systrace duration in seconds. Should be between 1
+	// and 30 seconds. 0 disables systrace.
 	DurationSeconds int64 `json:"durationSeconds,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DurationSeconds") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DurationSeconds") to
@@ -2491,24 +2651,21 @@ func (s *SystraceSetup) MarshalJSON() ([]byte, error) {
 // test.
 type TestDetails struct {
 	// ErrorMessage: Output only. If the TestState is ERROR, then this
-	// string will contain
-	// human-readable details about the error.
+	// string will contain human-readable details about the error.
 	ErrorMessage string `json:"errorMessage,omitempty"`
 
 	// ProgressMessages: Output only. Human-readable, detailed descriptions
-	// of the test's progress.
-	// For example: "Provisioning a device", "Starting Test".
-	//
-	// During the course of execution new data may be appended
-	// to the end of progress_messages.
+	// of the test's progress. For example: "Provisioning a device",
+	// "Starting Test". During the course of execution new data may be
+	// appended to the end of progress_messages.
 	ProgressMessages []string `json:"progressMessages,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ErrorMessage") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ErrorMessage") to include
@@ -2531,6 +2688,10 @@ type TestEnvironmentCatalog struct {
 	// AndroidDeviceCatalog: Supported Android devices.
 	AndroidDeviceCatalog *AndroidDeviceCatalog `json:"androidDeviceCatalog,omitempty"`
 
+	// DeviceIpBlockCatalog: The IP blocks used by devices in the test
+	// environment.
+	DeviceIpBlockCatalog *DeviceIpBlockCatalog `json:"deviceIpBlockCatalog,omitempty"`
+
 	// IosDeviceCatalog: Supported iOS devices.
 	IosDeviceCatalog *IosDeviceCatalog `json:"iosDeviceCatalog,omitempty"`
 
@@ -2547,8 +2708,8 @@ type TestEnvironmentCatalog struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "AndroidDeviceCatalog") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -2589,57 +2750,36 @@ type TestExecution struct {
 	Shard *Shard `json:"shard,omitempty"`
 
 	// State: Output only. Indicates the current progress of the test
-	// execution
-	// (e.g., FINISHED).
+	// execution (e.g., FINISHED).
 	//
 	// Possible values:
-	//   "TEST_STATE_UNSPECIFIED" - Do not use.  For proto versioning only.
+	//   "TEST_STATE_UNSPECIFIED" - Do not use. For proto versioning only.
 	//   "VALIDATING" - The execution or matrix is being validated.
 	//   "PENDING" - The execution or matrix is waiting for resources to
 	// become available.
-	//   "RUNNING" - The execution is currently being processed.
-	//
-	// Can only be set on an execution.
-	//   "FINISHED" - The execution or matrix has terminated normally.
-	//
-	// On a matrix this means that the matrix level processing completed
-	// normally,
-	// but individual executions may be in an ERROR state.
+	//   "RUNNING" - The execution is currently being processed. Can only be
+	// set on an execution.
+	//   "FINISHED" - The execution or matrix has terminated normally. On a
+	// matrix this means that the matrix level processing completed
+	// normally, but individual executions may be in an ERROR state.
 	//   "ERROR" - The execution or matrix has stopped because it
-	// encountered an
-	// infrastructure failure.
+	// encountered an infrastructure failure.
 	//   "UNSUPPORTED_ENVIRONMENT" - The execution was not run because it
-	// corresponds to a unsupported
-	// environment.
-	//
-	// Can only be set on an execution.
+	// corresponds to a unsupported environment. Can only be set on an
+	// execution.
 	//   "INCOMPATIBLE_ENVIRONMENT" - The execution was not run because the
-	// provided inputs are incompatible with
-	// the requested environment.
-	//
-	// Example: requested AndroidVersion is lower than APK's
-	// minSdkVersion
-	//
+	// provided inputs are incompatible with the requested environment.
+	// Example: requested AndroidVersion is lower than APK's minSdkVersion
 	// Can only be set on an execution.
 	//   "INCOMPATIBLE_ARCHITECTURE" - The execution was not run because the
-	// provided inputs are incompatible with
-	// the requested architecture.
-	//
-	// Example: requested device does not support running the native code
-	// in
-	// the supplied APK
-	//
-	// Can only be set on an execution.
-	//   "CANCELLED" - The user cancelled the execution.
-	//
-	// Can only be set on an execution.
+	// provided inputs are incompatible with the requested architecture.
+	// Example: requested device does not support running the native code in
+	// the supplied APK Can only be set on an execution.
+	//   "CANCELLED" - The user cancelled the execution. Can only be set on
+	// an execution.
 	//   "INVALID" - The execution or matrix was not run because the
-	// provided inputs are not
-	// valid.
-	//
-	// Examples: input file is not of the expected type, is
-	// malformed/corrupt, or
-	// was flagged as malware
+	// provided inputs are not valid. Examples: input file is not of the
+	// expected type, is malformed/corrupt, or was flagged as malware
 	State string `json:"state,omitempty"`
 
 	// TestDetails: Output only. Additional details about the running test.
@@ -2658,10 +2798,10 @@ type TestExecution struct {
 
 	// ForceSendFields is a list of field names (e.g. "Environment") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Environment") to include
@@ -2680,10 +2820,8 @@ func (s *TestExecution) MarshalJSON() ([]byte, error) {
 }
 
 // TestMatrix: TestMatrix captures all details about a test. It contains
-// the environment
-// configuration, test specification, test executions and overall state
-// and
-// outcome.
+// the environment configuration, test specification, test executions
+// and overall state and outcome.
 type TestMatrix struct {
 	// ClientInfo: Information about the client which invoked the test.
 	ClientInfo *ClientInfo `json:"clientInfo,omitempty"`
@@ -2692,17 +2830,23 @@ type TestMatrix struct {
 	// on.
 	EnvironmentMatrix *EnvironmentMatrix `json:"environmentMatrix,omitempty"`
 
+	// FailFast: If true, only a single attempt at most will be made to run
+	// each execution/shard in the matrix. Flaky test attempts are not
+	// affected. Normally, 2 or more attempts are made if a potential
+	// infrastructure issue is detected. This feature is for latency
+	// sensitive workloads. The incidence of execution failures may be
+	// significantly greater for fail-fast matrices and support is more
+	// limited because of that expectation.
+	FailFast bool `json:"failFast,omitempty"`
+
 	// FlakyTestAttempts: The number of times a TestExecution should be
-	// re-attempted if one or more
-	// of its test cases fail for any reason.
-	// The maximum number of reruns allowed is 10.
-	//
-	// Default is 0, which implies no reruns.
+	// re-attempted if one or more of its test cases fail for any reason.
+	// The maximum number of reruns allowed is 10. Default is 0, which
+	// implies no reruns.
 	FlakyTestAttempts int64 `json:"flakyTestAttempts,omitempty"`
 
 	// InvalidMatrixDetails: Output only. Describes why the matrix is
-	// considered invalid.
-	// Only useful for matrices in the INVALID state.
+	// considered invalid. Only useful for matrices in the INVALID state.
 	//
 	// Possible values:
 	//   "INVALID_MATRIX_DETAILS_UNSPECIFIED" - Do not use. For proto
@@ -2715,30 +2859,23 @@ type TestMatrix struct {
 	//   "NO_PACKAGE_NAME" - The APK manifest does not declare a package
 	// name.
 	//   "INVALID_PACKAGE_NAME" - The APK application ID (aka package name)
-	// is invalid.
-	// See also
+	// is invalid. See also
 	// https://developer.android.com/studio/build/application-id
 	//   "TEST_SAME_AS_APP" - The test package and app package are the same.
 	//   "NO_INSTRUMENTATION" - The test apk does not declare an
 	// instrumentation.
 	//   "NO_SIGNATURE" - The input app apk does not have a signature.
 	//   "INSTRUMENTATION_ORCHESTRATOR_INCOMPATIBLE" - The test runner class
-	// specified by user or in the test APK's manifest file
-	// is not compatible with Android Test Orchestrator.
-	// Orchestrator is only compatible with AndroidJUnitRunner version 1.0
-	// or
-	// higher.
-	// Orchestrator can be disabled by using
-	// DO_NOT_USE_ORCHESTRATOR
+	// specified by user or in the test APK's manifest file is not
+	// compatible with Android Test Orchestrator. Orchestrator is only
+	// compatible with AndroidJUnitRunner version 1.1 or higher.
+	// Orchestrator can be disabled by using DO_NOT_USE_ORCHESTRATOR
 	// OrchestratorOption.
 	//   "NO_TEST_RUNNER_CLASS" - The test APK does not contain the test
-	// runner class specified by user or in
-	// the manifest file.
-	// This can be caused by either of the following reasons:
-	// - the user provided a runner class name that's incorrect, or
-	// - the test runner isn't built into the test APK (might be in the app
-	// APK
-	// instead).
+	// runner class specified by user or in the manifest file. This can be
+	// caused by either of the following reasons: - the user provided a
+	// runner class name that's incorrect, or - the test runner isn't built
+	// into the test APK (might be in the app APK instead).
 	//   "NO_LAUNCHER_ACTIVITY" - A main launcher activity could not be
 	// found.
 	//   "FORBIDDEN_PERMISSIONS" - The app declares one or more permissions
@@ -2746,83 +2883,75 @@ type TestMatrix struct {
 	//   "INVALID_ROBO_DIRECTIVES" - There is a conflict in the provided
 	// robo_directives.
 	//   "INVALID_RESOURCE_NAME" - There is at least one invalid resource
-	// name in the provided
-	// robo directives
+	// name in the provided robo directives
 	//   "INVALID_DIRECTIVE_ACTION" - Invalid definition of action in the
-	// robo directives
-	// (e.g. a click or ignore action includes an input text field)
+	// robo directives (e.g. a click or ignore action includes an input text
+	// field)
 	//   "TEST_LOOP_INTENT_FILTER_NOT_FOUND" - There is no test loop intent
-	// filter, or the one that is given is
-	// not formatted correctly.
+	// filter, or the one that is given is not formatted correctly.
 	//   "SCENARIO_LABEL_NOT_DECLARED" - The request contains a scenario
-	// label that was not declared in the
-	// manifest.
+	// label that was not declared in the manifest.
 	//   "SCENARIO_LABEL_MALFORMED" - There was an error when parsing a
 	// label's value.
 	//   "SCENARIO_NOT_DECLARED" - The request contains a scenario number
-	// that was not declared in the
-	// manifest.
+	// that was not declared in the manifest.
 	//   "DEVICE_ADMIN_RECEIVER" - Device administrator applications are not
 	// allowed.
 	//   "MALFORMED_XC_TEST_ZIP" - The zipped XCTest was malformed. The zip
-	// did not contain a single
-	// .xctestrun file and the contents of the
-	// DerivedData/Build/Products
-	// directory.
+	// did not contain a single .xctestrun file and the contents of the
+	// DerivedData/Build/Products directory.
 	//   "BUILT_FOR_IOS_SIMULATOR" - The zipped XCTest was built for the iOS
-	// simulator rather than for a
-	// physical device.
+	// simulator rather than for a physical device.
 	//   "NO_TESTS_IN_XC_TEST_ZIP" - The .xctestrun file did not specify any
 	// test targets.
 	//   "USE_DESTINATION_ARTIFACTS" - One or more of the test targets
-	// defined in the .xctestrun file specifies
-	// "UseDestinationArtifacts", which is disallowed.
+	// defined in the .xctestrun file specifies "UseDestinationArtifacts",
+	// which is disallowed.
 	//   "TEST_NOT_APP_HOSTED" - XC tests which run on physical devices must
-	// have
-	// "IsAppHostedTestBundle" == "true" in the xctestrun file.
+	// have "IsAppHostedTestBundle" == "true" in the xctestrun file.
 	//   "PLIST_CANNOT_BE_PARSED" - An Info.plist file in the XCTest zip
 	// could not be parsed.
-	//   "TEST_ONLY_APK" - The APK is marked as "testOnly".
-	// Deprecated and not currently used.
+	//   "TEST_ONLY_APK" - The APK is marked as "testOnly". Deprecated and
+	// not currently used.
 	//   "MALFORMED_IPA" - The input IPA could not be parsed.
 	//   "MISSING_URL_SCHEME" - The application doesn't register the game
 	// loop URL scheme.
 	//   "MALFORMED_APP_BUNDLE" - The iOS application bundle (.app) couldn't
 	// be processed.
-	//   "NO_CODE_APK" - APK contains no code.
-	// See
-	// also
-	// https://developer.android.com/guide/topics/manifest/application-e
-	// lement.html#code
+	//   "NO_CODE_APK" - APK contains no code. See also
+	// https://developer.android.com/guide/topics/manifest/application-element.html#code
 	//   "INVALID_INPUT_APK" - Either the provided input APK path was
-	// malformed,
-	// the APK file does not exist, or the user does not have permission
-	// to
-	// access the APK file.
+	// malformed, the APK file does not exist, or the user does not have
+	// permission to access the APK file.
 	//   "INVALID_APK_PREVIEW_SDK" - APK is built for a preview SDK which is
 	// unsupported
+	//   "MATRIX_TOO_LARGE" - The matrix expanded to contain too many
+	// executions.
+	//   "TEST_QUOTA_EXCEEDED" - Not enough test quota to run the executions
+	// in this matrix.
+	//   "SERVICE_NOT_ACTIVATED" - A required cloud service api is not
+	// activated. See:
+	// https://firebase.google.com/docs/test-lab/android/continuous#requirements
+	//   "UNKNOWN_PERMISSION_ERROR" - There was an unknown permission issue
+	// running this test.
 	InvalidMatrixDetails string `json:"invalidMatrixDetails,omitempty"`
 
-	// OutcomeSummary: Output Only. The overall outcome of the test.
-	// Only set when the test matrix state is FINISHED.
+	// OutcomeSummary: Output Only. The overall outcome of the test. Only
+	// set when the test matrix state is FINISHED.
 	//
 	// Possible values:
 	//   "OUTCOME_SUMMARY_UNSPECIFIED" - Do not use. For proto versioning
 	// only.
-	//   "SUCCESS" - The test matrix run was successful, for instance:
-	// - All the test cases passed.
-	// - Robo did not detect a crash of the application under test.
-	//   "FAILURE" - A run failed, for instance:
-	// - One or more test case failed.
-	// - A test timed out.
-	// - The application under test crashed.
+	//   "SUCCESS" - The test matrix run was successful, for instance: - All
+	// the test cases passed. - Robo did not detect a crash of the
+	// application under test.
+	//   "FAILURE" - A run failed, for instance: - One or more test case
+	// failed. - A test timed out. - The application under test crashed.
 	//   "INCONCLUSIVE" - Something unexpected happened. The run should
-	// still be considered
-	// unsuccessful but this is likely a transient problem and re-running
-	// the
-	// test might be successful.
-	//   "SKIPPED" - All tests were skipped, for instance:
-	// - All device configurations were incompatible.
+	// still be considered unsuccessful but this is likely a transient
+	// problem and re-running the test might be successful.
+	//   "SKIPPED" - All tests were skipped, for instance: - All device
+	// configurations were incompatible.
 	OutcomeSummary string `json:"outcomeSummary,omitempty"`
 
 	// ProjectId: The cloud project that owns the test matrix.
@@ -2836,58 +2965,37 @@ type TestMatrix struct {
 	// matrix.
 	//
 	// Possible values:
-	//   "TEST_STATE_UNSPECIFIED" - Do not use.  For proto versioning only.
+	//   "TEST_STATE_UNSPECIFIED" - Do not use. For proto versioning only.
 	//   "VALIDATING" - The execution or matrix is being validated.
 	//   "PENDING" - The execution or matrix is waiting for resources to
 	// become available.
-	//   "RUNNING" - The execution is currently being processed.
-	//
-	// Can only be set on an execution.
-	//   "FINISHED" - The execution or matrix has terminated normally.
-	//
-	// On a matrix this means that the matrix level processing completed
-	// normally,
-	// but individual executions may be in an ERROR state.
+	//   "RUNNING" - The execution is currently being processed. Can only be
+	// set on an execution.
+	//   "FINISHED" - The execution or matrix has terminated normally. On a
+	// matrix this means that the matrix level processing completed
+	// normally, but individual executions may be in an ERROR state.
 	//   "ERROR" - The execution or matrix has stopped because it
-	// encountered an
-	// infrastructure failure.
+	// encountered an infrastructure failure.
 	//   "UNSUPPORTED_ENVIRONMENT" - The execution was not run because it
-	// corresponds to a unsupported
-	// environment.
-	//
-	// Can only be set on an execution.
+	// corresponds to a unsupported environment. Can only be set on an
+	// execution.
 	//   "INCOMPATIBLE_ENVIRONMENT" - The execution was not run because the
-	// provided inputs are incompatible with
-	// the requested environment.
-	//
-	// Example: requested AndroidVersion is lower than APK's
-	// minSdkVersion
-	//
+	// provided inputs are incompatible with the requested environment.
+	// Example: requested AndroidVersion is lower than APK's minSdkVersion
 	// Can only be set on an execution.
 	//   "INCOMPATIBLE_ARCHITECTURE" - The execution was not run because the
-	// provided inputs are incompatible with
-	// the requested architecture.
-	//
-	// Example: requested device does not support running the native code
-	// in
-	// the supplied APK
-	//
-	// Can only be set on an execution.
-	//   "CANCELLED" - The user cancelled the execution.
-	//
-	// Can only be set on an execution.
+	// provided inputs are incompatible with the requested architecture.
+	// Example: requested device does not support running the native code in
+	// the supplied APK Can only be set on an execution.
+	//   "CANCELLED" - The user cancelled the execution. Can only be set on
+	// an execution.
 	//   "INVALID" - The execution or matrix was not run because the
-	// provided inputs are not
-	// valid.
-	//
-	// Examples: input file is not of the expected type, is
-	// malformed/corrupt, or
-	// was flagged as malware
+	// provided inputs are not valid. Examples: input file is not of the
+	// expected type, is malformed/corrupt, or was flagged as malware
 	State string `json:"state,omitempty"`
 
 	// TestExecutions: Output only. The list of test executions that the
-	// service creates for
-	// this matrix.
+	// service creates for this matrix.
 	TestExecutions []*TestExecution `json:"testExecutions,omitempty"`
 
 	// TestMatrixId: Output only. Unique id set by the service.
@@ -2906,10 +3014,10 @@ type TestMatrix struct {
 
 	// ForceSendFields is a list of field names (e.g. "ClientInfo") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ClientInfo") to include in
@@ -2935,28 +3043,25 @@ type TestSetup struct {
 	Account *Account `json:"account,omitempty"`
 
 	// AdditionalApks: APKs to install in addition to those being directly
-	// tested.
-	// Currently capped at 100.
+	// tested. Currently capped at 100.
 	AdditionalApks []*Apk `json:"additionalApks,omitempty"`
 
 	// DirectoriesToPull: List of directories on the device to upload to GCS
-	// at the end of the test;
-	// they must be absolute paths under /sdcard or /data/local/tmp.
-	// Path names are restricted to characters a-z A-Z 0-9 _ - . + and
-	// /
-	//
-	// Note: The paths /sdcard and /data will be made available and treated
-	// as
-	// implicit path substitutions. E.g. if /sdcard on a particular device
-	// does
-	// not map to external storage, the system will replace it with the
-	// external
-	// storage path prefix for that device.
+	// at the end of the test; they must be absolute paths under /sdcard,
+	// /storage or /data/local/tmp. Path names are restricted to characters
+	// a-z A-Z 0-9 _ - . + and / Note: The paths /sdcard and /data will be
+	// made available and treated as implicit path substitutions. E.g. if
+	// /sdcard on a particular device does not map to external storage, the
+	// system will replace it with the external storage path prefix for that
+	// device.
 	DirectoriesToPull []string `json:"directoriesToPull,omitempty"`
 
+	// DontAutograntPermissions: Whether to prevent all runtime permissions
+	// to be granted at app install
+	DontAutograntPermissions bool `json:"dontAutograntPermissions,omitempty"`
+
 	// EnvironmentVariables: Environment variables to set for the test (only
-	// applicable for
-	// instrumentation tests).
+	// applicable for instrumentation tests).
 	EnvironmentVariables []*EnvironmentVariable `json:"environmentVariables,omitempty"`
 
 	// FilesToPush: List of files to push to the device before starting the
@@ -2964,28 +3069,26 @@ type TestSetup struct {
 	FilesToPush []*DeviceFile `json:"filesToPush,omitempty"`
 
 	// NetworkProfile: The network traffic profile used for running the
-	// test.
-	// Available network profiles can be queried by using
-	// the
-	// NETWORK_CONFIGURATION environment type when
-	// calling
+	// test. Available network profiles can be queried by using the
+	// NETWORK_CONFIGURATION environment type when calling
 	// TestEnvironmentDiscoveryService.GetTestEnvironmentCatalog.
 	NetworkProfile string `json:"networkProfile,omitempty"`
 
-	// Systrace: Systrace configuration for the run.
-	// If set a systrace will be taken, starting on test start and lasting
-	// for the
-	// configured duration. The systrace file thus obtained is put in the
-	// results
-	// bucket together with the other artifacts from the run.
+	// Systrace: Deprecated: Systrace uses Python 2 which has been sunset
+	// 2020-01-01. Support of Systrace may stop at any time, at which point
+	// no Systrace file will be provided in the results. Systrace
+	// configuration for the run. If set a systrace will be taken, starting
+	// on test start and lasting for the configured duration. The systrace
+	// file thus obtained is put in the results bucket together with the
+	// other artifacts from the run.
 	Systrace *SystraceSetup `json:"systrace,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Account") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Account") to include in
@@ -3032,23 +3135,20 @@ type TestSpecification struct {
 	IosXcTest *IosXcTest `json:"iosXcTest,omitempty"`
 
 	// TestSetup: Test setup requirements for Android e.g. files to install,
-	// bootstrap
-	// scripts.
+	// bootstrap scripts.
 	TestSetup *TestSetup `json:"testSetup,omitempty"`
 
-	// TestTimeout: Max time a test execution is allowed to run before it
-	// is
-	// automatically cancelled.
-	// The default value is 5 min.
+	// TestTimeout: Max time a test execution is allowed to run before it is
+	// automatically cancelled. The default value is 5 min.
 	TestTimeout string `json:"testTimeout,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "AndroidInstrumentationTest") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g.
@@ -3070,21 +3170,18 @@ func (s *TestSpecification) MarshalJSON() ([]byte, error) {
 // TestTargetsForShard: Test targets for a shard.
 type TestTargetsForShard struct {
 	// TestTargets: Group of packages, classes, and/or test methods to be
-	// run for each shard.
-	// The targets need to be specified in AndroidJUnitRunner argument
-	// format. For
-	// example, “package com.my.packages” “class
-	// com.my.package.MyClass”.
-	//
-	// The number of shard_test_targets must be greater than 0.
+	// run for each shard. The targets need to be specified in
+	// AndroidJUnitRunner argument format. For example, "package
+	// com.my.packages" "class com.my.package.MyClass". The number of
+	// test_targets must be greater than 0.
 	TestTargets []string `json:"testTargets,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "TestTargets") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "TestTargets") to include
@@ -3102,9 +3199,7 @@ func (s *TestTargetsForShard) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ToolResultsExecution: Represents a tool results execution
-// resource.
-//
+// ToolResultsExecution: Represents a tool results execution resource.
 // This has the results of a TestMatrix.
 type ToolResultsExecution struct {
 	// ExecutionId: Output only. A tool results execution ID.
@@ -3119,10 +3214,10 @@ type ToolResultsExecution struct {
 
 	// ForceSendFields is a list of field names (e.g. "ExecutionId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ExecutionId") to include
@@ -3151,10 +3246,10 @@ type ToolResultsHistory struct {
 
 	// ForceSendFields is a list of field names (e.g. "HistoryId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "HistoryId") to include in
@@ -3172,9 +3267,8 @@ func (s *ToolResultsHistory) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ToolResultsStep: Represents a tool results step resource.
-//
-// This has the results of a TestExecution.
+// ToolResultsStep: Represents a tool results step resource. This has
+// the results of a TestExecution.
 type ToolResultsStep struct {
 	// ExecutionId: Output only. A tool results execution ID.
 	ExecutionId string `json:"executionId,omitempty"`
@@ -3191,10 +3285,10 @@ type ToolResultsStep struct {
 
 	// ForceSendFields is a list of field names (e.g. "ExecutionId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ExecutionId") to include
@@ -3231,10 +3325,10 @@ type TrafficRule struct {
 
 	// ForceSendFields is a list of field names (e.g. "Bandwidth") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Bandwidth") to include in
@@ -3273,25 +3367,27 @@ func (s *TrafficRule) UnmarshalJSON(data []byte) error {
 }
 
 // UniformSharding: Uniformly shards test cases given a total number of
-// shards.
-//
-// For Instrumentation test, it will be translated to “-e numShard”
-// “-e
-// shardIndex” AndroidJUnitRunner arguments. With uniform sharding
-// enabled,
-// specifying these sharding arguments via environment_variables is
-// invalid.
+// shards. For instrumentation tests, it will be translated to "-e
+// numShard" and "-e shardIndex" AndroidJUnitRunner arguments. With
+// uniform sharding enabled, specifying either of these sharding
+// arguments via `environment_variables` is invalid. Based on the
+// sharding mechanism AndroidJUnitRunner uses, there is no guarantee
+// that test cases will be distributed uniformly across all shards.
 type UniformSharding struct {
-	// NumShards: Required. Total number of shards. The number must be >= 1
-	// and <= 50.
+	// NumShards: Required. The total number of shards to create. This must
+	// always be a positive number that is no greater than the total number
+	// of test cases. When you select one or more physical devices, the
+	// number of shards must be <= 50. When you select one or more ARM
+	// virtual devices, it must be <= 100. When you select only x86 virtual
+	// devices, it must be <= 500.
 	NumShards int64 `json:"numShards,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "NumShards") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NumShards") to include in
@@ -3309,23 +3405,53 @@ func (s *UniformSharding) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// UsesFeature: A tag within a manifest.
+// https://developer.android.com/guide/topics/manifest/uses-feature-element.html
+type UsesFeature struct {
+	// IsRequired: The android:required value
+	IsRequired bool `json:"isRequired,omitempty"`
+
+	// Name: The android:name value
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IsRequired") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IsRequired") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UsesFeature) MarshalJSON() ([]byte, error) {
+	type NoMethod UsesFeature
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // XcodeVersion: An Xcode version that an iOS version is compatible
 // with.
 type XcodeVersion struct {
-	// Tags: Tags for this Xcode version.
-	// Example: "default".
+	// Tags: Tags for this Xcode version. Example: "default".
 	Tags []string `json:"tags,omitempty"`
 
-	// Version: The id for this version.
-	// Example: "9.2".
+	// Version: The id for this version. Example: "9.2".
 	Version string `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Tags") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Tags") to include in API
@@ -3387,7 +3513,7 @@ func (c *ApplicationDetailServiceGetApkDetailsCall) Header() http.Header {
 
 func (c *ApplicationDetailServiceGetApkDetailsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3424,17 +3550,17 @@ func (c *ApplicationDetailServiceGetApkDetailsCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GetApkDetailsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3479,17 +3605,16 @@ type ProjectsTestMatricesCancelCall struct {
 	header_      http.Header
 }
 
-// Cancel: Cancels unfinished test executions in a test matrix.
-// This call returns immediately and cancellation proceeds
-// asychronously.
-// If the matrix is already final, this operation will have no
-// effect.
+// Cancel: Cancels unfinished test executions in a test matrix. This
+// call returns immediately and cancellation proceeds asynchronously. If
+// the matrix is already final, this operation will have no effect. May
+// return any of the following canonical error codes: -
+// PERMISSION_DENIED - if the user is not authorized to read project -
+// INVALID_ARGUMENT - if the request is malformed - NOT_FOUND - if the
+// Test Matrix does not exist
 //
-// May return any of the following canonical error codes:
-//
-// - PERMISSION_DENIED - if the user is not authorized to read project
-// - INVALID_ARGUMENT - if the request is malformed
-// - NOT_FOUND - if the Test Matrix does not exist
+// - projectId: Cloud project that owns the test.
+// - testMatrixId: Test matrix that will be canceled.
 func (r *ProjectsTestMatricesService) Cancel(projectId string, testMatrixId string) *ProjectsTestMatricesCancelCall {
 	c := &ProjectsTestMatricesCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -3524,7 +3649,7 @@ func (c *ProjectsTestMatricesCancelCall) Header() http.Header {
 
 func (c *ProjectsTestMatricesCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3560,17 +3685,17 @@ func (c *ProjectsTestMatricesCancelCall) Do(opts ...googleapi.CallOption) (*Canc
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &CancelTestMatrixResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3584,7 +3709,7 @@ func (c *ProjectsTestMatricesCancelCall) Do(opts ...googleapi.CallOption) (*Canc
 	}
 	return ret, nil
 	// {
-	//   "description": "Cancels unfinished test executions in a test matrix.\nThis call returns immediately and cancellation proceeds asychronously.\nIf the matrix is already final, this operation will have no effect.\n\nMay return any of the following canonical error codes:\n\n- PERMISSION_DENIED - if the user is not authorized to read project\n- INVALID_ARGUMENT - if the request is malformed\n- NOT_FOUND - if the Test Matrix does not exist",
+	//   "description": "Cancels unfinished test executions in a test matrix. This call returns immediately and cancellation proceeds asynchronously. If the matrix is already final, this operation will have no effect. May return any of the following canonical error codes: - PERMISSION_DENIED - if the user is not authorized to read project - INVALID_ARGUMENT - if the request is malformed - NOT_FOUND - if the Test Matrix does not exist",
 	//   "flatPath": "v1/projects/{projectId}/testMatrices/{testMatrixId}:cancel",
 	//   "httpMethod": "POST",
 	//   "id": "testing.projects.testMatrices.cancel",
@@ -3629,18 +3754,14 @@ type ProjectsTestMatricesCreateCall struct {
 }
 
 // Create: Creates and runs a matrix of tests according to the given
-// specifications.
-// Unsupported environments will be returned in the state
-// UNSUPPORTED.
-// Matrices are limited to at most 200 supported executions.
+// specifications. Unsupported environments will be returned in the
+// state UNSUPPORTED. A test matrix is limited to use at most 2000
+// devices in parallel. May return any of the following canonical error
+// codes: - PERMISSION_DENIED - if the user is not authorized to write
+// to project - INVALID_ARGUMENT - if the request is malformed or if the
+// matrix tries to use too many simultaneous devices.
 //
-// May return any of the following canonical error codes:
-//
-// - PERMISSION_DENIED - if the user is not authorized to write to
-// project
-// - INVALID_ARGUMENT - if the request is malformed or if the matrix
-// expands
-//                      to more than 200 supported executions
+// - projectId: The GCE project under which this job will run.
 func (r *ProjectsTestMatricesService) Create(projectId string, testmatrix *TestMatrix) *ProjectsTestMatricesCreateCall {
 	c := &ProjectsTestMatricesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -3649,12 +3770,9 @@ func (r *ProjectsTestMatricesService) Create(projectId string, testmatrix *TestM
 }
 
 // RequestId sets the optional parameter "requestId": A string id used
-// to detect duplicated requests.
-// Ids are automatically scoped to a project, so
-// users should ensure the ID is unique per-project.
-// A UUID is recommended.
-//
-// Optional, but strongly recommended.
+// to detect duplicated requests. Ids are automatically scoped to a
+// project, so users should ensure the ID is unique per-project. A UUID
+// is recommended. Optional, but strongly recommended.
 func (c *ProjectsTestMatricesCreateCall) RequestId(requestId string) *ProjectsTestMatricesCreateCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
@@ -3687,7 +3805,7 @@ func (c *ProjectsTestMatricesCreateCall) Header() http.Header {
 
 func (c *ProjectsTestMatricesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3727,17 +3845,17 @@ func (c *ProjectsTestMatricesCreateCall) Do(opts ...googleapi.CallOption) (*Test
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TestMatrix{
 		ServerResponse: googleapi.ServerResponse{
@@ -3751,7 +3869,7 @@ func (c *ProjectsTestMatricesCreateCall) Do(opts ...googleapi.CallOption) (*Test
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates and runs a matrix of tests according to the given specifications.\nUnsupported environments will be returned in the state UNSUPPORTED.\nMatrices are limited to at most 200 supported executions.\n\nMay return any of the following canonical error codes:\n\n- PERMISSION_DENIED - if the user is not authorized to write to project\n- INVALID_ARGUMENT - if the request is malformed or if the matrix expands\n                     to more than 200 supported executions",
+	//   "description": "Creates and runs a matrix of tests according to the given specifications. Unsupported environments will be returned in the state UNSUPPORTED. A test matrix is limited to use at most 2000 devices in parallel. May return any of the following canonical error codes: - PERMISSION_DENIED - if the user is not authorized to write to project - INVALID_ARGUMENT - if the request is malformed or if the matrix tries to use too many simultaneous devices.",
 	//   "flatPath": "v1/projects/{projectId}/testMatrices",
 	//   "httpMethod": "POST",
 	//   "id": "testing.projects.testMatrices.create",
@@ -3766,7 +3884,7 @@ func (c *ProjectsTestMatricesCreateCall) Do(opts ...googleapi.CallOption) (*Test
 	//       "type": "string"
 	//     },
 	//     "requestId": {
-	//       "description": "A string id used to detect duplicated requests.\nIds are automatically scoped to a project, so\nusers should ensure the ID is unique per-project.\nA UUID is recommended.\n\nOptional, but strongly recommended.",
+	//       "description": "A string id used to detect duplicated requests. Ids are automatically scoped to a project, so users should ensure the ID is unique per-project. A UUID is recommended. Optional, but strongly recommended.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -3797,13 +3915,14 @@ type ProjectsTestMatricesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Checks the status of a test matrix.
+// Get: Checks the status of a test matrix. May return any of the
+// following canonical error codes: - PERMISSION_DENIED - if the user is
+// not authorized to read project - INVALID_ARGUMENT - if the request is
+// malformed - NOT_FOUND - if the Test Matrix does not exist
 //
-// May return any of the following canonical error codes:
-//
-// - PERMISSION_DENIED - if the user is not authorized to read project
-// - INVALID_ARGUMENT - if the request is malformed
-// - NOT_FOUND - if the Test Matrix does not exist
+//   - projectId: Cloud project that owns the test matrix.
+//   - testMatrixId: Unique test matrix id which was assigned by the
+//     service.
 func (r *ProjectsTestMatricesService) Get(projectId string, testMatrixId string) *ProjectsTestMatricesGetCall {
 	c := &ProjectsTestMatricesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -3848,7 +3967,7 @@ func (c *ProjectsTestMatricesGetCall) Header() http.Header {
 
 func (c *ProjectsTestMatricesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3887,17 +4006,17 @@ func (c *ProjectsTestMatricesGetCall) Do(opts ...googleapi.CallOption) (*TestMat
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TestMatrix{
 		ServerResponse: googleapi.ServerResponse{
@@ -3911,7 +4030,7 @@ func (c *ProjectsTestMatricesGetCall) Do(opts ...googleapi.CallOption) (*TestMat
 	}
 	return ret, nil
 	// {
-	//   "description": "Checks the status of a test matrix.\n\nMay return any of the following canonical error codes:\n\n- PERMISSION_DENIED - if the user is not authorized to read project\n- INVALID_ARGUMENT - if the request is malformed\n- NOT_FOUND - if the Test Matrix does not exist",
+	//   "description": "Checks the status of a test matrix. May return any of the following canonical error codes: - PERMISSION_DENIED - if the user is not authorized to read project - INVALID_ARGUMENT - if the request is malformed - NOT_FOUND - if the Test Matrix does not exist",
 	//   "flatPath": "v1/projects/{projectId}/testMatrices/{testMatrixId}",
 	//   "httpMethod": "GET",
 	//   "id": "testing.projects.testMatrices.get",
@@ -3956,13 +4075,12 @@ type TestEnvironmentCatalogGetCall struct {
 	header_         http.Header
 }
 
-// Get: Gets the catalog of supported test environments.
+// Get: Gets the catalog of supported test environments. May return any
+// of the following canonical error codes: - INVALID_ARGUMENT - if the
+// request is malformed - NOT_FOUND - if the environment type does not
+// exist - INTERNAL - if an internal error occurred
 //
-// May return any of the following canonical error codes:
-//
-// - INVALID_ARGUMENT - if the request is malformed
-// - NOT_FOUND - if the environment type does not exist
-// - INTERNAL - if an internal error occurred
+// - environmentType: The type of environment that should be listed.
 func (r *TestEnvironmentCatalogService) Get(environmentType string) *TestEnvironmentCatalogGetCall {
 	c := &TestEnvironmentCatalogGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.environmentType = environmentType
@@ -4013,7 +4131,7 @@ func (c *TestEnvironmentCatalogGetCall) Header() http.Header {
 
 func (c *TestEnvironmentCatalogGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4051,17 +4169,17 @@ func (c *TestEnvironmentCatalogGetCall) Do(opts ...googleapi.CallOption) (*TestE
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TestEnvironmentCatalog{
 		ServerResponse: googleapi.ServerResponse{
@@ -4075,7 +4193,7 @@ func (c *TestEnvironmentCatalogGetCall) Do(opts ...googleapi.CallOption) (*TestE
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the catalog of supported test environments.\n\nMay return any of the following canonical error codes:\n\n- INVALID_ARGUMENT - if the request is malformed\n- NOT_FOUND - if the environment type does not exist\n- INTERNAL - if an internal error occurred",
+	//   "description": "Gets the catalog of supported test environments. May return any of the following canonical error codes: - INVALID_ARGUMENT - if the request is malformed - NOT_FOUND - if the environment type does not exist - INTERNAL - if an internal error occurred",
 	//   "flatPath": "v1/testEnvironmentCatalog/{environmentType}",
 	//   "httpMethod": "GET",
 	//   "id": "testing.testEnvironmentCatalog.get",
@@ -4090,7 +4208,16 @@ func (c *TestEnvironmentCatalogGetCall) Do(opts ...googleapi.CallOption) (*TestE
 	//         "ANDROID",
 	//         "IOS",
 	//         "NETWORK_CONFIGURATION",
-	//         "PROVIDED_SOFTWARE"
+	//         "PROVIDED_SOFTWARE",
+	//         "DEVICE_IP_BLOCKS"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Do not use. For proto versioning only.",
+	//         "A device running a version of the Android OS.",
+	//         "A device running a version of iOS.",
+	//         "A network configuration to use when running a test.",
+	//         "The software environment provided by TestExecutionService.",
+	//         "The IP blocks used by devices in the test environment."
 	//       ],
 	//       "location": "path",
 	//       "required": true,

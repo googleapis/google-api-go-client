@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -6,39 +6,37 @@
 
 // Package monitoring provides access to the Cloud Monitoring API.
 //
-// This package is DEPRECATED. Use package cloud.google.com/go/monitoring/apiv3 instead.
-//
 // For product documentation, see: https://cloud.google.com/monitoring/api/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/monitoring/v1"
-//   ...
-//   ctx := context.Background()
-//   monitoringService, err := monitoring.NewService(ctx)
+//	import "google.golang.org/api/monitoring/v1"
+//	...
+//	ctx := context.Background()
+//	monitoringService, err := monitoring.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//   monitoringService, err := monitoring.NewService(ctx, option.WithScopes(monitoring.MonitoringWriteScope))
+//	monitoringService, err := monitoring.NewService(ctx, option.WithScopes(monitoring.MonitoringWriteScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   monitoringService, err := monitoring.NewService(ctx, option.WithAPIKey("AIza..."))
+//	monitoringService, err := monitoring.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   monitoringService, err := monitoring.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	monitoringService, err := monitoring.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package monitoring // import "google.golang.org/api/monitoring/v1"
@@ -56,6 +54,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -81,10 +80,12 @@ const apiId = "monitoring:v1"
 const apiName = "monitoring"
 const apiVersion = "v1"
 const basePath = "https://monitoring.googleapis.com/"
+const mtlsBasePath = "https://monitoring.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud data and see the
+	// email address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
 	// View and write monitoring data for all of your Google and third-party
@@ -101,7 +102,7 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
 		"https://www.googleapis.com/auth/monitoring",
 		"https://www.googleapis.com/auth/monitoring.read",
@@ -110,6 +111,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -134,6 +136,8 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client, BasePath: basePath}
+	s.Locations = NewLocationsService(s)
+	s.Operations = NewOperationsService(s)
 	s.Projects = NewProjectsService(s)
 	return s, nil
 }
@@ -142,6 +146,10 @@ type Service struct {
 	client    *http.Client
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
+
+	Locations *LocationsService
+
+	Operations *OperationsService
 
 	Projects *ProjectsService
 }
@@ -153,9 +161,64 @@ func (s *Service) userAgent() string {
 	return googleapi.UserAgent + " " + s.UserAgent
 }
 
+func NewLocationsService(s *Service) *LocationsService {
+	rs := &LocationsService{s: s}
+	rs.Global = NewLocationsGlobalService(s)
+	return rs
+}
+
+type LocationsService struct {
+	s *Service
+
+	Global *LocationsGlobalService
+}
+
+func NewLocationsGlobalService(s *Service) *LocationsGlobalService {
+	rs := &LocationsGlobalService{s: s}
+	rs.MetricsScopes = NewLocationsGlobalMetricsScopesService(s)
+	return rs
+}
+
+type LocationsGlobalService struct {
+	s *Service
+
+	MetricsScopes *LocationsGlobalMetricsScopesService
+}
+
+func NewLocationsGlobalMetricsScopesService(s *Service) *LocationsGlobalMetricsScopesService {
+	rs := &LocationsGlobalMetricsScopesService{s: s}
+	rs.Projects = NewLocationsGlobalMetricsScopesProjectsService(s)
+	return rs
+}
+
+type LocationsGlobalMetricsScopesService struct {
+	s *Service
+
+	Projects *LocationsGlobalMetricsScopesProjectsService
+}
+
+func NewLocationsGlobalMetricsScopesProjectsService(s *Service) *LocationsGlobalMetricsScopesProjectsService {
+	rs := &LocationsGlobalMetricsScopesProjectsService{s: s}
+	return rs
+}
+
+type LocationsGlobalMetricsScopesProjectsService struct {
+	s *Service
+}
+
+func NewOperationsService(s *Service) *OperationsService {
+	rs := &OperationsService{s: s}
+	return rs
+}
+
+type OperationsService struct {
+	s *Service
+}
+
 func NewProjectsService(s *Service) *ProjectsService {
 	rs := &ProjectsService{s: s}
 	rs.Dashboards = NewProjectsDashboardsService(s)
+	rs.Location = NewProjectsLocationService(s)
 	return rs
 }
 
@@ -163,6 +226,8 @@ type ProjectsService struct {
 	s *Service
 
 	Dashboards *ProjectsDashboardsService
+
+	Location *ProjectsLocationService
 }
 
 func NewProjectsDashboardsService(s *Service) *ProjectsDashboardsService {
@@ -171,6 +236,87 @@ func NewProjectsDashboardsService(s *Service) *ProjectsDashboardsService {
 }
 
 type ProjectsDashboardsService struct {
+	s *Service
+}
+
+func NewProjectsLocationService(s *Service) *ProjectsLocationService {
+	rs := &ProjectsLocationService{s: s}
+	rs.Prometheus = NewProjectsLocationPrometheusService(s)
+	return rs
+}
+
+type ProjectsLocationService struct {
+	s *Service
+
+	Prometheus *ProjectsLocationPrometheusService
+}
+
+func NewProjectsLocationPrometheusService(s *Service) *ProjectsLocationPrometheusService {
+	rs := &ProjectsLocationPrometheusService{s: s}
+	rs.Api = NewProjectsLocationPrometheusApiService(s)
+	return rs
+}
+
+type ProjectsLocationPrometheusService struct {
+	s *Service
+
+	Api *ProjectsLocationPrometheusApiService
+}
+
+func NewProjectsLocationPrometheusApiService(s *Service) *ProjectsLocationPrometheusApiService {
+	rs := &ProjectsLocationPrometheusApiService{s: s}
+	rs.V1 = NewProjectsLocationPrometheusApiV1Service(s)
+	return rs
+}
+
+type ProjectsLocationPrometheusApiService struct {
+	s *Service
+
+	V1 *ProjectsLocationPrometheusApiV1Service
+}
+
+func NewProjectsLocationPrometheusApiV1Service(s *Service) *ProjectsLocationPrometheusApiV1Service {
+	rs := &ProjectsLocationPrometheusApiV1Service{s: s}
+	rs.Label = NewProjectsLocationPrometheusApiV1LabelService(s)
+	rs.Labels_ = NewProjectsLocationPrometheusApiV1LabelsService(s)
+	rs.Metadata = NewProjectsLocationPrometheusApiV1MetadataService(s)
+	return rs
+}
+
+type ProjectsLocationPrometheusApiV1Service struct {
+	s *Service
+
+	Label *ProjectsLocationPrometheusApiV1LabelService
+
+	Labels_ *ProjectsLocationPrometheusApiV1LabelsService
+
+	Metadata *ProjectsLocationPrometheusApiV1MetadataService
+}
+
+func NewProjectsLocationPrometheusApiV1LabelService(s *Service) *ProjectsLocationPrometheusApiV1LabelService {
+	rs := &ProjectsLocationPrometheusApiV1LabelService{s: s}
+	return rs
+}
+
+type ProjectsLocationPrometheusApiV1LabelService struct {
+	s *Service
+}
+
+func NewProjectsLocationPrometheusApiV1LabelsService(s *Service) *ProjectsLocationPrometheusApiV1LabelsService {
+	rs := &ProjectsLocationPrometheusApiV1LabelsService{s: s}
+	return rs
+}
+
+type ProjectsLocationPrometheusApiV1LabelsService struct {
+	s *Service
+}
+
+func NewProjectsLocationPrometheusApiV1MetadataService(s *Service) *ProjectsLocationPrometheusApiV1MetadataService {
+	rs := &ProjectsLocationPrometheusApiV1MetadataService{s: s}
+	return rs
+}
+
+type ProjectsLocationPrometheusApiV1MetadataService struct {
 	s *Service
 }
 
@@ -206,7 +352,8 @@ type Aggregation struct {
 	// seconds. If a per-series aligner other than ALIGN_NONE is specified,
 	// this field is required or an error is returned. If no per-series
 	// aligner is specified, or the aligner ALIGN_NONE is specified, then
-	// this field is ignored.
+	// this field is ignored.The maximum value of the alignment_period is 2
+	// years, or 104 weeks.
 	AlignmentPeriod string `json:"alignmentPeriod,omitempty"`
 
 	// CrossSeriesReducer: The reduction operation to be used to combine
@@ -422,10 +569,10 @@ type Aggregation struct {
 
 	// ForceSendFields is a list of field names (e.g. "AlignmentPeriod") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AlignmentPeriod") to
@@ -440,6 +587,35 @@ type Aggregation struct {
 
 func (s *Aggregation) MarshalJSON() ([]byte, error) {
 	type NoMethod Aggregation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AlertChart: A chart that displays alert policy data.
+type AlertChart struct {
+	// Name: Required. The resource name of the alert policy. The format is:
+	// projects/[PROJECT_ID_OR_NUMBER]/alertPolicies/[ALERT_POLICY_ID]
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AlertChart) MarshalJSON() ([]byte, error) {
+	type NoMethod AlertChart
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -460,10 +636,10 @@ type Axis struct {
 
 	// ForceSendFields is a list of field names (e.g. "Label") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Label") to include in API
@@ -499,10 +675,10 @@ type ChartOptions struct {
 
 	// ForceSendFields is a list of field names (e.g. "Mode") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Mode") to include in API
@@ -520,6 +696,36 @@ func (s *ChartOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// CollapsibleGroup: A widget that groups the other widgets. All widgets
+// that are within the area spanned by the grouping widget are
+// considered member widgets.
+type CollapsibleGroup struct {
+	// Collapsed: The collapsed state of the widget on first page load.
+	Collapsed bool `json:"collapsed,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Collapsed") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Collapsed") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CollapsibleGroup) MarshalJSON() ([]byte, error) {
+	type NoMethod CollapsibleGroup
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Column: Defines the layout properties and content for a column.
 type Column struct {
 	// Weight: The relative weight of this column. The column weight is used
@@ -533,10 +739,10 @@ type Column struct {
 
 	// ForceSendFields is a list of field names (e.g. "Weight") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Weight") to include in API
@@ -563,10 +769,10 @@ type ColumnLayout struct {
 
 	// ForceSendFields is a list of field names (e.g. "Columns") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Columns") to include in
@@ -584,12 +790,47 @@ func (s *ColumnLayout) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ColumnSettings: The persistent settings for a table's columns.
+type ColumnSettings struct {
+	// Column: Required. The id of the column.
+	Column string `json:"column,omitempty"`
+
+	// Visible: Required. Whether the column should be visible on page load.
+	Visible bool `json:"visible,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Column") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Column") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ColumnSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod ColumnSettings
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Dashboard: A Google Stackdriver dashboard. Dashboards define the
 // content and layout of pages in the Stackdriver web application.
 type Dashboard struct {
 	// ColumnLayout: The content is divided into equally spaced columns and
 	// the widgets are arranged vertically.
 	ColumnLayout *ColumnLayout `json:"columnLayout,omitempty"`
+
+	// DashboardFilters: Filters to reduce the amount of data charted based
+	// on the filter criteria.
+	DashboardFilters []*DashboardFilter `json:"dashboardFilters,omitempty"`
 
 	// DisplayName: Required. The mutable, human-readable name.
 	DisplayName string `json:"displayName,omitempty"`
@@ -607,6 +848,13 @@ type Dashboard struct {
 	// simple list of informational elements like widgets or tiles.
 	GridLayout *GridLayout `json:"gridLayout,omitempty"`
 
+	// Labels: Labels applied to the dashboard
+	Labels map[string]string `json:"labels,omitempty"`
+
+	// MosaicLayout: The content is arranged as a grid of tiles, with each
+	// content widget occupying one or more grid blocks.
+	MosaicLayout *MosaicLayout `json:"mosaicLayout,omitempty"`
+
 	// Name: Immutable. The resource name of the dashboard.
 	Name string `json:"name,omitempty"`
 
@@ -620,10 +868,10 @@ type Dashboard struct {
 
 	// ForceSendFields is a list of field names (e.g. "ColumnLayout") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ColumnLayout") to include
@@ -637,6 +885,55 @@ type Dashboard struct {
 
 func (s *Dashboard) MarshalJSON() ([]byte, error) {
 	type NoMethod Dashboard
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DashboardFilter: A filter to reduce the amount of data charted in
+// relevant widgets.
+type DashboardFilter struct {
+	// FilterType: The specified filter type
+	//
+	// Possible values:
+	//   "FILTER_TYPE_UNSPECIFIED" - Filter type is unspecified. This is not
+	// valid in a well-formed request.
+	//   "RESOURCE_LABEL" - Filter on a resource label value
+	//   "METRIC_LABEL" - Filter on a metrics label value
+	//   "USER_METADATA_LABEL" - Filter on a user metadata label value
+	//   "SYSTEM_METADATA_LABEL" - Filter on a system metadata label value
+	//   "GROUP" - Filter on a group id
+	FilterType string `json:"filterType,omitempty"`
+
+	// LabelKey: Required. The key for the label
+	LabelKey string `json:"labelKey,omitempty"`
+
+	// StringValue: A variable-length string value.
+	StringValue string `json:"stringValue,omitempty"`
+
+	// TemplateVariable: The placeholder text that can be referenced in a
+	// filter string or MQL query. If omitted, the dashboard filter will be
+	// applied to all relevant widgets in the dashboard.
+	TemplateVariable string `json:"templateVariable,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FilterType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FilterType") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DashboardFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod DashboardFilter
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -679,16 +976,25 @@ type DataSet struct {
 	// currently available in the Stackdriver Monitoring application.
 	PlotType string `json:"plotType,omitempty"`
 
+	// TargetAxis: Optional. The target axis to use for plotting the metric.
+	//
+	// Possible values:
+	//   "TARGET_AXIS_UNSPECIFIED" - The target axis was not specified.
+	// Defaults to Y1.
+	//   "Y1" - The y_axis (the right axis of chart).
+	//   "Y2" - The y2_axis (the left axis of chart).
+	TargetAxis string `json:"targetAxis,omitempty"`
+
 	// TimeSeriesQuery: Required. Fields for querying time series data from
 	// the Stackdriver metrics API.
 	TimeSeriesQuery *TimeSeriesQuery `json:"timeSeriesQuery,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LegendTemplate") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "LegendTemplate") to
@@ -707,15 +1013,16 @@ func (s *DataSet) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DroppedLabels: A set of (label, value) pairs which were dropped
-// during aggregation, attached to google.api.Distribution.Exemplars in
-// google.api.Distribution values during aggregation.These values are
-// used in combination with the label values that remain on the
-// aggregated Distribution timeseries to construct the full label set
-// for the exemplar values. The resulting full label set may be used to
-// identify the specific task/job/instance (for example) which may be
-// contributing to a long-tail, while allowing the storage savings of
-// only storing aggregated distribution values for a large group.Note
+// DroppedLabels: A set of (label, value) pairs that were removed from a
+// Distribution time series during aggregation and then added as an
+// attachment to a Distribution.Exemplar.The full label set for the
+// exemplars is constructed by using the dropped pairs in combination
+// with the label values that remain on the aggregated Distribution time
+// series. The constructed full label set can be used to identify the
+// specific entity, such as the instance or job, which might be
+// contributing to a long-tail. However, with dropped labels, the
+// storage requirements are reduced because only the aggregated
+// distribution values for a large group of time series are stored.Note
 // that there are no guarantees on ordering of the labels from
 // exemplar-to-exemplar and from distribution-to-distribution in the
 // same stream, and there may be duplicates. It is up to clients to
@@ -727,10 +1034,10 @@ type DroppedLabels struct {
 
 	// ForceSendFields is a list of field names (e.g. "Label") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Label") to include in API
@@ -751,12 +1058,8 @@ func (s *DroppedLabels) MarshalJSON() ([]byte, error) {
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
-// instance:
-// service Foo {
-//   rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty);
-// }
-// The JSON representation for Empty is empty JSON object {}.
+// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); }
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -830,10 +1133,10 @@ type Field struct {
 
 	// ForceSendFields is a list of field names (e.g. "Cardinality") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Cardinality") to include
@@ -865,10 +1168,10 @@ type GaugeView struct {
 
 	// ForceSendFields is a list of field names (e.g. "LowerBound") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "LowerBound") to include in
@@ -917,10 +1220,10 @@ type GridLayout struct {
 
 	// ForceSendFields is a list of field names (e.g. "Columns") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Columns") to include in
@@ -934,6 +1237,63 @@ type GridLayout struct {
 
 func (s *GridLayout) MarshalJSON() ([]byte, error) {
 	type NoMethod GridLayout
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// HttpBody: Message that represents an arbitrary HTTP body. It should
+// only be used for payload formats that can't be represented as JSON,
+// such as raw binary or an HTML page.This message can be used both in
+// streaming and non-streaming API methods in the request as well as the
+// response.It can be used as a top-level request field, which is
+// convenient if one wants to extract parameters from either the URL or
+// HTTP template into the request fields and also want access to the raw
+// HTTP body.Example: message GetResourceRequest { // A unique request
+// id. string request_id = 1; // The raw HTTP body is bound to this
+// field. google.api.HttpBody http_body = 2; } service ResourceService {
+// rpc GetResource(GetResourceRequest) returns (google.api.HttpBody);
+// rpc UpdateResource(google.api.HttpBody) returns
+// (google.protobuf.Empty); } Example with streaming methods: service
+// CaldavService { rpc GetCalendar(stream google.api.HttpBody) returns
+// (stream google.api.HttpBody); rpc UpdateCalendar(stream
+// google.api.HttpBody) returns (stream google.api.HttpBody); } Use of
+// this type only changes how the request and response bodies are
+// handled, all other features will continue to work unchanged.
+type HttpBody struct {
+	// ContentType: The HTTP Content-Type header value specifying the
+	// content type of the body.
+	ContentType string `json:"contentType,omitempty"`
+
+	// Data: The HTTP request/response body as raw binary.
+	Data string `json:"data,omitempty"`
+
+	// Extensions: Application specific response metadata. Must be set in
+	// the first response for streaming APIs.
+	Extensions []googleapi.RawMessage `json:"extensions,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "ContentType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ContentType") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *HttpBody) MarshalJSON() ([]byte, error) {
+	type NoMethod HttpBody
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -955,10 +1315,10 @@ type ListDashboardsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Dashboards") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Dashboards") to include in
@@ -972,6 +1332,343 @@ type ListDashboardsResponse struct {
 
 func (s *ListDashboardsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListDashboardsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListLabelsRequest: ListLabelsRequest holds all parameters of the
+// Prometheus upstream API for returning a list of label names.
+type ListLabelsRequest struct {
+	// End: The end time to evaluate the query for. Either floating point
+	// UNIX seconds or RFC3339 formatted timestamp.
+	End string `json:"end,omitempty"`
+
+	// Match: A list of matchers encoded in the Prometheus label matcher
+	// format to constrain the values to series that satisfy them.
+	Match string `json:"match,omitempty"`
+
+	// Start: The start time to evaluate the query for. Either floating
+	// point UNIX seconds or RFC3339 formatted timestamp.
+	Start string `json:"start,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "End") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "End") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListLabelsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ListLabelsRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListMetricsScopesByMonitoredProjectResponse: Response for the
+// ListMetricsScopesByMonitoredProject method.
+type ListMetricsScopesByMonitoredProjectResponse struct {
+	// MetricsScopes: A set of all metrics scopes that the specified
+	// monitored project has been added to.
+	MetricsScopes []*MetricsScope `json:"metricsScopes,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "MetricsScopes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MetricsScopes") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListMetricsScopesByMonitoredProjectResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListMetricsScopesByMonitoredProjectResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// LogsPanel: A widget that displays a stream of log.
+type LogsPanel struct {
+	// Filter: A filter that chooses which log entries to return. See
+	// Advanced Logs Queries
+	// (https://cloud.google.com/logging/docs/view/advanced-queries). Only
+	// log entries that match the filter are returned. An empty filter
+	// matches all log entries.
+	Filter string `json:"filter,omitempty"`
+
+	// ResourceNames: The names of logging resources to collect logs for.
+	// Currently only projects are supported. If empty, the widget will
+	// default to the host project.
+	ResourceNames []string `json:"resourceNames,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Filter") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Filter") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LogsPanel) MarshalJSON() ([]byte, error) {
+	type NoMethod LogsPanel
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MetricsScope: Represents a Metrics Scope
+// (https://cloud.google.com/monitoring/settings#concept-scope) in Cloud
+// Monitoring, which specifies one or more Google projects and zero or
+// more AWS accounts to monitor together.
+type MetricsScope struct {
+	// CreateTime: Output only. The time when this Metrics Scope was
+	// created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// MonitoredProjects: Output only. The list of projects monitored by
+	// this Metrics Scope.
+	MonitoredProjects []*MonitoredProject `json:"monitoredProjects,omitempty"`
+
+	// Name: Immutable. The resource name of the Monitoring Metrics Scope.
+	// On input, the resource name can be specified with the scoping project
+	// ID or number. On output, the resource name is specified with the
+	// scoping project number. Example:
+	// locations/global/metricsScopes/{SCOPING_PROJECT_ID_OR_NUMBER}
+	Name string `json:"name,omitempty"`
+
+	// UpdateTime: Output only. The time when this Metrics Scope record was
+	// last updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MetricsScope) MarshalJSON() ([]byte, error) {
+	type NoMethod MetricsScope
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MonitoredProject: A project being monitored
+// (https://cloud.google.com/monitoring/settings/multiple-projects#create-multi)
+// by a Metrics Scope.
+type MonitoredProject struct {
+	// CreateTime: Output only. The time when this MonitoredProject was
+	// created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// Name: Immutable. The resource name of the MonitoredProject. On input,
+	// the resource name includes the scoping project ID and monitored
+	// project ID. On output, it contains the equivalent project numbers.
+	// Example:
+	// locations/global/metricsScopes/{SCOPING_PROJECT_ID_OR_NUMBER}/projects
+	// /{MONITORED_PROJECT_ID_OR_NUMBER}
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MonitoredProject) MarshalJSON() ([]byte, error) {
+	type NoMethod MonitoredProject
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MosaicLayout: A mosaic layout divides the available space into a grid
+// of blocks, and overlays the grid with tiles. Unlike GridLayout, tiles
+// may span multiple grid blocks and can be placed at arbitrary
+// locations in the grid.
+type MosaicLayout struct {
+	// Columns: The number of columns in the mosaic grid. The number of
+	// columns must be between 1 and 12, inclusive.
+	Columns int64 `json:"columns,omitempty"`
+
+	// Tiles: The tiles to display.
+	Tiles []*Tile `json:"tiles,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Columns") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Columns") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MosaicLayout) MarshalJSON() ([]byte, error) {
+	type NoMethod MosaicLayout
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Operation: This resource represents a long-running operation that is
+// the result of a network API call.
+type Operation struct {
+	// Done: If the value is false, it means the operation is still in
+	// progress. If true, the operation is completed, and either error or
+	// response is available.
+	Done bool `json:"done,omitempty"`
+
+	// Error: The error result of the operation in case of failure or
+	// cancellation.
+	Error *Status `json:"error,omitempty"`
+
+	// Metadata: Service-specific metadata associated with the operation. It
+	// typically contains progress information and common metadata such as
+	// create time. Some services might not provide such metadata. Any
+	// method that returns a long-running operation should document the
+	// metadata type, if any.
+	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
+
+	// Name: The server-assigned name, which is only unique within the same
+	// service that originally returns it. If you use the default HTTP
+	// mapping, the name should be a resource name ending with
+	// operations/{unique_id}.
+	Name string `json:"name,omitempty"`
+
+	// Response: The normal response of the operation in case of success. If
+	// the original method returns no data on success, such as Delete, the
+	// response is google.protobuf.Empty. If the original method is standard
+	// Get/Create/Update, the response should be the resource. For other
+	// methods, the response should have the type XxxResponse, where Xxx is
+	// the original method name. For example, if the original method name is
+	// TakeSnapshot(), the inferred response type is TakeSnapshotResponse.
+	Response googleapi.RawMessage `json:"response,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Done") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Done") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Operation) MarshalJSON() ([]byte, error) {
+	type NoMethod Operation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// OperationMetadata: Contains metadata for longrunning operation for
+// the edit Metrics Scope endpoints.
+type OperationMetadata struct {
+	// CreateTime: The time when the batch request was received.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// State: Current state of the batch operation.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Invalid.
+	//   "CREATED" - Request has been received.
+	//   "RUNNING" - Request is actively being processed.
+	//   "DONE" - The batch processing is done.
+	//   "CANCELLED" - The batch processing was cancelled.
+	State string `json:"state,omitempty"`
+
+	// UpdateTime: The time when the operation result was last updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod OperationMetadata
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -994,10 +1691,10 @@ type Option struct {
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Name") to include in API
@@ -1053,10 +1750,10 @@ type PickTimeSeriesFilter struct {
 
 	// ForceSendFields is a list of field names (e.g. "Direction") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Direction") to include in
@@ -1070,6 +1767,174 @@ type PickTimeSeriesFilter struct {
 
 func (s *PickTimeSeriesFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod PickTimeSeriesFilter
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// QueryExemplarsRequest: QueryExemplarsRequest holds all parameters of
+// the Prometheus upstream API for querying exemplars.
+type QueryExemplarsRequest struct {
+	// End: The end time to evaluate the query for. Either floating point
+	// UNIX seconds or RFC3339 formatted timestamp.
+	End string `json:"end,omitempty"`
+
+	// Query: A PromQL query string. Query lanauge documentation:
+	// https://prometheus.io/docs/prometheus/latest/querying/basics/.
+	Query string `json:"query,omitempty"`
+
+	// Start: The start time to evaluate the query for. Either floating
+	// point UNIX seconds or RFC3339 formatted timestamp.
+	Start string `json:"start,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "End") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "End") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *QueryExemplarsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod QueryExemplarsRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// QueryInstantRequest: QueryInstantRequest holds all parameters of the
+// Prometheus upstream instant query API plus GCM specific parameters.
+type QueryInstantRequest struct {
+	// Query: A PromQL query string. Query lanauge documentation:
+	// https://prometheus.io/docs/prometheus/latest/querying/basics/.
+	Query string `json:"query,omitempty"`
+
+	// Time: The single point in time to evaluate the query for. Either
+	// floating point UNIX seconds or RFC3339 formatted timestamp.
+	Time string `json:"time,omitempty"`
+
+	// Timeout: An upper bound timeout for the query. Either a Prometheus
+	// duration string
+	// (https://prometheus.io/docs/prometheus/latest/querying/basics/#time-durations)
+	// or floating point seconds. This non-standard encoding must be used
+	// for compatibility with the open source API. Clients may still
+	// implement timeouts at the connection level while ignoring this field.
+	Timeout string `json:"timeout,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Query") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Query") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *QueryInstantRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod QueryInstantRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// QueryRangeRequest: QueryRangeRequest holds all parameters of the
+// Prometheus upstream range query API plus GCM specific parameters.
+type QueryRangeRequest struct {
+	// End: The end time to evaluate the query for. Either floating point
+	// UNIX seconds or RFC3339 formatted timestamp.
+	End string `json:"end,omitempty"`
+
+	// Query: A PromQL query string. Query lanauge documentation:
+	// https://prometheus.io/docs/prometheus/latest/querying/basics/.
+	Query string `json:"query,omitempty"`
+
+	// Start: The start time to evaluate the query for. Either floating
+	// point UNIX seconds or RFC3339 formatted timestamp.
+	Start string `json:"start,omitempty"`
+
+	// Step: The resolution of query result. Either a Prometheus duration
+	// string
+	// (https://prometheus.io/docs/prometheus/latest/querying/basics/#time-durations)
+	// or floating point seconds. This non-standard encoding must be used
+	// for compatibility with the open source API. Clients may still
+	// implement timeouts at the connection level while ignoring this field.
+	Step string `json:"step,omitempty"`
+
+	// Timeout: An upper bound timeout for the query. Either a Prometheus
+	// duration string
+	// (https://prometheus.io/docs/prometheus/latest/querying/basics/#time-durations)
+	// or floating point seconds. This non-standard encoding must be used
+	// for compatibility with the open source API. Clients may still
+	// implement timeouts at the connection level while ignoring this field.
+	Timeout string `json:"timeout,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "End") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "End") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *QueryRangeRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod QueryRangeRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// QuerySeriesRequest: QuerySeries holds all parameters of the
+// Prometheus upstream API for querying series.
+type QuerySeriesRequest struct {
+	// End: The end time to evaluate the query for. Either floating point
+	// UNIX seconds or RFC3339 formatted timestamp.
+	End string `json:"end,omitempty"`
+
+	// Start: The start time to evaluate the query for. Either floating
+	// point UNIX seconds or RFC3339 formatted timestamp.
+	Start string `json:"start,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "End") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "End") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *QuerySeriesRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod QuerySeriesRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1089,10 +1954,10 @@ type RatioPart struct {
 
 	// ForceSendFields is a list of field names (e.g. "Aggregation") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Aggregation") to include
@@ -1123,10 +1988,10 @@ type Row struct {
 
 	// ForceSendFields is a list of field names (e.g. "Weight") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Weight") to include in API
@@ -1152,10 +2017,10 @@ type RowLayout struct {
 
 	// ForceSendFields is a list of field names (e.g. "Rows") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Rows") to include in API
@@ -1190,15 +2055,15 @@ type Scorecard struct {
 	// a warning threshold that triggers above/below, then the scorecard is
 	// in a warning state - unless x also puts it in a danger state. (Danger
 	// trumps warning.)As an example, consider a scorecard with the
-	// following four thresholds: {  value: 90,  category: 'DANGER',
-	// trigger: 'ABOVE', }, {  value: 70,  category: 'WARNING',  trigger:
-	// 'ABOVE', }, {  value: 10,  category: 'DANGER',  trigger: 'BELOW', },
-	// {  value: 20,  category: 'WARNING',  trigger: 'BELOW', }Then: values
-	// less than or equal to 10 would put the scorecard in a DANGER state,
-	// values greater than 10 but less than or equal to 20 a WARNING state,
-	// values strictly between 20 and 70 an OK state, values greater than or
-	// equal to 70 but less than 90 a WARNING state, and values greater than
-	// or equal to 90 a DANGER state.
+	// following four thresholds: { value: 90, category: 'DANGER', trigger:
+	// 'ABOVE', }, { value: 70, category: 'WARNING', trigger: 'ABOVE', }, {
+	// value: 10, category: 'DANGER', trigger: 'BELOW', }, { value: 20,
+	// category: 'WARNING', trigger: 'BELOW', } Then: values less than or
+	// equal to 10 would put the scorecard in a DANGER state, values greater
+	// than 10 but less than or equal to 20 a WARNING state, values strictly
+	// between 20 and 70 an OK state, values greater than or equal to 70 but
+	// less than 90 a WARNING state, and values greater than or equal to 90
+	// a DANGER state.
 	Thresholds []*Threshold `json:"thresholds,omitempty"`
 
 	// TimeSeriesQuery: Required. Fields for querying time series data from
@@ -1207,10 +2072,10 @@ type Scorecard struct {
 
 	// ForceSendFields is a list of field names (e.g. "GaugeView") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "GaugeView") to include in
@@ -1238,10 +2103,10 @@ type SourceContext struct {
 
 	// ForceSendFields is a list of field names (e.g. "FileName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "FileName") to include in
@@ -1259,18 +2124,13 @@ func (s *SourceContext) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SpanContext: The context of a span, attached to Exemplars in
-// Distribution values during aggregation.It contains the name of a span
-// with
-// format:
-// projects/[PROJECT_ID_OR_NUMBER]/traces/[TRACE_ID]/spans/[SPAN_
-// ID]
-//
+// SpanContext: The context of a span. This is attached to an Exemplar
+// in Distribution values during aggregation.It contains the name of a
+// span with format:
+// projects/[PROJECT_ID_OR_NUMBER]/traces/[TRACE_ID]/spans/[SPAN_ID]
 type SpanContext struct {
-	// SpanName: The resource name of the span. The format
-	// is:
+	// SpanName: The resource name of the span. The format is:
 	// projects/[PROJECT_ID_OR_NUMBER]/traces/[TRACE_ID]/spans/[SPAN_ID]
-	//
 	// [TRACE_ID] is a unique identifier for a trace within a project; it is
 	// a 32-character hexadecimal encoding of a 16-byte array.[SPAN_ID] is a
 	// unique identifier for a span within a trace; it is a 16-character
@@ -1279,10 +2139,10 @@ type SpanContext struct {
 
 	// ForceSendFields is a list of field names (e.g. "SpanName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "SpanName") to include in
@@ -1326,10 +2186,10 @@ type SparkChartView struct {
 
 	// ForceSendFields is a list of field names (e.g. "MinAlignmentPeriod")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "MinAlignmentPeriod") to
@@ -1344,6 +2204,170 @@ type SparkChartView struct {
 
 func (s *SparkChartView) MarshalJSON() ([]byte, error) {
 	type NoMethod SparkChartView
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// StatisticalTimeSeriesFilter: A filter that ranks streams based on
+// their statistical relation to other streams in a request. Note: This
+// field is deprecated and completely ignored by the API.
+type StatisticalTimeSeriesFilter struct {
+	// NumTimeSeries: How many time series to output.
+	NumTimeSeries int64 `json:"numTimeSeries,omitempty"`
+
+	// RankingMethod: rankingMethod is applied to a set of time series, and
+	// then the produced value for each individual time series is used to
+	// compare a given time series to others. These are methods that cannot
+	// be applied stream-by-stream, but rather require the full context of a
+	// request to evaluate time series.
+	//
+	// Possible values:
+	//   "METHOD_UNSPECIFIED" - Not allowed in well-formed requests.
+	//   "METHOD_CLUSTER_OUTLIER" - Compute the outlier score of each
+	// stream.
+	RankingMethod string `json:"rankingMethod,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "NumTimeSeries") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NumTimeSeries") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *StatisticalTimeSeriesFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod StatisticalTimeSeriesFilter
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Status: The Status type defines a logical error model that is
+// suitable for different programming environments, including REST APIs
+// and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
+// Status message contains three pieces of data: error code, error
+// message, and error details.You can find out more about this error
+// model and how to work with it in the API Design Guide
+// (https://cloud.google.com/apis/design/errors).
+type Status struct {
+	// Code: The status code, which should be an enum value of
+	// google.rpc.Code.
+	Code int64 `json:"code,omitempty"`
+
+	// Details: A list of messages that carry the error details. There is a
+	// common set of message types for APIs to use.
+	Details []googleapi.RawMessage `json:"details,omitempty"`
+
+	// Message: A developer-facing error message, which should be in
+	// English. Any user-facing error message should be localized and sent
+	// in the google.rpc.Status.details field, or localized by the client.
+	Message string `json:"message,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Code") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Code") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Status) MarshalJSON() ([]byte, error) {
+	type NoMethod Status
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// TableDataSet: Groups a time series query definition with table
+// options.
+type TableDataSet struct {
+	// MinAlignmentPeriod: Optional. The lower bound on data point frequency
+	// for this data set, implemented by specifying the minimum alignment
+	// period to use in a time series query For example, if the data is
+	// published once every 10 minutes, the min_alignment_period should be
+	// at least 10 minutes. It would not make sense to fetch and align data
+	// at one minute intervals.
+	MinAlignmentPeriod string `json:"minAlignmentPeriod,omitempty"`
+
+	// TableDisplayOptions: Optional. Table display options for configuring
+	// how the table is rendered.
+	TableDisplayOptions *TableDisplayOptions `json:"tableDisplayOptions,omitempty"`
+
+	// TableTemplate: Optional. A template string for naming TimeSeries in
+	// the resulting data set. This should be a string with interpolations
+	// of the form ${label_name}, which will resolve to the label's value
+	// i.e. "${resource.labels.project_id}."
+	TableTemplate string `json:"tableTemplate,omitempty"`
+
+	// TimeSeriesQuery: Required. Fields for querying time series data from
+	// the Stackdriver metrics API.
+	TimeSeriesQuery *TimeSeriesQuery `json:"timeSeriesQuery,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MinAlignmentPeriod")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MinAlignmentPeriod") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TableDataSet) MarshalJSON() ([]byte, error) {
+	type NoMethod TableDataSet
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// TableDisplayOptions: Table display options that can be reused.
+type TableDisplayOptions struct {
+	// ShownColumns: Optional. This field is unused and has been replaced by
+	// TimeSeriesTable.column_settings
+	ShownColumns []string `json:"shownColumns,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ShownColumns") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ShownColumns") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TableDisplayOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod TableDisplayOptions
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1363,10 +2387,10 @@ type Text struct {
 
 	// ForceSendFields is a list of field names (e.g. "Content") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Content") to include in
@@ -1410,16 +2434,26 @@ type Threshold struct {
 	// Label: A label for the threshold.
 	Label string `json:"label,omitempty"`
 
+	// TargetAxis: The target axis to use for plotting the threshold. Target
+	// axis is not allowed in a Scorecard.
+	//
+	// Possible values:
+	//   "TARGET_AXIS_UNSPECIFIED" - The target axis was not specified.
+	// Defaults to Y1.
+	//   "Y1" - The y_axis (the right axis of chart).
+	//   "Y2" - The y2_axis (the left axis of chart).
+	TargetAxis string `json:"targetAxis,omitempty"`
+
 	// Value: The value of the threshold. The value should be defined in the
 	// native scale of the metric.
 	Value float64 `json:"value,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Color") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Color") to include in API
@@ -1451,11 +2485,58 @@ func (s *Threshold) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// Tile: A single tile in the mosaic. The placement and size of the tile
+// are configurable.
+type Tile struct {
+	// Height: The height of the tile, measured in grid blocks. Tiles must
+	// have a minimum height of 1.
+	Height int64 `json:"height,omitempty"`
+
+	// Widget: The informational widget contained in the tile. For example
+	// an XyChart.
+	Widget *Widget `json:"widget,omitempty"`
+
+	// Width: The width of the tile, measured in grid blocks. Tiles must
+	// have a minimum width of 1.
+	Width int64 `json:"width,omitempty"`
+
+	// XPos: The zero-indexed position of the tile in grid blocks relative
+	// to the left edge of the grid. Tiles must be contained within the
+	// specified number of columns. x_pos cannot be negative.
+	XPos int64 `json:"xPos,omitempty"`
+
+	// YPos: The zero-indexed position of the tile in grid blocks relative
+	// to the top edge of the grid. y_pos cannot be negative.
+	YPos int64 `json:"yPos,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Height") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Height") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Tile) MarshalJSON() ([]byte, error) {
+	type NoMethod Tile
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // TimeSeriesFilter: A filter that defines a subset of time series data
 // that is displayed in a widget. Time series data is fetched using the
 // ListTimeSeries
-// (https://cloud.google.com/monitoring/api/ref_v3/rest/v3/projects.timeS
-// eries/list) method.
+// (https://cloud.google.com/monitoring/api/ref_v3/rest/v3/projects.timeSeries/list)
+// method.
 type TimeSeriesFilter struct {
 	// Aggregation: By default, the raw time series data is returned. Use
 	// this field to combine multiple time series for different views of the
@@ -1474,12 +2555,16 @@ type TimeSeriesFilter struct {
 	// applied.
 	SecondaryAggregation *Aggregation `json:"secondaryAggregation,omitempty"`
 
+	// StatisticalTimeSeriesFilter: Statistics based time series filter.
+	// Note: This field is deprecated and completely ignored by the API.
+	StatisticalTimeSeriesFilter *StatisticalTimeSeriesFilter `json:"statisticalTimeSeriesFilter,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Aggregation") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Aggregation") to include
@@ -1515,12 +2600,16 @@ type TimeSeriesFilterRatio struct {
 	// computed.
 	SecondaryAggregation *Aggregation `json:"secondaryAggregation,omitempty"`
 
+	// StatisticalTimeSeriesFilter: Statistics based time series filter.
+	// Note: This field is deprecated and completely ignored by the API.
+	StatisticalTimeSeriesFilter *StatisticalTimeSeriesFilter `json:"statisticalTimeSeriesFilter,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Denominator") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Denominator") to include
@@ -1542,6 +2631,9 @@ func (s *TimeSeriesFilterRatio) MarshalJSON() ([]byte, error) {
 // methods for querying time series data from the Stackdriver metrics
 // API.
 type TimeSeriesQuery struct {
+	// PrometheusQuery: A query used to fetch time series with PromQL.
+	PrometheusQuery string `json:"prometheusQuery,omitempty"`
+
 	// TimeSeriesFilter: Filter parameters to fetch time series.
 	TimeSeriesFilter *TimeSeriesFilter `json:"timeSeriesFilter,omitempty"`
 
@@ -1549,25 +2641,25 @@ type TimeSeriesQuery struct {
 	// series filters.
 	TimeSeriesFilterRatio *TimeSeriesFilterRatio `json:"timeSeriesFilterRatio,omitempty"`
 
-	// TimeSeriesQueryLanguage: A query used to fetch time series.
+	// TimeSeriesQueryLanguage: A query used to fetch time series with MQL.
 	TimeSeriesQueryLanguage string `json:"timeSeriesQueryLanguage,omitempty"`
 
 	// UnitOverride: The unit of data contained in fetched time series. If
 	// non-empty, this unit will override any unit that accompanies fetched
 	// data. The format is the same as the unit
-	// (https://cloud.google.com/monitoring/api/ref_v3/rest/v3/projects.metri
-	// cDescriptors) field in MetricDescriptor.
+	// (https://cloud.google.com/monitoring/api/ref_v3/rest/v3/projects.metricDescriptors)
+	// field in MetricDescriptor.
 	UnitOverride string `json:"unitOverride,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "TimeSeriesFilter") to
+	// ForceSendFields is a list of field names (e.g. "PrometheusQuery") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "TimeSeriesFilter") to
+	// NullFields is a list of field names (e.g. "PrometheusQuery") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -1579,6 +2671,47 @@ type TimeSeriesQuery struct {
 
 func (s *TimeSeriesQuery) MarshalJSON() ([]byte, error) {
 	type NoMethod TimeSeriesQuery
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// TimeSeriesTable: A table that displays time series data.
+type TimeSeriesTable struct {
+	// ColumnSettings: Optional. The list of the persistent column settings
+	// for the table.
+	ColumnSettings []*ColumnSettings `json:"columnSettings,omitempty"`
+
+	// DataSets: Required. The data displayed in this table.
+	DataSets []*TableDataSet `json:"dataSets,omitempty"`
+
+	// MetricVisualization: Optional. Store rendering strategy
+	//
+	// Possible values:
+	//   "METRIC_VISUALIZATION_UNSPECIFIED" - Unspecified state
+	//   "NUMBER" - Default text rendering
+	//   "BAR" - Horizontal bar rendering
+	MetricVisualization string `json:"metricVisualization,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ColumnSettings") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ColumnSettings") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TimeSeriesTable) MarshalJSON() ([]byte, error) {
+	type NoMethod TimeSeriesTable
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1610,10 +2743,10 @@ type Type struct {
 
 	// ForceSendFields is a list of field names (e.g. "Fields") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Fields") to include in API
@@ -1634,8 +2767,19 @@ func (s *Type) MarshalJSON() ([]byte, error) {
 // Widget: Widget contains a single dashboard component and
 // configuration of how to present the component in the dashboard.
 type Widget struct {
+	// AlertChart: A chart of alert policy data.
+	AlertChart *AlertChart `json:"alertChart,omitempty"`
+
 	// Blank: A blank space.
 	Blank *Empty `json:"blank,omitempty"`
+
+	// CollapsibleGroup: A widget that groups the other widgets. All widgets
+	// that are within the area spanned by the grouping widget are
+	// considered member widgets.
+	CollapsibleGroup *CollapsibleGroup `json:"collapsibleGroup,omitempty"`
+
+	// LogsPanel: A widget that shows a stream of logs.
+	LogsPanel *LogsPanel `json:"logsPanel,omitempty"`
 
 	// Scorecard: A scorecard summarizing time series data.
 	Scorecard *Scorecard `json:"scorecard,omitempty"`
@@ -1643,22 +2787,26 @@ type Widget struct {
 	// Text: A raw string or markdown displaying textual content.
 	Text *Text `json:"text,omitempty"`
 
+	// TimeSeriesTable: A widget that displays time series data in a tabular
+	// format.
+	TimeSeriesTable *TimeSeriesTable `json:"timeSeriesTable,omitempty"`
+
 	// Title: Optional. The title of the widget.
 	Title string `json:"title,omitempty"`
 
 	// XyChart: A chart of time series data.
 	XyChart *XyChart `json:"xyChart,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Blank") to
+	// ForceSendFields is a list of field names (e.g. "AlertChart") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Blank") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "AlertChart") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -1693,15 +2841,18 @@ type XyChart struct {
 	// XAxis: The properties applied to the X axis.
 	XAxis *Axis `json:"xAxis,omitempty"`
 
+	// Y2Axis: The properties applied to the Y2 axis.
+	Y2Axis *Axis `json:"y2Axis,omitempty"`
+
 	// YAxis: The properties applied to the Y axis.
 	YAxis *Axis `json:"yAxis,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ChartOptions") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ChartOptions") to include
@@ -1719,6 +2870,743 @@ func (s *XyChart) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// method id "monitoring.locations.global.metricsScopes.get":
+
+type LocationsGlobalMetricsScopesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Returns a specific Metrics Scope, including the list of projects
+// monitored by the specified Metrics Scope.
+//
+//   - name: The resource name of the Metrics Scope. Example:
+//     locations/global/metricsScopes/{SCOPING_PROJECT_ID_OR_NUMBER}.
+func (r *LocationsGlobalMetricsScopesService) Get(name string) *LocationsGlobalMetricsScopesGetCall {
+	c := &LocationsGlobalMetricsScopesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LocationsGlobalMetricsScopesGetCall) Fields(s ...googleapi.Field) *LocationsGlobalMetricsScopesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *LocationsGlobalMetricsScopesGetCall) IfNoneMatch(entityTag string) *LocationsGlobalMetricsScopesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *LocationsGlobalMetricsScopesGetCall) Context(ctx context.Context) *LocationsGlobalMetricsScopesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *LocationsGlobalMetricsScopesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *LocationsGlobalMetricsScopesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "monitoring.locations.global.metricsScopes.get" call.
+// Exactly one of *MetricsScope or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *MetricsScope.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *LocationsGlobalMetricsScopesGetCall) Do(opts ...googleapi.CallOption) (*MetricsScope, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &MetricsScope{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns a specific Metrics Scope, including the list of projects monitored by the specified Metrics Scope.",
+	//   "flatPath": "v1/locations/global/metricsScopes/{metricsScopesId}",
+	//   "httpMethod": "GET",
+	//   "id": "monitoring.locations.global.metricsScopes.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the Metrics Scope. Example: locations/global/metricsScopes/{SCOPING_PROJECT_ID_OR_NUMBER}",
+	//       "location": "path",
+	//       "pattern": "^locations/global/metricsScopes/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "MetricsScope"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/monitoring",
+	//     "https://www.googleapis.com/auth/monitoring.read"
+	//   ]
+	// }
+
+}
+
+// method id "monitoring.locations.global.metricsScopes.listMetricsScopesByMonitoredProject":
+
+type LocationsGlobalMetricsScopesListMetricsScopesByMonitoredProjectCall struct {
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// ListMetricsScopesByMonitoredProject: Returns a list of every Metrics
+// Scope that a specific MonitoredProject has been added to. The metrics
+// scope representing the specified monitored project will always be the
+// first entry in the response.
+func (r *LocationsGlobalMetricsScopesService) ListMetricsScopesByMonitoredProject() *LocationsGlobalMetricsScopesListMetricsScopesByMonitoredProjectCall {
+	c := &LocationsGlobalMetricsScopesListMetricsScopesByMonitoredProjectCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// MonitoredResourceContainer sets the optional parameter
+// "monitoredResourceContainer": Required. The resource name of the
+// Monitored Project being requested. Example:
+// projects/{MONITORED_PROJECT_ID_OR_NUMBER}
+func (c *LocationsGlobalMetricsScopesListMetricsScopesByMonitoredProjectCall) MonitoredResourceContainer(monitoredResourceContainer string) *LocationsGlobalMetricsScopesListMetricsScopesByMonitoredProjectCall {
+	c.urlParams_.Set("monitoredResourceContainer", monitoredResourceContainer)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LocationsGlobalMetricsScopesListMetricsScopesByMonitoredProjectCall) Fields(s ...googleapi.Field) *LocationsGlobalMetricsScopesListMetricsScopesByMonitoredProjectCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *LocationsGlobalMetricsScopesListMetricsScopesByMonitoredProjectCall) IfNoneMatch(entityTag string) *LocationsGlobalMetricsScopesListMetricsScopesByMonitoredProjectCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *LocationsGlobalMetricsScopesListMetricsScopesByMonitoredProjectCall) Context(ctx context.Context) *LocationsGlobalMetricsScopesListMetricsScopesByMonitoredProjectCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *LocationsGlobalMetricsScopesListMetricsScopesByMonitoredProjectCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *LocationsGlobalMetricsScopesListMetricsScopesByMonitoredProjectCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/locations/global/metricsScopes:listMetricsScopesByMonitoredProject")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "monitoring.locations.global.metricsScopes.listMetricsScopesByMonitoredProject" call.
+// Exactly one of *ListMetricsScopesByMonitoredProjectResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *ListMetricsScopesByMonitoredProjectResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *LocationsGlobalMetricsScopesListMetricsScopesByMonitoredProjectCall) Do(opts ...googleapi.CallOption) (*ListMetricsScopesByMonitoredProjectResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListMetricsScopesByMonitoredProjectResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns a list of every Metrics Scope that a specific MonitoredProject has been added to. The metrics scope representing the specified monitored project will always be the first entry in the response.",
+	//   "flatPath": "v1/locations/global/metricsScopes:listMetricsScopesByMonitoredProject",
+	//   "httpMethod": "GET",
+	//   "id": "monitoring.locations.global.metricsScopes.listMetricsScopesByMonitoredProject",
+	//   "parameterOrder": [],
+	//   "parameters": {
+	//     "monitoredResourceContainer": {
+	//       "description": "Required. The resource name of the Monitored Project being requested. Example: projects/{MONITORED_PROJECT_ID_OR_NUMBER}",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/locations/global/metricsScopes:listMetricsScopesByMonitoredProject",
+	//   "response": {
+	//     "$ref": "ListMetricsScopesByMonitoredProjectResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/monitoring",
+	//     "https://www.googleapis.com/auth/monitoring.read"
+	//   ]
+	// }
+
+}
+
+// method id "monitoring.locations.global.metricsScopes.projects.create":
+
+type LocationsGlobalMetricsScopesProjectsCreateCall struct {
+	s                *Service
+	parent           string
+	monitoredproject *MonitoredProject
+	urlParams_       gensupport.URLParams
+	ctx_             context.Context
+	header_          http.Header
+}
+
+// Create: Adds a MonitoredProject with the given project ID to the
+// specified Metrics Scope.
+//
+//   - parent: The resource name of the existing Metrics Scope that will
+//     monitor this project. Example:
+//     locations/global/metricsScopes/{SCOPING_PROJECT_ID_OR_NUMBER}.
+func (r *LocationsGlobalMetricsScopesProjectsService) Create(parent string, monitoredproject *MonitoredProject) *LocationsGlobalMetricsScopesProjectsCreateCall {
+	c := &LocationsGlobalMetricsScopesProjectsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.monitoredproject = monitoredproject
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LocationsGlobalMetricsScopesProjectsCreateCall) Fields(s ...googleapi.Field) *LocationsGlobalMetricsScopesProjectsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *LocationsGlobalMetricsScopesProjectsCreateCall) Context(ctx context.Context) *LocationsGlobalMetricsScopesProjectsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *LocationsGlobalMetricsScopesProjectsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *LocationsGlobalMetricsScopesProjectsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.monitoredproject)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/projects")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "monitoring.locations.global.metricsScopes.projects.create" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *LocationsGlobalMetricsScopesProjectsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Adds a MonitoredProject with the given project ID to the specified Metrics Scope.",
+	//   "flatPath": "v1/locations/global/metricsScopes/{metricsScopesId}/projects",
+	//   "httpMethod": "POST",
+	//   "id": "monitoring.locations.global.metricsScopes.projects.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The resource name of the existing Metrics Scope that will monitor this project. Example: locations/global/metricsScopes/{SCOPING_PROJECT_ID_OR_NUMBER}",
+	//       "location": "path",
+	//       "pattern": "^locations/global/metricsScopes/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/projects",
+	//   "request": {
+	//     "$ref": "MonitoredProject"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/monitoring",
+	//     "https://www.googleapis.com/auth/monitoring.write"
+	//   ]
+	// }
+
+}
+
+// method id "monitoring.locations.global.metricsScopes.projects.delete":
+
+type LocationsGlobalMetricsScopesProjectsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a MonitoredProject from the specified Metrics Scope.
+//
+//   - name: The resource name of the MonitoredProject. Example:
+//     locations/global/metricsScopes/{SCOPING_PROJECT_ID_OR_NUMBER}/projec
+//     ts/{MONITORED_PROJECT_ID_OR_NUMBER}Authorization requires the
+//     following Google IAM (https://cloud.google.com/iam) permissions on
+//     both the Metrics Scope and on the MonitoredProject:
+//     monitoring.metricsScopes.link.
+func (r *LocationsGlobalMetricsScopesProjectsService) Delete(name string) *LocationsGlobalMetricsScopesProjectsDeleteCall {
+	c := &LocationsGlobalMetricsScopesProjectsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LocationsGlobalMetricsScopesProjectsDeleteCall) Fields(s ...googleapi.Field) *LocationsGlobalMetricsScopesProjectsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *LocationsGlobalMetricsScopesProjectsDeleteCall) Context(ctx context.Context) *LocationsGlobalMetricsScopesProjectsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *LocationsGlobalMetricsScopesProjectsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *LocationsGlobalMetricsScopesProjectsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "monitoring.locations.global.metricsScopes.projects.delete" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *LocationsGlobalMetricsScopesProjectsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a MonitoredProject from the specified Metrics Scope.",
+	//   "flatPath": "v1/locations/global/metricsScopes/{metricsScopesId}/projects/{projectsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "monitoring.locations.global.metricsScopes.projects.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the MonitoredProject. Example: locations/global/metricsScopes/{SCOPING_PROJECT_ID_OR_NUMBER}/projects/{MONITORED_PROJECT_ID_OR_NUMBER}Authorization requires the following Google IAM (https://cloud.google.com/iam) permissions on both the Metrics Scope and on the MonitoredProject: monitoring.metricsScopes.link",
+	//       "location": "path",
+	//       "pattern": "^locations/global/metricsScopes/[^/]+/projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/monitoring",
+	//     "https://www.googleapis.com/auth/monitoring.write"
+	//   ]
+	// }
+
+}
+
+// method id "monitoring.operations.get":
+
+type OperationsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the latest state of a long-running operation. Clients can
+// use this method to poll the operation result at intervals as
+// recommended by the API service.
+//
+// - name: The name of the operation resource.
+func (r *OperationsService) Get(name string) *OperationsGetCall {
+	c := &OperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OperationsGetCall) Fields(s ...googleapi.Field) *OperationsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OperationsGetCall) IfNoneMatch(entityTag string) *OperationsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OperationsGetCall) Context(ctx context.Context) *OperationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OperationsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "monitoring.operations.get" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
+	//   "flatPath": "v1/operations/{operationsId}",
+	//   "httpMethod": "GET",
+	//   "id": "monitoring.operations.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The name of the operation resource.",
+	//       "location": "path",
+	//       "pattern": "^operations/.*$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/monitoring",
+	//     "https://www.googleapis.com/auth/monitoring.read"
+	//   ]
+	// }
+
+}
+
 // method id "monitoring.projects.dashboards.create":
 
 type ProjectsDashboardsCreateCall struct {
@@ -1730,14 +3618,28 @@ type ProjectsDashboardsCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates a new custom dashboard.This method requires the
-// monitoring.dashboards.create permission on the specified project. For
-// more information, see Google Cloud IAM
-// (https://cloud.google.com/iam).
+// Create: Creates a new custom dashboard. For examples on how you can
+// use this API to create dashboards, see Managing dashboards by API
+// (https://cloud.google.com/monitoring/dashboards/api-dashboard). This
+// method requires the monitoring.dashboards.create permission on the
+// specified project. For more information about permissions, see Cloud
+// Identity and Access Management (https://cloud.google.com/iam).
+//
+//   - parent: The project on which to execute the request. The format is:
+//     projects/[PROJECT_ID_OR_NUMBER] The [PROJECT_ID_OR_NUMBER] must
+//     match the dashboard resource name.
 func (r *ProjectsDashboardsService) Create(parent string, dashboard *Dashboard) *ProjectsDashboardsCreateCall {
 	c := &ProjectsDashboardsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	c.dashboard = dashboard
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": If set,
+// validate the request and preview the review, but do not actually save
+// it.
+func (c *ProjectsDashboardsCreateCall) ValidateOnly(validateOnly bool) *ProjectsDashboardsCreateCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
 }
 
@@ -1768,7 +3670,7 @@ func (c *ProjectsDashboardsCreateCall) Header() http.Header {
 
 func (c *ProjectsDashboardsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1808,17 +3710,17 @@ func (c *ProjectsDashboardsCreateCall) Do(opts ...googleapi.CallOption) (*Dashbo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Dashboard{
 		ServerResponse: googleapi.ServerResponse{
@@ -1832,7 +3734,7 @@ func (c *ProjectsDashboardsCreateCall) Do(opts ...googleapi.CallOption) (*Dashbo
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new custom dashboard.This method requires the monitoring.dashboards.create permission on the specified project. For more information, see Google Cloud IAM (https://cloud.google.com/iam).",
+	//   "description": "Creates a new custom dashboard. For examples on how you can use this API to create dashboards, see Managing dashboards by API (https://cloud.google.com/monitoring/dashboards/api-dashboard). This method requires the monitoring.dashboards.create permission on the specified project. For more information about permissions, see Cloud Identity and Access Management (https://cloud.google.com/iam).",
 	//   "flatPath": "v1/projects/{projectsId}/dashboards",
 	//   "httpMethod": "POST",
 	//   "id": "monitoring.projects.dashboards.create",
@@ -1841,11 +3743,16 @@ func (c *ProjectsDashboardsCreateCall) Do(opts ...googleapi.CallOption) (*Dashbo
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The project on which to execute the request. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]\nThe [PROJECT_ID_OR_NUMBER] must match the dashboard resource name.",
+	//       "description": "Required. The project on which to execute the request. The format is: projects/[PROJECT_ID_OR_NUMBER] The [PROJECT_ID_OR_NUMBER] must match the dashboard resource name.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "validateOnly": {
+	//       "description": "If set, validate the request and preview the review, but do not actually save it.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     }
 	//   },
 	//   "path": "v1/{+parent}/dashboards",
@@ -1876,8 +3783,11 @@ type ProjectsDashboardsDeleteCall struct {
 
 // Delete: Deletes an existing custom dashboard.This method requires the
 // monitoring.dashboards.delete permission on the specified dashboard.
-// For more information, see Google Cloud IAM
+// For more information, see Cloud Identity and Access Management
 // (https://cloud.google.com/iam).
+//
+//   - name: The resource name of the Dashboard. The format is:
+//     projects/[PROJECT_ID_OR_NUMBER]/dashboards/[DASHBOARD_ID].
 func (r *ProjectsDashboardsService) Delete(name string) *ProjectsDashboardsDeleteCall {
 	c := &ProjectsDashboardsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1911,7 +3821,7 @@ func (c *ProjectsDashboardsDeleteCall) Header() http.Header {
 
 func (c *ProjectsDashboardsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1946,17 +3856,17 @@ func (c *ProjectsDashboardsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty,
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -1970,7 +3880,7 @@ func (c *ProjectsDashboardsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty,
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes an existing custom dashboard.This method requires the monitoring.dashboards.delete permission on the specified dashboard. For more information, see Google Cloud IAM (https://cloud.google.com/iam).",
+	//   "description": "Deletes an existing custom dashboard.This method requires the monitoring.dashboards.delete permission on the specified dashboard. For more information, see Cloud Identity and Access Management (https://cloud.google.com/iam).",
 	//   "flatPath": "v1/projects/{projectsId}/dashboards/{dashboardsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "monitoring.projects.dashboards.delete",
@@ -1979,7 +3889,7 @@ func (c *ProjectsDashboardsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty,
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the Dashboard. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/dashboards/[DASHBOARD_ID]\n",
+	//       "description": "Required. The resource name of the Dashboard. The format is: projects/[PROJECT_ID_OR_NUMBER]/dashboards/[DASHBOARD_ID] ",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/dashboards/[^/]+$",
 	//       "required": true,
@@ -2012,8 +3922,13 @@ type ProjectsDashboardsGetCall struct {
 
 // Get: Fetches a specific dashboard.This method requires the
 // monitoring.dashboards.get permission on the specified dashboard. For
-// more information, see Google Cloud IAM
+// more information, see Cloud Identity and Access Management
 // (https://cloud.google.com/iam).
+//
+//   - name: The resource name of the Dashboard. The format is one of:
+//     dashboards/[DASHBOARD_ID] (for system dashboards)
+//     projects/[PROJECT_ID_OR_NUMBER]/dashboards/[DASHBOARD_ID] (for
+//     custom dashboards).
 func (r *ProjectsDashboardsService) Get(name string) *ProjectsDashboardsGetCall {
 	c := &ProjectsDashboardsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2057,7 +3972,7 @@ func (c *ProjectsDashboardsGetCall) Header() http.Header {
 
 func (c *ProjectsDashboardsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2095,17 +4010,17 @@ func (c *ProjectsDashboardsGetCall) Do(opts ...googleapi.CallOption) (*Dashboard
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Dashboard{
 		ServerResponse: googleapi.ServerResponse{
@@ -2119,7 +4034,7 @@ func (c *ProjectsDashboardsGetCall) Do(opts ...googleapi.CallOption) (*Dashboard
 	}
 	return ret, nil
 	// {
-	//   "description": "Fetches a specific dashboard.This method requires the monitoring.dashboards.get permission on the specified dashboard. For more information, see Google Cloud IAM (https://cloud.google.com/iam).",
+	//   "description": "Fetches a specific dashboard.This method requires the monitoring.dashboards.get permission on the specified dashboard. For more information, see Cloud Identity and Access Management (https://cloud.google.com/iam).",
 	//   "flatPath": "v1/projects/{projectsId}/dashboards/{dashboardsId}",
 	//   "httpMethod": "GET",
 	//   "id": "monitoring.projects.dashboards.get",
@@ -2128,7 +4043,7 @@ func (c *ProjectsDashboardsGetCall) Do(opts ...googleapi.CallOption) (*Dashboard
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the Dashboard. The format is one of:\ndashboards/[DASHBOARD_ID] (for system dashboards)\nprojects/[PROJECT_ID_OR_NUMBER]/dashboards/[DASHBOARD_ID]  (for custom dashboards).",
+	//       "description": "Required. The resource name of the Dashboard. The format is one of: dashboards/[DASHBOARD_ID] (for system dashboards) projects/[PROJECT_ID_OR_NUMBER]/dashboards/[DASHBOARD_ID] (for custom dashboards).",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/dashboards/[^/]+$",
 	//       "required": true,
@@ -2161,8 +4076,11 @@ type ProjectsDashboardsListCall struct {
 
 // List: Lists the existing dashboards.This method requires the
 // monitoring.dashboards.list permission on the specified project. For
-// more information, see Google Cloud IAM
+// more information, see Cloud Identity and Access Management
 // (https://cloud.google.com/iam).
+//
+//   - parent: The scope of the dashboards to list. The format is:
+//     projects/[PROJECT_ID_OR_NUMBER].
 func (r *ProjectsDashboardsService) List(parent string) *ProjectsDashboardsListCall {
 	c := &ProjectsDashboardsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2223,7 +4141,7 @@ func (c *ProjectsDashboardsListCall) Header() http.Header {
 
 func (c *ProjectsDashboardsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2261,17 +4179,17 @@ func (c *ProjectsDashboardsListCall) Do(opts ...googleapi.CallOption) (*ListDash
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListDashboardsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2285,7 +4203,7 @@ func (c *ProjectsDashboardsListCall) Do(opts ...googleapi.CallOption) (*ListDash
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the existing dashboards.This method requires the monitoring.dashboards.list permission on the specified project. For more information, see Google Cloud IAM (https://cloud.google.com/iam).",
+	//   "description": "Lists the existing dashboards.This method requires the monitoring.dashboards.list permission on the specified project. For more information, see Cloud Identity and Access Management (https://cloud.google.com/iam).",
 	//   "flatPath": "v1/projects/{projectsId}/dashboards",
 	//   "httpMethod": "GET",
 	//   "id": "monitoring.projects.dashboards.list",
@@ -2305,7 +4223,7 @@ func (c *ProjectsDashboardsListCall) Do(opts ...googleapi.CallOption) (*ListDash
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The scope of the dashboards to list. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]\n",
+	//       "description": "Required. The scope of the dashboards to list. The format is: projects/[PROJECT_ID_OR_NUMBER] ",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -2360,11 +4278,21 @@ type ProjectsDashboardsPatchCall struct {
 // Patch: Replaces an existing custom dashboard with a new
 // definition.This method requires the monitoring.dashboards.update
 // permission on the specified dashboard. For more information, see
-// Google Cloud IAM (https://cloud.google.com/iam).
+// Cloud Identity and Access Management (https://cloud.google.com/iam).
+//
+// - name: Immutable. The resource name of the dashboard.
 func (r *ProjectsDashboardsService) Patch(name string, dashboard *Dashboard) *ProjectsDashboardsPatchCall {
 	c := &ProjectsDashboardsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	c.dashboard = dashboard
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": If set,
+// validate the request and preview the review, but do not actually save
+// it.
+func (c *ProjectsDashboardsPatchCall) ValidateOnly(validateOnly bool) *ProjectsDashboardsPatchCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
 }
 
@@ -2395,7 +4323,7 @@ func (c *ProjectsDashboardsPatchCall) Header() http.Header {
 
 func (c *ProjectsDashboardsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2435,17 +4363,17 @@ func (c *ProjectsDashboardsPatchCall) Do(opts ...googleapi.CallOption) (*Dashboa
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Dashboard{
 		ServerResponse: googleapi.ServerResponse{
@@ -2459,7 +4387,7 @@ func (c *ProjectsDashboardsPatchCall) Do(opts ...googleapi.CallOption) (*Dashboa
 	}
 	return ret, nil
 	// {
-	//   "description": "Replaces an existing custom dashboard with a new definition.This method requires the monitoring.dashboards.update permission on the specified dashboard. For more information, see Google Cloud IAM (https://cloud.google.com/iam).",
+	//   "description": "Replaces an existing custom dashboard with a new definition.This method requires the monitoring.dashboards.update permission on the specified dashboard. For more information, see Cloud Identity and Access Management (https://cloud.google.com/iam).",
 	//   "flatPath": "v1/projects/{projectsId}/dashboards/{dashboardsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "monitoring.projects.dashboards.patch",
@@ -2473,6 +4401,11 @@ func (c *ProjectsDashboardsPatchCall) Do(opts ...googleapi.CallOption) (*Dashboa
 	//       "pattern": "^projects/[^/]+/dashboards/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "validateOnly": {
+	//       "description": "If set, validate the request and preview the review, but do not actually save it.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     }
 	//   },
 	//   "path": "v1/{+name}",
@@ -2486,6 +4419,1407 @@ func (c *ProjectsDashboardsPatchCall) Do(opts ...googleapi.CallOption) (*Dashboa
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/monitoring",
 	//     "https://www.googleapis.com/auth/monitoring.write"
+	//   ]
+	// }
+
+}
+
+// method id "monitoring.projects.location.prometheus.api.v1.labels":
+
+type ProjectsLocationPrometheusApiV1LabelsCall struct {
+	s                 *Service
+	name              string
+	location          string
+	listlabelsrequest *ListLabelsRequest
+	urlParams_        gensupport.URLParams
+	ctx_              context.Context
+	header_           http.Header
+}
+
+// Labels: Lists labels for metrics.
+//
+//   - location: Location of the resource information. Has to be "global"
+//     now.
+//   - name: The workspace on which to execute the request. It is not part
+//     of the open source API but used as a request path prefix to
+//     distinguish different virtual Prometheus instances of Google
+//     Prometheus Engine. The format is: projects/PROJECT_ID_OR_NUMBER.
+func (r *ProjectsLocationPrometheusApiV1Service) Labels(name string, location string, listlabelsrequest *ListLabelsRequest) *ProjectsLocationPrometheusApiV1LabelsCall {
+	c := &ProjectsLocationPrometheusApiV1LabelsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.location = location
+	c.listlabelsrequest = listlabelsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationPrometheusApiV1LabelsCall) Fields(s ...googleapi.Field) *ProjectsLocationPrometheusApiV1LabelsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationPrometheusApiV1LabelsCall) Context(ctx context.Context) *ProjectsLocationPrometheusApiV1LabelsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationPrometheusApiV1LabelsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationPrometheusApiV1LabelsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.listlabelsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}/location/{location}/prometheus/api/v1/labels")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name":     c.name,
+		"location": c.location,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "monitoring.projects.location.prometheus.api.v1.labels" call.
+// Exactly one of *HttpBody or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *HttpBody.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationPrometheusApiV1LabelsCall) Do(opts ...googleapi.CallOption) (*HttpBody, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &HttpBody{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists labels for metrics.",
+	//   "flatPath": "v1/projects/{projectsId}/location/{location}/prometheus/api/v1/labels",
+	//   "httpMethod": "POST",
+	//   "id": "monitoring.projects.location.prometheus.api.v1.labels",
+	//   "parameterOrder": [
+	//     "name",
+	//     "location"
+	//   ],
+	//   "parameters": {
+	//     "location": {
+	//       "description": "Location of the resource information. Has to be \"global\" now.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "The workspace on which to execute the request. It is not part of the open source API but used as a request path prefix to distinguish different virtual Prometheus instances of Google Prometheus Engine. The format is: projects/PROJECT_ID_OR_NUMBER.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}/location/{location}/prometheus/api/v1/labels",
+	//   "request": {
+	//     "$ref": "ListLabelsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "HttpBody"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/monitoring",
+	//     "https://www.googleapis.com/auth/monitoring.read"
+	//   ]
+	// }
+
+}
+
+// method id "monitoring.projects.location.prometheus.api.v1.query":
+
+type ProjectsLocationPrometheusApiV1QueryCall struct {
+	s                   *Service
+	name                string
+	location            string
+	queryinstantrequest *QueryInstantRequest
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// Query: Evaluate a PromQL query at a single point in time.
+//
+//   - location: Location of the resource information. Has to be "global"
+//     now.
+//   - name: The project on which to execute the request. Data associcated
+//     with the project's workspace stored under the The format is:
+//     projects/PROJECT_ID_OR_NUMBER. Open source API but used as a
+//     request path prefix to distinguish different virtual Prometheus
+//     instances of Google Prometheus Engine.
+func (r *ProjectsLocationPrometheusApiV1Service) Query(name string, location string, queryinstantrequest *QueryInstantRequest) *ProjectsLocationPrometheusApiV1QueryCall {
+	c := &ProjectsLocationPrometheusApiV1QueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.location = location
+	c.queryinstantrequest = queryinstantrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationPrometheusApiV1QueryCall) Fields(s ...googleapi.Field) *ProjectsLocationPrometheusApiV1QueryCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationPrometheusApiV1QueryCall) Context(ctx context.Context) *ProjectsLocationPrometheusApiV1QueryCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationPrometheusApiV1QueryCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationPrometheusApiV1QueryCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.queryinstantrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}/location/{location}/prometheus/api/v1/query")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name":     c.name,
+		"location": c.location,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "monitoring.projects.location.prometheus.api.v1.query" call.
+// Exactly one of *HttpBody or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *HttpBody.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationPrometheusApiV1QueryCall) Do(opts ...googleapi.CallOption) (*HttpBody, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &HttpBody{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Evaluate a PromQL query at a single point in time.",
+	//   "flatPath": "v1/projects/{projectsId}/location/{location}/prometheus/api/v1/query",
+	//   "httpMethod": "POST",
+	//   "id": "monitoring.projects.location.prometheus.api.v1.query",
+	//   "parameterOrder": [
+	//     "name",
+	//     "location"
+	//   ],
+	//   "parameters": {
+	//     "location": {
+	//       "description": "Location of the resource information. Has to be \"global\" now.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "The project on which to execute the request. Data associcated with the project's workspace stored under the The format is: projects/PROJECT_ID_OR_NUMBER. Open source API but used as a request path prefix to distinguish different virtual Prometheus instances of Google Prometheus Engine.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}/location/{location}/prometheus/api/v1/query",
+	//   "request": {
+	//     "$ref": "QueryInstantRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "HttpBody"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/monitoring",
+	//     "https://www.googleapis.com/auth/monitoring.read"
+	//   ]
+	// }
+
+}
+
+// method id "monitoring.projects.location.prometheus.api.v1.query_exemplars":
+
+type ProjectsLocationPrometheusApiV1QueryExemplarsCall struct {
+	s                     *Service
+	name                  string
+	location              string
+	queryexemplarsrequest *QueryExemplarsRequest
+	urlParams_            gensupport.URLParams
+	ctx_                  context.Context
+	header_               http.Header
+}
+
+// QueryExemplars: Lists exemplars relevant to a given PromQL query,
+//
+//   - location: Location of the resource information. Has to be "global"
+//     now.
+//   - name: The project on which to execute the request. Data associcated
+//     with the project's workspace stored under the The format is:
+//     projects/PROJECT_ID_OR_NUMBER. Open source API but used as a
+//     request path prefix to distinguish different virtual Prometheus
+//     instances of Google Prometheus Engine.
+func (r *ProjectsLocationPrometheusApiV1Service) QueryExemplars(name string, location string, queryexemplarsrequest *QueryExemplarsRequest) *ProjectsLocationPrometheusApiV1QueryExemplarsCall {
+	c := &ProjectsLocationPrometheusApiV1QueryExemplarsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.location = location
+	c.queryexemplarsrequest = queryexemplarsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationPrometheusApiV1QueryExemplarsCall) Fields(s ...googleapi.Field) *ProjectsLocationPrometheusApiV1QueryExemplarsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationPrometheusApiV1QueryExemplarsCall) Context(ctx context.Context) *ProjectsLocationPrometheusApiV1QueryExemplarsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationPrometheusApiV1QueryExemplarsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationPrometheusApiV1QueryExemplarsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.queryexemplarsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}/location/{location}/prometheus/api/v1/query_exemplars")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name":     c.name,
+		"location": c.location,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "monitoring.projects.location.prometheus.api.v1.query_exemplars" call.
+// Exactly one of *HttpBody or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *HttpBody.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationPrometheusApiV1QueryExemplarsCall) Do(opts ...googleapi.CallOption) (*HttpBody, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &HttpBody{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists exemplars relevant to a given PromQL query,",
+	//   "flatPath": "v1/projects/{projectsId}/location/{location}/prometheus/api/v1/query_exemplars",
+	//   "httpMethod": "POST",
+	//   "id": "monitoring.projects.location.prometheus.api.v1.query_exemplars",
+	//   "parameterOrder": [
+	//     "name",
+	//     "location"
+	//   ],
+	//   "parameters": {
+	//     "location": {
+	//       "description": "Location of the resource information. Has to be \"global\" now.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "The project on which to execute the request. Data associcated with the project's workspace stored under the The format is: projects/PROJECT_ID_OR_NUMBER. Open source API but used as a request path prefix to distinguish different virtual Prometheus instances of Google Prometheus Engine.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}/location/{location}/prometheus/api/v1/query_exemplars",
+	//   "request": {
+	//     "$ref": "QueryExemplarsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "HttpBody"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/monitoring",
+	//     "https://www.googleapis.com/auth/monitoring.read"
+	//   ]
+	// }
+
+}
+
+// method id "monitoring.projects.location.prometheus.api.v1.query_range":
+
+type ProjectsLocationPrometheusApiV1QueryRangeCall struct {
+	s                 *Service
+	name              string
+	location          string
+	queryrangerequest *QueryRangeRequest
+	urlParams_        gensupport.URLParams
+	ctx_              context.Context
+	header_           http.Header
+}
+
+// QueryRange: Evaluate a PromQL query with start, end time range.
+//
+//   - location: Location of the resource information. Has to be "global"
+//     now.
+//   - name: The project on which to execute the request. Data associcated
+//     with the project's workspace stored under the The format is:
+//     projects/PROJECT_ID_OR_NUMBER. Open source API but used as a
+//     request path prefix to distinguish different virtual Prometheus
+//     instances of Google Prometheus Engine.
+func (r *ProjectsLocationPrometheusApiV1Service) QueryRange(name string, location string, queryrangerequest *QueryRangeRequest) *ProjectsLocationPrometheusApiV1QueryRangeCall {
+	c := &ProjectsLocationPrometheusApiV1QueryRangeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.location = location
+	c.queryrangerequest = queryrangerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationPrometheusApiV1QueryRangeCall) Fields(s ...googleapi.Field) *ProjectsLocationPrometheusApiV1QueryRangeCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationPrometheusApiV1QueryRangeCall) Context(ctx context.Context) *ProjectsLocationPrometheusApiV1QueryRangeCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationPrometheusApiV1QueryRangeCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationPrometheusApiV1QueryRangeCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.queryrangerequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}/location/{location}/prometheus/api/v1/query_range")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name":     c.name,
+		"location": c.location,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "monitoring.projects.location.prometheus.api.v1.query_range" call.
+// Exactly one of *HttpBody or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *HttpBody.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationPrometheusApiV1QueryRangeCall) Do(opts ...googleapi.CallOption) (*HttpBody, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &HttpBody{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Evaluate a PromQL query with start, end time range.",
+	//   "flatPath": "v1/projects/{projectsId}/location/{location}/prometheus/api/v1/query_range",
+	//   "httpMethod": "POST",
+	//   "id": "monitoring.projects.location.prometheus.api.v1.query_range",
+	//   "parameterOrder": [
+	//     "name",
+	//     "location"
+	//   ],
+	//   "parameters": {
+	//     "location": {
+	//       "description": "Location of the resource information. Has to be \"global\" now.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "The project on which to execute the request. Data associcated with the project's workspace stored under the The format is: projects/PROJECT_ID_OR_NUMBER. Open source API but used as a request path prefix to distinguish different virtual Prometheus instances of Google Prometheus Engine.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}/location/{location}/prometheus/api/v1/query_range",
+	//   "request": {
+	//     "$ref": "QueryRangeRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "HttpBody"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/monitoring",
+	//     "https://www.googleapis.com/auth/monitoring.read"
+	//   ]
+	// }
+
+}
+
+// method id "monitoring.projects.location.prometheus.api.v1.series":
+
+type ProjectsLocationPrometheusApiV1SeriesCall struct {
+	s                  *Service
+	name               string
+	location           string
+	queryseriesrequest *QuerySeriesRequest
+	urlParams_         gensupport.URLParams
+	ctx_               context.Context
+	header_            http.Header
+}
+
+// Series: Lists metadata for metrics.
+//
+//   - location: Location of the resource information. Has to be "global"
+//     for now.
+//   - name: The workspace on which to execute the request. It is not part
+//     of the open source API but used as a request path prefix to
+//     distinguish different virtual Prometheus instances of Google
+//     Prometheus Engine. The format is: projects/PROJECT_ID_OR_NUMBER.
+func (r *ProjectsLocationPrometheusApiV1Service) Series(name string, location string, queryseriesrequest *QuerySeriesRequest) *ProjectsLocationPrometheusApiV1SeriesCall {
+	c := &ProjectsLocationPrometheusApiV1SeriesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.location = location
+	c.queryseriesrequest = queryseriesrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationPrometheusApiV1SeriesCall) Fields(s ...googleapi.Field) *ProjectsLocationPrometheusApiV1SeriesCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationPrometheusApiV1SeriesCall) Context(ctx context.Context) *ProjectsLocationPrometheusApiV1SeriesCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationPrometheusApiV1SeriesCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationPrometheusApiV1SeriesCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.queryseriesrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}/location/{location}/prometheus/api/v1/series")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name":     c.name,
+		"location": c.location,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "monitoring.projects.location.prometheus.api.v1.series" call.
+// Exactly one of *HttpBody or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *HttpBody.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationPrometheusApiV1SeriesCall) Do(opts ...googleapi.CallOption) (*HttpBody, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &HttpBody{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists metadata for metrics.",
+	//   "flatPath": "v1/projects/{projectsId}/location/{location}/prometheus/api/v1/series",
+	//   "httpMethod": "POST",
+	//   "id": "monitoring.projects.location.prometheus.api.v1.series",
+	//   "parameterOrder": [
+	//     "name",
+	//     "location"
+	//   ],
+	//   "parameters": {
+	//     "location": {
+	//       "description": "Location of the resource information. Has to be \"global\" for now.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "Required. The workspace on which to execute the request. It is not part of the open source API but used as a request path prefix to distinguish different virtual Prometheus instances of Google Prometheus Engine. The format is: projects/PROJECT_ID_OR_NUMBER.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}/location/{location}/prometheus/api/v1/series",
+	//   "request": {
+	//     "$ref": "QuerySeriesRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "HttpBody"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/monitoring",
+	//     "https://www.googleapis.com/auth/monitoring.read"
+	//   ]
+	// }
+
+}
+
+// method id "monitoring.projects.location.prometheus.api.v1.label.values":
+
+type ProjectsLocationPrometheusApiV1LabelValuesCall struct {
+	s            *Service
+	name         string
+	location     string
+	label        string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Values: Lists possible values for a given label name.
+//
+//   - label: The label name for which values are queried.
+//   - location: Location of the resource information. Has to be "global"
+//     now.
+//   - name: The workspace on which to execute the request. It is not part
+//     of the open source API but used as a request path prefix to
+//     distinguish different virtual Prometheus instances of Google
+//     Prometheus Engine. The format is: projects/PROJECT_ID_OR_NUMBER.
+func (r *ProjectsLocationPrometheusApiV1LabelService) Values(name string, location string, label string) *ProjectsLocationPrometheusApiV1LabelValuesCall {
+	c := &ProjectsLocationPrometheusApiV1LabelValuesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.location = location
+	c.label = label
+	return c
+}
+
+// End sets the optional parameter "end": The end time to evaluate the
+// query for. Either floating point UNIX seconds or RFC3339 formatted
+// timestamp.
+func (c *ProjectsLocationPrometheusApiV1LabelValuesCall) End(end string) *ProjectsLocationPrometheusApiV1LabelValuesCall {
+	c.urlParams_.Set("end", end)
+	return c
+}
+
+// Match sets the optional parameter "match": A list of matchers encoded
+// in the Prometheus label matcher format to constrain the values to
+// series that satisfy them.
+func (c *ProjectsLocationPrometheusApiV1LabelValuesCall) Match(match string) *ProjectsLocationPrometheusApiV1LabelValuesCall {
+	c.urlParams_.Set("match", match)
+	return c
+}
+
+// Start sets the optional parameter "start": The start time to evaluate
+// the query for. Either floating point UNIX seconds or RFC3339
+// formatted timestamp.
+func (c *ProjectsLocationPrometheusApiV1LabelValuesCall) Start(start string) *ProjectsLocationPrometheusApiV1LabelValuesCall {
+	c.urlParams_.Set("start", start)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationPrometheusApiV1LabelValuesCall) Fields(s ...googleapi.Field) *ProjectsLocationPrometheusApiV1LabelValuesCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationPrometheusApiV1LabelValuesCall) IfNoneMatch(entityTag string) *ProjectsLocationPrometheusApiV1LabelValuesCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationPrometheusApiV1LabelValuesCall) Context(ctx context.Context) *ProjectsLocationPrometheusApiV1LabelValuesCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationPrometheusApiV1LabelValuesCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationPrometheusApiV1LabelValuesCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}/location/{location}/prometheus/api/v1/label/{label}/values")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name":     c.name,
+		"location": c.location,
+		"label":    c.label,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "monitoring.projects.location.prometheus.api.v1.label.values" call.
+// Exactly one of *HttpBody or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *HttpBody.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationPrometheusApiV1LabelValuesCall) Do(opts ...googleapi.CallOption) (*HttpBody, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &HttpBody{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists possible values for a given label name.",
+	//   "flatPath": "v1/projects/{projectsId}/location/{location}/prometheus/api/v1/label/{label}/values",
+	//   "httpMethod": "GET",
+	//   "id": "monitoring.projects.location.prometheus.api.v1.label.values",
+	//   "parameterOrder": [
+	//     "name",
+	//     "location",
+	//     "label"
+	//   ],
+	//   "parameters": {
+	//     "end": {
+	//       "description": "The end time to evaluate the query for. Either floating point UNIX seconds or RFC3339 formatted timestamp.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "label": {
+	//       "description": "The label name for which values are queried.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "location": {
+	//       "description": "Location of the resource information. Has to be \"global\" now.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "match": {
+	//       "description": "A list of matchers encoded in the Prometheus label matcher format to constrain the values to series that satisfy them.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "The workspace on which to execute the request. It is not part of the open source API but used as a request path prefix to distinguish different virtual Prometheus instances of Google Prometheus Engine. The format is: projects/PROJECT_ID_OR_NUMBER.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "start": {
+	//       "description": "The start time to evaluate the query for. Either floating point UNIX seconds or RFC3339 formatted timestamp.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}/location/{location}/prometheus/api/v1/label/{label}/values",
+	//   "response": {
+	//     "$ref": "HttpBody"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/monitoring",
+	//     "https://www.googleapis.com/auth/monitoring.read"
+	//   ]
+	// }
+
+}
+
+// method id "monitoring.projects.location.prometheus.api.v1.labels.list":
+
+type ProjectsLocationPrometheusApiV1LabelsListCall struct {
+	s            *Service
+	name         string
+	location     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists labels for metrics.
+//
+//   - location: Location of the resource information. Has to be "global"
+//     now.
+//   - name: The workspace on which to execute the request. It is not part
+//     of the open source API but used as a request path prefix to
+//     distinguish different virtual Prometheus instances of Google
+//     Prometheus Engine. The format is: projects/PROJECT_ID_OR_NUMBER.
+func (r *ProjectsLocationPrometheusApiV1LabelsService) List(name string, location string) *ProjectsLocationPrometheusApiV1LabelsListCall {
+	c := &ProjectsLocationPrometheusApiV1LabelsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.location = location
+	return c
+}
+
+// End sets the optional parameter "end": The end time to evaluate the
+// query for. Either floating point UNIX seconds or RFC3339 formatted
+// timestamp.
+func (c *ProjectsLocationPrometheusApiV1LabelsListCall) End(end string) *ProjectsLocationPrometheusApiV1LabelsListCall {
+	c.urlParams_.Set("end", end)
+	return c
+}
+
+// Match sets the optional parameter "match": A list of matchers encoded
+// in the Prometheus label matcher format to constrain the values to
+// series that satisfy them.
+func (c *ProjectsLocationPrometheusApiV1LabelsListCall) Match(match string) *ProjectsLocationPrometheusApiV1LabelsListCall {
+	c.urlParams_.Set("match", match)
+	return c
+}
+
+// Start sets the optional parameter "start": The start time to evaluate
+// the query for. Either floating point UNIX seconds or RFC3339
+// formatted timestamp.
+func (c *ProjectsLocationPrometheusApiV1LabelsListCall) Start(start string) *ProjectsLocationPrometheusApiV1LabelsListCall {
+	c.urlParams_.Set("start", start)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationPrometheusApiV1LabelsListCall) Fields(s ...googleapi.Field) *ProjectsLocationPrometheusApiV1LabelsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationPrometheusApiV1LabelsListCall) IfNoneMatch(entityTag string) *ProjectsLocationPrometheusApiV1LabelsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationPrometheusApiV1LabelsListCall) Context(ctx context.Context) *ProjectsLocationPrometheusApiV1LabelsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationPrometheusApiV1LabelsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationPrometheusApiV1LabelsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}/location/{location}/prometheus/api/v1/labels")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name":     c.name,
+		"location": c.location,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "monitoring.projects.location.prometheus.api.v1.labels.list" call.
+// Exactly one of *HttpBody or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *HttpBody.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationPrometheusApiV1LabelsListCall) Do(opts ...googleapi.CallOption) (*HttpBody, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &HttpBody{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists labels for metrics.",
+	//   "flatPath": "v1/projects/{projectsId}/location/{location}/prometheus/api/v1/labels",
+	//   "httpMethod": "GET",
+	//   "id": "monitoring.projects.location.prometheus.api.v1.labels.list",
+	//   "parameterOrder": [
+	//     "name",
+	//     "location"
+	//   ],
+	//   "parameters": {
+	//     "end": {
+	//       "description": "The end time to evaluate the query for. Either floating point UNIX seconds or RFC3339 formatted timestamp.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "location": {
+	//       "description": "Location of the resource information. Has to be \"global\" now.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "match": {
+	//       "description": "A list of matchers encoded in the Prometheus label matcher format to constrain the values to series that satisfy them.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "The workspace on which to execute the request. It is not part of the open source API but used as a request path prefix to distinguish different virtual Prometheus instances of Google Prometheus Engine. The format is: projects/PROJECT_ID_OR_NUMBER.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "start": {
+	//       "description": "The start time to evaluate the query for. Either floating point UNIX seconds or RFC3339 formatted timestamp.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}/location/{location}/prometheus/api/v1/labels",
+	//   "response": {
+	//     "$ref": "HttpBody"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/monitoring",
+	//     "https://www.googleapis.com/auth/monitoring.read"
+	//   ]
+	// }
+
+}
+
+// method id "monitoring.projects.location.prometheus.api.v1.metadata.list":
+
+type ProjectsLocationPrometheusApiV1MetadataListCall struct {
+	s            *Service
+	name         string
+	location     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists metadata for metrics.
+//
+//   - location: Location of the resource information. Has to be "global"
+//     for now.
+//   - name: The workspace on which to execute the request. It is not part
+//     of the open source API but used as a request path prefix to
+//     distinguish different virtual Prometheus instances of Google
+//     Prometheus Engine. The format is: projects/PROJECT_ID_OR_NUMBER.
+func (r *ProjectsLocationPrometheusApiV1MetadataService) List(name string, location string) *ProjectsLocationPrometheusApiV1MetadataListCall {
+	c := &ProjectsLocationPrometheusApiV1MetadataListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.location = location
+	return c
+}
+
+// Limit sets the optional parameter "limit": Maximum number of metrics
+// to return.
+func (c *ProjectsLocationPrometheusApiV1MetadataListCall) Limit(limit int64) *ProjectsLocationPrometheusApiV1MetadataListCall {
+	c.urlParams_.Set("limit", fmt.Sprint(limit))
+	return c
+}
+
+// Metric sets the optional parameter "metric": The metric name for
+// which to query metadata. If unset, all metric metadata is returned.
+func (c *ProjectsLocationPrometheusApiV1MetadataListCall) Metric(metric string) *ProjectsLocationPrometheusApiV1MetadataListCall {
+	c.urlParams_.Set("metric", metric)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationPrometheusApiV1MetadataListCall) Fields(s ...googleapi.Field) *ProjectsLocationPrometheusApiV1MetadataListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationPrometheusApiV1MetadataListCall) IfNoneMatch(entityTag string) *ProjectsLocationPrometheusApiV1MetadataListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationPrometheusApiV1MetadataListCall) Context(ctx context.Context) *ProjectsLocationPrometheusApiV1MetadataListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationPrometheusApiV1MetadataListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationPrometheusApiV1MetadataListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}/location/{location}/prometheus/api/v1/metadata")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name":     c.name,
+		"location": c.location,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "monitoring.projects.location.prometheus.api.v1.metadata.list" call.
+// Exactly one of *HttpBody or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *HttpBody.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationPrometheusApiV1MetadataListCall) Do(opts ...googleapi.CallOption) (*HttpBody, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &HttpBody{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists metadata for metrics.",
+	//   "flatPath": "v1/projects/{projectsId}/location/{location}/prometheus/api/v1/metadata",
+	//   "httpMethod": "GET",
+	//   "id": "monitoring.projects.location.prometheus.api.v1.metadata.list",
+	//   "parameterOrder": [
+	//     "name",
+	//     "location"
+	//   ],
+	//   "parameters": {
+	//     "limit": {
+	//       "description": "Maximum number of metrics to return.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "location": {
+	//       "description": "Location of the resource information. Has to be \"global\" for now.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "metric": {
+	//       "description": "The metric name for which to query metadata. If unset, all metric metadata is returned.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "Required. The workspace on which to execute the request. It is not part of the open source API but used as a request path prefix to distinguish different virtual Prometheus instances of Google Prometheus Engine. The format is: projects/PROJECT_ID_OR_NUMBER.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}/location/{location}/prometheus/api/v1/metadata",
+	//   "response": {
+	//     "$ref": "HttpBody"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/monitoring",
+	//     "https://www.googleapis.com/auth/monitoring.read"
 	//   ]
 	// }
 

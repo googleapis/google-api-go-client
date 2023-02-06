@@ -19,6 +19,7 @@
  "baseUrl": "https://logging.googleapis.com/",
  "basePath": "",
  "rootUrl": "https://logging.googleapis.com/",
+ "mtlsRootUrl": "https://logging.mtls.googleapis.com/",
  "servicePath": "",
  "batchPath": "batch",
  "parameters": {

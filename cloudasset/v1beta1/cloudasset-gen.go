@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/asset-inventory/docs/quickstart
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/cloudasset/v1beta1"
-//   ...
-//   ctx := context.Background()
-//   cloudassetService, err := cloudasset.NewService(ctx)
+//	import "google.golang.org/api/cloudasset/v1beta1"
+//	...
+//	ctx := context.Background()
+//	cloudassetService, err := cloudasset.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   cloudassetService, err := cloudasset.NewService(ctx, option.WithAPIKey("AIza..."))
+//	cloudassetService, err := cloudasset.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   cloudassetService, err := cloudasset.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	cloudassetService, err := cloudasset.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package cloudasset // import "google.golang.org/api/cloudasset/v1beta1"
@@ -50,6 +50,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -75,21 +76,24 @@ const apiId = "cloudasset:v1beta1"
 const apiName = "cloudasset"
 const apiVersion = "v1beta1"
 const basePath = "https://cloudasset.googleapis.com/"
+const mtlsBasePath = "https://cloudasset.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud data and see the
+	// email address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -202,44 +206,106 @@ type ProjectsOperationsService struct {
 	s *Service
 }
 
-// Asset: Cloud asset. This includes all Google Cloud Platform
-// resources,
-// Cloud IAM policies, and other non-GCP assets.
-type Asset struct {
-	// AssetType: Type of the asset. Example: "google.compute.Disk".
-	AssetType string `json:"assetType,omitempty"`
+// AnalyzeIamPolicyLongrunningMetadata: Represents the metadata of the
+// longrunning operation for the AnalyzeIamPolicyLongrunning RPC.
+type AnalyzeIamPolicyLongrunningMetadata struct {
+	// CreateTime: Output only. The time the operation was created.
+	CreateTime string `json:"createTime,omitempty"`
 
-	// IamPolicy: Representation of the actual Cloud IAM policy set on a
-	// cloud resource. For
-	// each resource, there must be at most one Cloud IAM policy set on it.
-	IamPolicy *Policy `json:"iamPolicy,omitempty"`
-
-	// Name: The full name of the asset. For
-	// example:
-	// `//compute.googleapis.com/projects/my_project_123/zones/zone1
-	// /instances/instance1`.
-	// See
-	// [Resource
-	// Names](https://cloud.google.com/apis/design/resource_names#f
-	// ull_resource_name)
-	// for more information.
-	Name string `json:"name,omitempty"`
-
-	// Resource: Representation of the resource.
-	Resource *Resource `json:"resource,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AssetType") to
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "AssetType") to include in
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AnalyzeIamPolicyLongrunningMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod AnalyzeIamPolicyLongrunningMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AnalyzeIamPolicyLongrunningResponse: A response message for
+// AssetService.AnalyzeIamPolicyLongrunning.
+type AnalyzeIamPolicyLongrunningResponse struct {
+}
+
+// Asset: An asset in Google Cloud. An asset can be any resource in the
+// Google Cloud resource hierarchy
+// (https://cloud.google.com/resource-manager/docs/cloud-platform-resource-hierarchy),
+// a resource outside the Google Cloud resource hierarchy (such as
+// Google Kubernetes Engine clusters and objects), or a policy (e.g. IAM
+// policy). See Supported asset types
+// (https://cloud.google.com/asset-inventory/docs/supported-asset-types)
+// for more information.
+type Asset struct {
+	// AccessLevel: Please also refer to the access level user guide
+	// (https://cloud.google.com/access-context-manager/docs/overview#access-levels).
+	AccessLevel *GoogleIdentityAccesscontextmanagerV1AccessLevel `json:"accessLevel,omitempty"`
+
+	// AccessPolicy: Please also refer to the access policy user guide
+	// (https://cloud.google.com/access-context-manager/docs/overview#access-policies).
+	AccessPolicy *GoogleIdentityAccesscontextmanagerV1AccessPolicy `json:"accessPolicy,omitempty"`
+
+	// AssetType: The type of the asset. Example:
+	// `compute.googleapis.com/Disk` See Supported asset types
+	// (https://cloud.google.com/asset-inventory/docs/supported-asset-types)
+	// for more information.
+	AssetType string `json:"assetType,omitempty"`
+
+	// IamPolicy: A representation of the IAM policy set on a Google Cloud
+	// resource. There can be a maximum of one IAM policy set on any given
+	// resource. In addition, IAM policies inherit their granted access
+	// scope from any policies set on parent resources in the resource
+	// hierarchy. Therefore, the effectively policy is the union of both the
+	// policy set on this resource and each policy set on all of the
+	// resource's ancestry resource levels in the hierarchy. See this topic
+	// (https://cloud.google.com/iam/help/allow-policies/inheritance) for
+	// more information.
+	IamPolicy *Policy `json:"iamPolicy,omitempty"`
+
+	// Name: The full name of the asset. Example:
+	// `//compute.googleapis.com/projects/my_project_123/zones/zone1/instance
+	// s/instance1` See Resource names
+	// (https://cloud.google.com/apis/design/resource_names#full_resource_name)
+	// for more information.
+	Name string `json:"name,omitempty"`
+
+	// OrgPolicy: A representation of an organization policy
+	// (https://cloud.google.com/resource-manager/docs/organization-policy/overview#organization_policy).
+	// There can be more than one organization policy with different
+	// constraints set on a given resource.
+	OrgPolicy []*GoogleCloudOrgpolicyV1Policy `json:"orgPolicy,omitempty"`
+
+	// Resource: A representation of the resource.
+	Resource *Resource `json:"resource,omitempty"`
+
+	// ServicePerimeter: Please also refer to the service perimeter user
+	// guide (https://cloud.google.com/vpc-service-controls/docs/overview).
+	ServicePerimeter *GoogleIdentityAccesscontextmanagerV1ServicePerimeter `json:"servicePerimeter,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AccessLevel") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AccessLevel") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -251,81 +317,40 @@ func (s *Asset) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// AuditConfig: Specifies the audit configuration for a service.
-// The configuration determines which permission types are logged, and
-// what
-// identities, if any, are exempted from logging.
-// An AuditConfig must have one or more AuditLogConfigs.
-//
-// If there are AuditConfigs for both `allServices` and a specific
-// service,
-// the union of the two AuditConfigs is used for that service: the
-// log_types
-// specified in each AuditConfig are enabled, and the exempted_members
-// in each
-// AuditLogConfig are exempted.
-//
-// Example Policy with multiple AuditConfigs:
-//
-//     {
-//       "audit_configs": [
-//         {
-//           "service": "allServices"
-//           "audit_log_configs": [
-//             {
-//               "log_type": "DATA_READ",
-//               "exempted_members": [
-//                 "user:jose@example.com"
-//               ]
-//             },
-//             {
-//               "log_type": "DATA_WRITE",
-//             },
-//             {
-//               "log_type": "ADMIN_READ",
-//             }
-//           ]
-//         },
-//         {
-//           "service": "sampleservice.googleapis.com"
-//           "audit_log_configs": [
-//             {
-//               "log_type": "DATA_READ",
-//             },
-//             {
-//               "log_type": "DATA_WRITE",
-//               "exempted_members": [
-//                 "user:aliya@example.com"
-//               ]
-//             }
-//           ]
-//         }
-//       ]
-//     }
-//
-// For sampleservice, this policy enables DATA_READ, DATA_WRITE and
-// ADMIN_READ
-// logging. It also exempts jose@example.com from DATA_READ logging,
-// and
-// aliya@example.com from DATA_WRITE logging.
+// AuditConfig: Specifies the audit configuration for a service. The
+// configuration determines which permission types are logged, and what
+// identities, if any, are exempted from logging. An AuditConfig must
+// have one or more AuditLogConfigs. If there are AuditConfigs for both
+// `allServices` and a specific service, the union of the two
+// AuditConfigs is used for that service: the log_types specified in
+// each AuditConfig are enabled, and the exempted_members in each
+// AuditLogConfig are exempted. Example Policy with multiple
+// AuditConfigs: { "audit_configs": [ { "service": "allServices",
+// "audit_log_configs": [ { "log_type": "DATA_READ", "exempted_members":
+// [ "user:jose@example.com" ] }, { "log_type": "DATA_WRITE" }, {
+// "log_type": "ADMIN_READ" } ] }, { "service":
+// "sampleservice.googleapis.com", "audit_log_configs": [ { "log_type":
+// "DATA_READ" }, { "log_type": "DATA_WRITE", "exempted_members": [
+// "user:aliya@example.com" ] } ] } ] } For sampleservice, this policy
+// enables DATA_READ, DATA_WRITE and ADMIN_READ logging. It also exempts
+// `jose@example.com` from DATA_READ logging, and `aliya@example.com`
+// from DATA_WRITE logging.
 type AuditConfig struct {
 	// AuditLogConfigs: The configuration for logging of each type of
 	// permission.
 	AuditLogConfigs []*AuditLogConfig `json:"auditLogConfigs,omitempty"`
 
-	// Service: Specifies a service that will be enabled for audit
-	// logging.
-	// For example, `storage.googleapis.com`,
-	// `cloudsql.googleapis.com`.
+	// Service: Specifies a service that will be enabled for audit logging.
+	// For example, `storage.googleapis.com`, `cloudsql.googleapis.com`.
 	// `allServices` is a special value that covers all services.
 	Service string `json:"service,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AuditLogConfigs") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AuditLogConfigs") to
@@ -345,31 +370,15 @@ func (s *AuditConfig) MarshalJSON() ([]byte, error) {
 }
 
 // AuditLogConfig: Provides the configuration for logging a type of
-// permissions.
-// Example:
-//
-//     {
-//       "audit_log_configs": [
-//         {
-//           "log_type": "DATA_READ",
-//           "exempted_members": [
-//             "user:jose@example.com"
-//           ]
-//         },
-//         {
-//           "log_type": "DATA_WRITE",
-//         }
-//       ]
-//     }
-//
-// This enables 'DATA_READ' and 'DATA_WRITE' logging, while
-// exempting
-// jose@example.com from DATA_READ logging.
+// permissions. Example: { "audit_log_configs": [ { "log_type":
+// "DATA_READ", "exempted_members": [ "user:jose@example.com" ] }, {
+// "log_type": "DATA_WRITE" } ] } This enables 'DATA_READ' and
+// 'DATA_WRITE' logging, while exempting jose@example.com from DATA_READ
+// logging.
 type AuditLogConfig struct {
 	// ExemptedMembers: Specifies the identities that do not cause logging
-	// for this type of
-	// permission.
-	// Follows the same format of Binding.members.
+	// for this type of permission. Follows the same format of
+	// Binding.members.
 	ExemptedMembers []string `json:"exemptedMembers,omitempty"`
 
 	// LogType: The log type that this config enables.
@@ -383,10 +392,10 @@ type AuditLogConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "ExemptedMembers") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ExemptedMembers") to
@@ -416,10 +425,10 @@ type BatchGetAssetsHistoryResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Assets") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Assets") to include in API
@@ -437,93 +446,67 @@ func (s *BatchGetAssetsHistoryResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Binding: Associates `members` with a `role`.
+// Binding: Associates `members`, or principals, with a `role`.
 type Binding struct {
-	// Condition: The condition that is associated with this binding.
-	// NOTE: An unsatisfied condition will not allow user access via
-	// current
-	// binding. Different bindings, including their conditions, are
-	// examined
-	// independently.
+	// Condition: The condition that is associated with this binding. If the
+	// condition evaluates to `true`, then this binding applies to the
+	// current request. If the condition evaluates to `false`, then this
+	// binding does not apply to the current request. However, a different
+	// role binding might grant the same role to one or more of the
+	// principals in this binding. To learn which resources support
+	// conditions in their IAM policies, see the IAM documentation
+	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Condition *Expr `json:"condition,omitempty"`
 
-	// Members: Specifies the identities requesting access for a Cloud
-	// Platform resource.
-	// `members` can have the following values:
-	//
-	// * `allUsers`: A special identifier that represents anyone who is
-	//    on the internet; with or without a Google account.
-	//
-	// * `allAuthenticatedUsers`: A special identifier that represents
-	// anyone
-	//    who is authenticated with a Google account or a service
-	// account.
-	//
-	// * `user:{emailid}`: An email address that represents a specific
-	// Google
-	//    account. For example, `alice@example.com` .
-	//
-	//
-	// * `serviceAccount:{emailid}`: An email address that represents a
-	// service
-	//    account. For example,
-	// `my-other-app@appspot.gserviceaccount.com`.
-	//
-	// * `group:{emailid}`: An email address that represents a Google
-	// group.
-	//    For example, `admins@example.com`.
-	//
-	// * `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
-	// unique
-	//    identifier) representing a user that has been recently deleted.
-	// For
-	//    example, `alice@example.com?uid=123456789012345678901`. If the
-	// user is
-	//    recovered, this value reverts to `user:{emailid}` and the
-	// recovered user
-	//    retains the role in the binding.
-	//
-	// * `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
-	// (plus
-	//    unique identifier) representing a service account that has been
-	// recently
-	//    deleted. For example,
-	//
+	// Members: Specifies the principals requesting access for a Google
+	// Cloud resource. `members` can have the following values: *
+	// `allUsers`: A special identifier that represents anyone who is on the
+	// internet; with or without a Google account. *
+	// `allAuthenticatedUsers`: A special identifier that represents anyone
+	// who is authenticated with a Google account or a service account. Does
+	// not include identities that come from external identity providers
+	// (IdPs) through identity federation. * `user:{emailid}`: An email
+	// address that represents a specific Google account. For example,
+	// `alice@example.com` . * `serviceAccount:{emailid}`: An email address
+	// that represents a Google service account. For example,
+	// `my-other-app@appspot.gserviceaccount.com`. *
+	// `serviceAccount:{projectid}.svc.id.goog[{namespace}/{kubernetes-sa}]`:
+	//  An identifier for a Kubernetes service account
+	// (https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts).
+	// For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`.
+	// * `group:{emailid}`: An email address that represents a Google group.
+	// For example, `admins@example.com`. * `domain:{domain}`: The G Suite
+	// domain (primary) that represents all the users of that domain. For
+	// example, `google.com` or `example.com`. *
+	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
+	// unique identifier) representing a user that has been recently
+	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
+	// If the user is recovered, this value reverts to `user:{emailid}` and
+	// the recovered user retains the role in the binding. *
+	// `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
+	// (plus unique identifier) representing a service account that has been
+	// recently deleted. For example,
 	// `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`.
-	//
-	//    If the service account is undeleted, this value reverts to
-	//    `serviceAccount:{emailid}` and the undeleted service account
-	// retains the
-	//    role in the binding.
-	//
-	// * `deleted:group:{emailid}?uid={uniqueid}`: An email address (plus
-	// unique
-	//    identifier) representing a Google group that has been recently
-	//    deleted. For example,
-	// `admins@example.com?uid=123456789012345678901`. If
-	//    the group is recovered, this value reverts to `group:{emailid}`
-	// and the
-	//    recovered group retains the role in the binding.
-	//
-	//
-	// * `domain:{domain}`: The G Suite domain (primary) that represents all
-	// the
-	//    users of that domain. For example, `google.com` or
-	// `example.com`.
-	//
-	//
+	// If the service account is undeleted, this value reverts to
+	// `serviceAccount:{emailid}` and the undeleted service account retains
+	// the role in the binding. * `deleted:group:{emailid}?uid={uniqueid}`:
+	// An email address (plus unique identifier) representing a Google group
+	// that has been recently deleted. For example,
+	// `admins@example.com?uid=123456789012345678901`. If the group is
+	// recovered, this value reverts to `group:{emailid}` and the recovered
+	// group retains the role in the binding.
 	Members []string `json:"members,omitempty"`
 
-	// Role: Role that is assigned to `members`.
+	// Role: Role that is assigned to the list of `members`, or principals.
 	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`.
 	Role string `json:"role,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Condition") to include in
@@ -544,19 +527,14 @@ func (s *Binding) MarshalJSON() ([]byte, error) {
 // ExportAssetsRequest: Export asset request.
 type ExportAssetsRequest struct {
 	// AssetTypes: A list of asset types of which to take a snapshot for.
-	// For example:
-	// "google.compute.Disk". If specified, only matching assets will be
-	// returned.
-	// See [Introduction to Cloud
-	// Asset
-	// Inventory](https://cloud.google.com/resource-manager/docs/cloud-
-	// asset-inventory/overview)
+	// For example: "google.compute.Disk". If specified, only matching
+	// assets will be returned. See Introduction to Cloud Asset Inventory
+	// (https://cloud.google.com/resource-manager/docs/cloud-asset-inventory/overview)
 	// for all supported asset types.
 	AssetTypes []string `json:"assetTypes,omitempty"`
 
 	// ContentType: Asset content type. If not specified, no content but the
-	// asset name will be
-	// returned.
+	// asset name will be returned.
 	//
 	// Possible values:
 	//   "CONTENT_TYPE_UNSPECIFIED" - Unspecified content type.
@@ -565,27 +543,23 @@ type ExportAssetsRequest struct {
 	ContentType string `json:"contentType,omitempty"`
 
 	// OutputConfig: Required. Output configuration indicating where the
-	// results will be output
-	// to. All results will be in newline delimited JSON format.
+	// results will be output to. All results will be in newline delimited
+	// JSON format.
 	OutputConfig *OutputConfig `json:"outputConfig,omitempty"`
 
 	// ReadTime: Timestamp to take an asset snapshot. This can only be set
-	// to a timestamp
-	// between 2018-10-02 UTC (inclusive) and the current time. If not
-	// specified,
-	// the current time will be used. Due to delays in resource data
-	// collection
-	// and indexing, there is a volatile window during which running the
-	// same
-	// query may get different results.
+	// to a timestamp between 2018-10-02 UTC (inclusive) and the current
+	// time. If not specified, the current time will be used. Due to delays
+	// in resource data collection and indexing, there is a volatile window
+	// during which running the same query may get different results.
 	ReadTime string `json:"readTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AssetTypes") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AssetTypes") to include in
@@ -604,73 +578,48 @@ func (s *ExportAssetsRequest) MarshalJSON() ([]byte, error) {
 }
 
 // Expr: Represents a textual expression in the Common Expression
-// Language (CEL)
-// syntax. CEL is a C-like expression language. The syntax and semantics
-// of CEL
-// are documented at https://github.com/google/cel-spec.
-//
-// Example (Comparison):
-//
-//     title: "Summary size limit"
-//     description: "Determines if a summary is less than 100 chars"
-//     expression: "document.summary.size() < 100"
-//
-// Example (Equality):
-//
-//     title: "Requestor is owner"
-//     description: "Determines if requestor is the document owner"
-//     expression: "document.owner ==
-// request.auth.claims.email"
-//
-// Example (Logic):
-//
-//     title: "Public documents"
-//     description: "Determine whether the document should be publicly
-// visible"
-//     expression: "document.type != 'private' && document.type !=
-// 'internal'"
-//
-// Example (Data Manipulation):
-//
-//     title: "Notification string"
-//     description: "Create a notification string with a timestamp."
-//     expression: "'New message received at ' +
-// string(document.create_time)"
-//
-// The exact variables and functions that may be referenced within an
-// expression
-// are determined by the service that evaluates it. See the
-// service
-// documentation for additional information.
+// Language (CEL) syntax. CEL is a C-like expression language. The
+// syntax and semantics of CEL are documented at
+// https://github.com/google/cel-spec. Example (Comparison): title:
+// "Summary size limit" description: "Determines if a summary is less
+// than 100 chars" expression: "document.summary.size() < 100" Example
+// (Equality): title: "Requestor is owner" description: "Determines if
+// requestor is the document owner" expression: "document.owner ==
+// request.auth.claims.email" Example (Logic): title: "Public documents"
+// description: "Determine whether the document should be publicly
+// visible" expression: "document.type != 'private' && document.type !=
+// 'internal'" Example (Data Manipulation): title: "Notification string"
+// description: "Create a notification string with a timestamp."
+// expression: "'New message received at ' +
+// string(document.create_time)" The exact variables and functions that
+// may be referenced within an expression are determined by the service
+// that evaluates it. See the service documentation for additional
+// information.
 type Expr struct {
 	// Description: Optional. Description of the expression. This is a
-	// longer text which
-	// describes the expression, e.g. when hovered over it in a UI.
+	// longer text which describes the expression, e.g. when hovered over it
+	// in a UI.
 	Description string `json:"description,omitempty"`
 
 	// Expression: Textual representation of an expression in Common
-	// Expression Language
-	// syntax.
+	// Expression Language syntax.
 	Expression string `json:"expression,omitempty"`
 
 	// Location: Optional. String indicating the location of the expression
-	// for error
-	// reporting, e.g. a file name and a position in the file.
+	// for error reporting, e.g. a file name and a position in the file.
 	Location string `json:"location,omitempty"`
 
 	// Title: Optional. Title for the expression, i.e. a short string
-	// describing
-	// its purpose. This can be used e.g. in UIs which allow to enter
-	// the
-	// expression.
+	// describing its purpose. This can be used e.g. in UIs which allow to
+	// enter the expression.
 	Title string `json:"title,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Description") to include
@@ -690,39 +639,29 @@ func (s *Expr) MarshalJSON() ([]byte, error) {
 
 // GcsDestination: A Cloud Storage location.
 type GcsDestination struct {
-	// Uri: The uri of the Cloud Storage object. It's the same uri that is
-	// used by
-	// gsutil. For example: "gs://bucket_name/object_name". See [Viewing
-	// and
-	// Editing
-	// Object
-	// Metadata](https://cloud.google.com/storage/docs/viewing-editing
-	// -metadata)
-	// for more information.
+	// Uri: The URI of the Cloud Storage object. It's the same URI that is
+	// used by gsutil. For example: "gs://bucket_name/object_name". See
+	// Viewing and Editing Object Metadata
+	// (https://cloud.google.com/storage/docs/viewing-editing-metadata) for
+	// more information.
 	Uri string `json:"uri,omitempty"`
 
-	// UriPrefix: The uri prefix of all generated Cloud Storage objects. For
-	// example:
-	// "gs://bucket_name/object_name_prefix". Each object uri is in
-	// format:
-	// "gs://bucket_name/object_name_prefix/<asset type>/<shard number> and
-	// only
-	// contains assets for that type. <shard number> starts from 0. For
-	// example:
+	// UriPrefix: The URI prefix of all generated Cloud Storage objects. For
+	// example: "gs://bucket_name/object_name_prefix". Each object URI is in
+	// format: "gs://bucket_name/object_name_prefix// and only contains
+	// assets for that type. starts from 0. For example:
 	// "gs://bucket_name/object_name_prefix/google.compute.disk/0" is the
-	// first
-	// shard of output objects containing all google.compute.disk assets.
-	// An INVALID_ARGUMENT error will be returned if file with the same
-	// name
-	// "gs://bucket_name/object_name_prefix" already exists.
+	// first shard of output objects containing all google.compute.disk
+	// assets. An INVALID_ARGUMENT error will be returned if file with the
+	// same name "gs://bucket_name/object_name_prefix" already exists.
 	UriPrefix string `json:"uriPrefix,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Uri") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Uri") to include in API
@@ -740,53 +679,1591 @@ func (s *GcsDestination) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudAssetV1p7beta1Asset: An asset in Google Cloud. An asset
+// can be any resource in the Google Cloud resource hierarchy
+// (https://cloud.google.com/resource-manager/docs/cloud-platform-resource-hierarchy),
+// a resource outside the Google Cloud resource hierarchy (such as
+// Google Kubernetes Engine clusters and objects), or a policy (e.g. IAM
+// policy). See Supported asset types
+// (https://cloud.google.com/asset-inventory/docs/supported-asset-types)
+// for more information.
+type GoogleCloudAssetV1p7beta1Asset struct {
+	// AccessLevel: Please also refer to the access level user guide
+	// (https://cloud.google.com/access-context-manager/docs/overview#access-levels).
+	AccessLevel *GoogleIdentityAccesscontextmanagerV1AccessLevel `json:"accessLevel,omitempty"`
+
+	// AccessPolicy: Please also refer to the access policy user guide
+	// (https://cloud.google.com/access-context-manager/docs/overview#access-policies).
+	AccessPolicy *GoogleIdentityAccesscontextmanagerV1AccessPolicy `json:"accessPolicy,omitempty"`
+
+	// Ancestors: The ancestry path of an asset in Google Cloud resource
+	// hierarchy
+	// (https://cloud.google.com/resource-manager/docs/cloud-platform-resource-hierarchy),
+	// represented as a list of relative resource names. An ancestry path
+	// starts with the closest ancestor in the hierarchy and ends at root.
+	// If the asset is a project, folder, or organization, the ancestry path
+	// starts from the asset itself. Example: `["projects/123456789",
+	// "folders/5432", "organizations/1234"]`
+	Ancestors []string `json:"ancestors,omitempty"`
+
+	// AssetType: The type of the asset. Example:
+	// `compute.googleapis.com/Disk` See Supported asset types
+	// (https://cloud.google.com/asset-inventory/docs/supported-asset-types)
+	// for more information.
+	AssetType string `json:"assetType,omitempty"`
+
+	// IamPolicy: A representation of the IAM policy set on a Google Cloud
+	// resource. There can be a maximum of one IAM policy set on any given
+	// resource. In addition, IAM policies inherit their granted access
+	// scope from any policies set on parent resources in the resource
+	// hierarchy. Therefore, the effectively policy is the union of both the
+	// policy set on this resource and each policy set on all of the
+	// resource's ancestry resource levels in the hierarchy. See this topic
+	// (https://cloud.google.com/iam/help/allow-policies/inheritance) for
+	// more information.
+	IamPolicy *Policy `json:"iamPolicy,omitempty"`
+
+	// Name: The full name of the asset. Example:
+	// `//compute.googleapis.com/projects/my_project_123/zones/zone1/instance
+	// s/instance1` See Resource names
+	// (https://cloud.google.com/apis/design/resource_names#full_resource_name)
+	// for more information.
+	Name string `json:"name,omitempty"`
+
+	// OrgPolicy: A representation of an organization policy
+	// (https://cloud.google.com/resource-manager/docs/organization-policy/overview#organization_policy).
+	// There can be more than one organization policy with different
+	// constraints set on a given resource.
+	OrgPolicy []*GoogleCloudOrgpolicyV1Policy `json:"orgPolicy,omitempty"`
+
+	// RelatedAssets: The related assets of the asset of one relationship
+	// type. One asset only represents one type of relationship.
+	RelatedAssets *GoogleCloudAssetV1p7beta1RelatedAssets `json:"relatedAssets,omitempty"`
+
+	// Resource: A representation of the resource.
+	Resource *GoogleCloudAssetV1p7beta1Resource `json:"resource,omitempty"`
+
+	// ServicePerimeter: Please also refer to the service perimeter user
+	// guide (https://cloud.google.com/vpc-service-controls/docs/overview).
+	ServicePerimeter *GoogleIdentityAccesscontextmanagerV1ServicePerimeter `json:"servicePerimeter,omitempty"`
+
+	// UpdateTime: The last update timestamp of an asset. update_time is
+	// updated when create/update/delete operation is performed.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AccessLevel") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AccessLevel") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAssetV1p7beta1Asset) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssetV1p7beta1Asset
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssetV1p7beta1RelatedAsset: An asset identify in Google
+// Cloud which contains its name, type and ancestors. An asset can be
+// any resource in the Google Cloud resource hierarchy
+// (https://cloud.google.com/resource-manager/docs/cloud-platform-resource-hierarchy),
+// a resource outside the Google Cloud resource hierarchy (such as
+// Google Kubernetes Engine clusters and objects), or a policy (e.g. IAM
+// policy). See Supported asset types
+// (https://cloud.google.com/asset-inventory/docs/supported-asset-types)
+// for more information.
+type GoogleCloudAssetV1p7beta1RelatedAsset struct {
+	// Ancestors: The ancestors of an asset in Google Cloud resource
+	// hierarchy
+	// (https://cloud.google.com/resource-manager/docs/cloud-platform-resource-hierarchy),
+	// represented as a list of relative resource names. An ancestry path
+	// starts with the closest ancestor in the hierarchy and ends at root.
+	// Example: `["projects/123456789", "folders/5432",
+	// "organizations/1234"]`
+	Ancestors []string `json:"ancestors,omitempty"`
+
+	// Asset: The full name of the asset. Example:
+	// `//compute.googleapis.com/projects/my_project_123/zones/zone1/instance
+	// s/instance1` See Resource names
+	// (https://cloud.google.com/apis/design/resource_names#full_resource_name)
+	// for more information.
+	Asset string `json:"asset,omitempty"`
+
+	// AssetType: The type of the asset. Example:
+	// `compute.googleapis.com/Disk` See Supported asset types
+	// (https://cloud.google.com/asset-inventory/docs/supported-asset-types)
+	// for more information.
+	AssetType string `json:"assetType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Ancestors") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Ancestors") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAssetV1p7beta1RelatedAsset) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssetV1p7beta1RelatedAsset
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssetV1p7beta1RelatedAssets: The detailed related assets
+// with the `relationship_type`.
+type GoogleCloudAssetV1p7beta1RelatedAssets struct {
+	// Assets: The peer resources of the relationship.
+	Assets []*GoogleCloudAssetV1p7beta1RelatedAsset `json:"assets,omitempty"`
+
+	// RelationshipAttributes: The detailed relation attributes.
+	RelationshipAttributes *GoogleCloudAssetV1p7beta1RelationshipAttributes `json:"relationshipAttributes,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Assets") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Assets") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAssetV1p7beta1RelatedAssets) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssetV1p7beta1RelatedAssets
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssetV1p7beta1RelationshipAttributes: The relationship
+// attributes which include `type`, `source_resource_type`,
+// `target_resource_type` and `action`.
+type GoogleCloudAssetV1p7beta1RelationshipAttributes struct {
+	// Action: The detail of the relationship, e.g. `contains`, `attaches`
+	Action string `json:"action,omitempty"`
+
+	// SourceResourceType: The source asset type. Example:
+	// `compute.googleapis.com/Instance`
+	SourceResourceType string `json:"sourceResourceType,omitempty"`
+
+	// TargetResourceType: The target asset type. Example:
+	// `compute.googleapis.com/Disk`
+	TargetResourceType string `json:"targetResourceType,omitempty"`
+
+	// Type: The unique identifier of the relationship type. Example:
+	// `INSTANCE_TO_INSTANCEGROUP`
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Action") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Action") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAssetV1p7beta1RelationshipAttributes) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssetV1p7beta1RelationshipAttributes
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssetV1p7beta1Resource: A representation of a Google Cloud
+// resource.
+type GoogleCloudAssetV1p7beta1Resource struct {
+	// Data: The content of the resource, in which some sensitive fields are
+	// removed and may not be present.
+	Data googleapi.RawMessage `json:"data,omitempty"`
+
+	// DiscoveryDocumentUri: The URL of the discovery document containing
+	// the resource's JSON schema. Example:
+	// `https://www.googleapis.com/discovery/v1/apis/compute/v1/rest` This
+	// value is unspecified for resources that do not have an API based on a
+	// discovery document, such as Cloud Bigtable.
+	DiscoveryDocumentUri string `json:"discoveryDocumentUri,omitempty"`
+
+	// DiscoveryName: The JSON schema name listed in the discovery document.
+	// Example: `Project` This value is unspecified for resources that do
+	// not have an API based on a discovery document, such as Cloud
+	// Bigtable.
+	DiscoveryName string `json:"discoveryName,omitempty"`
+
+	// Location: The location of the resource in Google Cloud, such as its
+	// zone and region. For more information, see
+	// https://cloud.google.com/about/locations/.
+	Location string `json:"location,omitempty"`
+
+	// Parent: The full name of the immediate parent of this resource. See
+	// Resource Names
+	// (https://cloud.google.com/apis/design/resource_names#full_resource_name)
+	// for more information. For Google Cloud assets, this value is the
+	// parent resource defined in the IAM policy hierarchy
+	// (https://cloud.google.com/iam/docs/overview#policy_hierarchy).
+	// Example:
+	// `//cloudresourcemanager.googleapis.com/projects/my_project_123` For
+	// third-party assets, this field may be set differently.
+	Parent string `json:"parent,omitempty"`
+
+	// ResourceUrl: The REST URL for accessing the resource. An HTTP `GET`
+	// request using this URL returns the resource itself. Example:
+	// `https://cloudresourcemanager.googleapis.com/v1/projects/my-project-12
+	// 3` This value is unspecified for resources without a REST API.
+	ResourceUrl string `json:"resourceUrl,omitempty"`
+
+	// Version: The API version. Example: `v1`
+	Version string `json:"version,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Data") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Data") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAssetV1p7beta1Resource) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssetV1p7beta1Resource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudOrgpolicyV1BooleanPolicy: Used in `policy_type` to specify
+// how `boolean_policy` will behave at this resource.
+type GoogleCloudOrgpolicyV1BooleanPolicy struct {
+	// Enforced: If `true`, then the `Policy` is enforced. If `false`, then
+	// any configuration is acceptable. Suppose you have a `Constraint`
+	// `constraints/compute.disableSerialPortAccess` with
+	// `constraint_default` set to `ALLOW`. A `Policy` for that `Constraint`
+	// exhibits the following behavior: - If the `Policy` at this resource
+	// has enforced set to `false`, serial port connection attempts will be
+	// allowed. - If the `Policy` at this resource has enforced set to
+	// `true`, serial port connection attempts will be refused. - If the
+	// `Policy` at this resource is `RestoreDefault`, serial port connection
+	// attempts will be allowed. - If no `Policy` is set at this resource or
+	// anywhere higher in the resource hierarchy, serial port connection
+	// attempts will be allowed. - If no `Policy` is set at this resource,
+	// but one exists higher in the resource hierarchy, the behavior is as
+	// if the`Policy` were set at this resource. The following examples
+	// demonstrate the different possible layerings: Example 1 (nearest
+	// `Constraint` wins): `organizations/foo` has a `Policy` with:
+	// {enforced: false} `projects/bar` has no `Policy` set. The constraint
+	// at `projects/bar` and `organizations/foo` will not be enforced.
+	// Example 2 (enforcement gets replaced): `organizations/foo` has a
+	// `Policy` with: {enforced: false} `projects/bar` has a `Policy` with:
+	// {enforced: true} The constraint at `organizations/foo` is not
+	// enforced. The constraint at `projects/bar` is enforced. Example 3
+	// (RestoreDefault): `organizations/foo` has a `Policy` with: {enforced:
+	// true} `projects/bar` has a `Policy` with: {RestoreDefault: {}} The
+	// constraint at `organizations/foo` is enforced. The constraint at
+	// `projects/bar` is not enforced, because `constraint_default` for the
+	// `Constraint` is `ALLOW`.
+	Enforced bool `json:"enforced,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Enforced") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Enforced") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudOrgpolicyV1BooleanPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudOrgpolicyV1BooleanPolicy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudOrgpolicyV1ListPolicy: Used in `policy_type` to specify
+// how `list_policy` behaves at this resource. `ListPolicy` can define
+// specific values and subtrees of Cloud Resource Manager resource
+// hierarchy (`Organizations`, `Folders`, `Projects`) that are allowed
+// or denied by setting the `allowed_values` and `denied_values` fields.
+// This is achieved by using the `under:` and optional `is:` prefixes.
+// The `under:` prefix is used to denote resource subtree values. The
+// `is:` prefix is used to denote specific values, and is required only
+// if the value contains a ":". Values prefixed with "is:" are treated
+// the same as values with no prefix. Ancestry subtrees must be in one
+// of the following formats: - "projects/", e.g.
+// "projects/tokyo-rain-123" - "folders/", e.g. "folders/1234" -
+// "organizations/", e.g. "organizations/1234" The `supports_under`
+// field of the associated `Constraint` defines whether ancestry
+// prefixes can be used. You can set `allowed_values` and
+// `denied_values` in the same `Policy` if `all_values` is
+// `ALL_VALUES_UNSPECIFIED`. `ALLOW` or `DENY` are used to allow or deny
+// all values. If `all_values` is set to either `ALLOW` or `DENY`,
+// `allowed_values` and `denied_values` must be unset.
+type GoogleCloudOrgpolicyV1ListPolicy struct {
+	// AllValues: The policy all_values state.
+	//
+	// Possible values:
+	//   "ALL_VALUES_UNSPECIFIED" - Indicates that allowed_values or
+	// denied_values must be set.
+	//   "ALLOW" - A policy with this set allows all values.
+	//   "DENY" - A policy with this set denies all values.
+	AllValues string `json:"allValues,omitempty"`
+
+	// AllowedValues: List of values allowed at this resource. Can only be
+	// set if `all_values` is set to `ALL_VALUES_UNSPECIFIED`.
+	AllowedValues []string `json:"allowedValues,omitempty"`
+
+	// DeniedValues: List of values denied at this resource. Can only be set
+	// if `all_values` is set to `ALL_VALUES_UNSPECIFIED`.
+	DeniedValues []string `json:"deniedValues,omitempty"`
+
+	// InheritFromParent: Determines the inheritance behavior for this
+	// `Policy`. By default, a `ListPolicy` set at a resource supersedes any
+	// `Policy` set anywhere up the resource hierarchy. However, if
+	// `inherit_from_parent` is set to `true`, then the values from the
+	// effective `Policy` of the parent resource are inherited, meaning the
+	// values set in this `Policy` are added to the values inherited up the
+	// hierarchy. Setting `Policy` hierarchies that inherit both allowed
+	// values and denied values isn't recommended in most circumstances to
+	// keep the configuration simple and understandable. However, it is
+	// possible to set a `Policy` with `allowed_values` set that inherits a
+	// `Policy` with `denied_values` set. In this case, the values that are
+	// allowed must be in `allowed_values` and not present in
+	// `denied_values`. For example, suppose you have a `Constraint`
+	// `constraints/serviceuser.services`, which has a `constraint_type` of
+	// `list_constraint`, and with `constraint_default` set to `ALLOW`.
+	// Suppose that at the Organization level, a `Policy` is applied that
+	// restricts the allowed API activations to {`E1`, `E2`}. Then, if a
+	// `Policy` is applied to a project below the Organization that has
+	// `inherit_from_parent` set to `false` and field all_values set to
+	// DENY, then an attempt to activate any API will be denied. The
+	// following examples demonstrate different possible layerings for
+	// `projects/bar` parented by `organizations/foo`: Example 1 (no
+	// inherited values): `organizations/foo` has a `Policy` with values:
+	// {allowed_values: "E1" allowed_values:"E2"} `projects/bar` has
+	// `inherit_from_parent` `false` and values: {allowed_values: "E3"
+	// allowed_values: "E4"} The accepted values at `organizations/foo` are
+	// `E1`, `E2`. The accepted values at `projects/bar` are `E3`, and `E4`.
+	// Example 2 (inherited values): `organizations/foo` has a `Policy` with
+	// values: {allowed_values: "E1" allowed_values:"E2"} `projects/bar` has
+	// a `Policy` with values: {value: "E3" value: "E4" inherit_from_parent:
+	// true} The accepted values at `organizations/foo` are `E1`, `E2`. The
+	// accepted values at `projects/bar` are `E1`, `E2`, `E3`, and `E4`.
+	// Example 3 (inheriting both allowed and denied values):
+	// `organizations/foo` has a `Policy` with values: {allowed_values: "E1"
+	// allowed_values: "E2"} `projects/bar` has a `Policy` with:
+	// {denied_values: "E1"} The accepted values at `organizations/foo` are
+	// `E1`, `E2`. The value accepted at `projects/bar` is `E2`. Example 4
+	// (RestoreDefault): `organizations/foo` has a `Policy` with values:
+	// {allowed_values: "E1" allowed_values:"E2"} `projects/bar` has a
+	// `Policy` with values: {RestoreDefault: {}} The accepted values at
+	// `organizations/foo` are `E1`, `E2`. The accepted values at
+	// `projects/bar` are either all or none depending on the value of
+	// `constraint_default` (if `ALLOW`, all; if `DENY`, none). Example 5
+	// (no policy inherits parent policy): `organizations/foo` has no
+	// `Policy` set. `projects/bar` has no `Policy` set. The accepted values
+	// at both levels are either all or none depending on the value of
+	// `constraint_default` (if `ALLOW`, all; if `DENY`, none). Example 6
+	// (ListConstraint allowing all): `organizations/foo` has a `Policy`
+	// with values: {allowed_values: "E1" allowed_values: "E2"}
+	// `projects/bar` has a `Policy` with: {all: ALLOW} The accepted values
+	// at `organizations/foo` are `E1`, E2`. Any value is accepted at
+	// `projects/bar`. Example 7 (ListConstraint allowing none):
+	// `organizations/foo` has a `Policy` with values: {allowed_values: "E1"
+	// allowed_values: "E2"} `projects/bar` has a `Policy` with: {all: DENY}
+	// The accepted values at `organizations/foo` are `E1`, E2`. No value is
+	// accepted at `projects/bar`. Example 10 (allowed and denied subtrees
+	// of Resource Manager hierarchy): Given the following resource
+	// hierarchy O1->{F1, F2}; F1->{P1}; F2->{P2, P3}, `organizations/foo`
+	// has a `Policy` with values: {allowed_values:
+	// "under:organizations/O1"} `projects/bar` has a `Policy` with:
+	// {allowed_values: "under:projects/P3"} {denied_values:
+	// "under:folders/F2"} The accepted values at `organizations/foo` are
+	// `organizations/O1`, `folders/F1`, `folders/F2`, `projects/P1`,
+	// `projects/P2`, `projects/P3`. The accepted values at `projects/bar`
+	// are `organizations/O1`, `folders/F1`, `projects/P1`.
+	InheritFromParent bool `json:"inheritFromParent,omitempty"`
+
+	// SuggestedValue: Optional. The Google Cloud Console will try to
+	// default to a configuration that matches the value specified in this
+	// `Policy`. If `suggested_value` is not set, it will inherit the value
+	// specified higher in the hierarchy, unless `inherit_from_parent` is
+	// `false`.
+	SuggestedValue string `json:"suggestedValue,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AllValues") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AllValues") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudOrgpolicyV1ListPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudOrgpolicyV1ListPolicy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudOrgpolicyV1Policy: Defines a Cloud Organization `Policy`
+// which is used to specify `Constraints` for configurations of Cloud
+// Platform resources.
+type GoogleCloudOrgpolicyV1Policy struct {
+	// BooleanPolicy: For boolean `Constraints`, whether to enforce the
+	// `Constraint` or not.
+	BooleanPolicy *GoogleCloudOrgpolicyV1BooleanPolicy `json:"booleanPolicy,omitempty"`
+
+	// Constraint: The name of the `Constraint` the `Policy` is configuring,
+	// for example, `constraints/serviceuser.services`. A list of available
+	// constraints
+	// (/resource-manager/docs/organization-policy/org-policy-constraints)
+	// is available. Immutable after creation.
+	Constraint string `json:"constraint,omitempty"`
+
+	// Etag: An opaque tag indicating the current version of the `Policy`,
+	// used for concurrency control. When the `Policy` is returned from
+	// either a `GetPolicy` or a `ListOrgPolicy` request, this `etag`
+	// indicates the version of the current `Policy` to use when executing a
+	// read-modify-write loop. When the `Policy` is returned from a
+	// `GetEffectivePolicy` request, the `etag` will be unset. When the
+	// `Policy` is used in a `SetOrgPolicy` method, use the `etag` value
+	// that was returned from a `GetOrgPolicy` request as part of a
+	// read-modify-write loop for concurrency control. Not setting the
+	// `etag`in a `SetOrgPolicy` request will result in an unconditional
+	// write of the `Policy`.
+	Etag string `json:"etag,omitempty"`
+
+	// ListPolicy: List of values either allowed or disallowed.
+	ListPolicy *GoogleCloudOrgpolicyV1ListPolicy `json:"listPolicy,omitempty"`
+
+	// RestoreDefault: Restores the default behavior of the constraint;
+	// independent of `Constraint` type.
+	RestoreDefault *GoogleCloudOrgpolicyV1RestoreDefault `json:"restoreDefault,omitempty"`
+
+	// UpdateTime: The time stamp the `Policy` was previously updated. This
+	// is set by the server, not specified by the caller, and represents the
+	// last time a call to `SetOrgPolicy` was made for that `Policy`. Any
+	// value set by the client will be ignored.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// Version: Version of the `Policy`. Default version is 0;
+	Version int64 `json:"version,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BooleanPolicy") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BooleanPolicy") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudOrgpolicyV1Policy) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudOrgpolicyV1Policy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudOrgpolicyV1RestoreDefault: Ignores policies set above this
+// resource and restores the `constraint_default` enforcement behavior
+// of the specific `Constraint` at this resource. Suppose that
+// `constraint_default` is set to `ALLOW` for the `Constraint`
+// `constraints/serviceuser.services`. Suppose that organization foo.com
+// sets a `Policy` at their Organization resource node that restricts
+// the allowed service activations to deny all service activations. They
+// could then set a `Policy` with the `policy_type` `restore_default` on
+// several experimental projects, restoring the `constraint_default`
+// enforcement of the `Constraint` for only those projects, allowing
+// those projects to have all services activated.
+type GoogleCloudOrgpolicyV1RestoreDefault struct {
+}
+
+// GoogleIdentityAccesscontextmanagerV1AccessLevel: An `AccessLevel` is
+// a label that can be applied to requests to Google Cloud services,
+// along with a list of requirements necessary for the label to be
+// applied.
+type GoogleIdentityAccesscontextmanagerV1AccessLevel struct {
+	// Basic: A `BasicLevel` composed of `Conditions`.
+	Basic *GoogleIdentityAccesscontextmanagerV1BasicLevel `json:"basic,omitempty"`
+
+	// Custom: A `CustomLevel` written in the Common Expression Language.
+	Custom *GoogleIdentityAccesscontextmanagerV1CustomLevel `json:"custom,omitempty"`
+
+	// Description: Description of the `AccessLevel` and its use. Does not
+	// affect behavior.
+	Description string `json:"description,omitempty"`
+
+	// Name: Resource name for the `AccessLevel`. Format:
+	// `accessPolicies/{access_policy}/accessLevels/{access_level}`. The
+	// `access_level` component must begin with a letter, followed by
+	// alphanumeric characters or `_`. Its maximum length is 50 characters.
+	// After you create an `AccessLevel`, you cannot change its `name`.
+	Name string `json:"name,omitempty"`
+
+	// Title: Human readable title. Must be unique within the Policy.
+	Title string `json:"title,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Basic") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Basic") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleIdentityAccesscontextmanagerV1AccessLevel) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleIdentityAccesscontextmanagerV1AccessLevel
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleIdentityAccesscontextmanagerV1AccessPolicy: `AccessPolicy` is a
+// container for `AccessLevels` (which define the necessary attributes
+// to use Google Cloud services) and `ServicePerimeters` (which define
+// regions of services able to freely pass data within a perimeter). An
+// access policy is globally visible within an organization, and the
+// restrictions it specifies apply to all projects within an
+// organization.
+type GoogleIdentityAccesscontextmanagerV1AccessPolicy struct {
+	// Etag: Output only. An opaque identifier for the current version of
+	// the `AccessPolicy`. This will always be a strongly validated etag,
+	// meaning that two Access Polices will be identical if and only if
+	// their etags are identical. Clients should not expect this to be in
+	// any specific format.
+	Etag string `json:"etag,omitempty"`
+
+	// Name: Output only. Resource name of the `AccessPolicy`. Format:
+	// `accessPolicies/{access_policy}`
+	Name string `json:"name,omitempty"`
+
+	// Parent: Required. The parent of this `AccessPolicy` in the Cloud
+	// Resource Hierarchy. Currently immutable once created. Format:
+	// `organizations/{organization_id}`
+	Parent string `json:"parent,omitempty"`
+
+	// Scopes: The scopes of a policy define which resources an ACM policy
+	// can restrict, and where ACM resources can be referenced. For example,
+	// a policy with scopes=["folders/123"] has the following behavior: -
+	// vpcsc perimeters can only restrict projects within folders/123 -
+	// access levels can only be referenced by resources within folders/123.
+	// If empty, there are no limitations on which resources can be
+	// restricted by an ACM policy, and there are no limitations on where
+	// ACM resources can be referenced. Only one policy can include a given
+	// scope (attempting to create a second policy which includes
+	// "folders/123" will result in an error). Currently, scopes cannot be
+	// modified after a policy is created. Currently, policies can only have
+	// a single scope. Format: list of `folders/{folder_number}` or
+	// `projects/{project_number}`
+	Scopes []string `json:"scopes,omitempty"`
+
+	// Title: Required. Human readable title. Does not affect behavior.
+	Title string `json:"title,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Etag") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Etag") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleIdentityAccesscontextmanagerV1AccessPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleIdentityAccesscontextmanagerV1AccessPolicy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleIdentityAccesscontextmanagerV1ApiOperation: Identification for
+// an API Operation.
+type GoogleIdentityAccesscontextmanagerV1ApiOperation struct {
+	// MethodSelectors: API methods or permissions to allow. Method or
+	// permission must belong to the service specified by `service_name`
+	// field. A single MethodSelector entry with `*` specified for the
+	// `method` field will allow all methods AND permissions for the service
+	// specified in `service_name`.
+	MethodSelectors []*GoogleIdentityAccesscontextmanagerV1MethodSelector `json:"methodSelectors,omitempty"`
+
+	// ServiceName: The name of the API whose methods or permissions the
+	// IngressPolicy or EgressPolicy want to allow. A single ApiOperation
+	// with `service_name` field set to `*` will allow all methods AND
+	// permissions for all services.
+	ServiceName string `json:"serviceName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MethodSelectors") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MethodSelectors") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleIdentityAccesscontextmanagerV1ApiOperation) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleIdentityAccesscontextmanagerV1ApiOperation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleIdentityAccesscontextmanagerV1BasicLevel: `BasicLevel` is an
+// `AccessLevel` using a set of recommended features.
+type GoogleIdentityAccesscontextmanagerV1BasicLevel struct {
+	// CombiningFunction: How the `conditions` list should be combined to
+	// determine if a request is granted this `AccessLevel`. If AND is used,
+	// each `Condition` in `conditions` must be satisfied for the
+	// `AccessLevel` to be applied. If OR is used, at least one `Condition`
+	// in `conditions` must be satisfied for the `AccessLevel` to be
+	// applied. Default behavior is AND.
+	//
+	// Possible values:
+	//   "AND" - All `Conditions` must be true for the `BasicLevel` to be
+	// true.
+	//   "OR" - If at least one `Condition` is true, then the `BasicLevel`
+	// is true.
+	CombiningFunction string `json:"combiningFunction,omitempty"`
+
+	// Conditions: Required. A list of requirements for the `AccessLevel` to
+	// be granted.
+	Conditions []*GoogleIdentityAccesscontextmanagerV1Condition `json:"conditions,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CombiningFunction")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CombiningFunction") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleIdentityAccesscontextmanagerV1BasicLevel) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleIdentityAccesscontextmanagerV1BasicLevel
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleIdentityAccesscontextmanagerV1Condition: A condition necessary
+// for an `AccessLevel` to be granted. The Condition is an AND over its
+// fields. So a Condition is true if: 1) the request IP is from one of
+// the listed subnetworks AND 2) the originating device complies with
+// the listed device policy AND 3) all listed access levels are granted
+// AND 4) the request was sent at a time allowed by the
+// DateTimeRestriction.
+type GoogleIdentityAccesscontextmanagerV1Condition struct {
+	// DevicePolicy: Device specific restrictions, all restrictions must
+	// hold for the Condition to be true. If not specified, all devices are
+	// allowed.
+	DevicePolicy *GoogleIdentityAccesscontextmanagerV1DevicePolicy `json:"devicePolicy,omitempty"`
+
+	// IpSubnetworks: CIDR block IP subnetwork specification. May be IPv4 or
+	// IPv6. Note that for a CIDR IP address block, the specified IP address
+	// portion must be properly truncated (i.e. all the host bits must be
+	// zero) or the input is considered malformed. For example,
+	// "192.0.2.0/24" is accepted but "192.0.2.1/24" is not. Similarly, for
+	// IPv6, "2001:db8::/32" is accepted whereas "2001:db8::1/32" is not.
+	// The originating IP of a request must be in one of the listed subnets
+	// in order for this Condition to be true. If empty, all IP addresses
+	// are allowed.
+	IpSubnetworks []string `json:"ipSubnetworks,omitempty"`
+
+	// Members: The request must be made by one of the provided user or
+	// service accounts. Groups are not supported. Syntax: `user:{emailid}`
+	// `serviceAccount:{emailid}` If not specified, a request may come from
+	// any user.
+	Members []string `json:"members,omitempty"`
+
+	// Negate: Whether to negate the Condition. If true, the Condition
+	// becomes a NAND over its non-empty fields, each field must be false
+	// for the Condition overall to be satisfied. Defaults to false.
+	Negate bool `json:"negate,omitempty"`
+
+	// Regions: The request must originate from one of the provided
+	// countries/regions. Must be valid ISO 3166-1 alpha-2 codes.
+	Regions []string `json:"regions,omitempty"`
+
+	// RequiredAccessLevels: A list of other access levels defined in the
+	// same `Policy`, referenced by resource name. Referencing an
+	// `AccessLevel` which does not exist is an error. All access levels
+	// listed must be granted for the Condition to be true. Example:
+	// "accessPolicies/MY_POLICY/accessLevels/LEVEL_NAME"
+	RequiredAccessLevels []string `json:"requiredAccessLevels,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DevicePolicy") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DevicePolicy") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleIdentityAccesscontextmanagerV1Condition) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleIdentityAccesscontextmanagerV1Condition
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleIdentityAccesscontextmanagerV1CustomLevel: `CustomLevel` is an
+// `AccessLevel` using the Cloud Common Expression Language to represent
+// the necessary conditions for the level to apply to a request. See CEL
+// spec at: https://github.com/google/cel-spec
+type GoogleIdentityAccesscontextmanagerV1CustomLevel struct {
+	// Expr: Required. A Cloud CEL expression evaluating to a boolean.
+	Expr *Expr `json:"expr,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Expr") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Expr") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleIdentityAccesscontextmanagerV1CustomLevel) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleIdentityAccesscontextmanagerV1CustomLevel
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleIdentityAccesscontextmanagerV1DevicePolicy: `DevicePolicy`
+// specifies device specific restrictions necessary to acquire a given
+// access level. A `DevicePolicy` specifies requirements for requests
+// from devices to be granted access levels, it does not do any
+// enforcement on the device. `DevicePolicy` acts as an AND over all
+// specified fields, and each repeated field is an OR over its elements.
+// Any unset fields are ignored. For example, if the proto is { os_type
+// : DESKTOP_WINDOWS, os_type : DESKTOP_LINUX, encryption_status:
+// ENCRYPTED}, then the DevicePolicy will be true for requests
+// originating from encrypted Linux desktops and encrypted Windows
+// desktops.
+type GoogleIdentityAccesscontextmanagerV1DevicePolicy struct {
+	// AllowedDeviceManagementLevels: Allowed device management levels, an
+	// empty list allows all management levels.
+	//
+	// Possible values:
+	//   "MANAGEMENT_UNSPECIFIED" - The device's management level is not
+	// specified or not known.
+	//   "NONE" - The device is not managed.
+	//   "BASIC" - Basic management is enabled, which is generally limited
+	// to monitoring and wiping the corporate account.
+	//   "COMPLETE" - Complete device management. This includes more
+	// thorough monitoring and the ability to directly manage the device
+	// (such as remote wiping). This can be enabled through the Android
+	// Enterprise Platform.
+	AllowedDeviceManagementLevels []string `json:"allowedDeviceManagementLevels,omitempty"`
+
+	// AllowedEncryptionStatuses: Allowed encryptions statuses, an empty
+	// list allows all statuses.
+	//
+	// Possible values:
+	//   "ENCRYPTION_UNSPECIFIED" - The encryption status of the device is
+	// not specified or not known.
+	//   "ENCRYPTION_UNSUPPORTED" - The device does not support encryption.
+	//   "UNENCRYPTED" - The device supports encryption, but is currently
+	// unencrypted.
+	//   "ENCRYPTED" - The device is encrypted.
+	AllowedEncryptionStatuses []string `json:"allowedEncryptionStatuses,omitempty"`
+
+	// OsConstraints: Allowed OS versions, an empty list allows all types
+	// and all versions.
+	OsConstraints []*GoogleIdentityAccesscontextmanagerV1OsConstraint `json:"osConstraints,omitempty"`
+
+	// RequireAdminApproval: Whether the device needs to be approved by the
+	// customer admin.
+	RequireAdminApproval bool `json:"requireAdminApproval,omitempty"`
+
+	// RequireCorpOwned: Whether the device needs to be corp owned.
+	RequireCorpOwned bool `json:"requireCorpOwned,omitempty"`
+
+	// RequireScreenlock: Whether or not screenlock is required for the
+	// DevicePolicy to be true. Defaults to `false`.
+	RequireScreenlock bool `json:"requireScreenlock,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AllowedDeviceManagementLevels") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "AllowedDeviceManagementLevels") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleIdentityAccesscontextmanagerV1DevicePolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleIdentityAccesscontextmanagerV1DevicePolicy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleIdentityAccesscontextmanagerV1EgressFrom: Defines the
+// conditions under which an EgressPolicy matches a request. Conditions
+// based on information about the source of the request. Note that if
+// the destination of the request is also protected by a
+// ServicePerimeter, then that ServicePerimeter must have an
+// IngressPolicy which allows access in order for this request to
+// succeed.
+type GoogleIdentityAccesscontextmanagerV1EgressFrom struct {
+	// Identities: A list of identities that are allowed access through this
+	// [EgressPolicy]. Should be in the format of email address. The email
+	// address should represent individual user or service account only.
+	Identities []string `json:"identities,omitempty"`
+
+	// IdentityType: Specifies the type of identities that are allowed
+	// access to outside the perimeter. If left unspecified, then members of
+	// `identities` field will be allowed access.
+	//
+	// Possible values:
+	//   "IDENTITY_TYPE_UNSPECIFIED" - No blanket identity group specified.
+	//   "ANY_IDENTITY" - Authorize access from all identities outside the
+	// perimeter.
+	//   "ANY_USER_ACCOUNT" - Authorize access from all human users outside
+	// the perimeter.
+	//   "ANY_SERVICE_ACCOUNT" - Authorize access from all service accounts
+	// outside the perimeter.
+	IdentityType string `json:"identityType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Identities") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Identities") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleIdentityAccesscontextmanagerV1EgressFrom) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleIdentityAccesscontextmanagerV1EgressFrom
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleIdentityAccesscontextmanagerV1EgressPolicy: Policy for egress
+// from perimeter. EgressPolicies match requests based on `egress_from`
+// and `egress_to` stanzas. For an EgressPolicy to match, both
+// `egress_from` and `egress_to` stanzas must be matched. If an
+// EgressPolicy matches a request, the request is allowed to span the
+// ServicePerimeter boundary. For example, an EgressPolicy can be used
+// to allow VMs on networks within the ServicePerimeter to access a
+// defined set of projects outside the perimeter in certain contexts
+// (e.g. to read data from a Cloud Storage bucket or query against a
+// BigQuery dataset). EgressPolicies are concerned with the *resources*
+// that a request relates as well as the API services and API actions
+// being used. They do not related to the direction of data movement.
+// More detailed documentation for this concept can be found in the
+// descriptions of EgressFrom and EgressTo.
+type GoogleIdentityAccesscontextmanagerV1EgressPolicy struct {
+	// EgressFrom: Defines conditions on the source of a request causing
+	// this EgressPolicy to apply.
+	EgressFrom *GoogleIdentityAccesscontextmanagerV1EgressFrom `json:"egressFrom,omitempty"`
+
+	// EgressTo: Defines the conditions on the ApiOperation and destination
+	// resources that cause this EgressPolicy to apply.
+	EgressTo *GoogleIdentityAccesscontextmanagerV1EgressTo `json:"egressTo,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EgressFrom") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EgressFrom") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleIdentityAccesscontextmanagerV1EgressPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleIdentityAccesscontextmanagerV1EgressPolicy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleIdentityAccesscontextmanagerV1EgressTo: Defines the conditions
+// under which an EgressPolicy matches a request. Conditions are based
+// on information about the ApiOperation intended to be performed on the
+// `resources` specified. Note that if the destination of the request is
+// also protected by a ServicePerimeter, then that ServicePerimeter must
+// have an IngressPolicy which allows access in order for this request
+// to succeed. The request must match `operations` AND `resources`
+// fields in order to be allowed egress out of the perimeter.
+type GoogleIdentityAccesscontextmanagerV1EgressTo struct {
+	// ExternalResources: A list of external resources that are allowed to
+	// be accessed. Only AWS and Azure resources are supported. For Amazon
+	// S3, the supported format is s3://BUCKET_NAME. For Azure Storage, the
+	// supported format is
+	// azure://myaccount.blob.core.windows.net/CONTAINER_NAME. A request
+	// matches if it contains an external resource in this list (Example:
+	// s3://bucket/path). Currently '*' is not allowed.
+	ExternalResources []string `json:"externalResources,omitempty"`
+
+	// Operations: A list of ApiOperations allowed to be performed by the
+	// sources specified in the corresponding EgressFrom. A request matches
+	// if it uses an operation/service in this list.
+	Operations []*GoogleIdentityAccesscontextmanagerV1ApiOperation `json:"operations,omitempty"`
+
+	// Resources: A list of resources, currently only projects in the form
+	// `projects/`, that are allowed to be accessed by sources defined in
+	// the corresponding EgressFrom. A request matches if it contains a
+	// resource in this list. If `*` is specified for `resources`, then this
+	// EgressTo rule will authorize access to all resources outside the
+	// perimeter.
+	Resources []string `json:"resources,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ExternalResources")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ExternalResources") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleIdentityAccesscontextmanagerV1EgressTo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleIdentityAccesscontextmanagerV1EgressTo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleIdentityAccesscontextmanagerV1IngressFrom: Defines the
+// conditions under which an IngressPolicy matches a request. Conditions
+// are based on information about the source of the request. The request
+// must satisfy what is defined in `sources` AND identity related fields
+// in order to match.
+type GoogleIdentityAccesscontextmanagerV1IngressFrom struct {
+	// Identities: A list of identities that are allowed access through this
+	// ingress policy. Should be in the format of email address. The email
+	// address should represent individual user or service account only.
+	Identities []string `json:"identities,omitempty"`
+
+	// IdentityType: Specifies the type of identities that are allowed
+	// access from outside the perimeter. If left unspecified, then members
+	// of `identities` field will be allowed access.
+	//
+	// Possible values:
+	//   "IDENTITY_TYPE_UNSPECIFIED" - No blanket identity group specified.
+	//   "ANY_IDENTITY" - Authorize access from all identities outside the
+	// perimeter.
+	//   "ANY_USER_ACCOUNT" - Authorize access from all human users outside
+	// the perimeter.
+	//   "ANY_SERVICE_ACCOUNT" - Authorize access from all service accounts
+	// outside the perimeter.
+	IdentityType string `json:"identityType,omitempty"`
+
+	// Sources: Sources that this IngressPolicy authorizes access from.
+	Sources []*GoogleIdentityAccesscontextmanagerV1IngressSource `json:"sources,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Identities") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Identities") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleIdentityAccesscontextmanagerV1IngressFrom) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleIdentityAccesscontextmanagerV1IngressFrom
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleIdentityAccesscontextmanagerV1IngressPolicy: Policy for ingress
+// into ServicePerimeter. IngressPolicies match requests based on
+// `ingress_from` and `ingress_to` stanzas. For an ingress policy to
+// match, both the `ingress_from` and `ingress_to` stanzas must be
+// matched. If an IngressPolicy matches a request, the request is
+// allowed through the perimeter boundary from outside the perimeter.
+// For example, access from the internet can be allowed either based on
+// an AccessLevel or, for traffic hosted on Google Cloud, the project of
+// the source network. For access from private networks, using the
+// project of the hosting network is required. Individual ingress
+// policies can be limited by restricting which services and/or actions
+// they match using the `ingress_to` field.
+type GoogleIdentityAccesscontextmanagerV1IngressPolicy struct {
+	// IngressFrom: Defines the conditions on the source of a request
+	// causing this IngressPolicy to apply.
+	IngressFrom *GoogleIdentityAccesscontextmanagerV1IngressFrom `json:"ingressFrom,omitempty"`
+
+	// IngressTo: Defines the conditions on the ApiOperation and request
+	// destination that cause this IngressPolicy to apply.
+	IngressTo *GoogleIdentityAccesscontextmanagerV1IngressTo `json:"ingressTo,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IngressFrom") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IngressFrom") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleIdentityAccesscontextmanagerV1IngressPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleIdentityAccesscontextmanagerV1IngressPolicy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleIdentityAccesscontextmanagerV1IngressSource: The source that
+// IngressPolicy authorizes access from.
+type GoogleIdentityAccesscontextmanagerV1IngressSource struct {
+	// AccessLevel: An AccessLevel resource name that allow resources within
+	// the ServicePerimeters to be accessed from the internet. AccessLevels
+	// listed must be in the same policy as this ServicePerimeter.
+	// Referencing a nonexistent AccessLevel will cause an error. If no
+	// AccessLevel names are listed, resources within the perimeter can only
+	// be accessed via Google Cloud calls with request origins within the
+	// perimeter. Example: `accessPolicies/MY_POLICY/accessLevels/MY_LEVEL`.
+	// If a single `*` is specified for `access_level`, then all
+	// IngressSources will be allowed.
+	AccessLevel string `json:"accessLevel,omitempty"`
+
+	// Resource: A Google Cloud resource that is allowed to ingress the
+	// perimeter. Requests from these resources will be allowed to access
+	// perimeter data. Currently only projects and VPCs are allowed. Project
+	// format: `projects/{project_number}` VPC network format:
+	// `//compute.googleapis.com/projects/{PROJECT_ID}/global/networks/{NAME}
+	// `. The project may be in any Google Cloud organization, not just the
+	// organization that the perimeter is defined in. `*` is not allowed,
+	// the case of allowing all Google Cloud resources only is not
+	// supported.
+	Resource string `json:"resource,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AccessLevel") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AccessLevel") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleIdentityAccesscontextmanagerV1IngressSource) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleIdentityAccesscontextmanagerV1IngressSource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleIdentityAccesscontextmanagerV1IngressTo: Defines the conditions
+// under which an IngressPolicy matches a request. Conditions are based
+// on information about the ApiOperation intended to be performed on the
+// target resource of the request. The request must satisfy what is
+// defined in `operations` AND `resources` in order to match.
+type GoogleIdentityAccesscontextmanagerV1IngressTo struct {
+	// Operations: A list of ApiOperations allowed to be performed by the
+	// sources specified in corresponding IngressFrom in this
+	// ServicePerimeter.
+	Operations []*GoogleIdentityAccesscontextmanagerV1ApiOperation `json:"operations,omitempty"`
+
+	// Resources: A list of resources, currently only projects in the form
+	// `projects/`, protected by this ServicePerimeter that are allowed to
+	// be accessed by sources defined in the corresponding IngressFrom. If a
+	// single `*` is specified, then access to all resources inside the
+	// perimeter are allowed.
+	Resources []string `json:"resources,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Operations") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Operations") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleIdentityAccesscontextmanagerV1IngressTo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleIdentityAccesscontextmanagerV1IngressTo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleIdentityAccesscontextmanagerV1MethodSelector: An allowed method
+// or permission of a service specified in ApiOperation.
+type GoogleIdentityAccesscontextmanagerV1MethodSelector struct {
+	// Method: Value for `method` should be a valid method name for the
+	// corresponding `service_name` in ApiOperation. If `*` used as value
+	// for `method`, then ALL methods and permissions are allowed.
+	Method string `json:"method,omitempty"`
+
+	// Permission: Value for `permission` should be a valid Cloud IAM
+	// permission for the corresponding `service_name` in ApiOperation.
+	Permission string `json:"permission,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Method") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Method") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleIdentityAccesscontextmanagerV1MethodSelector) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleIdentityAccesscontextmanagerV1MethodSelector
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleIdentityAccesscontextmanagerV1OsConstraint: A restriction on
+// the OS type and version of devices making requests.
+type GoogleIdentityAccesscontextmanagerV1OsConstraint struct {
+	// MinimumVersion: The minimum allowed OS version. If not set, any
+	// version of this OS satisfies the constraint. Format:
+	// "major.minor.patch". Examples: "10.5.301", "9.2.1".
+	MinimumVersion string `json:"minimumVersion,omitempty"`
+
+	// OsType: Required. The allowed OS type.
+	//
+	// Possible values:
+	//   "OS_UNSPECIFIED" - The operating system of the device is not
+	// specified or not known.
+	//   "DESKTOP_MAC" - A desktop Mac operating system.
+	//   "DESKTOP_WINDOWS" - A desktop Windows operating system.
+	//   "DESKTOP_LINUX" - A desktop Linux operating system.
+	//   "DESKTOP_CHROME_OS" - A desktop ChromeOS operating system.
+	//   "ANDROID" - An Android operating system.
+	//   "IOS" - An iOS operating system.
+	OsType string `json:"osType,omitempty"`
+
+	// RequireVerifiedChromeOs: Only allows requests from devices with a
+	// verified Chrome OS. Verifications includes requirements that the
+	// device is enterprise-managed, conformant to domain policies, and the
+	// caller has permission to call the API targeted by the request.
+	RequireVerifiedChromeOs bool `json:"requireVerifiedChromeOs,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MinimumVersion") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MinimumVersion") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleIdentityAccesscontextmanagerV1OsConstraint) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleIdentityAccesscontextmanagerV1OsConstraint
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleIdentityAccesscontextmanagerV1ServicePerimeter:
+// `ServicePerimeter` describes a set of Google Cloud resources which
+// can freely import and export data amongst themselves, but not export
+// outside of the `ServicePerimeter`. If a request with a source within
+// this `ServicePerimeter` has a target outside of the
+// `ServicePerimeter`, the request will be blocked. Otherwise the
+// request is allowed. There are two types of Service Perimeter -
+// Regular and Bridge. Regular Service Perimeters cannot overlap, a
+// single Google Cloud project or VPC network can only belong to a
+// single regular Service Perimeter. Service Perimeter Bridges can
+// contain only Google Cloud projects as members, a single Google Cloud
+// project may belong to multiple Service Perimeter Bridges.
+type GoogleIdentityAccesscontextmanagerV1ServicePerimeter struct {
+	// Description: Description of the `ServicePerimeter` and its use. Does
+	// not affect behavior.
+	Description string `json:"description,omitempty"`
+
+	// Name: Resource name for the `ServicePerimeter`. Format:
+	// `accessPolicies/{access_policy}/servicePerimeters/{service_perimeter}`
+	// . The `service_perimeter` component must begin with a letter,
+	// followed by alphanumeric characters or `_`. After you create a
+	// `ServicePerimeter`, you cannot change its `name`.
+	Name string `json:"name,omitempty"`
+
+	// PerimeterType: Perimeter type indicator. A single project or VPC
+	// network is allowed to be a member of single regular perimeter, but
+	// multiple service perimeter bridges. A project cannot be a included in
+	// a perimeter bridge without being included in regular perimeter. For
+	// perimeter bridges, the restricted service list as well as access
+	// level lists must be empty.
+	//
+	// Possible values:
+	//   "PERIMETER_TYPE_REGULAR" - Regular Perimeter. When no value is
+	// specified, the perimeter uses this type.
+	//   "PERIMETER_TYPE_BRIDGE" - Perimeter Bridge.
+	PerimeterType string `json:"perimeterType,omitempty"`
+
+	// Spec: Proposed (or dry run) ServicePerimeter configuration. This
+	// configuration allows to specify and test ServicePerimeter
+	// configuration without enforcing actual access restrictions. Only
+	// allowed to be set when the "use_explicit_dry_run_spec" flag is set.
+	Spec *GoogleIdentityAccesscontextmanagerV1ServicePerimeterConfig `json:"spec,omitempty"`
+
+	// Status: Current ServicePerimeter configuration. Specifies sets of
+	// resources, restricted services and access levels that determine
+	// perimeter content and boundaries.
+	Status *GoogleIdentityAccesscontextmanagerV1ServicePerimeterConfig `json:"status,omitempty"`
+
+	// Title: Human readable title. Must be unique within the Policy.
+	Title string `json:"title,omitempty"`
+
+	// UseExplicitDryRunSpec: Use explicit dry run spec flag. Ordinarily, a
+	// dry-run spec implicitly exists for all Service Perimeters, and that
+	// spec is identical to the status for those Service Perimeters. When
+	// this flag is set, it inhibits the generation of the implicit spec,
+	// thereby allowing the user to explicitly provide a configuration
+	// ("spec") to use in a dry-run version of the Service Perimeter. This
+	// allows the user to test changes to the enforced config ("status")
+	// without actually enforcing them. This testing is done through
+	// analyzing the differences between currently enforced and suggested
+	// restrictions. use_explicit_dry_run_spec must bet set to True if any
+	// of the fields in the spec are set to non-default values.
+	UseExplicitDryRunSpec bool `json:"useExplicitDryRunSpec,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Description") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleIdentityAccesscontextmanagerV1ServicePerimeter) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleIdentityAccesscontextmanagerV1ServicePerimeter
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleIdentityAccesscontextmanagerV1ServicePerimeterConfig:
+// `ServicePerimeterConfig` specifies a set of Google Cloud resources
+// that describe specific Service Perimeter configuration.
+type GoogleIdentityAccesscontextmanagerV1ServicePerimeterConfig struct {
+	// AccessLevels: A list of `AccessLevel` resource names that allow
+	// resources within the `ServicePerimeter` to be accessed from the
+	// internet. `AccessLevels` listed must be in the same policy as this
+	// `ServicePerimeter`. Referencing a nonexistent `AccessLevel` is a
+	// syntax error. If no `AccessLevel` names are listed, resources within
+	// the perimeter can only be accessed via Google Cloud calls with
+	// request origins within the perimeter. Example:
+	// "accessPolicies/MY_POLICY/accessLevels/MY_LEVEL". For Service
+	// Perimeter Bridge, must be empty.
+	AccessLevels []string `json:"accessLevels,omitempty"`
+
+	// EgressPolicies: List of EgressPolicies to apply to the perimeter. A
+	// perimeter may have multiple EgressPolicies, each of which is
+	// evaluated separately. Access is granted if any EgressPolicy grants
+	// it. Must be empty for a perimeter bridge.
+	EgressPolicies []*GoogleIdentityAccesscontextmanagerV1EgressPolicy `json:"egressPolicies,omitempty"`
+
+	// IngressPolicies: List of IngressPolicies to apply to the perimeter. A
+	// perimeter may have multiple IngressPolicies, each of which is
+	// evaluated separately. Access is granted if any Ingress Policy grants
+	// it. Must be empty for a perimeter bridge.
+	IngressPolicies []*GoogleIdentityAccesscontextmanagerV1IngressPolicy `json:"ingressPolicies,omitempty"`
+
+	// Resources: A list of Google Cloud resources that are inside of the
+	// service perimeter. Currently only projects and VPCs are allowed.
+	// Project format: `projects/{project_number}` VPC network format:
+	// `//compute.googleapis.com/projects/{PROJECT_ID}/global/networks/{NAME}
+	// `.
+	Resources []string `json:"resources,omitempty"`
+
+	// RestrictedServices: Google Cloud services that are subject to the
+	// Service Perimeter restrictions. For example, if
+	// `storage.googleapis.com` is specified, access to the storage buckets
+	// inside the perimeter must meet the perimeter's access restrictions.
+	RestrictedServices []string `json:"restrictedServices,omitempty"`
+
+	// VpcAccessibleServices: Configuration for APIs allowed within
+	// Perimeter.
+	VpcAccessibleServices *GoogleIdentityAccesscontextmanagerV1VpcAccessibleServices `json:"vpcAccessibleServices,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AccessLevels") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AccessLevels") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleIdentityAccesscontextmanagerV1ServicePerimeterConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleIdentityAccesscontextmanagerV1ServicePerimeterConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleIdentityAccesscontextmanagerV1VpcAccessibleServices: Specifies
+// how APIs are allowed to communicate within the Service Perimeter.
+type GoogleIdentityAccesscontextmanagerV1VpcAccessibleServices struct {
+	// AllowedServices: The list of APIs usable within the Service
+	// Perimeter. Must be empty unless 'enable_restriction' is True. You can
+	// specify a list of individual services, as well as include the
+	// 'RESTRICTED-SERVICES' value, which automatically includes all of the
+	// services protected by the perimeter.
+	AllowedServices []string `json:"allowedServices,omitempty"`
+
+	// EnableRestriction: Whether to restrict API calls within the Service
+	// Perimeter to the list of APIs specified in 'allowed_services'.
+	EnableRestriction bool `json:"enableRestriction,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AllowedServices") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AllowedServices") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleIdentityAccesscontextmanagerV1VpcAccessibleServices) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleIdentityAccesscontextmanagerV1VpcAccessibleServices
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Operation: This resource represents a long-running operation that is
-// the result of a
-// network API call.
+// the result of a network API call.
 type Operation struct {
 	// Done: If the value is `false`, it means the operation is still in
-	// progress.
-	// If `true`, the operation is completed, and either `error` or
-	// `response` is
-	// available.
+	// progress. If `true`, the operation is completed, and either `error`
+	// or `response` is available.
 	Done bool `json:"done,omitempty"`
 
 	// Error: The error result of the operation in case of failure or
 	// cancellation.
 	Error *Status `json:"error,omitempty"`
 
-	// Metadata: Service-specific metadata associated with the operation.
-	// It typically
-	// contains progress information and common metadata such as create
-	// time.
-	// Some services might not provide such metadata.  Any method that
-	// returns a
-	// long-running operation should document the metadata type, if any.
+	// Metadata: Service-specific metadata associated with the operation. It
+	// typically contains progress information and common metadata such as
+	// create time. Some services might not provide such metadata. Any
+	// method that returns a long-running operation should document the
+	// metadata type, if any.
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
 
 	// Name: The server-assigned name, which is only unique within the same
-	// service that
-	// originally returns it. If you use the default HTTP mapping,
-	// the
-	// `name` should be a resource name ending with
+	// service that originally returns it. If you use the default HTTP
+	// mapping, the `name` should be a resource name ending with
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success.
-	// If the original
-	// method returns no data on success, such as `Delete`, the response
-	// is
-	// `google.protobuf.Empty`.  If the original method is
-	// standard
-	// `Get`/`Create`/`Update`, the response should be the resource.  For
-	// other
-	// methods, the response should have the type `XxxResponse`, where
-	// `Xxx`
-	// is the original method name.  For example, if the original method
-	// name
-	// is `TakeSnapshot()`, the inferred response type
-	// is
-	// `TakeSnapshotResponse`.
+	// Response: The normal response of the operation in case of success. If
+	// the original method returns no data on success, such as `Delete`, the
+	// response is `google.protobuf.Empty`. If the original method is
+	// standard `Get`/`Create`/`Update`, the response should be the
+	// resource. For other methods, the response should have the type
+	// `XxxResponse`, where `Xxx` is the original method name. For example,
+	// if the original method name is `TakeSnapshot()`, the inferred
+	// response type is `TakeSnapshotResponse`.
 	Response googleapi.RawMessage `json:"response,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -795,10 +2272,10 @@ type Operation struct {
 
 	// ForceSendFields is a list of field names (e.g. "Done") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Done") to include in API
@@ -823,10 +2300,10 @@ type OutputConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "GcsDestination") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "GcsDestination") to
@@ -846,151 +2323,94 @@ func (s *OutputConfig) MarshalJSON() ([]byte, error) {
 }
 
 // Policy: An Identity and Access Management (IAM) policy, which
-// specifies access
-// controls for Google Cloud resources.
-//
-//
-// A `Policy` is a collection of `bindings`. A `binding` binds one or
-// more
-// `members` to a single `role`. Members can be user accounts, service
-// accounts,
-// Google groups, and domains (such as G Suite). A `role` is a named
-// list of
-// permissions; each `role` can be an IAM predefined role or a
-// user-created
-// custom role.
-//
-// Optionally, a `binding` can specify a `condition`, which is a
-// logical
-// expression that allows access to a resource only if the expression
-// evaluates
-// to `true`. A condition can add constraints based on attributes of
-// the
-// request, the resource, or both.
-//
-// **JSON example:**
-//
-//     {
-//       "bindings": [
-//         {
-//           "role": "roles/resourcemanager.organizationAdmin",
-//           "members": [
-//             "user:mike@example.com",
-//             "group:admins@example.com",
-//             "domain:google.com",
-//
-// "serviceAccount:my-project-id@appspot.gserviceaccount.com"
-//           ]
-//         },
-//         {
-//           "role": "roles/resourcemanager.organizationViewer",
-//           "members": ["user:eve@example.com"],
-//           "condition": {
-//             "title": "expirable access",
-//             "description": "Does not grant access after Sep 2020",
-//             "expression": "request.time <
-// timestamp('2020-10-01T00:00:00.000Z')",
-//           }
-//         }
-//       ],
-//       "etag": "BwWWja0YfJA=",
-//       "version": 3
-//     }
-//
-// **YAML example:**
-//
-//     bindings:
-//     - members:
-//       - user:mike@example.com
-//       - group:admins@example.com
-//       - domain:google.com
-//       - serviceAccount:my-project-id@appspot.gserviceaccount.com
-//       role: roles/resourcemanager.organizationAdmin
-//     - members:
-//       - user:eve@example.com
-//       role: roles/resourcemanager.organizationViewer
-//       condition:
-//         title: expirable access
-//         description: Does not grant access after Sep 2020
-//         expression: request.time <
-// timestamp('2020-10-01T00:00:00.000Z')
-//     - etag: BwWWja0YfJA=
-//     - version: 3
-//
-// For a description of IAM and its features, see the
-// [IAM documentation](https://cloud.google.com/iam/docs/).
+// specifies access controls for Google Cloud resources. A `Policy` is a
+// collection of `bindings`. A `binding` binds one or more `members`, or
+// principals, to a single `role`. Principals can be user accounts,
+// service accounts, Google groups, and domains (such as G Suite). A
+// `role` is a named list of permissions; each `role` can be an IAM
+// predefined role or a user-created custom role. For some types of
+// Google Cloud resources, a `binding` can also specify a `condition`,
+// which is a logical expression that allows access to a resource only
+// if the expression evaluates to `true`. A condition can add
+// constraints based on attributes of the request, the resource, or
+// both. To learn which resources support conditions in their IAM
+// policies, see the IAM documentation
+// (https://cloud.google.com/iam/help/conditions/resource-policies).
+// **JSON example:** { "bindings": [ { "role":
+// "roles/resourcemanager.organizationAdmin", "members": [
+// "user:mike@example.com", "group:admins@example.com",
+// "domain:google.com",
+// "serviceAccount:my-project-id@appspot.gserviceaccount.com" ] }, {
+// "role": "roles/resourcemanager.organizationViewer", "members": [
+// "user:eve@example.com" ], "condition": { "title": "expirable access",
+// "description": "Does not grant access after Sep 2020", "expression":
+// "request.time < timestamp('2020-10-01T00:00:00.000Z')", } } ],
+// "etag": "BwWWja0YfJA=", "version": 3 } **YAML example:** bindings: -
+// members: - user:mike@example.com - group:admins@example.com -
+// domain:google.com -
+// serviceAccount:my-project-id@appspot.gserviceaccount.com role:
+// roles/resourcemanager.organizationAdmin - members: -
+// user:eve@example.com role: roles/resourcemanager.organizationViewer
+// condition: title: expirable access description: Does not grant access
+// after Sep 2020 expression: request.time <
+// timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3
+// For a description of IAM and its features, see the IAM documentation
+// (https://cloud.google.com/iam/docs/).
 type Policy struct {
 	// AuditConfigs: Specifies cloud audit logging configuration for this
 	// policy.
 	AuditConfigs []*AuditConfig `json:"auditConfigs,omitempty"`
 
-	// Bindings: Associates a list of `members` to a `role`. Optionally, may
-	// specify a
-	// `condition` that determines how and when the `bindings` are applied.
-	// Each
-	// of the `bindings` must contain at least one member.
+	// Bindings: Associates a list of `members`, or principals, with a
+	// `role`. Optionally, may specify a `condition` that determines how and
+	// when the `bindings` are applied. Each of the `bindings` must contain
+	// at least one principal. The `bindings` in a `Policy` can refer to up
+	// to 1,500 principals; up to 250 of these principals can be Google
+	// groups. Each occurrence of a principal counts towards these limits.
+	// For example, if the `bindings` grant 50 different roles to
+	// `user:alice@example.com`, and not to any other principal, then you
+	// can add another 1,450 principals to the `bindings` in the `Policy`.
 	Bindings []*Binding `json:"bindings,omitempty"`
 
 	// Etag: `etag` is used for optimistic concurrency control as a way to
-	// help
-	// prevent simultaneous updates of a policy from overwriting each
-	// other.
-	// It is strongly suggested that systems make use of the `etag` in
-	// the
-	// read-modify-write cycle to perform policy updates in order to avoid
-	// race
-	// conditions: An `etag` is returned in the response to `getIamPolicy`,
-	// and
-	// systems are expected to put that etag in the request to
-	// `setIamPolicy` to
-	// ensure that their change will be applied to the same version of the
-	// policy.
-	//
-	// **Important:** If you use IAM Conditions, you must include the `etag`
-	// field
-	// whenever you call `setIamPolicy`. If you omit this field, then IAM
-	// allows
-	// you to overwrite a version `3` policy with a version `1` policy, and
-	// all of
+	// help prevent simultaneous updates of a policy from overwriting each
+	// other. It is strongly suggested that systems make use of the `etag`
+	// in the read-modify-write cycle to perform policy updates in order to
+	// avoid race conditions: An `etag` is returned in the response to
+	// `getIamPolicy`, and systems are expected to put that etag in the
+	// request to `setIamPolicy` to ensure that their change will be applied
+	// to the same version of the policy. **Important:** If you use IAM
+	// Conditions, you must include the `etag` field whenever you call
+	// `setIamPolicy`. If you omit this field, then IAM allows you to
+	// overwrite a version `3` policy with a version `1` policy, and all of
 	// the conditions in the version `3` policy are lost.
 	Etag string `json:"etag,omitempty"`
 
-	// Version: Specifies the format of the policy.
-	//
-	// Valid values are `0`, `1`, and `3`. Requests that specify an invalid
-	// value
-	// are rejected.
-	//
+	// Version: Specifies the format of the policy. Valid values are `0`,
+	// `1`, and `3`. Requests that specify an invalid value are rejected.
 	// Any operation that affects conditional role bindings must specify
-	// version
-	// `3`. This requirement applies to the following operations:
-	//
-	// * Getting a policy that includes a conditional role binding
-	// * Adding a conditional role binding to a policy
-	// * Changing a conditional role binding in a policy
-	// * Removing any role binding, with or without a condition, from a
-	// policy
-	//   that includes conditions
-	//
-	// **Important:** If you use IAM Conditions, you must include the `etag`
-	// field
-	// whenever you call `setIamPolicy`. If you omit this field, then IAM
-	// allows
-	// you to overwrite a version `3` policy with a version `1` policy, and
-	// all of
-	// the conditions in the version `3` policy are lost.
-	//
-	// If a policy does not include any conditions, operations on that
-	// policy may
-	// specify any valid version or leave the field unset.
+	// version `3`. This requirement applies to the following operations: *
+	// Getting a policy that includes a conditional role binding * Adding a
+	// conditional role binding to a policy * Changing a conditional role
+	// binding in a policy * Removing any role binding, with or without a
+	// condition, from a policy that includes conditions **Important:** If
+	// you use IAM Conditions, you must include the `etag` field whenever
+	// you call `setIamPolicy`. If you omit this field, then IAM allows you
+	// to overwrite a version `3` policy with a version `1` policy, and all
+	// of the conditions in the version `3` policy are lost. If a policy
+	// does not include any conditions, operations on that policy may
+	// specify any valid version or leave the field unset. To learn which
+	// resources support conditions in their IAM policies, see the IAM
+	// documentation
+	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Version int64 `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AuditConfigs") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AuditConfigs") to include
@@ -1008,69 +2428,51 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Resource: Representation of a cloud resource.
+// Resource: A representation of a Google Cloud resource.
 type Resource struct {
 	// Data: The content of the resource, in which some sensitive fields are
-	// scrubbed
-	// away and may not be present.
+	// removed and may not be present.
 	Data googleapi.RawMessage `json:"data,omitempty"`
 
 	// DiscoveryDocumentUri: The URL of the discovery document containing
-	// the resource's JSON schema.
-	// For
-	// example:
-	// "https://www.googleapis.com/discovery/v1/apis/compute/v1/res
-	// t".
-	// It will be left unspecified for resources without a discovery-based
-	// API,
-	// such as Cloud Bigtable.
+	// the resource's JSON schema. Example:
+	// `https://www.googleapis.com/discovery/v1/apis/compute/v1/rest` This
+	// value is unspecified for resources that do not have an API based on a
+	// discovery document, such as Cloud Bigtable.
 	DiscoveryDocumentUri string `json:"discoveryDocumentUri,omitempty"`
 
-	// DiscoveryName: The JSON schema name listed in the discovery
-	// document.
-	// Example: "Project". It will be left unspecified for resources (such
-	// as
-	// Cloud Bigtable) without a discovery-based API.
+	// DiscoveryName: The JSON schema name listed in the discovery document.
+	// Example: `Project` This value is unspecified for resources that do
+	// not have an API based on a discovery document, such as Cloud
+	// Bigtable.
 	DiscoveryName string `json:"discoveryName,omitempty"`
 
-	// Parent: The full name of the immediate parent of this resource.
-	// See
-	// [Resource
-	// Names](https://cloud.google.com/apis/design/resource_nam
-	// es#full_resource_name)
-	// for more information.
-	//
-	// For GCP assets, it is the parent resource defined in the [Cloud IAM
-	// policy
-	// hierarchy](https://cloud.google.com/iam/docs/overview#policy_hi
-	// erarchy).
-	// For
-	// example:
-	// "//cloudresourcemanager.googleapis.com/projects/my_project_1
-	// 23".
-	//
-	// For third-party assets, it is up to the users to define.
+	// Parent: The full name of the immediate parent of this resource. See
+	// Resource Names
+	// (https://cloud.google.com/apis/design/resource_names#full_resource_name)
+	// for more information. For Google Cloud assets, this value is the
+	// parent resource defined in the IAM policy hierarchy
+	// (https://cloud.google.com/iam/docs/overview#policy_hierarchy).
+	// Example:
+	// `//cloudresourcemanager.googleapis.com/projects/my_project_123` For
+	// third-party assets, this field may be set differently.
 	Parent string `json:"parent,omitempty"`
 
-	// ResourceUrl: The REST URL for accessing the resource. An HTTP GET
-	// operation using this
-	// URL returns the resource
-	// itself.
-	// Example:
-	// `https://cloudresourcemanager.googleapis.com/v1/proje
-	// cts/my-project-123`.
-	// It will be left unspecified for resources without a REST API.
+	// ResourceUrl: The REST URL for accessing the resource. An HTTP `GET`
+	// request using this URL returns the resource itself. Example:
+	// `https://cloudresourcemanager.googleapis.com/v1/projects/my-project-12
+	// 3` This value is unspecified for resources without a REST API.
 	ResourceUrl string `json:"resourceUrl,omitempty"`
 
-	// Version: The API version. Example: "v1".
+	// Version: The API version. Example: `v1`
 	Version string `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Data") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Data") to include in API
@@ -1089,40 +2491,32 @@ func (s *Resource) MarshalJSON() ([]byte, error) {
 }
 
 // Status: The `Status` type defines a logical error model that is
-// suitable for
-// different programming environments, including REST APIs and RPC APIs.
-// It is
-// used by [gRPC](https://github.com/grpc). Each `Status` message
-// contains
-// three pieces of data: error code, error message, and error
-// details.
-//
-// You can find out more about this error model and how to work with it
-// in the
-// [API Design Guide](https://cloud.google.com/apis/design/errors).
+// suitable for different programming environments, including REST APIs
+// and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
+// `Status` message contains three pieces of data: error code, error
+// message, and error details. You can find out more about this error
+// model and how to work with it in the API Design Guide
+// (https://cloud.google.com/apis/design/errors).
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
 	Code int64 `json:"code,omitempty"`
 
-	// Details: A list of messages that carry the error details.  There is a
-	// common set of
-	// message types for APIs to use.
+	// Details: A list of messages that carry the error details. There is a
+	// common set of message types for APIs to use.
 	Details []googleapi.RawMessage `json:"details,omitempty"`
 
 	// Message: A developer-facing error message, which should be in
-	// English. Any
-	// user-facing error message should be localized and sent in
-	// the
-	// google.rpc.Status.details field, or localized by the client.
+	// English. Any user-facing error message should be localized and sent
+	// in the google.rpc.Status.details field, or localized by the client.
 	Message string `json:"message,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Code") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Code") to include in API
@@ -1140,14 +2534,14 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// TemporalAsset: Temporal asset. In addition to the asset, the temporal
-// asset includes the
-// status of the asset and valid from and to time of it.
+// TemporalAsset: An asset in Google Cloud and its temporal metadata,
+// including the time window when it was observed and its status during
+// that window.
 type TemporalAsset struct {
-	// Asset: Asset.
+	// Asset: An asset in Google Cloud.
 	Asset *Asset `json:"asset,omitempty"`
 
-	// Deleted: If the asset is deleted or not.
+	// Deleted: Whether the asset has been deleted or not.
 	Deleted bool `json:"deleted,omitempty"`
 
 	// Window: The time window when the asset data and state was observed.
@@ -1155,10 +2549,10 @@ type TemporalAsset struct {
 
 	// ForceSendFields is a list of field names (e.g. "Asset") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Asset") to include in API
@@ -1176,10 +2570,11 @@ func (s *TemporalAsset) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// TimeWindow: A time window of (start_time, end_time].
+// TimeWindow: A time window specified by its `start_time` and
+// `end_time`.
 type TimeWindow struct {
-	// EndTime: End time of the time window (inclusive).
-	// Current timestamp if not specified.
+	// EndTime: End time of the time window (inclusive). If not specified,
+	// the current timestamp is used instead.
 	EndTime string `json:"endTime,omitempty"`
 
 	// StartTime: Start time of the time window (exclusive).
@@ -1187,10 +2582,10 @@ type TimeWindow struct {
 
 	// ForceSendFields is a list of field names (e.g. "EndTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "EndTime") to include in
@@ -1220,11 +2615,17 @@ type FoldersExportAssetsCall struct {
 }
 
 // ExportAssets: Exports assets with time and resource types to a given
-// Cloud Storage
-// location. The output format is newline-delimited JSON.
-// This API implements the google.longrunning.Operation API allowing
-// you
-// to keep track of the export.
+// Cloud Storage location. The output format is newline-delimited JSON.
+// This API implements the google.longrunning.Operation API allowing you
+// to keep track of the export. We recommend intervals of at least 2
+// seconds with exponential retry to poll the export operation result.
+// For regular-size resource parent, the export operation usually
+// finishes within 5 minutes.
+//
+//   - parent: The relative name of the root asset. This can only be an
+//     organization number (such as "organizations/123"), a project ID
+//     (such as "projects/my-project-id"), a project number (such as
+//     "projects/12345"), or a folder number (such as "folders/123").
 func (r *FoldersService) ExportAssets(parent string, exportassetsrequest *ExportAssetsRequest) *FoldersExportAssetsCall {
 	c := &FoldersExportAssetsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1259,7 +2660,7 @@ func (c *FoldersExportAssetsCall) Header() http.Header {
 
 func (c *FoldersExportAssetsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1299,17 +2700,17 @@ func (c *FoldersExportAssetsCall) Do(opts ...googleapi.CallOption) (*Operation, 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -1323,7 +2724,7 @@ func (c *FoldersExportAssetsCall) Do(opts ...googleapi.CallOption) (*Operation, 
 	}
 	return ret, nil
 	// {
-	//   "description": "Exports assets with time and resource types to a given Cloud Storage\nlocation. The output format is newline-delimited JSON.\nThis API implements the google.longrunning.Operation API allowing you\nto keep track of the export.",
+	//   "description": "Exports assets with time and resource types to a given Cloud Storage location. The output format is newline-delimited JSON. This API implements the google.longrunning.Operation API allowing you to keep track of the export. We recommend intervals of at least 2 seconds with exponential retry to poll the export operation result. For regular-size resource parent, the export operation usually finishes within 5 minutes.",
 	//   "flatPath": "v1beta1/folders/{foldersId}:exportAssets",
 	//   "httpMethod": "POST",
 	//   "id": "cloudasset.folders.exportAssets",
@@ -1332,7 +2733,7 @@ func (c *FoldersExportAssetsCall) Do(opts ...googleapi.CallOption) (*Operation, 
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The relative name of the root asset. This can only be an\norganization number (such as \"organizations/123\"), a project ID (such as\n\"projects/my-project-id\"), a project number (such as \"projects/12345\"), or\na folder number (such as \"folders/123\").",
+	//       "description": "Required. The relative name of the root asset. This can only be an organization number (such as \"organizations/123\"), a project ID (such as \"projects/my-project-id\"), a project number (such as \"projects/12345\"), or a folder number (such as \"folders/123\").",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+$",
 	//       "required": true,
@@ -1364,11 +2765,11 @@ type FoldersOperationsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets the latest state of a long-running operation.  Clients can
-// use this
-// method to poll the operation result at intervals as recommended by
-// the API
-// service.
+// Get: Gets the latest state of a long-running operation. Clients can
+// use this method to poll the operation result at intervals as
+// recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *FoldersOperationsService) Get(name string) *FoldersOperationsGetCall {
 	c := &FoldersOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1412,7 +2813,7 @@ func (c *FoldersOperationsGetCall) Header() http.Header {
 
 func (c *FoldersOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1450,17 +2851,17 @@ func (c *FoldersOperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation,
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -1474,7 +2875,7 @@ func (c *FoldersOperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation,
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the latest state of a long-running operation.  Clients can use this\nmethod to poll the operation result at intervals as recommended by the API\nservice.",
+	//   "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
 	//   "flatPath": "v1beta1/folders/{foldersId}/operations/{operationsId}/{operationsId1}",
 	//   "httpMethod": "GET",
 	//   "id": "cloudasset.folders.operations.get",
@@ -1513,17 +2914,17 @@ type OrganizationsBatchGetAssetsHistoryCall struct {
 }
 
 // BatchGetAssetsHistory: Batch gets the update history of assets that
-// overlap a time window.
-// For RESOURCE content, this API outputs history with asset in
-// both
-// non-delete or deleted status.
-// For IAM_POLICY content, this API outputs history when the asset and
-// its
-// attached IAM POLICY both exist. This can create gaps in the output
-// history.
-// If a specified asset does not exist, this API returns an
-// INVALID_ARGUMENT
+// overlap a time window. For IAM_POLICY content, this API outputs
+// history when the asset and its attached IAM POLICY both exist. This
+// can create gaps in the output history. Otherwise, this API outputs
+// history with asset in both non-delete or deleted status. If a
+// specified asset does not exist, this API returns an INVALID_ARGUMENT
 // error.
+//
+//   - parent: The relative name of the root asset. It can only be an
+//     organization number (such as "organizations/123"), a project ID
+//     (such as "projects/my-project-id")", or a project number (such as
+//     "projects/12345").
 func (r *OrganizationsService) BatchGetAssetsHistory(parent string) *OrganizationsBatchGetAssetsHistoryCall {
 	c := &OrganizationsBatchGetAssetsHistoryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1531,19 +2932,12 @@ func (r *OrganizationsService) BatchGetAssetsHistory(parent string) *Organizatio
 }
 
 // AssetNames sets the optional parameter "assetNames": A list of the
-// full names of the assets. For
-// example:
-// `//compute.googleapis.com/projects/my_project_123/zones/zone1
-// /instances/instance1`.
-// See
-// [Resource
-// Names](https://cloud.google.com/apis/design/resource_names#f
-// ull_resource_name)
-// for more info.
-//
-// The request becomes a no-op if the asset name list is empty, and the
-// max
-// size of the asset name list is 100 in one request.
+// full names of the assets. For example:
+// `//compute.googleapis.com/projects/my_project_123/zones/zone1/instance
+// s/instance1`. See Resource Names
+// (https://cloud.google.com/apis/design/resource_names#full_resource_name)
+// for more info. The request becomes a no-op if the asset name list is
+// empty, and the max size of the asset name list is 100 in one request.
 func (c *OrganizationsBatchGetAssetsHistoryCall) AssetNames(assetNames ...string) *OrganizationsBatchGetAssetsHistoryCall {
 	c.urlParams_.SetMulti("assetNames", append([]string{}, assetNames...))
 	return c
@@ -1553,18 +2947,18 @@ func (c *OrganizationsBatchGetAssetsHistoryCall) AssetNames(assetNames ...string
 // type.
 //
 // Possible values:
-//   "CONTENT_TYPE_UNSPECIFIED"
-//   "RESOURCE"
-//   "IAM_POLICY"
+//
+//	"CONTENT_TYPE_UNSPECIFIED" - Unspecified content type.
+//	"RESOURCE" - Resource metadata.
+//	"IAM_POLICY" - The actual IAM policy set on a resource.
 func (c *OrganizationsBatchGetAssetsHistoryCall) ContentType(contentType string) *OrganizationsBatchGetAssetsHistoryCall {
 	c.urlParams_.Set("contentType", contentType)
 	return c
 }
 
 // ReadTimeWindowEndTime sets the optional parameter
-// "readTimeWindow.endTime": End time of the time window
-// (inclusive).
-// Current timestamp if not specified.
+// "readTimeWindow.endTime": End time of the time window (inclusive). If
+// not specified, the current timestamp is used instead.
 func (c *OrganizationsBatchGetAssetsHistoryCall) ReadTimeWindowEndTime(readTimeWindowEndTime string) *OrganizationsBatchGetAssetsHistoryCall {
 	c.urlParams_.Set("readTimeWindow.endTime", readTimeWindowEndTime)
 	return c
@@ -1615,7 +3009,7 @@ func (c *OrganizationsBatchGetAssetsHistoryCall) Header() http.Header {
 
 func (c *OrganizationsBatchGetAssetsHistoryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1653,17 +3047,17 @@ func (c *OrganizationsBatchGetAssetsHistoryCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &BatchGetAssetsHistoryResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1677,7 +3071,7 @@ func (c *OrganizationsBatchGetAssetsHistoryCall) Do(opts ...googleapi.CallOption
 	}
 	return ret, nil
 	// {
-	//   "description": "Batch gets the update history of assets that overlap a time window.\nFor RESOURCE content, this API outputs history with asset in both\nnon-delete or deleted status.\nFor IAM_POLICY content, this API outputs history when the asset and its\nattached IAM POLICY both exist. This can create gaps in the output history.\nIf a specified asset does not exist, this API returns an INVALID_ARGUMENT\nerror.",
+	//   "description": "Batch gets the update history of assets that overlap a time window. For IAM_POLICY content, this API outputs history when the asset and its attached IAM POLICY both exist. This can create gaps in the output history. Otherwise, this API outputs history with asset in both non-delete or deleted status. If a specified asset does not exist, this API returns an INVALID_ARGUMENT error.",
 	//   "flatPath": "v1beta1/organizations/{organizationsId}:batchGetAssetsHistory",
 	//   "httpMethod": "GET",
 	//   "id": "cloudasset.organizations.batchGetAssetsHistory",
@@ -1686,7 +3080,7 @@ func (c *OrganizationsBatchGetAssetsHistoryCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "assetNames": {
-	//       "description": "A list of the full names of the assets. For example:\n`//compute.googleapis.com/projects/my_project_123/zones/zone1/instances/instance1`.\nSee [Resource\nNames](https://cloud.google.com/apis/design/resource_names#full_resource_name)\nfor more info.\n\nThe request becomes a no-op if the asset name list is empty, and the max\nsize of the asset name list is 100 in one request.",
+	//       "description": "A list of the full names of the assets. For example: `//compute.googleapis.com/projects/my_project_123/zones/zone1/instances/instance1`. See [Resource Names](https://cloud.google.com/apis/design/resource_names#full_resource_name) for more info. The request becomes a no-op if the asset name list is empty, and the max size of the asset name list is 100 in one request.",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
@@ -1698,18 +3092,23 @@ func (c *OrganizationsBatchGetAssetsHistoryCall) Do(opts ...googleapi.CallOption
 	//         "RESOURCE",
 	//         "IAM_POLICY"
 	//       ],
+	//       "enumDescriptions": [
+	//         "Unspecified content type.",
+	//         "Resource metadata.",
+	//         "The actual IAM policy set on a resource."
+	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The relative name of the root asset. It can only be an\norganization number (such as \"organizations/123\"), a project ID (such as\n\"projects/my-project-id\")\", or a project number (such as \"projects/12345\").",
+	//       "description": "Required. The relative name of the root asset. It can only be an organization number (such as \"organizations/123\"), a project ID (such as \"projects/my-project-id\")\", or a project number (such as \"projects/12345\").",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "readTimeWindow.endTime": {
-	//       "description": "End time of the time window (inclusive).\nCurrent timestamp if not specified.",
+	//       "description": "End time of the time window (inclusive). If not specified, the current timestamp is used instead.",
 	//       "format": "google-datetime",
 	//       "location": "query",
 	//       "type": "string"
@@ -1744,11 +3143,17 @@ type OrganizationsExportAssetsCall struct {
 }
 
 // ExportAssets: Exports assets with time and resource types to a given
-// Cloud Storage
-// location. The output format is newline-delimited JSON.
-// This API implements the google.longrunning.Operation API allowing
-// you
-// to keep track of the export.
+// Cloud Storage location. The output format is newline-delimited JSON.
+// This API implements the google.longrunning.Operation API allowing you
+// to keep track of the export. We recommend intervals of at least 2
+// seconds with exponential retry to poll the export operation result.
+// For regular-size resource parent, the export operation usually
+// finishes within 5 minutes.
+//
+//   - parent: The relative name of the root asset. This can only be an
+//     organization number (such as "organizations/123"), a project ID
+//     (such as "projects/my-project-id"), a project number (such as
+//     "projects/12345"), or a folder number (such as "folders/123").
 func (r *OrganizationsService) ExportAssets(parent string, exportassetsrequest *ExportAssetsRequest) *OrganizationsExportAssetsCall {
 	c := &OrganizationsExportAssetsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1783,7 +3188,7 @@ func (c *OrganizationsExportAssetsCall) Header() http.Header {
 
 func (c *OrganizationsExportAssetsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1823,17 +3228,17 @@ func (c *OrganizationsExportAssetsCall) Do(opts ...googleapi.CallOption) (*Opera
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -1847,7 +3252,7 @@ func (c *OrganizationsExportAssetsCall) Do(opts ...googleapi.CallOption) (*Opera
 	}
 	return ret, nil
 	// {
-	//   "description": "Exports assets with time and resource types to a given Cloud Storage\nlocation. The output format is newline-delimited JSON.\nThis API implements the google.longrunning.Operation API allowing you\nto keep track of the export.",
+	//   "description": "Exports assets with time and resource types to a given Cloud Storage location. The output format is newline-delimited JSON. This API implements the google.longrunning.Operation API allowing you to keep track of the export. We recommend intervals of at least 2 seconds with exponential retry to poll the export operation result. For regular-size resource parent, the export operation usually finishes within 5 minutes.",
 	//   "flatPath": "v1beta1/organizations/{organizationsId}:exportAssets",
 	//   "httpMethod": "POST",
 	//   "id": "cloudasset.organizations.exportAssets",
@@ -1856,7 +3261,7 @@ func (c *OrganizationsExportAssetsCall) Do(opts ...googleapi.CallOption) (*Opera
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The relative name of the root asset. This can only be an\norganization number (such as \"organizations/123\"), a project ID (such as\n\"projects/my-project-id\"), a project number (such as \"projects/12345\"), or\na folder number (such as \"folders/123\").",
+	//       "description": "Required. The relative name of the root asset. This can only be an organization number (such as \"organizations/123\"), a project ID (such as \"projects/my-project-id\"), a project number (such as \"projects/12345\"), or a folder number (such as \"folders/123\").",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+$",
 	//       "required": true,
@@ -1888,11 +3293,11 @@ type OrganizationsOperationsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets the latest state of a long-running operation.  Clients can
-// use this
-// method to poll the operation result at intervals as recommended by
-// the API
-// service.
+// Get: Gets the latest state of a long-running operation. Clients can
+// use this method to poll the operation result at intervals as
+// recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *OrganizationsOperationsService) Get(name string) *OrganizationsOperationsGetCall {
 	c := &OrganizationsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1936,7 +3341,7 @@ func (c *OrganizationsOperationsGetCall) Header() http.Header {
 
 func (c *OrganizationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1974,17 +3379,17 @@ func (c *OrganizationsOperationsGetCall) Do(opts ...googleapi.CallOption) (*Oper
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -1998,7 +3403,7 @@ func (c *OrganizationsOperationsGetCall) Do(opts ...googleapi.CallOption) (*Oper
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the latest state of a long-running operation.  Clients can use this\nmethod to poll the operation result at intervals as recommended by the API\nservice.",
+	//   "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
 	//   "flatPath": "v1beta1/organizations/{organizationsId}/operations/{operationsId}/{operationsId1}",
 	//   "httpMethod": "GET",
 	//   "id": "cloudasset.organizations.operations.get",
@@ -2037,17 +3442,17 @@ type ProjectsBatchGetAssetsHistoryCall struct {
 }
 
 // BatchGetAssetsHistory: Batch gets the update history of assets that
-// overlap a time window.
-// For RESOURCE content, this API outputs history with asset in
-// both
-// non-delete or deleted status.
-// For IAM_POLICY content, this API outputs history when the asset and
-// its
-// attached IAM POLICY both exist. This can create gaps in the output
-// history.
-// If a specified asset does not exist, this API returns an
-// INVALID_ARGUMENT
+// overlap a time window. For IAM_POLICY content, this API outputs
+// history when the asset and its attached IAM POLICY both exist. This
+// can create gaps in the output history. Otherwise, this API outputs
+// history with asset in both non-delete or deleted status. If a
+// specified asset does not exist, this API returns an INVALID_ARGUMENT
 // error.
+//
+//   - parent: The relative name of the root asset. It can only be an
+//     organization number (such as "organizations/123"), a project ID
+//     (such as "projects/my-project-id")", or a project number (such as
+//     "projects/12345").
 func (r *ProjectsService) BatchGetAssetsHistory(parent string) *ProjectsBatchGetAssetsHistoryCall {
 	c := &ProjectsBatchGetAssetsHistoryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2055,19 +3460,12 @@ func (r *ProjectsService) BatchGetAssetsHistory(parent string) *ProjectsBatchGet
 }
 
 // AssetNames sets the optional parameter "assetNames": A list of the
-// full names of the assets. For
-// example:
-// `//compute.googleapis.com/projects/my_project_123/zones/zone1
-// /instances/instance1`.
-// See
-// [Resource
-// Names](https://cloud.google.com/apis/design/resource_names#f
-// ull_resource_name)
-// for more info.
-//
-// The request becomes a no-op if the asset name list is empty, and the
-// max
-// size of the asset name list is 100 in one request.
+// full names of the assets. For example:
+// `//compute.googleapis.com/projects/my_project_123/zones/zone1/instance
+// s/instance1`. See Resource Names
+// (https://cloud.google.com/apis/design/resource_names#full_resource_name)
+// for more info. The request becomes a no-op if the asset name list is
+// empty, and the max size of the asset name list is 100 in one request.
 func (c *ProjectsBatchGetAssetsHistoryCall) AssetNames(assetNames ...string) *ProjectsBatchGetAssetsHistoryCall {
 	c.urlParams_.SetMulti("assetNames", append([]string{}, assetNames...))
 	return c
@@ -2077,18 +3475,18 @@ func (c *ProjectsBatchGetAssetsHistoryCall) AssetNames(assetNames ...string) *Pr
 // type.
 //
 // Possible values:
-//   "CONTENT_TYPE_UNSPECIFIED"
-//   "RESOURCE"
-//   "IAM_POLICY"
+//
+//	"CONTENT_TYPE_UNSPECIFIED" - Unspecified content type.
+//	"RESOURCE" - Resource metadata.
+//	"IAM_POLICY" - The actual IAM policy set on a resource.
 func (c *ProjectsBatchGetAssetsHistoryCall) ContentType(contentType string) *ProjectsBatchGetAssetsHistoryCall {
 	c.urlParams_.Set("contentType", contentType)
 	return c
 }
 
 // ReadTimeWindowEndTime sets the optional parameter
-// "readTimeWindow.endTime": End time of the time window
-// (inclusive).
-// Current timestamp if not specified.
+// "readTimeWindow.endTime": End time of the time window (inclusive). If
+// not specified, the current timestamp is used instead.
 func (c *ProjectsBatchGetAssetsHistoryCall) ReadTimeWindowEndTime(readTimeWindowEndTime string) *ProjectsBatchGetAssetsHistoryCall {
 	c.urlParams_.Set("readTimeWindow.endTime", readTimeWindowEndTime)
 	return c
@@ -2139,7 +3537,7 @@ func (c *ProjectsBatchGetAssetsHistoryCall) Header() http.Header {
 
 func (c *ProjectsBatchGetAssetsHistoryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2177,17 +3575,17 @@ func (c *ProjectsBatchGetAssetsHistoryCall) Do(opts ...googleapi.CallOption) (*B
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &BatchGetAssetsHistoryResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2201,7 +3599,7 @@ func (c *ProjectsBatchGetAssetsHistoryCall) Do(opts ...googleapi.CallOption) (*B
 	}
 	return ret, nil
 	// {
-	//   "description": "Batch gets the update history of assets that overlap a time window.\nFor RESOURCE content, this API outputs history with asset in both\nnon-delete or deleted status.\nFor IAM_POLICY content, this API outputs history when the asset and its\nattached IAM POLICY both exist. This can create gaps in the output history.\nIf a specified asset does not exist, this API returns an INVALID_ARGUMENT\nerror.",
+	//   "description": "Batch gets the update history of assets that overlap a time window. For IAM_POLICY content, this API outputs history when the asset and its attached IAM POLICY both exist. This can create gaps in the output history. Otherwise, this API outputs history with asset in both non-delete or deleted status. If a specified asset does not exist, this API returns an INVALID_ARGUMENT error.",
 	//   "flatPath": "v1beta1/projects/{projectsId}:batchGetAssetsHistory",
 	//   "httpMethod": "GET",
 	//   "id": "cloudasset.projects.batchGetAssetsHistory",
@@ -2210,7 +3608,7 @@ func (c *ProjectsBatchGetAssetsHistoryCall) Do(opts ...googleapi.CallOption) (*B
 	//   ],
 	//   "parameters": {
 	//     "assetNames": {
-	//       "description": "A list of the full names of the assets. For example:\n`//compute.googleapis.com/projects/my_project_123/zones/zone1/instances/instance1`.\nSee [Resource\nNames](https://cloud.google.com/apis/design/resource_names#full_resource_name)\nfor more info.\n\nThe request becomes a no-op if the asset name list is empty, and the max\nsize of the asset name list is 100 in one request.",
+	//       "description": "A list of the full names of the assets. For example: `//compute.googleapis.com/projects/my_project_123/zones/zone1/instances/instance1`. See [Resource Names](https://cloud.google.com/apis/design/resource_names#full_resource_name) for more info. The request becomes a no-op if the asset name list is empty, and the max size of the asset name list is 100 in one request.",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
@@ -2222,18 +3620,23 @@ func (c *ProjectsBatchGetAssetsHistoryCall) Do(opts ...googleapi.CallOption) (*B
 	//         "RESOURCE",
 	//         "IAM_POLICY"
 	//       ],
+	//       "enumDescriptions": [
+	//         "Unspecified content type.",
+	//         "Resource metadata.",
+	//         "The actual IAM policy set on a resource."
+	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The relative name of the root asset. It can only be an\norganization number (such as \"organizations/123\"), a project ID (such as\n\"projects/my-project-id\")\", or a project number (such as \"projects/12345\").",
+	//       "description": "Required. The relative name of the root asset. It can only be an organization number (such as \"organizations/123\"), a project ID (such as \"projects/my-project-id\")\", or a project number (such as \"projects/12345\").",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "readTimeWindow.endTime": {
-	//       "description": "End time of the time window (inclusive).\nCurrent timestamp if not specified.",
+	//       "description": "End time of the time window (inclusive). If not specified, the current timestamp is used instead.",
 	//       "format": "google-datetime",
 	//       "location": "query",
 	//       "type": "string"
@@ -2268,11 +3671,17 @@ type ProjectsExportAssetsCall struct {
 }
 
 // ExportAssets: Exports assets with time and resource types to a given
-// Cloud Storage
-// location. The output format is newline-delimited JSON.
-// This API implements the google.longrunning.Operation API allowing
-// you
-// to keep track of the export.
+// Cloud Storage location. The output format is newline-delimited JSON.
+// This API implements the google.longrunning.Operation API allowing you
+// to keep track of the export. We recommend intervals of at least 2
+// seconds with exponential retry to poll the export operation result.
+// For regular-size resource parent, the export operation usually
+// finishes within 5 minutes.
+//
+//   - parent: The relative name of the root asset. This can only be an
+//     organization number (such as "organizations/123"), a project ID
+//     (such as "projects/my-project-id"), a project number (such as
+//     "projects/12345"), or a folder number (such as "folders/123").
 func (r *ProjectsService) ExportAssets(parent string, exportassetsrequest *ExportAssetsRequest) *ProjectsExportAssetsCall {
 	c := &ProjectsExportAssetsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2307,7 +3716,7 @@ func (c *ProjectsExportAssetsCall) Header() http.Header {
 
 func (c *ProjectsExportAssetsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2347,17 +3756,17 @@ func (c *ProjectsExportAssetsCall) Do(opts ...googleapi.CallOption) (*Operation,
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -2371,7 +3780,7 @@ func (c *ProjectsExportAssetsCall) Do(opts ...googleapi.CallOption) (*Operation,
 	}
 	return ret, nil
 	// {
-	//   "description": "Exports assets with time and resource types to a given Cloud Storage\nlocation. The output format is newline-delimited JSON.\nThis API implements the google.longrunning.Operation API allowing you\nto keep track of the export.",
+	//   "description": "Exports assets with time and resource types to a given Cloud Storage location. The output format is newline-delimited JSON. This API implements the google.longrunning.Operation API allowing you to keep track of the export. We recommend intervals of at least 2 seconds with exponential retry to poll the export operation result. For regular-size resource parent, the export operation usually finishes within 5 minutes.",
 	//   "flatPath": "v1beta1/projects/{projectsId}:exportAssets",
 	//   "httpMethod": "POST",
 	//   "id": "cloudasset.projects.exportAssets",
@@ -2380,7 +3789,7 @@ func (c *ProjectsExportAssetsCall) Do(opts ...googleapi.CallOption) (*Operation,
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The relative name of the root asset. This can only be an\norganization number (such as \"organizations/123\"), a project ID (such as\n\"projects/my-project-id\"), a project number (such as \"projects/12345\"), or\na folder number (such as \"folders/123\").",
+	//       "description": "Required. The relative name of the root asset. This can only be an organization number (such as \"organizations/123\"), a project ID (such as \"projects/my-project-id\"), a project number (such as \"projects/12345\"), or a folder number (such as \"folders/123\").",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -2412,11 +3821,11 @@ type ProjectsOperationsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets the latest state of a long-running operation.  Clients can
-// use this
-// method to poll the operation result at intervals as recommended by
-// the API
-// service.
+// Get: Gets the latest state of a long-running operation. Clients can
+// use this method to poll the operation result at intervals as
+// recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsOperationsService) Get(name string) *ProjectsOperationsGetCall {
 	c := &ProjectsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2460,7 +3869,7 @@ func (c *ProjectsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2498,17 +3907,17 @@ func (c *ProjectsOperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -2522,7 +3931,7 @@ func (c *ProjectsOperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the latest state of a long-running operation.  Clients can use this\nmethod to poll the operation result at intervals as recommended by the API\nservice.",
+	//   "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/operations/{operationsId}/{operationsId1}",
 	//   "httpMethod": "GET",
 	//   "id": "cloudasset.projects.operations.get",

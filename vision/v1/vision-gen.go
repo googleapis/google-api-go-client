@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -10,35 +10,35 @@
 //
 // For product documentation, see: https://cloud.google.com/vision/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/vision/v1"
-//   ...
-//   ctx := context.Background()
-//   visionService, err := vision.NewService(ctx)
+//	import "google.golang.org/api/vision/v1"
+//	...
+//	ctx := context.Background()
+//	visionService, err := vision.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//   visionService, err := vision.NewService(ctx, option.WithScopes(vision.CloudVisionScope))
+//	visionService, err := vision.NewService(ctx, option.WithScopes(vision.CloudVisionScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   visionService, err := vision.NewService(ctx, option.WithAPIKey("AIza..."))
+//	visionService, err := vision.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   visionService, err := vision.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	visionService, err := vision.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package vision // import "google.golang.org/api/vision/v1"
@@ -56,6 +56,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -81,10 +82,12 @@ const apiId = "vision:v1"
 const apiName = "vision"
 const apiVersion = "v1"
 const basePath = "https://vision.googleapis.com/"
+const mtlsBasePath = "https://vision.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud data and see the
+	// email address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
 	// Apply machine learning models to understand and label images
@@ -93,13 +96,14 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
 		"https://www.googleapis.com/auth/cloud-vision",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -348,18 +352,16 @@ type ProjectsOperationsService struct {
 // `AddProductToProductSet` method.
 type AddProductToProductSetRequest struct {
 	// Product: Required. The resource name for the Product to be added to
-	// this ProductSet.
-	//
-	// Format is:
+	// this ProductSet. Format is:
 	// `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID`
 	Product string `json:"product,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Product") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Product") to include in
@@ -390,32 +392,22 @@ type AnnotateFileRequest struct {
 	// InputConfig: Required. Information about the input file.
 	InputConfig *InputConfig `json:"inputConfig,omitempty"`
 
-	// Pages: Pages of the file to perform image annotation.
-	//
-	// Pages starts from 1, we assume the first page of the file is page
-	// 1.
-	// At most 5 pages are supported per request. Pages can be
-	// negative.
-	//
-	// Page 1 means the first page.
-	// Page 2 means the second page.
-	// Page -1 means the last page.
-	// Page -2 means the second to the last page.
-	//
-	// If the file is GIF instead of PDF or TIFF, page refers to GIF
-	// frames.
-	//
-	// If this field is empty, by default the service performs image
-	// annotation
-	// for the first 5 pages of the file.
+	// Pages: Pages of the file to perform image annotation. Pages starts
+	// from 1, we assume the first page of the file is page 1. At most 5
+	// pages are supported per request. Pages can be negative. Page 1 means
+	// the first page. Page 2 means the second page. Page -1 means the last
+	// page. Page -2 means the second to the last page. If the file is GIF
+	// instead of PDF or TIFF, page refers to GIF frames. If this field is
+	// empty, by default the service performs image annotation for the first
+	// 5 pages of the file.
 	Pages []int64 `json:"pages,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Features") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Features") to include in
@@ -434,12 +426,11 @@ func (s *AnnotateFileRequest) MarshalJSON() ([]byte, error) {
 }
 
 // AnnotateFileResponse: Response to a single file annotation request. A
-// file may contain one or more
-// images, which individually have their own responses.
+// file may contain one or more images, which individually have their
+// own responses.
 type AnnotateFileResponse struct {
 	// Error: If set, represents the error message for the failed request.
-	// The
-	// `responses` field will not be set in this case.
+	// The `responses` field will not be set in this case.
 	Error *Status `json:"error,omitempty"`
 
 	// InputConfig: Information about the file for which this response is
@@ -447,8 +438,7 @@ type AnnotateFileResponse struct {
 	InputConfig *InputConfig `json:"inputConfig,omitempty"`
 
 	// Responses: Individual responses to images found within the file. This
-	// field will be
-	// empty if the `error` field is set.
+	// field will be empty if the `error` field is set.
 	Responses []*AnnotateImageResponse `json:"responses,omitempty"`
 
 	// TotalPages: This field gives the total number of pages in the file.
@@ -456,10 +446,10 @@ type AnnotateFileResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Error") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Error") to include in API
@@ -478,8 +468,8 @@ func (s *AnnotateFileResponse) MarshalJSON() ([]byte, error) {
 }
 
 // AnnotateImageRequest: Request for performing Google Cloud Vision API
-// tasks over a user-provided
-// image, with user-requested features, and with context information.
+// tasks over a user-provided image, with user-requested features, and
+// with context information.
 type AnnotateImageRequest struct {
 	// Features: Requested features.
 	Features []*Feature `json:"features,omitempty"`
@@ -492,10 +482,10 @@ type AnnotateImageRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "Features") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Features") to include in
@@ -516,17 +506,16 @@ func (s *AnnotateImageRequest) MarshalJSON() ([]byte, error) {
 // AnnotateImageResponse: Response to an image annotation request.
 type AnnotateImageResponse struct {
 	// Context: If present, contextual information is needed to understand
-	// where this image
-	// comes from.
+	// where this image comes from.
 	Context *ImageAnnotationContext `json:"context,omitempty"`
 
 	// CropHintsAnnotation: If present, crop hints have completed
 	// successfully.
 	CropHintsAnnotation *CropHintsAnnotation `json:"cropHintsAnnotation,omitempty"`
 
-	// Error: If set, represents the error message for the operation.
-	// Note that filled-in image annotations are guaranteed to be
-	// correct, even when `error` is set.
+	// Error: If set, represents the error message for the operation. Note
+	// that filled-in image annotations are guaranteed to be correct, even
+	// when `error` is set.
 	Error *Status `json:"error,omitempty"`
 
 	// FaceAnnotations: If present, face detection has completed
@@ -534,11 +523,8 @@ type AnnotateImageResponse struct {
 	FaceAnnotations []*FaceAnnotation `json:"faceAnnotations,omitempty"`
 
 	// FullTextAnnotation: If present, text (OCR) detection or document
-	// (OCR) text detection has
-	// completed successfully.
-	// This annotation provides the structural hierarchy for the OCR
-	// detected
-	// text.
+	// (OCR) text detection has completed successfully. This annotation
+	// provides the structural hierarchy for the OCR detected text.
 	FullTextAnnotation *TextAnnotation `json:"fullTextAnnotation,omitempty"`
 
 	// ImagePropertiesAnnotation: If present, image properties were
@@ -554,8 +540,8 @@ type AnnotateImageResponse struct {
 	LandmarkAnnotations []*EntityAnnotation `json:"landmarkAnnotations,omitempty"`
 
 	// LocalizedObjectAnnotations: If present, localized object detection
-	// has completed successfully.
-	// This will be sorted descending by confidence score.
+	// has completed successfully. This will be sorted descending by
+	// confidence score.
 	LocalizedObjectAnnotations []*LocalizedObjectAnnotation `json:"localizedObjectAnnotations,omitempty"`
 
 	// LogoAnnotations: If present, logo detection has completed
@@ -579,10 +565,10 @@ type AnnotateImageResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Context") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Context") to include in
@@ -618,10 +604,10 @@ type AsyncAnnotateFileRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "Features") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Features") to include in
@@ -648,10 +634,10 @@ type AsyncAnnotateFileResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "OutputConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "OutputConfig") to include
@@ -670,23 +656,14 @@ func (s *AsyncAnnotateFileResponse) MarshalJSON() ([]byte, error) {
 }
 
 // AsyncBatchAnnotateFilesRequest: Multiple async file annotation
-// requests are batched into a single service
-// call.
+// requests are batched into a single service call.
 type AsyncBatchAnnotateFilesRequest struct {
-	// Parent: Optional. Target project and location to make a
-	// call.
-	//
-	// Format: `projects/{project-id}/locations/{location-id}`.
-	//
-	// If no parent is specified, a region will be chosen
-	// automatically.
-	//
-	// Supported location-ids:
-	//     `us`: USA country only,
-	//     `asia`: East asia areas, like Japan, Taiwan,
-	//     `eu`: The European Union.
-	//
-	// Example: `projects/project-A/locations/eu`.
+	// Parent: Optional. Target project and location to make a call. Format:
+	// `projects/{project-id}/locations/{location-id}`. If no parent is
+	// specified, a region will be chosen automatically. Supported
+	// location-ids: `us`: USA country only, `asia`: East asia areas, like
+	// Japan, Taiwan, `eu`: The European Union. Example:
+	// `projects/project-A/locations/eu`.
 	Parent string `json:"parent,omitempty"`
 
 	// Requests: Required. Individual async file annotation requests for
@@ -695,10 +672,10 @@ type AsyncBatchAnnotateFilesRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "Parent") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Parent") to include in API
@@ -720,16 +697,15 @@ func (s *AsyncBatchAnnotateFilesRequest) MarshalJSON() ([]byte, error) {
 // annotation request.
 type AsyncBatchAnnotateFilesResponse struct {
 	// Responses: The list of file annotation responses, one for each
-	// request in
-	// AsyncBatchAnnotateFilesRequest.
+	// request in AsyncBatchAnnotateFilesRequest.
 	Responses []*AsyncAnnotateFileResponse `json:"responses,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Responses") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Responses") to include in
@@ -754,20 +730,12 @@ type AsyncBatchAnnotateImagesRequest struct {
 	// (e.g. format).
 	OutputConfig *OutputConfig `json:"outputConfig,omitempty"`
 
-	// Parent: Optional. Target project and location to make a
-	// call.
-	//
-	// Format: `projects/{project-id}/locations/{location-id}`.
-	//
-	// If no parent is specified, a region will be chosen
-	// automatically.
-	//
-	// Supported location-ids:
-	//     `us`: USA country only,
-	//     `asia`: East asia areas, like Japan, Taiwan,
-	//     `eu`: The European Union.
-	//
-	// Example: `projects/project-A/locations/eu`.
+	// Parent: Optional. Target project and location to make a call. Format:
+	// `projects/{project-id}/locations/{location-id}`. If no parent is
+	// specified, a region will be chosen automatically. Supported
+	// location-ids: `us`: USA country only, `asia`: East asia areas, like
+	// Japan, Taiwan, `eu`: The European Union. Example:
+	// `projects/project-A/locations/eu`.
 	Parent string `json:"parent,omitempty"`
 
 	// Requests: Required. Individual image annotation requests for this
@@ -776,10 +744,10 @@ type AsyncBatchAnnotateImagesRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "OutputConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "OutputConfig") to include
@@ -806,10 +774,10 @@ type AsyncBatchAnnotateImagesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "OutputConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "OutputConfig") to include
@@ -830,33 +798,24 @@ func (s *AsyncBatchAnnotateImagesResponse) MarshalJSON() ([]byte, error) {
 // BatchAnnotateFilesRequest: A list of requests to annotate files using
 // the BatchAnnotateFiles API.
 type BatchAnnotateFilesRequest struct {
-	// Parent: Optional. Target project and location to make a
-	// call.
-	//
-	// Format: `projects/{project-id}/locations/{location-id}`.
-	//
-	// If no parent is specified, a region will be chosen
-	// automatically.
-	//
-	// Supported location-ids:
-	//     `us`: USA country only,
-	//     `asia`: East asia areas, like Japan, Taiwan,
-	//     `eu`: The European Union.
-	//
-	// Example: `projects/project-A/locations/eu`.
+	// Parent: Optional. Target project and location to make a call. Format:
+	// `projects/{project-id}/locations/{location-id}`. If no parent is
+	// specified, a region will be chosen automatically. Supported
+	// location-ids: `us`: USA country only, `asia`: East asia areas, like
+	// Japan, Taiwan, `eu`: The European Union. Example:
+	// `projects/project-A/locations/eu`.
 	Parent string `json:"parent,omitempty"`
 
 	// Requests: Required. The list of file annotation requests. Right now
-	// we support only one
-	// AnnotateFileRequest in BatchAnnotateFilesRequest.
+	// we support only one AnnotateFileRequest in BatchAnnotateFilesRequest.
 	Requests []*AnnotateFileRequest `json:"requests,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Parent") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Parent") to include in API
@@ -877,8 +836,8 @@ func (s *BatchAnnotateFilesRequest) MarshalJSON() ([]byte, error) {
 // BatchAnnotateFilesResponse: A list of file annotation responses.
 type BatchAnnotateFilesResponse struct {
 	// Responses: The list of file annotation responses, each response
-	// corresponding to each
-	// AnnotateFileRequest in BatchAnnotateFilesRequest.
+	// corresponding to each AnnotateFileRequest in
+	// BatchAnnotateFilesRequest.
 	Responses []*AnnotateFileResponse `json:"responses,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -887,10 +846,10 @@ type BatchAnnotateFilesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Responses") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Responses") to include in
@@ -911,20 +870,12 @@ func (s *BatchAnnotateFilesResponse) MarshalJSON() ([]byte, error) {
 // BatchAnnotateImagesRequest: Multiple image annotation requests are
 // batched into a single service call.
 type BatchAnnotateImagesRequest struct {
-	// Parent: Optional. Target project and location to make a
-	// call.
-	//
-	// Format: `projects/{project-id}/locations/{location-id}`.
-	//
-	// If no parent is specified, a region will be chosen
-	// automatically.
-	//
-	// Supported location-ids:
-	//     `us`: USA country only,
-	//     `asia`: East asia areas, like Japan, Taiwan,
-	//     `eu`: The European Union.
-	//
-	// Example: `projects/project-A/locations/eu`.
+	// Parent: Optional. Target project and location to make a call. Format:
+	// `projects/{project-id}/locations/{location-id}`. If no parent is
+	// specified, a region will be chosen automatically. Supported
+	// location-ids: `us`: USA country only, `asia`: East asia areas, like
+	// Japan, Taiwan, `eu`: The European Union. Example:
+	// `projects/project-A/locations/eu`.
 	Parent string `json:"parent,omitempty"`
 
 	// Requests: Required. Individual image annotation requests for this
@@ -933,10 +884,10 @@ type BatchAnnotateImagesRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "Parent") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Parent") to include in API
@@ -967,10 +918,10 @@ type BatchAnnotateImagesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Responses") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Responses") to include in
@@ -989,14 +940,11 @@ func (s *BatchAnnotateImagesResponse) MarshalJSON() ([]byte, error) {
 }
 
 // BatchOperationMetadata: Metadata for the batch operations such as the
-// current state.
-//
-// This is included in the `metadata` field of the `Operation` returned
-// by the
-// `GetOperation` call of the `google::longrunning::Operations` service.
+// current state. This is included in the `metadata` field of the
+// `Operation` returned by the `GetOperation` call of the
+// `google::longrunning::Operations` service.
 type BatchOperationMetadata struct {
-	// EndTime: The time when the batch request is finished
-	// and
+	// EndTime: The time when the batch request is finished and
 	// google.longrunning.Operation.done is set to true.
 	EndTime string `json:"endTime,omitempty"`
 
@@ -1006,15 +954,13 @@ type BatchOperationMetadata struct {
 	//   "STATE_UNSPECIFIED" - Invalid.
 	//   "PROCESSING" - Request is actively being processed.
 	//   "SUCCESSFUL" - The request is done and at least one item has been
-	// successfully
-	// processed.
+	// successfully processed.
 	//   "FAILED" - The request is done and no item has been successfully
 	// processed.
 	//   "CANCELLED" - The request is done after the
-	// longrunning.Operations.CancelOperation has
-	// been called by the user.  Any records that were processed before
-	// the
-	// cancel command are output as specified in the request.
+	// longrunning.Operations.CancelOperation has been called by the user.
+	// Any records that were processed before the cancel command are output
+	// as specified in the request.
 	State string `json:"state,omitempty"`
 
 	// SubmitTime: The time when the batch request was submitted to the
@@ -1023,10 +969,10 @@ type BatchOperationMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "EndTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "EndTime") to include in
@@ -1057,30 +1003,14 @@ type Block struct {
 	//   "BARCODE" - Barcode block.
 	BlockType string `json:"blockType,omitempty"`
 
-	// BoundingBox: The bounding box for the block.
-	// The vertices are in the order of top-left, top-right,
-	// bottom-right,
-	// bottom-left. When a rotation of the bounding box is detected the
-	// rotation
-	// is represented as around the top-left corner as defined when the text
-	// is
-	// read in the 'natural' orientation.
-	// For example:
-	//
-	// * when the text is horizontal it might look like:
-	//
-	//         0----1
-	//         |    |
-	//         3----2
-	//
-	// * when it's rotated 180 degrees around the top-left corner it
-	// becomes:
-	//
-	//         2----3
-	//         |    |
-	//         1----0
-	//
-	//   and the vertex order will still be (0, 1, 2, 3).
+	// BoundingBox: The bounding box for the block. The vertices are in the
+	// order of top-left, top-right, bottom-right, bottom-left. When a
+	// rotation of the bounding box is detected the rotation is represented
+	// as around the top-left corner as defined when the text is read in the
+	// 'natural' orientation. For example: * when the text is horizontal it
+	// might look like: 0----1 | | 3----2 * when it's rotated 180 degrees
+	// around the top-left corner it becomes: 2----3 | | 1----0 and the
+	// vertex order will still be (0, 1, 2, 3).
 	BoundingBox *BoundingPoly `json:"boundingBox,omitempty"`
 
 	// Confidence: Confidence of the OCR results on the block. Range [0, 1].
@@ -1095,10 +1025,10 @@ type Block struct {
 
 	// ForceSendFields is a list of field names (e.g. "BlockType") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BlockType") to include in
@@ -1140,10 +1070,10 @@ type BoundingPoly struct {
 
 	// ForceSendFields is a list of field names (e.g. "NormalizedVertices")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NormalizedVertices") to
@@ -1168,153 +1098,68 @@ type CancelOperationRequest struct {
 }
 
 // Color: Represents a color in the RGBA color space. This
-// representation is designed
-// for simplicity of conversion to/from color representations in
-// various
-// languages over compactness; for example, the fields of this
-// representation
-// can be trivially provided to the constructor of "java.awt.Color" in
-// Java; it
-// can also be trivially provided to UIColor's
-// "+colorWithRed:green:blue:alpha"
-// method in iOS; and, with just a little work, it can be easily
-// formatted into
-// a CSS "rgba()" string in JavaScript, as well.
-//
-// Note: this proto does not carry information about the absolute color
-// space
-// that should be used to interpret the RGB value (e.g. sRGB, Adobe
-// RGB,
-// DCI-P3, BT.2020, etc.). By default, applications SHOULD assume the
-// sRGB color
-// space.
-//
-// Example (Java):
-//
-//      import com.google.type.Color;
-//
-//      // ...
-//      public static java.awt.Color fromProto(Color protocolor) {
-//        float alpha = protocolor.hasAlpha()
-//            ? protocolor.getAlpha().getValue()
-//            : 1.0;
-//
-//        return new java.awt.Color(
-//            protocolor.getRed(),
-//            protocolor.getGreen(),
-//            protocolor.getBlue(),
-//            alpha);
-//      }
-//
-//      public static Color toProto(java.awt.Color color) {
-//        float red = (float) color.getRed();
-//        float green = (float) color.getGreen();
-//        float blue = (float) color.getBlue();
-//        float denominator = 255.0;
-//        Color.Builder resultBuilder =
-//            Color
-//                .newBuilder()
-//                .setRed(red / denominator)
-//                .setGreen(green / denominator)
-//                .setBlue(blue / denominator);
-//        int alpha = color.getAlpha();
-//        if (alpha != 255) {
-//          result.setAlpha(
-//              FloatValue
-//                  .newBuilder()
-//                  .setValue(((float) alpha) / denominator)
-//                  .build());
-//        }
-//        return resultBuilder.build();
-//      }
-//      // ...
-//
-// Example (iOS / Obj-C):
-//
-//      // ...
-//      static UIColor* fromProto(Color* protocolor) {
-//         float red = [protocolor red];
-//         float green = [protocolor green];
-//         float blue = [protocolor blue];
-//         FloatValue* alpha_wrapper = [protocolor alpha];
-//         float alpha = 1.0;
-//         if (alpha_wrapper != nil) {
-//           alpha = [alpha_wrapper value];
-//         }
-//         return [UIColor colorWithRed:red green:green blue:blue
-// alpha:alpha];
-//      }
-//
-//      static Color* toProto(UIColor* color) {
-//          CGFloat red, green, blue, alpha;
-//          if (![color getRed:&red green:&green blue:&blue
-// alpha:&alpha]) {
-//            return nil;
-//          }
-//          Color* result = [[Color alloc] init];
-//          [result setRed:red];
-//          [result setGreen:green];
-//          [result setBlue:blue];
-//          if (alpha <= 0.9999) {
-//            [result setAlpha:floatWrapperWithValue(alpha)];
-//          }
-//          [result autorelease];
-//          return result;
-//     }
-//     // ...
-//
-//  Example (JavaScript):
-//
-//     // ...
-//
-//     var protoToCssColor = function(rgb_color) {
-//        var redFrac = rgb_color.red || 0.0;
-//        var greenFrac = rgb_color.green || 0.0;
-//        var blueFrac = rgb_color.blue || 0.0;
-//        var red = Math.floor(redFrac * 255);
-//        var green = Math.floor(greenFrac * 255);
-//        var blue = Math.floor(blueFrac * 255);
-//
-//        if (!('alpha' in rgb_color)) {
-//           return rgbToCssColor_(red, green, blue);
-//        }
-//
-//        var alphaFrac = rgb_color.alpha.value || 0.0;
-//        var rgbParams = [red, green, blue].join(',');
-//        return ['rgba(', rgbParams, ',', alphaFrac, ')'].join('');
-//     };
-//
-//     var rgbToCssColor_ = function(red, green, blue) {
-//       var rgbNumber = new Number((red << 16) | (green << 8) | blue);
-//       var hexString = rgbNumber.toString(16);
-//       var missingZeros = 6 - hexString.length;
-//       var resultBuilder = ['#'];
-//       for (var i = 0; i < missingZeros; i++) {
-//          resultBuilder.push('0');
-//       }
-//       resultBuilder.push(hexString);
-//       return resultBuilder.join('');
-//     };
-//
-//     // ...
+// representation is designed for simplicity of conversion to/from color
+// representations in various languages over compactness. For example,
+// the fields of this representation can be trivially provided to the
+// constructor of `java.awt.Color` in Java; it can also be trivially
+// provided to UIColor's `+colorWithRed:green:blue:alpha` method in iOS;
+// and, with just a little work, it can be easily formatted into a CSS
+// `rgba()` string in JavaScript. This reference page doesn't carry
+// information about the absolute color space that should be used to
+// interpret the RGB value (e.g. sRGB, Adobe RGB, DCI-P3, BT.2020,
+// etc.). By default, applications should assume the sRGB color space.
+// When color equality needs to be decided, implementations, unless
+// documented otherwise, treat two colors as equal if all their red,
+// green, blue, and alpha values each differ by at most 1e-5. Example
+// (Java): import com.google.type.Color; // ... public static
+// java.awt.Color fromProto(Color protocolor) { float alpha =
+// protocolor.hasAlpha() ? protocolor.getAlpha().getValue() : 1.0;
+// return new java.awt.Color( protocolor.getRed(),
+// protocolor.getGreen(), protocolor.getBlue(), alpha); } public static
+// Color toProto(java.awt.Color color) { float red = (float)
+// color.getRed(); float green = (float) color.getGreen(); float blue =
+// (float) color.getBlue(); float denominator = 255.0; Color.Builder
+// resultBuilder = Color .newBuilder() .setRed(red / denominator)
+// .setGreen(green / denominator) .setBlue(blue / denominator); int
+// alpha = color.getAlpha(); if (alpha != 255) { result.setAlpha(
+// FloatValue .newBuilder() .setValue(((float) alpha) / denominator)
+// .build()); } return resultBuilder.build(); } // ... Example (iOS /
+// Obj-C): // ... static UIColor* fromProto(Color* protocolor) { float
+// red = [protocolor red]; float green = [protocolor green]; float blue
+// = [protocolor blue]; FloatValue* alpha_wrapper = [protocolor alpha];
+// float alpha = 1.0; if (alpha_wrapper != nil) { alpha = [alpha_wrapper
+// value]; } return [UIColor colorWithRed:red green:green blue:blue
+// alpha:alpha]; } static Color* toProto(UIColor* color) { CGFloat red,
+// green, blue, alpha; if (![color getRed:&red green:&green blue:&blue
+// alpha:&alpha]) { return nil; } Color* result = [[Color alloc] init];
+// [result setRed:red]; [result setGreen:green]; [result setBlue:blue];
+// if (alpha <= 0.9999) { [result
+// setAlpha:floatWrapperWithValue(alpha)]; } [result autorelease];
+// return result; } // ... Example (JavaScript): // ... var
+// protoToCssColor = function(rgb_color) { var redFrac = rgb_color.red
+// || 0.0; var greenFrac = rgb_color.green || 0.0; var blueFrac =
+// rgb_color.blue || 0.0; var red = Math.floor(redFrac * 255); var green
+// = Math.floor(greenFrac * 255); var blue = Math.floor(blueFrac * 255);
+// if (!('alpha' in rgb_color)) { return rgbToCssColor(red, green,
+// blue); } var alphaFrac = rgb_color.alpha.value || 0.0; var rgbParams
+// = [red, green, blue].join(','); return ['rgba(', rgbParams, ',',
+// alphaFrac, ')'].join(”); }; var rgbToCssColor = function(red, green,
+// blue) { var rgbNumber = new Number((red << 16) | (green << 8) |
+// blue); var hexString = rgbNumber.toString(16); var missingZeros = 6 -
+// hexString.length; var resultBuilder = ['#']; for (var i = 0; i <
+// missingZeros; i++) { resultBuilder.push('0'); }
+// resultBuilder.push(hexString); return resultBuilder.join(”); }; //
+// ...
 type Color struct {
 	// Alpha: The fraction of this color that should be applied to the
-	// pixel. That is,
-	// the final pixel color is defined by the equation:
-	//
-	//   pixel color = alpha * (this color) + (1.0 - alpha) * (background
-	// color)
-	//
-	// This means that a value of 1.0 corresponds to a solid color,
-	// whereas
-	// a value of 0.0 corresponds to a completely transparent color.
-	// This
-	// uses a wrapper message rather than a simple float scalar so that it
-	// is
-	// possible to distinguish between a default value and the value being
-	// unset.
-	// If omitted, this color object is to be rendered as a solid color
-	// (as if the alpha value had been explicitly given with a value of
+	// pixel. That is, the final pixel color is defined by the equation:
+	// `pixel color = alpha * (this color) + (1.0 - alpha) * (background
+	// color)` This means that a value of 1.0 corresponds to a solid color,
+	// whereas a value of 0.0 corresponds to a completely transparent color.
+	// This uses a wrapper message rather than a simple float scalar so that
+	// it is possible to distinguish between a default value and the value
+	// being unset. If omitted, this color object is rendered as a solid
+	// color (as if the alpha value had been explicitly given a value of
 	// 1.0).
 	Alpha float64 `json:"alpha,omitempty"`
 
@@ -1332,10 +1177,10 @@ type Color struct {
 
 	// ForceSendFields is a list of field names (e.g. "Alpha") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Alpha") to include in API
@@ -1374,15 +1219,13 @@ func (s *Color) UnmarshalJSON(data []byte) error {
 }
 
 // ColorInfo: Color information consists of RGB channels, score, and the
-// fraction of
-// the image that the color occupies in the image.
+// fraction of the image that the color occupies in the image.
 type ColorInfo struct {
 	// Color: RGB components of the color.
 	Color *Color `json:"color,omitempty"`
 
 	// PixelFraction: The fraction of pixels the color occupies in the
-	// image.
-	// Value in range [0, 1].
+	// image. Value in range [0, 1].
 	PixelFraction float64 `json:"pixelFraction,omitempty"`
 
 	// Score: Image-specific score for this color. Value in range [0, 1].
@@ -1390,10 +1233,10 @@ type ColorInfo struct {
 
 	// ForceSendFields is a list of field names (e.g. "Color") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Color") to include in API
@@ -1431,24 +1274,22 @@ func (s *ColorInfo) UnmarshalJSON(data []byte) error {
 // serving an image.
 type CropHint struct {
 	// BoundingPoly: The bounding polygon for the crop region. The
-	// coordinates of the bounding
-	// box are in the original image's scale.
+	// coordinates of the bounding box are in the original image's scale.
 	BoundingPoly *BoundingPoly `json:"boundingPoly,omitempty"`
 
-	// Confidence: Confidence of this being a salient region.  Range [0, 1].
+	// Confidence: Confidence of this being a salient region. Range [0, 1].
 	Confidence float64 `json:"confidence,omitempty"`
 
 	// ImportanceFraction: Fraction of importance of this salient region
-	// with respect to the original
-	// image.
+	// with respect to the original image.
 	ImportanceFraction float64 `json:"importanceFraction,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BoundingPoly") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BoundingPoly") to include
@@ -1490,10 +1331,10 @@ type CropHintsAnnotation struct {
 
 	// ForceSendFields is a list of field names (e.g. "CropHints") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CropHints") to include in
@@ -1514,24 +1355,19 @@ func (s *CropHintsAnnotation) MarshalJSON() ([]byte, error) {
 // CropHintsParams: Parameters for crop hints annotation request.
 type CropHintsParams struct {
 	// AspectRatios: Aspect ratios in floats, representing the ratio of the
-	// width to the height
-	// of the image. For example, if the desired aspect ratio is 4/3,
-	// the
-	// corresponding float value should be 1.33333.  If not specified,
-	// the
-	// best possible crop is returned. The number of provided aspect ratios
-	// is
-	// limited to a maximum of 16; any aspect ratios provided after the 16th
-	// are
-	// ignored.
+	// width to the height of the image. For example, if the desired aspect
+	// ratio is 4/3, the corresponding float value should be 1.33333. If not
+	// specified, the best possible crop is returned. The number of provided
+	// aspect ratios is limited to a maximum of 16; any aspect ratios
+	// provided after the 16th are ignored.
 	AspectRatios []float64 `json:"aspectRatios,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AspectRatios") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AspectRatios") to include
@@ -1562,17 +1398,16 @@ type DetectedBreak struct {
 	//   "SURE_SPACE" - Sure space (very wide).
 	//   "EOL_SURE_SPACE" - Line-wrapping break.
 	//   "HYPHEN" - End-line hyphen that is not present in text; does not
-	// co-occur with
-	// `SPACE`, `LEADER_SPACE`, or `LINE_BREAK`.
+	// co-occur with `SPACE`, `LEADER_SPACE`, or `LINE_BREAK`.
 	//   "LINE_BREAK" - Line break that ends a paragraph.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "IsPrefix") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "IsPrefix") to include in
@@ -1596,18 +1431,16 @@ type DetectedLanguage struct {
 	Confidence float64 `json:"confidence,omitempty"`
 
 	// LanguageCode: The BCP-47 language code, such as "en-US" or "sr-Latn".
-	// For more
-	// information,
-	// see
+	// For more information, see
 	// http://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Confidence") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Confidence") to include in
@@ -1647,10 +1480,10 @@ type DominantColorsAnnotation struct {
 
 	// ForceSendFields is a list of field names (e.g. "Colors") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Colors") to include in API
@@ -1669,17 +1502,10 @@ func (s *DominantColorsAnnotation) MarshalJSON() ([]byte, error) {
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
-// duplicated
-// empty messages in your APIs. A typical example is to use it as the
-// request
-// or the response type of an API method. For instance:
-//
-//     service Foo {
-//       rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty);
-//     }
-//
-// The JSON representation for `Empty` is empty JSON object `{}`.
+// duplicated empty messages in your APIs. A typical example is to use
+// it as the request or the response type of an API method. For
+// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); }
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -1688,71 +1514,57 @@ type Empty struct {
 
 // EntityAnnotation: Set of detected entity features.
 type EntityAnnotation struct {
-	// BoundingPoly: Image region to which this entity belongs. Not
-	// produced
+	// BoundingPoly: Image region to which this entity belongs. Not produced
 	// for `LABEL_DETECTION` features.
 	BoundingPoly *BoundingPoly `json:"boundingPoly,omitempty"`
 
-	// Confidence: **Deprecated. Use `score` instead.**
-	// The accuracy of the entity detection in an image.
-	// For example, for an image in which the "Eiffel Tower" entity is
-	// detected,
-	// this field represents the confidence that there is a tower in the
-	// query
-	// image. Range [0, 1].
+	// Confidence: **Deprecated. Use `score` instead.** The accuracy of the
+	// entity detection in an image. For example, for an image in which the
+	// "Eiffel Tower" entity is detected, this field represents the
+	// confidence that there is a tower in the query image. Range [0, 1].
 	Confidence float64 `json:"confidence,omitempty"`
 
 	// Description: Entity textual description, expressed in its `locale`
 	// language.
 	Description string `json:"description,omitempty"`
 
-	// Locale: The language code for the locale in which the entity
-	// textual
+	// Locale: The language code for the locale in which the entity textual
 	// `description` is expressed.
 	Locale string `json:"locale,omitempty"`
 
-	// Locations: The location information for the detected entity.
-	// Multiple
-	// `LocationInfo` elements can be present because one location
-	// may
-	// indicate the location of the scene in the image, and another
-	// location
-	// may indicate the location of the place where the image was
-	// taken.
+	// Locations: The location information for the detected entity. Multiple
+	// `LocationInfo` elements can be present because one location may
+	// indicate the location of the scene in the image, and another location
+	// may indicate the location of the place where the image was taken.
 	// Location information is usually present for landmarks.
 	Locations []*LocationInfo `json:"locations,omitempty"`
 
-	// Mid: Opaque entity ID. Some IDs may be available in
-	// [Google Knowledge Graph
-	// Search
-	// API](https://developers.google.com/knowledge-graph/).
+	// Mid: Opaque entity ID. Some IDs may be available in Google Knowledge
+	// Graph Search API (https://developers.google.com/knowledge-graph/).
 	Mid string `json:"mid,omitempty"`
 
 	// Properties: Some entities may have optional user-supplied `Property`
-	// (name/value)
-	// fields, such a score or string that qualifies the entity.
+	// (name/value) fields, such a score or string that qualifies the
+	// entity.
 	Properties []*Property `json:"properties,omitempty"`
 
 	// Score: Overall score of the result. Range [0, 1].
 	Score float64 `json:"score,omitempty"`
 
 	// Topicality: The relevancy of the ICA (Image Content Annotation) label
-	// to the
-	// image. For example, the relevancy of "tower" is likely higher to an
-	// image
-	// containing the detected "Eiffel Tower" than to an image containing
-	// a
-	// detected distant towering building, even though the confidence
-	// that
-	// there is a tower in each image may be the same. Range [0, 1].
+	// to the image. For example, the relevancy of "tower" is likely higher
+	// to an image containing the detected "Eiffel Tower" than to an image
+	// containing a detected distant towering building, even though the
+	// confidence that there is a tower in each image may be the same. Range
+	// [0, 1].
 	Topicality float64 `json:"topicality,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BoundingPoly") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BoundingPoly") to include
@@ -1814,15 +1626,11 @@ type FaceAnnotation struct {
 	BlurredLikelihood string `json:"blurredLikelihood,omitempty"`
 
 	// BoundingPoly: The bounding polygon around the face. The coordinates
-	// of the bounding box
-	// are in the original image's scale.
-	// The bounding box is computed to "frame" the face in accordance with
-	// human
-	// expectations. It is based on the landmarker results.
-	// Note that one or more x and/or y coordinates may not be generated in
-	// the
-	// `BoundingPoly` (the polygon will be unbounded) if only a partial
-	// face
+	// of the bounding box are in the original image's scale. The bounding
+	// box is computed to "frame" the face in accordance with human
+	// expectations. It is based on the landmarker results. Note that one or
+	// more x and/or y coordinates may not be generated in the
+	// `BoundingPoly` (the polygon will be unbounded) if only a partial face
 	// appears in the image to be annotated.
 	BoundingPoly *BoundingPoly `json:"boundingPoly,omitempty"`
 
@@ -1830,15 +1638,11 @@ type FaceAnnotation struct {
 	DetectionConfidence float64 `json:"detectionConfidence,omitempty"`
 
 	// FdBoundingPoly: The `fd_bounding_poly` bounding polygon is tighter
-	// than the
-	// `boundingPoly`, and encloses only the skin part of the face.
-	// Typically, it
-	// is used to eliminate the face from any image analysis that detects
-	// the
-	// "amount of skin" visible in an image. It is not based on
-	// the
-	// landmarker results, only on the initial face detection, hence
-	// the <code>fd</code> (face detection) prefix.
+	// than the `boundingPoly`, and encloses only the skin part of the face.
+	// Typically, it is used to eliminate the face from any image analysis
+	// that detects the "amount of skin" visible in an image. It is not
+	// based on the landmarker results, only on the initial face detection,
+	// hence the fd (face detection) prefix.
 	FdBoundingPoly *BoundingPoly `json:"fdBoundingPoly,omitempty"`
 
 	// HeadwearLikelihood: Headwear likelihood.
@@ -1870,17 +1674,13 @@ type FaceAnnotation struct {
 	Landmarks []*Landmark `json:"landmarks,omitempty"`
 
 	// PanAngle: Yaw angle, which indicates the leftward/rightward angle
-	// that the face is
-	// pointing relative to the vertical plane perpendicular to the image.
-	// Range
-	// [-180,180].
+	// that the face is pointing relative to the vertical plane
+	// perpendicular to the image. Range [-180,180].
 	PanAngle float64 `json:"panAngle,omitempty"`
 
 	// RollAngle: Roll angle, which indicates the amount of
-	// clockwise/anti-clockwise rotation
-	// of the face relative to the image vertical about the axis
-	// perpendicular to
-	// the face. Range [-180,180].
+	// clockwise/anti-clockwise rotation of the face relative to the image
+	// vertical about the axis perpendicular to the face. Range [-180,180].
 	RollAngle float64 `json:"rollAngle,omitempty"`
 
 	// SorrowLikelihood: Sorrow likelihood.
@@ -1906,8 +1706,8 @@ type FaceAnnotation struct {
 	SurpriseLikelihood string `json:"surpriseLikelihood,omitempty"`
 
 	// TiltAngle: Pitch angle, which indicates the upwards/downwards angle
-	// that the face is
-	// pointing relative to the image's horizontal plane. Range [-180,180].
+	// that the face is pointing relative to the image's horizontal plane.
+	// Range [-180,180].
 	TiltAngle float64 `json:"tiltAngle,omitempty"`
 
 	// UnderExposedLikelihood: Under-exposed likelihood.
@@ -1923,10 +1723,10 @@ type FaceAnnotation struct {
 
 	// ForceSendFields is a list of field names (e.g. "AngerLikelihood") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AngerLikelihood") to
@@ -1968,20 +1768,17 @@ func (s *FaceAnnotation) UnmarshalJSON(data []byte) error {
 }
 
 // Feature: The type of Google Cloud Vision API detection to perform,
-// and the maximum
-// number of results to return for that type. Multiple `Feature` objects
-// can
-// be specified in the `features` list.
+// and the maximum number of results to return for that type. Multiple
+// `Feature` objects can be specified in the `features` list.
 type Feature struct {
-	// MaxResults: Maximum number of results of this type. Does not apply
-	// to
+	// MaxResults: Maximum number of results of this type. Does not apply to
 	// `TEXT_DETECTION`, `DOCUMENT_TEXT_DETECTION`, or `CROP_HINTS`.
 	MaxResults int64 `json:"maxResults,omitempty"`
 
-	// Model: Model to use for the feature.
-	// Supported values: "builtin/stable" (the default if unset)
-	// and
-	// "builtin/latest".
+	// Model: Model to use for the feature. Supported values:
+	// "builtin/stable" (the default if unset) and "builtin/latest".
+	// `DOCUMENT_TEXT_DETECTION` and `TEXT_DETECTION` also support
+	// "builtin/weekly" for the bleeding edge release updated weekly.
 	Model string `json:"model,omitempty"`
 
 	// Type: The feature type.
@@ -1993,18 +1790,15 @@ type Feature struct {
 	//   "LOGO_DETECTION" - Run logo detection.
 	//   "LABEL_DETECTION" - Run label detection.
 	//   "TEXT_DETECTION" - Run text detection / optical character
-	// recognition (OCR). Text detection
-	// is optimized for areas of text within a larger image; if the image
-	// is
-	// a document, use `DOCUMENT_TEXT_DETECTION` instead.
+	// recognition (OCR). Text detection is optimized for areas of text
+	// within a larger image; if the image is a document, use
+	// `DOCUMENT_TEXT_DETECTION` instead.
 	//   "DOCUMENT_TEXT_DETECTION" - Run dense text document OCR. Takes
-	// precedence when both
-	// `DOCUMENT_TEXT_DETECTION` and `TEXT_DETECTION` are present.
+	// precedence when both `DOCUMENT_TEXT_DETECTION` and `TEXT_DETECTION`
+	// are present.
 	//   "SAFE_SEARCH_DETECTION" - Run Safe Search to detect potentially
-	// unsafe
-	// or undesirable content.
-	//   "IMAGE_PROPERTIES" - Compute a set of image properties, such as
-	// the
+	// unsafe or undesirable content.
+	//   "IMAGE_PROPERTIES" - Compute a set of image properties, such as the
 	// image's dominant colors.
 	//   "CROP_HINTS" - Run crop hints.
 	//   "WEB_DETECTION" - Run web detection.
@@ -2014,10 +1808,10 @@ type Feature struct {
 
 	// ForceSendFields is a list of field names (e.g. "MaxResults") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "MaxResults") to include in
@@ -2039,47 +1833,30 @@ func (s *Feature) MarshalJSON() ([]byte, error) {
 // will be written to.
 type GcsDestination struct {
 	// Uri: Google Cloud Storage URI prefix where the results will be
-	// stored. Results
-	// will be in JSON format and preceded by its corresponding input URI
-	// prefix.
-	// This field can either represent a gcs file prefix or gcs directory.
-	// In
-	// either case, the uri should be unique because in order to get all of
-	// the
-	// output files, you will need to do a wildcard gcs search on the uri
-	// prefix
-	// you provide.
-	//
-	// Examples:
-	//
-	// *    File Prefix: gs://bucket-name/here/filenameprefix   The output
-	// files
-	// will be created in gs://bucket-name/here/ and the names of the
-	// output files will begin with "filenameprefix".
-	//
-	// *    Directory Prefix: gs://bucket-name/some/location/   The output
-	// files
-	// will be created in gs://bucket-name/some/location/ and the names of
-	// the
-	// output files could be anything because there was no filename
-	// prefix
-	// specified.
-	//
-	// If multiple outputs, each response is still AnnotateFileResponse,
-	// each of
-	// which contains some subset of the full list of
-	// AnnotateImageResponse.
-	// Multiple outputs can happen if, for example, the output JSON is too
-	// large
-	// and overflows into multiple sharded files.
+	// stored. Results will be in JSON format and preceded by its
+	// corresponding input URI prefix. This field can either represent a gcs
+	// file prefix or gcs directory. In either case, the uri should be
+	// unique because in order to get all of the output files, you will need
+	// to do a wildcard gcs search on the uri prefix you provide. Examples:
+	// * File Prefix: gs://bucket-name/here/filenameprefix The output files
+	// will be created in gs://bucket-name/here/ and the names of the output
+	// files will begin with "filenameprefix". * Directory Prefix:
+	// gs://bucket-name/some/location/ The output files will be created in
+	// gs://bucket-name/some/location/ and the names of the output files
+	// could be anything because there was no filename prefix specified. If
+	// multiple outputs, each response is still AnnotateFileResponse, each
+	// of which contains some subset of the full list of
+	// AnnotateImageResponse. Multiple outputs can happen if, for example,
+	// the output JSON is too large and overflows into multiple sharded
+	// files.
 	Uri string `json:"uri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Uri") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Uri") to include in API
@@ -2100,17 +1877,16 @@ func (s *GcsDestination) MarshalJSON() ([]byte, error) {
 // GcsSource: The Google Cloud Storage location where the input will be
 // read from.
 type GcsSource struct {
-	// Uri: Google Cloud Storage URI for the input file. This must only be
-	// a
+	// Uri: Google Cloud Storage URI for the input file. This must only be a
 	// Google Cloud Storage object. Wildcards are not currently supported.
 	Uri string `json:"uri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Uri") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Uri") to include in API
@@ -2129,12 +1905,11 @@ func (s *GcsSource) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudVisionV1p1beta1AnnotateFileResponse: Response to a single
-// file annotation request. A file may contain one or more
-// images, which individually have their own responses.
+// file annotation request. A file may contain one or more images, which
+// individually have their own responses.
 type GoogleCloudVisionV1p1beta1AnnotateFileResponse struct {
 	// Error: If set, represents the error message for the failed request.
-	// The
-	// `responses` field will not be set in this case.
+	// The `responses` field will not be set in this case.
 	Error *Status `json:"error,omitempty"`
 
 	// InputConfig: Information about the file for which this response is
@@ -2142,8 +1917,7 @@ type GoogleCloudVisionV1p1beta1AnnotateFileResponse struct {
 	InputConfig *GoogleCloudVisionV1p1beta1InputConfig `json:"inputConfig,omitempty"`
 
 	// Responses: Individual responses to images found within the file. This
-	// field will be
-	// empty if the `error` field is set.
+	// field will be empty if the `error` field is set.
 	Responses []*GoogleCloudVisionV1p1beta1AnnotateImageResponse `json:"responses,omitempty"`
 
 	// TotalPages: This field gives the total number of pages in the file.
@@ -2151,10 +1925,10 @@ type GoogleCloudVisionV1p1beta1AnnotateFileResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Error") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Error") to include in API
@@ -2176,17 +1950,16 @@ func (s *GoogleCloudVisionV1p1beta1AnnotateFileResponse) MarshalJSON() ([]byte, 
 // annotation request.
 type GoogleCloudVisionV1p1beta1AnnotateImageResponse struct {
 	// Context: If present, contextual information is needed to understand
-	// where this image
-	// comes from.
+	// where this image comes from.
 	Context *GoogleCloudVisionV1p1beta1ImageAnnotationContext `json:"context,omitempty"`
 
 	// CropHintsAnnotation: If present, crop hints have completed
 	// successfully.
 	CropHintsAnnotation *GoogleCloudVisionV1p1beta1CropHintsAnnotation `json:"cropHintsAnnotation,omitempty"`
 
-	// Error: If set, represents the error message for the operation.
-	// Note that filled-in image annotations are guaranteed to be
-	// correct, even when `error` is set.
+	// Error: If set, represents the error message for the operation. Note
+	// that filled-in image annotations are guaranteed to be correct, even
+	// when `error` is set.
 	Error *Status `json:"error,omitempty"`
 
 	// FaceAnnotations: If present, face detection has completed
@@ -2194,11 +1967,8 @@ type GoogleCloudVisionV1p1beta1AnnotateImageResponse struct {
 	FaceAnnotations []*GoogleCloudVisionV1p1beta1FaceAnnotation `json:"faceAnnotations,omitempty"`
 
 	// FullTextAnnotation: If present, text (OCR) detection or document
-	// (OCR) text detection has
-	// completed successfully.
-	// This annotation provides the structural hierarchy for the OCR
-	// detected
-	// text.
+	// (OCR) text detection has completed successfully. This annotation
+	// provides the structural hierarchy for the OCR detected text.
 	FullTextAnnotation *GoogleCloudVisionV1p1beta1TextAnnotation `json:"fullTextAnnotation,omitempty"`
 
 	// ImagePropertiesAnnotation: If present, image properties were
@@ -2214,8 +1984,8 @@ type GoogleCloudVisionV1p1beta1AnnotateImageResponse struct {
 	LandmarkAnnotations []*GoogleCloudVisionV1p1beta1EntityAnnotation `json:"landmarkAnnotations,omitempty"`
 
 	// LocalizedObjectAnnotations: If present, localized object detection
-	// has completed successfully.
-	// This will be sorted descending by confidence score.
+	// has completed successfully. This will be sorted descending by
+	// confidence score.
 	LocalizedObjectAnnotations []*GoogleCloudVisionV1p1beta1LocalizedObjectAnnotation `json:"localizedObjectAnnotations,omitempty"`
 
 	// LogoAnnotations: If present, logo detection has completed
@@ -2239,10 +2009,10 @@ type GoogleCloudVisionV1p1beta1AnnotateImageResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Context") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Context") to include in
@@ -2269,10 +2039,10 @@ type GoogleCloudVisionV1p1beta1AsyncAnnotateFileResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "OutputConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "OutputConfig") to include
@@ -2294,16 +2064,15 @@ func (s *GoogleCloudVisionV1p1beta1AsyncAnnotateFileResponse) MarshalJSON() ([]b
 // to an async batch file annotation request.
 type GoogleCloudVisionV1p1beta1AsyncBatchAnnotateFilesResponse struct {
 	// Responses: The list of file annotation responses, one for each
-	// request in
-	// AsyncBatchAnnotateFilesRequest.
+	// request in AsyncBatchAnnotateFilesRequest.
 	Responses []*GoogleCloudVisionV1p1beta1AsyncAnnotateFileResponse `json:"responses,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Responses") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Responses") to include in
@@ -2334,30 +2103,14 @@ type GoogleCloudVisionV1p1beta1Block struct {
 	//   "BARCODE" - Barcode block.
 	BlockType string `json:"blockType,omitempty"`
 
-	// BoundingBox: The bounding box for the block.
-	// The vertices are in the order of top-left, top-right,
-	// bottom-right,
-	// bottom-left. When a rotation of the bounding box is detected the
-	// rotation
-	// is represented as around the top-left corner as defined when the text
-	// is
-	// read in the 'natural' orientation.
-	// For example:
-	//
-	// * when the text is horizontal it might look like:
-	//
-	//         0----1
-	//         |    |
-	//         3----2
-	//
-	// * when it's rotated 180 degrees around the top-left corner it
-	// becomes:
-	//
-	//         2----3
-	//         |    |
-	//         1----0
-	//
-	//   and the vertex order will still be (0, 1, 2, 3).
+	// BoundingBox: The bounding box for the block. The vertices are in the
+	// order of top-left, top-right, bottom-right, bottom-left. When a
+	// rotation of the bounding box is detected the rotation is represented
+	// as around the top-left corner as defined when the text is read in the
+	// 'natural' orientation. For example: * when the text is horizontal it
+	// might look like: 0----1 | | 3----2 * when it's rotated 180 degrees
+	// around the top-left corner it becomes: 2----3 | | 1----0 and the
+	// vertex order will still be (0, 1, 2, 3).
 	BoundingBox *GoogleCloudVisionV1p1beta1BoundingPoly `json:"boundingBox,omitempty"`
 
 	// Confidence: Confidence of the OCR results on the block. Range [0, 1].
@@ -2372,10 +2125,10 @@ type GoogleCloudVisionV1p1beta1Block struct {
 
 	// ForceSendFields is a list of field names (e.g. "BlockType") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BlockType") to include in
@@ -2418,10 +2171,10 @@ type GoogleCloudVisionV1p1beta1BoundingPoly struct {
 
 	// ForceSendFields is a list of field names (e.g. "NormalizedVertices")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NormalizedVertices") to
@@ -2441,15 +2194,14 @@ func (s *GoogleCloudVisionV1p1beta1BoundingPoly) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudVisionV1p1beta1ColorInfo: Color information consists of
-// RGB channels, score, and the fraction of
-// the image that the color occupies in the image.
+// RGB channels, score, and the fraction of the image that the color
+// occupies in the image.
 type GoogleCloudVisionV1p1beta1ColorInfo struct {
 	// Color: RGB components of the color.
 	Color *Color `json:"color,omitempty"`
 
 	// PixelFraction: The fraction of pixels the color occupies in the
-	// image.
-	// Value in range [0, 1].
+	// image. Value in range [0, 1].
 	PixelFraction float64 `json:"pixelFraction,omitempty"`
 
 	// Score: Image-specific score for this color. Value in range [0, 1].
@@ -2457,10 +2209,10 @@ type GoogleCloudVisionV1p1beta1ColorInfo struct {
 
 	// ForceSendFields is a list of field names (e.g. "Color") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Color") to include in API
@@ -2498,24 +2250,22 @@ func (s *GoogleCloudVisionV1p1beta1ColorInfo) UnmarshalJSON(data []byte) error {
 // generate a new crop when serving an image.
 type GoogleCloudVisionV1p1beta1CropHint struct {
 	// BoundingPoly: The bounding polygon for the crop region. The
-	// coordinates of the bounding
-	// box are in the original image's scale.
+	// coordinates of the bounding box are in the original image's scale.
 	BoundingPoly *GoogleCloudVisionV1p1beta1BoundingPoly `json:"boundingPoly,omitempty"`
 
-	// Confidence: Confidence of this being a salient region.  Range [0, 1].
+	// Confidence: Confidence of this being a salient region. Range [0, 1].
 	Confidence float64 `json:"confidence,omitempty"`
 
 	// ImportanceFraction: Fraction of importance of this salient region
-	// with respect to the original
-	// image.
+	// with respect to the original image.
 	ImportanceFraction float64 `json:"importanceFraction,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BoundingPoly") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BoundingPoly") to include
@@ -2557,10 +2307,10 @@ type GoogleCloudVisionV1p1beta1CropHintsAnnotation struct {
 
 	// ForceSendFields is a list of field names (e.g. "CropHints") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CropHints") to include in
@@ -2586,10 +2336,10 @@ type GoogleCloudVisionV1p1beta1DominantColorsAnnotation struct {
 
 	// ForceSendFields is a list of field names (e.g. "Colors") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Colors") to include in API
@@ -2610,71 +2360,57 @@ func (s *GoogleCloudVisionV1p1beta1DominantColorsAnnotation) MarshalJSON() ([]by
 // GoogleCloudVisionV1p1beta1EntityAnnotation: Set of detected entity
 // features.
 type GoogleCloudVisionV1p1beta1EntityAnnotation struct {
-	// BoundingPoly: Image region to which this entity belongs. Not
-	// produced
+	// BoundingPoly: Image region to which this entity belongs. Not produced
 	// for `LABEL_DETECTION` features.
 	BoundingPoly *GoogleCloudVisionV1p1beta1BoundingPoly `json:"boundingPoly,omitempty"`
 
-	// Confidence: **Deprecated. Use `score` instead.**
-	// The accuracy of the entity detection in an image.
-	// For example, for an image in which the "Eiffel Tower" entity is
-	// detected,
-	// this field represents the confidence that there is a tower in the
-	// query
-	// image. Range [0, 1].
+	// Confidence: **Deprecated. Use `score` instead.** The accuracy of the
+	// entity detection in an image. For example, for an image in which the
+	// "Eiffel Tower" entity is detected, this field represents the
+	// confidence that there is a tower in the query image. Range [0, 1].
 	Confidence float64 `json:"confidence,omitempty"`
 
 	// Description: Entity textual description, expressed in its `locale`
 	// language.
 	Description string `json:"description,omitempty"`
 
-	// Locale: The language code for the locale in which the entity
-	// textual
+	// Locale: The language code for the locale in which the entity textual
 	// `description` is expressed.
 	Locale string `json:"locale,omitempty"`
 
-	// Locations: The location information for the detected entity.
-	// Multiple
-	// `LocationInfo` elements can be present because one location
-	// may
-	// indicate the location of the scene in the image, and another
-	// location
-	// may indicate the location of the place where the image was
-	// taken.
+	// Locations: The location information for the detected entity. Multiple
+	// `LocationInfo` elements can be present because one location may
+	// indicate the location of the scene in the image, and another location
+	// may indicate the location of the place where the image was taken.
 	// Location information is usually present for landmarks.
 	Locations []*GoogleCloudVisionV1p1beta1LocationInfo `json:"locations,omitempty"`
 
-	// Mid: Opaque entity ID. Some IDs may be available in
-	// [Google Knowledge Graph
-	// Search
-	// API](https://developers.google.com/knowledge-graph/).
+	// Mid: Opaque entity ID. Some IDs may be available in Google Knowledge
+	// Graph Search API (https://developers.google.com/knowledge-graph/).
 	Mid string `json:"mid,omitempty"`
 
 	// Properties: Some entities may have optional user-supplied `Property`
-	// (name/value)
-	// fields, such a score or string that qualifies the entity.
+	// (name/value) fields, such a score or string that qualifies the
+	// entity.
 	Properties []*GoogleCloudVisionV1p1beta1Property `json:"properties,omitempty"`
 
 	// Score: Overall score of the result. Range [0, 1].
 	Score float64 `json:"score,omitempty"`
 
 	// Topicality: The relevancy of the ICA (Image Content Annotation) label
-	// to the
-	// image. For example, the relevancy of "tower" is likely higher to an
-	// image
-	// containing the detected "Eiffel Tower" than to an image containing
-	// a
-	// detected distant towering building, even though the confidence
-	// that
-	// there is a tower in each image may be the same. Range [0, 1].
+	// to the image. For example, the relevancy of "tower" is likely higher
+	// to an image containing the detected "Eiffel Tower" than to an image
+	// containing a detected distant towering building, even though the
+	// confidence that there is a tower in each image may be the same. Range
+	// [0, 1].
 	Topicality float64 `json:"topicality,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BoundingPoly") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BoundingPoly") to include
@@ -2736,15 +2472,11 @@ type GoogleCloudVisionV1p1beta1FaceAnnotation struct {
 	BlurredLikelihood string `json:"blurredLikelihood,omitempty"`
 
 	// BoundingPoly: The bounding polygon around the face. The coordinates
-	// of the bounding box
-	// are in the original image's scale.
-	// The bounding box is computed to "frame" the face in accordance with
-	// human
-	// expectations. It is based on the landmarker results.
-	// Note that one or more x and/or y coordinates may not be generated in
-	// the
-	// `BoundingPoly` (the polygon will be unbounded) if only a partial
-	// face
+	// of the bounding box are in the original image's scale. The bounding
+	// box is computed to "frame" the face in accordance with human
+	// expectations. It is based on the landmarker results. Note that one or
+	// more x and/or y coordinates may not be generated in the
+	// `BoundingPoly` (the polygon will be unbounded) if only a partial face
 	// appears in the image to be annotated.
 	BoundingPoly *GoogleCloudVisionV1p1beta1BoundingPoly `json:"boundingPoly,omitempty"`
 
@@ -2752,15 +2484,11 @@ type GoogleCloudVisionV1p1beta1FaceAnnotation struct {
 	DetectionConfidence float64 `json:"detectionConfidence,omitempty"`
 
 	// FdBoundingPoly: The `fd_bounding_poly` bounding polygon is tighter
-	// than the
-	// `boundingPoly`, and encloses only the skin part of the face.
-	// Typically, it
-	// is used to eliminate the face from any image analysis that detects
-	// the
-	// "amount of skin" visible in an image. It is not based on
-	// the
-	// landmarker results, only on the initial face detection, hence
-	// the <code>fd</code> (face detection) prefix.
+	// than the `boundingPoly`, and encloses only the skin part of the face.
+	// Typically, it is used to eliminate the face from any image analysis
+	// that detects the "amount of skin" visible in an image. It is not
+	// based on the landmarker results, only on the initial face detection,
+	// hence the fd (face detection) prefix.
 	FdBoundingPoly *GoogleCloudVisionV1p1beta1BoundingPoly `json:"fdBoundingPoly,omitempty"`
 
 	// HeadwearLikelihood: Headwear likelihood.
@@ -2792,17 +2520,13 @@ type GoogleCloudVisionV1p1beta1FaceAnnotation struct {
 	Landmarks []*GoogleCloudVisionV1p1beta1FaceAnnotationLandmark `json:"landmarks,omitempty"`
 
 	// PanAngle: Yaw angle, which indicates the leftward/rightward angle
-	// that the face is
-	// pointing relative to the vertical plane perpendicular to the image.
-	// Range
-	// [-180,180].
+	// that the face is pointing relative to the vertical plane
+	// perpendicular to the image. Range [-180,180].
 	PanAngle float64 `json:"panAngle,omitempty"`
 
 	// RollAngle: Roll angle, which indicates the amount of
-	// clockwise/anti-clockwise rotation
-	// of the face relative to the image vertical about the axis
-	// perpendicular to
-	// the face. Range [-180,180].
+	// clockwise/anti-clockwise rotation of the face relative to the image
+	// vertical about the axis perpendicular to the face. Range [-180,180].
 	RollAngle float64 `json:"rollAngle,omitempty"`
 
 	// SorrowLikelihood: Sorrow likelihood.
@@ -2828,8 +2552,8 @@ type GoogleCloudVisionV1p1beta1FaceAnnotation struct {
 	SurpriseLikelihood string `json:"surpriseLikelihood,omitempty"`
 
 	// TiltAngle: Pitch angle, which indicates the upwards/downwards angle
-	// that the face is
-	// pointing relative to the image's horizontal plane. Range [-180,180].
+	// that the face is pointing relative to the image's horizontal plane.
+	// Range [-180,180].
 	TiltAngle float64 `json:"tiltAngle,omitempty"`
 
 	// UnderExposedLikelihood: Under-exposed likelihood.
@@ -2845,10 +2569,10 @@ type GoogleCloudVisionV1p1beta1FaceAnnotation struct {
 
 	// ForceSendFields is a list of field names (e.g. "AngerLikelihood") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AngerLikelihood") to
@@ -2934,14 +2658,16 @@ type GoogleCloudVisionV1p1beta1FaceAnnotationLandmark struct {
 	//   "CHIN_GNATHION" - Chin gnathion.
 	//   "CHIN_LEFT_GONION" - Chin left gonion.
 	//   "CHIN_RIGHT_GONION" - Chin right gonion.
+	//   "LEFT_CHEEK_CENTER" - Left cheek center.
+	//   "RIGHT_CHEEK_CENTER" - Right cheek center.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Position") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Position") to include in
@@ -2963,47 +2689,30 @@ func (s *GoogleCloudVisionV1p1beta1FaceAnnotationLandmark) MarshalJSON() ([]byte
 // location where the output will be written to.
 type GoogleCloudVisionV1p1beta1GcsDestination struct {
 	// Uri: Google Cloud Storage URI prefix where the results will be
-	// stored. Results
-	// will be in JSON format and preceded by its corresponding input URI
-	// prefix.
-	// This field can either represent a gcs file prefix or gcs directory.
-	// In
-	// either case, the uri should be unique because in order to get all of
-	// the
-	// output files, you will need to do a wildcard gcs search on the uri
-	// prefix
-	// you provide.
-	//
-	// Examples:
-	//
-	// *    File Prefix: gs://bucket-name/here/filenameprefix   The output
-	// files
-	// will be created in gs://bucket-name/here/ and the names of the
-	// output files will begin with "filenameprefix".
-	//
-	// *    Directory Prefix: gs://bucket-name/some/location/   The output
-	// files
-	// will be created in gs://bucket-name/some/location/ and the names of
-	// the
-	// output files could be anything because there was no filename
-	// prefix
-	// specified.
-	//
-	// If multiple outputs, each response is still AnnotateFileResponse,
-	// each of
-	// which contains some subset of the full list of
-	// AnnotateImageResponse.
-	// Multiple outputs can happen if, for example, the output JSON is too
-	// large
-	// and overflows into multiple sharded files.
+	// stored. Results will be in JSON format and preceded by its
+	// corresponding input URI prefix. This field can either represent a gcs
+	// file prefix or gcs directory. In either case, the uri should be
+	// unique because in order to get all of the output files, you will need
+	// to do a wildcard gcs search on the uri prefix you provide. Examples:
+	// * File Prefix: gs://bucket-name/here/filenameprefix The output files
+	// will be created in gs://bucket-name/here/ and the names of the output
+	// files will begin with "filenameprefix". * Directory Prefix:
+	// gs://bucket-name/some/location/ The output files will be created in
+	// gs://bucket-name/some/location/ and the names of the output files
+	// could be anything because there was no filename prefix specified. If
+	// multiple outputs, each response is still AnnotateFileResponse, each
+	// of which contains some subset of the full list of
+	// AnnotateImageResponse. Multiple outputs can happen if, for example,
+	// the output JSON is too large and overflows into multiple sharded
+	// files.
 	Uri string `json:"uri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Uri") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Uri") to include in API
@@ -3024,17 +2733,16 @@ func (s *GoogleCloudVisionV1p1beta1GcsDestination) MarshalJSON() ([]byte, error)
 // GoogleCloudVisionV1p1beta1GcsSource: The Google Cloud Storage
 // location where the input will be read from.
 type GoogleCloudVisionV1p1beta1GcsSource struct {
-	// Uri: Google Cloud Storage URI for the input file. This must only be
-	// a
+	// Uri: Google Cloud Storage URI for the input file. This must only be a
 	// Google Cloud Storage object. Wildcards are not currently supported.
 	Uri string `json:"uri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Uri") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Uri") to include in API
@@ -3053,12 +2761,11 @@ func (s *GoogleCloudVisionV1p1beta1GcsSource) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudVisionV1p1beta1ImageAnnotationContext: If an image was
-// produced from a file (e.g. a PDF), this message gives
-// information about the source of that image.
+// produced from a file (e.g. a PDF), this message gives information
+// about the source of that image.
 type GoogleCloudVisionV1p1beta1ImageAnnotationContext struct {
 	// PageNumber: If the file was a PDF or TIFF, this field gives the page
-	// number within
-	// the file used to produce the image.
+	// number within the file used to produce the image.
 	PageNumber int64 `json:"pageNumber,omitempty"`
 
 	// Uri: The URI of the file used to produce the image.
@@ -3066,10 +2773,10 @@ type GoogleCloudVisionV1p1beta1ImageAnnotationContext struct {
 
 	// ForceSendFields is a list of field names (e.g. "PageNumber") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "PageNumber") to include in
@@ -3095,10 +2802,10 @@ type GoogleCloudVisionV1p1beta1ImageProperties struct {
 
 	// ForceSendFields is a list of field names (e.g. "DominantColors") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DominantColors") to
@@ -3120,30 +2827,27 @@ func (s *GoogleCloudVisionV1p1beta1ImageProperties) MarshalJSON() ([]byte, error
 // GoogleCloudVisionV1p1beta1InputConfig: The desired input location and
 // metadata.
 type GoogleCloudVisionV1p1beta1InputConfig struct {
-	// Content: File content, represented as a stream of bytes.
-	// Note: As with all `bytes` fields, protobuffers use a pure
-	// binary
-	// representation, whereas JSON representations use base64.
-	//
-	// Currently, this field only works for BatchAnnotateFiles requests. It
-	// does
-	// not work for AsyncBatchAnnotateFiles requests.
+	// Content: File content, represented as a stream of bytes. Note: As
+	// with all `bytes` fields, protobuffers use a pure binary
+	// representation, whereas JSON representations use base64. Currently,
+	// this field only works for BatchAnnotateFiles requests. It does not
+	// work for AsyncBatchAnnotateFiles requests.
 	Content string `json:"content,omitempty"`
 
 	// GcsSource: The Google Cloud Storage location to read the input from.
 	GcsSource *GoogleCloudVisionV1p1beta1GcsSource `json:"gcsSource,omitempty"`
 
 	// MimeType: The type of the file. Currently only "application/pdf",
-	// "image/tiff" and
-	// "image/gif" are supported. Wildcards are not supported.
+	// "image/tiff" and "image/gif" are supported. Wildcards are not
+	// supported.
 	MimeType string `json:"mimeType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Content") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Content") to include in
@@ -3169,9 +2873,7 @@ type GoogleCloudVisionV1p1beta1LocalizedObjectAnnotation struct {
 	BoundingPoly *GoogleCloudVisionV1p1beta1BoundingPoly `json:"boundingPoly,omitempty"`
 
 	// LanguageCode: The BCP-47 language code, such as "en-US" or "sr-Latn".
-	// For more
-	// information,
-	// see
+	// For more information, see
 	// http://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
 	LanguageCode string `json:"languageCode,omitempty"`
 
@@ -3186,10 +2888,10 @@ type GoogleCloudVisionV1p1beta1LocalizedObjectAnnotation struct {
 
 	// ForceSendFields is a list of field names (e.g. "BoundingPoly") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BoundingPoly") to include
@@ -3229,10 +2931,10 @@ type GoogleCloudVisionV1p1beta1LocationInfo struct {
 
 	// ForceSendFields is a list of field names (e.g. "LatLng") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "LatLng") to include in API
@@ -3251,10 +2953,8 @@ func (s *GoogleCloudVisionV1p1beta1LocationInfo) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudVisionV1p1beta1NormalizedVertex: A vertex represents a 2D
-// point in the image.
-// NOTE: the normalized vertex coordinates are relative to the original
-// image
-// and range from 0 to 1.
+// point in the image. NOTE: the normalized vertex coordinates are
+// relative to the original image and range from 0 to 1.
 type GoogleCloudVisionV1p1beta1NormalizedVertex struct {
 	// X: X coordinate.
 	X float64 `json:"x,omitempty"`
@@ -3264,10 +2964,10 @@ type GoogleCloudVisionV1p1beta1NormalizedVertex struct {
 
 	// ForceSendFields is a list of field names (e.g. "X") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "X") to include in API
@@ -3322,10 +3022,10 @@ type GoogleCloudVisionV1p1beta1OperationMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CreateTime") to include in
@@ -3347,21 +3047,13 @@ func (s *GoogleCloudVisionV1p1beta1OperationMetadata) MarshalJSON() ([]byte, err
 // and metadata.
 type GoogleCloudVisionV1p1beta1OutputConfig struct {
 	// BatchSize: The max number of response protos to put into each output
-	// JSON file on
-	// Google Cloud Storage.
-	// The valid range is [1, 100]. If not specified, the default value is
-	// 20.
-	//
-	// For example, for one pdf file with 100 pages, 100 response protos
-	// will
-	// be generated. If `batch_size` = 20, then 5 json files each
-	// containing 20 response protos will be written under the
-	// prefix
-	// `gcs_destination`.`uri`.
-	//
+	// JSON file on Google Cloud Storage. The valid range is [1, 100]. If
+	// not specified, the default value is 20. For example, for one pdf file
+	// with 100 pages, 100 response protos will be generated. If
+	// `batch_size` = 20, then 5 json files each containing 20 response
+	// protos will be written under the prefix `gcs_destination`.`uri`.
 	// Currently, batch_size only applies to GcsDestination, with potential
-	// future
-	// support for other output configurations.
+	// future support for other output configurations.
 	BatchSize int64 `json:"batchSize,omitempty"`
 
 	// GcsDestination: The Google Cloud Storage location to write the
@@ -3370,10 +3062,10 @@ type GoogleCloudVisionV1p1beta1OutputConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "BatchSize") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BatchSize") to include in
@@ -3400,24 +3092,22 @@ type GoogleCloudVisionV1p1beta1Page struct {
 	Confidence float64 `json:"confidence,omitempty"`
 
 	// Height: Page height. For PDFs the unit is points. For images
-	// (including
-	// TIFFs) the unit is pixels.
+	// (including TIFFs) the unit is pixels.
 	Height int64 `json:"height,omitempty"`
 
 	// Property: Additional information detected on the page.
 	Property *GoogleCloudVisionV1p1beta1TextAnnotationTextProperty `json:"property,omitempty"`
 
-	// Width: Page width. For PDFs the unit is points. For images
-	// (including
+	// Width: Page width. For PDFs the unit is points. For images (including
 	// TIFFs) the unit is pixels.
 	Width int64 `json:"width,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Blocks") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Blocks") to include in API
@@ -3452,25 +3142,14 @@ func (s *GoogleCloudVisionV1p1beta1Page) UnmarshalJSON(data []byte) error {
 // GoogleCloudVisionV1p1beta1Paragraph: Structural unit of text
 // representing a number of words in certain order.
 type GoogleCloudVisionV1p1beta1Paragraph struct {
-	// BoundingBox: The bounding box for the paragraph.
-	// The vertices are in the order of top-left, top-right,
-	// bottom-right,
-	// bottom-left. When a rotation of the bounding box is detected the
-	// rotation
-	// is represented as around the top-left corner as defined when the text
-	// is
-	// read in the 'natural' orientation.
-	// For example:
-	//   * when the text is horizontal it might look like:
-	//      0----1
-	//      |    |
-	//      3----2
-	//   * when it's rotated 180 degrees around the top-left corner it
-	// becomes:
-	//      2----3
-	//      |    |
-	//      1----0
-	//   and the vertex order will still be (0, 1, 2, 3).
+	// BoundingBox: The bounding box for the paragraph. The vertices are in
+	// the order of top-left, top-right, bottom-right, bottom-left. When a
+	// rotation of the bounding box is detected the rotation is represented
+	// as around the top-left corner as defined when the text is read in the
+	// 'natural' orientation. For example: * when the text is horizontal it
+	// might look like: 0----1 | | 3----2 * when it's rotated 180 degrees
+	// around the top-left corner it becomes: 2----3 | | 1----0 and the
+	// vertex order will still be (0, 1, 2, 3).
 	BoundingBox *GoogleCloudVisionV1p1beta1BoundingPoly `json:"boundingBox,omitempty"`
 
 	// Confidence: Confidence of the OCR results for the paragraph. Range
@@ -3485,10 +3164,10 @@ type GoogleCloudVisionV1p1beta1Paragraph struct {
 
 	// ForceSendFields is a list of field names (e.g. "BoundingBox") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BoundingBox") to include
@@ -3521,9 +3200,9 @@ func (s *GoogleCloudVisionV1p1beta1Paragraph) UnmarshalJSON(data []byte) error {
 }
 
 // GoogleCloudVisionV1p1beta1Position: A 3D position in the image, used
-// primarily for Face detection landmarks.
-// A valid Position must have both x and y coordinates.
-// The position coordinates are in the same scale as the original image.
+// primarily for Face detection landmarks. A valid Position must have
+// both x and y coordinates. The position coordinates are in the same
+// scale as the original image.
 type GoogleCloudVisionV1p1beta1Position struct {
 	// X: X coordinate.
 	X float64 `json:"x,omitempty"`
@@ -3536,10 +3215,10 @@ type GoogleCloudVisionV1p1beta1Position struct {
 
 	// ForceSendFields is a list of field names (e.g. "X") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "X") to include in API
@@ -3579,60 +3258,42 @@ func (s *GoogleCloudVisionV1p1beta1Position) UnmarshalJSON(data []byte) error {
 // ReferenceImages.
 type GoogleCloudVisionV1p1beta1Product struct {
 	// Description: User-provided metadata to be stored with this product.
-	// Must be at most 4096
-	// characters long.
+	// Must be at most 4096 characters long.
 	Description string `json:"description,omitempty"`
 
 	// DisplayName: The user-provided name for this Product. Must not be
-	// empty. Must be at most
-	// 4096 characters long.
+	// empty. Must be at most 4096 characters long.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Name: The resource name of the product.
-	//
-	// Format
-	// is:
-	// `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID`.
-	//
-	// This field is ignored when creating a product.
+	// Name: The resource name of the product. Format is:
+	// `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID`. This
+	// field is ignored when creating a product.
 	Name string `json:"name,omitempty"`
 
 	// ProductCategory: Immutable. The category for the product identified
-	// by the reference image. This should
-	// be either "homegoods-v2", "apparel-v2", or "toys-v2". The legacy
-	// categories
-	// "homegoods", "apparel", and "toys" are still supported, but these
-	// should
-	// not be used for new products.
+	// by the reference image. This should be one of "homegoods-v2",
+	// "apparel-v2", "toys-v2", "packagedgoods-v1" or "general-v1". The
+	// legacy categories "homegoods", "apparel", and "toys" are still
+	// supported, but these should not be used for new products.
 	ProductCategory string `json:"productCategory,omitempty"`
 
 	// ProductLabels: Key-value pairs that can be attached to a product. At
-	// query time,
-	// constraints can be specified based on the product_labels.
-	//
+	// query time, constraints can be specified based on the product_labels.
 	// Note that integer values can be provided as strings, e.g. "1199".
-	// Only
-	// strings with integer values can match a range-based restriction which
-	// is
-	// to be supported soon.
-	//
-	// Multiple values can be assigned to the same key. One product may have
-	// up to
-	// 500 product_labels.
-	//
-	// Notice that the total number of distinct product_labels over all
-	// products
-	// in one ProductSet cannot exceed 1M, otherwise the product search
-	// pipeline
+	// Only strings with integer values can match a range-based restriction
+	// which is to be supported soon. Multiple values can be assigned to the
+	// same key. One product may have up to 500 product_labels. Notice that
+	// the total number of distinct product_labels over all products in one
+	// ProductSet cannot exceed 1M, otherwise the product search pipeline
 	// will refuse to work for that ProductSet.
 	ProductLabels []*GoogleCloudVisionV1p1beta1ProductKeyValue `json:"productLabels,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Description") to include
@@ -3654,21 +3315,19 @@ func (s *GoogleCloudVisionV1p1beta1Product) MarshalJSON() ([]byte, error) {
 // represented as a key-value pair.
 type GoogleCloudVisionV1p1beta1ProductKeyValue struct {
 	// Key: The key of the label attached to the product. Cannot be empty
-	// and cannot
-	// exceed 128 bytes.
+	// and cannot exceed 128 bytes.
 	Key string `json:"key,omitempty"`
 
 	// Value: The value of the label attached to the product. Cannot be
-	// empty and
-	// cannot exceed 128 bytes.
+	// empty and cannot exceed 128 bytes.
 	Value string `json:"value,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Key") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Key") to include in API
@@ -3690,19 +3349,15 @@ func (s *GoogleCloudVisionV1p1beta1ProductKeyValue) MarshalJSON() ([]byte, error
 // search request.
 type GoogleCloudVisionV1p1beta1ProductSearchResults struct {
 	// IndexTime: Timestamp of the index which provided these results.
-	// Products added to the
-	// product set and products removed from the product set after this time
-	// are
-	// not reflected in the current results.
+	// Products added to the product set and products removed from the
+	// product set after this time are not reflected in the current results.
 	IndexTime string `json:"indexTime,omitempty"`
 
 	// ProductGroupedResults: List of results grouped by products detected
-	// in the query image. Each entry
-	// corresponds to one bounding polygon in the query image, and contains
-	// the
-	// matching products specific to that region. There may be duplicate
-	// product
-	// matches in the union of all the per-product results.
+	// in the query image. Each entry corresponds to one bounding polygon in
+	// the query image, and contains the matching products specific to that
+	// region. There may be duplicate product matches in the union of all
+	// the per-product results.
 	ProductGroupedResults []*GoogleCloudVisionV1p1beta1ProductSearchResultsGroupedResult `json:"productGroupedResults,omitempty"`
 
 	// Results: List of results, one for each product match.
@@ -3710,10 +3365,10 @@ type GoogleCloudVisionV1p1beta1ProductSearchResults struct {
 
 	// ForceSendFields is a list of field names (e.g. "IndexTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "IndexTime") to include in
@@ -3732,8 +3387,7 @@ func (s *GoogleCloudVisionV1p1beta1ProductSearchResults) MarshalJSON() ([]byte, 
 }
 
 // GoogleCloudVisionV1p1beta1ProductSearchResultsGroupedResult:
-// Information about the products similar to a single product in a
-// query
+// Information about the products similar to a single product in a query
 // image.
 type GoogleCloudVisionV1p1beta1ProductSearchResultsGroupedResult struct {
 	// BoundingPoly: The bounding polygon around the product detected in the
@@ -3749,10 +3403,10 @@ type GoogleCloudVisionV1p1beta1ProductSearchResultsGroupedResult struct {
 
 	// ForceSendFields is a list of field names (e.g. "BoundingPoly") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BoundingPoly") to include
@@ -3774,9 +3428,7 @@ func (s *GoogleCloudVisionV1p1beta1ProductSearchResultsGroupedResult) MarshalJSO
 // Prediction for what the object in the bounding box is.
 type GoogleCloudVisionV1p1beta1ProductSearchResultsObjectAnnotation struct {
 	// LanguageCode: The BCP-47 language code, such as "en-US" or "sr-Latn".
-	// For more
-	// information,
-	// see
+	// For more information, see
 	// http://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
 	LanguageCode string `json:"languageCode,omitempty"`
 
@@ -3791,10 +3443,10 @@ type GoogleCloudVisionV1p1beta1ProductSearchResultsObjectAnnotation struct {
 
 	// ForceSendFields is a list of field names (e.g. "LanguageCode") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "LanguageCode") to include
@@ -3830,24 +3482,22 @@ func (s *GoogleCloudVisionV1p1beta1ProductSearchResultsObjectAnnotation) Unmarsh
 // about a product.
 type GoogleCloudVisionV1p1beta1ProductSearchResultsResult struct {
 	// Image: The resource name of the image from the product that is the
-	// closest match
-	// to the query.
+	// closest match to the query.
 	Image string `json:"image,omitempty"`
 
 	// Product: The Product.
 	Product *GoogleCloudVisionV1p1beta1Product `json:"product,omitempty"`
 
 	// Score: A confidence level on the match, ranging from 0 (no
-	// confidence) to
-	// 1 (full confidence).
+	// confidence) to 1 (full confidence).
 	Score float64 `json:"score,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Image") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Image") to include in API
@@ -3893,10 +3543,10 @@ type GoogleCloudVisionV1p1beta1Property struct {
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Name") to include in API
@@ -3915,16 +3565,12 @@ func (s *GoogleCloudVisionV1p1beta1Property) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudVisionV1p1beta1SafeSearchAnnotation: Set of features
-// pertaining to the image, computed by computer vision
-// methods over safe-search verticals (for example, adult, spoof,
-// medical,
-// violence).
+// pertaining to the image, computed by computer vision methods over
+// safe-search verticals (for example, adult, spoof, medical, violence).
 type GoogleCloudVisionV1p1beta1SafeSearchAnnotation struct {
 	// Adult: Represents the adult content likelihood for the image. Adult
-	// content may
-	// contain elements such as nudity, pornographic images or cartoons,
-	// or
-	// sexual activities.
+	// content may contain elements such as nudity, pornographic images or
+	// cartoons, or sexual activities.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
@@ -3947,12 +3593,9 @@ type GoogleCloudVisionV1p1beta1SafeSearchAnnotation struct {
 	Medical string `json:"medical,omitempty"`
 
 	// Racy: Likelihood that the request image contains racy content. Racy
-	// content may
-	// include (but is not limited to) skimpy or sheer clothing,
-	// strategically
-	// covered nudity, lewd or provocative poses, or close-ups of
-	// sensitive
-	// body areas.
+	// content may include (but is not limited to) skimpy or sheer clothing,
+	// strategically covered nudity, lewd or provocative poses, or close-ups
+	// of sensitive body areas.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
@@ -3963,9 +3606,9 @@ type GoogleCloudVisionV1p1beta1SafeSearchAnnotation struct {
 	//   "VERY_LIKELY" - It is very likely.
 	Racy string `json:"racy,omitempty"`
 
-	// Spoof: Spoof likelihood. The likelihood that an modification
-	// was made to the image's canonical version to make it appear
-	// funny or offensive.
+	// Spoof: Spoof likelihood. The likelihood that an modification was made
+	// to the image's canonical version to make it appear funny or
+	// offensive.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
@@ -3989,10 +3632,10 @@ type GoogleCloudVisionV1p1beta1SafeSearchAnnotation struct {
 
 	// ForceSendFields is a list of field names (e.g. "Adult") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Adult") to include in API
@@ -4012,25 +3655,14 @@ func (s *GoogleCloudVisionV1p1beta1SafeSearchAnnotation) MarshalJSON() ([]byte, 
 
 // GoogleCloudVisionV1p1beta1Symbol: A single symbol representation.
 type GoogleCloudVisionV1p1beta1Symbol struct {
-	// BoundingBox: The bounding box for the symbol.
-	// The vertices are in the order of top-left, top-right,
-	// bottom-right,
-	// bottom-left. When a rotation of the bounding box is detected the
-	// rotation
-	// is represented as around the top-left corner as defined when the text
-	// is
-	// read in the 'natural' orientation.
-	// For example:
-	//   * when the text is horizontal it might look like:
-	//      0----1
-	//      |    |
-	//      3----2
-	//   * when it's rotated 180 degrees around the top-left corner it
-	// becomes:
-	//      2----3
-	//      |    |
-	//      1----0
-	//   and the vertex order will still be (0, 1, 2, 3).
+	// BoundingBox: The bounding box for the symbol. The vertices are in the
+	// order of top-left, top-right, bottom-right, bottom-left. When a
+	// rotation of the bounding box is detected the rotation is represented
+	// as around the top-left corner as defined when the text is read in the
+	// 'natural' orientation. For example: * when the text is horizontal it
+	// might look like: 0----1 | | 3----2 * when it's rotated 180 degrees
+	// around the top-left corner it becomes: 2----3 | | 1----0 and the
+	// vertex order will still be (0, 1, 2, 3).
 	BoundingBox *GoogleCloudVisionV1p1beta1BoundingPoly `json:"boundingBox,omitempty"`
 
 	// Confidence: Confidence of the OCR results for the symbol. Range [0,
@@ -4045,10 +3677,10 @@ type GoogleCloudVisionV1p1beta1Symbol struct {
 
 	// ForceSendFields is a list of field names (e.g. "BoundingBox") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BoundingBox") to include
@@ -4081,17 +3713,12 @@ func (s *GoogleCloudVisionV1p1beta1Symbol) UnmarshalJSON(data []byte) error {
 }
 
 // GoogleCloudVisionV1p1beta1TextAnnotation: TextAnnotation contains a
-// structured representation of OCR extracted text.
-// The hierarchy of an OCR extracted text structure is like this:
-//     TextAnnotation -> Page -> Block -> Paragraph -> Word ->
-// Symbol
-// Each structural component, starting from Page, may further have their
-// own
-// properties. Properties describe detected languages, breaks etc..
-// Please refer
-// to the TextAnnotation.TextProperty message definition below for
-// more
-// detail.
+// structured representation of OCR extracted text. The hierarchy of an
+// OCR extracted text structure is like this: TextAnnotation -> Page ->
+// Block -> Paragraph -> Word -> Symbol Each structural component,
+// starting from Page, may further have their own properties. Properties
+// describe detected languages, breaks etc.. Please refer to the
+// TextAnnotation.TextProperty message definition below for more detail.
 type GoogleCloudVisionV1p1beta1TextAnnotation struct {
 	// Pages: List of pages detected by OCR.
 	Pages []*GoogleCloudVisionV1p1beta1Page `json:"pages,omitempty"`
@@ -4101,10 +3728,10 @@ type GoogleCloudVisionV1p1beta1TextAnnotation struct {
 
 	// ForceSendFields is a list of field names (e.g. "Pages") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Pages") to include in API
@@ -4136,17 +3763,16 @@ type GoogleCloudVisionV1p1beta1TextAnnotationDetectedBreak struct {
 	//   "SURE_SPACE" - Sure space (very wide).
 	//   "EOL_SURE_SPACE" - Line-wrapping break.
 	//   "HYPHEN" - End-line hyphen that is not present in text; does not
-	// co-occur with
-	// `SPACE`, `LEADER_SPACE`, or `LINE_BREAK`.
+	// co-occur with `SPACE`, `LEADER_SPACE`, or `LINE_BREAK`.
 	//   "LINE_BREAK" - Line break that ends a paragraph.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "IsPrefix") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "IsPrefix") to include in
@@ -4171,18 +3797,16 @@ type GoogleCloudVisionV1p1beta1TextAnnotationDetectedLanguage struct {
 	Confidence float64 `json:"confidence,omitempty"`
 
 	// LanguageCode: The BCP-47 language code, such as "en-US" or "sr-Latn".
-	// For more
-	// information,
-	// see
+	// For more information, see
 	// http://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Confidence") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Confidence") to include in
@@ -4226,10 +3850,10 @@ type GoogleCloudVisionV1p1beta1TextAnnotationTextProperty struct {
 
 	// ForceSendFields is a list of field names (e.g. "DetectedBreak") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DetectedBreak") to include
@@ -4248,9 +3872,8 @@ func (s *GoogleCloudVisionV1p1beta1TextAnnotationTextProperty) MarshalJSON() ([]
 }
 
 // GoogleCloudVisionV1p1beta1Vertex: A vertex represents a 2D point in
-// the image.
-// NOTE: the vertex coordinates are in the same scale as the original
-// image.
+// the image. NOTE: the vertex coordinates are in the same scale as the
+// original image.
 type GoogleCloudVisionV1p1beta1Vertex struct {
 	// X: X coordinate.
 	X int64 `json:"x,omitempty"`
@@ -4260,10 +3883,10 @@ type GoogleCloudVisionV1p1beta1Vertex struct {
 
 	// ForceSendFields is a list of field names (e.g. "X") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "X") to include in API
@@ -4285,22 +3908,19 @@ func (s *GoogleCloudVisionV1p1beta1Vertex) MarshalJSON() ([]byte, error) {
 // image from the Internet.
 type GoogleCloudVisionV1p1beta1WebDetection struct {
 	// BestGuessLabels: The service's best guess as to the topic of the
-	// request image.
-	// Inferred from similar images on the open web.
+	// request image. Inferred from similar images on the open web.
 	BestGuessLabels []*GoogleCloudVisionV1p1beta1WebDetectionWebLabel `json:"bestGuessLabels,omitempty"`
 
-	// FullMatchingImages: Fully matching images from the Internet.
-	// Can include resized copies of the query image.
+	// FullMatchingImages: Fully matching images from the Internet. Can
+	// include resized copies of the query image.
 	FullMatchingImages []*GoogleCloudVisionV1p1beta1WebDetectionWebImage `json:"fullMatchingImages,omitempty"`
 
 	// PagesWithMatchingImages: Web pages containing the matching images
 	// from the Internet.
 	PagesWithMatchingImages []*GoogleCloudVisionV1p1beta1WebDetectionWebPage `json:"pagesWithMatchingImages,omitempty"`
 
-	// PartialMatchingImages: Partial matching images from the
-	// Internet.
-	// Those images are similar enough to share some key-point features.
-	// For
+	// PartialMatchingImages: Partial matching images from the Internet.
+	// Those images are similar enough to share some key-point features. For
 	// example an original image will likely have partial matching for its
 	// crops.
 	PartialMatchingImages []*GoogleCloudVisionV1p1beta1WebDetectionWebImage `json:"partialMatchingImages,omitempty"`
@@ -4313,10 +3933,10 @@ type GoogleCloudVisionV1p1beta1WebDetection struct {
 
 	// ForceSendFields is a list of field names (e.g. "BestGuessLabels") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BestGuessLabels") to
@@ -4344,16 +3964,16 @@ type GoogleCloudVisionV1p1beta1WebDetectionWebEntity struct {
 	// EntityId: Opaque entity ID.
 	EntityId string `json:"entityId,omitempty"`
 
-	// Score: Overall relevancy score for the entity.
-	// Not normalized and not comparable across different image queries.
+	// Score: Overall relevancy score for the entity. Not normalized and not
+	// comparable across different image queries.
 	Score float64 `json:"score,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Description") to include
@@ -4396,10 +4016,10 @@ type GoogleCloudVisionV1p1beta1WebDetectionWebImage struct {
 
 	// ForceSendFields is a list of field names (e.g. "Score") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Score") to include in API
@@ -4438,18 +4058,16 @@ type GoogleCloudVisionV1p1beta1WebDetectionWebLabel struct {
 	Label string `json:"label,omitempty"`
 
 	// LanguageCode: The BCP-47 language code for `label`, such as "en-US"
-	// or "sr-Latn".
-	// For more information,
-	// see
+	// or "sr-Latn". For more information, see
 	// http://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Label") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Label") to include in API
@@ -4470,18 +4088,16 @@ func (s *GoogleCloudVisionV1p1beta1WebDetectionWebLabel) MarshalJSON() ([]byte, 
 // GoogleCloudVisionV1p1beta1WebDetectionWebPage: Metadata for web
 // pages.
 type GoogleCloudVisionV1p1beta1WebDetectionWebPage struct {
-	// FullMatchingImages: Fully matching images on the page.
-	// Can include resized copies of the query image.
+	// FullMatchingImages: Fully matching images on the page. Can include
+	// resized copies of the query image.
 	FullMatchingImages []*GoogleCloudVisionV1p1beta1WebDetectionWebImage `json:"fullMatchingImages,omitempty"`
 
 	// PageTitle: Title for the web page, may contain HTML markups.
 	PageTitle string `json:"pageTitle,omitempty"`
 
-	// PartialMatchingImages: Partial matching images on the page.
-	// Those images are similar enough to share some key-point features.
-	// For
-	// example an original image will likely have partial matching for
-	// its
+	// PartialMatchingImages: Partial matching images on the page. Those
+	// images are similar enough to share some key-point features. For
+	// example an original image will likely have partial matching for its
 	// crops.
 	PartialMatchingImages []*GoogleCloudVisionV1p1beta1WebDetectionWebImage `json:"partialMatchingImages,omitempty"`
 
@@ -4493,10 +4109,10 @@ type GoogleCloudVisionV1p1beta1WebDetectionWebPage struct {
 
 	// ForceSendFields is a list of field names (e.g. "FullMatchingImages")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "FullMatchingImages") to
@@ -4531,25 +4147,14 @@ func (s *GoogleCloudVisionV1p1beta1WebDetectionWebPage) UnmarshalJSON(data []byt
 
 // GoogleCloudVisionV1p1beta1Word: A word representation.
 type GoogleCloudVisionV1p1beta1Word struct {
-	// BoundingBox: The bounding box for the word.
-	// The vertices are in the order of top-left, top-right,
-	// bottom-right,
-	// bottom-left. When a rotation of the bounding box is detected the
-	// rotation
-	// is represented as around the top-left corner as defined when the text
-	// is
-	// read in the 'natural' orientation.
-	// For example:
-	//   * when the text is horizontal it might look like:
-	//      0----1
-	//      |    |
-	//      3----2
-	//   * when it's rotated 180 degrees around the top-left corner it
-	// becomes:
-	//      2----3
-	//      |    |
-	//      1----0
-	//   and the vertex order will still be (0, 1, 2, 3).
+	// BoundingBox: The bounding box for the word. The vertices are in the
+	// order of top-left, top-right, bottom-right, bottom-left. When a
+	// rotation of the bounding box is detected the rotation is represented
+	// as around the top-left corner as defined when the text is read in the
+	// 'natural' orientation. For example: * when the text is horizontal it
+	// might look like: 0----1 | | 3----2 * when it's rotated 180 degrees
+	// around the top-left corner it becomes: 2----3 | | 1----0 and the
+	// vertex order will still be (0, 1, 2, 3).
 	BoundingBox *GoogleCloudVisionV1p1beta1BoundingPoly `json:"boundingBox,omitempty"`
 
 	// Confidence: Confidence of the OCR results for the word. Range [0, 1].
@@ -4558,16 +4163,16 @@ type GoogleCloudVisionV1p1beta1Word struct {
 	// Property: Additional information detected for the word.
 	Property *GoogleCloudVisionV1p1beta1TextAnnotationTextProperty `json:"property,omitempty"`
 
-	// Symbols: List of symbols in the word.
-	// The order of the symbols follows the natural reading order.
+	// Symbols: List of symbols in the word. The order of the symbols
+	// follows the natural reading order.
 	Symbols []*GoogleCloudVisionV1p1beta1Symbol `json:"symbols,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BoundingBox") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BoundingBox") to include
@@ -4600,12 +4205,11 @@ func (s *GoogleCloudVisionV1p1beta1Word) UnmarshalJSON(data []byte) error {
 }
 
 // GoogleCloudVisionV1p2beta1AnnotateFileResponse: Response to a single
-// file annotation request. A file may contain one or more
-// images, which individually have their own responses.
+// file annotation request. A file may contain one or more images, which
+// individually have their own responses.
 type GoogleCloudVisionV1p2beta1AnnotateFileResponse struct {
 	// Error: If set, represents the error message for the failed request.
-	// The
-	// `responses` field will not be set in this case.
+	// The `responses` field will not be set in this case.
 	Error *Status `json:"error,omitempty"`
 
 	// InputConfig: Information about the file for which this response is
@@ -4613,8 +4217,7 @@ type GoogleCloudVisionV1p2beta1AnnotateFileResponse struct {
 	InputConfig *GoogleCloudVisionV1p2beta1InputConfig `json:"inputConfig,omitempty"`
 
 	// Responses: Individual responses to images found within the file. This
-	// field will be
-	// empty if the `error` field is set.
+	// field will be empty if the `error` field is set.
 	Responses []*GoogleCloudVisionV1p2beta1AnnotateImageResponse `json:"responses,omitempty"`
 
 	// TotalPages: This field gives the total number of pages in the file.
@@ -4622,10 +4225,10 @@ type GoogleCloudVisionV1p2beta1AnnotateFileResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Error") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Error") to include in API
@@ -4647,17 +4250,16 @@ func (s *GoogleCloudVisionV1p2beta1AnnotateFileResponse) MarshalJSON() ([]byte, 
 // annotation request.
 type GoogleCloudVisionV1p2beta1AnnotateImageResponse struct {
 	// Context: If present, contextual information is needed to understand
-	// where this image
-	// comes from.
+	// where this image comes from.
 	Context *GoogleCloudVisionV1p2beta1ImageAnnotationContext `json:"context,omitempty"`
 
 	// CropHintsAnnotation: If present, crop hints have completed
 	// successfully.
 	CropHintsAnnotation *GoogleCloudVisionV1p2beta1CropHintsAnnotation `json:"cropHintsAnnotation,omitempty"`
 
-	// Error: If set, represents the error message for the operation.
-	// Note that filled-in image annotations are guaranteed to be
-	// correct, even when `error` is set.
+	// Error: If set, represents the error message for the operation. Note
+	// that filled-in image annotations are guaranteed to be correct, even
+	// when `error` is set.
 	Error *Status `json:"error,omitempty"`
 
 	// FaceAnnotations: If present, face detection has completed
@@ -4665,11 +4267,8 @@ type GoogleCloudVisionV1p2beta1AnnotateImageResponse struct {
 	FaceAnnotations []*GoogleCloudVisionV1p2beta1FaceAnnotation `json:"faceAnnotations,omitempty"`
 
 	// FullTextAnnotation: If present, text (OCR) detection or document
-	// (OCR) text detection has
-	// completed successfully.
-	// This annotation provides the structural hierarchy for the OCR
-	// detected
-	// text.
+	// (OCR) text detection has completed successfully. This annotation
+	// provides the structural hierarchy for the OCR detected text.
 	FullTextAnnotation *GoogleCloudVisionV1p2beta1TextAnnotation `json:"fullTextAnnotation,omitempty"`
 
 	// ImagePropertiesAnnotation: If present, image properties were
@@ -4685,8 +4284,8 @@ type GoogleCloudVisionV1p2beta1AnnotateImageResponse struct {
 	LandmarkAnnotations []*GoogleCloudVisionV1p2beta1EntityAnnotation `json:"landmarkAnnotations,omitempty"`
 
 	// LocalizedObjectAnnotations: If present, localized object detection
-	// has completed successfully.
-	// This will be sorted descending by confidence score.
+	// has completed successfully. This will be sorted descending by
+	// confidence score.
 	LocalizedObjectAnnotations []*GoogleCloudVisionV1p2beta1LocalizedObjectAnnotation `json:"localizedObjectAnnotations,omitempty"`
 
 	// LogoAnnotations: If present, logo detection has completed
@@ -4710,10 +4309,10 @@ type GoogleCloudVisionV1p2beta1AnnotateImageResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Context") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Context") to include in
@@ -4740,10 +4339,10 @@ type GoogleCloudVisionV1p2beta1AsyncAnnotateFileResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "OutputConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "OutputConfig") to include
@@ -4765,16 +4364,15 @@ func (s *GoogleCloudVisionV1p2beta1AsyncAnnotateFileResponse) MarshalJSON() ([]b
 // to an async batch file annotation request.
 type GoogleCloudVisionV1p2beta1AsyncBatchAnnotateFilesResponse struct {
 	// Responses: The list of file annotation responses, one for each
-	// request in
-	// AsyncBatchAnnotateFilesRequest.
+	// request in AsyncBatchAnnotateFilesRequest.
 	Responses []*GoogleCloudVisionV1p2beta1AsyncAnnotateFileResponse `json:"responses,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Responses") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Responses") to include in
@@ -4805,30 +4403,14 @@ type GoogleCloudVisionV1p2beta1Block struct {
 	//   "BARCODE" - Barcode block.
 	BlockType string `json:"blockType,omitempty"`
 
-	// BoundingBox: The bounding box for the block.
-	// The vertices are in the order of top-left, top-right,
-	// bottom-right,
-	// bottom-left. When a rotation of the bounding box is detected the
-	// rotation
-	// is represented as around the top-left corner as defined when the text
-	// is
-	// read in the 'natural' orientation.
-	// For example:
-	//
-	// * when the text is horizontal it might look like:
-	//
-	//         0----1
-	//         |    |
-	//         3----2
-	//
-	// * when it's rotated 180 degrees around the top-left corner it
-	// becomes:
-	//
-	//         2----3
-	//         |    |
-	//         1----0
-	//
-	//   and the vertex order will still be (0, 1, 2, 3).
+	// BoundingBox: The bounding box for the block. The vertices are in the
+	// order of top-left, top-right, bottom-right, bottom-left. When a
+	// rotation of the bounding box is detected the rotation is represented
+	// as around the top-left corner as defined when the text is read in the
+	// 'natural' orientation. For example: * when the text is horizontal it
+	// might look like: 0----1 | | 3----2 * when it's rotated 180 degrees
+	// around the top-left corner it becomes: 2----3 | | 1----0 and the
+	// vertex order will still be (0, 1, 2, 3).
 	BoundingBox *GoogleCloudVisionV1p2beta1BoundingPoly `json:"boundingBox,omitempty"`
 
 	// Confidence: Confidence of the OCR results on the block. Range [0, 1].
@@ -4843,10 +4425,10 @@ type GoogleCloudVisionV1p2beta1Block struct {
 
 	// ForceSendFields is a list of field names (e.g. "BlockType") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BlockType") to include in
@@ -4889,10 +4471,10 @@ type GoogleCloudVisionV1p2beta1BoundingPoly struct {
 
 	// ForceSendFields is a list of field names (e.g. "NormalizedVertices")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NormalizedVertices") to
@@ -4912,15 +4494,14 @@ func (s *GoogleCloudVisionV1p2beta1BoundingPoly) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudVisionV1p2beta1ColorInfo: Color information consists of
-// RGB channels, score, and the fraction of
-// the image that the color occupies in the image.
+// RGB channels, score, and the fraction of the image that the color
+// occupies in the image.
 type GoogleCloudVisionV1p2beta1ColorInfo struct {
 	// Color: RGB components of the color.
 	Color *Color `json:"color,omitempty"`
 
 	// PixelFraction: The fraction of pixels the color occupies in the
-	// image.
-	// Value in range [0, 1].
+	// image. Value in range [0, 1].
 	PixelFraction float64 `json:"pixelFraction,omitempty"`
 
 	// Score: Image-specific score for this color. Value in range [0, 1].
@@ -4928,10 +4509,10 @@ type GoogleCloudVisionV1p2beta1ColorInfo struct {
 
 	// ForceSendFields is a list of field names (e.g. "Color") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Color") to include in API
@@ -4969,24 +4550,22 @@ func (s *GoogleCloudVisionV1p2beta1ColorInfo) UnmarshalJSON(data []byte) error {
 // generate a new crop when serving an image.
 type GoogleCloudVisionV1p2beta1CropHint struct {
 	// BoundingPoly: The bounding polygon for the crop region. The
-	// coordinates of the bounding
-	// box are in the original image's scale.
+	// coordinates of the bounding box are in the original image's scale.
 	BoundingPoly *GoogleCloudVisionV1p2beta1BoundingPoly `json:"boundingPoly,omitempty"`
 
-	// Confidence: Confidence of this being a salient region.  Range [0, 1].
+	// Confidence: Confidence of this being a salient region. Range [0, 1].
 	Confidence float64 `json:"confidence,omitempty"`
 
 	// ImportanceFraction: Fraction of importance of this salient region
-	// with respect to the original
-	// image.
+	// with respect to the original image.
 	ImportanceFraction float64 `json:"importanceFraction,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BoundingPoly") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BoundingPoly") to include
@@ -5028,10 +4607,10 @@ type GoogleCloudVisionV1p2beta1CropHintsAnnotation struct {
 
 	// ForceSendFields is a list of field names (e.g. "CropHints") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CropHints") to include in
@@ -5057,10 +4636,10 @@ type GoogleCloudVisionV1p2beta1DominantColorsAnnotation struct {
 
 	// ForceSendFields is a list of field names (e.g. "Colors") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Colors") to include in API
@@ -5081,71 +4660,57 @@ func (s *GoogleCloudVisionV1p2beta1DominantColorsAnnotation) MarshalJSON() ([]by
 // GoogleCloudVisionV1p2beta1EntityAnnotation: Set of detected entity
 // features.
 type GoogleCloudVisionV1p2beta1EntityAnnotation struct {
-	// BoundingPoly: Image region to which this entity belongs. Not
-	// produced
+	// BoundingPoly: Image region to which this entity belongs. Not produced
 	// for `LABEL_DETECTION` features.
 	BoundingPoly *GoogleCloudVisionV1p2beta1BoundingPoly `json:"boundingPoly,omitempty"`
 
-	// Confidence: **Deprecated. Use `score` instead.**
-	// The accuracy of the entity detection in an image.
-	// For example, for an image in which the "Eiffel Tower" entity is
-	// detected,
-	// this field represents the confidence that there is a tower in the
-	// query
-	// image. Range [0, 1].
+	// Confidence: **Deprecated. Use `score` instead.** The accuracy of the
+	// entity detection in an image. For example, for an image in which the
+	// "Eiffel Tower" entity is detected, this field represents the
+	// confidence that there is a tower in the query image. Range [0, 1].
 	Confidence float64 `json:"confidence,omitempty"`
 
 	// Description: Entity textual description, expressed in its `locale`
 	// language.
 	Description string `json:"description,omitempty"`
 
-	// Locale: The language code for the locale in which the entity
-	// textual
+	// Locale: The language code for the locale in which the entity textual
 	// `description` is expressed.
 	Locale string `json:"locale,omitempty"`
 
-	// Locations: The location information for the detected entity.
-	// Multiple
-	// `LocationInfo` elements can be present because one location
-	// may
-	// indicate the location of the scene in the image, and another
-	// location
-	// may indicate the location of the place where the image was
-	// taken.
+	// Locations: The location information for the detected entity. Multiple
+	// `LocationInfo` elements can be present because one location may
+	// indicate the location of the scene in the image, and another location
+	// may indicate the location of the place where the image was taken.
 	// Location information is usually present for landmarks.
 	Locations []*GoogleCloudVisionV1p2beta1LocationInfo `json:"locations,omitempty"`
 
-	// Mid: Opaque entity ID. Some IDs may be available in
-	// [Google Knowledge Graph
-	// Search
-	// API](https://developers.google.com/knowledge-graph/).
+	// Mid: Opaque entity ID. Some IDs may be available in Google Knowledge
+	// Graph Search API (https://developers.google.com/knowledge-graph/).
 	Mid string `json:"mid,omitempty"`
 
 	// Properties: Some entities may have optional user-supplied `Property`
-	// (name/value)
-	// fields, such a score or string that qualifies the entity.
+	// (name/value) fields, such a score or string that qualifies the
+	// entity.
 	Properties []*GoogleCloudVisionV1p2beta1Property `json:"properties,omitempty"`
 
 	// Score: Overall score of the result. Range [0, 1].
 	Score float64 `json:"score,omitempty"`
 
 	// Topicality: The relevancy of the ICA (Image Content Annotation) label
-	// to the
-	// image. For example, the relevancy of "tower" is likely higher to an
-	// image
-	// containing the detected "Eiffel Tower" than to an image containing
-	// a
-	// detected distant towering building, even though the confidence
-	// that
-	// there is a tower in each image may be the same. Range [0, 1].
+	// to the image. For example, the relevancy of "tower" is likely higher
+	// to an image containing the detected "Eiffel Tower" than to an image
+	// containing a detected distant towering building, even though the
+	// confidence that there is a tower in each image may be the same. Range
+	// [0, 1].
 	Topicality float64 `json:"topicality,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BoundingPoly") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BoundingPoly") to include
@@ -5207,15 +4772,11 @@ type GoogleCloudVisionV1p2beta1FaceAnnotation struct {
 	BlurredLikelihood string `json:"blurredLikelihood,omitempty"`
 
 	// BoundingPoly: The bounding polygon around the face. The coordinates
-	// of the bounding box
-	// are in the original image's scale.
-	// The bounding box is computed to "frame" the face in accordance with
-	// human
-	// expectations. It is based on the landmarker results.
-	// Note that one or more x and/or y coordinates may not be generated in
-	// the
-	// `BoundingPoly` (the polygon will be unbounded) if only a partial
-	// face
+	// of the bounding box are in the original image's scale. The bounding
+	// box is computed to "frame" the face in accordance with human
+	// expectations. It is based on the landmarker results. Note that one or
+	// more x and/or y coordinates may not be generated in the
+	// `BoundingPoly` (the polygon will be unbounded) if only a partial face
 	// appears in the image to be annotated.
 	BoundingPoly *GoogleCloudVisionV1p2beta1BoundingPoly `json:"boundingPoly,omitempty"`
 
@@ -5223,15 +4784,11 @@ type GoogleCloudVisionV1p2beta1FaceAnnotation struct {
 	DetectionConfidence float64 `json:"detectionConfidence,omitempty"`
 
 	// FdBoundingPoly: The `fd_bounding_poly` bounding polygon is tighter
-	// than the
-	// `boundingPoly`, and encloses only the skin part of the face.
-	// Typically, it
-	// is used to eliminate the face from any image analysis that detects
-	// the
-	// "amount of skin" visible in an image. It is not based on
-	// the
-	// landmarker results, only on the initial face detection, hence
-	// the <code>fd</code> (face detection) prefix.
+	// than the `boundingPoly`, and encloses only the skin part of the face.
+	// Typically, it is used to eliminate the face from any image analysis
+	// that detects the "amount of skin" visible in an image. It is not
+	// based on the landmarker results, only on the initial face detection,
+	// hence the fd (face detection) prefix.
 	FdBoundingPoly *GoogleCloudVisionV1p2beta1BoundingPoly `json:"fdBoundingPoly,omitempty"`
 
 	// HeadwearLikelihood: Headwear likelihood.
@@ -5263,17 +4820,13 @@ type GoogleCloudVisionV1p2beta1FaceAnnotation struct {
 	Landmarks []*GoogleCloudVisionV1p2beta1FaceAnnotationLandmark `json:"landmarks,omitempty"`
 
 	// PanAngle: Yaw angle, which indicates the leftward/rightward angle
-	// that the face is
-	// pointing relative to the vertical plane perpendicular to the image.
-	// Range
-	// [-180,180].
+	// that the face is pointing relative to the vertical plane
+	// perpendicular to the image. Range [-180,180].
 	PanAngle float64 `json:"panAngle,omitempty"`
 
 	// RollAngle: Roll angle, which indicates the amount of
-	// clockwise/anti-clockwise rotation
-	// of the face relative to the image vertical about the axis
-	// perpendicular to
-	// the face. Range [-180,180].
+	// clockwise/anti-clockwise rotation of the face relative to the image
+	// vertical about the axis perpendicular to the face. Range [-180,180].
 	RollAngle float64 `json:"rollAngle,omitempty"`
 
 	// SorrowLikelihood: Sorrow likelihood.
@@ -5299,8 +4852,8 @@ type GoogleCloudVisionV1p2beta1FaceAnnotation struct {
 	SurpriseLikelihood string `json:"surpriseLikelihood,omitempty"`
 
 	// TiltAngle: Pitch angle, which indicates the upwards/downwards angle
-	// that the face is
-	// pointing relative to the image's horizontal plane. Range [-180,180].
+	// that the face is pointing relative to the image's horizontal plane.
+	// Range [-180,180].
 	TiltAngle float64 `json:"tiltAngle,omitempty"`
 
 	// UnderExposedLikelihood: Under-exposed likelihood.
@@ -5316,10 +4869,10 @@ type GoogleCloudVisionV1p2beta1FaceAnnotation struct {
 
 	// ForceSendFields is a list of field names (e.g. "AngerLikelihood") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AngerLikelihood") to
@@ -5405,14 +4958,16 @@ type GoogleCloudVisionV1p2beta1FaceAnnotationLandmark struct {
 	//   "CHIN_GNATHION" - Chin gnathion.
 	//   "CHIN_LEFT_GONION" - Chin left gonion.
 	//   "CHIN_RIGHT_GONION" - Chin right gonion.
+	//   "LEFT_CHEEK_CENTER" - Left cheek center.
+	//   "RIGHT_CHEEK_CENTER" - Right cheek center.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Position") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Position") to include in
@@ -5434,47 +4989,30 @@ func (s *GoogleCloudVisionV1p2beta1FaceAnnotationLandmark) MarshalJSON() ([]byte
 // location where the output will be written to.
 type GoogleCloudVisionV1p2beta1GcsDestination struct {
 	// Uri: Google Cloud Storage URI prefix where the results will be
-	// stored. Results
-	// will be in JSON format and preceded by its corresponding input URI
-	// prefix.
-	// This field can either represent a gcs file prefix or gcs directory.
-	// In
-	// either case, the uri should be unique because in order to get all of
-	// the
-	// output files, you will need to do a wildcard gcs search on the uri
-	// prefix
-	// you provide.
-	//
-	// Examples:
-	//
-	// *    File Prefix: gs://bucket-name/here/filenameprefix   The output
-	// files
-	// will be created in gs://bucket-name/here/ and the names of the
-	// output files will begin with "filenameprefix".
-	//
-	// *    Directory Prefix: gs://bucket-name/some/location/   The output
-	// files
-	// will be created in gs://bucket-name/some/location/ and the names of
-	// the
-	// output files could be anything because there was no filename
-	// prefix
-	// specified.
-	//
-	// If multiple outputs, each response is still AnnotateFileResponse,
-	// each of
-	// which contains some subset of the full list of
-	// AnnotateImageResponse.
-	// Multiple outputs can happen if, for example, the output JSON is too
-	// large
-	// and overflows into multiple sharded files.
+	// stored. Results will be in JSON format and preceded by its
+	// corresponding input URI prefix. This field can either represent a gcs
+	// file prefix or gcs directory. In either case, the uri should be
+	// unique because in order to get all of the output files, you will need
+	// to do a wildcard gcs search on the uri prefix you provide. Examples:
+	// * File Prefix: gs://bucket-name/here/filenameprefix The output files
+	// will be created in gs://bucket-name/here/ and the names of the output
+	// files will begin with "filenameprefix". * Directory Prefix:
+	// gs://bucket-name/some/location/ The output files will be created in
+	// gs://bucket-name/some/location/ and the names of the output files
+	// could be anything because there was no filename prefix specified. If
+	// multiple outputs, each response is still AnnotateFileResponse, each
+	// of which contains some subset of the full list of
+	// AnnotateImageResponse. Multiple outputs can happen if, for example,
+	// the output JSON is too large and overflows into multiple sharded
+	// files.
 	Uri string `json:"uri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Uri") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Uri") to include in API
@@ -5495,17 +5033,16 @@ func (s *GoogleCloudVisionV1p2beta1GcsDestination) MarshalJSON() ([]byte, error)
 // GoogleCloudVisionV1p2beta1GcsSource: The Google Cloud Storage
 // location where the input will be read from.
 type GoogleCloudVisionV1p2beta1GcsSource struct {
-	// Uri: Google Cloud Storage URI for the input file. This must only be
-	// a
+	// Uri: Google Cloud Storage URI for the input file. This must only be a
 	// Google Cloud Storage object. Wildcards are not currently supported.
 	Uri string `json:"uri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Uri") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Uri") to include in API
@@ -5524,12 +5061,11 @@ func (s *GoogleCloudVisionV1p2beta1GcsSource) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudVisionV1p2beta1ImageAnnotationContext: If an image was
-// produced from a file (e.g. a PDF), this message gives
-// information about the source of that image.
+// produced from a file (e.g. a PDF), this message gives information
+// about the source of that image.
 type GoogleCloudVisionV1p2beta1ImageAnnotationContext struct {
 	// PageNumber: If the file was a PDF or TIFF, this field gives the page
-	// number within
-	// the file used to produce the image.
+	// number within the file used to produce the image.
 	PageNumber int64 `json:"pageNumber,omitempty"`
 
 	// Uri: The URI of the file used to produce the image.
@@ -5537,10 +5073,10 @@ type GoogleCloudVisionV1p2beta1ImageAnnotationContext struct {
 
 	// ForceSendFields is a list of field names (e.g. "PageNumber") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "PageNumber") to include in
@@ -5566,10 +5102,10 @@ type GoogleCloudVisionV1p2beta1ImageProperties struct {
 
 	// ForceSendFields is a list of field names (e.g. "DominantColors") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DominantColors") to
@@ -5591,30 +5127,27 @@ func (s *GoogleCloudVisionV1p2beta1ImageProperties) MarshalJSON() ([]byte, error
 // GoogleCloudVisionV1p2beta1InputConfig: The desired input location and
 // metadata.
 type GoogleCloudVisionV1p2beta1InputConfig struct {
-	// Content: File content, represented as a stream of bytes.
-	// Note: As with all `bytes` fields, protobuffers use a pure
-	// binary
-	// representation, whereas JSON representations use base64.
-	//
-	// Currently, this field only works for BatchAnnotateFiles requests. It
-	// does
-	// not work for AsyncBatchAnnotateFiles requests.
+	// Content: File content, represented as a stream of bytes. Note: As
+	// with all `bytes` fields, protobuffers use a pure binary
+	// representation, whereas JSON representations use base64. Currently,
+	// this field only works for BatchAnnotateFiles requests. It does not
+	// work for AsyncBatchAnnotateFiles requests.
 	Content string `json:"content,omitempty"`
 
 	// GcsSource: The Google Cloud Storage location to read the input from.
 	GcsSource *GoogleCloudVisionV1p2beta1GcsSource `json:"gcsSource,omitempty"`
 
 	// MimeType: The type of the file. Currently only "application/pdf",
-	// "image/tiff" and
-	// "image/gif" are supported. Wildcards are not supported.
+	// "image/tiff" and "image/gif" are supported. Wildcards are not
+	// supported.
 	MimeType string `json:"mimeType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Content") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Content") to include in
@@ -5640,9 +5173,7 @@ type GoogleCloudVisionV1p2beta1LocalizedObjectAnnotation struct {
 	BoundingPoly *GoogleCloudVisionV1p2beta1BoundingPoly `json:"boundingPoly,omitempty"`
 
 	// LanguageCode: The BCP-47 language code, such as "en-US" or "sr-Latn".
-	// For more
-	// information,
-	// see
+	// For more information, see
 	// http://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
 	LanguageCode string `json:"languageCode,omitempty"`
 
@@ -5657,10 +5188,10 @@ type GoogleCloudVisionV1p2beta1LocalizedObjectAnnotation struct {
 
 	// ForceSendFields is a list of field names (e.g. "BoundingPoly") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BoundingPoly") to include
@@ -5700,10 +5231,10 @@ type GoogleCloudVisionV1p2beta1LocationInfo struct {
 
 	// ForceSendFields is a list of field names (e.g. "LatLng") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "LatLng") to include in API
@@ -5722,10 +5253,8 @@ func (s *GoogleCloudVisionV1p2beta1LocationInfo) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudVisionV1p2beta1NormalizedVertex: A vertex represents a 2D
-// point in the image.
-// NOTE: the normalized vertex coordinates are relative to the original
-// image
-// and range from 0 to 1.
+// point in the image. NOTE: the normalized vertex coordinates are
+// relative to the original image and range from 0 to 1.
 type GoogleCloudVisionV1p2beta1NormalizedVertex struct {
 	// X: X coordinate.
 	X float64 `json:"x,omitempty"`
@@ -5735,10 +5264,10 @@ type GoogleCloudVisionV1p2beta1NormalizedVertex struct {
 
 	// ForceSendFields is a list of field names (e.g. "X") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "X") to include in API
@@ -5793,10 +5322,10 @@ type GoogleCloudVisionV1p2beta1OperationMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CreateTime") to include in
@@ -5818,21 +5347,13 @@ func (s *GoogleCloudVisionV1p2beta1OperationMetadata) MarshalJSON() ([]byte, err
 // and metadata.
 type GoogleCloudVisionV1p2beta1OutputConfig struct {
 	// BatchSize: The max number of response protos to put into each output
-	// JSON file on
-	// Google Cloud Storage.
-	// The valid range is [1, 100]. If not specified, the default value is
-	// 20.
-	//
-	// For example, for one pdf file with 100 pages, 100 response protos
-	// will
-	// be generated. If `batch_size` = 20, then 5 json files each
-	// containing 20 response protos will be written under the
-	// prefix
-	// `gcs_destination`.`uri`.
-	//
+	// JSON file on Google Cloud Storage. The valid range is [1, 100]. If
+	// not specified, the default value is 20. For example, for one pdf file
+	// with 100 pages, 100 response protos will be generated. If
+	// `batch_size` = 20, then 5 json files each containing 20 response
+	// protos will be written under the prefix `gcs_destination`.`uri`.
 	// Currently, batch_size only applies to GcsDestination, with potential
-	// future
-	// support for other output configurations.
+	// future support for other output configurations.
 	BatchSize int64 `json:"batchSize,omitempty"`
 
 	// GcsDestination: The Google Cloud Storage location to write the
@@ -5841,10 +5362,10 @@ type GoogleCloudVisionV1p2beta1OutputConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "BatchSize") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BatchSize") to include in
@@ -5871,24 +5392,22 @@ type GoogleCloudVisionV1p2beta1Page struct {
 	Confidence float64 `json:"confidence,omitempty"`
 
 	// Height: Page height. For PDFs the unit is points. For images
-	// (including
-	// TIFFs) the unit is pixels.
+	// (including TIFFs) the unit is pixels.
 	Height int64 `json:"height,omitempty"`
 
 	// Property: Additional information detected on the page.
 	Property *GoogleCloudVisionV1p2beta1TextAnnotationTextProperty `json:"property,omitempty"`
 
-	// Width: Page width. For PDFs the unit is points. For images
-	// (including
+	// Width: Page width. For PDFs the unit is points. For images (including
 	// TIFFs) the unit is pixels.
 	Width int64 `json:"width,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Blocks") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Blocks") to include in API
@@ -5923,25 +5442,14 @@ func (s *GoogleCloudVisionV1p2beta1Page) UnmarshalJSON(data []byte) error {
 // GoogleCloudVisionV1p2beta1Paragraph: Structural unit of text
 // representing a number of words in certain order.
 type GoogleCloudVisionV1p2beta1Paragraph struct {
-	// BoundingBox: The bounding box for the paragraph.
-	// The vertices are in the order of top-left, top-right,
-	// bottom-right,
-	// bottom-left. When a rotation of the bounding box is detected the
-	// rotation
-	// is represented as around the top-left corner as defined when the text
-	// is
-	// read in the 'natural' orientation.
-	// For example:
-	//   * when the text is horizontal it might look like:
-	//      0----1
-	//      |    |
-	//      3----2
-	//   * when it's rotated 180 degrees around the top-left corner it
-	// becomes:
-	//      2----3
-	//      |    |
-	//      1----0
-	//   and the vertex order will still be (0, 1, 2, 3).
+	// BoundingBox: The bounding box for the paragraph. The vertices are in
+	// the order of top-left, top-right, bottom-right, bottom-left. When a
+	// rotation of the bounding box is detected the rotation is represented
+	// as around the top-left corner as defined when the text is read in the
+	// 'natural' orientation. For example: * when the text is horizontal it
+	// might look like: 0----1 | | 3----2 * when it's rotated 180 degrees
+	// around the top-left corner it becomes: 2----3 | | 1----0 and the
+	// vertex order will still be (0, 1, 2, 3).
 	BoundingBox *GoogleCloudVisionV1p2beta1BoundingPoly `json:"boundingBox,omitempty"`
 
 	// Confidence: Confidence of the OCR results for the paragraph. Range
@@ -5956,10 +5464,10 @@ type GoogleCloudVisionV1p2beta1Paragraph struct {
 
 	// ForceSendFields is a list of field names (e.g. "BoundingBox") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BoundingBox") to include
@@ -5992,9 +5500,9 @@ func (s *GoogleCloudVisionV1p2beta1Paragraph) UnmarshalJSON(data []byte) error {
 }
 
 // GoogleCloudVisionV1p2beta1Position: A 3D position in the image, used
-// primarily for Face detection landmarks.
-// A valid Position must have both x and y coordinates.
-// The position coordinates are in the same scale as the original image.
+// primarily for Face detection landmarks. A valid Position must have
+// both x and y coordinates. The position coordinates are in the same
+// scale as the original image.
 type GoogleCloudVisionV1p2beta1Position struct {
 	// X: X coordinate.
 	X float64 `json:"x,omitempty"`
@@ -6007,10 +5515,10 @@ type GoogleCloudVisionV1p2beta1Position struct {
 
 	// ForceSendFields is a list of field names (e.g. "X") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "X") to include in API
@@ -6050,60 +5558,42 @@ func (s *GoogleCloudVisionV1p2beta1Position) UnmarshalJSON(data []byte) error {
 // ReferenceImages.
 type GoogleCloudVisionV1p2beta1Product struct {
 	// Description: User-provided metadata to be stored with this product.
-	// Must be at most 4096
-	// characters long.
+	// Must be at most 4096 characters long.
 	Description string `json:"description,omitempty"`
 
 	// DisplayName: The user-provided name for this Product. Must not be
-	// empty. Must be at most
-	// 4096 characters long.
+	// empty. Must be at most 4096 characters long.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Name: The resource name of the product.
-	//
-	// Format
-	// is:
-	// `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID`.
-	//
-	// This field is ignored when creating a product.
+	// Name: The resource name of the product. Format is:
+	// `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID`. This
+	// field is ignored when creating a product.
 	Name string `json:"name,omitempty"`
 
 	// ProductCategory: Immutable. The category for the product identified
-	// by the reference image. This should
-	// be either "homegoods-v2", "apparel-v2", or "toys-v2". The legacy
-	// categories
-	// "homegoods", "apparel", and "toys" are still supported, but these
-	// should
-	// not be used for new products.
+	// by the reference image. This should be one of "homegoods-v2",
+	// "apparel-v2", "toys-v2", "packagedgoods-v1" or "general-v1". The
+	// legacy categories "homegoods", "apparel", and "toys" are still
+	// supported, but these should not be used for new products.
 	ProductCategory string `json:"productCategory,omitempty"`
 
 	// ProductLabels: Key-value pairs that can be attached to a product. At
-	// query time,
-	// constraints can be specified based on the product_labels.
-	//
+	// query time, constraints can be specified based on the product_labels.
 	// Note that integer values can be provided as strings, e.g. "1199".
-	// Only
-	// strings with integer values can match a range-based restriction which
-	// is
-	// to be supported soon.
-	//
-	// Multiple values can be assigned to the same key. One product may have
-	// up to
-	// 500 product_labels.
-	//
-	// Notice that the total number of distinct product_labels over all
-	// products
-	// in one ProductSet cannot exceed 1M, otherwise the product search
-	// pipeline
+	// Only strings with integer values can match a range-based restriction
+	// which is to be supported soon. Multiple values can be assigned to the
+	// same key. One product may have up to 500 product_labels. Notice that
+	// the total number of distinct product_labels over all products in one
+	// ProductSet cannot exceed 1M, otherwise the product search pipeline
 	// will refuse to work for that ProductSet.
 	ProductLabels []*GoogleCloudVisionV1p2beta1ProductKeyValue `json:"productLabels,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Description") to include
@@ -6125,21 +5615,19 @@ func (s *GoogleCloudVisionV1p2beta1Product) MarshalJSON() ([]byte, error) {
 // represented as a key-value pair.
 type GoogleCloudVisionV1p2beta1ProductKeyValue struct {
 	// Key: The key of the label attached to the product. Cannot be empty
-	// and cannot
-	// exceed 128 bytes.
+	// and cannot exceed 128 bytes.
 	Key string `json:"key,omitempty"`
 
 	// Value: The value of the label attached to the product. Cannot be
-	// empty and
-	// cannot exceed 128 bytes.
+	// empty and cannot exceed 128 bytes.
 	Value string `json:"value,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Key") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Key") to include in API
@@ -6161,19 +5649,15 @@ func (s *GoogleCloudVisionV1p2beta1ProductKeyValue) MarshalJSON() ([]byte, error
 // search request.
 type GoogleCloudVisionV1p2beta1ProductSearchResults struct {
 	// IndexTime: Timestamp of the index which provided these results.
-	// Products added to the
-	// product set and products removed from the product set after this time
-	// are
-	// not reflected in the current results.
+	// Products added to the product set and products removed from the
+	// product set after this time are not reflected in the current results.
 	IndexTime string `json:"indexTime,omitempty"`
 
 	// ProductGroupedResults: List of results grouped by products detected
-	// in the query image. Each entry
-	// corresponds to one bounding polygon in the query image, and contains
-	// the
-	// matching products specific to that region. There may be duplicate
-	// product
-	// matches in the union of all the per-product results.
+	// in the query image. Each entry corresponds to one bounding polygon in
+	// the query image, and contains the matching products specific to that
+	// region. There may be duplicate product matches in the union of all
+	// the per-product results.
 	ProductGroupedResults []*GoogleCloudVisionV1p2beta1ProductSearchResultsGroupedResult `json:"productGroupedResults,omitempty"`
 
 	// Results: List of results, one for each product match.
@@ -6181,10 +5665,10 @@ type GoogleCloudVisionV1p2beta1ProductSearchResults struct {
 
 	// ForceSendFields is a list of field names (e.g. "IndexTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "IndexTime") to include in
@@ -6203,8 +5687,7 @@ func (s *GoogleCloudVisionV1p2beta1ProductSearchResults) MarshalJSON() ([]byte, 
 }
 
 // GoogleCloudVisionV1p2beta1ProductSearchResultsGroupedResult:
-// Information about the products similar to a single product in a
-// query
+// Information about the products similar to a single product in a query
 // image.
 type GoogleCloudVisionV1p2beta1ProductSearchResultsGroupedResult struct {
 	// BoundingPoly: The bounding polygon around the product detected in the
@@ -6220,10 +5703,10 @@ type GoogleCloudVisionV1p2beta1ProductSearchResultsGroupedResult struct {
 
 	// ForceSendFields is a list of field names (e.g. "BoundingPoly") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BoundingPoly") to include
@@ -6245,9 +5728,7 @@ func (s *GoogleCloudVisionV1p2beta1ProductSearchResultsGroupedResult) MarshalJSO
 // Prediction for what the object in the bounding box is.
 type GoogleCloudVisionV1p2beta1ProductSearchResultsObjectAnnotation struct {
 	// LanguageCode: The BCP-47 language code, such as "en-US" or "sr-Latn".
-	// For more
-	// information,
-	// see
+	// For more information, see
 	// http://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
 	LanguageCode string `json:"languageCode,omitempty"`
 
@@ -6262,10 +5743,10 @@ type GoogleCloudVisionV1p2beta1ProductSearchResultsObjectAnnotation struct {
 
 	// ForceSendFields is a list of field names (e.g. "LanguageCode") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "LanguageCode") to include
@@ -6301,24 +5782,22 @@ func (s *GoogleCloudVisionV1p2beta1ProductSearchResultsObjectAnnotation) Unmarsh
 // about a product.
 type GoogleCloudVisionV1p2beta1ProductSearchResultsResult struct {
 	// Image: The resource name of the image from the product that is the
-	// closest match
-	// to the query.
+	// closest match to the query.
 	Image string `json:"image,omitempty"`
 
 	// Product: The Product.
 	Product *GoogleCloudVisionV1p2beta1Product `json:"product,omitempty"`
 
 	// Score: A confidence level on the match, ranging from 0 (no
-	// confidence) to
-	// 1 (full confidence).
+	// confidence) to 1 (full confidence).
 	Score float64 `json:"score,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Image") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Image") to include in API
@@ -6364,10 +5843,10 @@ type GoogleCloudVisionV1p2beta1Property struct {
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Name") to include in API
@@ -6386,16 +5865,12 @@ func (s *GoogleCloudVisionV1p2beta1Property) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudVisionV1p2beta1SafeSearchAnnotation: Set of features
-// pertaining to the image, computed by computer vision
-// methods over safe-search verticals (for example, adult, spoof,
-// medical,
-// violence).
+// pertaining to the image, computed by computer vision methods over
+// safe-search verticals (for example, adult, spoof, medical, violence).
 type GoogleCloudVisionV1p2beta1SafeSearchAnnotation struct {
 	// Adult: Represents the adult content likelihood for the image. Adult
-	// content may
-	// contain elements such as nudity, pornographic images or cartoons,
-	// or
-	// sexual activities.
+	// content may contain elements such as nudity, pornographic images or
+	// cartoons, or sexual activities.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
@@ -6418,12 +5893,9 @@ type GoogleCloudVisionV1p2beta1SafeSearchAnnotation struct {
 	Medical string `json:"medical,omitempty"`
 
 	// Racy: Likelihood that the request image contains racy content. Racy
-	// content may
-	// include (but is not limited to) skimpy or sheer clothing,
-	// strategically
-	// covered nudity, lewd or provocative poses, or close-ups of
-	// sensitive
-	// body areas.
+	// content may include (but is not limited to) skimpy or sheer clothing,
+	// strategically covered nudity, lewd or provocative poses, or close-ups
+	// of sensitive body areas.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
@@ -6434,9 +5906,9 @@ type GoogleCloudVisionV1p2beta1SafeSearchAnnotation struct {
 	//   "VERY_LIKELY" - It is very likely.
 	Racy string `json:"racy,omitempty"`
 
-	// Spoof: Spoof likelihood. The likelihood that an modification
-	// was made to the image's canonical version to make it appear
-	// funny or offensive.
+	// Spoof: Spoof likelihood. The likelihood that an modification was made
+	// to the image's canonical version to make it appear funny or
+	// offensive.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
@@ -6460,10 +5932,10 @@ type GoogleCloudVisionV1p2beta1SafeSearchAnnotation struct {
 
 	// ForceSendFields is a list of field names (e.g. "Adult") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Adult") to include in API
@@ -6483,25 +5955,14 @@ func (s *GoogleCloudVisionV1p2beta1SafeSearchAnnotation) MarshalJSON() ([]byte, 
 
 // GoogleCloudVisionV1p2beta1Symbol: A single symbol representation.
 type GoogleCloudVisionV1p2beta1Symbol struct {
-	// BoundingBox: The bounding box for the symbol.
-	// The vertices are in the order of top-left, top-right,
-	// bottom-right,
-	// bottom-left. When a rotation of the bounding box is detected the
-	// rotation
-	// is represented as around the top-left corner as defined when the text
-	// is
-	// read in the 'natural' orientation.
-	// For example:
-	//   * when the text is horizontal it might look like:
-	//      0----1
-	//      |    |
-	//      3----2
-	//   * when it's rotated 180 degrees around the top-left corner it
-	// becomes:
-	//      2----3
-	//      |    |
-	//      1----0
-	//   and the vertex order will still be (0, 1, 2, 3).
+	// BoundingBox: The bounding box for the symbol. The vertices are in the
+	// order of top-left, top-right, bottom-right, bottom-left. When a
+	// rotation of the bounding box is detected the rotation is represented
+	// as around the top-left corner as defined when the text is read in the
+	// 'natural' orientation. For example: * when the text is horizontal it
+	// might look like: 0----1 | | 3----2 * when it's rotated 180 degrees
+	// around the top-left corner it becomes: 2----3 | | 1----0 and the
+	// vertex order will still be (0, 1, 2, 3).
 	BoundingBox *GoogleCloudVisionV1p2beta1BoundingPoly `json:"boundingBox,omitempty"`
 
 	// Confidence: Confidence of the OCR results for the symbol. Range [0,
@@ -6516,10 +5977,10 @@ type GoogleCloudVisionV1p2beta1Symbol struct {
 
 	// ForceSendFields is a list of field names (e.g. "BoundingBox") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BoundingBox") to include
@@ -6552,17 +6013,12 @@ func (s *GoogleCloudVisionV1p2beta1Symbol) UnmarshalJSON(data []byte) error {
 }
 
 // GoogleCloudVisionV1p2beta1TextAnnotation: TextAnnotation contains a
-// structured representation of OCR extracted text.
-// The hierarchy of an OCR extracted text structure is like this:
-//     TextAnnotation -> Page -> Block -> Paragraph -> Word ->
-// Symbol
-// Each structural component, starting from Page, may further have their
-// own
-// properties. Properties describe detected languages, breaks etc..
-// Please refer
-// to the TextAnnotation.TextProperty message definition below for
-// more
-// detail.
+// structured representation of OCR extracted text. The hierarchy of an
+// OCR extracted text structure is like this: TextAnnotation -> Page ->
+// Block -> Paragraph -> Word -> Symbol Each structural component,
+// starting from Page, may further have their own properties. Properties
+// describe detected languages, breaks etc.. Please refer to the
+// TextAnnotation.TextProperty message definition below for more detail.
 type GoogleCloudVisionV1p2beta1TextAnnotation struct {
 	// Pages: List of pages detected by OCR.
 	Pages []*GoogleCloudVisionV1p2beta1Page `json:"pages,omitempty"`
@@ -6572,10 +6028,10 @@ type GoogleCloudVisionV1p2beta1TextAnnotation struct {
 
 	// ForceSendFields is a list of field names (e.g. "Pages") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Pages") to include in API
@@ -6607,17 +6063,16 @@ type GoogleCloudVisionV1p2beta1TextAnnotationDetectedBreak struct {
 	//   "SURE_SPACE" - Sure space (very wide).
 	//   "EOL_SURE_SPACE" - Line-wrapping break.
 	//   "HYPHEN" - End-line hyphen that is not present in text; does not
-	// co-occur with
-	// `SPACE`, `LEADER_SPACE`, or `LINE_BREAK`.
+	// co-occur with `SPACE`, `LEADER_SPACE`, or `LINE_BREAK`.
 	//   "LINE_BREAK" - Line break that ends a paragraph.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "IsPrefix") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "IsPrefix") to include in
@@ -6642,18 +6097,16 @@ type GoogleCloudVisionV1p2beta1TextAnnotationDetectedLanguage struct {
 	Confidence float64 `json:"confidence,omitempty"`
 
 	// LanguageCode: The BCP-47 language code, such as "en-US" or "sr-Latn".
-	// For more
-	// information,
-	// see
+	// For more information, see
 	// http://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Confidence") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Confidence") to include in
@@ -6697,10 +6150,10 @@ type GoogleCloudVisionV1p2beta1TextAnnotationTextProperty struct {
 
 	// ForceSendFields is a list of field names (e.g. "DetectedBreak") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DetectedBreak") to include
@@ -6719,9 +6172,8 @@ func (s *GoogleCloudVisionV1p2beta1TextAnnotationTextProperty) MarshalJSON() ([]
 }
 
 // GoogleCloudVisionV1p2beta1Vertex: A vertex represents a 2D point in
-// the image.
-// NOTE: the vertex coordinates are in the same scale as the original
-// image.
+// the image. NOTE: the vertex coordinates are in the same scale as the
+// original image.
 type GoogleCloudVisionV1p2beta1Vertex struct {
 	// X: X coordinate.
 	X int64 `json:"x,omitempty"`
@@ -6731,10 +6183,10 @@ type GoogleCloudVisionV1p2beta1Vertex struct {
 
 	// ForceSendFields is a list of field names (e.g. "X") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "X") to include in API
@@ -6756,22 +6208,19 @@ func (s *GoogleCloudVisionV1p2beta1Vertex) MarshalJSON() ([]byte, error) {
 // image from the Internet.
 type GoogleCloudVisionV1p2beta1WebDetection struct {
 	// BestGuessLabels: The service's best guess as to the topic of the
-	// request image.
-	// Inferred from similar images on the open web.
+	// request image. Inferred from similar images on the open web.
 	BestGuessLabels []*GoogleCloudVisionV1p2beta1WebDetectionWebLabel `json:"bestGuessLabels,omitempty"`
 
-	// FullMatchingImages: Fully matching images from the Internet.
-	// Can include resized copies of the query image.
+	// FullMatchingImages: Fully matching images from the Internet. Can
+	// include resized copies of the query image.
 	FullMatchingImages []*GoogleCloudVisionV1p2beta1WebDetectionWebImage `json:"fullMatchingImages,omitempty"`
 
 	// PagesWithMatchingImages: Web pages containing the matching images
 	// from the Internet.
 	PagesWithMatchingImages []*GoogleCloudVisionV1p2beta1WebDetectionWebPage `json:"pagesWithMatchingImages,omitempty"`
 
-	// PartialMatchingImages: Partial matching images from the
-	// Internet.
-	// Those images are similar enough to share some key-point features.
-	// For
+	// PartialMatchingImages: Partial matching images from the Internet.
+	// Those images are similar enough to share some key-point features. For
 	// example an original image will likely have partial matching for its
 	// crops.
 	PartialMatchingImages []*GoogleCloudVisionV1p2beta1WebDetectionWebImage `json:"partialMatchingImages,omitempty"`
@@ -6784,10 +6233,10 @@ type GoogleCloudVisionV1p2beta1WebDetection struct {
 
 	// ForceSendFields is a list of field names (e.g. "BestGuessLabels") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BestGuessLabels") to
@@ -6815,16 +6264,16 @@ type GoogleCloudVisionV1p2beta1WebDetectionWebEntity struct {
 	// EntityId: Opaque entity ID.
 	EntityId string `json:"entityId,omitempty"`
 
-	// Score: Overall relevancy score for the entity.
-	// Not normalized and not comparable across different image queries.
+	// Score: Overall relevancy score for the entity. Not normalized and not
+	// comparable across different image queries.
 	Score float64 `json:"score,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Description") to include
@@ -6867,10 +6316,10 @@ type GoogleCloudVisionV1p2beta1WebDetectionWebImage struct {
 
 	// ForceSendFields is a list of field names (e.g. "Score") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Score") to include in API
@@ -6909,18 +6358,16 @@ type GoogleCloudVisionV1p2beta1WebDetectionWebLabel struct {
 	Label string `json:"label,omitempty"`
 
 	// LanguageCode: The BCP-47 language code for `label`, such as "en-US"
-	// or "sr-Latn".
-	// For more information,
-	// see
+	// or "sr-Latn". For more information, see
 	// http://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Label") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Label") to include in API
@@ -6941,18 +6388,16 @@ func (s *GoogleCloudVisionV1p2beta1WebDetectionWebLabel) MarshalJSON() ([]byte, 
 // GoogleCloudVisionV1p2beta1WebDetectionWebPage: Metadata for web
 // pages.
 type GoogleCloudVisionV1p2beta1WebDetectionWebPage struct {
-	// FullMatchingImages: Fully matching images on the page.
-	// Can include resized copies of the query image.
+	// FullMatchingImages: Fully matching images on the page. Can include
+	// resized copies of the query image.
 	FullMatchingImages []*GoogleCloudVisionV1p2beta1WebDetectionWebImage `json:"fullMatchingImages,omitempty"`
 
 	// PageTitle: Title for the web page, may contain HTML markups.
 	PageTitle string `json:"pageTitle,omitempty"`
 
-	// PartialMatchingImages: Partial matching images on the page.
-	// Those images are similar enough to share some key-point features.
-	// For
-	// example an original image will likely have partial matching for
-	// its
+	// PartialMatchingImages: Partial matching images on the page. Those
+	// images are similar enough to share some key-point features. For
+	// example an original image will likely have partial matching for its
 	// crops.
 	PartialMatchingImages []*GoogleCloudVisionV1p2beta1WebDetectionWebImage `json:"partialMatchingImages,omitempty"`
 
@@ -6964,10 +6409,10 @@ type GoogleCloudVisionV1p2beta1WebDetectionWebPage struct {
 
 	// ForceSendFields is a list of field names (e.g. "FullMatchingImages")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "FullMatchingImages") to
@@ -7002,25 +6447,14 @@ func (s *GoogleCloudVisionV1p2beta1WebDetectionWebPage) UnmarshalJSON(data []byt
 
 // GoogleCloudVisionV1p2beta1Word: A word representation.
 type GoogleCloudVisionV1p2beta1Word struct {
-	// BoundingBox: The bounding box for the word.
-	// The vertices are in the order of top-left, top-right,
-	// bottom-right,
-	// bottom-left. When a rotation of the bounding box is detected the
-	// rotation
-	// is represented as around the top-left corner as defined when the text
-	// is
-	// read in the 'natural' orientation.
-	// For example:
-	//   * when the text is horizontal it might look like:
-	//      0----1
-	//      |    |
-	//      3----2
-	//   * when it's rotated 180 degrees around the top-left corner it
-	// becomes:
-	//      2----3
-	//      |    |
-	//      1----0
-	//   and the vertex order will still be (0, 1, 2, 3).
+	// BoundingBox: The bounding box for the word. The vertices are in the
+	// order of top-left, top-right, bottom-right, bottom-left. When a
+	// rotation of the bounding box is detected the rotation is represented
+	// as around the top-left corner as defined when the text is read in the
+	// 'natural' orientation. For example: * when the text is horizontal it
+	// might look like: 0----1 | | 3----2 * when it's rotated 180 degrees
+	// around the top-left corner it becomes: 2----3 | | 1----0 and the
+	// vertex order will still be (0, 1, 2, 3).
 	BoundingBox *GoogleCloudVisionV1p2beta1BoundingPoly `json:"boundingBox,omitempty"`
 
 	// Confidence: Confidence of the OCR results for the word. Range [0, 1].
@@ -7029,16 +6463,16 @@ type GoogleCloudVisionV1p2beta1Word struct {
 	// Property: Additional information detected for the word.
 	Property *GoogleCloudVisionV1p2beta1TextAnnotationTextProperty `json:"property,omitempty"`
 
-	// Symbols: List of symbols in the word.
-	// The order of the symbols follows the natural reading order.
+	// Symbols: List of symbols in the word. The order of the symbols
+	// follows the natural reading order.
 	Symbols []*GoogleCloudVisionV1p2beta1Symbol `json:"symbols,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BoundingBox") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BoundingBox") to include
@@ -7071,12 +6505,11 @@ func (s *GoogleCloudVisionV1p2beta1Word) UnmarshalJSON(data []byte) error {
 }
 
 // GoogleCloudVisionV1p3beta1AnnotateFileResponse: Response to a single
-// file annotation request. A file may contain one or more
-// images, which individually have their own responses.
+// file annotation request. A file may contain one or more images, which
+// individually have their own responses.
 type GoogleCloudVisionV1p3beta1AnnotateFileResponse struct {
 	// Error: If set, represents the error message for the failed request.
-	// The
-	// `responses` field will not be set in this case.
+	// The `responses` field will not be set in this case.
 	Error *Status `json:"error,omitempty"`
 
 	// InputConfig: Information about the file for which this response is
@@ -7084,8 +6517,7 @@ type GoogleCloudVisionV1p3beta1AnnotateFileResponse struct {
 	InputConfig *GoogleCloudVisionV1p3beta1InputConfig `json:"inputConfig,omitempty"`
 
 	// Responses: Individual responses to images found within the file. This
-	// field will be
-	// empty if the `error` field is set.
+	// field will be empty if the `error` field is set.
 	Responses []*GoogleCloudVisionV1p3beta1AnnotateImageResponse `json:"responses,omitempty"`
 
 	// TotalPages: This field gives the total number of pages in the file.
@@ -7093,10 +6525,10 @@ type GoogleCloudVisionV1p3beta1AnnotateFileResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Error") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Error") to include in API
@@ -7118,17 +6550,16 @@ func (s *GoogleCloudVisionV1p3beta1AnnotateFileResponse) MarshalJSON() ([]byte, 
 // annotation request.
 type GoogleCloudVisionV1p3beta1AnnotateImageResponse struct {
 	// Context: If present, contextual information is needed to understand
-	// where this image
-	// comes from.
+	// where this image comes from.
 	Context *GoogleCloudVisionV1p3beta1ImageAnnotationContext `json:"context,omitempty"`
 
 	// CropHintsAnnotation: If present, crop hints have completed
 	// successfully.
 	CropHintsAnnotation *GoogleCloudVisionV1p3beta1CropHintsAnnotation `json:"cropHintsAnnotation,omitempty"`
 
-	// Error: If set, represents the error message for the operation.
-	// Note that filled-in image annotations are guaranteed to be
-	// correct, even when `error` is set.
+	// Error: If set, represents the error message for the operation. Note
+	// that filled-in image annotations are guaranteed to be correct, even
+	// when `error` is set.
 	Error *Status `json:"error,omitempty"`
 
 	// FaceAnnotations: If present, face detection has completed
@@ -7136,11 +6567,8 @@ type GoogleCloudVisionV1p3beta1AnnotateImageResponse struct {
 	FaceAnnotations []*GoogleCloudVisionV1p3beta1FaceAnnotation `json:"faceAnnotations,omitempty"`
 
 	// FullTextAnnotation: If present, text (OCR) detection or document
-	// (OCR) text detection has
-	// completed successfully.
-	// This annotation provides the structural hierarchy for the OCR
-	// detected
-	// text.
+	// (OCR) text detection has completed successfully. This annotation
+	// provides the structural hierarchy for the OCR detected text.
 	FullTextAnnotation *GoogleCloudVisionV1p3beta1TextAnnotation `json:"fullTextAnnotation,omitempty"`
 
 	// ImagePropertiesAnnotation: If present, image properties were
@@ -7156,8 +6584,8 @@ type GoogleCloudVisionV1p3beta1AnnotateImageResponse struct {
 	LandmarkAnnotations []*GoogleCloudVisionV1p3beta1EntityAnnotation `json:"landmarkAnnotations,omitempty"`
 
 	// LocalizedObjectAnnotations: If present, localized object detection
-	// has completed successfully.
-	// This will be sorted descending by confidence score.
+	// has completed successfully. This will be sorted descending by
+	// confidence score.
 	LocalizedObjectAnnotations []*GoogleCloudVisionV1p3beta1LocalizedObjectAnnotation `json:"localizedObjectAnnotations,omitempty"`
 
 	// LogoAnnotations: If present, logo detection has completed
@@ -7181,10 +6609,10 @@ type GoogleCloudVisionV1p3beta1AnnotateImageResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Context") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Context") to include in
@@ -7211,10 +6639,10 @@ type GoogleCloudVisionV1p3beta1AsyncAnnotateFileResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "OutputConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "OutputConfig") to include
@@ -7236,16 +6664,15 @@ func (s *GoogleCloudVisionV1p3beta1AsyncAnnotateFileResponse) MarshalJSON() ([]b
 // to an async batch file annotation request.
 type GoogleCloudVisionV1p3beta1AsyncBatchAnnotateFilesResponse struct {
 	// Responses: The list of file annotation responses, one for each
-	// request in
-	// AsyncBatchAnnotateFilesRequest.
+	// request in AsyncBatchAnnotateFilesRequest.
 	Responses []*GoogleCloudVisionV1p3beta1AsyncAnnotateFileResponse `json:"responses,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Responses") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Responses") to include in
@@ -7264,14 +6691,11 @@ func (s *GoogleCloudVisionV1p3beta1AsyncBatchAnnotateFilesResponse) MarshalJSON(
 }
 
 // GoogleCloudVisionV1p3beta1BatchOperationMetadata: Metadata for the
-// batch operations such as the current state.
-//
-// This is included in the `metadata` field of the `Operation` returned
-// by the
-// `GetOperation` call of the `google::longrunning::Operations` service.
+// batch operations such as the current state. This is included in the
+// `metadata` field of the `Operation` returned by the `GetOperation`
+// call of the `google::longrunning::Operations` service.
 type GoogleCloudVisionV1p3beta1BatchOperationMetadata struct {
-	// EndTime: The time when the batch request is finished
-	// and
+	// EndTime: The time when the batch request is finished and
 	// google.longrunning.Operation.done is set to true.
 	EndTime string `json:"endTime,omitempty"`
 
@@ -7281,15 +6705,13 @@ type GoogleCloudVisionV1p3beta1BatchOperationMetadata struct {
 	//   "STATE_UNSPECIFIED" - Invalid.
 	//   "PROCESSING" - Request is actively being processed.
 	//   "SUCCESSFUL" - The request is done and at least one item has been
-	// successfully
-	// processed.
+	// successfully processed.
 	//   "FAILED" - The request is done and no item has been successfully
 	// processed.
 	//   "CANCELLED" - The request is done after the
-	// longrunning.Operations.CancelOperation has
-	// been called by the user.  Any records that were processed before
-	// the
-	// cancel command are output as specified in the request.
+	// longrunning.Operations.CancelOperation has been called by the user.
+	// Any records that were processed before the cancel command are output
+	// as specified in the request.
 	State string `json:"state,omitempty"`
 
 	// SubmitTime: The time when the batch request was submitted to the
@@ -7298,10 +6720,10 @@ type GoogleCloudVisionV1p3beta1BatchOperationMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "EndTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "EndTime") to include in
@@ -7332,30 +6754,14 @@ type GoogleCloudVisionV1p3beta1Block struct {
 	//   "BARCODE" - Barcode block.
 	BlockType string `json:"blockType,omitempty"`
 
-	// BoundingBox: The bounding box for the block.
-	// The vertices are in the order of top-left, top-right,
-	// bottom-right,
-	// bottom-left. When a rotation of the bounding box is detected the
-	// rotation
-	// is represented as around the top-left corner as defined when the text
-	// is
-	// read in the 'natural' orientation.
-	// For example:
-	//
-	// * when the text is horizontal it might look like:
-	//
-	//         0----1
-	//         |    |
-	//         3----2
-	//
-	// * when it's rotated 180 degrees around the top-left corner it
-	// becomes:
-	//
-	//         2----3
-	//         |    |
-	//         1----0
-	//
-	//   and the vertex order will still be (0, 1, 2, 3).
+	// BoundingBox: The bounding box for the block. The vertices are in the
+	// order of top-left, top-right, bottom-right, bottom-left. When a
+	// rotation of the bounding box is detected the rotation is represented
+	// as around the top-left corner as defined when the text is read in the
+	// 'natural' orientation. For example: * when the text is horizontal it
+	// might look like: 0----1 | | 3----2 * when it's rotated 180 degrees
+	// around the top-left corner it becomes: 2----3 | | 1----0 and the
+	// vertex order will still be (0, 1, 2, 3).
 	BoundingBox *GoogleCloudVisionV1p3beta1BoundingPoly `json:"boundingBox,omitempty"`
 
 	// Confidence: Confidence of the OCR results on the block. Range [0, 1].
@@ -7370,10 +6776,10 @@ type GoogleCloudVisionV1p3beta1Block struct {
 
 	// ForceSendFields is a list of field names (e.g. "BlockType") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BlockType") to include in
@@ -7416,10 +6822,10 @@ type GoogleCloudVisionV1p3beta1BoundingPoly struct {
 
 	// ForceSendFields is a list of field names (e.g. "NormalizedVertices")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NormalizedVertices") to
@@ -7439,15 +6845,14 @@ func (s *GoogleCloudVisionV1p3beta1BoundingPoly) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudVisionV1p3beta1ColorInfo: Color information consists of
-// RGB channels, score, and the fraction of
-// the image that the color occupies in the image.
+// RGB channels, score, and the fraction of the image that the color
+// occupies in the image.
 type GoogleCloudVisionV1p3beta1ColorInfo struct {
 	// Color: RGB components of the color.
 	Color *Color `json:"color,omitempty"`
 
 	// PixelFraction: The fraction of pixels the color occupies in the
-	// image.
-	// Value in range [0, 1].
+	// image. Value in range [0, 1].
 	PixelFraction float64 `json:"pixelFraction,omitempty"`
 
 	// Score: Image-specific score for this color. Value in range [0, 1].
@@ -7455,10 +6860,10 @@ type GoogleCloudVisionV1p3beta1ColorInfo struct {
 
 	// ForceSendFields is a list of field names (e.g. "Color") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Color") to include in API
@@ -7496,24 +6901,22 @@ func (s *GoogleCloudVisionV1p3beta1ColorInfo) UnmarshalJSON(data []byte) error {
 // generate a new crop when serving an image.
 type GoogleCloudVisionV1p3beta1CropHint struct {
 	// BoundingPoly: The bounding polygon for the crop region. The
-	// coordinates of the bounding
-	// box are in the original image's scale.
+	// coordinates of the bounding box are in the original image's scale.
 	BoundingPoly *GoogleCloudVisionV1p3beta1BoundingPoly `json:"boundingPoly,omitempty"`
 
-	// Confidence: Confidence of this being a salient region.  Range [0, 1].
+	// Confidence: Confidence of this being a salient region. Range [0, 1].
 	Confidence float64 `json:"confidence,omitempty"`
 
 	// ImportanceFraction: Fraction of importance of this salient region
-	// with respect to the original
-	// image.
+	// with respect to the original image.
 	ImportanceFraction float64 `json:"importanceFraction,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BoundingPoly") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BoundingPoly") to include
@@ -7555,10 +6958,10 @@ type GoogleCloudVisionV1p3beta1CropHintsAnnotation struct {
 
 	// ForceSendFields is a list of field names (e.g. "CropHints") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CropHints") to include in
@@ -7584,10 +6987,10 @@ type GoogleCloudVisionV1p3beta1DominantColorsAnnotation struct {
 
 	// ForceSendFields is a list of field names (e.g. "Colors") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Colors") to include in API
@@ -7608,71 +7011,57 @@ func (s *GoogleCloudVisionV1p3beta1DominantColorsAnnotation) MarshalJSON() ([]by
 // GoogleCloudVisionV1p3beta1EntityAnnotation: Set of detected entity
 // features.
 type GoogleCloudVisionV1p3beta1EntityAnnotation struct {
-	// BoundingPoly: Image region to which this entity belongs. Not
-	// produced
+	// BoundingPoly: Image region to which this entity belongs. Not produced
 	// for `LABEL_DETECTION` features.
 	BoundingPoly *GoogleCloudVisionV1p3beta1BoundingPoly `json:"boundingPoly,omitempty"`
 
-	// Confidence: **Deprecated. Use `score` instead.**
-	// The accuracy of the entity detection in an image.
-	// For example, for an image in which the "Eiffel Tower" entity is
-	// detected,
-	// this field represents the confidence that there is a tower in the
-	// query
-	// image. Range [0, 1].
+	// Confidence: **Deprecated. Use `score` instead.** The accuracy of the
+	// entity detection in an image. For example, for an image in which the
+	// "Eiffel Tower" entity is detected, this field represents the
+	// confidence that there is a tower in the query image. Range [0, 1].
 	Confidence float64 `json:"confidence,omitempty"`
 
 	// Description: Entity textual description, expressed in its `locale`
 	// language.
 	Description string `json:"description,omitempty"`
 
-	// Locale: The language code for the locale in which the entity
-	// textual
+	// Locale: The language code for the locale in which the entity textual
 	// `description` is expressed.
 	Locale string `json:"locale,omitempty"`
 
-	// Locations: The location information for the detected entity.
-	// Multiple
-	// `LocationInfo` elements can be present because one location
-	// may
-	// indicate the location of the scene in the image, and another
-	// location
-	// may indicate the location of the place where the image was
-	// taken.
+	// Locations: The location information for the detected entity. Multiple
+	// `LocationInfo` elements can be present because one location may
+	// indicate the location of the scene in the image, and another location
+	// may indicate the location of the place where the image was taken.
 	// Location information is usually present for landmarks.
 	Locations []*GoogleCloudVisionV1p3beta1LocationInfo `json:"locations,omitempty"`
 
-	// Mid: Opaque entity ID. Some IDs may be available in
-	// [Google Knowledge Graph
-	// Search
-	// API](https://developers.google.com/knowledge-graph/).
+	// Mid: Opaque entity ID. Some IDs may be available in Google Knowledge
+	// Graph Search API (https://developers.google.com/knowledge-graph/).
 	Mid string `json:"mid,omitempty"`
 
 	// Properties: Some entities may have optional user-supplied `Property`
-	// (name/value)
-	// fields, such a score or string that qualifies the entity.
+	// (name/value) fields, such a score or string that qualifies the
+	// entity.
 	Properties []*GoogleCloudVisionV1p3beta1Property `json:"properties,omitempty"`
 
 	// Score: Overall score of the result. Range [0, 1].
 	Score float64 `json:"score,omitempty"`
 
 	// Topicality: The relevancy of the ICA (Image Content Annotation) label
-	// to the
-	// image. For example, the relevancy of "tower" is likely higher to an
-	// image
-	// containing the detected "Eiffel Tower" than to an image containing
-	// a
-	// detected distant towering building, even though the confidence
-	// that
-	// there is a tower in each image may be the same. Range [0, 1].
+	// to the image. For example, the relevancy of "tower" is likely higher
+	// to an image containing the detected "Eiffel Tower" than to an image
+	// containing a detected distant towering building, even though the
+	// confidence that there is a tower in each image may be the same. Range
+	// [0, 1].
 	Topicality float64 `json:"topicality,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BoundingPoly") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BoundingPoly") to include
@@ -7734,15 +7123,11 @@ type GoogleCloudVisionV1p3beta1FaceAnnotation struct {
 	BlurredLikelihood string `json:"blurredLikelihood,omitempty"`
 
 	// BoundingPoly: The bounding polygon around the face. The coordinates
-	// of the bounding box
-	// are in the original image's scale.
-	// The bounding box is computed to "frame" the face in accordance with
-	// human
-	// expectations. It is based on the landmarker results.
-	// Note that one or more x and/or y coordinates may not be generated in
-	// the
-	// `BoundingPoly` (the polygon will be unbounded) if only a partial
-	// face
+	// of the bounding box are in the original image's scale. The bounding
+	// box is computed to "frame" the face in accordance with human
+	// expectations. It is based on the landmarker results. Note that one or
+	// more x and/or y coordinates may not be generated in the
+	// `BoundingPoly` (the polygon will be unbounded) if only a partial face
 	// appears in the image to be annotated.
 	BoundingPoly *GoogleCloudVisionV1p3beta1BoundingPoly `json:"boundingPoly,omitempty"`
 
@@ -7750,15 +7135,11 @@ type GoogleCloudVisionV1p3beta1FaceAnnotation struct {
 	DetectionConfidence float64 `json:"detectionConfidence,omitempty"`
 
 	// FdBoundingPoly: The `fd_bounding_poly` bounding polygon is tighter
-	// than the
-	// `boundingPoly`, and encloses only the skin part of the face.
-	// Typically, it
-	// is used to eliminate the face from any image analysis that detects
-	// the
-	// "amount of skin" visible in an image. It is not based on
-	// the
-	// landmarker results, only on the initial face detection, hence
-	// the <code>fd</code> (face detection) prefix.
+	// than the `boundingPoly`, and encloses only the skin part of the face.
+	// Typically, it is used to eliminate the face from any image analysis
+	// that detects the "amount of skin" visible in an image. It is not
+	// based on the landmarker results, only on the initial face detection,
+	// hence the fd (face detection) prefix.
 	FdBoundingPoly *GoogleCloudVisionV1p3beta1BoundingPoly `json:"fdBoundingPoly,omitempty"`
 
 	// HeadwearLikelihood: Headwear likelihood.
@@ -7790,17 +7171,13 @@ type GoogleCloudVisionV1p3beta1FaceAnnotation struct {
 	Landmarks []*GoogleCloudVisionV1p3beta1FaceAnnotationLandmark `json:"landmarks,omitempty"`
 
 	// PanAngle: Yaw angle, which indicates the leftward/rightward angle
-	// that the face is
-	// pointing relative to the vertical plane perpendicular to the image.
-	// Range
-	// [-180,180].
+	// that the face is pointing relative to the vertical plane
+	// perpendicular to the image. Range [-180,180].
 	PanAngle float64 `json:"panAngle,omitempty"`
 
 	// RollAngle: Roll angle, which indicates the amount of
-	// clockwise/anti-clockwise rotation
-	// of the face relative to the image vertical about the axis
-	// perpendicular to
-	// the face. Range [-180,180].
+	// clockwise/anti-clockwise rotation of the face relative to the image
+	// vertical about the axis perpendicular to the face. Range [-180,180].
 	RollAngle float64 `json:"rollAngle,omitempty"`
 
 	// SorrowLikelihood: Sorrow likelihood.
@@ -7826,8 +7203,8 @@ type GoogleCloudVisionV1p3beta1FaceAnnotation struct {
 	SurpriseLikelihood string `json:"surpriseLikelihood,omitempty"`
 
 	// TiltAngle: Pitch angle, which indicates the upwards/downwards angle
-	// that the face is
-	// pointing relative to the image's horizontal plane. Range [-180,180].
+	// that the face is pointing relative to the image's horizontal plane.
+	// Range [-180,180].
 	TiltAngle float64 `json:"tiltAngle,omitempty"`
 
 	// UnderExposedLikelihood: Under-exposed likelihood.
@@ -7843,10 +7220,10 @@ type GoogleCloudVisionV1p3beta1FaceAnnotation struct {
 
 	// ForceSendFields is a list of field names (e.g. "AngerLikelihood") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AngerLikelihood") to
@@ -7932,14 +7309,16 @@ type GoogleCloudVisionV1p3beta1FaceAnnotationLandmark struct {
 	//   "CHIN_GNATHION" - Chin gnathion.
 	//   "CHIN_LEFT_GONION" - Chin left gonion.
 	//   "CHIN_RIGHT_GONION" - Chin right gonion.
+	//   "LEFT_CHEEK_CENTER" - Left cheek center.
+	//   "RIGHT_CHEEK_CENTER" - Right cheek center.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Position") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Position") to include in
@@ -7961,47 +7340,30 @@ func (s *GoogleCloudVisionV1p3beta1FaceAnnotationLandmark) MarshalJSON() ([]byte
 // location where the output will be written to.
 type GoogleCloudVisionV1p3beta1GcsDestination struct {
 	// Uri: Google Cloud Storage URI prefix where the results will be
-	// stored. Results
-	// will be in JSON format and preceded by its corresponding input URI
-	// prefix.
-	// This field can either represent a gcs file prefix or gcs directory.
-	// In
-	// either case, the uri should be unique because in order to get all of
-	// the
-	// output files, you will need to do a wildcard gcs search on the uri
-	// prefix
-	// you provide.
-	//
-	// Examples:
-	//
-	// *    File Prefix: gs://bucket-name/here/filenameprefix   The output
-	// files
-	// will be created in gs://bucket-name/here/ and the names of the
-	// output files will begin with "filenameprefix".
-	//
-	// *    Directory Prefix: gs://bucket-name/some/location/   The output
-	// files
-	// will be created in gs://bucket-name/some/location/ and the names of
-	// the
-	// output files could be anything because there was no filename
-	// prefix
-	// specified.
-	//
-	// If multiple outputs, each response is still AnnotateFileResponse,
-	// each of
-	// which contains some subset of the full list of
-	// AnnotateImageResponse.
-	// Multiple outputs can happen if, for example, the output JSON is too
-	// large
-	// and overflows into multiple sharded files.
+	// stored. Results will be in JSON format and preceded by its
+	// corresponding input URI prefix. This field can either represent a gcs
+	// file prefix or gcs directory. In either case, the uri should be
+	// unique because in order to get all of the output files, you will need
+	// to do a wildcard gcs search on the uri prefix you provide. Examples:
+	// * File Prefix: gs://bucket-name/here/filenameprefix The output files
+	// will be created in gs://bucket-name/here/ and the names of the output
+	// files will begin with "filenameprefix". * Directory Prefix:
+	// gs://bucket-name/some/location/ The output files will be created in
+	// gs://bucket-name/some/location/ and the names of the output files
+	// could be anything because there was no filename prefix specified. If
+	// multiple outputs, each response is still AnnotateFileResponse, each
+	// of which contains some subset of the full list of
+	// AnnotateImageResponse. Multiple outputs can happen if, for example,
+	// the output JSON is too large and overflows into multiple sharded
+	// files.
 	Uri string `json:"uri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Uri") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Uri") to include in API
@@ -8022,17 +7384,16 @@ func (s *GoogleCloudVisionV1p3beta1GcsDestination) MarshalJSON() ([]byte, error)
 // GoogleCloudVisionV1p3beta1GcsSource: The Google Cloud Storage
 // location where the input will be read from.
 type GoogleCloudVisionV1p3beta1GcsSource struct {
-	// Uri: Google Cloud Storage URI for the input file. This must only be
-	// a
+	// Uri: Google Cloud Storage URI for the input file. This must only be a
 	// Google Cloud Storage object. Wildcards are not currently supported.
 	Uri string `json:"uri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Uri") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Uri") to include in API
@@ -8051,12 +7412,11 @@ func (s *GoogleCloudVisionV1p3beta1GcsSource) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudVisionV1p3beta1ImageAnnotationContext: If an image was
-// produced from a file (e.g. a PDF), this message gives
-// information about the source of that image.
+// produced from a file (e.g. a PDF), this message gives information
+// about the source of that image.
 type GoogleCloudVisionV1p3beta1ImageAnnotationContext struct {
 	// PageNumber: If the file was a PDF or TIFF, this field gives the page
-	// number within
-	// the file used to produce the image.
+	// number within the file used to produce the image.
 	PageNumber int64 `json:"pageNumber,omitempty"`
 
 	// Uri: The URI of the file used to produce the image.
@@ -8064,10 +7424,10 @@ type GoogleCloudVisionV1p3beta1ImageAnnotationContext struct {
 
 	// ForceSendFields is a list of field names (e.g. "PageNumber") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "PageNumber") to include in
@@ -8093,10 +7453,10 @@ type GoogleCloudVisionV1p3beta1ImageProperties struct {
 
 	// ForceSendFields is a list of field names (e.g. "DominantColors") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DominantColors") to
@@ -8116,12 +7476,8 @@ func (s *GoogleCloudVisionV1p3beta1ImageProperties) MarshalJSON() ([]byte, error
 }
 
 // GoogleCloudVisionV1p3beta1ImportProductSetsResponse: Response message
-// for the `ImportProductSets` method.
-//
-// This message is returned by
-// the
-// google.longrunning.Operations.GetOperation method in the
-// returned
+// for the `ImportProductSets` method. This message is returned by the
+// google.longrunning.Operations.GetOperation method in the returned
 // google.longrunning.Operation.response field.
 type GoogleCloudVisionV1p3beta1ImportProductSetsResponse struct {
 	// ReferenceImages: The list of reference_images that are imported
@@ -8129,22 +7485,18 @@ type GoogleCloudVisionV1p3beta1ImportProductSetsResponse struct {
 	ReferenceImages []*GoogleCloudVisionV1p3beta1ReferenceImage `json:"referenceImages,omitempty"`
 
 	// Statuses: The rpc status for each ImportProductSet request, including
-	// both successes
-	// and errors.
-	//
-	// The number of statuses here matches the number of lines in the csv
-	// file,
-	// and statuses[i] stores the success or failure status of processing
-	// the i-th
-	// line of the csv, starting from line 0.
+	// both successes and errors. The number of statuses here matches the
+	// number of lines in the csv file, and statuses[i] stores the success
+	// or failure status of processing the i-th line of the csv, starting
+	// from line 0.
 	Statuses []*Status `json:"statuses,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ReferenceImages") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ReferenceImages") to
@@ -8166,30 +7518,27 @@ func (s *GoogleCloudVisionV1p3beta1ImportProductSetsResponse) MarshalJSON() ([]b
 // GoogleCloudVisionV1p3beta1InputConfig: The desired input location and
 // metadata.
 type GoogleCloudVisionV1p3beta1InputConfig struct {
-	// Content: File content, represented as a stream of bytes.
-	// Note: As with all `bytes` fields, protobuffers use a pure
-	// binary
-	// representation, whereas JSON representations use base64.
-	//
-	// Currently, this field only works for BatchAnnotateFiles requests. It
-	// does
-	// not work for AsyncBatchAnnotateFiles requests.
+	// Content: File content, represented as a stream of bytes. Note: As
+	// with all `bytes` fields, protobuffers use a pure binary
+	// representation, whereas JSON representations use base64. Currently,
+	// this field only works for BatchAnnotateFiles requests. It does not
+	// work for AsyncBatchAnnotateFiles requests.
 	Content string `json:"content,omitempty"`
 
 	// GcsSource: The Google Cloud Storage location to read the input from.
 	GcsSource *GoogleCloudVisionV1p3beta1GcsSource `json:"gcsSource,omitempty"`
 
 	// MimeType: The type of the file. Currently only "application/pdf",
-	// "image/tiff" and
-	// "image/gif" are supported. Wildcards are not supported.
+	// "image/tiff" and "image/gif" are supported. Wildcards are not
+	// supported.
 	MimeType string `json:"mimeType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Content") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Content") to include in
@@ -8215,9 +7564,7 @@ type GoogleCloudVisionV1p3beta1LocalizedObjectAnnotation struct {
 	BoundingPoly *GoogleCloudVisionV1p3beta1BoundingPoly `json:"boundingPoly,omitempty"`
 
 	// LanguageCode: The BCP-47 language code, such as "en-US" or "sr-Latn".
-	// For more
-	// information,
-	// see
+	// For more information, see
 	// http://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
 	LanguageCode string `json:"languageCode,omitempty"`
 
@@ -8232,10 +7579,10 @@ type GoogleCloudVisionV1p3beta1LocalizedObjectAnnotation struct {
 
 	// ForceSendFields is a list of field names (e.g. "BoundingPoly") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BoundingPoly") to include
@@ -8275,10 +7622,10 @@ type GoogleCloudVisionV1p3beta1LocationInfo struct {
 
 	// ForceSendFields is a list of field names (e.g. "LatLng") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "LatLng") to include in API
@@ -8297,10 +7644,8 @@ func (s *GoogleCloudVisionV1p3beta1LocationInfo) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudVisionV1p3beta1NormalizedVertex: A vertex represents a 2D
-// point in the image.
-// NOTE: the normalized vertex coordinates are relative to the original
-// image
-// and range from 0 to 1.
+// point in the image. NOTE: the normalized vertex coordinates are
+// relative to the original image and range from 0 to 1.
 type GoogleCloudVisionV1p3beta1NormalizedVertex struct {
 	// X: X coordinate.
 	X float64 `json:"x,omitempty"`
@@ -8310,10 +7655,10 @@ type GoogleCloudVisionV1p3beta1NormalizedVertex struct {
 
 	// ForceSendFields is a list of field names (e.g. "X") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "X") to include in API
@@ -8368,10 +7713,10 @@ type GoogleCloudVisionV1p3beta1OperationMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CreateTime") to include in
@@ -8393,21 +7738,13 @@ func (s *GoogleCloudVisionV1p3beta1OperationMetadata) MarshalJSON() ([]byte, err
 // and metadata.
 type GoogleCloudVisionV1p3beta1OutputConfig struct {
 	// BatchSize: The max number of response protos to put into each output
-	// JSON file on
-	// Google Cloud Storage.
-	// The valid range is [1, 100]. If not specified, the default value is
-	// 20.
-	//
-	// For example, for one pdf file with 100 pages, 100 response protos
-	// will
-	// be generated. If `batch_size` = 20, then 5 json files each
-	// containing 20 response protos will be written under the
-	// prefix
-	// `gcs_destination`.`uri`.
-	//
+	// JSON file on Google Cloud Storage. The valid range is [1, 100]. If
+	// not specified, the default value is 20. For example, for one pdf file
+	// with 100 pages, 100 response protos will be generated. If
+	// `batch_size` = 20, then 5 json files each containing 20 response
+	// protos will be written under the prefix `gcs_destination`.`uri`.
 	// Currently, batch_size only applies to GcsDestination, with potential
-	// future
-	// support for other output configurations.
+	// future support for other output configurations.
 	BatchSize int64 `json:"batchSize,omitempty"`
 
 	// GcsDestination: The Google Cloud Storage location to write the
@@ -8416,10 +7753,10 @@ type GoogleCloudVisionV1p3beta1OutputConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "BatchSize") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BatchSize") to include in
@@ -8446,24 +7783,22 @@ type GoogleCloudVisionV1p3beta1Page struct {
 	Confidence float64 `json:"confidence,omitempty"`
 
 	// Height: Page height. For PDFs the unit is points. For images
-	// (including
-	// TIFFs) the unit is pixels.
+	// (including TIFFs) the unit is pixels.
 	Height int64 `json:"height,omitempty"`
 
 	// Property: Additional information detected on the page.
 	Property *GoogleCloudVisionV1p3beta1TextAnnotationTextProperty `json:"property,omitempty"`
 
-	// Width: Page width. For PDFs the unit is points. For images
-	// (including
+	// Width: Page width. For PDFs the unit is points. For images (including
 	// TIFFs) the unit is pixels.
 	Width int64 `json:"width,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Blocks") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Blocks") to include in API
@@ -8498,25 +7833,14 @@ func (s *GoogleCloudVisionV1p3beta1Page) UnmarshalJSON(data []byte) error {
 // GoogleCloudVisionV1p3beta1Paragraph: Structural unit of text
 // representing a number of words in certain order.
 type GoogleCloudVisionV1p3beta1Paragraph struct {
-	// BoundingBox: The bounding box for the paragraph.
-	// The vertices are in the order of top-left, top-right,
-	// bottom-right,
-	// bottom-left. When a rotation of the bounding box is detected the
-	// rotation
-	// is represented as around the top-left corner as defined when the text
-	// is
-	// read in the 'natural' orientation.
-	// For example:
-	//   * when the text is horizontal it might look like:
-	//      0----1
-	//      |    |
-	//      3----2
-	//   * when it's rotated 180 degrees around the top-left corner it
-	// becomes:
-	//      2----3
-	//      |    |
-	//      1----0
-	//   and the vertex order will still be (0, 1, 2, 3).
+	// BoundingBox: The bounding box for the paragraph. The vertices are in
+	// the order of top-left, top-right, bottom-right, bottom-left. When a
+	// rotation of the bounding box is detected the rotation is represented
+	// as around the top-left corner as defined when the text is read in the
+	// 'natural' orientation. For example: * when the text is horizontal it
+	// might look like: 0----1 | | 3----2 * when it's rotated 180 degrees
+	// around the top-left corner it becomes: 2----3 | | 1----0 and the
+	// vertex order will still be (0, 1, 2, 3).
 	BoundingBox *GoogleCloudVisionV1p3beta1BoundingPoly `json:"boundingBox,omitempty"`
 
 	// Confidence: Confidence of the OCR results for the paragraph. Range
@@ -8531,10 +7855,10 @@ type GoogleCloudVisionV1p3beta1Paragraph struct {
 
 	// ForceSendFields is a list of field names (e.g. "BoundingBox") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BoundingBox") to include
@@ -8567,9 +7891,9 @@ func (s *GoogleCloudVisionV1p3beta1Paragraph) UnmarshalJSON(data []byte) error {
 }
 
 // GoogleCloudVisionV1p3beta1Position: A 3D position in the image, used
-// primarily for Face detection landmarks.
-// A valid Position must have both x and y coordinates.
-// The position coordinates are in the same scale as the original image.
+// primarily for Face detection landmarks. A valid Position must have
+// both x and y coordinates. The position coordinates are in the same
+// scale as the original image.
 type GoogleCloudVisionV1p3beta1Position struct {
 	// X: X coordinate.
 	X float64 `json:"x,omitempty"`
@@ -8582,10 +7906,10 @@ type GoogleCloudVisionV1p3beta1Position struct {
 
 	// ForceSendFields is a list of field names (e.g. "X") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "X") to include in API
@@ -8625,60 +7949,42 @@ func (s *GoogleCloudVisionV1p3beta1Position) UnmarshalJSON(data []byte) error {
 // ReferenceImages.
 type GoogleCloudVisionV1p3beta1Product struct {
 	// Description: User-provided metadata to be stored with this product.
-	// Must be at most 4096
-	// characters long.
+	// Must be at most 4096 characters long.
 	Description string `json:"description,omitempty"`
 
 	// DisplayName: The user-provided name for this Product. Must not be
-	// empty. Must be at most
-	// 4096 characters long.
+	// empty. Must be at most 4096 characters long.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Name: The resource name of the product.
-	//
-	// Format
-	// is:
-	// `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID`.
-	//
-	// This field is ignored when creating a product.
+	// Name: The resource name of the product. Format is:
+	// `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID`. This
+	// field is ignored when creating a product.
 	Name string `json:"name,omitempty"`
 
 	// ProductCategory: Immutable. The category for the product identified
-	// by the reference image. This should
-	// be either "homegoods-v2", "apparel-v2", or "toys-v2". The legacy
-	// categories
-	// "homegoods", "apparel", and "toys" are still supported, but these
-	// should
-	// not be used for new products.
+	// by the reference image. This should be one of "homegoods-v2",
+	// "apparel-v2", "toys-v2", "packagedgoods-v1" or "general-v1". The
+	// legacy categories "homegoods", "apparel", and "toys" are still
+	// supported, but these should not be used for new products.
 	ProductCategory string `json:"productCategory,omitempty"`
 
 	// ProductLabels: Key-value pairs that can be attached to a product. At
-	// query time,
-	// constraints can be specified based on the product_labels.
-	//
+	// query time, constraints can be specified based on the product_labels.
 	// Note that integer values can be provided as strings, e.g. "1199".
-	// Only
-	// strings with integer values can match a range-based restriction which
-	// is
-	// to be supported soon.
-	//
-	// Multiple values can be assigned to the same key. One product may have
-	// up to
-	// 500 product_labels.
-	//
-	// Notice that the total number of distinct product_labels over all
-	// products
-	// in one ProductSet cannot exceed 1M, otherwise the product search
-	// pipeline
+	// Only strings with integer values can match a range-based restriction
+	// which is to be supported soon. Multiple values can be assigned to the
+	// same key. One product may have up to 500 product_labels. Notice that
+	// the total number of distinct product_labels over all products in one
+	// ProductSet cannot exceed 1M, otherwise the product search pipeline
 	// will refuse to work for that ProductSet.
 	ProductLabels []*GoogleCloudVisionV1p3beta1ProductKeyValue `json:"productLabels,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Description") to include
@@ -8700,21 +8006,19 @@ func (s *GoogleCloudVisionV1p3beta1Product) MarshalJSON() ([]byte, error) {
 // represented as a key-value pair.
 type GoogleCloudVisionV1p3beta1ProductKeyValue struct {
 	// Key: The key of the label attached to the product. Cannot be empty
-	// and cannot
-	// exceed 128 bytes.
+	// and cannot exceed 128 bytes.
 	Key string `json:"key,omitempty"`
 
 	// Value: The value of the label attached to the product. Cannot be
-	// empty and
-	// cannot exceed 128 bytes.
+	// empty and cannot exceed 128 bytes.
 	Value string `json:"value,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Key") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Key") to include in API
@@ -8736,19 +8040,15 @@ func (s *GoogleCloudVisionV1p3beta1ProductKeyValue) MarshalJSON() ([]byte, error
 // search request.
 type GoogleCloudVisionV1p3beta1ProductSearchResults struct {
 	// IndexTime: Timestamp of the index which provided these results.
-	// Products added to the
-	// product set and products removed from the product set after this time
-	// are
-	// not reflected in the current results.
+	// Products added to the product set and products removed from the
+	// product set after this time are not reflected in the current results.
 	IndexTime string `json:"indexTime,omitempty"`
 
 	// ProductGroupedResults: List of results grouped by products detected
-	// in the query image. Each entry
-	// corresponds to one bounding polygon in the query image, and contains
-	// the
-	// matching products specific to that region. There may be duplicate
-	// product
-	// matches in the union of all the per-product results.
+	// in the query image. Each entry corresponds to one bounding polygon in
+	// the query image, and contains the matching products specific to that
+	// region. There may be duplicate product matches in the union of all
+	// the per-product results.
 	ProductGroupedResults []*GoogleCloudVisionV1p3beta1ProductSearchResultsGroupedResult `json:"productGroupedResults,omitempty"`
 
 	// Results: List of results, one for each product match.
@@ -8756,10 +8056,10 @@ type GoogleCloudVisionV1p3beta1ProductSearchResults struct {
 
 	// ForceSendFields is a list of field names (e.g. "IndexTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "IndexTime") to include in
@@ -8778,8 +8078,7 @@ func (s *GoogleCloudVisionV1p3beta1ProductSearchResults) MarshalJSON() ([]byte, 
 }
 
 // GoogleCloudVisionV1p3beta1ProductSearchResultsGroupedResult:
-// Information about the products similar to a single product in a
-// query
+// Information about the products similar to a single product in a query
 // image.
 type GoogleCloudVisionV1p3beta1ProductSearchResultsGroupedResult struct {
 	// BoundingPoly: The bounding polygon around the product detected in the
@@ -8795,10 +8094,10 @@ type GoogleCloudVisionV1p3beta1ProductSearchResultsGroupedResult struct {
 
 	// ForceSendFields is a list of field names (e.g. "BoundingPoly") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BoundingPoly") to include
@@ -8820,9 +8119,7 @@ func (s *GoogleCloudVisionV1p3beta1ProductSearchResultsGroupedResult) MarshalJSO
 // Prediction for what the object in the bounding box is.
 type GoogleCloudVisionV1p3beta1ProductSearchResultsObjectAnnotation struct {
 	// LanguageCode: The BCP-47 language code, such as "en-US" or "sr-Latn".
-	// For more
-	// information,
-	// see
+	// For more information, see
 	// http://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
 	LanguageCode string `json:"languageCode,omitempty"`
 
@@ -8837,10 +8134,10 @@ type GoogleCloudVisionV1p3beta1ProductSearchResultsObjectAnnotation struct {
 
 	// ForceSendFields is a list of field names (e.g. "LanguageCode") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "LanguageCode") to include
@@ -8876,24 +8173,22 @@ func (s *GoogleCloudVisionV1p3beta1ProductSearchResultsObjectAnnotation) Unmarsh
 // about a product.
 type GoogleCloudVisionV1p3beta1ProductSearchResultsResult struct {
 	// Image: The resource name of the image from the product that is the
-	// closest match
-	// to the query.
+	// closest match to the query.
 	Image string `json:"image,omitempty"`
 
 	// Product: The Product.
 	Product *GoogleCloudVisionV1p3beta1Product `json:"product,omitempty"`
 
 	// Score: A confidence level on the match, ranging from 0 (no
-	// confidence) to
-	// 1 (full confidence).
+	// confidence) to 1 (full confidence).
 	Score float64 `json:"score,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Image") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Image") to include in API
@@ -8939,10 +8234,10 @@ type GoogleCloudVisionV1p3beta1Property struct {
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Name") to include in API
@@ -8961,47 +8256,33 @@ func (s *GoogleCloudVisionV1p3beta1Property) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudVisionV1p3beta1ReferenceImage: A `ReferenceImage`
-// represents a product image and its associated metadata,
-// such as bounding boxes.
+// represents a product image and its associated metadata, such as
+// bounding boxes.
 type GoogleCloudVisionV1p3beta1ReferenceImage struct {
 	// BoundingPolys: Optional. Bounding polygons around the areas of
-	// interest in the reference image.
-	// If this field is empty, the system will try to detect regions
-	// of
-	// interest. At most 10 bounding polygons will be used.
-	//
-	// The provided shape is converted into a non-rotated rectangle.
-	// Once
-	// converted, the small edge of the rectangle must be greater than or
-	// equal
-	// to 300 pixels. The aspect ratio must be 1:4 or less (i.e. 1:3 is ok;
-	// 1:5
-	// is not).
+	// interest in the reference image. If this field is empty, the system
+	// will try to detect regions of interest. At most 10 bounding polygons
+	// will be used. The provided shape is converted into a non-rotated
+	// rectangle. Once converted, the small edge of the rectangle must be
+	// greater than or equal to 300 pixels. The aspect ratio must be 1:4 or
+	// less (i.e. 1:3 is ok; 1:5 is not).
 	BoundingPolys []*GoogleCloudVisionV1p3beta1BoundingPoly `json:"boundingPolys,omitempty"`
 
-	// Name: The resource name of the reference image.
-	//
-	// Format
-	// is:
-	//
-	// `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID/referen
-	// ceImages/IMAGE_ID`.
-	//
-	// This field is ignored when creating a reference image.
+	// Name: The resource name of the reference image. Format is:
+	// `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID/referenceIma
+	// ges/IMAGE_ID`. This field is ignored when creating a reference image.
 	Name string `json:"name,omitempty"`
 
-	// Uri: Required. The Google Cloud Storage URI of the reference
-	// image.
-	//
+	// Uri: Required. The Google Cloud Storage URI of the reference image.
 	// The URI must start with `gs://`.
 	Uri string `json:"uri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BoundingPolys") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BoundingPolys") to include
@@ -9020,16 +8301,12 @@ func (s *GoogleCloudVisionV1p3beta1ReferenceImage) MarshalJSON() ([]byte, error)
 }
 
 // GoogleCloudVisionV1p3beta1SafeSearchAnnotation: Set of features
-// pertaining to the image, computed by computer vision
-// methods over safe-search verticals (for example, adult, spoof,
-// medical,
-// violence).
+// pertaining to the image, computed by computer vision methods over
+// safe-search verticals (for example, adult, spoof, medical, violence).
 type GoogleCloudVisionV1p3beta1SafeSearchAnnotation struct {
 	// Adult: Represents the adult content likelihood for the image. Adult
-	// content may
-	// contain elements such as nudity, pornographic images or cartoons,
-	// or
-	// sexual activities.
+	// content may contain elements such as nudity, pornographic images or
+	// cartoons, or sexual activities.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
@@ -9052,12 +8329,9 @@ type GoogleCloudVisionV1p3beta1SafeSearchAnnotation struct {
 	Medical string `json:"medical,omitempty"`
 
 	// Racy: Likelihood that the request image contains racy content. Racy
-	// content may
-	// include (but is not limited to) skimpy or sheer clothing,
-	// strategically
-	// covered nudity, lewd or provocative poses, or close-ups of
-	// sensitive
-	// body areas.
+	// content may include (but is not limited to) skimpy or sheer clothing,
+	// strategically covered nudity, lewd or provocative poses, or close-ups
+	// of sensitive body areas.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
@@ -9068,9 +8342,9 @@ type GoogleCloudVisionV1p3beta1SafeSearchAnnotation struct {
 	//   "VERY_LIKELY" - It is very likely.
 	Racy string `json:"racy,omitempty"`
 
-	// Spoof: Spoof likelihood. The likelihood that an modification
-	// was made to the image's canonical version to make it appear
-	// funny or offensive.
+	// Spoof: Spoof likelihood. The likelihood that an modification was made
+	// to the image's canonical version to make it appear funny or
+	// offensive.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
@@ -9094,10 +8368,10 @@ type GoogleCloudVisionV1p3beta1SafeSearchAnnotation struct {
 
 	// ForceSendFields is a list of field names (e.g. "Adult") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Adult") to include in API
@@ -9117,25 +8391,14 @@ func (s *GoogleCloudVisionV1p3beta1SafeSearchAnnotation) MarshalJSON() ([]byte, 
 
 // GoogleCloudVisionV1p3beta1Symbol: A single symbol representation.
 type GoogleCloudVisionV1p3beta1Symbol struct {
-	// BoundingBox: The bounding box for the symbol.
-	// The vertices are in the order of top-left, top-right,
-	// bottom-right,
-	// bottom-left. When a rotation of the bounding box is detected the
-	// rotation
-	// is represented as around the top-left corner as defined when the text
-	// is
-	// read in the 'natural' orientation.
-	// For example:
-	//   * when the text is horizontal it might look like:
-	//      0----1
-	//      |    |
-	//      3----2
-	//   * when it's rotated 180 degrees around the top-left corner it
-	// becomes:
-	//      2----3
-	//      |    |
-	//      1----0
-	//   and the vertex order will still be (0, 1, 2, 3).
+	// BoundingBox: The bounding box for the symbol. The vertices are in the
+	// order of top-left, top-right, bottom-right, bottom-left. When a
+	// rotation of the bounding box is detected the rotation is represented
+	// as around the top-left corner as defined when the text is read in the
+	// 'natural' orientation. For example: * when the text is horizontal it
+	// might look like: 0----1 | | 3----2 * when it's rotated 180 degrees
+	// around the top-left corner it becomes: 2----3 | | 1----0 and the
+	// vertex order will still be (0, 1, 2, 3).
 	BoundingBox *GoogleCloudVisionV1p3beta1BoundingPoly `json:"boundingBox,omitempty"`
 
 	// Confidence: Confidence of the OCR results for the symbol. Range [0,
@@ -9150,10 +8413,10 @@ type GoogleCloudVisionV1p3beta1Symbol struct {
 
 	// ForceSendFields is a list of field names (e.g. "BoundingBox") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BoundingBox") to include
@@ -9186,17 +8449,12 @@ func (s *GoogleCloudVisionV1p3beta1Symbol) UnmarshalJSON(data []byte) error {
 }
 
 // GoogleCloudVisionV1p3beta1TextAnnotation: TextAnnotation contains a
-// structured representation of OCR extracted text.
-// The hierarchy of an OCR extracted text structure is like this:
-//     TextAnnotation -> Page -> Block -> Paragraph -> Word ->
-// Symbol
-// Each structural component, starting from Page, may further have their
-// own
-// properties. Properties describe detected languages, breaks etc..
-// Please refer
-// to the TextAnnotation.TextProperty message definition below for
-// more
-// detail.
+// structured representation of OCR extracted text. The hierarchy of an
+// OCR extracted text structure is like this: TextAnnotation -> Page ->
+// Block -> Paragraph -> Word -> Symbol Each structural component,
+// starting from Page, may further have their own properties. Properties
+// describe detected languages, breaks etc.. Please refer to the
+// TextAnnotation.TextProperty message definition below for more detail.
 type GoogleCloudVisionV1p3beta1TextAnnotation struct {
 	// Pages: List of pages detected by OCR.
 	Pages []*GoogleCloudVisionV1p3beta1Page `json:"pages,omitempty"`
@@ -9206,10 +8464,10 @@ type GoogleCloudVisionV1p3beta1TextAnnotation struct {
 
 	// ForceSendFields is a list of field names (e.g. "Pages") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Pages") to include in API
@@ -9241,17 +8499,16 @@ type GoogleCloudVisionV1p3beta1TextAnnotationDetectedBreak struct {
 	//   "SURE_SPACE" - Sure space (very wide).
 	//   "EOL_SURE_SPACE" - Line-wrapping break.
 	//   "HYPHEN" - End-line hyphen that is not present in text; does not
-	// co-occur with
-	// `SPACE`, `LEADER_SPACE`, or `LINE_BREAK`.
+	// co-occur with `SPACE`, `LEADER_SPACE`, or `LINE_BREAK`.
 	//   "LINE_BREAK" - Line break that ends a paragraph.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "IsPrefix") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "IsPrefix") to include in
@@ -9276,18 +8533,16 @@ type GoogleCloudVisionV1p3beta1TextAnnotationDetectedLanguage struct {
 	Confidence float64 `json:"confidence,omitempty"`
 
 	// LanguageCode: The BCP-47 language code, such as "en-US" or "sr-Latn".
-	// For more
-	// information,
-	// see
+	// For more information, see
 	// http://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Confidence") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Confidence") to include in
@@ -9331,10 +8586,10 @@ type GoogleCloudVisionV1p3beta1TextAnnotationTextProperty struct {
 
 	// ForceSendFields is a list of field names (e.g. "DetectedBreak") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DetectedBreak") to include
@@ -9353,9 +8608,8 @@ func (s *GoogleCloudVisionV1p3beta1TextAnnotationTextProperty) MarshalJSON() ([]
 }
 
 // GoogleCloudVisionV1p3beta1Vertex: A vertex represents a 2D point in
-// the image.
-// NOTE: the vertex coordinates are in the same scale as the original
-// image.
+// the image. NOTE: the vertex coordinates are in the same scale as the
+// original image.
 type GoogleCloudVisionV1p3beta1Vertex struct {
 	// X: X coordinate.
 	X int64 `json:"x,omitempty"`
@@ -9365,10 +8619,10 @@ type GoogleCloudVisionV1p3beta1Vertex struct {
 
 	// ForceSendFields is a list of field names (e.g. "X") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "X") to include in API
@@ -9390,22 +8644,19 @@ func (s *GoogleCloudVisionV1p3beta1Vertex) MarshalJSON() ([]byte, error) {
 // image from the Internet.
 type GoogleCloudVisionV1p3beta1WebDetection struct {
 	// BestGuessLabels: The service's best guess as to the topic of the
-	// request image.
-	// Inferred from similar images on the open web.
+	// request image. Inferred from similar images on the open web.
 	BestGuessLabels []*GoogleCloudVisionV1p3beta1WebDetectionWebLabel `json:"bestGuessLabels,omitempty"`
 
-	// FullMatchingImages: Fully matching images from the Internet.
-	// Can include resized copies of the query image.
+	// FullMatchingImages: Fully matching images from the Internet. Can
+	// include resized copies of the query image.
 	FullMatchingImages []*GoogleCloudVisionV1p3beta1WebDetectionWebImage `json:"fullMatchingImages,omitempty"`
 
 	// PagesWithMatchingImages: Web pages containing the matching images
 	// from the Internet.
 	PagesWithMatchingImages []*GoogleCloudVisionV1p3beta1WebDetectionWebPage `json:"pagesWithMatchingImages,omitempty"`
 
-	// PartialMatchingImages: Partial matching images from the
-	// Internet.
-	// Those images are similar enough to share some key-point features.
-	// For
+	// PartialMatchingImages: Partial matching images from the Internet.
+	// Those images are similar enough to share some key-point features. For
 	// example an original image will likely have partial matching for its
 	// crops.
 	PartialMatchingImages []*GoogleCloudVisionV1p3beta1WebDetectionWebImage `json:"partialMatchingImages,omitempty"`
@@ -9418,10 +8669,10 @@ type GoogleCloudVisionV1p3beta1WebDetection struct {
 
 	// ForceSendFields is a list of field names (e.g. "BestGuessLabels") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BestGuessLabels") to
@@ -9449,16 +8700,16 @@ type GoogleCloudVisionV1p3beta1WebDetectionWebEntity struct {
 	// EntityId: Opaque entity ID.
 	EntityId string `json:"entityId,omitempty"`
 
-	// Score: Overall relevancy score for the entity.
-	// Not normalized and not comparable across different image queries.
+	// Score: Overall relevancy score for the entity. Not normalized and not
+	// comparable across different image queries.
 	Score float64 `json:"score,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Description") to include
@@ -9501,10 +8752,10 @@ type GoogleCloudVisionV1p3beta1WebDetectionWebImage struct {
 
 	// ForceSendFields is a list of field names (e.g. "Score") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Score") to include in API
@@ -9543,18 +8794,16 @@ type GoogleCloudVisionV1p3beta1WebDetectionWebLabel struct {
 	Label string `json:"label,omitempty"`
 
 	// LanguageCode: The BCP-47 language code for `label`, such as "en-US"
-	// or "sr-Latn".
-	// For more information,
-	// see
+	// or "sr-Latn". For more information, see
 	// http://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Label") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Label") to include in API
@@ -9575,18 +8824,16 @@ func (s *GoogleCloudVisionV1p3beta1WebDetectionWebLabel) MarshalJSON() ([]byte, 
 // GoogleCloudVisionV1p3beta1WebDetectionWebPage: Metadata for web
 // pages.
 type GoogleCloudVisionV1p3beta1WebDetectionWebPage struct {
-	// FullMatchingImages: Fully matching images on the page.
-	// Can include resized copies of the query image.
+	// FullMatchingImages: Fully matching images on the page. Can include
+	// resized copies of the query image.
 	FullMatchingImages []*GoogleCloudVisionV1p3beta1WebDetectionWebImage `json:"fullMatchingImages,omitempty"`
 
 	// PageTitle: Title for the web page, may contain HTML markups.
 	PageTitle string `json:"pageTitle,omitempty"`
 
-	// PartialMatchingImages: Partial matching images on the page.
-	// Those images are similar enough to share some key-point features.
-	// For
-	// example an original image will likely have partial matching for
-	// its
+	// PartialMatchingImages: Partial matching images on the page. Those
+	// images are similar enough to share some key-point features. For
+	// example an original image will likely have partial matching for its
 	// crops.
 	PartialMatchingImages []*GoogleCloudVisionV1p3beta1WebDetectionWebImage `json:"partialMatchingImages,omitempty"`
 
@@ -9598,10 +8845,10 @@ type GoogleCloudVisionV1p3beta1WebDetectionWebPage struct {
 
 	// ForceSendFields is a list of field names (e.g. "FullMatchingImages")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "FullMatchingImages") to
@@ -9636,25 +8883,14 @@ func (s *GoogleCloudVisionV1p3beta1WebDetectionWebPage) UnmarshalJSON(data []byt
 
 // GoogleCloudVisionV1p3beta1Word: A word representation.
 type GoogleCloudVisionV1p3beta1Word struct {
-	// BoundingBox: The bounding box for the word.
-	// The vertices are in the order of top-left, top-right,
-	// bottom-right,
-	// bottom-left. When a rotation of the bounding box is detected the
-	// rotation
-	// is represented as around the top-left corner as defined when the text
-	// is
-	// read in the 'natural' orientation.
-	// For example:
-	//   * when the text is horizontal it might look like:
-	//      0----1
-	//      |    |
-	//      3----2
-	//   * when it's rotated 180 degrees around the top-left corner it
-	// becomes:
-	//      2----3
-	//      |    |
-	//      1----0
-	//   and the vertex order will still be (0, 1, 2, 3).
+	// BoundingBox: The bounding box for the word. The vertices are in the
+	// order of top-left, top-right, bottom-right, bottom-left. When a
+	// rotation of the bounding box is detected the rotation is represented
+	// as around the top-left corner as defined when the text is read in the
+	// 'natural' orientation. For example: * when the text is horizontal it
+	// might look like: 0----1 | | 3----2 * when it's rotated 180 degrees
+	// around the top-left corner it becomes: 2----3 | | 1----0 and the
+	// vertex order will still be (0, 1, 2, 3).
 	BoundingBox *GoogleCloudVisionV1p3beta1BoundingPoly `json:"boundingBox,omitempty"`
 
 	// Confidence: Confidence of the OCR results for the word. Range [0, 1].
@@ -9663,16 +8899,16 @@ type GoogleCloudVisionV1p3beta1Word struct {
 	// Property: Additional information detected for the word.
 	Property *GoogleCloudVisionV1p3beta1TextAnnotationTextProperty `json:"property,omitempty"`
 
-	// Symbols: List of symbols in the word.
-	// The order of the symbols follows the natural reading order.
+	// Symbols: List of symbols in the word. The order of the symbols
+	// follows the natural reading order.
 	Symbols []*GoogleCloudVisionV1p3beta1Symbol `json:"symbols,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BoundingBox") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BoundingBox") to include
@@ -9705,12 +8941,11 @@ func (s *GoogleCloudVisionV1p3beta1Word) UnmarshalJSON(data []byte) error {
 }
 
 // GoogleCloudVisionV1p4beta1AnnotateFileResponse: Response to a single
-// file annotation request. A file may contain one or more
-// images, which individually have their own responses.
+// file annotation request. A file may contain one or more images, which
+// individually have their own responses.
 type GoogleCloudVisionV1p4beta1AnnotateFileResponse struct {
 	// Error: If set, represents the error message for the failed request.
-	// The
-	// `responses` field will not be set in this case.
+	// The `responses` field will not be set in this case.
 	Error *Status `json:"error,omitempty"`
 
 	// InputConfig: Information about the file for which this response is
@@ -9718,8 +8953,7 @@ type GoogleCloudVisionV1p4beta1AnnotateFileResponse struct {
 	InputConfig *GoogleCloudVisionV1p4beta1InputConfig `json:"inputConfig,omitempty"`
 
 	// Responses: Individual responses to images found within the file. This
-	// field will be
-	// empty if the `error` field is set.
+	// field will be empty if the `error` field is set.
 	Responses []*GoogleCloudVisionV1p4beta1AnnotateImageResponse `json:"responses,omitempty"`
 
 	// TotalPages: This field gives the total number of pages in the file.
@@ -9727,10 +8961,10 @@ type GoogleCloudVisionV1p4beta1AnnotateFileResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Error") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Error") to include in API
@@ -9752,17 +8986,16 @@ func (s *GoogleCloudVisionV1p4beta1AnnotateFileResponse) MarshalJSON() ([]byte, 
 // annotation request.
 type GoogleCloudVisionV1p4beta1AnnotateImageResponse struct {
 	// Context: If present, contextual information is needed to understand
-	// where this image
-	// comes from.
+	// where this image comes from.
 	Context *GoogleCloudVisionV1p4beta1ImageAnnotationContext `json:"context,omitempty"`
 
 	// CropHintsAnnotation: If present, crop hints have completed
 	// successfully.
 	CropHintsAnnotation *GoogleCloudVisionV1p4beta1CropHintsAnnotation `json:"cropHintsAnnotation,omitempty"`
 
-	// Error: If set, represents the error message for the operation.
-	// Note that filled-in image annotations are guaranteed to be
-	// correct, even when `error` is set.
+	// Error: If set, represents the error message for the operation. Note
+	// that filled-in image annotations are guaranteed to be correct, even
+	// when `error` is set.
 	Error *Status `json:"error,omitempty"`
 
 	// FaceAnnotations: If present, face detection has completed
@@ -9770,11 +9003,8 @@ type GoogleCloudVisionV1p4beta1AnnotateImageResponse struct {
 	FaceAnnotations []*GoogleCloudVisionV1p4beta1FaceAnnotation `json:"faceAnnotations,omitempty"`
 
 	// FullTextAnnotation: If present, text (OCR) detection or document
-	// (OCR) text detection has
-	// completed successfully.
-	// This annotation provides the structural hierarchy for the OCR
-	// detected
-	// text.
+	// (OCR) text detection has completed successfully. This annotation
+	// provides the structural hierarchy for the OCR detected text.
 	FullTextAnnotation *GoogleCloudVisionV1p4beta1TextAnnotation `json:"fullTextAnnotation,omitempty"`
 
 	// ImagePropertiesAnnotation: If present, image properties were
@@ -9790,8 +9020,8 @@ type GoogleCloudVisionV1p4beta1AnnotateImageResponse struct {
 	LandmarkAnnotations []*GoogleCloudVisionV1p4beta1EntityAnnotation `json:"landmarkAnnotations,omitempty"`
 
 	// LocalizedObjectAnnotations: If present, localized object detection
-	// has completed successfully.
-	// This will be sorted descending by confidence score.
+	// has completed successfully. This will be sorted descending by
+	// confidence score.
 	LocalizedObjectAnnotations []*GoogleCloudVisionV1p4beta1LocalizedObjectAnnotation `json:"localizedObjectAnnotations,omitempty"`
 
 	// LogoAnnotations: If present, logo detection has completed
@@ -9815,10 +9045,10 @@ type GoogleCloudVisionV1p4beta1AnnotateImageResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Context") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Context") to include in
@@ -9845,10 +9075,10 @@ type GoogleCloudVisionV1p4beta1AsyncAnnotateFileResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "OutputConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "OutputConfig") to include
@@ -9870,16 +9100,15 @@ func (s *GoogleCloudVisionV1p4beta1AsyncAnnotateFileResponse) MarshalJSON() ([]b
 // to an async batch file annotation request.
 type GoogleCloudVisionV1p4beta1AsyncBatchAnnotateFilesResponse struct {
 	// Responses: The list of file annotation responses, one for each
-	// request in
-	// AsyncBatchAnnotateFilesRequest.
+	// request in AsyncBatchAnnotateFilesRequest.
 	Responses []*GoogleCloudVisionV1p4beta1AsyncAnnotateFileResponse `json:"responses,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Responses") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Responses") to include in
@@ -9906,10 +9135,10 @@ type GoogleCloudVisionV1p4beta1AsyncBatchAnnotateImagesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "OutputConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "OutputConfig") to include
@@ -9931,16 +9160,16 @@ func (s *GoogleCloudVisionV1p4beta1AsyncBatchAnnotateImagesResponse) MarshalJSON
 // annotation responses.
 type GoogleCloudVisionV1p4beta1BatchAnnotateFilesResponse struct {
 	// Responses: The list of file annotation responses, each response
-	// corresponding to each
-	// AnnotateFileRequest in BatchAnnotateFilesRequest.
+	// corresponding to each AnnotateFileRequest in
+	// BatchAnnotateFilesRequest.
 	Responses []*GoogleCloudVisionV1p4beta1AnnotateFileResponse `json:"responses,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Responses") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Responses") to include in
@@ -9959,14 +9188,11 @@ func (s *GoogleCloudVisionV1p4beta1BatchAnnotateFilesResponse) MarshalJSON() ([]
 }
 
 // GoogleCloudVisionV1p4beta1BatchOperationMetadata: Metadata for the
-// batch operations such as the current state.
-//
-// This is included in the `metadata` field of the `Operation` returned
-// by the
-// `GetOperation` call of the `google::longrunning::Operations` service.
+// batch operations such as the current state. This is included in the
+// `metadata` field of the `Operation` returned by the `GetOperation`
+// call of the `google::longrunning::Operations` service.
 type GoogleCloudVisionV1p4beta1BatchOperationMetadata struct {
-	// EndTime: The time when the batch request is finished
-	// and
+	// EndTime: The time when the batch request is finished and
 	// google.longrunning.Operation.done is set to true.
 	EndTime string `json:"endTime,omitempty"`
 
@@ -9976,15 +9202,13 @@ type GoogleCloudVisionV1p4beta1BatchOperationMetadata struct {
 	//   "STATE_UNSPECIFIED" - Invalid.
 	//   "PROCESSING" - Request is actively being processed.
 	//   "SUCCESSFUL" - The request is done and at least one item has been
-	// successfully
-	// processed.
+	// successfully processed.
 	//   "FAILED" - The request is done and no item has been successfully
 	// processed.
 	//   "CANCELLED" - The request is done after the
-	// longrunning.Operations.CancelOperation has
-	// been called by the user.  Any records that were processed before
-	// the
-	// cancel command are output as specified in the request.
+	// longrunning.Operations.CancelOperation has been called by the user.
+	// Any records that were processed before the cancel command are output
+	// as specified in the request.
 	State string `json:"state,omitempty"`
 
 	// SubmitTime: The time when the batch request was submitted to the
@@ -9993,10 +9217,10 @@ type GoogleCloudVisionV1p4beta1BatchOperationMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "EndTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "EndTime") to include in
@@ -10027,30 +9251,14 @@ type GoogleCloudVisionV1p4beta1Block struct {
 	//   "BARCODE" - Barcode block.
 	BlockType string `json:"blockType,omitempty"`
 
-	// BoundingBox: The bounding box for the block.
-	// The vertices are in the order of top-left, top-right,
-	// bottom-right,
-	// bottom-left. When a rotation of the bounding box is detected the
-	// rotation
-	// is represented as around the top-left corner as defined when the text
-	// is
-	// read in the 'natural' orientation.
-	// For example:
-	//
-	// * when the text is horizontal it might look like:
-	//
-	//         0----1
-	//         |    |
-	//         3----2
-	//
-	// * when it's rotated 180 degrees around the top-left corner it
-	// becomes:
-	//
-	//         2----3
-	//         |    |
-	//         1----0
-	//
-	//   and the vertex order will still be (0, 1, 2, 3).
+	// BoundingBox: The bounding box for the block. The vertices are in the
+	// order of top-left, top-right, bottom-right, bottom-left. When a
+	// rotation of the bounding box is detected the rotation is represented
+	// as around the top-left corner as defined when the text is read in the
+	// 'natural' orientation. For example: * when the text is horizontal it
+	// might look like: 0----1 | | 3----2 * when it's rotated 180 degrees
+	// around the top-left corner it becomes: 2----3 | | 1----0 and the
+	// vertex order will still be (0, 1, 2, 3).
 	BoundingBox *GoogleCloudVisionV1p4beta1BoundingPoly `json:"boundingBox,omitempty"`
 
 	// Confidence: Confidence of the OCR results on the block. Range [0, 1].
@@ -10065,10 +9273,10 @@ type GoogleCloudVisionV1p4beta1Block struct {
 
 	// ForceSendFields is a list of field names (e.g. "BlockType") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BlockType") to include in
@@ -10111,10 +9319,10 @@ type GoogleCloudVisionV1p4beta1BoundingPoly struct {
 
 	// ForceSendFields is a list of field names (e.g. "NormalizedVertices")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NormalizedVertices") to
@@ -10142,17 +9350,16 @@ type GoogleCloudVisionV1p4beta1Celebrity struct {
 	// DisplayName: The Celebrity's display name.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Name: The resource name of the preloaded Celebrity. Has the
-	// format
+	// Name: The resource name of the preloaded Celebrity. Has the format
 	// `builtin/{mid}`.
 	Name string `json:"name,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Description") to include
@@ -10171,15 +9378,14 @@ func (s *GoogleCloudVisionV1p4beta1Celebrity) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudVisionV1p4beta1ColorInfo: Color information consists of
-// RGB channels, score, and the fraction of
-// the image that the color occupies in the image.
+// RGB channels, score, and the fraction of the image that the color
+// occupies in the image.
 type GoogleCloudVisionV1p4beta1ColorInfo struct {
 	// Color: RGB components of the color.
 	Color *Color `json:"color,omitempty"`
 
 	// PixelFraction: The fraction of pixels the color occupies in the
-	// image.
-	// Value in range [0, 1].
+	// image. Value in range [0, 1].
 	PixelFraction float64 `json:"pixelFraction,omitempty"`
 
 	// Score: Image-specific score for this color. Value in range [0, 1].
@@ -10187,10 +9393,10 @@ type GoogleCloudVisionV1p4beta1ColorInfo struct {
 
 	// ForceSendFields is a list of field names (e.g. "Color") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Color") to include in API
@@ -10228,24 +9434,22 @@ func (s *GoogleCloudVisionV1p4beta1ColorInfo) UnmarshalJSON(data []byte) error {
 // generate a new crop when serving an image.
 type GoogleCloudVisionV1p4beta1CropHint struct {
 	// BoundingPoly: The bounding polygon for the crop region. The
-	// coordinates of the bounding
-	// box are in the original image's scale.
+	// coordinates of the bounding box are in the original image's scale.
 	BoundingPoly *GoogleCloudVisionV1p4beta1BoundingPoly `json:"boundingPoly,omitempty"`
 
-	// Confidence: Confidence of this being a salient region.  Range [0, 1].
+	// Confidence: Confidence of this being a salient region. Range [0, 1].
 	Confidence float64 `json:"confidence,omitempty"`
 
 	// ImportanceFraction: Fraction of importance of this salient region
-	// with respect to the original
-	// image.
+	// with respect to the original image.
 	ImportanceFraction float64 `json:"importanceFraction,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BoundingPoly") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BoundingPoly") to include
@@ -10287,10 +9491,10 @@ type GoogleCloudVisionV1p4beta1CropHintsAnnotation struct {
 
 	// ForceSendFields is a list of field names (e.g. "CropHints") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CropHints") to include in
@@ -10316,10 +9520,10 @@ type GoogleCloudVisionV1p4beta1DominantColorsAnnotation struct {
 
 	// ForceSendFields is a list of field names (e.g. "Colors") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Colors") to include in API
@@ -10340,71 +9544,57 @@ func (s *GoogleCloudVisionV1p4beta1DominantColorsAnnotation) MarshalJSON() ([]by
 // GoogleCloudVisionV1p4beta1EntityAnnotation: Set of detected entity
 // features.
 type GoogleCloudVisionV1p4beta1EntityAnnotation struct {
-	// BoundingPoly: Image region to which this entity belongs. Not
-	// produced
+	// BoundingPoly: Image region to which this entity belongs. Not produced
 	// for `LABEL_DETECTION` features.
 	BoundingPoly *GoogleCloudVisionV1p4beta1BoundingPoly `json:"boundingPoly,omitempty"`
 
-	// Confidence: **Deprecated. Use `score` instead.**
-	// The accuracy of the entity detection in an image.
-	// For example, for an image in which the "Eiffel Tower" entity is
-	// detected,
-	// this field represents the confidence that there is a tower in the
-	// query
-	// image. Range [0, 1].
+	// Confidence: **Deprecated. Use `score` instead.** The accuracy of the
+	// entity detection in an image. For example, for an image in which the
+	// "Eiffel Tower" entity is detected, this field represents the
+	// confidence that there is a tower in the query image. Range [0, 1].
 	Confidence float64 `json:"confidence,omitempty"`
 
 	// Description: Entity textual description, expressed in its `locale`
 	// language.
 	Description string `json:"description,omitempty"`
 
-	// Locale: The language code for the locale in which the entity
-	// textual
+	// Locale: The language code for the locale in which the entity textual
 	// `description` is expressed.
 	Locale string `json:"locale,omitempty"`
 
-	// Locations: The location information for the detected entity.
-	// Multiple
-	// `LocationInfo` elements can be present because one location
-	// may
-	// indicate the location of the scene in the image, and another
-	// location
-	// may indicate the location of the place where the image was
-	// taken.
+	// Locations: The location information for the detected entity. Multiple
+	// `LocationInfo` elements can be present because one location may
+	// indicate the location of the scene in the image, and another location
+	// may indicate the location of the place where the image was taken.
 	// Location information is usually present for landmarks.
 	Locations []*GoogleCloudVisionV1p4beta1LocationInfo `json:"locations,omitempty"`
 
-	// Mid: Opaque entity ID. Some IDs may be available in
-	// [Google Knowledge Graph
-	// Search
-	// API](https://developers.google.com/knowledge-graph/).
+	// Mid: Opaque entity ID. Some IDs may be available in Google Knowledge
+	// Graph Search API (https://developers.google.com/knowledge-graph/).
 	Mid string `json:"mid,omitempty"`
 
 	// Properties: Some entities may have optional user-supplied `Property`
-	// (name/value)
-	// fields, such a score or string that qualifies the entity.
+	// (name/value) fields, such a score or string that qualifies the
+	// entity.
 	Properties []*GoogleCloudVisionV1p4beta1Property `json:"properties,omitempty"`
 
 	// Score: Overall score of the result. Range [0, 1].
 	Score float64 `json:"score,omitempty"`
 
 	// Topicality: The relevancy of the ICA (Image Content Annotation) label
-	// to the
-	// image. For example, the relevancy of "tower" is likely higher to an
-	// image
-	// containing the detected "Eiffel Tower" than to an image containing
-	// a
-	// detected distant towering building, even though the confidence
-	// that
-	// there is a tower in each image may be the same. Range [0, 1].
+	// to the image. For example, the relevancy of "tower" is likely higher
+	// to an image containing the detected "Eiffel Tower" than to an image
+	// containing a detected distant towering building, even though the
+	// confidence that there is a tower in each image may be the same. Range
+	// [0, 1].
 	Topicality float64 `json:"topicality,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BoundingPoly") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BoundingPoly") to include
@@ -10466,15 +9656,11 @@ type GoogleCloudVisionV1p4beta1FaceAnnotation struct {
 	BlurredLikelihood string `json:"blurredLikelihood,omitempty"`
 
 	// BoundingPoly: The bounding polygon around the face. The coordinates
-	// of the bounding box
-	// are in the original image's scale.
-	// The bounding box is computed to "frame" the face in accordance with
-	// human
-	// expectations. It is based on the landmarker results.
-	// Note that one or more x and/or y coordinates may not be generated in
-	// the
-	// `BoundingPoly` (the polygon will be unbounded) if only a partial
-	// face
+	// of the bounding box are in the original image's scale. The bounding
+	// box is computed to "frame" the face in accordance with human
+	// expectations. It is based on the landmarker results. Note that one or
+	// more x and/or y coordinates may not be generated in the
+	// `BoundingPoly` (the polygon will be unbounded) if only a partial face
 	// appears in the image to be annotated.
 	BoundingPoly *GoogleCloudVisionV1p4beta1BoundingPoly `json:"boundingPoly,omitempty"`
 
@@ -10482,15 +9668,11 @@ type GoogleCloudVisionV1p4beta1FaceAnnotation struct {
 	DetectionConfidence float64 `json:"detectionConfidence,omitempty"`
 
 	// FdBoundingPoly: The `fd_bounding_poly` bounding polygon is tighter
-	// than the
-	// `boundingPoly`, and encloses only the skin part of the face.
-	// Typically, it
-	// is used to eliminate the face from any image analysis that detects
-	// the
-	// "amount of skin" visible in an image. It is not based on
-	// the
-	// landmarker results, only on the initial face detection, hence
-	// the <code>fd</code> (face detection) prefix.
+	// than the `boundingPoly`, and encloses only the skin part of the face.
+	// Typically, it is used to eliminate the face from any image analysis
+	// that detects the "amount of skin" visible in an image. It is not
+	// based on the landmarker results, only on the initial face detection,
+	// hence the fd (face detection) prefix.
 	FdBoundingPoly *GoogleCloudVisionV1p4beta1BoundingPoly `json:"fdBoundingPoly,omitempty"`
 
 	// HeadwearLikelihood: Headwear likelihood.
@@ -10522,25 +9704,19 @@ type GoogleCloudVisionV1p4beta1FaceAnnotation struct {
 	Landmarks []*GoogleCloudVisionV1p4beta1FaceAnnotationLandmark `json:"landmarks,omitempty"`
 
 	// PanAngle: Yaw angle, which indicates the leftward/rightward angle
-	// that the face is
-	// pointing relative to the vertical plane perpendicular to the image.
-	// Range
-	// [-180,180].
+	// that the face is pointing relative to the vertical plane
+	// perpendicular to the image. Range [-180,180].
 	PanAngle float64 `json:"panAngle,omitempty"`
 
 	// RecognitionResult: Additional recognition information. Only computed
-	// if
-	// image_context.face_recognition_params is provided, **and** a match is
-	// found
-	// to a Celebrity in the input CelebritySet. This field is
+	// if image_context.face_recognition_params is provided, **and** a match
+	// is found to a Celebrity in the input CelebritySet. This field is
 	// sorted in order of decreasing confidence values.
 	RecognitionResult []*GoogleCloudVisionV1p4beta1FaceRecognitionResult `json:"recognitionResult,omitempty"`
 
 	// RollAngle: Roll angle, which indicates the amount of
-	// clockwise/anti-clockwise rotation
-	// of the face relative to the image vertical about the axis
-	// perpendicular to
-	// the face. Range [-180,180].
+	// clockwise/anti-clockwise rotation of the face relative to the image
+	// vertical about the axis perpendicular to the face. Range [-180,180].
 	RollAngle float64 `json:"rollAngle,omitempty"`
 
 	// SorrowLikelihood: Sorrow likelihood.
@@ -10566,8 +9742,8 @@ type GoogleCloudVisionV1p4beta1FaceAnnotation struct {
 	SurpriseLikelihood string `json:"surpriseLikelihood,omitempty"`
 
 	// TiltAngle: Pitch angle, which indicates the upwards/downwards angle
-	// that the face is
-	// pointing relative to the image's horizontal plane. Range [-180,180].
+	// that the face is pointing relative to the image's horizontal plane.
+	// Range [-180,180].
 	TiltAngle float64 `json:"tiltAngle,omitempty"`
 
 	// UnderExposedLikelihood: Under-exposed likelihood.
@@ -10583,10 +9759,10 @@ type GoogleCloudVisionV1p4beta1FaceAnnotation struct {
 
 	// ForceSendFields is a list of field names (e.g. "AngerLikelihood") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AngerLikelihood") to
@@ -10672,14 +9848,16 @@ type GoogleCloudVisionV1p4beta1FaceAnnotationLandmark struct {
 	//   "CHIN_GNATHION" - Chin gnathion.
 	//   "CHIN_LEFT_GONION" - Chin left gonion.
 	//   "CHIN_RIGHT_GONION" - Chin right gonion.
+	//   "LEFT_CHEEK_CENTER" - Left cheek center.
+	//   "RIGHT_CHEEK_CENTER" - Right cheek center.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Position") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Position") to include in
@@ -10708,10 +9886,10 @@ type GoogleCloudVisionV1p4beta1FaceRecognitionResult struct {
 
 	// ForceSendFields is a list of field names (e.g. "Celebrity") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Celebrity") to include in
@@ -10747,47 +9925,30 @@ func (s *GoogleCloudVisionV1p4beta1FaceRecognitionResult) UnmarshalJSON(data []b
 // location where the output will be written to.
 type GoogleCloudVisionV1p4beta1GcsDestination struct {
 	// Uri: Google Cloud Storage URI prefix where the results will be
-	// stored. Results
-	// will be in JSON format and preceded by its corresponding input URI
-	// prefix.
-	// This field can either represent a gcs file prefix or gcs directory.
-	// In
-	// either case, the uri should be unique because in order to get all of
-	// the
-	// output files, you will need to do a wildcard gcs search on the uri
-	// prefix
-	// you provide.
-	//
-	// Examples:
-	//
-	// *    File Prefix: gs://bucket-name/here/filenameprefix   The output
-	// files
-	// will be created in gs://bucket-name/here/ and the names of the
-	// output files will begin with "filenameprefix".
-	//
-	// *    Directory Prefix: gs://bucket-name/some/location/   The output
-	// files
-	// will be created in gs://bucket-name/some/location/ and the names of
-	// the
-	// output files could be anything because there was no filename
-	// prefix
-	// specified.
-	//
-	// If multiple outputs, each response is still AnnotateFileResponse,
-	// each of
-	// which contains some subset of the full list of
-	// AnnotateImageResponse.
-	// Multiple outputs can happen if, for example, the output JSON is too
-	// large
-	// and overflows into multiple sharded files.
+	// stored. Results will be in JSON format and preceded by its
+	// corresponding input URI prefix. This field can either represent a gcs
+	// file prefix or gcs directory. In either case, the uri should be
+	// unique because in order to get all of the output files, you will need
+	// to do a wildcard gcs search on the uri prefix you provide. Examples:
+	// * File Prefix: gs://bucket-name/here/filenameprefix The output files
+	// will be created in gs://bucket-name/here/ and the names of the output
+	// files will begin with "filenameprefix". * Directory Prefix:
+	// gs://bucket-name/some/location/ The output files will be created in
+	// gs://bucket-name/some/location/ and the names of the output files
+	// could be anything because there was no filename prefix specified. If
+	// multiple outputs, each response is still AnnotateFileResponse, each
+	// of which contains some subset of the full list of
+	// AnnotateImageResponse. Multiple outputs can happen if, for example,
+	// the output JSON is too large and overflows into multiple sharded
+	// files.
 	Uri string `json:"uri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Uri") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Uri") to include in API
@@ -10808,17 +9969,16 @@ func (s *GoogleCloudVisionV1p4beta1GcsDestination) MarshalJSON() ([]byte, error)
 // GoogleCloudVisionV1p4beta1GcsSource: The Google Cloud Storage
 // location where the input will be read from.
 type GoogleCloudVisionV1p4beta1GcsSource struct {
-	// Uri: Google Cloud Storage URI for the input file. This must only be
-	// a
+	// Uri: Google Cloud Storage URI for the input file. This must only be a
 	// Google Cloud Storage object. Wildcards are not currently supported.
 	Uri string `json:"uri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Uri") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Uri") to include in API
@@ -10837,12 +9997,11 @@ func (s *GoogleCloudVisionV1p4beta1GcsSource) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudVisionV1p4beta1ImageAnnotationContext: If an image was
-// produced from a file (e.g. a PDF), this message gives
-// information about the source of that image.
+// produced from a file (e.g. a PDF), this message gives information
+// about the source of that image.
 type GoogleCloudVisionV1p4beta1ImageAnnotationContext struct {
 	// PageNumber: If the file was a PDF or TIFF, this field gives the page
-	// number within
-	// the file used to produce the image.
+	// number within the file used to produce the image.
 	PageNumber int64 `json:"pageNumber,omitempty"`
 
 	// Uri: The URI of the file used to produce the image.
@@ -10850,10 +10009,10 @@ type GoogleCloudVisionV1p4beta1ImageAnnotationContext struct {
 
 	// ForceSendFields is a list of field names (e.g. "PageNumber") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "PageNumber") to include in
@@ -10879,10 +10038,10 @@ type GoogleCloudVisionV1p4beta1ImageProperties struct {
 
 	// ForceSendFields is a list of field names (e.g. "DominantColors") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DominantColors") to
@@ -10902,12 +10061,8 @@ func (s *GoogleCloudVisionV1p4beta1ImageProperties) MarshalJSON() ([]byte, error
 }
 
 // GoogleCloudVisionV1p4beta1ImportProductSetsResponse: Response message
-// for the `ImportProductSets` method.
-//
-// This message is returned by
-// the
-// google.longrunning.Operations.GetOperation method in the
-// returned
+// for the `ImportProductSets` method. This message is returned by the
+// google.longrunning.Operations.GetOperation method in the returned
 // google.longrunning.Operation.response field.
 type GoogleCloudVisionV1p4beta1ImportProductSetsResponse struct {
 	// ReferenceImages: The list of reference_images that are imported
@@ -10915,22 +10070,18 @@ type GoogleCloudVisionV1p4beta1ImportProductSetsResponse struct {
 	ReferenceImages []*GoogleCloudVisionV1p4beta1ReferenceImage `json:"referenceImages,omitempty"`
 
 	// Statuses: The rpc status for each ImportProductSet request, including
-	// both successes
-	// and errors.
-	//
-	// The number of statuses here matches the number of lines in the csv
-	// file,
-	// and statuses[i] stores the success or failure status of processing
-	// the i-th
-	// line of the csv, starting from line 0.
+	// both successes and errors. The number of statuses here matches the
+	// number of lines in the csv file, and statuses[i] stores the success
+	// or failure status of processing the i-th line of the csv, starting
+	// from line 0.
 	Statuses []*Status `json:"statuses,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ReferenceImages") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ReferenceImages") to
@@ -10952,30 +10103,27 @@ func (s *GoogleCloudVisionV1p4beta1ImportProductSetsResponse) MarshalJSON() ([]b
 // GoogleCloudVisionV1p4beta1InputConfig: The desired input location and
 // metadata.
 type GoogleCloudVisionV1p4beta1InputConfig struct {
-	// Content: File content, represented as a stream of bytes.
-	// Note: As with all `bytes` fields, protobuffers use a pure
-	// binary
-	// representation, whereas JSON representations use base64.
-	//
-	// Currently, this field only works for BatchAnnotateFiles requests. It
-	// does
-	// not work for AsyncBatchAnnotateFiles requests.
+	// Content: File content, represented as a stream of bytes. Note: As
+	// with all `bytes` fields, protobuffers use a pure binary
+	// representation, whereas JSON representations use base64. Currently,
+	// this field only works for BatchAnnotateFiles requests. It does not
+	// work for AsyncBatchAnnotateFiles requests.
 	Content string `json:"content,omitempty"`
 
 	// GcsSource: The Google Cloud Storage location to read the input from.
 	GcsSource *GoogleCloudVisionV1p4beta1GcsSource `json:"gcsSource,omitempty"`
 
 	// MimeType: The type of the file. Currently only "application/pdf",
-	// "image/tiff" and
-	// "image/gif" are supported. Wildcards are not supported.
+	// "image/tiff" and "image/gif" are supported. Wildcards are not
+	// supported.
 	MimeType string `json:"mimeType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Content") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Content") to include in
@@ -11001,9 +10149,7 @@ type GoogleCloudVisionV1p4beta1LocalizedObjectAnnotation struct {
 	BoundingPoly *GoogleCloudVisionV1p4beta1BoundingPoly `json:"boundingPoly,omitempty"`
 
 	// LanguageCode: The BCP-47 language code, such as "en-US" or "sr-Latn".
-	// For more
-	// information,
-	// see
+	// For more information, see
 	// http://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
 	LanguageCode string `json:"languageCode,omitempty"`
 
@@ -11018,10 +10164,10 @@ type GoogleCloudVisionV1p4beta1LocalizedObjectAnnotation struct {
 
 	// ForceSendFields is a list of field names (e.g. "BoundingPoly") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BoundingPoly") to include
@@ -11061,10 +10207,10 @@ type GoogleCloudVisionV1p4beta1LocationInfo struct {
 
 	// ForceSendFields is a list of field names (e.g. "LatLng") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "LatLng") to include in API
@@ -11083,10 +10229,8 @@ func (s *GoogleCloudVisionV1p4beta1LocationInfo) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudVisionV1p4beta1NormalizedVertex: A vertex represents a 2D
-// point in the image.
-// NOTE: the normalized vertex coordinates are relative to the original
-// image
-// and range from 0 to 1.
+// point in the image. NOTE: the normalized vertex coordinates are
+// relative to the original image and range from 0 to 1.
 type GoogleCloudVisionV1p4beta1NormalizedVertex struct {
 	// X: X coordinate.
 	X float64 `json:"x,omitempty"`
@@ -11096,10 +10240,10 @@ type GoogleCloudVisionV1p4beta1NormalizedVertex struct {
 
 	// ForceSendFields is a list of field names (e.g. "X") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "X") to include in API
@@ -11154,10 +10298,10 @@ type GoogleCloudVisionV1p4beta1OperationMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CreateTime") to include in
@@ -11179,21 +10323,13 @@ func (s *GoogleCloudVisionV1p4beta1OperationMetadata) MarshalJSON() ([]byte, err
 // and metadata.
 type GoogleCloudVisionV1p4beta1OutputConfig struct {
 	// BatchSize: The max number of response protos to put into each output
-	// JSON file on
-	// Google Cloud Storage.
-	// The valid range is [1, 100]. If not specified, the default value is
-	// 20.
-	//
-	// For example, for one pdf file with 100 pages, 100 response protos
-	// will
-	// be generated. If `batch_size` = 20, then 5 json files each
-	// containing 20 response protos will be written under the
-	// prefix
-	// `gcs_destination`.`uri`.
-	//
+	// JSON file on Google Cloud Storage. The valid range is [1, 100]. If
+	// not specified, the default value is 20. For example, for one pdf file
+	// with 100 pages, 100 response protos will be generated. If
+	// `batch_size` = 20, then 5 json files each containing 20 response
+	// protos will be written under the prefix `gcs_destination`.`uri`.
 	// Currently, batch_size only applies to GcsDestination, with potential
-	// future
-	// support for other output configurations.
+	// future support for other output configurations.
 	BatchSize int64 `json:"batchSize,omitempty"`
 
 	// GcsDestination: The Google Cloud Storage location to write the
@@ -11202,10 +10338,10 @@ type GoogleCloudVisionV1p4beta1OutputConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "BatchSize") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BatchSize") to include in
@@ -11232,24 +10368,22 @@ type GoogleCloudVisionV1p4beta1Page struct {
 	Confidence float64 `json:"confidence,omitempty"`
 
 	// Height: Page height. For PDFs the unit is points. For images
-	// (including
-	// TIFFs) the unit is pixels.
+	// (including TIFFs) the unit is pixels.
 	Height int64 `json:"height,omitempty"`
 
 	// Property: Additional information detected on the page.
 	Property *GoogleCloudVisionV1p4beta1TextAnnotationTextProperty `json:"property,omitempty"`
 
-	// Width: Page width. For PDFs the unit is points. For images
-	// (including
+	// Width: Page width. For PDFs the unit is points. For images (including
 	// TIFFs) the unit is pixels.
 	Width int64 `json:"width,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Blocks") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Blocks") to include in API
@@ -11284,25 +10418,14 @@ func (s *GoogleCloudVisionV1p4beta1Page) UnmarshalJSON(data []byte) error {
 // GoogleCloudVisionV1p4beta1Paragraph: Structural unit of text
 // representing a number of words in certain order.
 type GoogleCloudVisionV1p4beta1Paragraph struct {
-	// BoundingBox: The bounding box for the paragraph.
-	// The vertices are in the order of top-left, top-right,
-	// bottom-right,
-	// bottom-left. When a rotation of the bounding box is detected the
-	// rotation
-	// is represented as around the top-left corner as defined when the text
-	// is
-	// read in the 'natural' orientation.
-	// For example:
-	//   * when the text is horizontal it might look like:
-	//      0----1
-	//      |    |
-	//      3----2
-	//   * when it's rotated 180 degrees around the top-left corner it
-	// becomes:
-	//      2----3
-	//      |    |
-	//      1----0
-	//   and the vertex order will still be (0, 1, 2, 3).
+	// BoundingBox: The bounding box for the paragraph. The vertices are in
+	// the order of top-left, top-right, bottom-right, bottom-left. When a
+	// rotation of the bounding box is detected the rotation is represented
+	// as around the top-left corner as defined when the text is read in the
+	// 'natural' orientation. For example: * when the text is horizontal it
+	// might look like: 0----1 | | 3----2 * when it's rotated 180 degrees
+	// around the top-left corner it becomes: 2----3 | | 1----0 and the
+	// vertex order will still be (0, 1, 2, 3).
 	BoundingBox *GoogleCloudVisionV1p4beta1BoundingPoly `json:"boundingBox,omitempty"`
 
 	// Confidence: Confidence of the OCR results for the paragraph. Range
@@ -11317,10 +10440,10 @@ type GoogleCloudVisionV1p4beta1Paragraph struct {
 
 	// ForceSendFields is a list of field names (e.g. "BoundingBox") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BoundingBox") to include
@@ -11353,9 +10476,9 @@ func (s *GoogleCloudVisionV1p4beta1Paragraph) UnmarshalJSON(data []byte) error {
 }
 
 // GoogleCloudVisionV1p4beta1Position: A 3D position in the image, used
-// primarily for Face detection landmarks.
-// A valid Position must have both x and y coordinates.
-// The position coordinates are in the same scale as the original image.
+// primarily for Face detection landmarks. A valid Position must have
+// both x and y coordinates. The position coordinates are in the same
+// scale as the original image.
 type GoogleCloudVisionV1p4beta1Position struct {
 	// X: X coordinate.
 	X float64 `json:"x,omitempty"`
@@ -11368,10 +10491,10 @@ type GoogleCloudVisionV1p4beta1Position struct {
 
 	// ForceSendFields is a list of field names (e.g. "X") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "X") to include in API
@@ -11411,60 +10534,42 @@ func (s *GoogleCloudVisionV1p4beta1Position) UnmarshalJSON(data []byte) error {
 // ReferenceImages.
 type GoogleCloudVisionV1p4beta1Product struct {
 	// Description: User-provided metadata to be stored with this product.
-	// Must be at most 4096
-	// characters long.
+	// Must be at most 4096 characters long.
 	Description string `json:"description,omitempty"`
 
 	// DisplayName: The user-provided name for this Product. Must not be
-	// empty. Must be at most
-	// 4096 characters long.
+	// empty. Must be at most 4096 characters long.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Name: The resource name of the product.
-	//
-	// Format
-	// is:
-	// `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID`.
-	//
-	// This field is ignored when creating a product.
+	// Name: The resource name of the product. Format is:
+	// `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID`. This
+	// field is ignored when creating a product.
 	Name string `json:"name,omitempty"`
 
 	// ProductCategory: Immutable. The category for the product identified
-	// by the reference image. This should
-	// be either "homegoods-v2", "apparel-v2", or "toys-v2". The legacy
-	// categories
-	// "homegoods", "apparel", and "toys" are still supported, but these
-	// should
-	// not be used for new products.
+	// by the reference image. This should be one of "homegoods-v2",
+	// "apparel-v2", "toys-v2", "packagedgoods-v1" or "general-v1". The
+	// legacy categories "homegoods", "apparel", and "toys" are still
+	// supported, but these should not be used for new products.
 	ProductCategory string `json:"productCategory,omitempty"`
 
 	// ProductLabels: Key-value pairs that can be attached to a product. At
-	// query time,
-	// constraints can be specified based on the product_labels.
-	//
+	// query time, constraints can be specified based on the product_labels.
 	// Note that integer values can be provided as strings, e.g. "1199".
-	// Only
-	// strings with integer values can match a range-based restriction which
-	// is
-	// to be supported soon.
-	//
-	// Multiple values can be assigned to the same key. One product may have
-	// up to
-	// 500 product_labels.
-	//
-	// Notice that the total number of distinct product_labels over all
-	// products
-	// in one ProductSet cannot exceed 1M, otherwise the product search
-	// pipeline
+	// Only strings with integer values can match a range-based restriction
+	// which is to be supported soon. Multiple values can be assigned to the
+	// same key. One product may have up to 500 product_labels. Notice that
+	// the total number of distinct product_labels over all products in one
+	// ProductSet cannot exceed 1M, otherwise the product search pipeline
 	// will refuse to work for that ProductSet.
 	ProductLabels []*GoogleCloudVisionV1p4beta1ProductKeyValue `json:"productLabels,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Description") to include
@@ -11486,21 +10591,19 @@ func (s *GoogleCloudVisionV1p4beta1Product) MarshalJSON() ([]byte, error) {
 // represented as a key-value pair.
 type GoogleCloudVisionV1p4beta1ProductKeyValue struct {
 	// Key: The key of the label attached to the product. Cannot be empty
-	// and cannot
-	// exceed 128 bytes.
+	// and cannot exceed 128 bytes.
 	Key string `json:"key,omitempty"`
 
 	// Value: The value of the label attached to the product. Cannot be
-	// empty and
-	// cannot exceed 128 bytes.
+	// empty and cannot exceed 128 bytes.
 	Value string `json:"value,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Key") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Key") to include in API
@@ -11522,19 +10625,15 @@ func (s *GoogleCloudVisionV1p4beta1ProductKeyValue) MarshalJSON() ([]byte, error
 // search request.
 type GoogleCloudVisionV1p4beta1ProductSearchResults struct {
 	// IndexTime: Timestamp of the index which provided these results.
-	// Products added to the
-	// product set and products removed from the product set after this time
-	// are
-	// not reflected in the current results.
+	// Products added to the product set and products removed from the
+	// product set after this time are not reflected in the current results.
 	IndexTime string `json:"indexTime,omitempty"`
 
 	// ProductGroupedResults: List of results grouped by products detected
-	// in the query image. Each entry
-	// corresponds to one bounding polygon in the query image, and contains
-	// the
-	// matching products specific to that region. There may be duplicate
-	// product
-	// matches in the union of all the per-product results.
+	// in the query image. Each entry corresponds to one bounding polygon in
+	// the query image, and contains the matching products specific to that
+	// region. There may be duplicate product matches in the union of all
+	// the per-product results.
 	ProductGroupedResults []*GoogleCloudVisionV1p4beta1ProductSearchResultsGroupedResult `json:"productGroupedResults,omitempty"`
 
 	// Results: List of results, one for each product match.
@@ -11542,10 +10641,10 @@ type GoogleCloudVisionV1p4beta1ProductSearchResults struct {
 
 	// ForceSendFields is a list of field names (e.g. "IndexTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "IndexTime") to include in
@@ -11564,8 +10663,7 @@ func (s *GoogleCloudVisionV1p4beta1ProductSearchResults) MarshalJSON() ([]byte, 
 }
 
 // GoogleCloudVisionV1p4beta1ProductSearchResultsGroupedResult:
-// Information about the products similar to a single product in a
-// query
+// Information about the products similar to a single product in a query
 // image.
 type GoogleCloudVisionV1p4beta1ProductSearchResultsGroupedResult struct {
 	// BoundingPoly: The bounding polygon around the product detected in the
@@ -11581,10 +10679,10 @@ type GoogleCloudVisionV1p4beta1ProductSearchResultsGroupedResult struct {
 
 	// ForceSendFields is a list of field names (e.g. "BoundingPoly") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BoundingPoly") to include
@@ -11606,9 +10704,7 @@ func (s *GoogleCloudVisionV1p4beta1ProductSearchResultsGroupedResult) MarshalJSO
 // Prediction for what the object in the bounding box is.
 type GoogleCloudVisionV1p4beta1ProductSearchResultsObjectAnnotation struct {
 	// LanguageCode: The BCP-47 language code, such as "en-US" or "sr-Latn".
-	// For more
-	// information,
-	// see
+	// For more information, see
 	// http://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
 	LanguageCode string `json:"languageCode,omitempty"`
 
@@ -11623,10 +10719,10 @@ type GoogleCloudVisionV1p4beta1ProductSearchResultsObjectAnnotation struct {
 
 	// ForceSendFields is a list of field names (e.g. "LanguageCode") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "LanguageCode") to include
@@ -11662,24 +10758,22 @@ func (s *GoogleCloudVisionV1p4beta1ProductSearchResultsObjectAnnotation) Unmarsh
 // about a product.
 type GoogleCloudVisionV1p4beta1ProductSearchResultsResult struct {
 	// Image: The resource name of the image from the product that is the
-	// closest match
-	// to the query.
+	// closest match to the query.
 	Image string `json:"image,omitempty"`
 
 	// Product: The Product.
 	Product *GoogleCloudVisionV1p4beta1Product `json:"product,omitempty"`
 
 	// Score: A confidence level on the match, ranging from 0 (no
-	// confidence) to
-	// 1 (full confidence).
+	// confidence) to 1 (full confidence).
 	Score float64 `json:"score,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Image") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Image") to include in API
@@ -11725,10 +10819,10 @@ type GoogleCloudVisionV1p4beta1Property struct {
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Name") to include in API
@@ -11747,47 +10841,33 @@ func (s *GoogleCloudVisionV1p4beta1Property) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudVisionV1p4beta1ReferenceImage: A `ReferenceImage`
-// represents a product image and its associated metadata,
-// such as bounding boxes.
+// represents a product image and its associated metadata, such as
+// bounding boxes.
 type GoogleCloudVisionV1p4beta1ReferenceImage struct {
 	// BoundingPolys: Optional. Bounding polygons around the areas of
-	// interest in the reference image.
-	// If this field is empty, the system will try to detect regions
-	// of
-	// interest. At most 10 bounding polygons will be used.
-	//
-	// The provided shape is converted into a non-rotated rectangle.
-	// Once
-	// converted, the small edge of the rectangle must be greater than or
-	// equal
-	// to 300 pixels. The aspect ratio must be 1:4 or less (i.e. 1:3 is ok;
-	// 1:5
-	// is not).
+	// interest in the reference image. If this field is empty, the system
+	// will try to detect regions of interest. At most 10 bounding polygons
+	// will be used. The provided shape is converted into a non-rotated
+	// rectangle. Once converted, the small edge of the rectangle must be
+	// greater than or equal to 300 pixels. The aspect ratio must be 1:4 or
+	// less (i.e. 1:3 is ok; 1:5 is not).
 	BoundingPolys []*GoogleCloudVisionV1p4beta1BoundingPoly `json:"boundingPolys,omitempty"`
 
-	// Name: The resource name of the reference image.
-	//
-	// Format
-	// is:
-	//
-	// `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID/referen
-	// ceImages/IMAGE_ID`.
-	//
-	// This field is ignored when creating a reference image.
+	// Name: The resource name of the reference image. Format is:
+	// `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID/referenceIma
+	// ges/IMAGE_ID`. This field is ignored when creating a reference image.
 	Name string `json:"name,omitempty"`
 
-	// Uri: Required. The Google Cloud Storage URI of the reference
-	// image.
-	//
+	// Uri: Required. The Google Cloud Storage URI of the reference image.
 	// The URI must start with `gs://`.
 	Uri string `json:"uri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BoundingPolys") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BoundingPolys") to include
@@ -11806,16 +10886,12 @@ func (s *GoogleCloudVisionV1p4beta1ReferenceImage) MarshalJSON() ([]byte, error)
 }
 
 // GoogleCloudVisionV1p4beta1SafeSearchAnnotation: Set of features
-// pertaining to the image, computed by computer vision
-// methods over safe-search verticals (for example, adult, spoof,
-// medical,
-// violence).
+// pertaining to the image, computed by computer vision methods over
+// safe-search verticals (for example, adult, spoof, medical, violence).
 type GoogleCloudVisionV1p4beta1SafeSearchAnnotation struct {
 	// Adult: Represents the adult content likelihood for the image. Adult
-	// content may
-	// contain elements such as nudity, pornographic images or cartoons,
-	// or
-	// sexual activities.
+	// content may contain elements such as nudity, pornographic images or
+	// cartoons, or sexual activities.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
@@ -11838,12 +10914,9 @@ type GoogleCloudVisionV1p4beta1SafeSearchAnnotation struct {
 	Medical string `json:"medical,omitempty"`
 
 	// Racy: Likelihood that the request image contains racy content. Racy
-	// content may
-	// include (but is not limited to) skimpy or sheer clothing,
-	// strategically
-	// covered nudity, lewd or provocative poses, or close-ups of
-	// sensitive
-	// body areas.
+	// content may include (but is not limited to) skimpy or sheer clothing,
+	// strategically covered nudity, lewd or provocative poses, or close-ups
+	// of sensitive body areas.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
@@ -11854,9 +10927,9 @@ type GoogleCloudVisionV1p4beta1SafeSearchAnnotation struct {
 	//   "VERY_LIKELY" - It is very likely.
 	Racy string `json:"racy,omitempty"`
 
-	// Spoof: Spoof likelihood. The likelihood that an modification
-	// was made to the image's canonical version to make it appear
-	// funny or offensive.
+	// Spoof: Spoof likelihood. The likelihood that an modification was made
+	// to the image's canonical version to make it appear funny or
+	// offensive.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
@@ -11880,10 +10953,10 @@ type GoogleCloudVisionV1p4beta1SafeSearchAnnotation struct {
 
 	// ForceSendFields is a list of field names (e.g. "Adult") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Adult") to include in API
@@ -11903,25 +10976,14 @@ func (s *GoogleCloudVisionV1p4beta1SafeSearchAnnotation) MarshalJSON() ([]byte, 
 
 // GoogleCloudVisionV1p4beta1Symbol: A single symbol representation.
 type GoogleCloudVisionV1p4beta1Symbol struct {
-	// BoundingBox: The bounding box for the symbol.
-	// The vertices are in the order of top-left, top-right,
-	// bottom-right,
-	// bottom-left. When a rotation of the bounding box is detected the
-	// rotation
-	// is represented as around the top-left corner as defined when the text
-	// is
-	// read in the 'natural' orientation.
-	// For example:
-	//   * when the text is horizontal it might look like:
-	//      0----1
-	//      |    |
-	//      3----2
-	//   * when it's rotated 180 degrees around the top-left corner it
-	// becomes:
-	//      2----3
-	//      |    |
-	//      1----0
-	//   and the vertex order will still be (0, 1, 2, 3).
+	// BoundingBox: The bounding box for the symbol. The vertices are in the
+	// order of top-left, top-right, bottom-right, bottom-left. When a
+	// rotation of the bounding box is detected the rotation is represented
+	// as around the top-left corner as defined when the text is read in the
+	// 'natural' orientation. For example: * when the text is horizontal it
+	// might look like: 0----1 | | 3----2 * when it's rotated 180 degrees
+	// around the top-left corner it becomes: 2----3 | | 1----0 and the
+	// vertex order will still be (0, 1, 2, 3).
 	BoundingBox *GoogleCloudVisionV1p4beta1BoundingPoly `json:"boundingBox,omitempty"`
 
 	// Confidence: Confidence of the OCR results for the symbol. Range [0,
@@ -11936,10 +10998,10 @@ type GoogleCloudVisionV1p4beta1Symbol struct {
 
 	// ForceSendFields is a list of field names (e.g. "BoundingBox") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BoundingBox") to include
@@ -11972,17 +11034,12 @@ func (s *GoogleCloudVisionV1p4beta1Symbol) UnmarshalJSON(data []byte) error {
 }
 
 // GoogleCloudVisionV1p4beta1TextAnnotation: TextAnnotation contains a
-// structured representation of OCR extracted text.
-// The hierarchy of an OCR extracted text structure is like this:
-//     TextAnnotation -> Page -> Block -> Paragraph -> Word ->
-// Symbol
-// Each structural component, starting from Page, may further have their
-// own
-// properties. Properties describe detected languages, breaks etc..
-// Please refer
-// to the TextAnnotation.TextProperty message definition below for
-// more
-// detail.
+// structured representation of OCR extracted text. The hierarchy of an
+// OCR extracted text structure is like this: TextAnnotation -> Page ->
+// Block -> Paragraph -> Word -> Symbol Each structural component,
+// starting from Page, may further have their own properties. Properties
+// describe detected languages, breaks etc.. Please refer to the
+// TextAnnotation.TextProperty message definition below for more detail.
 type GoogleCloudVisionV1p4beta1TextAnnotation struct {
 	// Pages: List of pages detected by OCR.
 	Pages []*GoogleCloudVisionV1p4beta1Page `json:"pages,omitempty"`
@@ -11992,10 +11049,10 @@ type GoogleCloudVisionV1p4beta1TextAnnotation struct {
 
 	// ForceSendFields is a list of field names (e.g. "Pages") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Pages") to include in API
@@ -12027,17 +11084,16 @@ type GoogleCloudVisionV1p4beta1TextAnnotationDetectedBreak struct {
 	//   "SURE_SPACE" - Sure space (very wide).
 	//   "EOL_SURE_SPACE" - Line-wrapping break.
 	//   "HYPHEN" - End-line hyphen that is not present in text; does not
-	// co-occur with
-	// `SPACE`, `LEADER_SPACE`, or `LINE_BREAK`.
+	// co-occur with `SPACE`, `LEADER_SPACE`, or `LINE_BREAK`.
 	//   "LINE_BREAK" - Line break that ends a paragraph.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "IsPrefix") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "IsPrefix") to include in
@@ -12062,18 +11118,16 @@ type GoogleCloudVisionV1p4beta1TextAnnotationDetectedLanguage struct {
 	Confidence float64 `json:"confidence,omitempty"`
 
 	// LanguageCode: The BCP-47 language code, such as "en-US" or "sr-Latn".
-	// For more
-	// information,
-	// see
+	// For more information, see
 	// http://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Confidence") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Confidence") to include in
@@ -12117,10 +11171,10 @@ type GoogleCloudVisionV1p4beta1TextAnnotationTextProperty struct {
 
 	// ForceSendFields is a list of field names (e.g. "DetectedBreak") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DetectedBreak") to include
@@ -12139,9 +11193,8 @@ func (s *GoogleCloudVisionV1p4beta1TextAnnotationTextProperty) MarshalJSON() ([]
 }
 
 // GoogleCloudVisionV1p4beta1Vertex: A vertex represents a 2D point in
-// the image.
-// NOTE: the vertex coordinates are in the same scale as the original
-// image.
+// the image. NOTE: the vertex coordinates are in the same scale as the
+// original image.
 type GoogleCloudVisionV1p4beta1Vertex struct {
 	// X: X coordinate.
 	X int64 `json:"x,omitempty"`
@@ -12151,10 +11204,10 @@ type GoogleCloudVisionV1p4beta1Vertex struct {
 
 	// ForceSendFields is a list of field names (e.g. "X") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "X") to include in API
@@ -12176,22 +11229,19 @@ func (s *GoogleCloudVisionV1p4beta1Vertex) MarshalJSON() ([]byte, error) {
 // image from the Internet.
 type GoogleCloudVisionV1p4beta1WebDetection struct {
 	// BestGuessLabels: The service's best guess as to the topic of the
-	// request image.
-	// Inferred from similar images on the open web.
+	// request image. Inferred from similar images on the open web.
 	BestGuessLabels []*GoogleCloudVisionV1p4beta1WebDetectionWebLabel `json:"bestGuessLabels,omitempty"`
 
-	// FullMatchingImages: Fully matching images from the Internet.
-	// Can include resized copies of the query image.
+	// FullMatchingImages: Fully matching images from the Internet. Can
+	// include resized copies of the query image.
 	FullMatchingImages []*GoogleCloudVisionV1p4beta1WebDetectionWebImage `json:"fullMatchingImages,omitempty"`
 
 	// PagesWithMatchingImages: Web pages containing the matching images
 	// from the Internet.
 	PagesWithMatchingImages []*GoogleCloudVisionV1p4beta1WebDetectionWebPage `json:"pagesWithMatchingImages,omitempty"`
 
-	// PartialMatchingImages: Partial matching images from the
-	// Internet.
-	// Those images are similar enough to share some key-point features.
-	// For
+	// PartialMatchingImages: Partial matching images from the Internet.
+	// Those images are similar enough to share some key-point features. For
 	// example an original image will likely have partial matching for its
 	// crops.
 	PartialMatchingImages []*GoogleCloudVisionV1p4beta1WebDetectionWebImage `json:"partialMatchingImages,omitempty"`
@@ -12204,10 +11254,10 @@ type GoogleCloudVisionV1p4beta1WebDetection struct {
 
 	// ForceSendFields is a list of field names (e.g. "BestGuessLabels") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BestGuessLabels") to
@@ -12235,16 +11285,16 @@ type GoogleCloudVisionV1p4beta1WebDetectionWebEntity struct {
 	// EntityId: Opaque entity ID.
 	EntityId string `json:"entityId,omitempty"`
 
-	// Score: Overall relevancy score for the entity.
-	// Not normalized and not comparable across different image queries.
+	// Score: Overall relevancy score for the entity. Not normalized and not
+	// comparable across different image queries.
 	Score float64 `json:"score,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Description") to include
@@ -12287,10 +11337,10 @@ type GoogleCloudVisionV1p4beta1WebDetectionWebImage struct {
 
 	// ForceSendFields is a list of field names (e.g. "Score") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Score") to include in API
@@ -12329,18 +11379,16 @@ type GoogleCloudVisionV1p4beta1WebDetectionWebLabel struct {
 	Label string `json:"label,omitempty"`
 
 	// LanguageCode: The BCP-47 language code for `label`, such as "en-US"
-	// or "sr-Latn".
-	// For more information,
-	// see
+	// or "sr-Latn". For more information, see
 	// http://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Label") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Label") to include in API
@@ -12361,18 +11409,16 @@ func (s *GoogleCloudVisionV1p4beta1WebDetectionWebLabel) MarshalJSON() ([]byte, 
 // GoogleCloudVisionV1p4beta1WebDetectionWebPage: Metadata for web
 // pages.
 type GoogleCloudVisionV1p4beta1WebDetectionWebPage struct {
-	// FullMatchingImages: Fully matching images on the page.
-	// Can include resized copies of the query image.
+	// FullMatchingImages: Fully matching images on the page. Can include
+	// resized copies of the query image.
 	FullMatchingImages []*GoogleCloudVisionV1p4beta1WebDetectionWebImage `json:"fullMatchingImages,omitempty"`
 
 	// PageTitle: Title for the web page, may contain HTML markups.
 	PageTitle string `json:"pageTitle,omitempty"`
 
-	// PartialMatchingImages: Partial matching images on the page.
-	// Those images are similar enough to share some key-point features.
-	// For
-	// example an original image will likely have partial matching for
-	// its
+	// PartialMatchingImages: Partial matching images on the page. Those
+	// images are similar enough to share some key-point features. For
+	// example an original image will likely have partial matching for its
 	// crops.
 	PartialMatchingImages []*GoogleCloudVisionV1p4beta1WebDetectionWebImage `json:"partialMatchingImages,omitempty"`
 
@@ -12384,10 +11430,10 @@ type GoogleCloudVisionV1p4beta1WebDetectionWebPage struct {
 
 	// ForceSendFields is a list of field names (e.g. "FullMatchingImages")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "FullMatchingImages") to
@@ -12422,25 +11468,14 @@ func (s *GoogleCloudVisionV1p4beta1WebDetectionWebPage) UnmarshalJSON(data []byt
 
 // GoogleCloudVisionV1p4beta1Word: A word representation.
 type GoogleCloudVisionV1p4beta1Word struct {
-	// BoundingBox: The bounding box for the word.
-	// The vertices are in the order of top-left, top-right,
-	// bottom-right,
-	// bottom-left. When a rotation of the bounding box is detected the
-	// rotation
-	// is represented as around the top-left corner as defined when the text
-	// is
-	// read in the 'natural' orientation.
-	// For example:
-	//   * when the text is horizontal it might look like:
-	//      0----1
-	//      |    |
-	//      3----2
-	//   * when it's rotated 180 degrees around the top-left corner it
-	// becomes:
-	//      2----3
-	//      |    |
-	//      1----0
-	//   and the vertex order will still be (0, 1, 2, 3).
+	// BoundingBox: The bounding box for the word. The vertices are in the
+	// order of top-left, top-right, bottom-right, bottom-left. When a
+	// rotation of the bounding box is detected the rotation is represented
+	// as around the top-left corner as defined when the text is read in the
+	// 'natural' orientation. For example: * when the text is horizontal it
+	// might look like: 0----1 | | 3----2 * when it's rotated 180 degrees
+	// around the top-left corner it becomes: 2----3 | | 1----0 and the
+	// vertex order will still be (0, 1, 2, 3).
 	BoundingBox *GoogleCloudVisionV1p4beta1BoundingPoly `json:"boundingBox,omitempty"`
 
 	// Confidence: Confidence of the OCR results for the word. Range [0, 1].
@@ -12449,16 +11484,16 @@ type GoogleCloudVisionV1p4beta1Word struct {
 	// Property: Additional information detected for the word.
 	Property *GoogleCloudVisionV1p4beta1TextAnnotationTextProperty `json:"property,omitempty"`
 
-	// Symbols: List of symbols in the word.
-	// The order of the symbols follows the natural reading order.
+	// Symbols: List of symbols in the word. The order of the symbols
+	// follows the natural reading order.
 	Symbols []*GoogleCloudVisionV1p4beta1Symbol `json:"symbols,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BoundingBox") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BoundingBox") to include
@@ -12491,8 +11526,7 @@ func (s *GoogleCloudVisionV1p4beta1Word) UnmarshalJSON(data []byte) error {
 }
 
 // GroupedResult: Information about the products similar to a single
-// product in a query
-// image.
+// product in a query image.
 type GroupedResult struct {
 	// BoundingPoly: The bounding polygon around the product detected in the
 	// query image.
@@ -12507,10 +11541,10 @@ type GroupedResult struct {
 
 	// ForceSendFields is a list of field names (e.g. "BoundingPoly") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BoundingPoly") to include
@@ -12530,25 +11564,25 @@ func (s *GroupedResult) MarshalJSON() ([]byte, error) {
 
 // Image: Client image to perform Google Cloud Vision API tasks over.
 type Image struct {
-	// Content: Image content, represented as a stream of bytes.
-	// Note: As with all `bytes` fields, protobuffers use a pure
-	// binary
-	// representation, whereas JSON representations use base64.
+	// Content: Image content, represented as a stream of bytes. Note: As
+	// with all `bytes` fields, protobuffers use a pure binary
+	// representation, whereas JSON representations use base64. Currently,
+	// this field only works for BatchAnnotateImages requests. It does not
+	// work for AsyncBatchAnnotateImages requests.
 	Content string `json:"content,omitempty"`
 
 	// Source: Google Cloud Storage image location, or publicly-accessible
-	// image
-	// URL. If both `content` and `source` are provided for an image,
-	// `content`
-	// takes precedence and is used to perform the image annotation request.
+	// image URL. If both `content` and `source` are provided for an image,
+	// `content` takes precedence and is used to perform the image
+	// annotation request.
 	Source *ImageSource `json:"source,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Content") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Content") to include in
@@ -12567,12 +11601,10 @@ func (s *Image) MarshalJSON() ([]byte, error) {
 }
 
 // ImageAnnotationContext: If an image was produced from a file (e.g. a
-// PDF), this message gives
-// information about the source of that image.
+// PDF), this message gives information about the source of that image.
 type ImageAnnotationContext struct {
 	// PageNumber: If the file was a PDF or TIFF, this field gives the page
-	// number within
-	// the file used to produce the image.
+	// number within the file used to produce the image.
 	PageNumber int64 `json:"pageNumber,omitempty"`
 
 	// Uri: The URI of the file used to produce the image.
@@ -12580,10 +11612,10 @@ type ImageAnnotationContext struct {
 
 	// ForceSendFields is a list of field names (e.g. "PageNumber") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "PageNumber") to include in
@@ -12607,21 +11639,14 @@ type ImageContext struct {
 	CropHintsParams *CropHintsParams `json:"cropHintsParams,omitempty"`
 
 	// LanguageHints: List of languages to use for TEXT_DETECTION. In most
-	// cases, an empty value
-	// yields the best results since it enables automatic language
-	// detection. For
-	// languages based on the Latin alphabet, setting `language_hints` is
-	// not
-	// needed. In rare cases, when the language of the text in the image is
-	// known,
-	// setting a hint will help get better results (although it will be
-	// a
-	// significant hindrance if the hint is wrong). Text detection returns
-	// an
-	// error if one or more of the specified languages is not one of
-	// the
-	// [supported
-	// languages](https://cloud.google.com/vision/docs/languages).
+	// cases, an empty value yields the best results since it enables
+	// automatic language detection. For languages based on the Latin
+	// alphabet, setting `language_hints` is not needed. In rare cases, when
+	// the language of the text in the image is known, setting a hint will
+	// help get better results (although it will be a significant hindrance
+	// if the hint is wrong). Text detection returns an error if one or more
+	// of the specified languages is not one of the supported languages
+	// (https://cloud.google.com/vision/docs/languages).
 	LanguageHints []string `json:"languageHints,omitempty"`
 
 	// LatLongRect: Not used.
@@ -12630,15 +11655,19 @@ type ImageContext struct {
 	// ProductSearchParams: Parameters for product search.
 	ProductSearchParams *ProductSearchParams `json:"productSearchParams,omitempty"`
 
+	// TextDetectionParams: Parameters for text detection and document text
+	// detection.
+	TextDetectionParams *TextDetectionParams `json:"textDetectionParams,omitempty"`
+
 	// WebDetectionParams: Parameters for web detection.
 	WebDetectionParams *WebDetectionParams `json:"webDetectionParams,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CropHintsParams") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CropHintsParams") to
@@ -12664,10 +11693,10 @@ type ImageProperties struct {
 
 	// ForceSendFields is a list of field names (e.g. "DominantColors") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DominantColors") to
@@ -12689,50 +11718,32 @@ func (s *ImageProperties) MarshalJSON() ([]byte, error) {
 // ImageSource: External image source (Google Cloud Storage or web URL
 // image location).
 type ImageSource struct {
-	// GcsImageUri: **Use `image_uri` instead.**
-	//
-	// The Google Cloud Storage  URI of the
-	// form
-	// `gs://bucket_name/object_name`. Object versioning is not supported.
-	// See
-	// [Google Cloud Storage
-	// Request
-	// URIs](https://cloud.google.com/storage/docs/reference-uris) for more
-	// info.
+	// GcsImageUri: **Use `image_uri` instead.** The Google Cloud Storage
+	// URI of the form `gs://bucket_name/object_name`. Object versioning is
+	// not supported. See Google Cloud Storage Request URIs
+	// (https://cloud.google.com/storage/docs/reference-uris) for more info.
 	GcsImageUri string `json:"gcsImageUri,omitempty"`
 
-	// ImageUri: The URI of the source image. Can be either:
-	//
-	// 1. A Google Cloud Storage URI of the form
-	//    `gs://bucket_name/object_name`. Object versioning is not
-	// supported. See
-	//    [Google Cloud Storage Request
-	//    URIs](https://cloud.google.com/storage/docs/reference-uris) for
-	// more
-	//    info.
-	//
+	// ImageUri: The URI of the source image. Can be either: 1. A Google
+	// Cloud Storage URI of the form `gs://bucket_name/object_name`. Object
+	// versioning is not supported. See Google Cloud Storage Request URIs
+	// (https://cloud.google.com/storage/docs/reference-uris) for more info.
 	// 2. A publicly-accessible image HTTP/HTTPS URL. When fetching images
-	// from
-	//    HTTP/HTTPS URLs, Google cannot guarantee that the request will be
-	//    completed. Your request may fail if the specified host denies the
-	//    request (e.g. due to request throttling or DOS prevention), or if
-	// Google
-	//    throttles requests to the site for abuse prevention. You should
-	// not
-	//    depend on externally-hosted images for production
-	// applications.
-	//
-	// When both `gcs_image_uri` and `image_uri` are specified, `image_uri`
-	// takes
-	// precedence.
+	// from HTTP/HTTPS URLs, Google cannot guarantee that the request will
+	// be completed. Your request may fail if the specified host denies the
+	// request (e.g. due to request throttling or DOS prevention), or if
+	// Google throttles requests to the site for abuse prevention. You
+	// should not depend on externally-hosted images for production
+	// applications. When both `gcs_image_uri` and `image_uri` are
+	// specified, `image_uri` takes precedence.
 	ImageUri string `json:"imageUri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "GcsImageUri") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "GcsImageUri") to include
@@ -12751,98 +11762,53 @@ func (s *ImageSource) MarshalJSON() ([]byte, error) {
 }
 
 // ImportProductSetsGcsSource: The Google Cloud Storage location for a
-// csv file which preserves a list of
-// ImportProductSetRequests in each line.
+// csv file which preserves a list of ImportProductSetRequests in each
+// line.
 type ImportProductSetsGcsSource struct {
-	// CsvFileUri: The Google Cloud Storage URI of the input csv file.
-	//
-	// The URI must start with `gs://`.
-	//
-	// The format of the input csv file should be one image per line.
-	// In each line, there are 8 columns.
-	//
-	// 1.  image-uri
-	// 2.  image-id
-	// 3.  product-set-id
-	// 4.  product-id
-	// 5.  product-category
-	// 6.  product-display-name
-	// 7.  labels
-	// 8.  bounding-poly
-	//
+	// CsvFileUri: The Google Cloud Storage URI of the input csv file. The
+	// URI must start with `gs://`. The format of the input csv file should
+	// be one image per line. In each line, there are 8 columns. 1.
+	// image-uri 2. image-id 3. product-set-id 4. product-id 5.
+	// product-category 6. product-display-name 7. labels 8. bounding-poly
 	// The `image-uri`, `product-set-id`, `product-id`, and
-	// `product-category`
-	// columns are required. All other columns are optional.
-	//
-	// If the `ProductSet` or `Product` specified by the `product-set-id`
-	// and
-	// `product-id` values does not exist, then the system will create a
-	// new
-	// `ProductSet` or `Product` for the image. In this case,
-	// the
-	// `product-display-name` column refers to
-	// display_name, the
-	// `product-category` column refers to
-	// product_category, and the
-	// `labels` column refers to product_labels.
-	//
-	// The `image-id` column is optional but must be unique if provided. If
-	// it is
-	// empty, the system will automatically assign a unique id to the
-	// image.
-	//
-	// The `product-display-name` column is optional. If it is empty, the
-	// system
-	// sets the display_name field for the product to a
-	// space (" "). You can update the `display_name` later by using the
-	// API.
-	//
-	// If a `Product` with the specified `product-id` already exists, then
-	// the
-	// system ignores the `product-display-name`, `product-category`, and
-	// `labels`
-	// columns.
-	//
-	// The `labels` column (optional) is a line containing a list
-	// of
+	// `product-category` columns are required. All other columns are
+	// optional. If the `ProductSet` or `Product` specified by the
+	// `product-set-id` and `product-id` values does not exist, then the
+	// system will create a new `ProductSet` or `Product` for the image. In
+	// this case, the `product-display-name` column refers to display_name,
+	// the `product-category` column refers to product_category, and the
+	// `labels` column refers to product_labels. The `image-id` column is
+	// optional but must be unique if provided. If it is empty, the system
+	// will automatically assign a unique id to the image. The
+	// `product-display-name` column is optional. If it is empty, the system
+	// sets the display_name field for the product to a space (" "). You can
+	// update the `display_name` later by using the API. If a `Product` with
+	// the specified `product-id` already exists, then the system ignores
+	// the `product-display-name`, `product-category`, and `labels` columns.
+	// The `labels` column (optional) is a line containing a list of
 	// comma-separated key-value pairs, in the following format:
-	//
-	//     "key_1=value_1,key_2=value_2,...,key_n=value_n"
-	//
-	// The `bounding-poly` column (optional) identifies one region
-	// of
-	// interest from the image in the same manner as `CreateReferenceImage`.
-	// If
-	// you do not specify the `bounding-poly` column, then the system will
-	// try to
-	// detect regions of interest automatically.
-	//
-	// At most one `bounding-poly` column is allowed per line. If the
-	// image
-	// contains multiple regions of interest, add a line to the CSV file
-	// that
-	// includes the same product information, and the `bounding-poly` values
-	// for
-	// each region of interest.
-	//
-	// The `bounding-poly` column must contain an even number of
-	// comma-separated
-	// numbers, in the format "p1_x,p1_y,p2_x,p2_y,...,pn_x,pn_y".
-	// Use
+	// "key_1=value_1,key_2=value_2,...,key_n=value_n" The `bounding-poly`
+	// column (optional) identifies one region of interest from the image in
+	// the same manner as `CreateReferenceImage`. If you do not specify the
+	// `bounding-poly` column, then the system will try to detect regions of
+	// interest automatically. At most one `bounding-poly` column is allowed
+	// per line. If the image contains multiple regions of interest, add a
+	// line to the CSV file that includes the same product information, and
+	// the `bounding-poly` values for each region of interest. The
+	// `bounding-poly` column must contain an even number of comma-separated
+	// numbers, in the format "p1_x,p1_y,p2_x,p2_y,...,pn_x,pn_y". Use
 	// non-negative integers for absolute bounding polygons, and float
-	// values
-	// in [0, 1] for normalized bounding polygons.
-	//
-	// The system will resize the image if the image resolution is too
-	// large to process (larger than 20MP).
+	// values in [0, 1] for normalized bounding polygons. The system will
+	// resize the image if the image resolution is too large to process
+	// (larger than 20MP).
 	CsvFileUri string `json:"csvFileUri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CsvFileUri") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CsvFileUri") to include in
@@ -12864,16 +11830,15 @@ func (s *ImportProductSetsGcsSource) MarshalJSON() ([]byte, error) {
 // `ImportProductSets` method.
 type ImportProductSetsInputConfig struct {
 	// GcsSource: The Google Cloud Storage location for a csv file which
-	// preserves a list
-	// of ImportProductSetRequests in each line.
+	// preserves a list of ImportProductSetRequests in each line.
 	GcsSource *ImportProductSetsGcsSource `json:"gcsSource,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "GcsSource") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "GcsSource") to include in
@@ -12899,10 +11864,10 @@ type ImportProductSetsRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "InputConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "InputConfig") to include
@@ -12921,12 +11886,8 @@ func (s *ImportProductSetsRequest) MarshalJSON() ([]byte, error) {
 }
 
 // ImportProductSetsResponse: Response message for the
-// `ImportProductSets` method.
-//
-// This message is returned by
-// the
-// google.longrunning.Operations.GetOperation method in the
-// returned
+// `ImportProductSets` method. This message is returned by the
+// google.longrunning.Operations.GetOperation method in the returned
 // google.longrunning.Operation.response field.
 type ImportProductSetsResponse struct {
 	// ReferenceImages: The list of reference_images that are imported
@@ -12934,22 +11895,18 @@ type ImportProductSetsResponse struct {
 	ReferenceImages []*ReferenceImage `json:"referenceImages,omitempty"`
 
 	// Statuses: The rpc status for each ImportProductSet request, including
-	// both successes
-	// and errors.
-	//
-	// The number of statuses here matches the number of lines in the csv
-	// file,
-	// and statuses[i] stores the success or failure status of processing
-	// the i-th
-	// line of the csv, starting from line 0.
+	// both successes and errors. The number of statuses here matches the
+	// number of lines in the csv file, and statuses[i] stores the success
+	// or failure status of processing the i-th line of the csv, starting
+	// from line 0.
 	Statuses []*Status `json:"statuses,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ReferenceImages") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ReferenceImages") to
@@ -12970,30 +11927,27 @@ func (s *ImportProductSetsResponse) MarshalJSON() ([]byte, error) {
 
 // InputConfig: The desired input location and metadata.
 type InputConfig struct {
-	// Content: File content, represented as a stream of bytes.
-	// Note: As with all `bytes` fields, protobuffers use a pure
-	// binary
-	// representation, whereas JSON representations use base64.
-	//
-	// Currently, this field only works for BatchAnnotateFiles requests. It
-	// does
-	// not work for AsyncBatchAnnotateFiles requests.
+	// Content: File content, represented as a stream of bytes. Note: As
+	// with all `bytes` fields, protobuffers use a pure binary
+	// representation, whereas JSON representations use base64. Currently,
+	// this field only works for BatchAnnotateFiles requests. It does not
+	// work for AsyncBatchAnnotateFiles requests.
 	Content string `json:"content,omitempty"`
 
 	// GcsSource: The Google Cloud Storage location to read the input from.
 	GcsSource *GcsSource `json:"gcsSource,omitempty"`
 
 	// MimeType: The type of the file. Currently only "application/pdf",
-	// "image/tiff" and
-	// "image/gif" are supported. Wildcards are not supported.
+	// "image/tiff" and "image/gif" are supported. Wildcards are not
+	// supported.
 	MimeType string `json:"mimeType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Content") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Content") to include in
@@ -13014,21 +11968,19 @@ func (s *InputConfig) MarshalJSON() ([]byte, error) {
 // KeyValue: A product label represented as a key-value pair.
 type KeyValue struct {
 	// Key: The key of the label attached to the product. Cannot be empty
-	// and cannot
-	// exceed 128 bytes.
+	// and cannot exceed 128 bytes.
 	Key string `json:"key,omitempty"`
 
 	// Value: The value of the label attached to the product. Cannot be
-	// empty and
-	// cannot exceed 128 bytes.
+	// empty and cannot exceed 128 bytes.
 	Value string `json:"value,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Key") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Key") to include in API
@@ -13090,14 +12042,16 @@ type Landmark struct {
 	//   "CHIN_GNATHION" - Chin gnathion.
 	//   "CHIN_LEFT_GONION" - Chin left gonion.
 	//   "CHIN_RIGHT_GONION" - Chin right gonion.
+	//   "LEFT_CHEEK_CENTER" - Left cheek center.
+	//   "RIGHT_CHEEK_CENTER" - Right cheek center.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Position") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Position") to include in
@@ -13115,15 +12069,11 @@ func (s *Landmark) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// LatLng: An object representing a latitude/longitude pair. This is
-// expressed as a pair
-// of doubles representing degrees latitude and degrees longitude.
-// Unless
-// specified otherwise, this must conform to the
-// <a
-// href="http://www.unoosa.org/pdf/icg/2012/template/WGS_84.pdf">WGS84
-// st
-// andard</a>. Values must be within normalized ranges.
+// LatLng: An object that represents a latitude/longitude pair. This is
+// expressed as a pair of doubles to represent degrees latitude and
+// degrees longitude. Unless specified otherwise, this object must
+// conform to the WGS84 standard. Values must be within normalized
+// ranges.
 type LatLng struct {
 	// Latitude: The latitude in degrees. It must be in the range [-90.0,
 	// +90.0].
@@ -13135,10 +12085,10 @@ type LatLng struct {
 
 	// ForceSendFields is a list of field names (e.g. "Latitude") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Latitude") to include in
@@ -13182,10 +12132,10 @@ type LatLongRect struct {
 
 	// ForceSendFields is a list of field names (e.g. "MaxLatLng") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "MaxLatLng") to include in
@@ -13219,10 +12169,10 @@ type ListOperationsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -13244,8 +12194,7 @@ func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 // method.
 type ListProductSetsResponse struct {
 	// NextPageToken: Token to retrieve the next page of results, or empty
-	// if there are no more
-	// results in the list.
+	// if there are no more results in the list.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ProductSets: List of ProductSets.
@@ -13257,10 +12206,10 @@ type ListProductSetsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -13282,8 +12231,7 @@ func (s *ListProductSetsResponse) MarshalJSON() ([]byte, error) {
 // `ListProductsInProductSet` method.
 type ListProductsInProductSetResponse struct {
 	// NextPageToken: Token to retrieve the next page of results, or empty
-	// if there are no more
-	// results in the list.
+	// if there are no more results in the list.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// Products: The list of Products.
@@ -13295,10 +12243,10 @@ type ListProductsInProductSetResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -13319,8 +12267,7 @@ func (s *ListProductsInProductSetResponse) MarshalJSON() ([]byte, error) {
 // ListProductsResponse: Response message for the `ListProducts` method.
 type ListProductsResponse struct {
 	// NextPageToken: Token to retrieve the next page of results, or empty
-	// if there are no more
-	// results in the list.
+	// if there are no more results in the list.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// Products: List of products.
@@ -13332,10 +12279,10 @@ type ListProductsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -13373,10 +12320,10 @@ type ListReferenceImagesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -13402,9 +12349,7 @@ type LocalizedObjectAnnotation struct {
 	BoundingPoly *BoundingPoly `json:"boundingPoly,omitempty"`
 
 	// LanguageCode: The BCP-47 language code, such as "en-US" or "sr-Latn".
-	// For more
-	// information,
-	// see
+	// For more information, see
 	// http://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
 	LanguageCode string `json:"languageCode,omitempty"`
 
@@ -13419,10 +12364,10 @@ type LocalizedObjectAnnotation struct {
 
 	// ForceSendFields is a list of field names (e.g. "BoundingPoly") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BoundingPoly") to include
@@ -13461,10 +12406,10 @@ type LocationInfo struct {
 
 	// ForceSendFields is a list of field names (e.g. "LatLng") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "LatLng") to include in API
@@ -13482,9 +12427,8 @@ func (s *LocationInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// NormalizedVertex: A vertex represents a 2D point in the image.
-// NOTE: the normalized vertex coordinates are relative to the original
-// image
+// NormalizedVertex: A vertex represents a 2D point in the image. NOTE:
+// the normalized vertex coordinates are relative to the original image
 // and range from 0 to 1.
 type NormalizedVertex struct {
 	// X: X coordinate.
@@ -13495,10 +12439,10 @@ type NormalizedVertex struct {
 
 	// ForceSendFields is a list of field names (e.g. "X") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "X") to include in API
@@ -13536,9 +12480,7 @@ func (s *NormalizedVertex) UnmarshalJSON(data []byte) error {
 // is.
 type ObjectAnnotation struct {
 	// LanguageCode: The BCP-47 language code, such as "en-US" or "sr-Latn".
-	// For more
-	// information,
-	// see
+	// For more information, see
 	// http://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
 	LanguageCode string `json:"languageCode,omitempty"`
 
@@ -13553,10 +12495,10 @@ type ObjectAnnotation struct {
 
 	// ForceSendFields is a list of field names (e.g. "LanguageCode") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "LanguageCode") to include
@@ -13589,52 +12531,38 @@ func (s *ObjectAnnotation) UnmarshalJSON(data []byte) error {
 }
 
 // Operation: This resource represents a long-running operation that is
-// the result of a
-// network API call.
+// the result of a network API call.
 type Operation struct {
 	// Done: If the value is `false`, it means the operation is still in
-	// progress.
-	// If `true`, the operation is completed, and either `error` or
-	// `response` is
-	// available.
+	// progress. If `true`, the operation is completed, and either `error`
+	// or `response` is available.
 	Done bool `json:"done,omitempty"`
 
 	// Error: The error result of the operation in case of failure or
 	// cancellation.
 	Error *Status `json:"error,omitempty"`
 
-	// Metadata: Service-specific metadata associated with the operation.
-	// It typically
-	// contains progress information and common metadata such as create
-	// time.
-	// Some services might not provide such metadata.  Any method that
-	// returns a
-	// long-running operation should document the metadata type, if any.
+	// Metadata: Service-specific metadata associated with the operation. It
+	// typically contains progress information and common metadata such as
+	// create time. Some services might not provide such metadata. Any
+	// method that returns a long-running operation should document the
+	// metadata type, if any.
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
 
 	// Name: The server-assigned name, which is only unique within the same
-	// service that
-	// originally returns it. If you use the default HTTP mapping,
-	// the
-	// `name` should be a resource name ending with
+	// service that originally returns it. If you use the default HTTP
+	// mapping, the `name` should be a resource name ending with
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success.
-	// If the original
-	// method returns no data on success, such as `Delete`, the response
-	// is
-	// `google.protobuf.Empty`.  If the original method is
-	// standard
-	// `Get`/`Create`/`Update`, the response should be the resource.  For
-	// other
-	// methods, the response should have the type `XxxResponse`, where
-	// `Xxx`
-	// is the original method name.  For example, if the original method
-	// name
-	// is `TakeSnapshot()`, the inferred response type
-	// is
-	// `TakeSnapshotResponse`.
+	// Response: The normal response of the operation in case of success. If
+	// the original method returns no data on success, such as `Delete`, the
+	// response is `google.protobuf.Empty`. If the original method is
+	// standard `Get`/`Create`/`Update`, the response should be the
+	// resource. For other methods, the response should have the type
+	// `XxxResponse`, where `Xxx` is the original method name. For example,
+	// if the original method name is `TakeSnapshot()`, the inferred
+	// response type is `TakeSnapshotResponse`.
 	Response googleapi.RawMessage `json:"response,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -13643,10 +12571,10 @@ type Operation struct {
 
 	// ForceSendFields is a list of field names (e.g. "Done") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Done") to include in API
@@ -13685,10 +12613,10 @@ type OperationMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CreateTime") to include in
@@ -13709,21 +12637,13 @@ func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
 // OutputConfig: The desired output location and metadata.
 type OutputConfig struct {
 	// BatchSize: The max number of response protos to put into each output
-	// JSON file on
-	// Google Cloud Storage.
-	// The valid range is [1, 100]. If not specified, the default value is
-	// 20.
-	//
-	// For example, for one pdf file with 100 pages, 100 response protos
-	// will
-	// be generated. If `batch_size` = 20, then 5 json files each
-	// containing 20 response protos will be written under the
-	// prefix
-	// `gcs_destination`.`uri`.
-	//
+	// JSON file on Google Cloud Storage. The valid range is [1, 100]. If
+	// not specified, the default value is 20. For example, for one pdf file
+	// with 100 pages, 100 response protos will be generated. If
+	// `batch_size` = 20, then 5 json files each containing 20 response
+	// protos will be written under the prefix `gcs_destination`.`uri`.
 	// Currently, batch_size only applies to GcsDestination, with potential
-	// future
-	// support for other output configurations.
+	// future support for other output configurations.
 	BatchSize int64 `json:"batchSize,omitempty"`
 
 	// GcsDestination: The Google Cloud Storage location to write the
@@ -13732,10 +12652,10 @@ type OutputConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "BatchSize") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BatchSize") to include in
@@ -13762,24 +12682,22 @@ type Page struct {
 	Confidence float64 `json:"confidence,omitempty"`
 
 	// Height: Page height. For PDFs the unit is points. For images
-	// (including
-	// TIFFs) the unit is pixels.
+	// (including TIFFs) the unit is pixels.
 	Height int64 `json:"height,omitempty"`
 
 	// Property: Additional information detected on the page.
 	Property *TextProperty `json:"property,omitempty"`
 
-	// Width: Page width. For PDFs the unit is points. For images
-	// (including
+	// Width: Page width. For PDFs the unit is points. For images (including
 	// TIFFs) the unit is pixels.
 	Width int64 `json:"width,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Blocks") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Blocks") to include in API
@@ -13814,25 +12732,14 @@ func (s *Page) UnmarshalJSON(data []byte) error {
 // Paragraph: Structural unit of text representing a number of words in
 // certain order.
 type Paragraph struct {
-	// BoundingBox: The bounding box for the paragraph.
-	// The vertices are in the order of top-left, top-right,
-	// bottom-right,
-	// bottom-left. When a rotation of the bounding box is detected the
-	// rotation
-	// is represented as around the top-left corner as defined when the text
-	// is
-	// read in the 'natural' orientation.
-	// For example:
-	//   * when the text is horizontal it might look like:
-	//      0----1
-	//      |    |
-	//      3----2
-	//   * when it's rotated 180 degrees around the top-left corner it
-	// becomes:
-	//      2----3
-	//      |    |
-	//      1----0
-	//   and the vertex order will still be (0, 1, 2, 3).
+	// BoundingBox: The bounding box for the paragraph. The vertices are in
+	// the order of top-left, top-right, bottom-right, bottom-left. When a
+	// rotation of the bounding box is detected the rotation is represented
+	// as around the top-left corner as defined when the text is read in the
+	// 'natural' orientation. For example: * when the text is horizontal it
+	// might look like: 0----1 | | 3----2 * when it's rotated 180 degrees
+	// around the top-left corner it becomes: 2----3 | | 1----0 and the
+	// vertex order will still be (0, 1, 2, 3).
 	BoundingBox *BoundingPoly `json:"boundingBox,omitempty"`
 
 	// Confidence: Confidence of the OCR results for the paragraph. Range
@@ -13847,10 +12754,10 @@ type Paragraph struct {
 
 	// ForceSendFields is a list of field names (e.g. "BoundingBox") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BoundingBox") to include
@@ -13883,9 +12790,9 @@ func (s *Paragraph) UnmarshalJSON(data []byte) error {
 }
 
 // Position: A 3D position in the image, used primarily for Face
-// detection landmarks.
-// A valid Position must have both x and y coordinates.
-// The position coordinates are in the same scale as the original image.
+// detection landmarks. A valid Position must have both x and y
+// coordinates. The position coordinates are in the same scale as the
+// original image.
 type Position struct {
 	// X: X coordinate.
 	X float64 `json:"x,omitempty"`
@@ -13898,10 +12805,10 @@ type Position struct {
 
 	// ForceSendFields is a list of field names (e.g. "X") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "X") to include in API
@@ -13940,51 +12847,33 @@ func (s *Position) UnmarshalJSON(data []byte) error {
 // Product: A Product contains ReferenceImages.
 type Product struct {
 	// Description: User-provided metadata to be stored with this product.
-	// Must be at most 4096
-	// characters long.
+	// Must be at most 4096 characters long.
 	Description string `json:"description,omitempty"`
 
 	// DisplayName: The user-provided name for this Product. Must not be
-	// empty. Must be at most
-	// 4096 characters long.
+	// empty. Must be at most 4096 characters long.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Name: The resource name of the product.
-	//
-	// Format
-	// is:
-	// `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID`.
-	//
-	// This field is ignored when creating a product.
+	// Name: The resource name of the product. Format is:
+	// `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID`. This
+	// field is ignored when creating a product.
 	Name string `json:"name,omitempty"`
 
 	// ProductCategory: Immutable. The category for the product identified
-	// by the reference image. This should
-	// be either "homegoods-v2", "apparel-v2", or "toys-v2". The legacy
-	// categories
-	// "homegoods", "apparel", and "toys" are still supported, but these
-	// should
-	// not be used for new products.
+	// by the reference image. This should be one of "homegoods-v2",
+	// "apparel-v2", "toys-v2", "packagedgoods-v1" or "general-v1". The
+	// legacy categories "homegoods", "apparel", and "toys" are still
+	// supported, but these should not be used for new products.
 	ProductCategory string `json:"productCategory,omitempty"`
 
 	// ProductLabels: Key-value pairs that can be attached to a product. At
-	// query time,
-	// constraints can be specified based on the product_labels.
-	//
+	// query time, constraints can be specified based on the product_labels.
 	// Note that integer values can be provided as strings, e.g. "1199".
-	// Only
-	// strings with integer values can match a range-based restriction which
-	// is
-	// to be supported soon.
-	//
-	// Multiple values can be assigned to the same key. One product may have
-	// up to
-	// 500 product_labels.
-	//
-	// Notice that the total number of distinct product_labels over all
-	// products
-	// in one ProductSet cannot exceed 1M, otherwise the product search
-	// pipeline
+	// Only strings with integer values can match a range-based restriction
+	// which is to be supported soon. Multiple values can be assigned to the
+	// same key. One product may have up to 500 product_labels. Notice that
+	// the total number of distinct product_labels over all products in one
+	// ProductSet cannot exceed 1M, otherwise the product search pipeline
 	// will refuse to work for that ProductSet.
 	ProductLabels []*KeyValue `json:"productLabels,omitempty"`
 
@@ -13994,10 +12883,10 @@ type Product struct {
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Description") to include
@@ -14018,55 +12907,40 @@ func (s *Product) MarshalJSON() ([]byte, error) {
 // ProductSearchParams: Parameters for a product search request.
 type ProductSearchParams struct {
 	// BoundingPoly: The bounding polygon around the area of interest in the
-	// image.
-	// If it is not specified, system discretion will be applied.
+	// image. If it is not specified, system discretion will be applied.
 	BoundingPoly *BoundingPoly `json:"boundingPoly,omitempty"`
 
 	// Filter: The filtering expression. This can be used to restrict search
-	// results based
-	// on Product labels. We currently support an AND of OR of
-	// key-value
-	// expressions, where each expression within an OR must have the same
-	// key. An
-	// '=' should be used to connect the key and value.
-	//
-	// For example, "(color = red OR color = blue) AND brand = Google"
-	// is
-	// acceptable, but "(color = red OR brand = Google)" is not
-	// acceptable.
+	// results based on Product labels. We currently support an AND of OR of
+	// key-value expressions, where each expression within an OR must have
+	// the same key. An '=' should be used to connect the key and value. For
+	// example, "(color = red OR color = blue) AND brand = Google" is
+	// acceptable, but "(color = red OR brand = Google)" is not acceptable.
 	// "color: red" is not acceptable because it uses a ':' instead of an
 	// '='.
 	Filter string `json:"filter,omitempty"`
 
 	// ProductCategories: The list of product categories to search in.
-	// Currently, we only consider
-	// the first category, and either "homegoods-v2", "apparel-v2",
-	// "toys-v2",
-	// "packagedgoods-v1", or "general-v1" should be specified. The
-	// legacy
-	// categories "homegoods", "apparel", and "toys" are still supported but
-	// will
-	// be deprecated. For new products, please use "homegoods-v2",
-	// "apparel-v2",
-	// or "toys-v2" for better product search accuracy. It is recommended
-	// to
-	// migrate existing products to these categories as well.
+	// Currently, we only consider the first category, and either
+	// "homegoods-v2", "apparel-v2", "toys-v2", "packagedgoods-v1", or
+	// "general-v1" should be specified. The legacy categories "homegoods",
+	// "apparel", and "toys" are still supported but will be deprecated. For
+	// new products, please use "homegoods-v2", "apparel-v2", or "toys-v2"
+	// for better product search accuracy. It is recommended to migrate
+	// existing products to these categories as well.
 	ProductCategories []string `json:"productCategories,omitempty"`
 
 	// ProductSet: The resource name of a ProductSet to be searched for
-	// similar images.
-	//
-	// Format
-	// is:
+	// similar images. Format is:
 	// `projects/PROJECT_ID/locations/LOC_ID/productSets/PRODUCT_SET_ID`.
 	ProductSet string `json:"productSet,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BoundingPoly") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BoundingPoly") to include
@@ -14087,19 +12961,15 @@ func (s *ProductSearchParams) MarshalJSON() ([]byte, error) {
 // ProductSearchResults: Results for a product search request.
 type ProductSearchResults struct {
 	// IndexTime: Timestamp of the index which provided these results.
-	// Products added to the
-	// product set and products removed from the product set after this time
-	// are
-	// not reflected in the current results.
+	// Products added to the product set and products removed from the
+	// product set after this time are not reflected in the current results.
 	IndexTime string `json:"indexTime,omitempty"`
 
 	// ProductGroupedResults: List of results grouped by products detected
-	// in the query image. Each entry
-	// corresponds to one bounding polygon in the query image, and contains
-	// the
-	// matching products specific to that region. There may be duplicate
-	// product
-	// matches in the union of all the per-product results.
+	// in the query image. Each entry corresponds to one bounding polygon in
+	// the query image, and contains the matching products specific to that
+	// region. There may be duplicate product matches in the union of all
+	// the per-product results.
 	ProductGroupedResults []*GroupedResult `json:"productGroupedResults,omitempty"`
 
 	// Results: List of results, one for each product match.
@@ -14107,10 +12977,10 @@ type ProductSearchResults struct {
 
 	// ForceSendFields is a list of field names (e.g. "IndexTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "IndexTime") to include in
@@ -14129,41 +12999,27 @@ func (s *ProductSearchResults) MarshalJSON() ([]byte, error) {
 }
 
 // ProductSet: A ProductSet contains Products. A ProductSet can contain
-// a maximum of 1
-// million reference images. If the limit is exceeded, periodic indexing
-// will
-// fail.
+// a maximum of 1 million reference images. If the limit is exceeded,
+// periodic indexing will fail.
 type ProductSet struct {
 	// DisplayName: The user-provided name for this ProductSet. Must not be
-	// empty. Must be at
-	// most 4096 characters long.
+	// empty. Must be at most 4096 characters long.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// IndexError: Output only. If there was an error with indexing the
-	// product set, the field
-	// is populated.
-	//
-	// This field is ignored when creating a ProductSet.
+	// product set, the field is populated. This field is ignored when
+	// creating a ProductSet.
 	IndexError *Status `json:"indexError,omitempty"`
 
 	// IndexTime: Output only. The time at which this ProductSet was last
-	// indexed. Query
-	// results will reflect all updates before this time. If this ProductSet
-	// has
-	// never been indexed, this timestamp is the default
-	// value
-	// "1970-01-01T00:00:00Z".
-	//
-	// This field is ignored when creating a ProductSet.
+	// indexed. Query results will reflect all updates before this time. If
+	// this ProductSet has never been indexed, this timestamp is the default
+	// value "1970-01-01T00:00:00Z". This field is ignored when creating a
+	// ProductSet.
 	IndexTime string `json:"indexTime,omitempty"`
 
-	// Name: The resource name of the ProductSet.
-	//
-	// Format
-	// is:
+	// Name: The resource name of the ProductSet. Format is:
 	// `projects/PROJECT_ID/locations/LOC_ID/productSets/PRODUCT_SET_ID`.
-	//
-	//
 	// This field is ignored when creating a ProductSet.
 	Name string `json:"name,omitempty"`
 
@@ -14173,10 +13029,10 @@ type ProductSet struct {
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DisplayName") to include
@@ -14198,18 +13054,16 @@ func (s *ProductSet) MarshalJSON() ([]byte, error) {
 // the Products to be deleted.
 type ProductSetPurgeConfig struct {
 	// ProductSetId: The ProductSet that contains the Products to delete. If
-	// a Product is a
-	// member of product_set_id in addition to other ProductSets, the
-	// Product will
-	// still be deleted.
+	// a Product is a member of product_set_id in addition to other
+	// ProductSets, the Product will still be deleted.
 	ProductSetId string `json:"productSetId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ProductSetId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ProductSetId") to include
@@ -14240,10 +13094,10 @@ type Property struct {
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Name") to include in API
@@ -14264,13 +13118,11 @@ func (s *Property) MarshalJSON() ([]byte, error) {
 // PurgeProductsRequest: Request message for the `PurgeProducts` method.
 type PurgeProductsRequest struct {
 	// DeleteOrphanProducts: If delete_orphan_products is true, all Products
-	// that are not in any
-	// ProductSet will be deleted.
+	// that are not in any ProductSet will be deleted.
 	DeleteOrphanProducts bool `json:"deleteOrphanProducts,omitempty"`
 
 	// Force: The default value is false. Override this value to true to
-	// actually perform
-	// the purge.
+	// actually perform the purge.
 	Force bool `json:"force,omitempty"`
 
 	// ProductSetPurgeConfig: Specify which ProductSet contains the Products
@@ -14279,8 +13131,8 @@ type PurgeProductsRequest struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "DeleteOrphanProducts") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -14303,38 +13155,23 @@ func (s *PurgeProductsRequest) MarshalJSON() ([]byte, error) {
 }
 
 // ReferenceImage: A `ReferenceImage` represents a product image and its
-// associated metadata,
-// such as bounding boxes.
+// associated metadata, such as bounding boxes.
 type ReferenceImage struct {
 	// BoundingPolys: Optional. Bounding polygons around the areas of
-	// interest in the reference image.
-	// If this field is empty, the system will try to detect regions
-	// of
-	// interest. At most 10 bounding polygons will be used.
-	//
-	// The provided shape is converted into a non-rotated rectangle.
-	// Once
-	// converted, the small edge of the rectangle must be greater than or
-	// equal
-	// to 300 pixels. The aspect ratio must be 1:4 or less (i.e. 1:3 is ok;
-	// 1:5
-	// is not).
+	// interest in the reference image. If this field is empty, the system
+	// will try to detect regions of interest. At most 10 bounding polygons
+	// will be used. The provided shape is converted into a non-rotated
+	// rectangle. Once converted, the small edge of the rectangle must be
+	// greater than or equal to 300 pixels. The aspect ratio must be 1:4 or
+	// less (i.e. 1:3 is ok; 1:5 is not).
 	BoundingPolys []*BoundingPoly `json:"boundingPolys,omitempty"`
 
-	// Name: The resource name of the reference image.
-	//
-	// Format
-	// is:
-	//
-	// `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID/referen
-	// ceImages/IMAGE_ID`.
-	//
-	// This field is ignored when creating a reference image.
+	// Name: The resource name of the reference image. Format is:
+	// `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID/referenceIma
+	// ges/IMAGE_ID`. This field is ignored when creating a reference image.
 	Name string `json:"name,omitempty"`
 
-	// Uri: Required. The Google Cloud Storage URI of the reference
-	// image.
-	//
+	// Uri: Required. The Google Cloud Storage URI of the reference image.
 	// The URI must start with `gs://`.
 	Uri string `json:"uri,omitempty"`
 
@@ -14344,10 +13181,10 @@ type ReferenceImage struct {
 
 	// ForceSendFields is a list of field names (e.g. "BoundingPolys") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BoundingPolys") to include
@@ -14369,18 +13206,16 @@ func (s *ReferenceImage) MarshalJSON() ([]byte, error) {
 // `RemoveProductFromProductSet` method.
 type RemoveProductFromProductSetRequest struct {
 	// Product: Required. The resource name for the Product to be removed
-	// from this ProductSet.
-	//
-	// Format is:
+	// from this ProductSet. Format is:
 	// `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID`
 	Product string `json:"product,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Product") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Product") to include in
@@ -14401,24 +13236,22 @@ func (s *RemoveProductFromProductSetRequest) MarshalJSON() ([]byte, error) {
 // Result: Information about a product.
 type Result struct {
 	// Image: The resource name of the image from the product that is the
-	// closest match
-	// to the query.
+	// closest match to the query.
 	Image string `json:"image,omitempty"`
 
 	// Product: The Product.
 	Product *Product `json:"product,omitempty"`
 
 	// Score: A confidence level on the match, ranging from 0 (no
-	// confidence) to
-	// 1 (full confidence).
+	// confidence) to 1 (full confidence).
 	Score float64 `json:"score,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Image") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Image") to include in API
@@ -14451,16 +13284,12 @@ func (s *Result) UnmarshalJSON(data []byte) error {
 }
 
 // SafeSearchAnnotation: Set of features pertaining to the image,
-// computed by computer vision
-// methods over safe-search verticals (for example, adult, spoof,
-// medical,
-// violence).
+// computed by computer vision methods over safe-search verticals (for
+// example, adult, spoof, medical, violence).
 type SafeSearchAnnotation struct {
 	// Adult: Represents the adult content likelihood for the image. Adult
-	// content may
-	// contain elements such as nudity, pornographic images or cartoons,
-	// or
-	// sexual activities.
+	// content may contain elements such as nudity, pornographic images or
+	// cartoons, or sexual activities.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
@@ -14483,12 +13312,9 @@ type SafeSearchAnnotation struct {
 	Medical string `json:"medical,omitempty"`
 
 	// Racy: Likelihood that the request image contains racy content. Racy
-	// content may
-	// include (but is not limited to) skimpy or sheer clothing,
-	// strategically
-	// covered nudity, lewd or provocative poses, or close-ups of
-	// sensitive
-	// body areas.
+	// content may include (but is not limited to) skimpy or sheer clothing,
+	// strategically covered nudity, lewd or provocative poses, or close-ups
+	// of sensitive body areas.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
@@ -14499,9 +13325,9 @@ type SafeSearchAnnotation struct {
 	//   "VERY_LIKELY" - It is very likely.
 	Racy string `json:"racy,omitempty"`
 
-	// Spoof: Spoof likelihood. The likelihood that an modification
-	// was made to the image's canonical version to make it appear
-	// funny or offensive.
+	// Spoof: Spoof likelihood. The likelihood that an modification was made
+	// to the image's canonical version to make it appear funny or
+	// offensive.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
@@ -14525,10 +13351,10 @@ type SafeSearchAnnotation struct {
 
 	// ForceSendFields is a list of field names (e.g. "Adult") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Adult") to include in API
@@ -14547,40 +13373,32 @@ func (s *SafeSearchAnnotation) MarshalJSON() ([]byte, error) {
 }
 
 // Status: The `Status` type defines a logical error model that is
-// suitable for
-// different programming environments, including REST APIs and RPC APIs.
-// It is
-// used by [gRPC](https://github.com/grpc). Each `Status` message
-// contains
-// three pieces of data: error code, error message, and error
-// details.
-//
-// You can find out more about this error model and how to work with it
-// in the
-// [API Design Guide](https://cloud.google.com/apis/design/errors).
+// suitable for different programming environments, including REST APIs
+// and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
+// `Status` message contains three pieces of data: error code, error
+// message, and error details. You can find out more about this error
+// model and how to work with it in the API Design Guide
+// (https://cloud.google.com/apis/design/errors).
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
 	Code int64 `json:"code,omitempty"`
 
-	// Details: A list of messages that carry the error details.  There is a
-	// common set of
-	// message types for APIs to use.
+	// Details: A list of messages that carry the error details. There is a
+	// common set of message types for APIs to use.
 	Details []googleapi.RawMessage `json:"details,omitempty"`
 
 	// Message: A developer-facing error message, which should be in
-	// English. Any
-	// user-facing error message should be localized and sent in
-	// the
-	// google.rpc.Status.details field, or localized by the client.
+	// English. Any user-facing error message should be localized and sent
+	// in the google.rpc.Status.details field, or localized by the client.
 	Message string `json:"message,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Code") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Code") to include in API
@@ -14600,25 +13418,14 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 
 // Symbol: A single symbol representation.
 type Symbol struct {
-	// BoundingBox: The bounding box for the symbol.
-	// The vertices are in the order of top-left, top-right,
-	// bottom-right,
-	// bottom-left. When a rotation of the bounding box is detected the
-	// rotation
-	// is represented as around the top-left corner as defined when the text
-	// is
-	// read in the 'natural' orientation.
-	// For example:
-	//   * when the text is horizontal it might look like:
-	//      0----1
-	//      |    |
-	//      3----2
-	//   * when it's rotated 180 degrees around the top-left corner it
-	// becomes:
-	//      2----3
-	//      |    |
-	//      1----0
-	//   and the vertex order will still be (0, 1, 2, 3).
+	// BoundingBox: The bounding box for the symbol. The vertices are in the
+	// order of top-left, top-right, bottom-right, bottom-left. When a
+	// rotation of the bounding box is detected the rotation is represented
+	// as around the top-left corner as defined when the text is read in the
+	// 'natural' orientation. For example: * when the text is horizontal it
+	// might look like: 0----1 | | 3----2 * when it's rotated 180 degrees
+	// around the top-left corner it becomes: 2----3 | | 1----0 and the
+	// vertex order will still be (0, 1, 2, 3).
 	BoundingBox *BoundingPoly `json:"boundingBox,omitempty"`
 
 	// Confidence: Confidence of the OCR results for the symbol. Range [0,
@@ -14633,10 +13440,10 @@ type Symbol struct {
 
 	// ForceSendFields is a list of field names (e.g. "BoundingBox") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BoundingBox") to include
@@ -14669,17 +13476,12 @@ func (s *Symbol) UnmarshalJSON(data []byte) error {
 }
 
 // TextAnnotation: TextAnnotation contains a structured representation
-// of OCR extracted text.
-// The hierarchy of an OCR extracted text structure is like this:
-//     TextAnnotation -> Page -> Block -> Paragraph -> Word ->
-// Symbol
-// Each structural component, starting from Page, may further have their
-// own
-// properties. Properties describe detected languages, breaks etc..
-// Please refer
-// to the TextAnnotation.TextProperty message definition below for
-// more
-// detail.
+// of OCR extracted text. The hierarchy of an OCR extracted text
+// structure is like this: TextAnnotation -> Page -> Block -> Paragraph
+// -> Word -> Symbol Each structural component, starting from Page, may
+// further have their own properties. Properties describe detected
+// languages, breaks etc.. Please refer to the
+// TextAnnotation.TextProperty message definition below for more detail.
 type TextAnnotation struct {
 	// Pages: List of pages detected by OCR.
 	Pages []*Page `json:"pages,omitempty"`
@@ -14689,10 +13491,10 @@ type TextAnnotation struct {
 
 	// ForceSendFields is a list of field names (e.g. "Pages") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Pages") to include in API
@@ -14710,6 +13512,42 @@ func (s *TextAnnotation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// TextDetectionParams: Parameters for text detections. This is used to
+// control TEXT_DETECTION and DOCUMENT_TEXT_DETECTION features.
+type TextDetectionParams struct {
+	// AdvancedOcrOptions: A list of advanced OCR options to fine-tune OCR
+	// behavior.
+	AdvancedOcrOptions []string `json:"advancedOcrOptions,omitempty"`
+
+	// EnableTextDetectionConfidenceScore: By default, Cloud Vision API only
+	// includes confidence score for DOCUMENT_TEXT_DETECTION result. Set the
+	// flag to true to include confidence score for TEXT_DETECTION as well.
+	EnableTextDetectionConfidenceScore bool `json:"enableTextDetectionConfidenceScore,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AdvancedOcrOptions")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdvancedOcrOptions") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TextDetectionParams) MarshalJSON() ([]byte, error) {
+	type NoMethod TextDetectionParams
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // TextProperty: Additional information detected on the structural
 // component.
 type TextProperty struct {
@@ -14722,10 +13560,10 @@ type TextProperty struct {
 
 	// ForceSendFields is a list of field names (e.g. "DetectedBreak") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DetectedBreak") to include
@@ -14743,9 +13581,8 @@ func (s *TextProperty) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Vertex: A vertex represents a 2D point in the image.
-// NOTE: the vertex coordinates are in the same scale as the original
-// image.
+// Vertex: A vertex represents a 2D point in the image. NOTE: the vertex
+// coordinates are in the same scale as the original image.
 type Vertex struct {
 	// X: X coordinate.
 	X int64 `json:"x,omitempty"`
@@ -14755,10 +13592,10 @@ type Vertex struct {
 
 	// ForceSendFields is a list of field names (e.g. "X") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "X") to include in API
@@ -14779,22 +13616,19 @@ func (s *Vertex) MarshalJSON() ([]byte, error) {
 // WebDetection: Relevant information for the image from the Internet.
 type WebDetection struct {
 	// BestGuessLabels: The service's best guess as to the topic of the
-	// request image.
-	// Inferred from similar images on the open web.
+	// request image. Inferred from similar images on the open web.
 	BestGuessLabels []*WebLabel `json:"bestGuessLabels,omitempty"`
 
-	// FullMatchingImages: Fully matching images from the Internet.
-	// Can include resized copies of the query image.
+	// FullMatchingImages: Fully matching images from the Internet. Can
+	// include resized copies of the query image.
 	FullMatchingImages []*WebImage `json:"fullMatchingImages,omitempty"`
 
 	// PagesWithMatchingImages: Web pages containing the matching images
 	// from the Internet.
 	PagesWithMatchingImages []*WebPage `json:"pagesWithMatchingImages,omitempty"`
 
-	// PartialMatchingImages: Partial matching images from the
-	// Internet.
-	// Those images are similar enough to share some key-point features.
-	// For
+	// PartialMatchingImages: Partial matching images from the Internet.
+	// Those images are similar enough to share some key-point features. For
 	// example an original image will likely have partial matching for its
 	// crops.
 	PartialMatchingImages []*WebImage `json:"partialMatchingImages,omitempty"`
@@ -14807,10 +13641,10 @@ type WebDetection struct {
 
 	// ForceSendFields is a list of field names (e.g. "BestGuessLabels") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BestGuessLabels") to
@@ -14837,10 +13671,10 @@ type WebDetectionParams struct {
 
 	// ForceSendFields is a list of field names (e.g. "IncludeGeoResults")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "IncludeGeoResults") to
@@ -14867,16 +13701,16 @@ type WebEntity struct {
 	// EntityId: Opaque entity ID.
 	EntityId string `json:"entityId,omitempty"`
 
-	// Score: Overall relevancy score for the entity.
-	// Not normalized and not comparable across different image queries.
+	// Score: Overall relevancy score for the entity. Not normalized and not
+	// comparable across different image queries.
 	Score float64 `json:"score,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Description") to include
@@ -14918,10 +13752,10 @@ type WebImage struct {
 
 	// ForceSendFields is a list of field names (e.g. "Score") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Score") to include in API
@@ -14959,18 +13793,16 @@ type WebLabel struct {
 	Label string `json:"label,omitempty"`
 
 	// LanguageCode: The BCP-47 language code for `label`, such as "en-US"
-	// or "sr-Latn".
-	// For more information,
-	// see
+	// or "sr-Latn". For more information, see
 	// http://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Label") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Label") to include in API
@@ -14990,18 +13822,16 @@ func (s *WebLabel) MarshalJSON() ([]byte, error) {
 
 // WebPage: Metadata for web pages.
 type WebPage struct {
-	// FullMatchingImages: Fully matching images on the page.
-	// Can include resized copies of the query image.
+	// FullMatchingImages: Fully matching images on the page. Can include
+	// resized copies of the query image.
 	FullMatchingImages []*WebImage `json:"fullMatchingImages,omitempty"`
 
 	// PageTitle: Title for the web page, may contain HTML markups.
 	PageTitle string `json:"pageTitle,omitempty"`
 
-	// PartialMatchingImages: Partial matching images on the page.
-	// Those images are similar enough to share some key-point features.
-	// For
-	// example an original image will likely have partial matching for
-	// its
+	// PartialMatchingImages: Partial matching images on the page. Those
+	// images are similar enough to share some key-point features. For
+	// example an original image will likely have partial matching for its
 	// crops.
 	PartialMatchingImages []*WebImage `json:"partialMatchingImages,omitempty"`
 
@@ -15013,10 +13843,10 @@ type WebPage struct {
 
 	// ForceSendFields is a list of field names (e.g. "FullMatchingImages")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "FullMatchingImages") to
@@ -15051,25 +13881,14 @@ func (s *WebPage) UnmarshalJSON(data []byte) error {
 
 // Word: A word representation.
 type Word struct {
-	// BoundingBox: The bounding box for the word.
-	// The vertices are in the order of top-left, top-right,
-	// bottom-right,
-	// bottom-left. When a rotation of the bounding box is detected the
-	// rotation
-	// is represented as around the top-left corner as defined when the text
-	// is
-	// read in the 'natural' orientation.
-	// For example:
-	//   * when the text is horizontal it might look like:
-	//      0----1
-	//      |    |
-	//      3----2
-	//   * when it's rotated 180 degrees around the top-left corner it
-	// becomes:
-	//      2----3
-	//      |    |
-	//      1----0
-	//   and the vertex order will still be (0, 1, 2, 3).
+	// BoundingBox: The bounding box for the word. The vertices are in the
+	// order of top-left, top-right, bottom-right, bottom-left. When a
+	// rotation of the bounding box is detected the rotation is represented
+	// as around the top-left corner as defined when the text is read in the
+	// 'natural' orientation. For example: * when the text is horizontal it
+	// might look like: 0----1 | | 3----2 * when it's rotated 180 degrees
+	// around the top-left corner it becomes: 2----3 | | 1----0 and the
+	// vertex order will still be (0, 1, 2, 3).
 	BoundingBox *BoundingPoly `json:"boundingBox,omitempty"`
 
 	// Confidence: Confidence of the OCR results for the word. Range [0, 1].
@@ -15078,16 +13897,16 @@ type Word struct {
 	// Property: Additional information detected for the word.
 	Property *TextProperty `json:"property,omitempty"`
 
-	// Symbols: List of symbols in the word.
-	// The order of the symbols follows the natural reading order.
+	// Symbols: List of symbols in the word. The order of the symbols
+	// follows the natural reading order.
 	Symbols []*Symbol `json:"symbols,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BoundingBox") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BoundingBox") to include
@@ -15130,17 +13949,11 @@ type FilesAnnotateCall struct {
 }
 
 // Annotate: Service that performs image detection and annotation for a
-// batch of files.
-// Now only "application/pdf", "image/tiff" and "image/gif" are
-// supported.
-//
-// This service will extract at most 5 (customers can specify which 5
-// in
-// AnnotateFileRequest.pages) frames (gif) or pages (pdf or tiff) from
-// each
-// file provided and perform detection and annotation for each
-// image
-// extracted.
+// batch of files. Now only "application/pdf", "image/tiff" and
+// "image/gif" are supported. This service will extract at most 5
+// (customers can specify which 5 in AnnotateFileRequest.pages) frames
+// (gif) or pages (pdf or tiff) from each file provided and perform
+// detection and annotation for each image extracted.
 func (r *FilesService) Annotate(batchannotatefilesrequest *BatchAnnotateFilesRequest) *FilesAnnotateCall {
 	c := &FilesAnnotateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.batchannotatefilesrequest = batchannotatefilesrequest
@@ -15174,7 +13987,7 @@ func (c *FilesAnnotateCall) Header() http.Header {
 
 func (c *FilesAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15211,17 +14024,17 @@ func (c *FilesAnnotateCall) Do(opts ...googleapi.CallOption) (*BatchAnnotateFile
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &BatchAnnotateFilesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -15235,7 +14048,7 @@ func (c *FilesAnnotateCall) Do(opts ...googleapi.CallOption) (*BatchAnnotateFile
 	}
 	return ret, nil
 	// {
-	//   "description": "Service that performs image detection and annotation for a batch of files.\nNow only \"application/pdf\", \"image/tiff\" and \"image/gif\" are supported.\n\nThis service will extract at most 5 (customers can specify which 5 in\nAnnotateFileRequest.pages) frames (gif) or pages (pdf or tiff) from each\nfile provided and perform detection and annotation for each image\nextracted.",
+	//   "description": "Service that performs image detection and annotation for a batch of files. Now only \"application/pdf\", \"image/tiff\" and \"image/gif\" are supported. This service will extract at most 5 (customers can specify which 5 in AnnotateFileRequest.pages) frames (gif) or pages (pdf or tiff) from each file provided and perform detection and annotation for each image extracted.",
 	//   "flatPath": "v1/files:annotate",
 	//   "httpMethod": "POST",
 	//   "id": "vision.files.annotate",
@@ -15267,14 +14080,10 @@ type FilesAsyncBatchAnnotateCall struct {
 }
 
 // AsyncBatchAnnotate: Run asynchronous image detection and annotation
-// for a list of generic
-// files, such as PDF files, which may contain multiple pages and
-// multiple
-// images per page. Progress and results can be retrieved through
-// the
-// `google.longrunning.Operations` interface.
-// `Operation.metadata` contains `OperationMetadata`
-// (metadata).
+// for a list of generic files, such as PDF files, which may contain
+// multiple pages and multiple images per page. Progress and results can
+// be retrieved through the `google.longrunning.Operations` interface.
+// `Operation.metadata` contains `OperationMetadata` (metadata).
 // `Operation.response` contains `AsyncBatchAnnotateFilesResponse`
 // (results).
 func (r *FilesService) AsyncBatchAnnotate(asyncbatchannotatefilesrequest *AsyncBatchAnnotateFilesRequest) *FilesAsyncBatchAnnotateCall {
@@ -15310,7 +14119,7 @@ func (c *FilesAsyncBatchAnnotateCall) Header() http.Header {
 
 func (c *FilesAsyncBatchAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15347,17 +14156,17 @@ func (c *FilesAsyncBatchAnnotateCall) Do(opts ...googleapi.CallOption) (*Operati
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -15371,7 +14180,7 @@ func (c *FilesAsyncBatchAnnotateCall) Do(opts ...googleapi.CallOption) (*Operati
 	}
 	return ret, nil
 	// {
-	//   "description": "Run asynchronous image detection and annotation for a list of generic\nfiles, such as PDF files, which may contain multiple pages and multiple\nimages per page. Progress and results can be retrieved through the\n`google.longrunning.Operations` interface.\n`Operation.metadata` contains `OperationMetadata` (metadata).\n`Operation.response` contains `AsyncBatchAnnotateFilesResponse` (results).",
+	//   "description": "Run asynchronous image detection and annotation for a list of generic files, such as PDF files, which may contain multiple pages and multiple images per page. Progress and results can be retrieved through the `google.longrunning.Operations` interface. `Operation.metadata` contains `OperationMetadata` (metadata). `Operation.response` contains `AsyncBatchAnnotateFilesResponse` (results).",
 	//   "flatPath": "v1/files:asyncBatchAnnotate",
 	//   "httpMethod": "POST",
 	//   "id": "vision.files.asyncBatchAnnotate",
@@ -15436,7 +14245,7 @@ func (c *ImagesAnnotateCall) Header() http.Header {
 
 func (c *ImagesAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15473,17 +14282,17 @@ func (c *ImagesAnnotateCall) Do(opts ...googleapi.CallOption) (*BatchAnnotateIma
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &BatchAnnotateImagesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -15529,20 +14338,12 @@ type ImagesAsyncBatchAnnotateCall struct {
 }
 
 // AsyncBatchAnnotate: Run asynchronous image detection and annotation
-// for a list of images.
-//
-// Progress and results can be retrieved through
-// the
-// `google.longrunning.Operations` interface.
-// `Operation.metadata` contains `OperationMetadata`
-// (metadata).
-// `Operation.response` contains `AsyncBatchAnnotateImagesResponse`
-// (results).
-//
-// This service will write image annotation outputs to json files in
-// customer
-// GCS bucket, each json file containing BatchAnnotateImagesResponse
-// proto.
+// for a list of images. Progress and results can be retrieved through
+// the `google.longrunning.Operations` interface. `Operation.metadata`
+// contains `OperationMetadata` (metadata). `Operation.response`
+// contains `AsyncBatchAnnotateImagesResponse` (results). This service
+// will write image annotation outputs to json files in customer GCS
+// bucket, each json file containing BatchAnnotateImagesResponse proto.
 func (r *ImagesService) AsyncBatchAnnotate(asyncbatchannotateimagesrequest *AsyncBatchAnnotateImagesRequest) *ImagesAsyncBatchAnnotateCall {
 	c := &ImagesAsyncBatchAnnotateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.asyncbatchannotateimagesrequest = asyncbatchannotateimagesrequest
@@ -15576,7 +14377,7 @@ func (c *ImagesAsyncBatchAnnotateCall) Header() http.Header {
 
 func (c *ImagesAsyncBatchAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15613,17 +14414,17 @@ func (c *ImagesAsyncBatchAnnotateCall) Do(opts ...googleapi.CallOption) (*Operat
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -15637,7 +14438,7 @@ func (c *ImagesAsyncBatchAnnotateCall) Do(opts ...googleapi.CallOption) (*Operat
 	}
 	return ret, nil
 	// {
-	//   "description": "Run asynchronous image detection and annotation for a list of images.\n\nProgress and results can be retrieved through the\n`google.longrunning.Operations` interface.\n`Operation.metadata` contains `OperationMetadata` (metadata).\n`Operation.response` contains `AsyncBatchAnnotateImagesResponse` (results).\n\nThis service will write image annotation outputs to json files in customer\nGCS bucket, each json file containing BatchAnnotateImagesResponse proto.",
+	//   "description": "Run asynchronous image detection and annotation for a list of images. Progress and results can be retrieved through the `google.longrunning.Operations` interface. `Operation.metadata` contains `OperationMetadata` (metadata). `Operation.response` contains `AsyncBatchAnnotateImagesResponse` (results). This service will write image annotation outputs to json files in customer GCS bucket, each json file containing BatchAnnotateImagesResponse proto.",
 	//   "flatPath": "v1/images:asyncBatchAnnotate",
 	//   "httpMethod": "POST",
 	//   "id": "vision.images.asyncBatchAnnotate",
@@ -15669,11 +14470,11 @@ type LocationsOperationsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets the latest state of a long-running operation.  Clients can
-// use this
-// method to poll the operation result at intervals as recommended by
-// the API
-// service.
+// Get: Gets the latest state of a long-running operation. Clients can
+// use this method to poll the operation result at intervals as
+// recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *LocationsOperationsService) Get(name string) *LocationsOperationsGetCall {
 	c := &LocationsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15717,7 +14518,7 @@ func (c *LocationsOperationsGetCall) Header() http.Header {
 
 func (c *LocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15755,17 +14556,17 @@ func (c *LocationsOperationsGetCall) Do(opts ...googleapi.CallOption) (*Operatio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -15779,7 +14580,7 @@ func (c *LocationsOperationsGetCall) Do(opts ...googleapi.CallOption) (*Operatio
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the latest state of a long-running operation.  Clients can use this\nmethod to poll the operation result at intervals as recommended by the API\nservice.",
+	//   "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
 	//   "flatPath": "v1/locations/{locationsId}/operations/{operationsId}",
 	//   "httpMethod": "GET",
 	//   "id": "vision.locations.operations.get",
@@ -15819,23 +14620,17 @@ type OperationsCancelCall struct {
 }
 
 // Cancel: Starts asynchronous cancellation on a long-running operation.
-//  The server
-// makes a best effort to cancel the operation, but success is
-// not
-// guaranteed.  If the server doesn't support this method, it
-// returns
-// `google.rpc.Code.UNIMPLEMENTED`.  Clients can
-// use
-// Operations.GetOperation or
-// other methods to check whether the cancellation succeeded or whether
-// the
-// operation completed despite cancellation. On successful
-// cancellation,
-// the operation is not deleted; instead, it becomes an operation
-// with
-// an Operation.error value with a google.rpc.Status.code of
-// 1,
-// corresponding to `Code.CANCELLED`.
+// The server makes a best effort to cancel the operation, but success
+// is not guaranteed. If the server doesn't support this method, it
+// returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use
+// Operations.GetOperation or other methods to check whether the
+// cancellation succeeded or whether the operation completed despite
+// cancellation. On successful cancellation, the operation is not
+// deleted; instead, it becomes an operation with an Operation.error
+// value with a google.rpc.Status.code of 1, corresponding to
+// `Code.CANCELLED`.
+//
+// - name: The name of the operation resource to be cancelled.
 func (r *OperationsService) Cancel(name string, canceloperationrequest *CancelOperationRequest) *OperationsCancelCall {
 	c := &OperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15870,7 +14665,7 @@ func (c *OperationsCancelCall) Header() http.Header {
 
 func (c *OperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15910,17 +14705,17 @@ func (c *OperationsCancelCall) Do(opts ...googleapi.CallOption) (*Empty, error) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -15934,7 +14729,7 @@ func (c *OperationsCancelCall) Do(opts ...googleapi.CallOption) (*Empty, error) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Starts asynchronous cancellation on a long-running operation.  The server\nmakes a best effort to cancel the operation, but success is not\nguaranteed.  If the server doesn't support this method, it returns\n`google.rpc.Code.UNIMPLEMENTED`.  Clients can use\nOperations.GetOperation or\nother methods to check whether the cancellation succeeded or whether the\noperation completed despite cancellation. On successful cancellation,\nthe operation is not deleted; instead, it becomes an operation with\nan Operation.error value with a google.rpc.Status.code of 1,\ncorresponding to `Code.CANCELLED`.",
+	//   "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
 	//   "flatPath": "v1/operations/{operationsId}:cancel",
 	//   "httpMethod": "POST",
 	//   "id": "vision.operations.cancel",
@@ -15976,12 +14771,11 @@ type OperationsDeleteCall struct {
 }
 
 // Delete: Deletes a long-running operation. This method indicates that
-// the client is
-// no longer interested in the operation result. It does not cancel
-// the
-// operation. If the server doesn't support this method, it
-// returns
-// `google.rpc.Code.UNIMPLEMENTED`.
+// the client is no longer interested in the operation result. It does
+// not cancel the operation. If the server doesn't support this method,
+// it returns `google.rpc.Code.UNIMPLEMENTED`.
+//
+// - name: The name of the operation resource to be deleted.
 func (r *OperationsService) Delete(name string) *OperationsDeleteCall {
 	c := &OperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -16015,7 +14809,7 @@ func (c *OperationsDeleteCall) Header() http.Header {
 
 func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16050,17 +14844,17 @@ func (c *OperationsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -16074,7 +14868,7 @@ func (c *OperationsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a long-running operation. This method indicates that the client is\nno longer interested in the operation result. It does not cancel the\noperation. If the server doesn't support this method, it returns\n`google.rpc.Code.UNIMPLEMENTED`.",
+	//   "description": "Deletes a long-running operation. This method indicates that the client is no longer interested in the operation result. It does not cancel the operation. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`.",
 	//   "flatPath": "v1/operations/{operationsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "vision.operations.delete",
@@ -16113,11 +14907,11 @@ type OperationsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets the latest state of a long-running operation.  Clients can
-// use this
-// method to poll the operation result at intervals as recommended by
-// the API
-// service.
+// Get: Gets the latest state of a long-running operation. Clients can
+// use this method to poll the operation result at intervals as
+// recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *OperationsService) Get(name string) *OperationsGetCall {
 	c := &OperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -16161,7 +14955,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16199,17 +14993,17 @@ func (c *OperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation, error)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -16223,7 +15017,7 @@ func (c *OperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation, error)
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the latest state of a long-running operation.  Clients can use this\nmethod to poll the operation result at intervals as recommended by the API\nservice.",
+	//   "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
 	//   "flatPath": "v1/operations/{operationsId}",
 	//   "httpMethod": "GET",
 	//   "id": "vision.operations.get",
@@ -16263,22 +15057,17 @@ type OperationsListCall struct {
 }
 
 // List: Lists operations that match the specified filter in the
-// request. If the
-// server doesn't support this method, it returns
-// `UNIMPLEMENTED`.
+// request. If the server doesn't support this method, it returns
+// `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to
+// override the binding to use different resource name schemes, such as
+// `users/*/operations`. To override the binding, API services can add a
+// binding such as "/v1/{name=users/*}/operations" to their service
+// configuration. For backwards compatibility, the default name includes
+// the operations collection id, however overriding users must ensure
+// the name binding is the parent resource, without the operations
+// collection id.
 //
-// NOTE: the `name` binding allows API services to override the
-// binding
-// to use different resource name schemes, such as `users/*/operations`.
-// To
-// override the binding, API services can add a binding such
-// as
-// "/v1/{name=users/*}/operations" to their service configuration.
-// For backwards compatibility, the default name includes the
-// operations
-// collection id, however overriding users must ensure the name
-// binding
-// is the parent resource, without the operations collection id.
+// - name: The name of the operation's parent resource.
 func (r *OperationsService) List(name string) *OperationsListCall {
 	c := &OperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -16343,7 +15132,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16381,17 +15170,17 @@ func (c *OperationsListCall) Do(opts ...googleapi.CallOption) (*ListOperationsRe
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListOperationsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -16405,7 +15194,7 @@ func (c *OperationsListCall) Do(opts ...googleapi.CallOption) (*ListOperationsRe
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the\nserver doesn't support this method, it returns `UNIMPLEMENTED`.\n\nNOTE: the `name` binding allows API services to override the binding\nto use different resource name schemes, such as `users/*/operations`. To\noverride the binding, API services can add a binding such as\n`\"/v1/{name=users/*}/operations\"` to their service configuration.\nFor backwards compatibility, the default name includes the operations\ncollection id, however overriding users must ensure the name binding\nis the parent resource, without the operations collection id.",
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
 	//   "flatPath": "v1/operations",
 	//   "httpMethod": "GET",
 	//   "id": "vision.operations.list",
@@ -16482,17 +15271,18 @@ type ProjectsFilesAnnotateCall struct {
 }
 
 // Annotate: Service that performs image detection and annotation for a
-// batch of files.
-// Now only "application/pdf", "image/tiff" and "image/gif" are
-// supported.
+// batch of files. Now only "application/pdf", "image/tiff" and
+// "image/gif" are supported. This service will extract at most 5
+// (customers can specify which 5 in AnnotateFileRequest.pages) frames
+// (gif) or pages (pdf or tiff) from each file provided and perform
+// detection and annotation for each image extracted.
 //
-// This service will extract at most 5 (customers can specify which 5
-// in
-// AnnotateFileRequest.pages) frames (gif) or pages (pdf or tiff) from
-// each
-// file provided and perform detection and annotation for each
-// image
-// extracted.
+//   - parent: Optional. Target project and location to make a call.
+//     Format: `projects/{project-id}/locations/{location-id}`. If no
+//     parent is specified, a region will be chosen automatically.
+//     Supported location-ids: `us`: USA country only, `asia`: East asia
+//     areas, like Japan, Taiwan, `eu`: The European Union. Example:
+//     `projects/project-A/locations/eu`.
 func (r *ProjectsFilesService) Annotate(parent string, batchannotatefilesrequest *BatchAnnotateFilesRequest) *ProjectsFilesAnnotateCall {
 	c := &ProjectsFilesAnnotateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -16527,7 +15317,7 @@ func (c *ProjectsFilesAnnotateCall) Header() http.Header {
 
 func (c *ProjectsFilesAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16567,17 +15357,17 @@ func (c *ProjectsFilesAnnotateCall) Do(opts ...googleapi.CallOption) (*BatchAnno
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &BatchAnnotateFilesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -16591,7 +15381,7 @@ func (c *ProjectsFilesAnnotateCall) Do(opts ...googleapi.CallOption) (*BatchAnno
 	}
 	return ret, nil
 	// {
-	//   "description": "Service that performs image detection and annotation for a batch of files.\nNow only \"application/pdf\", \"image/tiff\" and \"image/gif\" are supported.\n\nThis service will extract at most 5 (customers can specify which 5 in\nAnnotateFileRequest.pages) frames (gif) or pages (pdf or tiff) from each\nfile provided and perform detection and annotation for each image\nextracted.",
+	//   "description": "Service that performs image detection and annotation for a batch of files. Now only \"application/pdf\", \"image/tiff\" and \"image/gif\" are supported. This service will extract at most 5 (customers can specify which 5 in AnnotateFileRequest.pages) frames (gif) or pages (pdf or tiff) from each file provided and perform detection and annotation for each image extracted.",
 	//   "flatPath": "v1/projects/{projectsId}/files:annotate",
 	//   "httpMethod": "POST",
 	//   "id": "vision.projects.files.annotate",
@@ -16600,7 +15390,7 @@ func (c *ProjectsFilesAnnotateCall) Do(opts ...googleapi.CallOption) (*BatchAnno
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Optional. Target project and location to make a call.\n\nFormat: `projects/{project-id}/locations/{location-id}`.\n\nIf no parent is specified, a region will be chosen automatically.\n\nSupported location-ids:\n    `us`: USA country only,\n    `asia`: East asia areas, like Japan, Taiwan,\n    `eu`: The European Union.\n\nExample: `projects/project-A/locations/eu`.",
+	//       "description": "Optional. Target project and location to make a call. Format: `projects/{project-id}/locations/{location-id}`. If no parent is specified, a region will be chosen automatically. Supported location-ids: `us`: USA country only, `asia`: East asia areas, like Japan, Taiwan, `eu`: The European Union. Example: `projects/project-A/locations/eu`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -16634,16 +15424,19 @@ type ProjectsFilesAsyncBatchAnnotateCall struct {
 }
 
 // AsyncBatchAnnotate: Run asynchronous image detection and annotation
-// for a list of generic
-// files, such as PDF files, which may contain multiple pages and
-// multiple
-// images per page. Progress and results can be retrieved through
-// the
-// `google.longrunning.Operations` interface.
-// `Operation.metadata` contains `OperationMetadata`
-// (metadata).
+// for a list of generic files, such as PDF files, which may contain
+// multiple pages and multiple images per page. Progress and results can
+// be retrieved through the `google.longrunning.Operations` interface.
+// `Operation.metadata` contains `OperationMetadata` (metadata).
 // `Operation.response` contains `AsyncBatchAnnotateFilesResponse`
 // (results).
+//
+//   - parent: Optional. Target project and location to make a call.
+//     Format: `projects/{project-id}/locations/{location-id}`. If no
+//     parent is specified, a region will be chosen automatically.
+//     Supported location-ids: `us`: USA country only, `asia`: East asia
+//     areas, like Japan, Taiwan, `eu`: The European Union. Example:
+//     `projects/project-A/locations/eu`.
 func (r *ProjectsFilesService) AsyncBatchAnnotate(parent string, asyncbatchannotatefilesrequest *AsyncBatchAnnotateFilesRequest) *ProjectsFilesAsyncBatchAnnotateCall {
 	c := &ProjectsFilesAsyncBatchAnnotateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -16678,7 +15471,7 @@ func (c *ProjectsFilesAsyncBatchAnnotateCall) Header() http.Header {
 
 func (c *ProjectsFilesAsyncBatchAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16718,17 +15511,17 @@ func (c *ProjectsFilesAsyncBatchAnnotateCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -16742,7 +15535,7 @@ func (c *ProjectsFilesAsyncBatchAnnotateCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Run asynchronous image detection and annotation for a list of generic\nfiles, such as PDF files, which may contain multiple pages and multiple\nimages per page. Progress and results can be retrieved through the\n`google.longrunning.Operations` interface.\n`Operation.metadata` contains `OperationMetadata` (metadata).\n`Operation.response` contains `AsyncBatchAnnotateFilesResponse` (results).",
+	//   "description": "Run asynchronous image detection and annotation for a list of generic files, such as PDF files, which may contain multiple pages and multiple images per page. Progress and results can be retrieved through the `google.longrunning.Operations` interface. `Operation.metadata` contains `OperationMetadata` (metadata). `Operation.response` contains `AsyncBatchAnnotateFilesResponse` (results).",
 	//   "flatPath": "v1/projects/{projectsId}/files:asyncBatchAnnotate",
 	//   "httpMethod": "POST",
 	//   "id": "vision.projects.files.asyncBatchAnnotate",
@@ -16751,7 +15544,7 @@ func (c *ProjectsFilesAsyncBatchAnnotateCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Optional. Target project and location to make a call.\n\nFormat: `projects/{project-id}/locations/{location-id}`.\n\nIf no parent is specified, a region will be chosen automatically.\n\nSupported location-ids:\n    `us`: USA country only,\n    `asia`: East asia areas, like Japan, Taiwan,\n    `eu`: The European Union.\n\nExample: `projects/project-A/locations/eu`.",
+	//       "description": "Optional. Target project and location to make a call. Format: `projects/{project-id}/locations/{location-id}`. If no parent is specified, a region will be chosen automatically. Supported location-ids: `us`: USA country only, `asia`: East asia areas, like Japan, Taiwan, `eu`: The European Union. Example: `projects/project-A/locations/eu`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -16785,6 +15578,13 @@ type ProjectsImagesAnnotateCall struct {
 }
 
 // Annotate: Run image detection and annotation for a batch of images.
+//
+//   - parent: Optional. Target project and location to make a call.
+//     Format: `projects/{project-id}/locations/{location-id}`. If no
+//     parent is specified, a region will be chosen automatically.
+//     Supported location-ids: `us`: USA country only, `asia`: East asia
+//     areas, like Japan, Taiwan, `eu`: The European Union. Example:
+//     `projects/project-A/locations/eu`.
 func (r *ProjectsImagesService) Annotate(parent string, batchannotateimagesrequest *BatchAnnotateImagesRequest) *ProjectsImagesAnnotateCall {
 	c := &ProjectsImagesAnnotateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -16819,7 +15619,7 @@ func (c *ProjectsImagesAnnotateCall) Header() http.Header {
 
 func (c *ProjectsImagesAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16859,17 +15659,17 @@ func (c *ProjectsImagesAnnotateCall) Do(opts ...googleapi.CallOption) (*BatchAnn
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &BatchAnnotateImagesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -16892,7 +15692,7 @@ func (c *ProjectsImagesAnnotateCall) Do(opts ...googleapi.CallOption) (*BatchAnn
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Optional. Target project and location to make a call.\n\nFormat: `projects/{project-id}/locations/{location-id}`.\n\nIf no parent is specified, a region will be chosen automatically.\n\nSupported location-ids:\n    `us`: USA country only,\n    `asia`: East asia areas, like Japan, Taiwan,\n    `eu`: The European Union.\n\nExample: `projects/project-A/locations/eu`.",
+	//       "description": "Optional. Target project and location to make a call. Format: `projects/{project-id}/locations/{location-id}`. If no parent is specified, a region will be chosen automatically. Supported location-ids: `us`: USA country only, `asia`: East asia areas, like Japan, Taiwan, `eu`: The European Union. Example: `projects/project-A/locations/eu`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -16926,20 +15726,19 @@ type ProjectsImagesAsyncBatchAnnotateCall struct {
 }
 
 // AsyncBatchAnnotate: Run asynchronous image detection and annotation
-// for a list of images.
+// for a list of images. Progress and results can be retrieved through
+// the `google.longrunning.Operations` interface. `Operation.metadata`
+// contains `OperationMetadata` (metadata). `Operation.response`
+// contains `AsyncBatchAnnotateImagesResponse` (results). This service
+// will write image annotation outputs to json files in customer GCS
+// bucket, each json file containing BatchAnnotateImagesResponse proto.
 //
-// Progress and results can be retrieved through
-// the
-// `google.longrunning.Operations` interface.
-// `Operation.metadata` contains `OperationMetadata`
-// (metadata).
-// `Operation.response` contains `AsyncBatchAnnotateImagesResponse`
-// (results).
-//
-// This service will write image annotation outputs to json files in
-// customer
-// GCS bucket, each json file containing BatchAnnotateImagesResponse
-// proto.
+//   - parent: Optional. Target project and location to make a call.
+//     Format: `projects/{project-id}/locations/{location-id}`. If no
+//     parent is specified, a region will be chosen automatically.
+//     Supported location-ids: `us`: USA country only, `asia`: East asia
+//     areas, like Japan, Taiwan, `eu`: The European Union. Example:
+//     `projects/project-A/locations/eu`.
 func (r *ProjectsImagesService) AsyncBatchAnnotate(parent string, asyncbatchannotateimagesrequest *AsyncBatchAnnotateImagesRequest) *ProjectsImagesAsyncBatchAnnotateCall {
 	c := &ProjectsImagesAsyncBatchAnnotateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -16974,7 +15773,7 @@ func (c *ProjectsImagesAsyncBatchAnnotateCall) Header() http.Header {
 
 func (c *ProjectsImagesAsyncBatchAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17014,17 +15813,17 @@ func (c *ProjectsImagesAsyncBatchAnnotateCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -17038,7 +15837,7 @@ func (c *ProjectsImagesAsyncBatchAnnotateCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Run asynchronous image detection and annotation for a list of images.\n\nProgress and results can be retrieved through the\n`google.longrunning.Operations` interface.\n`Operation.metadata` contains `OperationMetadata` (metadata).\n`Operation.response` contains `AsyncBatchAnnotateImagesResponse` (results).\n\nThis service will write image annotation outputs to json files in customer\nGCS bucket, each json file containing BatchAnnotateImagesResponse proto.",
+	//   "description": "Run asynchronous image detection and annotation for a list of images. Progress and results can be retrieved through the `google.longrunning.Operations` interface. `Operation.metadata` contains `OperationMetadata` (metadata). `Operation.response` contains `AsyncBatchAnnotateImagesResponse` (results). This service will write image annotation outputs to json files in customer GCS bucket, each json file containing BatchAnnotateImagesResponse proto.",
 	//   "flatPath": "v1/projects/{projectsId}/images:asyncBatchAnnotate",
 	//   "httpMethod": "POST",
 	//   "id": "vision.projects.images.asyncBatchAnnotate",
@@ -17047,7 +15846,7 @@ func (c *ProjectsImagesAsyncBatchAnnotateCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Optional. Target project and location to make a call.\n\nFormat: `projects/{project-id}/locations/{location-id}`.\n\nIf no parent is specified, a region will be chosen automatically.\n\nSupported location-ids:\n    `us`: USA country only,\n    `asia`: East asia areas, like Japan, Taiwan,\n    `eu`: The European Union.\n\nExample: `projects/project-A/locations/eu`.",
+	//       "description": "Optional. Target project and location to make a call. Format: `projects/{project-id}/locations/{location-id}`. If no parent is specified, a region will be chosen automatically. Supported location-ids: `us`: USA country only, `asia`: East asia areas, like Japan, Taiwan, `eu`: The European Union. Example: `projects/project-A/locations/eu`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -17081,17 +15880,18 @@ type ProjectsLocationsFilesAnnotateCall struct {
 }
 
 // Annotate: Service that performs image detection and annotation for a
-// batch of files.
-// Now only "application/pdf", "image/tiff" and "image/gif" are
-// supported.
+// batch of files. Now only "application/pdf", "image/tiff" and
+// "image/gif" are supported. This service will extract at most 5
+// (customers can specify which 5 in AnnotateFileRequest.pages) frames
+// (gif) or pages (pdf or tiff) from each file provided and perform
+// detection and annotation for each image extracted.
 //
-// This service will extract at most 5 (customers can specify which 5
-// in
-// AnnotateFileRequest.pages) frames (gif) or pages (pdf or tiff) from
-// each
-// file provided and perform detection and annotation for each
-// image
-// extracted.
+//   - parent: Optional. Target project and location to make a call.
+//     Format: `projects/{project-id}/locations/{location-id}`. If no
+//     parent is specified, a region will be chosen automatically.
+//     Supported location-ids: `us`: USA country only, `asia`: East asia
+//     areas, like Japan, Taiwan, `eu`: The European Union. Example:
+//     `projects/project-A/locations/eu`.
 func (r *ProjectsLocationsFilesService) Annotate(parent string, batchannotatefilesrequest *BatchAnnotateFilesRequest) *ProjectsLocationsFilesAnnotateCall {
 	c := &ProjectsLocationsFilesAnnotateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -17126,7 +15926,7 @@ func (c *ProjectsLocationsFilesAnnotateCall) Header() http.Header {
 
 func (c *ProjectsLocationsFilesAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17166,17 +15966,17 @@ func (c *ProjectsLocationsFilesAnnotateCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &BatchAnnotateFilesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -17190,7 +15990,7 @@ func (c *ProjectsLocationsFilesAnnotateCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "Service that performs image detection and annotation for a batch of files.\nNow only \"application/pdf\", \"image/tiff\" and \"image/gif\" are supported.\n\nThis service will extract at most 5 (customers can specify which 5 in\nAnnotateFileRequest.pages) frames (gif) or pages (pdf or tiff) from each\nfile provided and perform detection and annotation for each image\nextracted.",
+	//   "description": "Service that performs image detection and annotation for a batch of files. Now only \"application/pdf\", \"image/tiff\" and \"image/gif\" are supported. This service will extract at most 5 (customers can specify which 5 in AnnotateFileRequest.pages) frames (gif) or pages (pdf or tiff) from each file provided and perform detection and annotation for each image extracted.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/files:annotate",
 	//   "httpMethod": "POST",
 	//   "id": "vision.projects.locations.files.annotate",
@@ -17199,7 +15999,7 @@ func (c *ProjectsLocationsFilesAnnotateCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Optional. Target project and location to make a call.\n\nFormat: `projects/{project-id}/locations/{location-id}`.\n\nIf no parent is specified, a region will be chosen automatically.\n\nSupported location-ids:\n    `us`: USA country only,\n    `asia`: East asia areas, like Japan, Taiwan,\n    `eu`: The European Union.\n\nExample: `projects/project-A/locations/eu`.",
+	//       "description": "Optional. Target project and location to make a call. Format: `projects/{project-id}/locations/{location-id}`. If no parent is specified, a region will be chosen automatically. Supported location-ids: `us`: USA country only, `asia`: East asia areas, like Japan, Taiwan, `eu`: The European Union. Example: `projects/project-A/locations/eu`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -17233,16 +16033,19 @@ type ProjectsLocationsFilesAsyncBatchAnnotateCall struct {
 }
 
 // AsyncBatchAnnotate: Run asynchronous image detection and annotation
-// for a list of generic
-// files, such as PDF files, which may contain multiple pages and
-// multiple
-// images per page. Progress and results can be retrieved through
-// the
-// `google.longrunning.Operations` interface.
-// `Operation.metadata` contains `OperationMetadata`
-// (metadata).
+// for a list of generic files, such as PDF files, which may contain
+// multiple pages and multiple images per page. Progress and results can
+// be retrieved through the `google.longrunning.Operations` interface.
+// `Operation.metadata` contains `OperationMetadata` (metadata).
 // `Operation.response` contains `AsyncBatchAnnotateFilesResponse`
 // (results).
+//
+//   - parent: Optional. Target project and location to make a call.
+//     Format: `projects/{project-id}/locations/{location-id}`. If no
+//     parent is specified, a region will be chosen automatically.
+//     Supported location-ids: `us`: USA country only, `asia`: East asia
+//     areas, like Japan, Taiwan, `eu`: The European Union. Example:
+//     `projects/project-A/locations/eu`.
 func (r *ProjectsLocationsFilesService) AsyncBatchAnnotate(parent string, asyncbatchannotatefilesrequest *AsyncBatchAnnotateFilesRequest) *ProjectsLocationsFilesAsyncBatchAnnotateCall {
 	c := &ProjectsLocationsFilesAsyncBatchAnnotateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -17277,7 +16080,7 @@ func (c *ProjectsLocationsFilesAsyncBatchAnnotateCall) Header() http.Header {
 
 func (c *ProjectsLocationsFilesAsyncBatchAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17317,17 +16120,17 @@ func (c *ProjectsLocationsFilesAsyncBatchAnnotateCall) Do(opts ...googleapi.Call
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -17341,7 +16144,7 @@ func (c *ProjectsLocationsFilesAsyncBatchAnnotateCall) Do(opts ...googleapi.Call
 	}
 	return ret, nil
 	// {
-	//   "description": "Run asynchronous image detection and annotation for a list of generic\nfiles, such as PDF files, which may contain multiple pages and multiple\nimages per page. Progress and results can be retrieved through the\n`google.longrunning.Operations` interface.\n`Operation.metadata` contains `OperationMetadata` (metadata).\n`Operation.response` contains `AsyncBatchAnnotateFilesResponse` (results).",
+	//   "description": "Run asynchronous image detection and annotation for a list of generic files, such as PDF files, which may contain multiple pages and multiple images per page. Progress and results can be retrieved through the `google.longrunning.Operations` interface. `Operation.metadata` contains `OperationMetadata` (metadata). `Operation.response` contains `AsyncBatchAnnotateFilesResponse` (results).",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/files:asyncBatchAnnotate",
 	//   "httpMethod": "POST",
 	//   "id": "vision.projects.locations.files.asyncBatchAnnotate",
@@ -17350,7 +16153,7 @@ func (c *ProjectsLocationsFilesAsyncBatchAnnotateCall) Do(opts ...googleapi.Call
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Optional. Target project and location to make a call.\n\nFormat: `projects/{project-id}/locations/{location-id}`.\n\nIf no parent is specified, a region will be chosen automatically.\n\nSupported location-ids:\n    `us`: USA country only,\n    `asia`: East asia areas, like Japan, Taiwan,\n    `eu`: The European Union.\n\nExample: `projects/project-A/locations/eu`.",
+	//       "description": "Optional. Target project and location to make a call. Format: `projects/{project-id}/locations/{location-id}`. If no parent is specified, a region will be chosen automatically. Supported location-ids: `us`: USA country only, `asia`: East asia areas, like Japan, Taiwan, `eu`: The European Union. Example: `projects/project-A/locations/eu`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -17384,6 +16187,13 @@ type ProjectsLocationsImagesAnnotateCall struct {
 }
 
 // Annotate: Run image detection and annotation for a batch of images.
+//
+//   - parent: Optional. Target project and location to make a call.
+//     Format: `projects/{project-id}/locations/{location-id}`. If no
+//     parent is specified, a region will be chosen automatically.
+//     Supported location-ids: `us`: USA country only, `asia`: East asia
+//     areas, like Japan, Taiwan, `eu`: The European Union. Example:
+//     `projects/project-A/locations/eu`.
 func (r *ProjectsLocationsImagesService) Annotate(parent string, batchannotateimagesrequest *BatchAnnotateImagesRequest) *ProjectsLocationsImagesAnnotateCall {
 	c := &ProjectsLocationsImagesAnnotateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -17418,7 +16228,7 @@ func (c *ProjectsLocationsImagesAnnotateCall) Header() http.Header {
 
 func (c *ProjectsLocationsImagesAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17458,17 +16268,17 @@ func (c *ProjectsLocationsImagesAnnotateCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &BatchAnnotateImagesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -17491,7 +16301,7 @@ func (c *ProjectsLocationsImagesAnnotateCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Optional. Target project and location to make a call.\n\nFormat: `projects/{project-id}/locations/{location-id}`.\n\nIf no parent is specified, a region will be chosen automatically.\n\nSupported location-ids:\n    `us`: USA country only,\n    `asia`: East asia areas, like Japan, Taiwan,\n    `eu`: The European Union.\n\nExample: `projects/project-A/locations/eu`.",
+	//       "description": "Optional. Target project and location to make a call. Format: `projects/{project-id}/locations/{location-id}`. If no parent is specified, a region will be chosen automatically. Supported location-ids: `us`: USA country only, `asia`: East asia areas, like Japan, Taiwan, `eu`: The European Union. Example: `projects/project-A/locations/eu`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -17525,20 +16335,19 @@ type ProjectsLocationsImagesAsyncBatchAnnotateCall struct {
 }
 
 // AsyncBatchAnnotate: Run asynchronous image detection and annotation
-// for a list of images.
+// for a list of images. Progress and results can be retrieved through
+// the `google.longrunning.Operations` interface. `Operation.metadata`
+// contains `OperationMetadata` (metadata). `Operation.response`
+// contains `AsyncBatchAnnotateImagesResponse` (results). This service
+// will write image annotation outputs to json files in customer GCS
+// bucket, each json file containing BatchAnnotateImagesResponse proto.
 //
-// Progress and results can be retrieved through
-// the
-// `google.longrunning.Operations` interface.
-// `Operation.metadata` contains `OperationMetadata`
-// (metadata).
-// `Operation.response` contains `AsyncBatchAnnotateImagesResponse`
-// (results).
-//
-// This service will write image annotation outputs to json files in
-// customer
-// GCS bucket, each json file containing BatchAnnotateImagesResponse
-// proto.
+//   - parent: Optional. Target project and location to make a call.
+//     Format: `projects/{project-id}/locations/{location-id}`. If no
+//     parent is specified, a region will be chosen automatically.
+//     Supported location-ids: `us`: USA country only, `asia`: East asia
+//     areas, like Japan, Taiwan, `eu`: The European Union. Example:
+//     `projects/project-A/locations/eu`.
 func (r *ProjectsLocationsImagesService) AsyncBatchAnnotate(parent string, asyncbatchannotateimagesrequest *AsyncBatchAnnotateImagesRequest) *ProjectsLocationsImagesAsyncBatchAnnotateCall {
 	c := &ProjectsLocationsImagesAsyncBatchAnnotateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -17573,7 +16382,7 @@ func (c *ProjectsLocationsImagesAsyncBatchAnnotateCall) Header() http.Header {
 
 func (c *ProjectsLocationsImagesAsyncBatchAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17613,17 +16422,17 @@ func (c *ProjectsLocationsImagesAsyncBatchAnnotateCall) Do(opts ...googleapi.Cal
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -17637,7 +16446,7 @@ func (c *ProjectsLocationsImagesAsyncBatchAnnotateCall) Do(opts ...googleapi.Cal
 	}
 	return ret, nil
 	// {
-	//   "description": "Run asynchronous image detection and annotation for a list of images.\n\nProgress and results can be retrieved through the\n`google.longrunning.Operations` interface.\n`Operation.metadata` contains `OperationMetadata` (metadata).\n`Operation.response` contains `AsyncBatchAnnotateImagesResponse` (results).\n\nThis service will write image annotation outputs to json files in customer\nGCS bucket, each json file containing BatchAnnotateImagesResponse proto.",
+	//   "description": "Run asynchronous image detection and annotation for a list of images. Progress and results can be retrieved through the `google.longrunning.Operations` interface. `Operation.metadata` contains `OperationMetadata` (metadata). `Operation.response` contains `AsyncBatchAnnotateImagesResponse` (results). This service will write image annotation outputs to json files in customer GCS bucket, each json file containing BatchAnnotateImagesResponse proto.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/images:asyncBatchAnnotate",
 	//   "httpMethod": "POST",
 	//   "id": "vision.projects.locations.images.asyncBatchAnnotate",
@@ -17646,7 +16455,7 @@ func (c *ProjectsLocationsImagesAsyncBatchAnnotateCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Optional. Target project and location to make a call.\n\nFormat: `projects/{project-id}/locations/{location-id}`.\n\nIf no parent is specified, a region will be chosen automatically.\n\nSupported location-ids:\n    `us`: USA country only,\n    `asia`: East asia areas, like Japan, Taiwan,\n    `eu`: The European Union.\n\nExample: `projects/project-A/locations/eu`.",
+	//       "description": "Optional. Target project and location to make a call. Format: `projects/{project-id}/locations/{location-id}`. If no parent is specified, a region will be chosen automatically. Supported location-ids: `us`: USA country only, `asia`: East asia areas, like Japan, Taiwan, `eu`: The European Union. Example: `projects/project-A/locations/eu`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -17679,11 +16488,11 @@ type ProjectsLocationsOperationsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets the latest state of a long-running operation.  Clients can
-// use this
-// method to poll the operation result at intervals as recommended by
-// the API
-// service.
+// Get: Gets the latest state of a long-running operation. Clients can
+// use this method to poll the operation result at intervals as
+// recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsLocationsOperationsService) Get(name string) *ProjectsLocationsOperationsGetCall {
 	c := &ProjectsLocationsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -17727,7 +16536,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17765,17 +16574,17 @@ func (c *ProjectsLocationsOperationsGetCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -17789,7 +16598,7 @@ func (c *ProjectsLocationsOperationsGetCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the latest state of a long-running operation.  Clients can use this\nmethod to poll the operation result at intervals as recommended by the API\nservice.",
+	//   "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/operations/{operationsId}",
 	//   "httpMethod": "GET",
 	//   "id": "vision.projects.locations.operations.get",
@@ -17829,14 +16638,12 @@ type ProjectsLocationsProductSetsAddProductCall struct {
 }
 
 // AddProduct: Adds a Product to the specified ProductSet. If the
-// Product is already
-// present, no change is made.
+// Product is already present, no change is made. One Product can be
+// added to at most 100 ProductSets. Possible errors: * Returns
+// NOT_FOUND if the Product or the ProductSet doesn't exist.
 //
-// One Product can be added to at most 100 ProductSets.
-//
-// Possible errors:
-//
-// * Returns NOT_FOUND if the Product or the ProductSet doesn't exist.
+//   - name: The resource name for the ProductSet to modify. Format is:
+//     `projects/PROJECT_ID/locations/LOC_ID/productSets/PRODUCT_SET_ID`.
 func (r *ProjectsLocationsProductSetsService) AddProduct(name string, addproducttoproductsetrequest *AddProductToProductSetRequest) *ProjectsLocationsProductSetsAddProductCall {
 	c := &ProjectsLocationsProductSetsAddProductCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -17871,7 +16678,7 @@ func (c *ProjectsLocationsProductSetsAddProductCall) Header() http.Header {
 
 func (c *ProjectsLocationsProductSetsAddProductCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17911,17 +16718,17 @@ func (c *ProjectsLocationsProductSetsAddProductCall) Do(opts ...googleapi.CallOp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -17935,7 +16742,7 @@ func (c *ProjectsLocationsProductSetsAddProductCall) Do(opts ...googleapi.CallOp
 	}
 	return ret, nil
 	// {
-	//   "description": "Adds a Product to the specified ProductSet. If the Product is already\npresent, no change is made.\n\nOne Product can be added to at most 100 ProductSets.\n\nPossible errors:\n\n* Returns NOT_FOUND if the Product or the ProductSet doesn't exist.",
+	//   "description": "Adds a Product to the specified ProductSet. If the Product is already present, no change is made. One Product can be added to at most 100 ProductSets. Possible errors: * Returns NOT_FOUND if the Product or the ProductSet doesn't exist.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/productSets/{productSetsId}:addProduct",
 	//   "httpMethod": "POST",
 	//   "id": "vision.projects.locations.productSets.addProduct",
@@ -17944,7 +16751,7 @@ func (c *ProjectsLocationsProductSetsAddProductCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name for the ProductSet to modify.\n\nFormat is:\n`projects/PROJECT_ID/locations/LOC_ID/productSets/PRODUCT_SET_ID`",
+	//       "description": "Required. The resource name for the ProductSet to modify. Format is: `projects/PROJECT_ID/locations/LOC_ID/productSets/PRODUCT_SET_ID`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/productSets/[^/]+$",
 	//       "required": true,
@@ -17977,13 +16784,12 @@ type ProjectsLocationsProductSetsCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates and returns a new ProductSet resource.
+// Create: Creates and returns a new ProductSet resource. Possible
+// errors: * Returns INVALID_ARGUMENT if display_name is missing, or is
+// longer than 4096 characters.
 //
-// Possible errors:
-//
-// * Returns INVALID_ARGUMENT if display_name is missing, or is longer
-// than
-//   4096 characters.
+//   - parent: The project in which the ProductSet should be created.
+//     Format is `projects/PROJECT_ID/locations/LOC_ID`.
 func (r *ProjectsLocationsProductSetsService) Create(parent string, productset *ProductSet) *ProjectsLocationsProductSetsCreateCall {
 	c := &ProjectsLocationsProductSetsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -17993,12 +16799,9 @@ func (r *ProjectsLocationsProductSetsService) Create(parent string, productset *
 
 // ProductSetId sets the optional parameter "productSetId": A
 // user-supplied resource id for this ProductSet. If set, the server
-// will
-// attempt to use this value as the resource id. If it is already in
-// use, an
-// error is returned with code ALREADY_EXISTS. Must be at most 128
-// characters
-// long. It cannot contain the character `/`.
+// will attempt to use this value as the resource id. If it is already
+// in use, an error is returned with code ALREADY_EXISTS. Must be at
+// most 128 characters long. It cannot contain the character `/`.
 func (c *ProjectsLocationsProductSetsCreateCall) ProductSetId(productSetId string) *ProjectsLocationsProductSetsCreateCall {
 	c.urlParams_.Set("productSetId", productSetId)
 	return c
@@ -18031,7 +16834,7 @@ func (c *ProjectsLocationsProductSetsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsProductSetsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18071,17 +16874,17 @@ func (c *ProjectsLocationsProductSetsCreateCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ProductSet{
 		ServerResponse: googleapi.ServerResponse{
@@ -18095,7 +16898,7 @@ func (c *ProjectsLocationsProductSetsCreateCall) Do(opts ...googleapi.CallOption
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates and returns a new ProductSet resource.\n\nPossible errors:\n\n* Returns INVALID_ARGUMENT if display_name is missing, or is longer than\n  4096 characters.",
+	//   "description": "Creates and returns a new ProductSet resource. Possible errors: * Returns INVALID_ARGUMENT if display_name is missing, or is longer than 4096 characters.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/productSets",
 	//   "httpMethod": "POST",
 	//   "id": "vision.projects.locations.productSets.create",
@@ -18104,14 +16907,14 @@ func (c *ProjectsLocationsProductSetsCreateCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The project in which the ProductSet should be created.\n\nFormat is `projects/PROJECT_ID/locations/LOC_ID`.",
+	//       "description": "Required. The project in which the ProductSet should be created. Format is `projects/PROJECT_ID/locations/LOC_ID`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "productSetId": {
-	//       "description": "A user-supplied resource id for this ProductSet. If set, the server will\nattempt to use this value as the resource id. If it is already in use, an\nerror is returned with code ALREADY_EXISTS. Must be at most 128 characters\nlong. It cannot contain the character `/`.",
+	//       "description": "A user-supplied resource id for this ProductSet. If set, the server will attempt to use this value as the resource id. If it is already in use, an error is returned with code ALREADY_EXISTS. Must be at most 128 characters long. It cannot contain the character `/`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -18142,10 +16945,11 @@ type ProjectsLocationsProductSetsDeleteCall struct {
 }
 
 // Delete: Permanently deletes a ProductSet. Products and
-// ReferenceImages in the
-// ProductSet are not deleted.
+// ReferenceImages in the ProductSet are not deleted. The actual image
+// files are not deleted from Google Cloud Storage.
 //
-// The actual image files are not deleted from Google Cloud Storage.
+//   - name: Resource name of the ProductSet to delete. Format is:
+//     `projects/PROJECT_ID/locations/LOC_ID/productSets/PRODUCT_SET_ID`.
 func (r *ProjectsLocationsProductSetsService) Delete(name string) *ProjectsLocationsProductSetsDeleteCall {
 	c := &ProjectsLocationsProductSetsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -18179,7 +16983,7 @@ func (c *ProjectsLocationsProductSetsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsProductSetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18214,17 +17018,17 @@ func (c *ProjectsLocationsProductSetsDeleteCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -18238,7 +17042,7 @@ func (c *ProjectsLocationsProductSetsDeleteCall) Do(opts ...googleapi.CallOption
 	}
 	return ret, nil
 	// {
-	//   "description": "Permanently deletes a ProductSet. Products and ReferenceImages in the\nProductSet are not deleted.\n\nThe actual image files are not deleted from Google Cloud Storage.",
+	//   "description": "Permanently deletes a ProductSet. Products and ReferenceImages in the ProductSet are not deleted. The actual image files are not deleted from Google Cloud Storage.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/productSets/{productSetsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "vision.projects.locations.productSets.delete",
@@ -18247,7 +17051,7 @@ func (c *ProjectsLocationsProductSetsDeleteCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name of the ProductSet to delete.\n\nFormat is:\n`projects/PROJECT_ID/locations/LOC_ID/productSets/PRODUCT_SET_ID`",
+	//       "description": "Required. Resource name of the ProductSet to delete. Format is: `projects/PROJECT_ID/locations/LOC_ID/productSets/PRODUCT_SET_ID`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/productSets/[^/]+$",
 	//       "required": true,
@@ -18277,11 +17081,11 @@ type ProjectsLocationsProductSetsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets information associated with a ProductSet.
-//
-// Possible errors:
-//
+// Get: Gets information associated with a ProductSet. Possible errors:
 // * Returns NOT_FOUND if the ProductSet does not exist.
+//
+//   - name: Resource name of the ProductSet to get. Format is:
+//     `projects/PROJECT_ID/locations/LOC_ID/productSets/PRODUCT_SET_ID`.
 func (r *ProjectsLocationsProductSetsService) Get(name string) *ProjectsLocationsProductSetsGetCall {
 	c := &ProjectsLocationsProductSetsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -18325,7 +17129,7 @@ func (c *ProjectsLocationsProductSetsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsProductSetsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18363,17 +17167,17 @@ func (c *ProjectsLocationsProductSetsGetCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ProductSet{
 		ServerResponse: googleapi.ServerResponse{
@@ -18387,7 +17191,7 @@ func (c *ProjectsLocationsProductSetsGetCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets information associated with a ProductSet.\n\nPossible errors:\n\n* Returns NOT_FOUND if the ProductSet does not exist.",
+	//   "description": "Gets information associated with a ProductSet. Possible errors: * Returns NOT_FOUND if the ProductSet does not exist.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/productSets/{productSetsId}",
 	//   "httpMethod": "GET",
 	//   "id": "vision.projects.locations.productSets.get",
@@ -18396,7 +17200,7 @@ func (c *ProjectsLocationsProductSetsGetCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name of the ProductSet to get.\n\nFormat is:\n`projects/PROJECT_ID/locations/LOC_ID/productSets/PRODUCT_SET_ID`",
+	//       "description": "Required. Resource name of the ProductSet to get. Format is: `projects/PROJECT_ID/locations/LOC_ID/productSets/PRODUCT_SET_ID`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/productSets/[^/]+$",
 	//       "required": true,
@@ -18427,22 +17231,16 @@ type ProjectsLocationsProductSetsImportCall struct {
 }
 
 // Import: Asynchronous API that imports a list of reference images to
-// specified
-// product sets based on a list of image information.
+// specified product sets based on a list of image information. The
+// google.longrunning.Operation API can be used to keep track of the
+// progress and results of the request. `Operation.metadata` contains
+// `BatchOperationMetadata`. (progress) `Operation.response` contains
+// `ImportProductSetsResponse`. (results) The input source of this
+// method is a csv file on Google Cloud Storage. For the format of the
+// csv file please see ImportProductSetsGcsSource.csv_file_uri.
 //
-// The google.longrunning.Operation API can be used to keep track of
-// the
-// progress and results of the request.
-// `Operation.metadata` contains `BatchOperationMetadata`.
-// (progress)
-// `Operation.response` contains `ImportProductSetsResponse`.
-// (results)
-//
-// The input source of this method is a csv file on Google Cloud
-// Storage.
-// For the format of the csv file please
-// see
-// ImportProductSetsGcsSource.csv_file_uri.
+//   - parent: The project in which the ProductSets should be imported.
+//     Format is `projects/PROJECT_ID/locations/LOC_ID`.
 func (r *ProjectsLocationsProductSetsService) Import(parent string, importproductsetsrequest *ImportProductSetsRequest) *ProjectsLocationsProductSetsImportCall {
 	c := &ProjectsLocationsProductSetsImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -18477,7 +17275,7 @@ func (c *ProjectsLocationsProductSetsImportCall) Header() http.Header {
 
 func (c *ProjectsLocationsProductSetsImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18517,17 +17315,17 @@ func (c *ProjectsLocationsProductSetsImportCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -18541,7 +17339,7 @@ func (c *ProjectsLocationsProductSetsImportCall) Do(opts ...googleapi.CallOption
 	}
 	return ret, nil
 	// {
-	//   "description": "Asynchronous API that imports a list of reference images to specified\nproduct sets based on a list of image information.\n\nThe google.longrunning.Operation API can be used to keep track of the\nprogress and results of the request.\n`Operation.metadata` contains `BatchOperationMetadata`. (progress)\n`Operation.response` contains `ImportProductSetsResponse`. (results)\n\nThe input source of this method is a csv file on Google Cloud Storage.\nFor the format of the csv file please see\nImportProductSetsGcsSource.csv_file_uri.",
+	//   "description": "Asynchronous API that imports a list of reference images to specified product sets based on a list of image information. The google.longrunning.Operation API can be used to keep track of the progress and results of the request. `Operation.metadata` contains `BatchOperationMetadata`. (progress) `Operation.response` contains `ImportProductSetsResponse`. (results) The input source of this method is a csv file on Google Cloud Storage. For the format of the csv file please see ImportProductSetsGcsSource.csv_file_uri.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/productSets:import",
 	//   "httpMethod": "POST",
 	//   "id": "vision.projects.locations.productSets.import",
@@ -18550,7 +17348,7 @@ func (c *ProjectsLocationsProductSetsImportCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The project in which the ProductSets should be imported.\n\nFormat is `projects/PROJECT_ID/locations/LOC_ID`.",
+	//       "description": "Required. The project in which the ProductSets should be imported. Format is `projects/PROJECT_ID/locations/LOC_ID`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -18583,12 +17381,12 @@ type ProjectsLocationsProductSetsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists ProductSets in an unspecified order.
+// List: Lists ProductSets in an unspecified order. Possible errors: *
+// Returns INVALID_ARGUMENT if page_size is greater than 100, or less
+// than 1.
 //
-// Possible errors:
-//
-// * Returns INVALID_ARGUMENT if page_size is greater than 100, or less
-//   than 1.
+//   - parent: The project from which ProductSets should be listed. Format
+//     is `projects/PROJECT_ID/locations/LOC_ID`.
 func (r *ProjectsLocationsProductSetsService) List(parent string) *ProjectsLocationsProductSetsListCall {
 	c := &ProjectsLocationsProductSetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -18646,7 +17444,7 @@ func (c *ProjectsLocationsProductSetsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsProductSetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18684,17 +17482,17 @@ func (c *ProjectsLocationsProductSetsListCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListProductSetsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -18708,7 +17506,7 @@ func (c *ProjectsLocationsProductSetsListCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists ProductSets in an unspecified order.\n\nPossible errors:\n\n* Returns INVALID_ARGUMENT if page_size is greater than 100, or less\n  than 1.",
+	//   "description": "Lists ProductSets in an unspecified order. Possible errors: * Returns INVALID_ARGUMENT if page_size is greater than 100, or less than 1.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/productSets",
 	//   "httpMethod": "GET",
 	//   "id": "vision.projects.locations.productSets.list",
@@ -18728,7 +17526,7 @@ func (c *ProjectsLocationsProductSetsListCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The project from which ProductSets should be listed.\n\nFormat is `projects/PROJECT_ID/locations/LOC_ID`.",
+	//       "description": "Required. The project from which ProductSets should be listed. Format is `projects/PROJECT_ID/locations/LOC_ID`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -18779,15 +17577,15 @@ type ProjectsLocationsProductSetsPatchCall struct {
 	header_    http.Header
 }
 
-// Patch: Makes changes to a ProductSet resource.
-// Only display_name can be updated currently.
+// Patch: Makes changes to a ProductSet resource. Only display_name can
+// be updated currently. Possible errors: * Returns NOT_FOUND if the
+// ProductSet does not exist. * Returns INVALID_ARGUMENT if display_name
+// is present in update_mask but missing from the request or longer than
+// 4096 characters.
 //
-// Possible errors:
-//
-// * Returns NOT_FOUND if the ProductSet does not exist.
-// * Returns INVALID_ARGUMENT if display_name is present in update_mask
-// but
-//   missing from the request or longer than 4096 characters.
+//   - name: The resource name of the ProductSet. Format is:
+//     `projects/PROJECT_ID/locations/LOC_ID/productSets/PRODUCT_SET_ID`.
+//     This field is ignored when creating a ProductSet.
 func (r *ProjectsLocationsProductSetsService) Patch(name string, productset *ProductSet) *ProjectsLocationsProductSetsPatchCall {
 	c := &ProjectsLocationsProductSetsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -18796,11 +17594,9 @@ func (r *ProjectsLocationsProductSetsService) Patch(name string, productset *Pro
 }
 
 // UpdateMask sets the optional parameter "updateMask": The FieldMask
-// that specifies which fields to
-// update.
-// If update_mask isn't specified, all mutable fields are to be
-// updated.
-// Valid mask path is `display_name`.
+// that specifies which fields to update. If update_mask isn't
+// specified, all mutable fields are to be updated. Valid mask path is
+// `display_name`.
 func (c *ProjectsLocationsProductSetsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsProductSetsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -18833,7 +17629,7 @@ func (c *ProjectsLocationsProductSetsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsProductSetsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18873,17 +17669,17 @@ func (c *ProjectsLocationsProductSetsPatchCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ProductSet{
 		ServerResponse: googleapi.ServerResponse{
@@ -18897,7 +17693,7 @@ func (c *ProjectsLocationsProductSetsPatchCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "Makes changes to a ProductSet resource.\nOnly display_name can be updated currently.\n\nPossible errors:\n\n* Returns NOT_FOUND if the ProductSet does not exist.\n* Returns INVALID_ARGUMENT if display_name is present in update_mask but\n  missing from the request or longer than 4096 characters.",
+	//   "description": "Makes changes to a ProductSet resource. Only display_name can be updated currently. Possible errors: * Returns NOT_FOUND if the ProductSet does not exist. * Returns INVALID_ARGUMENT if display_name is present in update_mask but missing from the request or longer than 4096 characters.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/productSets/{productSetsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "vision.projects.locations.productSets.patch",
@@ -18906,14 +17702,14 @@ func (c *ProjectsLocationsProductSetsPatchCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the ProductSet.\n\nFormat is:\n`projects/PROJECT_ID/locations/LOC_ID/productSets/PRODUCT_SET_ID`.\n\nThis field is ignored when creating a ProductSet.",
+	//       "description": "The resource name of the ProductSet. Format is: `projects/PROJECT_ID/locations/LOC_ID/productSets/PRODUCT_SET_ID`. This field is ignored when creating a ProductSet.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/productSets/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "The FieldMask that specifies which fields to\nupdate.\nIf update_mask isn't specified, all mutable fields are to be updated.\nValid mask path is `display_name`.",
+	//       "description": "The FieldMask that specifies which fields to update. If update_mask isn't specified, all mutable fields are to be updated. Valid mask path is `display_name`.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -18946,6 +17742,9 @@ type ProjectsLocationsProductSetsRemoveProductCall struct {
 }
 
 // RemoveProduct: Removes a Product from the specified ProductSet.
+//
+//   - name: The resource name for the ProductSet to modify. Format is:
+//     `projects/PROJECT_ID/locations/LOC_ID/productSets/PRODUCT_SET_ID`.
 func (r *ProjectsLocationsProductSetsService) RemoveProduct(name string, removeproductfromproductsetrequest *RemoveProductFromProductSetRequest) *ProjectsLocationsProductSetsRemoveProductCall {
 	c := &ProjectsLocationsProductSetsRemoveProductCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -18980,7 +17779,7 @@ func (c *ProjectsLocationsProductSetsRemoveProductCall) Header() http.Header {
 
 func (c *ProjectsLocationsProductSetsRemoveProductCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19020,17 +17819,17 @@ func (c *ProjectsLocationsProductSetsRemoveProductCall) Do(opts ...googleapi.Cal
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -19053,7 +17852,7 @@ func (c *ProjectsLocationsProductSetsRemoveProductCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name for the ProductSet to modify.\n\nFormat is:\n`projects/PROJECT_ID/locations/LOC_ID/productSets/PRODUCT_SET_ID`",
+	//       "description": "Required. The resource name for the ProductSet to modify. Format is: `projects/PROJECT_ID/locations/LOC_ID/productSets/PRODUCT_SET_ID`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/productSets/[^/]+$",
 	//       "required": true,
@@ -19087,15 +17886,13 @@ type ProjectsLocationsProductSetsProductsListCall struct {
 }
 
 // List: Lists the Products in a ProductSet, in an unspecified order. If
-// the
-// ProductSet does not exist, the products field of the response will
-// be
-// empty.
+// the ProductSet does not exist, the products field of the response
+// will be empty. Possible errors: * Returns INVALID_ARGUMENT if
+// page_size is greater than 100 or less than 1.
 //
-// Possible errors:
-//
-// * Returns INVALID_ARGUMENT if page_size is greater than 100 or less
-// than 1.
+//   - name: The ProductSet resource for which to retrieve Products.
+//     Format is:
+//     `projects/PROJECT_ID/locations/LOC_ID/productSets/PRODUCT_SET_ID`.
 func (r *ProjectsLocationsProductSetsProductsService) List(name string) *ProjectsLocationsProductSetsProductsListCall {
 	c := &ProjectsLocationsProductSetsProductsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -19153,7 +17950,7 @@ func (c *ProjectsLocationsProductSetsProductsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsProductSetsProductsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19191,17 +17988,17 @@ func (c *ProjectsLocationsProductSetsProductsListCall) Do(opts ...googleapi.Call
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListProductsInProductSetResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -19215,7 +18012,7 @@ func (c *ProjectsLocationsProductSetsProductsListCall) Do(opts ...googleapi.Call
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the Products in a ProductSet, in an unspecified order. If the\nProductSet does not exist, the products field of the response will be\nempty.\n\nPossible errors:\n\n* Returns INVALID_ARGUMENT if page_size is greater than 100 or less than 1.",
+	//   "description": "Lists the Products in a ProductSet, in an unspecified order. If the ProductSet does not exist, the products field of the response will be empty. Possible errors: * Returns INVALID_ARGUMENT if page_size is greater than 100 or less than 1.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/productSets/{productSetsId}/products",
 	//   "httpMethod": "GET",
 	//   "id": "vision.projects.locations.productSets.products.list",
@@ -19224,7 +18021,7 @@ func (c *ProjectsLocationsProductSetsProductsListCall) Do(opts ...googleapi.Call
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The ProductSet resource for which to retrieve Products.\n\nFormat is:\n`projects/PROJECT_ID/locations/LOC_ID/productSets/PRODUCT_SET_ID`",
+	//       "description": "Required. The ProductSet resource for which to retrieve Products. Format is: `projects/PROJECT_ID/locations/LOC_ID/productSets/PRODUCT_SET_ID`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/productSets/[^/]+$",
 	//       "required": true,
@@ -19286,16 +18083,14 @@ type ProjectsLocationsProductsCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates and returns a new product resource.
-//
-// Possible errors:
-//
+// Create: Creates and returns a new product resource. Possible errors:
 // * Returns INVALID_ARGUMENT if display_name is missing or longer than
-// 4096
-//   characters.
-// * Returns INVALID_ARGUMENT if description is longer than 4096
-// characters.
-// * Returns INVALID_ARGUMENT if product_category is missing or invalid.
+// 4096 characters. * Returns INVALID_ARGUMENT if description is longer
+// than 4096 characters. * Returns INVALID_ARGUMENT if product_category
+// is missing or invalid.
+//
+//   - parent: The project in which the Product should be created. Format
+//     is `projects/PROJECT_ID/locations/LOC_ID`.
 func (r *ProjectsLocationsProductsService) Create(parent string, product *Product) *ProjectsLocationsProductsCreateCall {
 	c := &ProjectsLocationsProductsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -19304,11 +18099,9 @@ func (r *ProjectsLocationsProductsService) Create(parent string, product *Produc
 }
 
 // ProductId sets the optional parameter "productId": A user-supplied
-// resource id for this Product. If set, the server will
-// attempt to use this value as the resource id. If it is already in
-// use, an
-// error is returned with code ALREADY_EXISTS. Must be at most 128
-// characters
+// resource id for this Product. If set, the server will attempt to use
+// this value as the resource id. If it is already in use, an error is
+// returned with code ALREADY_EXISTS. Must be at most 128 characters
 // long. It cannot contain the character `/`.
 func (c *ProjectsLocationsProductsCreateCall) ProductId(productId string) *ProjectsLocationsProductsCreateCall {
 	c.urlParams_.Set("productId", productId)
@@ -19342,7 +18135,7 @@ func (c *ProjectsLocationsProductsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsProductsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19382,17 +18175,17 @@ func (c *ProjectsLocationsProductsCreateCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Product{
 		ServerResponse: googleapi.ServerResponse{
@@ -19406,7 +18199,7 @@ func (c *ProjectsLocationsProductsCreateCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates and returns a new product resource.\n\nPossible errors:\n\n* Returns INVALID_ARGUMENT if display_name is missing or longer than 4096\n  characters.\n* Returns INVALID_ARGUMENT if description is longer than 4096 characters.\n* Returns INVALID_ARGUMENT if product_category is missing or invalid.",
+	//   "description": "Creates and returns a new product resource. Possible errors: * Returns INVALID_ARGUMENT if display_name is missing or longer than 4096 characters. * Returns INVALID_ARGUMENT if description is longer than 4096 characters. * Returns INVALID_ARGUMENT if product_category is missing or invalid.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/products",
 	//   "httpMethod": "POST",
 	//   "id": "vision.projects.locations.products.create",
@@ -19415,14 +18208,14 @@ func (c *ProjectsLocationsProductsCreateCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The project in which the Product should be created.\n\nFormat is\n`projects/PROJECT_ID/locations/LOC_ID`.",
+	//       "description": "Required. The project in which the Product should be created. Format is `projects/PROJECT_ID/locations/LOC_ID`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "productId": {
-	//       "description": "A user-supplied resource id for this Product. If set, the server will\nattempt to use this value as the resource id. If it is already in use, an\nerror is returned with code ALREADY_EXISTS. Must be at most 128 characters\nlong. It cannot contain the character `/`.",
+	//       "description": "A user-supplied resource id for this Product. If set, the server will attempt to use this value as the resource id. If it is already in use, an error is returned with code ALREADY_EXISTS. Must be at most 128 characters long. It cannot contain the character `/`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -19452,14 +18245,13 @@ type ProjectsLocationsProductsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Permanently deletes a product and its reference
-// images.
-//
+// Delete: Permanently deletes a product and its reference images.
 // Metadata of the product and all its images will be deleted right
-// away, but
-// search queries against ProductSets containing the product may still
-// work
-// until all related caches are refreshed.
+// away, but search queries against ProductSets containing the product
+// may still work until all related caches are refreshed.
+//
+//   - name: Resource name of product to delete. Format is:
+//     `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID`.
 func (r *ProjectsLocationsProductsService) Delete(name string) *ProjectsLocationsProductsDeleteCall {
 	c := &ProjectsLocationsProductsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -19493,7 +18285,7 @@ func (c *ProjectsLocationsProductsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsProductsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19528,17 +18320,17 @@ func (c *ProjectsLocationsProductsDeleteCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -19552,7 +18344,7 @@ func (c *ProjectsLocationsProductsDeleteCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Permanently deletes a product and its reference images.\n\nMetadata of the product and all its images will be deleted right away, but\nsearch queries against ProductSets containing the product may still work\nuntil all related caches are refreshed.",
+	//   "description": "Permanently deletes a product and its reference images. Metadata of the product and all its images will be deleted right away, but search queries against ProductSets containing the product may still work until all related caches are refreshed.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/products/{productsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "vision.projects.locations.products.delete",
@@ -19561,7 +18353,7 @@ func (c *ProjectsLocationsProductsDeleteCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name of product to delete.\n\nFormat is:\n`projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID`",
+	//       "description": "Required. Resource name of product to delete. Format is: `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/products/[^/]+$",
 	//       "required": true,
@@ -19591,11 +18383,11 @@ type ProjectsLocationsProductsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets information associated with a Product.
+// Get: Gets information associated with a Product. Possible errors: *
+// Returns NOT_FOUND if the Product does not exist.
 //
-// Possible errors:
-//
-// * Returns NOT_FOUND if the Product does not exist.
+//   - name: Resource name of the Product to get. Format is:
+//     `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID`.
 func (r *ProjectsLocationsProductsService) Get(name string) *ProjectsLocationsProductsGetCall {
 	c := &ProjectsLocationsProductsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -19639,7 +18431,7 @@ func (c *ProjectsLocationsProductsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsProductsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19677,17 +18469,17 @@ func (c *ProjectsLocationsProductsGetCall) Do(opts ...googleapi.CallOption) (*Pr
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Product{
 		ServerResponse: googleapi.ServerResponse{
@@ -19701,7 +18493,7 @@ func (c *ProjectsLocationsProductsGetCall) Do(opts ...googleapi.CallOption) (*Pr
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets information associated with a Product.\n\nPossible errors:\n\n* Returns NOT_FOUND if the Product does not exist.",
+	//   "description": "Gets information associated with a Product. Possible errors: * Returns NOT_FOUND if the Product does not exist.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/products/{productsId}",
 	//   "httpMethod": "GET",
 	//   "id": "vision.projects.locations.products.get",
@@ -19710,7 +18502,7 @@ func (c *ProjectsLocationsProductsGetCall) Do(opts ...googleapi.CallOption) (*Pr
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name of the Product to get.\n\nFormat is:\n`projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID`",
+	//       "description": "Required. Resource name of the Product to get. Format is: `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/products/[^/]+$",
 	//       "required": true,
@@ -19740,12 +18532,12 @@ type ProjectsLocationsProductsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists products in an unspecified order.
-//
-// Possible errors:
-//
-// * Returns INVALID_ARGUMENT if page_size is greater than 100 or less
+// List: Lists products in an unspecified order. Possible errors: *
+// Returns INVALID_ARGUMENT if page_size is greater than 100 or less
 // than 1.
+//
+//   - parent: The project OR ProductSet from which Products should be
+//     listed. Format: `projects/PROJECT_ID/locations/LOC_ID`.
 func (r *ProjectsLocationsProductsService) List(parent string) *ProjectsLocationsProductsListCall {
 	c := &ProjectsLocationsProductsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -19803,7 +18595,7 @@ func (c *ProjectsLocationsProductsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsProductsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19841,17 +18633,17 @@ func (c *ProjectsLocationsProductsListCall) Do(opts ...googleapi.CallOption) (*L
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListProductsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -19865,7 +18657,7 @@ func (c *ProjectsLocationsProductsListCall) Do(opts ...googleapi.CallOption) (*L
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists products in an unspecified order.\n\nPossible errors:\n\n* Returns INVALID_ARGUMENT if page_size is greater than 100 or less than 1.",
+	//   "description": "Lists products in an unspecified order. Possible errors: * Returns INVALID_ARGUMENT if page_size is greater than 100 or less than 1.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/products",
 	//   "httpMethod": "GET",
 	//   "id": "vision.projects.locations.products.list",
@@ -19885,7 +18677,7 @@ func (c *ProjectsLocationsProductsListCall) Do(opts ...googleapi.CallOption) (*L
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The project OR ProductSet from which Products should be listed.\n\nFormat:\n`projects/PROJECT_ID/locations/LOC_ID`",
+	//       "description": "Required. The project OR ProductSet from which Products should be listed. Format: `projects/PROJECT_ID/locations/LOC_ID`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -19936,26 +18728,19 @@ type ProjectsLocationsProductsPatchCall struct {
 	header_    http.Header
 }
 
-// Patch: Makes changes to a Product resource.
-// Only the `display_name`, `description`, and `labels` fields can be
-// updated
-// right now.
+// Patch: Makes changes to a Product resource. Only the `display_name`,
+// `description`, and `labels` fields can be updated right now. If
+// labels are updated, the change will not be reflected in queries until
+// the next index time. Possible errors: * Returns NOT_FOUND if the
+// Product does not exist. * Returns INVALID_ARGUMENT if display_name is
+// present in update_mask but is missing from the request or longer than
+// 4096 characters. * Returns INVALID_ARGUMENT if description is present
+// in update_mask but is longer than 4096 characters. * Returns
+// INVALID_ARGUMENT if product_category is present in update_mask.
 //
-// If labels are updated, the change will not be reflected in queries
-// until
-// the next index time.
-//
-// Possible errors:
-//
-// * Returns NOT_FOUND if the Product does not exist.
-// * Returns INVALID_ARGUMENT if display_name is present in update_mask
-// but is
-//   missing from the request or longer than 4096 characters.
-// * Returns INVALID_ARGUMENT if description is present in update_mask
-// but is
-//   longer than 4096 characters.
-// * Returns INVALID_ARGUMENT if product_category is present in
-// update_mask.
+//   - name: The resource name of the product. Format is:
+//     `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID`. This
+//     field is ignored when creating a product.
 func (r *ProjectsLocationsProductsService) Patch(name string, product *Product) *ProjectsLocationsProductsPatchCall {
 	c := &ProjectsLocationsProductsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -19964,13 +18749,9 @@ func (r *ProjectsLocationsProductsService) Patch(name string, product *Product) 
 }
 
 // UpdateMask sets the optional parameter "updateMask": The FieldMask
-// that specifies which fields
-// to update.
-// If update_mask isn't specified, all mutable fields are to be
-// updated.
-// Valid mask paths include `product_labels`, `display_name`,
-// and
-// `description`.
+// that specifies which fields to update. If update_mask isn't
+// specified, all mutable fields are to be updated. Valid mask paths
+// include `product_labels`, `display_name`, and `description`.
 func (c *ProjectsLocationsProductsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsProductsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -20003,7 +18784,7 @@ func (c *ProjectsLocationsProductsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsProductsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20043,17 +18824,17 @@ func (c *ProjectsLocationsProductsPatchCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Product{
 		ServerResponse: googleapi.ServerResponse{
@@ -20067,7 +18848,7 @@ func (c *ProjectsLocationsProductsPatchCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "Makes changes to a Product resource.\nOnly the `display_name`, `description`, and `labels` fields can be updated\nright now.\n\nIf labels are updated, the change will not be reflected in queries until\nthe next index time.\n\nPossible errors:\n\n* Returns NOT_FOUND if the Product does not exist.\n* Returns INVALID_ARGUMENT if display_name is present in update_mask but is\n  missing from the request or longer than 4096 characters.\n* Returns INVALID_ARGUMENT if description is present in update_mask but is\n  longer than 4096 characters.\n* Returns INVALID_ARGUMENT if product_category is present in update_mask.",
+	//   "description": "Makes changes to a Product resource. Only the `display_name`, `description`, and `labels` fields can be updated right now. If labels are updated, the change will not be reflected in queries until the next index time. Possible errors: * Returns NOT_FOUND if the Product does not exist. * Returns INVALID_ARGUMENT if display_name is present in update_mask but is missing from the request or longer than 4096 characters. * Returns INVALID_ARGUMENT if description is present in update_mask but is longer than 4096 characters. * Returns INVALID_ARGUMENT if product_category is present in update_mask.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/products/{productsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "vision.projects.locations.products.patch",
@@ -20076,14 +18857,14 @@ func (c *ProjectsLocationsProductsPatchCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the product.\n\nFormat is:\n`projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID`.\n\nThis field is ignored when creating a product.",
+	//       "description": "The resource name of the product. Format is: `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID`. This field is ignored when creating a product.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/products/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "The FieldMask that specifies which fields\nto update.\nIf update_mask isn't specified, all mutable fields are to be updated.\nValid mask paths include `product_labels`, `display_name`, and\n`description`.",
+	//       "description": "The FieldMask that specifies which fields to update. If update_mask isn't specified, all mutable fields are to be updated. Valid mask paths include `product_labels`, `display_name`, and `description`.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -20116,42 +18897,26 @@ type ProjectsLocationsProductsPurgeCall struct {
 }
 
 // Purge: Asynchronous API to delete all Products in a ProductSet or all
-// Products
-// that are in no ProductSet.
-//
-// If a Product is a member of the specified ProductSet in addition to
-// other
-// ProductSets, the Product will still be deleted.
-//
-// It is recommended to not delete the specified ProductSet until after
-// this
-// operation has completed. It is also recommended to not add any of
-// the
-// Products involved in the batch delete to a new ProductSet while
-// this
-// operation is running because those Products may still end up
-// deleted.
-//
-// It's not possible to undo the PurgeProducts operation. Therefore, it
-// is
-// recommended to keep the csv files used in ImportProductSets (if that
-// was
-// how you originally built the Product Set) before starting
-// PurgeProducts, in
-// case you need to re-import the data after deletion.
-//
-// If the plan is to purge all of the Products from a ProductSet and
-// then
-// re-use the empty ProductSet to re-import new Products into the
-// empty
-// ProductSet, you must wait until the PurgeProducts operation has
-// finished
-// for that ProductSet.
-//
-// The google.longrunning.Operation API can be used to keep track of
-// the
-// progress and results of the request.
+// Products that are in no ProductSet. If a Product is a member of the
+// specified ProductSet in addition to other ProductSets, the Product
+// will still be deleted. It is recommended to not delete the specified
+// ProductSet until after this operation has completed. It is also
+// recommended to not add any of the Products involved in the batch
+// delete to a new ProductSet while this operation is running because
+// those Products may still end up deleted. It's not possible to undo
+// the PurgeProducts operation. Therefore, it is recommended to keep the
+// csv files used in ImportProductSets (if that was how you originally
+// built the Product Set) before starting PurgeProducts, in case you
+// need to re-import the data after deletion. If the plan is to purge
+// all of the Products from a ProductSet and then re-use the empty
+// ProductSet to re-import new Products into the empty ProductSet, you
+// must wait until the PurgeProducts operation has finished for that
+// ProductSet. The google.longrunning.Operation API can be used to keep
+// track of the progress and results of the request.
 // `Operation.metadata` contains `BatchOperationMetadata`. (progress)
+//
+//   - parent: The project and location in which the Products should be
+//     deleted. Format is `projects/PROJECT_ID/locations/LOC_ID`.
 func (r *ProjectsLocationsProductsService) Purge(parent string, purgeproductsrequest *PurgeProductsRequest) *ProjectsLocationsProductsPurgeCall {
 	c := &ProjectsLocationsProductsPurgeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -20186,7 +18951,7 @@ func (c *ProjectsLocationsProductsPurgeCall) Header() http.Header {
 
 func (c *ProjectsLocationsProductsPurgeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20226,17 +18991,17 @@ func (c *ProjectsLocationsProductsPurgeCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -20250,7 +19015,7 @@ func (c *ProjectsLocationsProductsPurgeCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "Asynchronous API to delete all Products in a ProductSet or all Products\nthat are in no ProductSet.\n\nIf a Product is a member of the specified ProductSet in addition to other\nProductSets, the Product will still be deleted.\n\nIt is recommended to not delete the specified ProductSet until after this\noperation has completed. It is also recommended to not add any of the\nProducts involved in the batch delete to a new ProductSet while this\noperation is running because those Products may still end up deleted.\n\nIt's not possible to undo the PurgeProducts operation. Therefore, it is\nrecommended to keep the csv files used in ImportProductSets (if that was\nhow you originally built the Product Set) before starting PurgeProducts, in\ncase you need to re-import the data after deletion.\n\nIf the plan is to purge all of the Products from a ProductSet and then\nre-use the empty ProductSet to re-import new Products into the empty\nProductSet, you must wait until the PurgeProducts operation has finished\nfor that ProductSet.\n\nThe google.longrunning.Operation API can be used to keep track of the\nprogress and results of the request.\n`Operation.metadata` contains `BatchOperationMetadata`. (progress)",
+	//   "description": "Asynchronous API to delete all Products in a ProductSet or all Products that are in no ProductSet. If a Product is a member of the specified ProductSet in addition to other ProductSets, the Product will still be deleted. It is recommended to not delete the specified ProductSet until after this operation has completed. It is also recommended to not add any of the Products involved in the batch delete to a new ProductSet while this operation is running because those Products may still end up deleted. It's not possible to undo the PurgeProducts operation. Therefore, it is recommended to keep the csv files used in ImportProductSets (if that was how you originally built the Product Set) before starting PurgeProducts, in case you need to re-import the data after deletion. If the plan is to purge all of the Products from a ProductSet and then re-use the empty ProductSet to re-import new Products into the empty ProductSet, you must wait until the PurgeProducts operation has finished for that ProductSet. The google.longrunning.Operation API can be used to keep track of the progress and results of the request. `Operation.metadata` contains `BatchOperationMetadata`. (progress)",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/products:purge",
 	//   "httpMethod": "POST",
 	//   "id": "vision.projects.locations.products.purge",
@@ -20259,7 +19024,7 @@ func (c *ProjectsLocationsProductsPurgeCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The project and location in which the Products should be deleted.\n\nFormat is `projects/PROJECT_ID/locations/LOC_ID`.",
+	//       "description": "Required. The project and location in which the Products should be deleted. Format is `projects/PROJECT_ID/locations/LOC_ID`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -20292,34 +19057,24 @@ type ProjectsLocationsProductsReferenceImagesCreateCall struct {
 	header_        http.Header
 }
 
-// Create: Creates and returns a new ReferenceImage resource.
-//
-// The `bounding_poly` field is optional. If `bounding_poly` is not
-// specified,
-// the system will try to detect regions of interest in the image that
-// are
-// compatible with the product_category on the parent product. If it
-// is
-// specified, detection is ALWAYS skipped. The system converts polygons
-// into
-// non-rotated rectangles.
-//
-// Note that the pipeline will resize the image if the image resolution
-// is too
-// large to process (above 50MP).
-//
-// Possible errors:
-//
-// * Returns INVALID_ARGUMENT if the image_uri is missing or longer than
-// 4096
-//   characters.
-// * Returns INVALID_ARGUMENT if the product does not exist.
-// * Returns INVALID_ARGUMENT if bounding_poly is not provided, and
-// nothing
-//   compatible with the parent product's product_category is
-// detected.
-// * Returns INVALID_ARGUMENT if bounding_poly contains more than 10
+// Create: Creates and returns a new ReferenceImage resource. The
+// `bounding_poly` field is optional. If `bounding_poly` is not
+// specified, the system will try to detect regions of interest in the
+// image that are compatible with the product_category on the parent
+// product. If it is specified, detection is ALWAYS skipped. The system
+// converts polygons into non-rotated rectangles. Note that the pipeline
+// will resize the image if the image resolution is too large to process
+// (above 50MP). Possible errors: * Returns INVALID_ARGUMENT if the
+// image_uri is missing or longer than 4096 characters. * Returns
+// INVALID_ARGUMENT if the product does not exist. * Returns
+// INVALID_ARGUMENT if bounding_poly is not provided, and nothing
+// compatible with the parent product's product_category is detected. *
+// Returns INVALID_ARGUMENT if bounding_poly contains more than 10
 // polygons.
+//
+//   - parent: Resource name of the product in which to create the
+//     reference image. Format is
+//     `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID`.
 func (r *ProjectsLocationsProductsReferenceImagesService) Create(parent string, referenceimage *ReferenceImage) *ProjectsLocationsProductsReferenceImagesCreateCall {
 	c := &ProjectsLocationsProductsReferenceImagesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -20328,13 +19083,11 @@ func (r *ProjectsLocationsProductsReferenceImagesService) Create(parent string, 
 }
 
 // ReferenceImageId sets the optional parameter "referenceImageId": A
-// user-supplied resource id for the ReferenceImage to be added. If
-// set,
+// user-supplied resource id for the ReferenceImage to be added. If set,
 // the server will attempt to use this value as the resource id. If it
-// is
-// already in use, an error is returned with code ALREADY_EXISTS. Must
-// be at
-// most 128 characters long. It cannot contain the character `/`.
+// is already in use, an error is returned with code ALREADY_EXISTS.
+// Must be at most 128 characters long. It cannot contain the character
+// `/`.
 func (c *ProjectsLocationsProductsReferenceImagesCreateCall) ReferenceImageId(referenceImageId string) *ProjectsLocationsProductsReferenceImagesCreateCall {
 	c.urlParams_.Set("referenceImageId", referenceImageId)
 	return c
@@ -20367,7 +19120,7 @@ func (c *ProjectsLocationsProductsReferenceImagesCreateCall) Header() http.Heade
 
 func (c *ProjectsLocationsProductsReferenceImagesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20407,17 +19160,17 @@ func (c *ProjectsLocationsProductsReferenceImagesCreateCall) Do(opts ...googleap
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ReferenceImage{
 		ServerResponse: googleapi.ServerResponse{
@@ -20431,7 +19184,7 @@ func (c *ProjectsLocationsProductsReferenceImagesCreateCall) Do(opts ...googleap
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates and returns a new ReferenceImage resource.\n\nThe `bounding_poly` field is optional. If `bounding_poly` is not specified,\nthe system will try to detect regions of interest in the image that are\ncompatible with the product_category on the parent product. If it is\nspecified, detection is ALWAYS skipped. The system converts polygons into\nnon-rotated rectangles.\n\nNote that the pipeline will resize the image if the image resolution is too\nlarge to process (above 50MP).\n\nPossible errors:\n\n* Returns INVALID_ARGUMENT if the image_uri is missing or longer than 4096\n  characters.\n* Returns INVALID_ARGUMENT if the product does not exist.\n* Returns INVALID_ARGUMENT if bounding_poly is not provided, and nothing\n  compatible with the parent product's product_category is detected.\n* Returns INVALID_ARGUMENT if bounding_poly contains more than 10 polygons.",
+	//   "description": "Creates and returns a new ReferenceImage resource. The `bounding_poly` field is optional. If `bounding_poly` is not specified, the system will try to detect regions of interest in the image that are compatible with the product_category on the parent product. If it is specified, detection is ALWAYS skipped. The system converts polygons into non-rotated rectangles. Note that the pipeline will resize the image if the image resolution is too large to process (above 50MP). Possible errors: * Returns INVALID_ARGUMENT if the image_uri is missing or longer than 4096 characters. * Returns INVALID_ARGUMENT if the product does not exist. * Returns INVALID_ARGUMENT if bounding_poly is not provided, and nothing compatible with the parent product's product_category is detected. * Returns INVALID_ARGUMENT if bounding_poly contains more than 10 polygons.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/products/{productsId}/referenceImages",
 	//   "httpMethod": "POST",
 	//   "id": "vision.projects.locations.products.referenceImages.create",
@@ -20440,14 +19193,14 @@ func (c *ProjectsLocationsProductsReferenceImagesCreateCall) Do(opts ...googleap
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Resource name of the product in which to create the reference image.\n\nFormat is\n`projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID`.",
+	//       "description": "Required. Resource name of the product in which to create the reference image. Format is `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/products/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "referenceImageId": {
-	//       "description": "A user-supplied resource id for the ReferenceImage to be added. If set,\nthe server will attempt to use this value as the resource id. If it is\nalready in use, an error is returned with code ALREADY_EXISTS. Must be at\nmost 128 characters long. It cannot contain the character `/`.",
+	//       "description": "A user-supplied resource id for the ReferenceImage to be added. If set, the server will attempt to use this value as the resource id. If it is already in use, an error is returned with code ALREADY_EXISTS. Must be at most 128 characters long. It cannot contain the character `/`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -20477,15 +19230,16 @@ type ProjectsLocationsProductsReferenceImagesDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Permanently deletes a reference image.
+// Delete: Permanently deletes a reference image. The image metadata
+// will be deleted right away, but search queries against ProductSets
+// containing the image may still work until all related caches are
+// refreshed. The actual image files are not deleted from Google Cloud
+// Storage.
 //
-// The image metadata will be deleted right away, but search
-// queries
-// against ProductSets containing the image may still work until all
-// related
-// caches are refreshed.
-//
-// The actual image files are not deleted from Google Cloud Storage.
+//   - name: The resource name of the reference image to delete. Format
+//     is:
+//     `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID/referenceI
+//     mages/IMAGE_ID`.
 func (r *ProjectsLocationsProductsReferenceImagesService) Delete(name string) *ProjectsLocationsProductsReferenceImagesDeleteCall {
 	c := &ProjectsLocationsProductsReferenceImagesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -20519,7 +19273,7 @@ func (c *ProjectsLocationsProductsReferenceImagesDeleteCall) Header() http.Heade
 
 func (c *ProjectsLocationsProductsReferenceImagesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20554,17 +19308,17 @@ func (c *ProjectsLocationsProductsReferenceImagesDeleteCall) Do(opts ...googleap
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -20578,7 +19332,7 @@ func (c *ProjectsLocationsProductsReferenceImagesDeleteCall) Do(opts ...googleap
 	}
 	return ret, nil
 	// {
-	//   "description": "Permanently deletes a reference image.\n\nThe image metadata will be deleted right away, but search queries\nagainst ProductSets containing the image may still work until all related\ncaches are refreshed.\n\nThe actual image files are not deleted from Google Cloud Storage.",
+	//   "description": "Permanently deletes a reference image. The image metadata will be deleted right away, but search queries against ProductSets containing the image may still work until all related caches are refreshed. The actual image files are not deleted from Google Cloud Storage.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/products/{productsId}/referenceImages/{referenceImagesId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "vision.projects.locations.products.referenceImages.delete",
@@ -20587,7 +19341,7 @@ func (c *ProjectsLocationsProductsReferenceImagesDeleteCall) Do(opts ...googleap
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the reference image to delete.\n\nFormat is:\n\n`projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID/referenceImages/IMAGE_ID`",
+	//       "description": "Required. The resource name of the reference image to delete. Format is: `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID/referenceImages/IMAGE_ID`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/products/[^/]+/referenceImages/[^/]+$",
 	//       "required": true,
@@ -20617,11 +19371,12 @@ type ProjectsLocationsProductsReferenceImagesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets information associated with a ReferenceImage.
+// Get: Gets information associated with a ReferenceImage. Possible
+// errors: * Returns NOT_FOUND if the specified image does not exist.
 //
-// Possible errors:
-//
-// * Returns NOT_FOUND if the specified image does not exist.
+//   - name: The resource name of the ReferenceImage to get. Format is:
+//     `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID/referenceI
+//     mages/IMAGE_ID`.
 func (r *ProjectsLocationsProductsReferenceImagesService) Get(name string) *ProjectsLocationsProductsReferenceImagesGetCall {
 	c := &ProjectsLocationsProductsReferenceImagesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -20665,7 +19420,7 @@ func (c *ProjectsLocationsProductsReferenceImagesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsProductsReferenceImagesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20703,17 +19458,17 @@ func (c *ProjectsLocationsProductsReferenceImagesGetCall) Do(opts ...googleapi.C
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ReferenceImage{
 		ServerResponse: googleapi.ServerResponse{
@@ -20727,7 +19482,7 @@ func (c *ProjectsLocationsProductsReferenceImagesGetCall) Do(opts ...googleapi.C
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets information associated with a ReferenceImage.\n\nPossible errors:\n\n* Returns NOT_FOUND if the specified image does not exist.",
+	//   "description": "Gets information associated with a ReferenceImage. Possible errors: * Returns NOT_FOUND if the specified image does not exist.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/products/{productsId}/referenceImages/{referenceImagesId}",
 	//   "httpMethod": "GET",
 	//   "id": "vision.projects.locations.products.referenceImages.get",
@@ -20736,7 +19491,7 @@ func (c *ProjectsLocationsProductsReferenceImagesGetCall) Do(opts ...googleapi.C
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the ReferenceImage to get.\n\nFormat is:\n\n`projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID/referenceImages/IMAGE_ID`.",
+	//       "description": "Required. The resource name of the ReferenceImage to get. Format is: `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID/referenceImages/IMAGE_ID`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/products/[^/]+/referenceImages/[^/]+$",
 	//       "required": true,
@@ -20766,14 +19521,13 @@ type ProjectsLocationsProductsReferenceImagesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists reference images.
+// List: Lists reference images. Possible errors: * Returns NOT_FOUND if
+// the parent product does not exist. * Returns INVALID_ARGUMENT if the
+// page_size is greater than 100, or less than 1.
 //
-// Possible errors:
-//
-// * Returns NOT_FOUND if the parent product does not exist.
-// * Returns INVALID_ARGUMENT if the page_size is greater than 100, or
-// less
-//   than 1.
+//   - parent: Resource name of the product containing the reference
+//     images. Format is
+//     `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID`.
 func (r *ProjectsLocationsProductsReferenceImagesService) List(parent string) *ProjectsLocationsProductsReferenceImagesListCall {
 	c := &ProjectsLocationsProductsReferenceImagesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -20788,10 +19542,8 @@ func (c *ProjectsLocationsProductsReferenceImagesListCall) PageSize(pageSize int
 }
 
 // PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results to be returned. This is the value
-// of `nextPageToken` returned in a previous reference image list
-// request.
-//
+// identifying a page of results to be returned. This is the value of
+// `nextPageToken` returned in a previous reference image list request.
 // Defaults to the first page if not specified.
 func (c *ProjectsLocationsProductsReferenceImagesListCall) PageToken(pageToken string) *ProjectsLocationsProductsReferenceImagesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
@@ -20835,7 +19587,7 @@ func (c *ProjectsLocationsProductsReferenceImagesListCall) Header() http.Header 
 
 func (c *ProjectsLocationsProductsReferenceImagesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20873,17 +19625,17 @@ func (c *ProjectsLocationsProductsReferenceImagesListCall) Do(opts ...googleapi.
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListReferenceImagesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -20897,7 +19649,7 @@ func (c *ProjectsLocationsProductsReferenceImagesListCall) Do(opts ...googleapi.
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists reference images.\n\nPossible errors:\n\n* Returns NOT_FOUND if the parent product does not exist.\n* Returns INVALID_ARGUMENT if the page_size is greater than 100, or less\n  than 1.",
+	//   "description": "Lists reference images. Possible errors: * Returns NOT_FOUND if the parent product does not exist. * Returns INVALID_ARGUMENT if the page_size is greater than 100, or less than 1.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/products/{productsId}/referenceImages",
 	//   "httpMethod": "GET",
 	//   "id": "vision.projects.locations.products.referenceImages.list",
@@ -20912,12 +19664,12 @@ func (c *ProjectsLocationsProductsReferenceImagesListCall) Do(opts ...googleapi.
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token identifying a page of results to be returned. This is the value\nof `nextPageToken` returned in a previous reference image list request.\n\nDefaults to the first page if not specified.",
+	//       "description": "A token identifying a page of results to be returned. This is the value of `nextPageToken` returned in a previous reference image list request. Defaults to the first page if not specified.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Resource name of the product containing the reference images.\n\nFormat is\n`projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID`.",
+	//       "description": "Required. Resource name of the product containing the reference images. Format is `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/products/[^/]+$",
 	//       "required": true,
@@ -20968,11 +19720,11 @@ type ProjectsOperationsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets the latest state of a long-running operation.  Clients can
-// use this
-// method to poll the operation result at intervals as recommended by
-// the API
-// service.
+// Get: Gets the latest state of a long-running operation. Clients can
+// use this method to poll the operation result at intervals as
+// recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsOperationsService) Get(name string) *ProjectsOperationsGetCall {
 	c := &ProjectsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -21016,7 +19768,7 @@ func (c *ProjectsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21054,17 +19806,17 @@ func (c *ProjectsOperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -21078,7 +19830,7 @@ func (c *ProjectsOperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the latest state of a long-running operation.  Clients can use this\nmethod to poll the operation result at intervals as recommended by the API\nservice.",
+	//   "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
 	//   "flatPath": "v1/projects/{projectsId}/operations/{operationsId}",
 	//   "httpMethod": "GET",
 	//   "id": "vision.projects.operations.get",

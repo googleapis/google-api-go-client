@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -8,35 +8,35 @@
 //
 // For product documentation, see: https://developers.google.com/tag-manager
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/tagmanager/v1"
-//   ...
-//   ctx := context.Background()
-//   tagmanagerService, err := tagmanager.NewService(ctx)
+//	import "google.golang.org/api/tagmanager/v1"
+//	...
+//	ctx := context.Background()
+//	tagmanagerService, err := tagmanager.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//   tagmanagerService, err := tagmanager.NewService(ctx, option.WithScopes(tagmanager.TagmanagerReadonlyScope))
+//	tagmanagerService, err := tagmanager.NewService(ctx, option.WithScopes(tagmanager.TagmanagerReadonlyScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   tagmanagerService, err := tagmanager.NewService(ctx, option.WithAPIKey("AIza..."))
+//	tagmanagerService, err := tagmanager.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   tagmanagerService, err := tagmanager.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	tagmanagerService, err := tagmanager.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package tagmanager // import "google.golang.org/api/tagmanager/v1"
@@ -54,6 +54,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -78,7 +79,8 @@ var _ = internaloption.WithDefaultEndpoint
 const apiId = "tagmanager:v1"
 const apiName = "tagmanager"
 const apiVersion = "v1"
-const basePath = "https://www.googleapis.com/"
+const basePath = "https://tagmanager.googleapis.com/"
+const mtlsBasePath = "https://tagmanager.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
@@ -108,7 +110,7 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/tagmanager.delete.containers",
 		"https://www.googleapis.com/auth/tagmanager.edit.containers",
 		"https://www.googleapis.com/auth/tagmanager.edit.containerversions",
@@ -120,6 +122,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -310,19 +313,17 @@ type Account struct {
 	AccountId string `json:"accountId,omitempty"`
 
 	// Fingerprint: The fingerprint of the GTM Account as computed at
-	// storage time.
-	// This value is recomputed whenever the account is modified.
+	// storage time. This value is recomputed whenever the account is
+	// modified.
 	Fingerprint string `json:"fingerprint,omitempty"`
 
-	// Name: Account display name.
-	// @mutable tagmanager.accounts.create
+	// Name: Account display name. @mutable tagmanager.accounts.create
 	// @mutable tagmanager.accounts.update
 	Name string `json:"name,omitempty"`
 
 	// ShareData: Whether the account shares data anonymously with Google
-	// and others.
-	// @mutable tagmanager.accounts.create
-	// @mutable tagmanager.accounts.update
+	// and others. @mutable tagmanager.accounts.create @mutable
+	// tagmanager.accounts.update
 	ShareData bool `json:"shareData,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -331,10 +332,10 @@ type Account struct {
 
 	// ForceSendFields is a list of field names (e.g. "AccountId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AccountId") to include in
@@ -355,10 +356,8 @@ func (s *Account) MarshalJSON() ([]byte, error) {
 // AccountAccess: Defines the Google Tag Manager Account access
 // permissions.
 type AccountAccess struct {
-	// Permission: List of Account permissions.
-	// Valid account permissions are <code>read</code> and
-	// <code>manage</code>.
-	// @mutable tagmanager.accounts.permissions.create
+	// Permission: List of Account permissions. Valid account permissions
+	// are read and manage. @mutable tagmanager.accounts.permissions.create
 	// @mutable tagmanager.accounts.permissions.update
 	//
 	// Possible values:
@@ -372,10 +371,10 @@ type AccountAccess struct {
 
 	// ForceSendFields is a list of field names (e.g. "Permission") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Permission") to include in
@@ -396,33 +395,21 @@ func (s *AccountAccess) MarshalJSON() ([]byte, error) {
 // Condition: Represents a predicate.
 type Condition struct {
 	// Parameter: A list of named parameters (key/value), depending on the
-	// condition's type.
-	// Notes:<ul>
-	// <li>For binary operators, include parameters named <code>arg0</code>
-	// and
-	//    <code>arg1</code> for specifying the left and right operands,
-	//    respectively.</li>
-	// <li>At this time, the left operand (<code>arg0</code>) must be a
-	// reference
-	//     to a variable.</li>
-	// <li>For case-insensitive Regex matching, include a boolean parameter
-	// named
-	//     <code>ignore_case</code> that is set to <code>true</code>.
-	//     If not specified or set to any other value, the matching will be
-	// case
-	//     sensitive.</li>
-	// <li>To negate an operator, include a boolean parameter named
-	//     <code>negate</code> boolean parameter that is set to
-	// <code>true</code>.
-	//     </li>
-	// </ul>
-	// @mutable tagmanager.accounts.containers.triggers.create
-	// @mutable tagmanager.accounts.containers.triggers.update
+	// condition's type. Notes: - For binary operators, include parameters
+	// named arg0 and arg1 for specifying the left and right operands,
+	// respectively. - At this time, the left operand (arg0) must be a
+	// reference to a variable. - For case-insensitive Regex matching,
+	// include a boolean parameter named ignore_case that is set to true. If
+	// not specified or set to any other value, the matching will be case
+	// sensitive. - To negate an operator, include a boolean parameter named
+	// negate boolean parameter that is set to true. @mutable
+	// tagmanager.accounts.containers.triggers.create @mutable
+	// tagmanager.accounts.containers.triggers.update
 	Parameter []*Parameter `json:"parameter,omitempty"`
 
-	// Type: The type of operator for this condition.
-	// @mutable tagmanager.accounts.containers.triggers.create
-	// @mutable tagmanager.accounts.containers.triggers.update
+	// Type: The type of operator for this condition. @mutable
+	// tagmanager.accounts.containers.triggers.create @mutable
+	// tagmanager.accounts.containers.triggers.update
 	//
 	// Possible values:
 	//   "equals"
@@ -440,10 +427,10 @@ type Condition struct {
 
 	// ForceSendFields is a list of field names (e.g. "Parameter") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Parameter") to include in
@@ -470,26 +457,19 @@ type Container struct {
 	ContainerId string `json:"containerId,omitempty"`
 
 	// DomainName: Optional list of domain names associated with the
-	// Container.
-	// @mutable tagmanager.accounts.containers.create
-	// @mutable tagmanager.accounts.containers.update
+	// Container. @mutable tagmanager.accounts.containers.create @mutable
+	// tagmanager.accounts.containers.update
 	DomainName []string `json:"domainName,omitempty"`
 
 	// EnabledBuiltInVariable: List of enabled built-in variables. Valid
-	// values include: <code>pageUrl,
-	// pageHostname, pagePath, referrer, event, clickElement,
-	// clickClasses,
-	// clickId, clickTarget, clickUrl, clickText, formElement,
-	// formClasses,
-	// formId, formTarget, formUrl, formText, errorMessage, errorUrl,
-	// errorLine,
-	// newHistoryFragment, oldHistoryFragment, newHistoryState,
-	// oldHistoryState,
-	// historySource, containerVersion, debugMode,
-	// randomNumber,
-	// containerId</code>.
-	// @mutable tagmanager.accounts.containers.create
-	// @mutable tagmanager.accounts.containers.update
+	// values include: pageUrl, pageHostname, pagePath, referrer, event,
+	// clickElement, clickClasses, clickId, clickTarget, clickUrl,
+	// clickText, formElement, formClasses, formId, formTarget, formUrl,
+	// formText, errorMessage, errorUrl, errorLine, newHistoryFragment,
+	// oldHistoryFragment, newHistoryState, oldHistoryState, historySource,
+	// containerVersion, debugMode, randomNumber, containerId. @mutable
+	// tagmanager.accounts.containers.create @mutable
+	// tagmanager.accounts.containers.update
 	//
 	// Possible values:
 	//   "pageUrl"
@@ -600,38 +580,37 @@ type Container struct {
 	EnabledBuiltInVariable []string `json:"enabledBuiltInVariable,omitempty"`
 
 	// Fingerprint: The fingerprint of the GTM Container as computed at
-	// storage time.  This
-	// value is recomputed whenever the account is modified.
+	// storage time. This value is recomputed whenever the account is
+	// modified.
 	Fingerprint string `json:"fingerprint,omitempty"`
 
-	// Name: Container display name.
-	// @mutable tagmanager.accounts.containers.create
-	// @mutable tagmanager.accounts.containers.update
+	// Name: Container display name. @mutable
+	// tagmanager.accounts.containers.create @mutable
+	// tagmanager.accounts.containers.update
 	Name string `json:"name,omitempty"`
 
-	// Notes: Container Notes.
-	// @mutable tagmanager.accounts.containers.create
-	// @mutable tagmanager.accounts.containers.update
+	// Notes: Container Notes. @mutable
+	// tagmanager.accounts.containers.create @mutable
+	// tagmanager.accounts.containers.update
 	Notes string `json:"notes,omitempty"`
 
 	// PublicId: Container Public ID.
 	PublicId string `json:"publicId,omitempty"`
 
-	// TimeZoneCountryId: Container Country ID.
-	// @mutable tagmanager.accounts.containers.create
-	// @mutable tagmanager.accounts.containers.update
+	// TimeZoneCountryId: Container Country ID. @mutable
+	// tagmanager.accounts.containers.create @mutable
+	// tagmanager.accounts.containers.update
 	TimeZoneCountryId string `json:"timeZoneCountryId,omitempty"`
 
-	// TimeZoneId: Container Time Zone ID.
-	// @mutable tagmanager.accounts.containers.create
-	// @mutable tagmanager.accounts.containers.update
+	// TimeZoneId: Container Time Zone ID. @mutable
+	// tagmanager.accounts.containers.create @mutable
+	// tagmanager.accounts.containers.update
 	TimeZoneId string `json:"timeZoneId,omitempty"`
 
 	// UsageContext: List of Usage Contexts for the Container. Valid values
-	// include: <code>web,
-	// android, ios</code>.
-	// @mutable tagmanager.accounts.containers.create
-	// @mutable tagmanager.accounts.containers.update
+	// include: web, android, ios. @mutable
+	// tagmanager.accounts.containers.create @mutable
+	// tagmanager.accounts.containers.update
 	//
 	// Possible values:
 	//   "web"
@@ -648,10 +627,10 @@ type Container struct {
 
 	// ForceSendFields is a list of field names (e.g. "AccountId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AccountId") to include in
@@ -672,16 +651,15 @@ func (s *Container) MarshalJSON() ([]byte, error) {
 // ContainerAccess: Defines the Google Tag Manager Container access
 // permissions.
 type ContainerAccess struct {
-	// ContainerId: GTM Container ID.
-	// @mutable tagmanager.accounts.permissions.create
-	// @mutable tagmanager.accounts.permissions.update
+	// ContainerId: GTM Container ID. @mutable
+	// tagmanager.accounts.permissions.create @mutable
+	// tagmanager.accounts.permissions.update
 	ContainerId string `json:"containerId,omitempty"`
 
-	// Permission: List of Container permissions.
-	// Valid container permissions are: <code>read, edit, delete,
-	// publish</code>.
-	// @mutable tagmanager.accounts.permissions.create
-	// @mutable tagmanager.accounts.permissions.update
+	// Permission: List of Container permissions. Valid container
+	// permissions are: read, edit, delete, publish. @mutable
+	// tagmanager.accounts.permissions.create @mutable
+	// tagmanager.accounts.permissions.update
 	//
 	// Possible values:
 	//   "read"
@@ -694,10 +672,10 @@ type ContainerAccess struct {
 
 	// ForceSendFields is a list of field names (e.g. "ContainerId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ContainerId") to include
@@ -735,10 +713,8 @@ type ContainerVersion struct {
 	Deleted bool `json:"deleted,omitempty"`
 
 	// Fingerprint: The fingerprint of the GTM Container Version as computed
-	// at
-	// storage time. This value is recomputed whenever the container version
-	// is
-	// modified.
+	// at storage time. This value is recomputed whenever the container
+	// version is modified.
 	Fingerprint string `json:"fingerprint,omitempty"`
 
 	// Folder: The folders in the container that this version was taken
@@ -748,14 +724,12 @@ type ContainerVersion struct {
 	// Macro: The macros in the container that this version was taken from.
 	Macro []*Macro `json:"macro,omitempty"`
 
-	// Name: Container version display name.
-	// @mutable tagmanager.accounts.containers.versions.update
+	// Name: Container version display name. @mutable
+	// tagmanager.accounts.containers.versions.update
 	Name string `json:"name,omitempty"`
 
-	// Notes: User notes on how to apply this container version in
-	// the
-	// container.
-	// @mutable tagmanager.accounts.containers.versions.update
+	// Notes: User notes on how to apply this container version in the
+	// container. @mutable tagmanager.accounts.containers.versions.update
 	Notes string `json:"notes,omitempty"`
 
 	// Rule: The rules in the container that this version was taken from.
@@ -778,10 +752,10 @@ type ContainerVersion struct {
 
 	// ForceSendFields is a list of field names (e.g. "AccountId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AccountId") to include in
@@ -836,10 +810,10 @@ type ContainerVersionHeader struct {
 
 	// ForceSendFields is a list of field names (e.g. "AccountId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AccountId") to include in
@@ -867,16 +841,15 @@ type CreateContainerVersionRequestVersionOptions struct {
 	Notes string `json:"notes,omitempty"`
 
 	// QuickPreview: The creation of this version may be for quick preview
-	// and
-	// shouldn't be saved.
+	// and shouldn't be saved.
 	QuickPreview bool `json:"quickPreview,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Name") to include in API
@@ -908,10 +881,10 @@ type CreateContainerVersionResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "CompilerError") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CompilerError") to include
@@ -930,10 +903,9 @@ func (s *CreateContainerVersionResponse) MarshalJSON() ([]byte, error) {
 }
 
 // Environment: Represents a Google Tag Manager Environment. Note that a
-// user can create,
-// delete and update environments of type USER, but can only update
-// the
-// enable_debug and url fields of environments of other types.
+// user can create, delete and update environments of type USER, but can
+// only update the enable_debug and url fields of environments of other
+// types.
 type Environment struct {
 	// AccountId: GTM Account ID.
 	AccountId string `json:"accountId,omitempty"`
@@ -951,16 +923,15 @@ type Environment struct {
 	ContainerVersionId string `json:"containerVersionId,omitempty"`
 
 	// Description: The environment description. Can be set or changed only
-	// on USER type
-	// environments.
-	// @mutable tagmanager.accounts.containers.environments.create
-	// @mutable tagmanager.accounts.containers.environments.update
+	// on USER type environments. @mutable
+	// tagmanager.accounts.containers.environments.create @mutable
+	// tagmanager.accounts.containers.environments.update
 	Description string `json:"description,omitempty"`
 
 	// EnableDebug: Whether or not to enable debug by default on for the
-	// environment.
-	// @mutable tagmanager.accounts.containers.environments.create
-	// @mutable tagmanager.accounts.containers.environments.update
+	// environment. @mutable
+	// tagmanager.accounts.containers.environments.create @mutable
+	// tagmanager.accounts.containers.environments.update
 	EnableDebug bool `json:"enableDebug,omitempty"`
 
 	// EnvironmentId: GTM Environment ID uniquely identifies the GTM
@@ -968,15 +939,14 @@ type Environment struct {
 	EnvironmentId string `json:"environmentId,omitempty"`
 
 	// Fingerprint: The fingerprint of the GTM environment as computed at
-	// storage time.
-	// This value is recomputed whenever the environment is modified.
+	// storage time. This value is recomputed whenever the environment is
+	// modified.
 	Fingerprint string `json:"fingerprint,omitempty"`
 
 	// Name: The environment display name. Can be set or changed only on
-	// USER type
-	// environments.
-	// @mutable tagmanager.accounts.containers.environments.create
-	// @mutable tagmanager.accounts.containers.environments.update
+	// USER type environments. @mutable
+	// tagmanager.accounts.containers.environments.create @mutable
+	// tagmanager.accounts.containers.environments.update
 	Name string `json:"name,omitempty"`
 
 	// Type: The type of this environment.
@@ -984,19 +954,16 @@ type Environment struct {
 	// Possible values:
 	//   "user" - Used for user defined environments.
 	//   "live" - Used for Live environment, which points to the live
-	// published container
-	// version.
+	// published container version.
 	//   "latest" - Used for Latest environment, which points to the latest
-	// created container
-	// version.
+	// created container version.
 	//   "draft" - Used for Draft environment, which points to the single
-	// draft in
-	// the container.
+	// draft in the container.
 	Type string `json:"type,omitempty"`
 
-	// Url: Default preview page url for the environment.
-	// @mutable tagmanager.accounts.containers.environments.create
-	// @mutable tagmanager.accounts.containers.environments.update
+	// Url: Default preview page url for the environment. @mutable
+	// tagmanager.accounts.containers.environments.create @mutable
+	// tagmanager.accounts.containers.environments.update
 	Url string `json:"url,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1005,10 +972,10 @@ type Environment struct {
 
 	// ForceSendFields is a list of field names (e.g. "AccountId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AccountId") to include in
@@ -1035,16 +1002,15 @@ type Folder struct {
 	ContainerId string `json:"containerId,omitempty"`
 
 	// Fingerprint: The fingerprint of the GTM Folder as computed at storage
-	// time.
-	// This value is recomputed whenever the folder is modified.
+	// time. This value is recomputed whenever the folder is modified.
 	Fingerprint string `json:"fingerprint,omitempty"`
 
 	// FolderId: The Folder ID uniquely identifies the GTM Folder.
 	FolderId string `json:"folderId,omitempty"`
 
-	// Name: Folder display name.
-	// @mutable tagmanager.accounts.containers.folders.create
-	// @mutable tagmanager.accounts.containers.folders.update
+	// Name: Folder display name. @mutable
+	// tagmanager.accounts.containers.folders.create @mutable
+	// tagmanager.accounts.containers.folders.update
 	Name string `json:"name,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1053,10 +1019,10 @@ type Folder struct {
 
 	// ForceSendFields is a list of field names (e.g. "AccountId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AccountId") to include in
@@ -1091,10 +1057,10 @@ type FolderEntities struct {
 
 	// ForceSendFields is a list of field names (e.g. "Tag") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Tag") to include in API
@@ -1123,10 +1089,10 @@ type ListAccountUsersResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "UserAccess") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "UserAccess") to include in
@@ -1155,10 +1121,10 @@ type ListAccountsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Accounts") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Accounts") to include in
@@ -1191,10 +1157,10 @@ type ListContainerVersionsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "ContainerVersion") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ContainerVersion") to
@@ -1224,10 +1190,10 @@ type ListContainersResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Containers") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Containers") to include in
@@ -1256,10 +1222,10 @@ type ListEnvironmentsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Environments") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Environments") to include
@@ -1288,10 +1254,10 @@ type ListFoldersResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Folders") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Folders") to include in
@@ -1320,10 +1286,10 @@ type ListTagsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Tags") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Tags") to include in API
@@ -1352,10 +1318,10 @@ type ListTriggersResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Triggers") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Triggers") to include in
@@ -1384,10 +1350,10 @@ type ListVariablesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Variables") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Variables") to include in
@@ -1414,73 +1380,67 @@ type Macro struct {
 	ContainerId string `json:"containerId,omitempty"`
 
 	// DisablingRuleId: For mobile containers only: A list of rule IDs for
-	// disabling conditional
-	// macros; the macro is enabled if one of the enabling rules is true
-	// while all
-	// the disabling rules are false. Treated as an unordered set.
-	// @mutable tagmanager.accounts.containers.macros.create
-	// @mutable tagmanager.accounts.containers.macros.update
+	// disabling conditional macros; the macro is enabled if one of the
+	// enabling rules is true while all the disabling rules are false.
+	// Treated as an unordered set. @mutable
+	// tagmanager.accounts.containers.macros.create @mutable
+	// tagmanager.accounts.containers.macros.update
 	DisablingRuleId []string `json:"disablingRuleId,omitempty"`
 
 	// EnablingRuleId: For mobile containers only: A list of rule IDs for
-	// enabling conditional
-	// macros; the macro is enabled if one of the enabling rules is true
-	// while all
-	// the disabling rules are false. Treated as an unordered set.
-	// @mutable tagmanager.accounts.containers.macros.create
-	// @mutable tagmanager.accounts.containers.macros.update
+	// enabling conditional macros; the macro is enabled if one of the
+	// enabling rules is true while all the disabling rules are false.
+	// Treated as an unordered set. @mutable
+	// tagmanager.accounts.containers.macros.create @mutable
+	// tagmanager.accounts.containers.macros.update
 	EnablingRuleId []string `json:"enablingRuleId,omitempty"`
 
 	// Fingerprint: The fingerprint of the GTM Macro as computed at storage
-	// time.
-	// This value is recomputed whenever the macro is modified.
+	// time. This value is recomputed whenever the macro is modified.
 	Fingerprint string `json:"fingerprint,omitempty"`
 
 	// MacroId: The Macro ID uniquely identifies the GTM Macro.
 	MacroId string `json:"macroId,omitempty"`
 
-	// Name: Macro display name.
-	// @mutable tagmanager.accounts.containers.macros.create
-	// @mutable tagmanager.accounts.containers.macros.update
+	// Name: Macro display name. @mutable
+	// tagmanager.accounts.containers.macros.create @mutable
+	// tagmanager.accounts.containers.macros.update
 	Name string `json:"name,omitempty"`
 
-	// Notes: User notes on how to apply this macro in the
-	// container.
-	// @mutable tagmanager.accounts.containers.macros.create
-	// @mutable tagmanager.accounts.containers.macros.update
+	// Notes: User notes on how to apply this macro in the container.
+	// @mutable tagmanager.accounts.containers.macros.create @mutable
+	// tagmanager.accounts.containers.macros.update
 	Notes string `json:"notes,omitempty"`
 
-	// Parameter: The macro's parameters.
-	// @mutable tagmanager.accounts.containers.macros.create
-	// @mutable tagmanager.accounts.containers.macros.update
+	// Parameter: The macro's parameters. @mutable
+	// tagmanager.accounts.containers.macros.create @mutable
+	// tagmanager.accounts.containers.macros.update
 	Parameter []*Parameter `json:"parameter,omitempty"`
 
 	// ParentFolderId: Parent folder id.
 	ParentFolderId string `json:"parentFolderId,omitempty"`
 
-	// ScheduleEndMs: The end timestamp in milliseconds to schedule a
-	// macro.
-	// @mutable tagmanager.accounts.containers.macros.create
-	// @mutable tagmanager.accounts.containers.macros.update
+	// ScheduleEndMs: The end timestamp in milliseconds to schedule a macro.
+	// @mutable tagmanager.accounts.containers.macros.create @mutable
+	// tagmanager.accounts.containers.macros.update
 	ScheduleEndMs int64 `json:"scheduleEndMs,omitempty,string"`
 
 	// ScheduleStartMs: The start timestamp in milliseconds to schedule a
-	// macro.
-	// @mutable tagmanager.accounts.containers.macros.create
-	// @mutable tagmanager.accounts.containers.macros.update
+	// macro. @mutable tagmanager.accounts.containers.macros.create @mutable
+	// tagmanager.accounts.containers.macros.update
 	ScheduleStartMs int64 `json:"scheduleStartMs,omitempty,string"`
 
-	// Type: GTM Macro Type.
-	// @mutable tagmanager.accounts.containers.macros.create
-	// @mutable tagmanager.accounts.containers.macros.update
+	// Type: GTM Macro Type. @mutable
+	// tagmanager.accounts.containers.macros.create @mutable
+	// tagmanager.accounts.containers.macros.update
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AccountId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AccountId") to include in
@@ -1500,66 +1460,49 @@ func (s *Macro) MarshalJSON() ([]byte, error) {
 
 // Parameter: Represents a Google Tag Manager Parameter.
 type Parameter struct {
-	// Key: The named key that uniquely identifies a parameter.  Required
-	// for top-level
-	// parameters, as well as map values.  Ignored for list values.
-	// @mutable tagmanager.accounts.containers.variables.create
-	// @mutable tagmanager.accounts.containers.variables.update
-	// @mutable tagmanager.accounts.containers.triggers.create
-	// @mutable tagmanager.accounts.containers.triggers.update
-	// @mutable tagmanager.accounts.containers.tags.create
-	// @mutable tagmanager.accounts.containers.tags.update
+	// Key: The named key that uniquely identifies a parameter. Required for
+	// top-level parameters, as well as map values. Ignored for list values.
+	// @mutable tagmanager.accounts.containers.variables.create @mutable
+	// tagmanager.accounts.containers.variables.update @mutable
+	// tagmanager.accounts.containers.triggers.create @mutable
+	// tagmanager.accounts.containers.triggers.update @mutable
+	// tagmanager.accounts.containers.tags.create @mutable
+	// tagmanager.accounts.containers.tags.update
 	Key string `json:"key,omitempty"`
 
-	// List: This list parameter's parameters (keys will be
-	// ignored).
-	// @mutable tagmanager.accounts.containers.variables.create
-	// @mutable tagmanager.accounts.containers.variables.update
-	// @mutable tagmanager.accounts.containers.triggers.create
-	// @mutable tagmanager.accounts.containers.triggers.update
-	// @mutable tagmanager.accounts.containers.tags.create
-	// @mutable tagmanager.accounts.containers.tags.update
+	// List: This list parameter's parameters (keys will be ignored).
+	// @mutable tagmanager.accounts.containers.variables.create @mutable
+	// tagmanager.accounts.containers.variables.update @mutable
+	// tagmanager.accounts.containers.triggers.create @mutable
+	// tagmanager.accounts.containers.triggers.update @mutable
+	// tagmanager.accounts.containers.tags.create @mutable
+	// tagmanager.accounts.containers.tags.update
 	List []*Parameter `json:"list,omitempty"`
 
 	// Map: This map parameter's parameters (must have keys; keys must be
-	// unique).
-	// @mutable tagmanager.accounts.containers.variables.create
-	// @mutable tagmanager.accounts.containers.variables.update
-	// @mutable tagmanager.accounts.containers.triggers.create
-	// @mutable tagmanager.accounts.containers.triggers.update
-	// @mutable tagmanager.accounts.containers.tags.create
-	// @mutable tagmanager.accounts.containers.tags.update
+	// unique). @mutable tagmanager.accounts.containers.variables.create
+	// @mutable tagmanager.accounts.containers.variables.update @mutable
+	// tagmanager.accounts.containers.triggers.create @mutable
+	// tagmanager.accounts.containers.triggers.update @mutable
+	// tagmanager.accounts.containers.tags.create @mutable
+	// tagmanager.accounts.containers.tags.update
 	Map []*Parameter `json:"map,omitempty"`
 
-	// Type: The parameter type.  Valid values
-	// are:<ul>
-	// <li><code>boolean</code>: The value represents a boolean, represented
-	// as
-	//     'true' or 'false'</li>
-	// <li><code>integer</code>: The value represents a 64-bit signed
-	// integer
-	//     value, in base 10</li>
-	// <li><code>list</code>: A list of parameters should be
-	// specified</li>
-	// <li><code>map</code>: A map of parameters should be
-	// specified</li>
-	// <li><code>template</code>: The value represents any text; this can
-	// include
-	//     variable references (even variable references that might return
-	//     non-string types)</li>
-	// <li><code>trigger_reference</code>: The value represents a trigger,
-	//     represented as the trigger
-	// id</li>
-	// <li><code>tag_reference</code>: The value represents a tag,
-	// represented as
-	//     the tag name</li>
-	// </ul>
-	// @mutable tagmanager.accounts.containers.variables.create
-	// @mutable tagmanager.accounts.containers.variables.update
-	// @mutable tagmanager.accounts.containers.triggers.create
-	// @mutable tagmanager.accounts.containers.triggers.update
-	// @mutable tagmanager.accounts.containers.tags.create
-	// @mutable tagmanager.accounts.containers.tags.update
+	// Type: The parameter type. Valid values are: - boolean: The value
+	// represents a boolean, represented as 'true' or 'false' - integer: The
+	// value represents a 64-bit signed integer value, in base 10 - list: A
+	// list of parameters should be specified - map: A map of parameters
+	// should be specified - template: The value represents any text; this
+	// can include variable references (even variable references that might
+	// return non-string types) - trigger_reference: The value represents a
+	// trigger, represented as the trigger id - tag_reference: The value
+	// represents a tag, represented as the tag name @mutable
+	// tagmanager.accounts.containers.variables.create @mutable
+	// tagmanager.accounts.containers.variables.update @mutable
+	// tagmanager.accounts.containers.triggers.create @mutable
+	// tagmanager.accounts.containers.triggers.update @mutable
+	// tagmanager.accounts.containers.tags.create @mutable
+	// tagmanager.accounts.containers.tags.update
 	//
 	// Possible values:
 	//   "template" - May include variable references (such as
@@ -1572,24 +1515,22 @@ type Parameter struct {
 	//   "tagReference"
 	Type string `json:"type,omitempty"`
 
-	// Value: A parameter's value (may contain variable references such
-	// as
-	// "{{myVariable}}")
-	// as appropriate to the specified type.
-	// @mutable tagmanager.accounts.containers.variables.create
-	// @mutable tagmanager.accounts.containers.variables.update
-	// @mutable tagmanager.accounts.containers.triggers.create
-	// @mutable tagmanager.accounts.containers.triggers.update
-	// @mutable tagmanager.accounts.containers.tags.create
-	// @mutable tagmanager.accounts.containers.tags.update
+	// Value: A parameter's value (may contain variable references such as
+	// "{{myVariable}}") as appropriate to the specified type. @mutable
+	// tagmanager.accounts.containers.variables.create @mutable
+	// tagmanager.accounts.containers.variables.update @mutable
+	// tagmanager.accounts.containers.triggers.create @mutable
+	// tagmanager.accounts.containers.triggers.update @mutable
+	// tagmanager.accounts.containers.tags.create @mutable
+	// tagmanager.accounts.containers.tags.update
 	Value string `json:"value,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Key") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Key") to include in API
@@ -1621,10 +1562,10 @@ type PublishContainerVersionResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "CompilerError") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CompilerError") to include
@@ -1648,28 +1589,26 @@ type Rule struct {
 	AccountId string `json:"accountId,omitempty"`
 
 	// Condition: The list of conditions that make up this rule (implicit
-	// AND between them).
-	// @mutable tagmanager.accounts.containers.rules.create
-	// @mutable tagmanager.accounts.containers.rules.update
+	// AND between them). @mutable
+	// tagmanager.accounts.containers.rules.create @mutable
+	// tagmanager.accounts.containers.rules.update
 	Condition []*Condition `json:"condition,omitempty"`
 
 	// ContainerId: GTM Container ID.
 	ContainerId string `json:"containerId,omitempty"`
 
 	// Fingerprint: The fingerprint of the GTM Rule as computed at storage
-	// time.
-	// This value is recomputed whenever the rule is modified.
+	// time. This value is recomputed whenever the rule is modified.
 	Fingerprint string `json:"fingerprint,omitempty"`
 
-	// Name: Rule display name.
-	// @mutable tagmanager.accounts.containers.rules.create
-	// @mutable tagmanager.accounts.containers.rules.update
+	// Name: Rule display name. @mutable
+	// tagmanager.accounts.containers.rules.create @mutable
+	// tagmanager.accounts.containers.rules.update
 	Name string `json:"name,omitempty"`
 
-	// Notes: User notes on how to apply this rule in the
-	// container.
-	// @mutable tagmanager.accounts.containers.rules.create
-	// @mutable tagmanager.accounts.containers.rules.update
+	// Notes: User notes on how to apply this rule in the container.
+	// @mutable tagmanager.accounts.containers.rules.create @mutable
+	// tagmanager.accounts.containers.rules.update
 	Notes string `json:"notes,omitempty"`
 
 	// RuleId: The Rule ID uniquely identifies the GTM Rule.
@@ -1677,10 +1616,10 @@ type Rule struct {
 
 	// ForceSendFields is a list of field names (e.g. "AccountId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AccountId") to include in
@@ -1700,9 +1639,8 @@ func (s *Rule) MarshalJSON() ([]byte, error) {
 
 type SetupTag struct {
 	// StopOnSetupFailure: If true, fire the main tag if and only if the
-	// setup tag fires
-	// successfully.
-	// If false, fire the main tag regardless of setup tag firing status.
+	// setup tag fires successfully. If false, fire the main tag regardless
+	// of setup tag firing status.
 	StopOnSetupFailure bool `json:"stopOnSetupFailure,omitempty"`
 
 	// TagName: The name of the setup tag.
@@ -1710,10 +1648,10 @@ type SetupTag struct {
 
 	// ForceSendFields is a list of field names (e.g. "StopOnSetupFailure")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "StopOnSetupFailure") to
@@ -1738,95 +1676,82 @@ type Tag struct {
 	AccountId string `json:"accountId,omitempty"`
 
 	// BlockingRuleId: Blocking rule IDs. If any of the listed rules
-	// evaluate to true, the tag
-	//     will not fire.
-	// @mutable tagmanager.accounts.containers.tags.create
-	// @mutable tagmanager.accounts.containers.tags.update
+	// evaluate to true, the tag will not fire. @mutable
+	// tagmanager.accounts.containers.tags.create @mutable
+	// tagmanager.accounts.containers.tags.update
 	BlockingRuleId []string `json:"blockingRuleId,omitempty"`
 
 	// BlockingTriggerId: Blocking trigger IDs. If any of the listed
-	// triggers evaluate to true, the
-	// tag
-	//     will not fire.
-	// @mutable tagmanager.accounts.containers.tags.create
-	// @mutable tagmanager.accounts.containers.tags.update
+	// triggers evaluate to true, the tag will not fire. @mutable
+	// tagmanager.accounts.containers.tags.create @mutable
+	// tagmanager.accounts.containers.tags.update
 	BlockingTriggerId []string `json:"blockingTriggerId,omitempty"`
 
 	// ContainerId: GTM Container ID.
 	ContainerId string `json:"containerId,omitempty"`
 
 	// Fingerprint: The fingerprint of the GTM Tag as computed at storage
-	// time.
-	// This value is recomputed whenever the tag is modified.
+	// time. This value is recomputed whenever the tag is modified.
 	Fingerprint string `json:"fingerprint,omitempty"`
 
 	// FiringRuleId: Firing rule IDs. A tag will fire when any of the listed
-	// rules are true and
-	//     all of its <code>blockingRuleIds</code> (if any specified) are
-	// false.
-	// @mutable tagmanager.accounts.containers.tags.create
-	// @mutable tagmanager.accounts.containers.tags.update
+	// rules are true and all of its blockingRuleIds (if any specified) are
+	// false. @mutable tagmanager.accounts.containers.tags.create @mutable
+	// tagmanager.accounts.containers.tags.update
 	FiringRuleId []string `json:"firingRuleId,omitempty"`
 
 	// FiringTriggerId: Firing trigger IDs. A tag will fire when any of the
-	// listed triggers are
-	// true and all of its <code>blockingTriggerIds</code> (if any
-	// specified) are
-	// false.
-	// @mutable tagmanager.accounts.containers.tags.create
-	// @mutable tagmanager.accounts.containers.tags.update
+	// listed triggers are true and all of its blockingTriggerIds (if any
+	// specified) are false. @mutable
+	// tagmanager.accounts.containers.tags.create @mutable
+	// tagmanager.accounts.containers.tags.update
 	FiringTriggerId []string `json:"firingTriggerId,omitempty"`
 
 	// LiveOnly: If set to true, this tag will only fire in the live
-	// environment (e.g. not
-	// in preview or debug mode).
-	// @mutable tagmanager.accounts.containers.tags.create
-	// @mutable tagmanager.accounts.containers.tags.update
+	// environment (e.g. not in preview or debug mode). @mutable
+	// tagmanager.accounts.containers.tags.create @mutable
+	// tagmanager.accounts.containers.tags.update
 	LiveOnly bool `json:"liveOnly,omitempty"`
 
-	// Name: Tag display name.
-	// @mutable tagmanager.accounts.containers.tags.create
-	// @mutable tagmanager.accounts.containers.tags.update
+	// Name: Tag display name. @mutable
+	// tagmanager.accounts.containers.tags.create @mutable
+	// tagmanager.accounts.containers.tags.update
 	Name string `json:"name,omitempty"`
 
-	// Notes: User notes on how to apply this tag in the container.
-	// @mutable tagmanager.accounts.containers.tags.create
-	// @mutable tagmanager.accounts.containers.tags.update
+	// Notes: User notes on how to apply this tag in the container. @mutable
+	// tagmanager.accounts.containers.tags.create @mutable
+	// tagmanager.accounts.containers.tags.update
 	Notes string `json:"notes,omitempty"`
 
-	// Parameter: The tag's parameters.
-	// @mutable tagmanager.accounts.containers.tags.create
-	// @mutable tagmanager.accounts.containers.tags.update
+	// Parameter: The tag's parameters. @mutable
+	// tagmanager.accounts.containers.tags.create @mutable
+	// tagmanager.accounts.containers.tags.update
 	Parameter []*Parameter `json:"parameter,omitempty"`
 
 	// ParentFolderId: Parent folder id.
 	ParentFolderId string `json:"parentFolderId,omitempty"`
 
-	// Paused: True if the tag is paused.
-	// @mutable tagmanager.accounts.containers.tags.create
-	// @mutable tagmanager.accounts.containers.tags.update
+	// Paused: True if the tag is paused. @mutable
+	// tagmanager.accounts.containers.tags.create @mutable
+	// tagmanager.accounts.containers.tags.update
 	Paused bool `json:"paused,omitempty"`
 
 	// Priority: User defined numeric priority of the tag. Tags are fired
-	// asynchronously in
-	// order of priority. Tags with higher numeric value fire first. A
-	// tag's
-	// priority can be a positive or negative value. The default value is
-	// 0.
-	// @mutable tagmanager.accounts.containers.tags.create
-	// @mutable tagmanager.accounts.containers.tags.update
+	// asynchronously in order of priority. Tags with higher numeric value
+	// fire first. A tag's priority can be a positive or negative value. The
+	// default value is 0. @mutable
+	// tagmanager.accounts.containers.tags.create @mutable
+	// tagmanager.accounts.containers.tags.update
 	Priority *Parameter `json:"priority,omitempty"`
 
-	// ScheduleEndMs: The end timestamp in milliseconds to schedule a
-	// tag.
-	// @mutable tagmanager.accounts.containers.tags.create
-	// @mutable tagmanager.accounts.containers.tags.update
+	// ScheduleEndMs: The end timestamp in milliseconds to schedule a tag.
+	// @mutable tagmanager.accounts.containers.tags.create @mutable
+	// tagmanager.accounts.containers.tags.update
 	ScheduleEndMs int64 `json:"scheduleEndMs,omitempty,string"`
 
 	// ScheduleStartMs: The start timestamp in milliseconds to schedule a
-	// tag.
-	// @mutable tagmanager.accounts.containers.tags.create
-	// @mutable tagmanager.accounts.containers.tags.update
+	// tag. @mutable tagmanager.accounts.containers.tags.create @mutable
+	// tagmanager.accounts.containers.tags.update
 	ScheduleStartMs int64 `json:"scheduleStartMs,omitempty,string"`
 
 	// SetupTag: The list of setup tags. Currently we only allow one.
@@ -1837,8 +1762,7 @@ type Tag struct {
 	// Possible values:
 	//   "unlimited" - Tag can be fired multiple times per event.
 	//   "oncePerEvent" - Tag can only be fired per event but can be fired
-	// multiple times per load
-	// (e.g., app load or page load).
+	// multiple times per load (e.g., app load or page load).
 	//   "oncePerLoad" - Tag can only be fired per load (e.g., app load or
 	// page load).
 	TagFiringOption string `json:"tagFiringOption,omitempty"`
@@ -1849,9 +1773,9 @@ type Tag struct {
 	// TeardownTag: The list of teardown tags. Currently we only allow one.
 	TeardownTag []*TeardownTag `json:"teardownTag,omitempty"`
 
-	// Type: GTM Tag Type.
-	// @mutable tagmanager.accounts.containers.tags.create
-	// @mutable tagmanager.accounts.containers.tags.update
+	// Type: GTM Tag Type. @mutable
+	// tagmanager.accounts.containers.tags.create @mutable
+	// tagmanager.accounts.containers.tags.update
 	Type string `json:"type,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1860,10 +1784,10 @@ type Tag struct {
 
 	// ForceSendFields is a list of field names (e.g. "AccountId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AccountId") to include in
@@ -1883,9 +1807,8 @@ func (s *Tag) MarshalJSON() ([]byte, error) {
 
 type TeardownTag struct {
 	// StopTeardownOnFailure: If true, fire the teardown tag if and only if
-	// the main tag fires
-	// successfully.
-	// If false, fire the teardown tag regardless of main tag firing status.
+	// the main tag fires successfully. If false, fire the teardown tag
+	// regardless of main tag firing status.
 	StopTeardownOnFailure bool `json:"stopTeardownOnFailure,omitempty"`
 
 	// TagName: The name of the teardown tag.
@@ -1893,8 +1816,8 @@ type TeardownTag struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "StopTeardownOnFailure") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -1921,128 +1844,114 @@ type Trigger struct {
 	// AccountId: GTM Account ID.
 	AccountId string `json:"accountId,omitempty"`
 
-	// AutoEventFilter: Used in the case of auto event tracking.
-	// @mutable tagmanager.accounts.containers.triggers.create
-	// @mutable tagmanager.accounts.containers.triggers.update
+	// AutoEventFilter: Used in the case of auto event tracking. @mutable
+	// tagmanager.accounts.containers.triggers.create @mutable
+	// tagmanager.accounts.containers.triggers.update
 	AutoEventFilter []*Condition `json:"autoEventFilter,omitempty"`
 
 	// CheckValidation: Whether or not we should only fire tags if the form
-	// submit or link click
-	// event is not cancelled by some other event handler (e.g. because
-	// of
-	// validation). Only valid for Form Submission and Link Click
-	// triggers.
-	// @mutable tagmanager.accounts.containers.triggers.create
-	// @mutable tagmanager.accounts.containers.triggers.update
+	// submit or link click event is not cancelled by some other event
+	// handler (e.g. because of validation). Only valid for Form Submission
+	// and Link Click triggers. @mutable
+	// tagmanager.accounts.containers.triggers.create @mutable
+	// tagmanager.accounts.containers.triggers.update
 	CheckValidation *Parameter `json:"checkValidation,omitempty"`
 
 	// ContainerId: GTM Container ID.
 	ContainerId string `json:"containerId,omitempty"`
 
 	// ContinuousTimeMinMilliseconds: A visibility trigger minimum
-	// continuous visible time (in milliseconds).
-	// Only valid for AMP Visibility trigger.
-	// @mutable tagmanager.accounts.containers.triggers.create
-	// @mutable tagmanager.accounts.containers.triggers.update
+	// continuous visible time (in milliseconds). Only valid for AMP
+	// Visibility trigger. @mutable
+	// tagmanager.accounts.containers.triggers.create @mutable
+	// tagmanager.accounts.containers.triggers.update
 	ContinuousTimeMinMilliseconds *Parameter `json:"continuousTimeMinMilliseconds,omitempty"`
 
 	// CustomEventFilter: Used in the case of custom event, which is fired
-	// iff all Conditions are
-	// true.
-	// @mutable tagmanager.accounts.containers.triggers.create
-	// @mutable tagmanager.accounts.containers.triggers.update
+	// iff all Conditions are true. @mutable
+	// tagmanager.accounts.containers.triggers.create @mutable
+	// tagmanager.accounts.containers.triggers.update
 	CustomEventFilter []*Condition `json:"customEventFilter,omitempty"`
 
 	// EventName: Name of the GTM event that is fired. Only valid for Timer
-	// triggers.
-	// @mutable tagmanager.accounts.containers.triggers.create
+	// triggers. @mutable tagmanager.accounts.containers.triggers.create
 	// @mutable tagmanager.accounts.containers.triggers.update
 	EventName *Parameter `json:"eventName,omitempty"`
 
-	// Filter: The trigger will only fire iff all Conditions are
-	// true.
-	// @mutable tagmanager.accounts.containers.triggers.create
-	// @mutable tagmanager.accounts.containers.triggers.update
+	// Filter: The trigger will only fire iff all Conditions are true.
+	// @mutable tagmanager.accounts.containers.triggers.create @mutable
+	// tagmanager.accounts.containers.triggers.update
 	Filter []*Condition `json:"filter,omitempty"`
 
 	// Fingerprint: The fingerprint of the GTM Trigger as computed at
-	// storage time.
-	// This value is recomputed whenever the trigger is modified.
+	// storage time. This value is recomputed whenever the trigger is
+	// modified.
 	Fingerprint string `json:"fingerprint,omitempty"`
 
 	// HorizontalScrollPercentageList: List of integer percentage values for
-	// scroll triggers. The trigger will
-	// fire when each percentage is reached when the view is
-	// scrolled
-	// horizontally. Only valid for AMP scroll triggers.
-	// @mutable tagmanager.accounts.containers.triggers.create
-	// @mutable tagmanager.accounts.containers.triggers.update
+	// scroll triggers. The trigger will fire when each percentage is
+	// reached when the view is scrolled horizontally. Only valid for AMP
+	// scroll triggers. @mutable
+	// tagmanager.accounts.containers.triggers.create @mutable
+	// tagmanager.accounts.containers.triggers.update
 	HorizontalScrollPercentageList *Parameter `json:"horizontalScrollPercentageList,omitempty"`
 
 	// Interval: Time between triggering recurring Timer Events (in
-	// milliseconds). Only
-	// valid for Timer triggers.
-	// @mutable tagmanager.accounts.containers.triggers.create
-	// @mutable tagmanager.accounts.containers.triggers.update
+	// milliseconds). Only valid for Timer triggers. @mutable
+	// tagmanager.accounts.containers.triggers.create @mutable
+	// tagmanager.accounts.containers.triggers.update
 	Interval *Parameter `json:"interval,omitempty"`
 
 	// IntervalSeconds: Time between Timer Events to fire (in seconds). Only
-	// valid for AMP Timer
-	// trigger.
-	// @mutable tagmanager.accounts.containers.triggers.create
-	// @mutable tagmanager.accounts.containers.triggers.update
+	// valid for AMP Timer trigger. @mutable
+	// tagmanager.accounts.containers.triggers.create @mutable
+	// tagmanager.accounts.containers.triggers.update
 	IntervalSeconds *Parameter `json:"intervalSeconds,omitempty"`
 
 	// Limit: Limit of the number of GTM events this Timer Trigger will
-	// fire. If no limit
-	// is set, we will continue to fire GTM events until the user leaves the
-	// page.
-	// Only valid for Timer triggers.
-	// @mutable tagmanager.accounts.containers.triggers.create
-	// @mutable tagmanager.accounts.containers.triggers.update
+	// fire. If no limit is set, we will continue to fire GTM events until
+	// the user leaves the page. Only valid for Timer triggers. @mutable
+	// tagmanager.accounts.containers.triggers.create @mutable
+	// tagmanager.accounts.containers.triggers.update
 	Limit *Parameter `json:"limit,omitempty"`
 
 	// MaxTimerLengthSeconds: Max time to fire Timer Events (in seconds).
-	// Only valid for AMP Timer
-	// trigger.
-	// @mutable tagmanager.accounts.containers.triggers.create
-	// @mutable tagmanager.accounts.containers.triggers.update
+	// Only valid for AMP Timer trigger. @mutable
+	// tagmanager.accounts.containers.triggers.create @mutable
+	// tagmanager.accounts.containers.triggers.update
 	MaxTimerLengthSeconds *Parameter `json:"maxTimerLengthSeconds,omitempty"`
 
-	// Name: Trigger display name.
-	// @mutable tagmanager.accounts.containers.triggers.create
-	// @mutable tagmanager.accounts.containers.triggers.update
+	// Name: Trigger display name. @mutable
+	// tagmanager.accounts.containers.triggers.create @mutable
+	// tagmanager.accounts.containers.triggers.update
 	Name string `json:"name,omitempty"`
 
-	// Parameter: Additional parameters.
-	// @mutable
-	// tagmanager.accounts.containers.workspaces.triggers.create
-	// @mutable tagmanager.accounts.containers.workspaces.triggers.update
+	// Parameter: Additional parameters. @mutable
+	// tagmanager.accounts.containers.workspaces.triggers.create @mutable
+	// tagmanager.accounts.containers.workspaces.triggers.update
 	Parameter []*Parameter `json:"parameter,omitempty"`
 
 	// ParentFolderId: Parent folder id.
 	ParentFolderId string `json:"parentFolderId,omitempty"`
 
 	// Selector: A click trigger CSS selector (i.e. "a", "button" etc.).
-	// Only valid for AMP
-	// Click trigger.
-	// @mutable tagmanager.accounts.containers.triggers.create
-	// @mutable tagmanager.accounts.containers.triggers.update
+	// Only valid for AMP Click trigger. @mutable
+	// tagmanager.accounts.containers.triggers.create @mutable
+	// tagmanager.accounts.containers.triggers.update
 	Selector *Parameter `json:"selector,omitempty"`
 
 	// TotalTimeMinMilliseconds: A visibility trigger minimum total visible
-	// time (in milliseconds).
-	// Only valid for AMP Visibility trigger.
-	// @mutable tagmanager.accounts.containers.triggers.create
-	// @mutable tagmanager.accounts.containers.triggers.update
+	// time (in milliseconds). Only valid for AMP Visibility trigger.
+	// @mutable tagmanager.accounts.containers.triggers.create @mutable
+	// tagmanager.accounts.containers.triggers.update
 	TotalTimeMinMilliseconds *Parameter `json:"totalTimeMinMilliseconds,omitempty"`
 
 	// TriggerId: The Trigger ID uniquely identifies the GTM Trigger.
 	TriggerId string `json:"triggerId,omitempty"`
 
-	// Type: Defines the data layer event that causes this trigger.
-	// @mutable tagmanager.accounts.containers.triggers.create
-	// @mutable tagmanager.accounts.containers.triggers.update
+	// Type: Defines the data layer event that causes this trigger. @mutable
+	// tagmanager.accounts.containers.triggers.create @mutable
+	// tagmanager.accounts.containers.triggers.update
 	//
 	// Possible values:
 	//   "pageview"
@@ -2067,66 +1976,54 @@ type Trigger struct {
 	Type string `json:"type,omitempty"`
 
 	// UniqueTriggerId: Globally unique id of the trigger that
-	// auto-generates this (a Form Submit,
-	// Link Click or Timer listener) if any. Used to make incompatible
-	// auto-events
-	// work together with trigger filtering based on trigger ids. This value
-	// is
-	// populated during output generation since the tags implied by triggers
-	// don't
-	// exist until then. Only valid for Form Submit, Link Click and
-	// Timer
-	// triggers.
-	// @mutable tagmanager.accounts.containers.triggers.create
-	// @mutable tagmanager.accounts.containers.triggers.update
+	// auto-generates this (a Form Submit, Link Click or Timer listener) if
+	// any. Used to make incompatible auto-events work together with trigger
+	// filtering based on trigger ids. This value is populated during output
+	// generation since the tags implied by triggers don't exist until then.
+	// Only valid for Form Submit, Link Click and Timer triggers. @mutable
+	// tagmanager.accounts.containers.triggers.create @mutable
+	// tagmanager.accounts.containers.triggers.update
 	UniqueTriggerId *Parameter `json:"uniqueTriggerId,omitempty"`
 
 	// VerticalScrollPercentageList: List of integer percentage values for
-	// scroll triggers. The trigger will
-	// fire when each percentage is reached when the view is scrolled
-	// vertically.
-	// Only valid for AMP scroll triggers.
-	// @mutable tagmanager.accounts.containers.triggers.create
-	// @mutable tagmanager.accounts.containers.triggers.update
+	// scroll triggers. The trigger will fire when each percentage is
+	// reached when the view is scrolled vertically. Only valid for AMP
+	// scroll triggers. @mutable
+	// tagmanager.accounts.containers.triggers.create @mutable
+	// tagmanager.accounts.containers.triggers.update
 	VerticalScrollPercentageList *Parameter `json:"verticalScrollPercentageList,omitempty"`
 
 	// VisibilitySelector: A visibility trigger CSS selector (i.e. "#id").
-	// Only valid for AMP
-	// Visibility trigger.
-	// @mutable tagmanager.accounts.containers.triggers.create
-	// @mutable tagmanager.accounts.containers.triggers.update
+	// Only valid for AMP Visibility trigger. @mutable
+	// tagmanager.accounts.containers.triggers.create @mutable
+	// tagmanager.accounts.containers.triggers.update
 	VisibilitySelector *Parameter `json:"visibilitySelector,omitempty"`
 
 	// VisiblePercentageMax: A visibility trigger maximum percent
-	// visibility. Only valid for AMP
-	// Visibility trigger.
-	// @mutable tagmanager.accounts.containers.triggers.create
-	// @mutable tagmanager.accounts.containers.triggers.update
+	// visibility. Only valid for AMP Visibility trigger. @mutable
+	// tagmanager.accounts.containers.triggers.create @mutable
+	// tagmanager.accounts.containers.triggers.update
 	VisiblePercentageMax *Parameter `json:"visiblePercentageMax,omitempty"`
 
 	// VisiblePercentageMin: A visibility trigger minimum percent
-	// visibility. Only valid for AMP
-	// Visibility trigger.
-	// @mutable tagmanager.accounts.containers.triggers.create
-	// @mutable tagmanager.accounts.containers.triggers.update
+	// visibility. Only valid for AMP Visibility trigger. @mutable
+	// tagmanager.accounts.containers.triggers.create @mutable
+	// tagmanager.accounts.containers.triggers.update
 	VisiblePercentageMin *Parameter `json:"visiblePercentageMin,omitempty"`
 
 	// WaitForTags: Whether or not we should delay the form submissions or
-	// link opening
-	// until all of the tags have fired (by preventing the default
-	// action and later simulating the default action). Only valid for
-	// Form Submission and Link Click triggers.
-	// @mutable tagmanager.accounts.containers.triggers.create
-	// @mutable tagmanager.accounts.containers.triggers.update
+	// link opening until all of the tags have fired (by preventing the
+	// default action and later simulating the default action). Only valid
+	// for Form Submission and Link Click triggers. @mutable
+	// tagmanager.accounts.containers.triggers.create @mutable
+	// tagmanager.accounts.containers.triggers.update
 	WaitForTags *Parameter `json:"waitForTags,omitempty"`
 
 	// WaitForTagsTimeout: How long to wait (in milliseconds) for tags to
-	// fire when 'waits_for_tags'
-	// above evaluates to <code>true</code>.  Only valid for Form Submission
-	// and
-	// Link Click triggers.
-	// @mutable tagmanager.accounts.containers.triggers.create
-	// @mutable tagmanager.accounts.containers.triggers.update
+	// fire when 'waits_for_tags' above evaluates to true. Only valid for
+	// Form Submission and Link Click triggers. @mutable
+	// tagmanager.accounts.containers.triggers.create @mutable
+	// tagmanager.accounts.containers.triggers.update
 	WaitForTagsTimeout *Parameter `json:"waitForTagsTimeout,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2135,10 +2032,10 @@ type Trigger struct {
 
 	// ForceSendFields is a list of field names (e.g. "AccountId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AccountId") to include in
@@ -2159,21 +2056,21 @@ func (s *Trigger) MarshalJSON() ([]byte, error) {
 // UserAccess: Represents a user's permissions to an account and its
 // container.
 type UserAccess struct {
-	// AccountAccess: GTM Account access permissions.
-	// @mutable tagmanager.accounts.permissions.create
-	// @mutable tagmanager.accounts.permissions.update
+	// AccountAccess: GTM Account access permissions. @mutable
+	// tagmanager.accounts.permissions.create @mutable
+	// tagmanager.accounts.permissions.update
 	AccountAccess *AccountAccess `json:"accountAccess,omitempty"`
 
 	// AccountId: GTM Account ID.
 	AccountId string `json:"accountId,omitempty"`
 
-	// ContainerAccess: GTM Container access permissions.
-	// @mutable tagmanager.accounts.permissions.create
-	// @mutable tagmanager.accounts.permissions.update
+	// ContainerAccess: GTM Container access permissions. @mutable
+	// tagmanager.accounts.permissions.create @mutable
+	// tagmanager.accounts.permissions.update
 	ContainerAccess []*ContainerAccess `json:"containerAccess,omitempty"`
 
-	// EmailAddress: User's email address.
-	// @mutable tagmanager.accounts.permissions.create
+	// EmailAddress: User's email address. @mutable
+	// tagmanager.accounts.permissions.create
 	EmailAddress string `json:"emailAddress,omitempty"`
 
 	// PermissionId: Account Permission ID.
@@ -2185,10 +2082,10 @@ type UserAccess struct {
 
 	// ForceSendFields is a list of field names (e.g. "AccountAccess") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AccountAccess") to include
@@ -2215,64 +2112,57 @@ type Variable struct {
 	ContainerId string `json:"containerId,omitempty"`
 
 	// DisablingTriggerId: For mobile containers only: A list of trigger IDs
-	// for disabling conditional
-	// variables; the variable is enabled if one of the enabling trigger is
-	// true
-	// while all the disabling trigger are false. Treated as an unordered
-	// set.
-	// @mutable tagmanager.accounts.containers.variables.create
-	// @mutable tagmanager.accounts.containers.variables.update
+	// for disabling conditional variables; the variable is enabled if one
+	// of the enabling trigger is true while all the disabling trigger are
+	// false. Treated as an unordered set. @mutable
+	// tagmanager.accounts.containers.variables.create @mutable
+	// tagmanager.accounts.containers.variables.update
 	DisablingTriggerId []string `json:"disablingTriggerId,omitempty"`
 
 	// EnablingTriggerId: For mobile containers only: A list of trigger IDs
-	// for enabling conditional
-	// variables; the variable is enabled if one of the enabling triggers is
-	// true
-	// while all the disabling triggers are false. Treated as an unordered
-	// set.
-	// @mutable tagmanager.accounts.containers.variables.create
-	// @mutable tagmanager.accounts.containers.variables.update
+	// for enabling conditional variables; the variable is enabled if one of
+	// the enabling triggers is true while all the disabling triggers are
+	// false. Treated as an unordered set. @mutable
+	// tagmanager.accounts.containers.variables.create @mutable
+	// tagmanager.accounts.containers.variables.update
 	EnablingTriggerId []string `json:"enablingTriggerId,omitempty"`
 
 	// Fingerprint: The fingerprint of the GTM Variable as computed at
-	// storage time.
-	// This value is recomputed whenever the variable is modified.
+	// storage time. This value is recomputed whenever the variable is
+	// modified.
 	Fingerprint string `json:"fingerprint,omitempty"`
 
-	// Name: Variable display name.
-	// @mutable tagmanager.accounts.containers.variables.create
-	// @mutable tagmanager.accounts.containers.variables.update
+	// Name: Variable display name. @mutable
+	// tagmanager.accounts.containers.variables.create @mutable
+	// tagmanager.accounts.containers.variables.update
 	Name string `json:"name,omitempty"`
 
-	// Notes: User notes on how to apply this variable in the
-	// container.
-	// @mutable tagmanager.accounts.containers.variables.create
-	// @mutable tagmanager.accounts.containers.variables.update
+	// Notes: User notes on how to apply this variable in the container.
+	// @mutable tagmanager.accounts.containers.variables.create @mutable
+	// tagmanager.accounts.containers.variables.update
 	Notes string `json:"notes,omitempty"`
 
-	// Parameter: The variable's parameters.
-	// @mutable tagmanager.accounts.containers.variables.create
-	// @mutable tagmanager.accounts.containers.variables.update
+	// Parameter: The variable's parameters. @mutable
+	// tagmanager.accounts.containers.variables.create @mutable
+	// tagmanager.accounts.containers.variables.update
 	Parameter []*Parameter `json:"parameter,omitempty"`
 
 	// ParentFolderId: Parent folder id.
 	ParentFolderId string `json:"parentFolderId,omitempty"`
 
 	// ScheduleEndMs: The end timestamp in milliseconds to schedule a
-	// variable.
-	// @mutable tagmanager.accounts.containers.variables.create
+	// variable. @mutable tagmanager.accounts.containers.variables.create
 	// @mutable tagmanager.accounts.containers.variables.update
 	ScheduleEndMs int64 `json:"scheduleEndMs,omitempty,string"`
 
 	// ScheduleStartMs: The start timestamp in milliseconds to schedule a
-	// variable.
-	// @mutable tagmanager.accounts.containers.variables.create
+	// variable. @mutable tagmanager.accounts.containers.variables.create
 	// @mutable tagmanager.accounts.containers.variables.update
 	ScheduleStartMs int64 `json:"scheduleStartMs,omitempty,string"`
 
-	// Type: GTM Variable Type.
-	// @mutable tagmanager.accounts.containers.variables.create
-	// @mutable tagmanager.accounts.containers.variables.update
+	// Type: GTM Variable Type. @mutable
+	// tagmanager.accounts.containers.variables.create @mutable
+	// tagmanager.accounts.containers.variables.update
 	Type string `json:"type,omitempty"`
 
 	// VariableId: The Variable ID uniquely identifies the GTM Variable.
@@ -2284,10 +2174,10 @@ type Variable struct {
 
 	// ForceSendFields is a list of field names (e.g. "AccountId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AccountId") to include in
@@ -2317,6 +2207,8 @@ type AccountsGetCall struct {
 }
 
 // Get: Gets a GTM Account.
+//
+// - accountId: The GTM Account ID.
 func (r *AccountsService) Get(accountId string) *AccountsGetCall {
 	c := &AccountsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -2360,7 +2252,7 @@ func (c *AccountsGetCall) Header() http.Header {
 
 func (c *AccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2398,17 +2290,17 @@ func (c *AccountsGetCall) Do(opts ...googleapi.CallOption) (*Account, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Account{
 		ServerResponse: googleapi.ServerResponse{
@@ -2503,7 +2395,7 @@ func (c *AccountsListCall) Header() http.Header {
 
 func (c *AccountsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2538,17 +2430,17 @@ func (c *AccountsListCall) Do(opts ...googleapi.CallOption) (*ListAccountsRespon
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListAccountsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2593,6 +2485,8 @@ type AccountsUpdateCall struct {
 }
 
 // Update: Updates a GTM Account.
+//
+// - accountId: The GTM Account ID.
 func (r *AccountsService) Update(accountId string, account *Account) *AccountsUpdateCall {
 	c := &AccountsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -2601,8 +2495,8 @@ func (r *AccountsService) Update(accountId string, account *Account) *AccountsUp
 }
 
 // Fingerprint sets the optional parameter "fingerprint": When provided,
-// this fingerprint must match the fingerprint of the account
-// in storage.
+// this fingerprint must match the fingerprint of the account in
+// storage.
 func (c *AccountsUpdateCall) Fingerprint(fingerprint string) *AccountsUpdateCall {
 	c.urlParams_.Set("fingerprint", fingerprint)
 	return c
@@ -2635,7 +2529,7 @@ func (c *AccountsUpdateCall) Header() http.Header {
 
 func (c *AccountsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2675,17 +2569,17 @@ func (c *AccountsUpdateCall) Do(opts ...googleapi.CallOption) (*Account, error) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Account{
 		ServerResponse: googleapi.ServerResponse{
@@ -2714,7 +2608,7 @@ func (c *AccountsUpdateCall) Do(opts ...googleapi.CallOption) (*Account, error) 
 	//       "type": "string"
 	//     },
 	//     "fingerprint": {
-	//       "description": "When provided, this fingerprint must match the fingerprint of the account\nin storage.",
+	//       "description": "When provided, this fingerprint must match the fingerprint of the account in storage.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -2745,6 +2639,8 @@ type AccountsContainersCreateCall struct {
 }
 
 // Create: Creates a Container.
+//
+// - accountId: The GTM Account ID.
 func (r *AccountsContainersService) Create(accountId string, container *Container) *AccountsContainersCreateCall {
 	c := &AccountsContainersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -2779,7 +2675,7 @@ func (c *AccountsContainersCreateCall) Header() http.Header {
 
 func (c *AccountsContainersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2819,17 +2715,17 @@ func (c *AccountsContainersCreateCall) Do(opts ...googleapi.CallOption) (*Contai
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Container{
 		ServerResponse: googleapi.ServerResponse{
@@ -2884,6 +2780,9 @@ type AccountsContainersDeleteCall struct {
 }
 
 // Delete: Deletes a Container.
+//
+// - accountId: The GTM Account ID.
+// - containerId: The GTM Container ID.
 func (r *AccountsContainersService) Delete(accountId string, containerId string) *AccountsContainersDeleteCall {
 	c := &AccountsContainersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -2918,7 +2817,7 @@ func (c *AccountsContainersDeleteCall) Header() http.Header {
 
 func (c *AccountsContainersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2949,7 +2848,7 @@ func (c *AccountsContainersDeleteCall) Do(opts ...googleapi.CallOption) error {
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return gensupport.WrapError(err)
 	}
 	return nil
 	// {
@@ -2996,6 +2895,9 @@ type AccountsContainersGetCall struct {
 }
 
 // Get: Gets a Container.
+//
+// - accountId: The GTM Account ID.
+// - containerId: The GTM Container ID.
 func (r *AccountsContainersService) Get(accountId string, containerId string) *AccountsContainersGetCall {
 	c := &AccountsContainersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -3040,7 +2942,7 @@ func (c *AccountsContainersGetCall) Header() http.Header {
 
 func (c *AccountsContainersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3079,17 +2981,17 @@ func (c *AccountsContainersGetCall) Do(opts ...googleapi.CallOption) (*Container
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Container{
 		ServerResponse: googleapi.ServerResponse{
@@ -3149,6 +3051,8 @@ type AccountsContainersListCall struct {
 }
 
 // List: Lists all Containers that belongs to a GTM Account.
+//
+// - accountId: The GTM Account ID.
 func (r *AccountsContainersService) List(accountId string) *AccountsContainersListCall {
 	c := &AccountsContainersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -3192,7 +3096,7 @@ func (c *AccountsContainersListCall) Header() http.Header {
 
 func (c *AccountsContainersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3230,17 +3134,17 @@ func (c *AccountsContainersListCall) Do(opts ...googleapi.CallOption) (*ListCont
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListContainersResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3294,6 +3198,9 @@ type AccountsContainersUpdateCall struct {
 }
 
 // Update: Updates a Container.
+//
+// - accountId: The GTM Account ID.
+// - containerId: The GTM Container ID.
 func (r *AccountsContainersService) Update(accountId string, containerId string, container *Container) *AccountsContainersUpdateCall {
 	c := &AccountsContainersUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -3303,8 +3210,8 @@ func (r *AccountsContainersService) Update(accountId string, containerId string,
 }
 
 // Fingerprint sets the optional parameter "fingerprint": When provided,
-// this fingerprint must match the fingerprint of the
-// container in storage.
+// this fingerprint must match the fingerprint of the container in
+// storage.
 func (c *AccountsContainersUpdateCall) Fingerprint(fingerprint string) *AccountsContainersUpdateCall {
 	c.urlParams_.Set("fingerprint", fingerprint)
 	return c
@@ -3337,7 +3244,7 @@ func (c *AccountsContainersUpdateCall) Header() http.Header {
 
 func (c *AccountsContainersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3378,17 +3285,17 @@ func (c *AccountsContainersUpdateCall) Do(opts ...googleapi.CallOption) (*Contai
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Container{
 		ServerResponse: googleapi.ServerResponse{
@@ -3424,7 +3331,7 @@ func (c *AccountsContainersUpdateCall) Do(opts ...googleapi.CallOption) (*Contai
 	//       "type": "string"
 	//     },
 	//     "fingerprint": {
-	//       "description": "When provided, this fingerprint must match the fingerprint of the\ncontainer in storage.",
+	//       "description": "When provided, this fingerprint must match the fingerprint of the container in storage.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -3456,6 +3363,9 @@ type AccountsContainersEnvironmentsCreateCall struct {
 }
 
 // Create: Creates a GTM Environment.
+//
+// - accountId: The GTM Account ID.
+// - containerId: The GTM Container ID.
 func (r *AccountsContainersEnvironmentsService) Create(accountId string, containerId string, environment *Environment) *AccountsContainersEnvironmentsCreateCall {
 	c := &AccountsContainersEnvironmentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -3491,7 +3401,7 @@ func (c *AccountsContainersEnvironmentsCreateCall) Header() http.Header {
 
 func (c *AccountsContainersEnvironmentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3532,17 +3442,17 @@ func (c *AccountsContainersEnvironmentsCreateCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Environment{
 		ServerResponse: googleapi.ServerResponse{
@@ -3605,6 +3515,10 @@ type AccountsContainersEnvironmentsDeleteCall struct {
 }
 
 // Delete: Deletes a GTM Environment.
+//
+// - accountId: The GTM Account ID.
+// - containerId: The GTM Container ID.
+// - environmentId: The GTM Environment ID.
 func (r *AccountsContainersEnvironmentsService) Delete(accountId string, containerId string, environmentId string) *AccountsContainersEnvironmentsDeleteCall {
 	c := &AccountsContainersEnvironmentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -3640,7 +3554,7 @@ func (c *AccountsContainersEnvironmentsDeleteCall) Header() http.Header {
 
 func (c *AccountsContainersEnvironmentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3672,7 +3586,7 @@ func (c *AccountsContainersEnvironmentsDeleteCall) Do(opts ...googleapi.CallOpti
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return gensupport.WrapError(err)
 	}
 	return nil
 	// {
@@ -3727,6 +3641,10 @@ type AccountsContainersEnvironmentsGetCall struct {
 }
 
 // Get: Gets a GTM Environment.
+//
+// - accountId: The GTM Account ID.
+// - containerId: The GTM Container ID.
+// - environmentId: The GTM Environment ID.
 func (r *AccountsContainersEnvironmentsService) Get(accountId string, containerId string, environmentId string) *AccountsContainersEnvironmentsGetCall {
 	c := &AccountsContainersEnvironmentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -3772,7 +3690,7 @@ func (c *AccountsContainersEnvironmentsGetCall) Header() http.Header {
 
 func (c *AccountsContainersEnvironmentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3812,17 +3730,17 @@ func (c *AccountsContainersEnvironmentsGetCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Environment{
 		ServerResponse: googleapi.ServerResponse{
@@ -3890,6 +3808,9 @@ type AccountsContainersEnvironmentsListCall struct {
 }
 
 // List: Lists all GTM Environments of a GTM Container.
+//
+// - accountId: The GTM Account ID.
+// - containerId: The GTM Container ID.
 func (r *AccountsContainersEnvironmentsService) List(accountId string, containerId string) *AccountsContainersEnvironmentsListCall {
 	c := &AccountsContainersEnvironmentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -3934,7 +3855,7 @@ func (c *AccountsContainersEnvironmentsListCall) Header() http.Header {
 
 func (c *AccountsContainersEnvironmentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3973,17 +3894,17 @@ func (c *AccountsContainersEnvironmentsListCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListEnvironmentsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4045,6 +3966,10 @@ type AccountsContainersEnvironmentsUpdateCall struct {
 }
 
 // Update: Updates a GTM Environment.
+//
+// - accountId: The GTM Account ID.
+// - containerId: The GTM Container ID.
+// - environmentId: The GTM Environment ID.
 func (r *AccountsContainersEnvironmentsService) Update(accountId string, containerId string, environmentId string, environment *Environment) *AccountsContainersEnvironmentsUpdateCall {
 	c := &AccountsContainersEnvironmentsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -4055,8 +3980,8 @@ func (r *AccountsContainersEnvironmentsService) Update(accountId string, contain
 }
 
 // Fingerprint sets the optional parameter "fingerprint": When provided,
-// this fingerprint must match the fingerprint of the
-// environment in storage.
+// this fingerprint must match the fingerprint of the environment in
+// storage.
 func (c *AccountsContainersEnvironmentsUpdateCall) Fingerprint(fingerprint string) *AccountsContainersEnvironmentsUpdateCall {
 	c.urlParams_.Set("fingerprint", fingerprint)
 	return c
@@ -4089,7 +4014,7 @@ func (c *AccountsContainersEnvironmentsUpdateCall) Header() http.Header {
 
 func (c *AccountsContainersEnvironmentsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4131,17 +4056,17 @@ func (c *AccountsContainersEnvironmentsUpdateCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Environment{
 		ServerResponse: googleapi.ServerResponse{
@@ -4184,7 +4109,7 @@ func (c *AccountsContainersEnvironmentsUpdateCall) Do(opts ...googleapi.CallOpti
 	//       "type": "string"
 	//     },
 	//     "fingerprint": {
-	//       "description": "When provided, this fingerprint must match the fingerprint of the\nenvironment in storage.",
+	//       "description": "When provided, this fingerprint must match the fingerprint of the environment in storage.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -4216,6 +4141,9 @@ type AccountsContainersFoldersCreateCall struct {
 }
 
 // Create: Creates a GTM Folder.
+//
+// - accountId: The GTM Account ID.
+// - containerId: The GTM Container ID.
 func (r *AccountsContainersFoldersService) Create(accountId string, containerId string, folder *Folder) *AccountsContainersFoldersCreateCall {
 	c := &AccountsContainersFoldersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -4251,7 +4179,7 @@ func (c *AccountsContainersFoldersCreateCall) Header() http.Header {
 
 func (c *AccountsContainersFoldersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4292,17 +4220,17 @@ func (c *AccountsContainersFoldersCreateCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Folder{
 		ServerResponse: googleapi.ServerResponse{
@@ -4365,6 +4293,10 @@ type AccountsContainersFoldersDeleteCall struct {
 }
 
 // Delete: Deletes a GTM Folder.
+//
+// - accountId: The GTM Account ID.
+// - containerId: The GTM Container ID.
+// - folderId: The GTM Folder ID.
 func (r *AccountsContainersFoldersService) Delete(accountId string, containerId string, folderId string) *AccountsContainersFoldersDeleteCall {
 	c := &AccountsContainersFoldersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -4400,7 +4332,7 @@ func (c *AccountsContainersFoldersDeleteCall) Header() http.Header {
 
 func (c *AccountsContainersFoldersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4432,7 +4364,7 @@ func (c *AccountsContainersFoldersDeleteCall) Do(opts ...googleapi.CallOption) e
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return gensupport.WrapError(err)
 	}
 	return nil
 	// {
@@ -4487,6 +4419,10 @@ type AccountsContainersFoldersGetCall struct {
 }
 
 // Get: Gets a GTM Folder.
+//
+// - accountId: The GTM Account ID.
+// - containerId: The GTM Container ID.
+// - folderId: The GTM Folder ID.
 func (r *AccountsContainersFoldersService) Get(accountId string, containerId string, folderId string) *AccountsContainersFoldersGetCall {
 	c := &AccountsContainersFoldersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -4532,7 +4468,7 @@ func (c *AccountsContainersFoldersGetCall) Header() http.Header {
 
 func (c *AccountsContainersFoldersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4572,17 +4508,17 @@ func (c *AccountsContainersFoldersGetCall) Do(opts ...googleapi.CallOption) (*Fo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Folder{
 		ServerResponse: googleapi.ServerResponse{
@@ -4650,6 +4586,9 @@ type AccountsContainersFoldersListCall struct {
 }
 
 // List: Lists all GTM Folders of a Container.
+//
+// - accountId: The GTM Account ID.
+// - containerId: The GTM Container ID.
 func (r *AccountsContainersFoldersService) List(accountId string, containerId string) *AccountsContainersFoldersListCall {
 	c := &AccountsContainersFoldersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -4694,7 +4633,7 @@ func (c *AccountsContainersFoldersListCall) Header() http.Header {
 
 func (c *AccountsContainersFoldersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4733,17 +4672,17 @@ func (c *AccountsContainersFoldersListCall) Do(opts ...googleapi.CallOption) (*L
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListFoldersResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4805,6 +4744,10 @@ type AccountsContainersFoldersUpdateCall struct {
 }
 
 // Update: Updates a GTM Folder.
+//
+// - accountId: The GTM Account ID.
+// - containerId: The GTM Container ID.
+// - folderId: The GTM Folder ID.
 func (r *AccountsContainersFoldersService) Update(accountId string, containerId string, folderId string, folder *Folder) *AccountsContainersFoldersUpdateCall {
 	c := &AccountsContainersFoldersUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -4815,8 +4758,7 @@ func (r *AccountsContainersFoldersService) Update(accountId string, containerId 
 }
 
 // Fingerprint sets the optional parameter "fingerprint": When provided,
-// this fingerprint must match the fingerprint of the folder in
-// storage.
+// this fingerprint must match the fingerprint of the folder in storage.
 func (c *AccountsContainersFoldersUpdateCall) Fingerprint(fingerprint string) *AccountsContainersFoldersUpdateCall {
 	c.urlParams_.Set("fingerprint", fingerprint)
 	return c
@@ -4849,7 +4791,7 @@ func (c *AccountsContainersFoldersUpdateCall) Header() http.Header {
 
 func (c *AccountsContainersFoldersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4891,17 +4833,17 @@ func (c *AccountsContainersFoldersUpdateCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Folder{
 		ServerResponse: googleapi.ServerResponse{
@@ -4938,7 +4880,7 @@ func (c *AccountsContainersFoldersUpdateCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "string"
 	//     },
 	//     "fingerprint": {
-	//       "description": "When provided, this fingerprint must match the fingerprint of the folder in\nstorage.",
+	//       "description": "When provided, this fingerprint must match the fingerprint of the folder in storage.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4977,6 +4919,10 @@ type AccountsContainersFoldersEntitiesListCall struct {
 }
 
 // List: List all entities in a GTM Folder.
+//
+// - accountId: The GTM Account ID.
+// - containerId: The GTM Container ID.
+// - folderId: The GTM Folder ID.
 func (r *AccountsContainersFoldersEntitiesService) List(accountId string, containerId string, folderId string) *AccountsContainersFoldersEntitiesListCall {
 	c := &AccountsContainersFoldersEntitiesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -5022,7 +4968,7 @@ func (c *AccountsContainersFoldersEntitiesListCall) Header() http.Header {
 
 func (c *AccountsContainersFoldersEntitiesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5062,17 +5008,17 @@ func (c *AccountsContainersFoldersEntitiesListCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &FolderEntities{
 		ServerResponse: googleapi.ServerResponse{
@@ -5141,6 +5087,10 @@ type AccountsContainersMoveFoldersUpdateCall struct {
 }
 
 // Update: Moves entities to a GTM Folder.
+//
+// - accountId: The GTM Account ID.
+// - containerId: The GTM Container ID.
+// - folderId: The GTM Folder ID.
 func (r *AccountsContainersMoveFoldersService) Update(accountId string, containerId string, folderId string, folder *Folder) *AccountsContainersMoveFoldersUpdateCall {
 	c := &AccountsContainersMoveFoldersUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -5198,7 +5148,7 @@ func (c *AccountsContainersMoveFoldersUpdateCall) Header() http.Header {
 
 func (c *AccountsContainersMoveFoldersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5235,7 +5185,7 @@ func (c *AccountsContainersMoveFoldersUpdateCall) Do(opts ...googleapi.CallOptio
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return gensupport.WrapError(err)
 	}
 	return nil
 	// {
@@ -5311,6 +5261,10 @@ type AccountsContainersReauthorizeEnvironmentsUpdateCall struct {
 }
 
 // Update: Re-generates the authorization code for a GTM Environment.
+//
+// - accountId: The GTM Account ID.
+// - containerId: The GTM Container ID.
+// - environmentId: The GTM Environment ID.
 func (r *AccountsContainersReauthorizeEnvironmentsService) Update(accountId string, containerId string, environmentId string, environment *Environment) *AccountsContainersReauthorizeEnvironmentsUpdateCall {
 	c := &AccountsContainersReauthorizeEnvironmentsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -5347,7 +5301,7 @@ func (c *AccountsContainersReauthorizeEnvironmentsUpdateCall) Header() http.Head
 
 func (c *AccountsContainersReauthorizeEnvironmentsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5389,17 +5343,17 @@ func (c *AccountsContainersReauthorizeEnvironmentsUpdateCall) Do(opts ...googlea
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Environment{
 		ServerResponse: googleapi.ServerResponse{
@@ -5469,6 +5423,9 @@ type AccountsContainersTagsCreateCall struct {
 }
 
 // Create: Creates a GTM Tag.
+//
+// - accountId: The GTM Account ID.
+// - containerId: The GTM Container ID.
 func (r *AccountsContainersTagsService) Create(accountId string, containerId string, tag *Tag) *AccountsContainersTagsCreateCall {
 	c := &AccountsContainersTagsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -5504,7 +5461,7 @@ func (c *AccountsContainersTagsCreateCall) Header() http.Header {
 
 func (c *AccountsContainersTagsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5545,17 +5502,17 @@ func (c *AccountsContainersTagsCreateCall) Do(opts ...googleapi.CallOption) (*Ta
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Tag{
 		ServerResponse: googleapi.ServerResponse{
@@ -5618,6 +5575,10 @@ type AccountsContainersTagsDeleteCall struct {
 }
 
 // Delete: Deletes a GTM Tag.
+//
+// - accountId: The GTM Account ID.
+// - containerId: The GTM Container ID.
+// - tagId: The GTM Tag ID.
 func (r *AccountsContainersTagsService) Delete(accountId string, containerId string, tagId string) *AccountsContainersTagsDeleteCall {
 	c := &AccountsContainersTagsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -5653,7 +5614,7 @@ func (c *AccountsContainersTagsDeleteCall) Header() http.Header {
 
 func (c *AccountsContainersTagsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5685,7 +5646,7 @@ func (c *AccountsContainersTagsDeleteCall) Do(opts ...googleapi.CallOption) erro
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return gensupport.WrapError(err)
 	}
 	return nil
 	// {
@@ -5740,6 +5701,10 @@ type AccountsContainersTagsGetCall struct {
 }
 
 // Get: Gets a GTM Tag.
+//
+// - accountId: The GTM Account ID.
+// - containerId: The GTM Container ID.
+// - tagId: The GTM Tag ID.
 func (r *AccountsContainersTagsService) Get(accountId string, containerId string, tagId string) *AccountsContainersTagsGetCall {
 	c := &AccountsContainersTagsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -5785,7 +5750,7 @@ func (c *AccountsContainersTagsGetCall) Header() http.Header {
 
 func (c *AccountsContainersTagsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5825,17 +5790,17 @@ func (c *AccountsContainersTagsGetCall) Do(opts ...googleapi.CallOption) (*Tag, 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Tag{
 		ServerResponse: googleapi.ServerResponse{
@@ -5903,6 +5868,9 @@ type AccountsContainersTagsListCall struct {
 }
 
 // List: Lists all GTM Tags of a Container.
+//
+// - accountId: The GTM Account ID.
+// - containerId: The GTM Container ID.
 func (r *AccountsContainersTagsService) List(accountId string, containerId string) *AccountsContainersTagsListCall {
 	c := &AccountsContainersTagsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -5947,7 +5915,7 @@ func (c *AccountsContainersTagsListCall) Header() http.Header {
 
 func (c *AccountsContainersTagsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5986,17 +5954,17 @@ func (c *AccountsContainersTagsListCall) Do(opts ...googleapi.CallOption) (*List
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListTagsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -6058,6 +6026,10 @@ type AccountsContainersTagsUpdateCall struct {
 }
 
 // Update: Updates a GTM Tag.
+//
+// - accountId: The GTM Account ID.
+// - containerId: The GTM Container ID.
+// - tagId: The GTM Tag ID.
 func (r *AccountsContainersTagsService) Update(accountId string, containerId string, tagId string, tag *Tag) *AccountsContainersTagsUpdateCall {
 	c := &AccountsContainersTagsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -6068,8 +6040,7 @@ func (r *AccountsContainersTagsService) Update(accountId string, containerId str
 }
 
 // Fingerprint sets the optional parameter "fingerprint": When provided,
-// this fingerprint must match the fingerprint of the tag in
-// storage.
+// this fingerprint must match the fingerprint of the tag in storage.
 func (c *AccountsContainersTagsUpdateCall) Fingerprint(fingerprint string) *AccountsContainersTagsUpdateCall {
 	c.urlParams_.Set("fingerprint", fingerprint)
 	return c
@@ -6102,7 +6073,7 @@ func (c *AccountsContainersTagsUpdateCall) Header() http.Header {
 
 func (c *AccountsContainersTagsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6144,17 +6115,17 @@ func (c *AccountsContainersTagsUpdateCall) Do(opts ...googleapi.CallOption) (*Ta
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Tag{
 		ServerResponse: googleapi.ServerResponse{
@@ -6191,7 +6162,7 @@ func (c *AccountsContainersTagsUpdateCall) Do(opts ...googleapi.CallOption) (*Ta
 	//       "type": "string"
 	//     },
 	//     "fingerprint": {
-	//       "description": "When provided, this fingerprint must match the fingerprint of the tag in\nstorage.",
+	//       "description": "When provided, this fingerprint must match the fingerprint of the tag in storage.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6229,6 +6200,9 @@ type AccountsContainersTriggersCreateCall struct {
 }
 
 // Create: Creates a GTM Trigger.
+//
+// - accountId: The GTM Account ID.
+// - containerId: The GTM Container ID.
 func (r *AccountsContainersTriggersService) Create(accountId string, containerId string, trigger *Trigger) *AccountsContainersTriggersCreateCall {
 	c := &AccountsContainersTriggersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -6264,7 +6238,7 @@ func (c *AccountsContainersTriggersCreateCall) Header() http.Header {
 
 func (c *AccountsContainersTriggersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6305,17 +6279,17 @@ func (c *AccountsContainersTriggersCreateCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Trigger{
 		ServerResponse: googleapi.ServerResponse{
@@ -6378,6 +6352,10 @@ type AccountsContainersTriggersDeleteCall struct {
 }
 
 // Delete: Deletes a GTM Trigger.
+//
+// - accountId: The GTM Account ID.
+// - containerId: The GTM Container ID.
+// - triggerId: The GTM Trigger ID.
 func (r *AccountsContainersTriggersService) Delete(accountId string, containerId string, triggerId string) *AccountsContainersTriggersDeleteCall {
 	c := &AccountsContainersTriggersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -6413,7 +6391,7 @@ func (c *AccountsContainersTriggersDeleteCall) Header() http.Header {
 
 func (c *AccountsContainersTriggersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6445,7 +6423,7 @@ func (c *AccountsContainersTriggersDeleteCall) Do(opts ...googleapi.CallOption) 
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return gensupport.WrapError(err)
 	}
 	return nil
 	// {
@@ -6500,6 +6478,10 @@ type AccountsContainersTriggersGetCall struct {
 }
 
 // Get: Gets a GTM Trigger.
+//
+// - accountId: The GTM Account ID.
+// - containerId: The GTM Container ID.
+// - triggerId: The GTM Trigger ID.
 func (r *AccountsContainersTriggersService) Get(accountId string, containerId string, triggerId string) *AccountsContainersTriggersGetCall {
 	c := &AccountsContainersTriggersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -6545,7 +6527,7 @@ func (c *AccountsContainersTriggersGetCall) Header() http.Header {
 
 func (c *AccountsContainersTriggersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6585,17 +6567,17 @@ func (c *AccountsContainersTriggersGetCall) Do(opts ...googleapi.CallOption) (*T
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Trigger{
 		ServerResponse: googleapi.ServerResponse{
@@ -6663,6 +6645,9 @@ type AccountsContainersTriggersListCall struct {
 }
 
 // List: Lists all GTM Triggers of a Container.
+//
+// - accountId: The GTM Account ID.
+// - containerId: The GTM Container ID.
 func (r *AccountsContainersTriggersService) List(accountId string, containerId string) *AccountsContainersTriggersListCall {
 	c := &AccountsContainersTriggersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -6707,7 +6692,7 @@ func (c *AccountsContainersTriggersListCall) Header() http.Header {
 
 func (c *AccountsContainersTriggersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6746,17 +6731,17 @@ func (c *AccountsContainersTriggersListCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListTriggersResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -6818,6 +6803,10 @@ type AccountsContainersTriggersUpdateCall struct {
 }
 
 // Update: Updates a GTM Trigger.
+//
+// - accountId: The GTM Account ID.
+// - containerId: The GTM Container ID.
+// - triggerId: The GTM Trigger ID.
 func (r *AccountsContainersTriggersService) Update(accountId string, containerId string, triggerId string, trigger *Trigger) *AccountsContainersTriggersUpdateCall {
 	c := &AccountsContainersTriggersUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -6828,8 +6817,8 @@ func (r *AccountsContainersTriggersService) Update(accountId string, containerId
 }
 
 // Fingerprint sets the optional parameter "fingerprint": When provided,
-// this fingerprint must match the fingerprint of the trigger
-// in storage.
+// this fingerprint must match the fingerprint of the trigger in
+// storage.
 func (c *AccountsContainersTriggersUpdateCall) Fingerprint(fingerprint string) *AccountsContainersTriggersUpdateCall {
 	c.urlParams_.Set("fingerprint", fingerprint)
 	return c
@@ -6862,7 +6851,7 @@ func (c *AccountsContainersTriggersUpdateCall) Header() http.Header {
 
 func (c *AccountsContainersTriggersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6904,17 +6893,17 @@ func (c *AccountsContainersTriggersUpdateCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Trigger{
 		ServerResponse: googleapi.ServerResponse{
@@ -6951,7 +6940,7 @@ func (c *AccountsContainersTriggersUpdateCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     },
 	//     "fingerprint": {
-	//       "description": "When provided, this fingerprint must match the fingerprint of the trigger\nin storage.",
+	//       "description": "When provided, this fingerprint must match the fingerprint of the trigger in storage.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6989,6 +6978,9 @@ type AccountsContainersVariablesCreateCall struct {
 }
 
 // Create: Creates a GTM Variable.
+//
+// - accountId: The GTM Account ID.
+// - containerId: The GTM Container ID.
 func (r *AccountsContainersVariablesService) Create(accountId string, containerId string, variable *Variable) *AccountsContainersVariablesCreateCall {
 	c := &AccountsContainersVariablesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -7024,7 +7016,7 @@ func (c *AccountsContainersVariablesCreateCall) Header() http.Header {
 
 func (c *AccountsContainersVariablesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7065,17 +7057,17 @@ func (c *AccountsContainersVariablesCreateCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Variable{
 		ServerResponse: googleapi.ServerResponse{
@@ -7138,6 +7130,10 @@ type AccountsContainersVariablesDeleteCall struct {
 }
 
 // Delete: Deletes a GTM Variable.
+//
+// - accountId: The GTM Account ID.
+// - containerId: The GTM Container ID.
+// - variableId: The GTM Variable ID.
 func (r *AccountsContainersVariablesService) Delete(accountId string, containerId string, variableId string) *AccountsContainersVariablesDeleteCall {
 	c := &AccountsContainersVariablesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -7173,7 +7169,7 @@ func (c *AccountsContainersVariablesDeleteCall) Header() http.Header {
 
 func (c *AccountsContainersVariablesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7205,7 +7201,7 @@ func (c *AccountsContainersVariablesDeleteCall) Do(opts ...googleapi.CallOption)
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return gensupport.WrapError(err)
 	}
 	return nil
 	// {
@@ -7260,6 +7256,10 @@ type AccountsContainersVariablesGetCall struct {
 }
 
 // Get: Gets a GTM Variable.
+//
+// - accountId: The GTM Account ID.
+// - containerId: The GTM Container ID.
+// - variableId: The GTM Variable ID.
 func (r *AccountsContainersVariablesService) Get(accountId string, containerId string, variableId string) *AccountsContainersVariablesGetCall {
 	c := &AccountsContainersVariablesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -7305,7 +7305,7 @@ func (c *AccountsContainersVariablesGetCall) Header() http.Header {
 
 func (c *AccountsContainersVariablesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7345,17 +7345,17 @@ func (c *AccountsContainersVariablesGetCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Variable{
 		ServerResponse: googleapi.ServerResponse{
@@ -7423,6 +7423,9 @@ type AccountsContainersVariablesListCall struct {
 }
 
 // List: Lists all GTM Variables of a Container.
+//
+// - accountId: The GTM Account ID.
+// - containerId: The GTM Container ID.
 func (r *AccountsContainersVariablesService) List(accountId string, containerId string) *AccountsContainersVariablesListCall {
 	c := &AccountsContainersVariablesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -7467,7 +7470,7 @@ func (c *AccountsContainersVariablesListCall) Header() http.Header {
 
 func (c *AccountsContainersVariablesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7506,17 +7509,17 @@ func (c *AccountsContainersVariablesListCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListVariablesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -7578,6 +7581,10 @@ type AccountsContainersVariablesUpdateCall struct {
 }
 
 // Update: Updates a GTM Variable.
+//
+// - accountId: The GTM Account ID.
+// - containerId: The GTM Container ID.
+// - variableId: The GTM Variable ID.
 func (r *AccountsContainersVariablesService) Update(accountId string, containerId string, variableId string, variable *Variable) *AccountsContainersVariablesUpdateCall {
 	c := &AccountsContainersVariablesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -7588,8 +7595,8 @@ func (r *AccountsContainersVariablesService) Update(accountId string, containerI
 }
 
 // Fingerprint sets the optional parameter "fingerprint": When provided,
-// this fingerprint must match the fingerprint of the variable
-// in storage.
+// this fingerprint must match the fingerprint of the variable in
+// storage.
 func (c *AccountsContainersVariablesUpdateCall) Fingerprint(fingerprint string) *AccountsContainersVariablesUpdateCall {
 	c.urlParams_.Set("fingerprint", fingerprint)
 	return c
@@ -7622,7 +7629,7 @@ func (c *AccountsContainersVariablesUpdateCall) Header() http.Header {
 
 func (c *AccountsContainersVariablesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7664,17 +7671,17 @@ func (c *AccountsContainersVariablesUpdateCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Variable{
 		ServerResponse: googleapi.ServerResponse{
@@ -7711,7 +7718,7 @@ func (c *AccountsContainersVariablesUpdateCall) Do(opts ...googleapi.CallOption)
 	//       "type": "string"
 	//     },
 	//     "fingerprint": {
-	//       "description": "When provided, this fingerprint must match the fingerprint of the variable\nin storage.",
+	//       "description": "When provided, this fingerprint must match the fingerprint of the variable in storage.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -7749,6 +7756,9 @@ type AccountsContainersVersionsCreateCall struct {
 }
 
 // Create: Creates a Container Version.
+//
+// - accountId: The GTM Account ID.
+// - containerId: The GTM Container ID.
 func (r *AccountsContainersVersionsService) Create(accountId string, containerId string, createcontainerversionrequestversionoptions *CreateContainerVersionRequestVersionOptions) *AccountsContainersVersionsCreateCall {
 	c := &AccountsContainersVersionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -7784,7 +7794,7 @@ func (c *AccountsContainersVersionsCreateCall) Header() http.Header {
 
 func (c *AccountsContainersVersionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7825,17 +7835,17 @@ func (c *AccountsContainersVersionsCreateCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &CreateContainerVersionResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -7898,6 +7908,10 @@ type AccountsContainersVersionsDeleteCall struct {
 }
 
 // Delete: Deletes a Container Version.
+//
+// - accountId: The GTM Account ID.
+// - containerId: The GTM Container ID.
+// - containerVersionId: The GTM Container Version ID.
 func (r *AccountsContainersVersionsService) Delete(accountId string, containerId string, containerVersionId string) *AccountsContainersVersionsDeleteCall {
 	c := &AccountsContainersVersionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -7933,7 +7947,7 @@ func (c *AccountsContainersVersionsDeleteCall) Header() http.Header {
 
 func (c *AccountsContainersVersionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7965,7 +7979,7 @@ func (c *AccountsContainersVersionsDeleteCall) Do(opts ...googleapi.CallOption) 
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return gensupport.WrapError(err)
 	}
 	return nil
 	// {
@@ -8020,6 +8034,11 @@ type AccountsContainersVersionsGetCall struct {
 }
 
 // Get: Gets a Container Version.
+//
+//   - accountId: The GTM Account ID.
+//   - containerId: The GTM Container ID.
+//   - containerVersionId: The GTM Container Version ID. Specify published
+//     to retrieve the currently published version.
 func (r *AccountsContainersVersionsService) Get(accountId string, containerId string, containerVersionId string) *AccountsContainersVersionsGetCall {
 	c := &AccountsContainersVersionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -8065,7 +8084,7 @@ func (c *AccountsContainersVersionsGetCall) Header() http.Header {
 
 func (c *AccountsContainersVersionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8105,17 +8124,17 @@ func (c *AccountsContainersVersionsGetCall) Do(opts ...googleapi.CallOption) (*C
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ContainerVersion{
 		ServerResponse: googleapi.ServerResponse{
@@ -8152,7 +8171,7 @@ func (c *AccountsContainersVersionsGetCall) Do(opts ...googleapi.CallOption) (*C
 	//       "type": "string"
 	//     },
 	//     "containerVersionId": {
-	//       "description": "The GTM Container Version ID. Specify \u003ccode\u003epublished\u003c/code\u003e to retrieve\nthe currently published version.",
+	//       "description": "The GTM Container Version ID. Specify published to retrieve the currently published version.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -8184,6 +8203,9 @@ type AccountsContainersVersionsListCall struct {
 }
 
 // List: Lists all Container Versions of a GTM Container.
+//
+// - accountId: The GTM Account ID.
+// - containerId: The GTM Container ID.
 func (r *AccountsContainersVersionsService) List(accountId string, containerId string) *AccountsContainersVersionsListCall {
 	c := &AccountsContainersVersionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -8242,7 +8264,7 @@ func (c *AccountsContainersVersionsListCall) Header() http.Header {
 
 func (c *AccountsContainersVersionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8281,17 +8303,17 @@ func (c *AccountsContainersVersionsListCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListContainerVersionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -8365,6 +8387,10 @@ type AccountsContainersVersionsPublishCall struct {
 }
 
 // Publish: Publishes a Container Version.
+//
+// - accountId: The GTM Account ID.
+// - containerId: The GTM Container ID.
+// - containerVersionId: The GTM Container Version ID.
 func (r *AccountsContainersVersionsService) Publish(accountId string, containerId string, containerVersionId string) *AccountsContainersVersionsPublishCall {
 	c := &AccountsContainersVersionsPublishCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -8374,8 +8400,8 @@ func (r *AccountsContainersVersionsService) Publish(accountId string, containerI
 }
 
 // Fingerprint sets the optional parameter "fingerprint": When provided,
-// this fingerprint must match the fingerprint of the
-// container version in storage.
+// this fingerprint must match the fingerprint of the container version
+// in storage.
 func (c *AccountsContainersVersionsPublishCall) Fingerprint(fingerprint string) *AccountsContainersVersionsPublishCall {
 	c.urlParams_.Set("fingerprint", fingerprint)
 	return c
@@ -8408,7 +8434,7 @@ func (c *AccountsContainersVersionsPublishCall) Header() http.Header {
 
 func (c *AccountsContainersVersionsPublishCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8445,17 +8471,17 @@ func (c *AccountsContainersVersionsPublishCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &PublishContainerVersionResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -8498,7 +8524,7 @@ func (c *AccountsContainersVersionsPublishCall) Do(opts ...googleapi.CallOption)
 	//       "type": "string"
 	//     },
 	//     "fingerprint": {
-	//       "description": "When provided, this fingerprint must match the fingerprint of the\ncontainer version in storage.",
+	//       "description": "When provided, this fingerprint must match the fingerprint of the container version in storage.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -8527,12 +8553,13 @@ type AccountsContainersVersionsRestoreCall struct {
 }
 
 // Restore: Restores a Container Version. This will overwrite the
-// container's current
-// configuration (including its variables, triggers and tags). The
-// operation
-// will not have any effect on the version that is being served (i.e.
-// the
-// published version).
+// container's current configuration (including its variables, triggers
+// and tags). The operation will not have any effect on the version that
+// is being served (i.e. the published version).
+//
+// - accountId: The GTM Account ID.
+// - containerId: The GTM Container ID.
+// - containerVersionId: The GTM Container Version ID.
 func (r *AccountsContainersVersionsService) Restore(accountId string, containerId string, containerVersionId string) *AccountsContainersVersionsRestoreCall {
 	c := &AccountsContainersVersionsRestoreCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -8568,7 +8595,7 @@ func (c *AccountsContainersVersionsRestoreCall) Header() http.Header {
 
 func (c *AccountsContainersVersionsRestoreCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8605,17 +8632,17 @@ func (c *AccountsContainersVersionsRestoreCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ContainerVersion{
 		ServerResponse: googleapi.ServerResponse{
@@ -8629,7 +8656,7 @@ func (c *AccountsContainersVersionsRestoreCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "Restores a Container Version. This will overwrite the container's current\nconfiguration (including its variables, triggers and tags). The operation\nwill not have any effect on the version that is being served (i.e. the\npublished version).",
+	//   "description": "Restores a Container Version. This will overwrite the container's current configuration (including its variables, triggers and tags). The operation will not have any effect on the version that is being served (i.e. the published version).",
 	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/versions/{containerVersionId}/restore",
 	//   "httpMethod": "POST",
 	//   "id": "tagmanager.accounts.containers.versions.restore",
@@ -8682,6 +8709,10 @@ type AccountsContainersVersionsUndeleteCall struct {
 }
 
 // Undelete: Undeletes a Container Version.
+//
+// - accountId: The GTM Account ID.
+// - containerId: The GTM Container ID.
+// - containerVersionId: The GTM Container Version ID.
 func (r *AccountsContainersVersionsService) Undelete(accountId string, containerId string, containerVersionId string) *AccountsContainersVersionsUndeleteCall {
 	c := &AccountsContainersVersionsUndeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -8717,7 +8748,7 @@ func (c *AccountsContainersVersionsUndeleteCall) Header() http.Header {
 
 func (c *AccountsContainersVersionsUndeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8754,17 +8785,17 @@ func (c *AccountsContainersVersionsUndeleteCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ContainerVersion{
 		ServerResponse: googleapi.ServerResponse{
@@ -8832,6 +8863,10 @@ type AccountsContainersVersionsUpdateCall struct {
 }
 
 // Update: Updates a Container Version.
+//
+// - accountId: The GTM Account ID.
+// - containerId: The GTM Container ID.
+// - containerVersionId: The GTM Container Version ID.
 func (r *AccountsContainersVersionsService) Update(accountId string, containerId string, containerVersionId string, containerversion *ContainerVersion) *AccountsContainersVersionsUpdateCall {
 	c := &AccountsContainersVersionsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -8842,8 +8877,8 @@ func (r *AccountsContainersVersionsService) Update(accountId string, containerId
 }
 
 // Fingerprint sets the optional parameter "fingerprint": When provided,
-// this fingerprint must match the fingerprint of the
-// container version in storage.
+// this fingerprint must match the fingerprint of the container version
+// in storage.
 func (c *AccountsContainersVersionsUpdateCall) Fingerprint(fingerprint string) *AccountsContainersVersionsUpdateCall {
 	c.urlParams_.Set("fingerprint", fingerprint)
 	return c
@@ -8876,7 +8911,7 @@ func (c *AccountsContainersVersionsUpdateCall) Header() http.Header {
 
 func (c *AccountsContainersVersionsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8918,17 +8953,17 @@ func (c *AccountsContainersVersionsUpdateCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ContainerVersion{
 		ServerResponse: googleapi.ServerResponse{
@@ -8971,7 +9006,7 @@ func (c *AccountsContainersVersionsUpdateCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     },
 	//     "fingerprint": {
-	//       "description": "When provided, this fingerprint must match the fingerprint of the\ncontainer version in storage.",
+	//       "description": "When provided, this fingerprint must match the fingerprint of the container version in storage.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -9002,6 +9037,8 @@ type AccountsPermissionsCreateCall struct {
 }
 
 // Create: Creates a user's Account & Container Permissions.
+//
+// - accountId: The GTM Account ID.
 func (r *AccountsPermissionsService) Create(accountId string, useraccess *UserAccess) *AccountsPermissionsCreateCall {
 	c := &AccountsPermissionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -9036,7 +9073,7 @@ func (c *AccountsPermissionsCreateCall) Header() http.Header {
 
 func (c *AccountsPermissionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9076,17 +9113,17 @@ func (c *AccountsPermissionsCreateCall) Do(opts ...googleapi.CallOption) (*UserA
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &UserAccess{
 		ServerResponse: googleapi.ServerResponse{
@@ -9141,8 +9178,10 @@ type AccountsPermissionsDeleteCall struct {
 }
 
 // Delete: Removes a user from the account, revoking access to it and
-// all of its
-// containers.
+// all of its containers.
+//
+// - accountId: The GTM Account ID.
+// - permissionId: The GTM User ID.
 func (r *AccountsPermissionsService) Delete(accountId string, permissionId string) *AccountsPermissionsDeleteCall {
 	c := &AccountsPermissionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -9177,7 +9216,7 @@ func (c *AccountsPermissionsDeleteCall) Header() http.Header {
 
 func (c *AccountsPermissionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9208,11 +9247,11 @@ func (c *AccountsPermissionsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return gensupport.WrapError(err)
 	}
 	return nil
 	// {
-	//   "description": "Removes a user from the account, revoking access to it and all of its\ncontainers.",
+	//   "description": "Removes a user from the account, revoking access to it and all of its containers.",
 	//   "flatPath": "tagmanager/v1/accounts/{accountId}/permissions/{permissionId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "tagmanager.accounts.permissions.delete",
@@ -9255,6 +9294,9 @@ type AccountsPermissionsGetCall struct {
 }
 
 // Get: Gets a user's Account & Container Permissions.
+//
+// - accountId: The GTM Account ID.
+// - permissionId: The GTM User ID.
 func (r *AccountsPermissionsService) Get(accountId string, permissionId string) *AccountsPermissionsGetCall {
 	c := &AccountsPermissionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -9299,7 +9341,7 @@ func (c *AccountsPermissionsGetCall) Header() http.Header {
 
 func (c *AccountsPermissionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9338,17 +9380,17 @@ func (c *AccountsPermissionsGetCall) Do(opts ...googleapi.CallOption) (*UserAcce
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &UserAccess{
 		ServerResponse: googleapi.ServerResponse{
@@ -9407,8 +9449,9 @@ type AccountsPermissionsListCall struct {
 }
 
 // List: List all users that have access to the account along with
-// Account and
-// Container Permissions granted to each of them.
+// Account and Container Permissions granted to each of them.
+//
+// - accountId: The GTM Account ID.
 func (r *AccountsPermissionsService) List(accountId string) *AccountsPermissionsListCall {
 	c := &AccountsPermissionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -9452,7 +9495,7 @@ func (c *AccountsPermissionsListCall) Header() http.Header {
 
 func (c *AccountsPermissionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9490,17 +9533,17 @@ func (c *AccountsPermissionsListCall) Do(opts ...googleapi.CallOption) (*ListAcc
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListAccountUsersResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -9514,7 +9557,7 @@ func (c *AccountsPermissionsListCall) Do(opts ...googleapi.CallOption) (*ListAcc
 	}
 	return ret, nil
 	// {
-	//   "description": "List all users that have access to the account along with Account and\nContainer Permissions granted to each of them.",
+	//   "description": "List all users that have access to the account along with Account and Container Permissions granted to each of them.",
 	//   "flatPath": "tagmanager/v1/accounts/{accountId}/permissions",
 	//   "httpMethod": "GET",
 	//   "id": "tagmanager.accounts.permissions.list",
@@ -9553,6 +9596,9 @@ type AccountsPermissionsUpdateCall struct {
 }
 
 // Update: Updates a user's Account & Container Permissions.
+//
+// - accountId: The GTM Account ID.
+// - permissionId: The GTM User ID.
 func (r *AccountsPermissionsService) Update(accountId string, permissionId string, useraccess *UserAccess) *AccountsPermissionsUpdateCall {
 	c := &AccountsPermissionsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -9588,7 +9634,7 @@ func (c *AccountsPermissionsUpdateCall) Header() http.Header {
 
 func (c *AccountsPermissionsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9629,17 +9675,17 @@ func (c *AccountsPermissionsUpdateCall) Do(opts ...googleapi.CallOption) (*UserA
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &UserAccess{
 		ServerResponse: googleapi.ServerResponse{

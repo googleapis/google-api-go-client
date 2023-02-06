@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://developers.google.com/android/management
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/androidmanagement/v1"
-//   ...
-//   ctx := context.Background()
-//   androidmanagementService, err := androidmanagement.NewService(ctx)
+//	import "google.golang.org/api/androidmanagement/v1"
+//	...
+//	ctx := context.Background()
+//	androidmanagementService, err := androidmanagement.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   androidmanagementService, err := androidmanagement.NewService(ctx, option.WithAPIKey("AIza..."))
+//	androidmanagementService, err := androidmanagement.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   androidmanagementService, err := androidmanagement.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	androidmanagementService, err := androidmanagement.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package androidmanagement // import "google.golang.org/api/androidmanagement/v1"
@@ -50,6 +50,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -75,6 +76,7 @@ const apiId = "androidmanagement:v1"
 const apiName = "androidmanagement"
 const apiVersion = "v1"
 const basePath = "https://androidmanagement.googleapis.com/"
+const mtlsBasePath = "https://androidmanagement.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
@@ -84,12 +86,13 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/androidmanagement",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -238,10 +241,97 @@ type SignupUrlsService struct {
 	s *Service
 }
 
-// AdvancedSecurityOverrides: Security policies set to the most secure
-// values by default. To maintain the security posture of a device, we
-// don't recommend overriding any of the default values.
+// AdbShellCommandEvent: A shell command was issued over ADB via “adb
+// shell command”.
+type AdbShellCommandEvent struct {
+	// ShellCmd: Shell command that was issued over ADB via "adb shell
+	// command". Redacted to empty string on organization-owned managed
+	// profile devices.
+	ShellCmd string `json:"shellCmd,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ShellCmd") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ShellCmd") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AdbShellCommandEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod AdbShellCommandEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AdbShellInteractiveEvent: An ADB interactive shell was opened via
+// “adb shell”. Intentionally empty.
+type AdbShellInteractiveEvent struct {
+}
+
+// AdvancedSecurityOverrides: Security policies set to secure values by
+// default. To maintain the security posture of a device, we don't
+// recommend overriding any of the default values.
 type AdvancedSecurityOverrides struct {
+	// CommonCriteriaMode: Controls Common Criteria Mode—security
+	// standards defined in the Common Criteria for Information Technology
+	// Security Evaluation (https://www.commoncriteriaportal.org/) (CC).
+	// Enabling Common Criteria Mode increases certain security components
+	// on a device, including AES-GCM encryption of Bluetooth Long Term
+	// Keys, and Wi-Fi configuration stores.Warning: Common Criteria Mode
+	// enforces a strict security model typically only required for IT
+	// products used in national security systems and other highly sensitive
+	// organizations. Standard device use may be affected. Only enabled if
+	// required.
+	//
+	// Possible values:
+	//   "COMMON_CRITERIA_MODE_UNSPECIFIED" - Unspecified. Defaults to
+	// COMMON_CRITERIA_MODE_DISABLED.
+	//   "COMMON_CRITERIA_MODE_DISABLED" - Default. Disables Common Criteria
+	// Mode.
+	//   "COMMON_CRITERIA_MODE_ENABLED" - Enables Common Criteria Mode.
+	CommonCriteriaMode string `json:"commonCriteriaMode,omitempty"`
+
+	// DeveloperSettings: Controls access to developer settings: developer
+	// options and safe boot. Replaces safeBootDisabled (deprecated) and
+	// debuggingFeaturesAllowed (deprecated).
+	//
+	// Possible values:
+	//   "DEVELOPER_SETTINGS_UNSPECIFIED" - Unspecified. Defaults to
+	// DEVELOPER_SETTINGS_DISABLED.
+	//   "DEVELOPER_SETTINGS_DISABLED" - Default. Disables all developer
+	// settings and prevents the user from accessing them.
+	//   "DEVELOPER_SETTINGS_ALLOWED" - Allows all developer settings. The
+	// user can access and optionally configure the settings.
+	DeveloperSettings string `json:"developerSettings,omitempty"`
+
+	// GooglePlayProtectVerifyApps: Whether Google Play Protect verification
+	// (https://support.google.com/accounts/answer/2812853) is enforced.
+	// Replaces ensureVerifyAppsEnabled (deprecated).
+	//
+	// Possible values:
+	//   "GOOGLE_PLAY_PROTECT_VERIFY_APPS_UNSPECIFIED" - Unspecified.
+	// Defaults to VERIFY_APPS_ENFORCED.
+	//   "VERIFY_APPS_ENFORCED" - Default. Force-enables app verification.
+	//   "VERIFY_APPS_USER_CHOICE" - Allows the user to choose whether to
+	// enable app verification.
+	GooglePlayProtectVerifyApps string `json:"googlePlayProtectVerifyApps,omitempty"`
+
+	// PersonalAppsThatCanReadWorkNotifications: Personal apps that can read
+	// work profile notifications using a NotificationListenerService
+	// (https://developer.android.com/reference/android/service/notification/NotificationListenerService).
+	// By default, no personal apps (aside from system apps) can read work
+	// notifications. Each value in the list must be a package name.
+	PersonalAppsThatCanReadWorkNotifications []string `json:"personalAppsThatCanReadWorkNotifications,omitempty"`
+
 	// UntrustedAppsPolicy: The policy for untrusted apps (apps from unknown
 	// sources) enforced on the device. Replaces
 	// install_unknown_sources_allowed (deprecated).
@@ -258,15 +348,15 @@ type AdvancedSecurityOverrides struct {
 	// entire device.
 	UntrustedAppsPolicy string `json:"untrustedAppsPolicy,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "UntrustedAppsPolicy")
+	// ForceSendFields is a list of field names (e.g. "CommonCriteriaMode")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "UntrustedAppsPolicy") to
+	// NullFields is a list of field names (e.g. "CommonCriteriaMode") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -292,10 +382,10 @@ type AlwaysOnVpnPackage struct {
 
 	// ForceSendFields is a list of field names (e.g. "LockdownEnabled") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "LockdownEnabled") to
@@ -326,10 +416,10 @@ type ApiLevelCondition struct {
 
 	// ForceSendFields is a list of field names (e.g. "MinApiLevel") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "MinApiLevel") to include
@@ -347,6 +437,87 @@ func (s *ApiLevelCondition) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AppProcessInfo: Information about a process. It contains process
+// name, start time, app Uid, app Pid, seinfo tag, hash of the base APK.
+type AppProcessInfo struct {
+	// ApkSha256Hash: SHA-256 hash of the base APK, in hexadecimal format.
+	ApkSha256Hash string `json:"apkSha256Hash,omitempty"`
+
+	// PackageNames: Package names of all packages that are associated with
+	// the particular user ID. In most cases, this will be a single package
+	// name, the package that has been assigned that user ID. If multiple
+	// application share a UID then all packages sharing UID will be
+	// included.
+	PackageNames []string `json:"packageNames,omitempty"`
+
+	// Pid: Process ID.
+	Pid int64 `json:"pid,omitempty"`
+
+	// ProcessName: Process name.
+	ProcessName string `json:"processName,omitempty"`
+
+	// Seinfo: SELinux policy info.
+	Seinfo string `json:"seinfo,omitempty"`
+
+	// StartTime: Process start time.
+	StartTime string `json:"startTime,omitempty"`
+
+	// Uid: UID of the package.
+	Uid int64 `json:"uid,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ApkSha256Hash") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ApkSha256Hash") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppProcessInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod AppProcessInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AppProcessStartEvent: An app process was started. This is available
+// device-wide on fully managed devices and within the work profile on
+// organization-owned devices with a work profile.
+type AppProcessStartEvent struct {
+	// ProcessInfo: Information about a process.
+	ProcessInfo *AppProcessInfo `json:"processInfo,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ProcessInfo") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ProcessInfo") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppProcessStartEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod AppProcessStartEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // AppTrackInfo: Id to name association of a app track.
 type AppTrackInfo struct {
 	// TrackAlias: The track name associated with the trackId, set in the
@@ -360,10 +531,10 @@ type AppTrackInfo struct {
 
 	// ForceSendFields is a list of field names (e.g. "TrackAlias") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "TrackAlias") to include in
@@ -381,38 +552,171 @@ func (s *AppTrackInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AppVersion: This represents a single version of the app.
+type AppVersion struct {
+	// Production: If the value is True, it indicates that this version is a
+	// production track.
+	Production bool `json:"production,omitempty"`
+
+	// TrackIds: Track identifiers that the app version is published in.
+	// This does not include the production track (see production instead).
+	TrackIds []string `json:"trackIds,omitempty"`
+
+	// VersionCode: Unique increasing identifier for the app version.
+	VersionCode int64 `json:"versionCode,omitempty"`
+
+	// VersionString: The string used in the Play store by the app developer
+	// to identify the version. The string is not necessarily unique or
+	// localized (for example, the string could be "1.4").
+	VersionString string `json:"versionString,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Production") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Production") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppVersion) MarshalJSON() ([]byte, error) {
+	type NoMethod AppVersion
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Application: Information about an app.
 type Application struct {
+	// AppPricing: Whether this app is free, free with in-app purchases, or
+	// paid. If the pricing is unspecified, this means the app is not
+	// generally available anymore (even though it might still be available
+	// to people who own it).
+	//
+	// Possible values:
+	//   "APP_PRICING_UNSPECIFIED" - Unknown pricing, used to denote an
+	// approved app that is not generally available.
+	//   "FREE" - The app is free.
+	//   "FREE_WITH_IN_APP_PURCHASE" - The app is free, but offers in-app
+	// purchases.
+	//   "PAID" - The app is paid.
+	AppPricing string `json:"appPricing,omitempty"`
+
 	// AppTracks: Application tracks visible to the enterprise.
 	AppTracks []*AppTrackInfo `json:"appTracks,omitempty"`
+
+	// AppVersions: Versions currently available for this app.
+	AppVersions []*AppVersion `json:"appVersions,omitempty"`
+
+	// Author: The name of the author of the apps (for example, the app
+	// developer).
+	Author string `json:"author,omitempty"`
+
+	// AvailableCountries: The countries which this app is available in as
+	// per ISO 3166-1 alpha-2.
+	AvailableCountries []string `json:"availableCountries,omitempty"`
+
+	// Category: The app category (e.g. RACING, SOCIAL, etc.)
+	Category string `json:"category,omitempty"`
+
+	// ContentRating: The content rating for this app.
+	//
+	// Possible values:
+	//   "CONTENT_RATING_UNSPECIFIED" - Unspecified.
+	//   "THREE_YEARS" - Content suitable for ages 3 and above only.
+	//   "SEVEN_YEARS" - Content suitable for ages 7 and above only.
+	//   "TWELVE_YEARS" - Content suitable for ages 12 and above only.
+	//   "SIXTEEN_YEARS" - Content suitable for ages 16 and above only.
+	//   "EIGHTEEN_YEARS" - Content suitable for ages 18 and above only.
+	ContentRating string `json:"contentRating,omitempty"`
+
+	// Description: The localized promotional description, if available.
+	Description string `json:"description,omitempty"`
+
+	// DistributionChannel: How and to whom the package is made available.
+	//
+	// Possible values:
+	//   "DISTRIBUTION_CHANNEL_UNSPECIFIED" - Unspecified.
+	//   "PUBLIC_GOOGLE_HOSTED" - Package is available through the Play
+	// store and not restricted to a specific enterprise.
+	//   "PRIVATE_GOOGLE_HOSTED" - Package is a private app (restricted to
+	// an enterprise) but hosted by Google.
+	//   "PRIVATE_SELF_HOSTED" - Private app (restricted to an enterprise)
+	// and is privately hosted.
+	DistributionChannel string `json:"distributionChannel,omitempty"`
+
+	// Features: Noteworthy features (if any) of this app.
+	//
+	// Possible values:
+	//   "APP_FEATURE_UNSPECIFIED" - Unspecified.
+	//   "VPN_APP" - The app is a VPN.
+	Features []string `json:"features,omitempty"`
+
+	// FullDescription: Full app description, if available.
+	FullDescription string `json:"fullDescription,omitempty"`
+
+	// IconUrl: A link to an image that can be used as an icon for the app.
+	// This image is suitable for use up to a pixel size of 512 x 512.
+	IconUrl string `json:"iconUrl,omitempty"`
 
 	// ManagedProperties: The set of managed properties available to be
 	// pre-configured for the app.
 	ManagedProperties []*ManagedProperty `json:"managedProperties,omitempty"`
 
+	// MinAndroidSdkVersion: The minimum Android SDK necessary to run the
+	// app.
+	MinAndroidSdkVersion int64 `json:"minAndroidSdkVersion,omitempty"`
+
 	// Name: The name of the app in the form
-	// enterprises/{enterpriseId}/applications/{package_name}.
+	// enterprises/{enterprise}/applications/{package_name}.
 	Name string `json:"name,omitempty"`
 
 	// Permissions: The permissions required by the app.
 	Permissions []*ApplicationPermission `json:"permissions,omitempty"`
 
+	// PlayStoreUrl: A link to the (consumer) Google Play details page for
+	// the app.
+	PlayStoreUrl string `json:"playStoreUrl,omitempty"`
+
+	// RecentChanges: A localised description of the recent changes made to
+	// the app.
+	RecentChanges string `json:"recentChanges,omitempty"`
+
+	// ScreenshotUrls: A list of screenshot links representing the app.
+	ScreenshotUrls []string `json:"screenshotUrls,omitempty"`
+
+	// SmallIconUrl: A link to a smaller image that can be used as an icon
+	// for the app. This image is suitable for use up to a pixel size of 128
+	// x 128.
+	SmallIconUrl string `json:"smallIconUrl,omitempty"`
+
 	// Title: The title of the app. Localized.
 	Title string `json:"title,omitempty"`
+
+	// UpdateTime: Output only. The approximate time (within 7 days) the app
+	// was last published.
+	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "AppTracks") to
+	// ForceSendFields is a list of field names (e.g. "AppPricing") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "AppTracks") to include in
+	// NullFields is a list of field names (e.g. "AppPricing") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -450,10 +754,10 @@ type ApplicationEvent struct {
 
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CreateTime") to include in
@@ -486,10 +790,10 @@ type ApplicationPermission struct {
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Description") to include
@@ -516,6 +820,66 @@ type ApplicationPolicy struct {
 	// to the app’s production track. More details about each track are
 	// available in AppTrackInfo.
 	AccessibleTrackIds []string `json:"accessibleTrackIds,omitempty"`
+
+	// AlwaysOnVpnLockdownExemption: Specifies whether the app is allowed
+	// networking when the VPN is not connected and
+	// alwaysOnVpnPackage.lockdownEnabled is enabled. If set to
+	// VPN_LOCKDOWN_ENFORCED, the app is not allowed networking, and if set
+	// to VPN_LOCKDOWN_EXEMPTION, the app is allowed networking. Only
+	// supported on devices running Android 10 and above. If this is not
+	// supported by the device, the device will contain a
+	// NonComplianceDetail with non_compliance_reason set to API_LEVEL and a
+	// fieldPath. If this is not applicable to the app, the device will
+	// contain a NonComplianceDetail with non_compliance_reason set to
+	// UNSUPPORTED and a fieldPath. The fieldPath is set to
+	// applications[i].alwaysOnVpnLockdownExemption, where i is the index of
+	// the package in the applications policy.
+	//
+	// Possible values:
+	//   "ALWAYS_ON_VPN_LOCKDOWN_EXEMPTION_UNSPECIFIED" - Unspecified.
+	// Defaults to VPN_LOCKDOWN_ENFORCED.
+	//   "VPN_LOCKDOWN_ENFORCED" - The app respects the always-on VPN
+	// lockdown setting.
+	//   "VPN_LOCKDOWN_EXEMPTION" - The app is exempt from the always-on VPN
+	// lockdown setting.
+	AlwaysOnVpnLockdownExemption string `json:"alwaysOnVpnLockdownExemption,omitempty"`
+
+	// AutoUpdateMode: Controls the auto-update mode for the app.
+	//
+	// Possible values:
+	//   "AUTO_UPDATE_MODE_UNSPECIFIED" - Unspecified. Defaults to
+	// AUTO_UPDATE_DEFAULT.
+	//   "AUTO_UPDATE_DEFAULT" - The app is automatically updated with low
+	// priority to minimize the impact on the user.The app is updated when
+	// all of the following constraints are met: The device is not actively
+	// used. The device is connected to an unmetered network. The device is
+	// charging.The device is notified about a new update within 24 hours
+	// after it is published by the developer, after which the app is
+	// updated the next time the constraints above are met.
+	//   "AUTO_UPDATE_POSTPONED" - The app is not automatically updated for
+	// a maximum of 90 days after the app becomes out of date.90 days after
+	// the app becomes out of date, the latest available version is
+	// installed automatically with low priority (see AUTO_UPDATE_DEFAULT).
+	// After the app is updated it is not automatically updated again until
+	// 90 days after it becomes out of date again.The user can still
+	// manually update the app from the Play Store at any time.
+	//   "AUTO_UPDATE_HIGH_PRIORITY" - The app is updated as soon as
+	// possible. No constraints are applied.The device is notified
+	// immediately about a new update after it becomes available.
+	AutoUpdateMode string `json:"autoUpdateMode,omitempty"`
+
+	// ConnectedWorkAndPersonalApp: Controls whether the app can communicate
+	// with itself across a device’s work and personal profiles, subject
+	// to user consent.
+	//
+	// Possible values:
+	//   "CONNECTED_WORK_AND_PERSONAL_APP_UNSPECIFIED" - Unspecified.
+	// Defaults to CONNECTED_WORK_AND_PERSONAL_APPS_DISALLOWED.
+	//   "CONNECTED_WORK_AND_PERSONAL_APP_DISALLOWED" - Default. Prevents
+	// the app from communicating cross-profile.
+	//   "CONNECTED_WORK_AND_PERSONAL_APP_ALLOWED" - Allows the app to
+	// communicate across profiles after receiving user consent.
+	ConnectedWorkAndPersonalApp string `json:"connectedWorkAndPersonalApp,omitempty"`
 
 	// DefaultPermissionPolicy: The default policy for all permissions
 	// requested by the app. If specified, this overrides the policy-level
@@ -545,11 +909,40 @@ type ApplicationPolicy struct {
 	// permission grant state.
 	//   "PACKAGE_ACCESS" - Grants access to package access state.
 	//   "ENABLE_SYSTEM_APP" - Grants access for enabling system apps.
+	//   "NETWORK_ACTIVITY_LOGS" - Grants access to network activity logs.
+	// Allows the delegated application to call setNetworkLoggingEnabled
+	// (https://developer.android.com/reference/android/app/admin/DevicePolicyManager#setNetworkLoggingEnabled%28android.content.ComponentName,%20boolean%29),
+	// isNetworkLoggingEnabled
+	// (https://developer.android.com/reference/android/app/admin/DevicePolicyManager#isNetworkLoggingEnabled%28android.content.ComponentName%29)
+	// and retrieveNetworkLogs
+	// (https://developer.android.com/reference/android/app/admin/DevicePolicyManager#retrieveNetworkLogs%28android.content.ComponentName,%20long%29)
+	// methods. This scope can be delegated to at most one application.
+	// Supported for fully managed devices on Android 10 and above.
+	// Supported for a work profile on Android 12 and above. When delegation
+	// is supported and set, NETWORK_ACTIVITY_LOGS is ignored.
+	//   "SECURITY_LOGS" - Grants access to security logs. Allows the
+	// delegated application to call setSecurityLoggingEnabled
+	// (https://developer.android.com/reference/android/app/admin/DevicePolicyManager#setSecurityLoggingEnabled%28android.content.ComponentName,%20boolean%29),
+	// isSecurityLoggingEnabled
+	// (https://developer.android.com/reference/android/app/admin/DevicePolicyManager#isSecurityLoggingEnabled%28android.content.ComponentName%29),
+	// retrieveSecurityLogs
+	// (https://developer.android.com/reference/android/app/admin/DevicePolicyManager#retrieveSecurityLogs%28android.content.ComponentName%29)
+	// and retrievePreRebootSecurityLogs
+	// (https://developer.android.com/reference/android/app/admin/DevicePolicyManager#retrievePreRebootSecurityLogs%28android.content.ComponentName%29)
+	// methods. This scope can be delegated to at most one application.
+	// Supported for fully managed devices and company-owned devices with a
+	// work profile on Android 12 and above. When delegation is supported
+	// and set, SECURITY_LOGS is ignored.
 	DelegatedScopes []string `json:"delegatedScopes,omitempty"`
 
 	// Disabled: Whether the app is disabled. When disabled, the app data is
 	// still preserved.
 	Disabled bool `json:"disabled,omitempty"`
+
+	// ExtensionConfig: Configuration to enable this app as an extension
+	// app, with the capability of interacting with Android Device Policy
+	// offline.This field can be set for at most one app.
+	ExtensionConfig *ExtensionConfig `json:"extensionConfig,omitempty"`
 
 	// InstallType: The type of installation to perform.
 	//
@@ -575,7 +968,7 @@ type ApplicationPolicy struct {
 
 	// LockTaskAllowed: Whether the app is allowed to lock itself in
 	// full-screen mode. DEPRECATED. Use InstallType KIOSK or
-	// kioskCustomLauncherEnabled to to configure a dedicated device.
+	// kioskCustomLauncherEnabled to configure a dedicated device.
 	LockTaskAllowed bool `json:"lockTaskAllowed,omitempty"`
 
 	// ManagedConfiguration: Managed configuration applied to the app. The
@@ -583,14 +976,9 @@ type ApplicationPolicy struct {
 	// values supported by the app. Each field name in the managed
 	// configuration must match the key field of the ManagedProperty. The
 	// field value must be compatible with the type of the ManagedProperty:
-	// <table> <tr><td><i>type</i></td><td><i>JSON value</i></td></tr>
-	// <tr><td>BOOL</td><td>true or false</td></tr>
-	// <tr><td>STRING</td><td>string</td></tr>
-	// <tr><td>INTEGER</td><td>number</td></tr>
-	// <tr><td>CHOICE</td><td>string</td></tr>
-	// <tr><td>MULTISELECT</td><td>array of strings</td></tr>
-	// <tr><td>HIDDEN</td><td>string</td></tr>
-	// <tr><td>BUNDLE_ARRAY</td><td>array of objects</td></tr> </table>
+	// *type* *JSON value* BOOL true or false STRING string INTEGER number
+	// CHOICE string MULTISELECT array of strings HIDDEN string BUNDLE_ARRAY
+	// array of objects
 	ManagedConfiguration googleapi.RawMessage `json:"managedConfiguration,omitempty"`
 
 	// ManagedConfigurationTemplate: The managed configurations template for
@@ -616,12 +1004,26 @@ type ApplicationPolicy struct {
 	// permission_grants which apply to all apps.
 	PermissionGrants []*PermissionGrant `json:"permissionGrants,omitempty"`
 
+	// WorkProfileWidgets: Specifies whether the app installed in the work
+	// profile is allowed to add widgets to the home screen.
+	//
+	// Possible values:
+	//   "WORK_PROFILE_WIDGETS_UNSPECIFIED" - Unspecified. Defaults to
+	// work_profile_widgets_default
+	//   "WORK_PROFILE_WIDGETS_ALLOWED" - Work profile widgets are allowed.
+	// This means the application will be able to add widgets to the home
+	// screen.
+	//   "WORK_PROFILE_WIDGETS_DISALLOWED" - Work profile widgets are
+	// disallowed. This means the application will not be able to add
+	// widgets to the home screen.
+	WorkProfileWidgets string `json:"workProfileWidgets,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "AccessibleTrackIds")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AccessibleTrackIds") to
@@ -657,8 +1059,8 @@ type ApplicationReport struct {
 	// DisplayName: The display name of the app.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Events: List of app events. The most recent 20 events are stored in
-	// the list.
+	// Events: The list of app events which have occurred in the last 30
+	// hours.
 	Events []*ApplicationEvent `json:"events,omitempty"`
 
 	// InstallerPackageName: The package name of the app that installed this
@@ -678,9 +1080,9 @@ type ApplicationReport struct {
 
 	// SigningKeyCertFingerprints: The SHA-1 hash of each
 	// android.content.pm.Signature
-	// (https://developer.android.com/reference/android/content/pm/Signature.
-	// html) associated with the app package. Each byte of each hash value
-	// is represented as a two-digit hexadecimal number.
+	// (https://developer.android.com/reference/android/content/pm/Signature.html)
+	// associated with the app package. Each byte of each hash value is
+	// represented as a two-digit hexadecimal number.
 	SigningKeyCertFingerprints []string `json:"signingKeyCertFingerprints,omitempty"`
 
 	// State: Application state.
@@ -700,10 +1102,10 @@ type ApplicationReport struct {
 
 	// ForceSendFields is a list of field names (e.g. "ApplicationSource")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ApplicationSource") to
@@ -731,10 +1133,10 @@ type ApplicationReportingSettings struct {
 
 	// ForceSendFields is a list of field names (e.g. "IncludeRemovedApps")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "IncludeRemovedApps") to
@@ -753,6 +1155,47 @@ func (s *ApplicationReportingSettings) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// BatchUsageLogEvents: Batched event logs of events from the device.
+type BatchUsageLogEvents struct {
+	// Device: The name of the device in the form
+	// ‘enterprises/{enterpriseId}/devices/{deviceId}’
+	Device string `json:"device,omitempty"`
+
+	// RetrievalTime: The device timestamp when the batch of events were
+	// collected from the device.
+	RetrievalTime string `json:"retrievalTime,omitempty"`
+
+	// UsageLogEvents: The list of UsageLogEvent that were reported by the
+	// device, sorted chronologically by the event time.
+	UsageLogEvents []*UsageLogEvent `json:"usageLogEvents,omitempty"`
+
+	// User: The resource name of the user that owns this device in the form
+	// ‘enterprises/{enterpriseId}/users/{userId}’.
+	User string `json:"user,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Device") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Device") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BatchUsageLogEvents) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchUsageLogEvents
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // BlockAction: An action to block access to apps and data on a fully
 // managed device or in a work profile. This action also triggers a
 // device or work profile to displays a user-facing notification with
@@ -764,12 +1207,24 @@ type BlockAction struct {
 	// to 0. blockAfterDays must be less than wipeAfterDays.
 	BlockAfterDays int64 `json:"blockAfterDays,omitempty"`
 
+	// BlockScope: Specifies the scope of this BlockAction. Only applicable
+	// to devices that are company-owned.
+	//
+	// Possible values:
+	//   "BLOCK_SCOPE_UNSPECIFIED" - Unspecified. Defaults to
+	// BLOCK_SCOPE_WORK_PROFILE.
+	//   "BLOCK_SCOPE_WORK_PROFILE" - Block action is only applied to apps
+	// in the work profile. Apps in the personal profile are unaffected.
+	//   "BLOCK_SCOPE_DEVICE" - Block action is applied to the entire
+	// device, including apps in the personal profile.
+	BlockScope string `json:"blockScope,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "BlockAfterDays") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BlockAfterDays") to
@@ -788,31 +1243,154 @@ func (s *BlockAction) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ChoosePrivateKeyRule: A rule for automatically choosing a private key
-// and certificate to authenticate the device to a server.
+// CertAuthorityInstalledEvent: A new root certificate was installed
+// into the system's trusted credential storage. This is available
+// device-wide on fully managed devices and within the work profile on
+// organization-owned devices with a work profile.
+type CertAuthorityInstalledEvent struct {
+	// Certificate: Subject of the certificate.
+	Certificate string `json:"certificate,omitempty"`
+
+	// Success: Whether the installation event succeeded.
+	Success bool `json:"success,omitempty"`
+
+	// UserId: The user in which the certificate install event happened.
+	// Only available for devices running Android 11 and above.
+	UserId int64 `json:"userId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Certificate") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Certificate") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CertAuthorityInstalledEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod CertAuthorityInstalledEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CertAuthorityRemovedEvent: A root certificate was removed from the
+// system's trusted credential storage. This is available device-wide on
+// fully managed devices and within the work profile on
+// organization-owned devices with a work profile.
+type CertAuthorityRemovedEvent struct {
+	// Certificate: Subject of the certificate.
+	Certificate string `json:"certificate,omitempty"`
+
+	// Success: Whether the removal succeeded.
+	Success bool `json:"success,omitempty"`
+
+	// UserId: The user in which the certificate removal event occurred.
+	// Only available for devices running Android 11 and above.
+	UserId int64 `json:"userId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Certificate") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Certificate") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CertAuthorityRemovedEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod CertAuthorityRemovedEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CertValidationFailureEvent: An X.509v3 certificate failed to
+// validate, currently this validation is performed on the Wi-FI access
+// point and failure may be due to a mismatch upon server certificate
+// validation. However it may in the future include other validation
+// events of an X.509v3 certificate.
+type CertValidationFailureEvent struct {
+	// FailureReason: The reason why certification validation failed.
+	FailureReason string `json:"failureReason,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FailureReason") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FailureReason") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CertValidationFailureEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod CertValidationFailureEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ChoosePrivateKeyRule: Controls apps' access to private keys. The rule
+// determines which private key, if any, Android Device Policy grants to
+// the specified app. Access is granted either when the app calls
+// KeyChain.choosePrivateKeyAlias
+// (https://developer.android.com/reference/android/security/KeyChain#choosePrivateKeyAlias%28android.app.Activity,%20android.security.KeyChainAliasCallback,%20java.lang.String[],%20java.security.Principal[],%20java.lang.String,%20int,%20java.lang.String%29)
+// (or any overloads) to request a private key alias for a given URL, or
+// for rules that are not URL-specific (that is, if urlPattern is not
+// set, or set to the empty string or .*) on Android 11 and above,
+// directly so that the app can call KeyChain.getPrivateKey
+// (https://developer.android.com/reference/android/security/KeyChain#getPrivateKey%28android.content.Context,%20java.lang.String%29),
+// without first having to call KeyChain.choosePrivateKeyAlias.When an
+// app calls KeyChain.choosePrivateKeyAlias if more than one
+// choosePrivateKeyRules matches, the last matching rule defines which
+// key alias to return.
 type ChoosePrivateKeyRule struct {
-	// PackageNames: The package names for which outgoing requests are
-	// subject to this rule. If no package names are specified, then the
-	// rule applies to all packages. For each package name listed, the rule
-	// applies to that package and all other packages that shared the same
-	// Android UID. The SHA256 hash of the signing key signatures of each
-	// package_name will be verified against those provided by Play
+	// PackageNames: The package names to which this rule applies. The hash
+	// of the signing certificate for each app is verified against the hash
+	// provided by Play. If no package names are specified, then the alias
+	// is provided to all apps that call KeyChain.choosePrivateKeyAlias
+	// (https://developer.android.com/reference/android/security/KeyChain#choosePrivateKeyAlias%28android.app.Activity,%20android.security.KeyChainAliasCallback,%20java.lang.String[],%20java.security.Principal[],%20java.lang.String,%20int,%20java.lang.String%29)
+	// or any overloads (but not without calling
+	// KeyChain.choosePrivateKeyAlias, even on Android 11 and above). Any
+	// app with the same Android UID as a package specified here will have
+	// access when they call KeyChain.choosePrivateKeyAlias.
 	PackageNames []string `json:"packageNames,omitempty"`
 
 	// PrivateKeyAlias: The alias of the private key to be used.
 	PrivateKeyAlias string `json:"privateKeyAlias,omitempty"`
 
-	// UrlPattern: The URL pattern to match against the URL of the outgoing
-	// request. The pattern may contain asterisk (*) wildcards. Any URL is
-	// matched if unspecified.
+	// UrlPattern: The URL pattern to match against the URL of the request.
+	// If not set or empty, it matches all URLs. This uses the regular
+	// expression syntax of java.util.regex.Pattern.
 	UrlPattern string `json:"urlPattern,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PackageNames") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "PackageNames") to include
@@ -830,8 +1408,81 @@ func (s *ChoosePrivateKeyRule) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ClearAppsDataParams: Parameters associated with the CLEAR_APP_DATA
+// command to clear the data of specified apps from the device.
+type ClearAppsDataParams struct {
+	// PackageNames: The package names of the apps whose data will be
+	// cleared when the command is executed.
+	PackageNames []string `json:"packageNames,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PackageNames") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PackageNames") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ClearAppsDataParams) MarshalJSON() ([]byte, error) {
+	type NoMethod ClearAppsDataParams
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ClearAppsDataStatus: Status of the CLEAR_APP_DATA command to clear
+// the data of specified apps from the device.
+type ClearAppsDataStatus struct {
+	// Results: The per-app results, a mapping from package names to the
+	// respective clearing result.
+	Results map[string]PerAppResult `json:"results,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Results") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Results") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ClearAppsDataStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod ClearAppsDataStatus
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Command: A command.
 type Command struct {
+	// ClearAppsDataParams: Parameters for the CLEAR_APP_DATA command to
+	// clear the data of specified apps from the device. See
+	// ClearAppsDataParams. If this is set, then it is suggested that type
+	// should not be set. In this case, the server automatically sets it to
+	// CLEAR_APP_DATA. It is also acceptable to explicitly set type to
+	// CLEAR_APP_DATA.
+	ClearAppsDataParams *ClearAppsDataParams `json:"clearAppsDataParams,omitempty"`
+
+	// ClearAppsDataStatus: Output only. Status of the CLEAR_APP_DATA
+	// command to clear the data of specified apps from the device. See
+	// ClearAppsDataStatus.
+	ClearAppsDataStatus *ClearAppsDataStatus `json:"clearAppsDataStatus,omitempty"`
+
 	// CreateTime: The timestamp at which the command was created. The
 	// timestamp is automatically generated by the server.
 	CreateTime string `json:"createTime,omitempty"`
@@ -880,7 +1531,18 @@ type Command struct {
 	//   "LOCK" - Lock the device, as if the lock screen timeout had
 	// expired.
 	//   "RESET_PASSWORD" - Reset the user's password.
-	//   "REBOOT" - Reboot the device. Only supported on API level 24+.
+	//   "REBOOT" - Reboot the device. Only supported on fully managed
+	// devices running Android 7.0 (API level 24) or higher.
+	//   "RELINQUISH_OWNERSHIP" - Removes the work profile and all policies
+	// from a company-owned Android 8.0+ device, relinquishing the device
+	// for personal use. Apps and data associated with the personal
+	// profile(s) are preserved. The device will be deleted from the server
+	// after it acknowledges the command.
+	//   "CLEAR_APP_DATA" - Clears the application data of specified apps.
+	// This is supported on Android 9 and above. Note that an application
+	// can store data outside of its application data, for example in
+	// external storage or in a user dictionary. See also
+	// clear_apps_data_params.
 	Type string `json:"type,omitempty"`
 
 	// UserName: The resource name of the user that owns the device in the
@@ -888,25 +1550,68 @@ type Command struct {
 	// generated by the server based on the device the command is sent to.
 	UserName string `json:"userName,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "ClearAppsDataParams")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ClearAppsDataParams") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
 func (s *Command) MarshalJSON() ([]byte, error) {
 	type NoMethod Command
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CommonCriteriaModeInfo: Information about Common Criteria
+// Mode—security standards defined in the Common Criteria for
+// Information Technology Security Evaluation
+// (https://www.commoncriteriaportal.org/) (CC).This information is only
+// available if statusReportingSettings.commonCriteriaModeEnabled is
+// true in the device's policy.
+type CommonCriteriaModeInfo struct {
+	// CommonCriteriaModeStatus: Whether Common Criteria Mode is enabled.
+	//
+	// Possible values:
+	//   "COMMON_CRITERIA_MODE_STATUS_UNKNOWN" - Unknown status.
+	//   "COMMON_CRITERIA_MODE_DISABLED" - Common Criteria Mode is currently
+	// disabled.
+	//   "COMMON_CRITERIA_MODE_ENABLED" - Common Criteria Mode is currently
+	// enabled.
+	CommonCriteriaModeStatus string `json:"commonCriteriaModeStatus,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CommonCriteriaModeStatus") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CommonCriteriaModeStatus")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CommonCriteriaModeInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod CommonCriteriaModeInfo
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -940,10 +1645,10 @@ type ComplianceRule struct {
 
 	// ForceSendFields is a list of field names (e.g. "ApiLevelCondition")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ApiLevelCondition") to
@@ -962,36 +1667,284 @@ func (s *ComplianceRule) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Date: Represents a whole or partial calendar date, e.g. a birthday.
-// The time of day and time zone are either specified elsewhere or are
-// not significant. The date is relative to the Proleptic Gregorian
-// Calendar. This can represent:
-// A full date, with non-zero year, month and day values
-// A month and day value, with a zero year, e.g. an anniversary
-// A year on its own, with zero month and day values
-// A year and month value, with a zero day, e.g. a credit card
-// expiration dateRelated types are google.type.TimeOfDay and
-// google.protobuf.Timestamp.
+// ConnectEvent: A TCP connect event was initiated through the standard
+// network stack.
+type ConnectEvent struct {
+	// DestinationIpAddress: The destination IP address of the connect call.
+	DestinationIpAddress string `json:"destinationIpAddress,omitempty"`
+
+	// DestinationPort: The destination port of the connect call.
+	DestinationPort int64 `json:"destinationPort,omitempty"`
+
+	// PackageName: The package name of the UID that performed the connect
+	// call.
+	PackageName string `json:"packageName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "DestinationIpAddress") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DestinationIpAddress") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ConnectEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod ConnectEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ContactInfo: Contact details for managed Google Play enterprises.
+type ContactInfo struct {
+	// ContactEmail: Email address for a point of contact, which will be
+	// used to send important announcements related to managed Google Play.
+	ContactEmail string `json:"contactEmail,omitempty"`
+
+	// DataProtectionOfficerEmail: The email of the data protection officer.
+	// The email is validated but not verified.
+	DataProtectionOfficerEmail string `json:"dataProtectionOfficerEmail,omitempty"`
+
+	// DataProtectionOfficerName: The name of the data protection officer.
+	DataProtectionOfficerName string `json:"dataProtectionOfficerName,omitempty"`
+
+	// DataProtectionOfficerPhone: The phone number of the data protection
+	// officer The phone number is validated but not verified.
+	DataProtectionOfficerPhone string `json:"dataProtectionOfficerPhone,omitempty"`
+
+	// EuRepresentativeEmail: The email of the EU representative. The email
+	// is validated but not verified.
+	EuRepresentativeEmail string `json:"euRepresentativeEmail,omitempty"`
+
+	// EuRepresentativeName: The name of the EU representative.
+	EuRepresentativeName string `json:"euRepresentativeName,omitempty"`
+
+	// EuRepresentativePhone: The phone number of the EU representative. The
+	// phone number is validated but not verified.
+	EuRepresentativePhone string `json:"euRepresentativePhone,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ContactEmail") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ContactEmail") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ContactInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod ContactInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ContentProviderEndpoint: This feature is not generally available.
+type ContentProviderEndpoint struct {
+	// PackageName: This feature is not generally available.
+	PackageName string `json:"packageName,omitempty"`
+
+	// SigningCertsSha256: Required. This feature is not generally
+	// available.
+	SigningCertsSha256 []string `json:"signingCertsSha256,omitempty"`
+
+	// Uri: This feature is not generally available.
+	Uri string `json:"uri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PackageName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PackageName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ContentProviderEndpoint) MarshalJSON() ([]byte, error) {
+	type NoMethod ContentProviderEndpoint
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CrossProfilePolicies: Cross-profile policies applied on the device.
+type CrossProfilePolicies struct {
+	// CrossProfileCopyPaste: Whether text copied from one profile (personal
+	// or work) can be pasted in the other profile.
+	//
+	// Possible values:
+	//   "CROSS_PROFILE_COPY_PASTE_UNSPECIFIED" - Unspecified. Defaults to
+	// COPY_FROM_WORK_TO_PERSONAL_DISALLOWED
+	//   "COPY_FROM_WORK_TO_PERSONAL_DISALLOWED" - Default. Prevents users
+	// from pasting into the personal profile text copied from the work
+	// profile. Text copied from the personal profile can be pasted into the
+	// work profile, and text copied from the work profile can be pasted
+	// into the work profile.
+	//   "CROSS_PROFILE_COPY_PASTE_ALLOWED" - Text copied in either profile
+	// can be pasted in the other profile.
+	CrossProfileCopyPaste string `json:"crossProfileCopyPaste,omitempty"`
+
+	// CrossProfileDataSharing: Whether data from one profile (personal or
+	// work) can be shared with apps in the other profile. Specifically
+	// controls simple data sharing via intents. Management of other
+	// cross-profile communication channels, such as contact search,
+	// copy/paste, or connected work & personal apps, are configured
+	// separately.
+	//
+	// Possible values:
+	//   "CROSS_PROFILE_DATA_SHARING_UNSPECIFIED" - Unspecified. Defaults to
+	// DATA_SHARING_FROM_WORK_TO_PERSONAL_DISALLOWED.
+	//   "CROSS_PROFILE_DATA_SHARING_DISALLOWED" - Prevents data from being
+	// shared from both the personal profile to the work profile and the
+	// work profile to the personal profile.
+	//   "DATA_SHARING_FROM_WORK_TO_PERSONAL_DISALLOWED" - Default. Prevents
+	// users from sharing data from the work profile to apps in the personal
+	// profile. Personal data can be shared with work apps.
+	//   "CROSS_PROFILE_DATA_SHARING_ALLOWED" - Data from either profile can
+	// be shared with the other profile.
+	CrossProfileDataSharing string `json:"crossProfileDataSharing,omitempty"`
+
+	// ShowWorkContactsInPersonalProfile: Whether contacts stored in the
+	// work profile can be shown in personal profile contact searches and
+	// incoming calls.
+	//
+	// Possible values:
+	//   "SHOW_WORK_CONTACTS_IN_PERSONAL_PROFILE_UNSPECIFIED" - Unspecified.
+	// Defaults to SHOW_WORK_CONTACTS_IN_PERSONAL_PROFILE_ALLOWED.
+	//   "SHOW_WORK_CONTACTS_IN_PERSONAL_PROFILE_DISALLOWED" - Prevents work
+	// profile contacts from appearing in personal profile contact searches
+	// and incoming calls
+	//   "SHOW_WORK_CONTACTS_IN_PERSONAL_PROFILE_ALLOWED" - Default. Allows
+	// work profile contacts to appear in personal profile contact searches
+	// and incoming calls
+	ShowWorkContactsInPersonalProfile string `json:"showWorkContactsInPersonalProfile,omitempty"`
+
+	// WorkProfileWidgetsDefault: Specifies the default behaviour for work
+	// profile widgets. If the policy does not specify work_profile_widgets
+	// for a specific application, it will behave according to the value
+	// specified here.
+	//
+	// Possible values:
+	//   "WORK_PROFILE_WIDGETS_DEFAULT_UNSPECIFIED" - Unspecified. Defaults
+	// to WORK_PROFILE_WIDGETS_DEFAULT_DISALLOWED.
+	//   "WORK_PROFILE_WIDGETS_DEFAULT_ALLOWED" - Work profile widgets are
+	// allowed by default. This means that if the policy does not specify
+	// work_profile_widgets as WORK_PROFILE_WIDGETS_DISALLOWED for the
+	// application, it will be able to add widgets to the home screen.
+	//   "WORK_PROFILE_WIDGETS_DEFAULT_DISALLOWED" - Work profile widgets
+	// are disallowed by default. This means that if the policy does not
+	// specify work_profile_widgets as WORK_PROFILE_WIDGETS_ALLOWED for the
+	// application, it will be unable to add widgets to the home screen.
+	WorkProfileWidgetsDefault string `json:"workProfileWidgetsDefault,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CrossProfileCopyPaste") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CrossProfileCopyPaste") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CrossProfilePolicies) MarshalJSON() ([]byte, error) {
+	type NoMethod CrossProfilePolicies
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CryptoSelfTestCompletedEvent: Validates whether Android’s built-in
+// cryptographic library (BoringSSL) is valid. Should always succeed on
+// device boot, if it fails, the device should be considered untrusted.
+type CryptoSelfTestCompletedEvent struct {
+	// Success: Whether the test succeeded.
+	Success bool `json:"success,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Success") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Success") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CryptoSelfTestCompletedEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod CryptoSelfTestCompletedEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Date: Represents a whole or partial calendar date, such as a
+// birthday. The time of day and time zone are either specified
+// elsewhere or are insignificant. The date is relative to the Gregorian
+// Calendar. This can represent one of the following: A full date, with
+// non-zero year, month, and day values. A month and day, with a zero
+// year (for example, an anniversary). A year on its own, with a zero
+// month and a zero day. A year and month, with a zero day (for example,
+// a credit card expiration date).Related types: google.type.TimeOfDay
+// google.type.DateTime google.protobuf.Timestamp
 type Date struct {
-	// Day: Day of month. Must be from 1 to 31 and valid for the year and
-	// month, or 0 if specifying a year by itself or a year and month where
-	// the day is not significant.
+	// Day: Day of a month. Must be from 1 to 31 and valid for the year and
+	// month, or 0 to specify a year by itself or a year and month where the
+	// day isn't significant.
 	Day int64 `json:"day,omitempty"`
 
-	// Month: Month of year. Must be from 1 to 12, or 0 if specifying a year
+	// Month: Month of a year. Must be from 1 to 12, or 0 to specify a year
 	// without a month and day.
 	Month int64 `json:"month,omitempty"`
 
-	// Year: Year of date. Must be from 1 to 9999, or 0 if specifying a date
-	// without a year.
+	// Year: Year of the date. Must be from 1 to 9999, or 0 to specify a
+	// date without a year.
 	Year int64 `json:"year,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Day") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Day") to include in API
@@ -1022,6 +1975,12 @@ type Device struct {
 	// true in the device's policy.
 	ApplicationReports []*ApplicationReport `json:"applicationReports,omitempty"`
 
+	// AppliedPasswordPolicies: The password requirements currently applied
+	// to the device. The applied requirements may be slightly different
+	// from those specified in passwordPolicies in some cases. fieldPath is
+	// set based on passwordPolicies.
+	AppliedPasswordPolicies []*PasswordRequirements `json:"appliedPasswordPolicies,omitempty"`
+
 	// AppliedPolicyName: The name of the policy currently applied to the
 	// device.
 	AppliedPolicyName string `json:"appliedPolicyName,omitempty"`
@@ -1036,12 +1995,23 @@ type Device struct {
 	//   "DEVICE_STATE_UNSPECIFIED" - This value is disallowed.
 	//   "ACTIVE" - The device is active.
 	//   "DISABLED" - The device is disabled.
-	//   "DELETED" - The device was deleted. This state will never be
-	// returned by an API call, but is used in the final status report
-	// published to Cloud Pub/Sub when the device acknowledges the deletion.
+	//   "DELETED" - The device was deleted. This state is never returned by
+	// an API call, but is used in the final status report when the device
+	// acknowledges the deletion. If the device is deleted via the API call,
+	// this state is published to Pub/Sub. If the user deletes the work
+	// profile or resets the device, the device state will remain unknown to
+	// the server.
 	//   "PROVISIONING" - The device is being provisioned. Newly enrolled
 	// devices are in this state until they have a policy applied.
 	AppliedState string `json:"appliedState,omitempty"`
+
+	// CommonCriteriaModeInfo: Information about Common Criteria
+	// Mode—security standards defined in the Common Criteria for
+	// Information Technology Security Evaluation
+	// (https://www.commoncriteriaportal.org/) (CC).This information is only
+	// available if statusReportingSettings.commonCriteriaModeEnabled is
+	// true in the device's policy.
+	CommonCriteriaModeInfo *CommonCriteriaModeInfo `json:"commonCriteriaModeInfo,omitempty"`
 
 	// DeviceSettings: Device settings information. This information is only
 	// available if deviceSettingsEnabled is true in the device's policy.
@@ -1102,8 +2072,8 @@ type Device struct {
 	// memoryInfoEnabled is true in the device's policy.
 	MemoryEvents []*MemoryEvent `json:"memoryEvents,omitempty"`
 
-	// MemoryInfo: Memory information. This information is only available if
-	// memoryInfoEnabled is true in the device's policy.
+	// MemoryInfo: Memory information: contains information about device
+	// memory and storage.
 	MemoryInfo *MemoryInfo `json:"memoryInfo,omitempty"`
 
 	// Name: The name of the device in the form
@@ -1117,6 +2087,14 @@ type Device struct {
 	// NonComplianceDetails: Details about policy settings that the device
 	// is not compliant with.
 	NonComplianceDetails []*NonComplianceDetail `json:"nonComplianceDetails,omitempty"`
+
+	// Ownership: Ownership of the managed device.
+	//
+	// Possible values:
+	//   "OWNERSHIP_UNSPECIFIED" - Ownership is unspecified.
+	//   "COMPANY_OWNED" - Device is company-owned.
+	//   "PERSONALLY_OWNED" - Device is personally-owned.
+	Ownership string `json:"ownership,omitempty"`
 
 	// PolicyCompliant: Whether the device is compliant with its policy.
 	PolicyCompliant bool `json:"policyCompliant,omitempty"`
@@ -1160,9 +2138,12 @@ type Device struct {
 	//   "DEVICE_STATE_UNSPECIFIED" - This value is disallowed.
 	//   "ACTIVE" - The device is active.
 	//   "DISABLED" - The device is disabled.
-	//   "DELETED" - The device was deleted. This state will never be
-	// returned by an API call, but is used in the final status report
-	// published to Cloud Pub/Sub when the device acknowledges the deletion.
+	//   "DELETED" - The device was deleted. This state is never returned by
+	// an API call, but is used in the final status report when the device
+	// acknowledges the deletion. If the device is deleted via the API call,
+	// this state is published to Pub/Sub. If the user deletes the work
+	// profile or resets the device, the device state will remain unknown to
+	// the server.
 	//   "PROVISIONING" - The device is being provisioned. Newly enrolled
 	// devices are in this state until they have a policy applied.
 	State string `json:"state,omitempty"`
@@ -1185,10 +2166,10 @@ type Device struct {
 
 	// ForceSendFields is a list of field names (e.g. "ApiLevel") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ApiLevel") to include in
@@ -1245,17 +2226,17 @@ type DeviceSettings struct {
 	// is enabled.
 	UnknownSourcesEnabled bool `json:"unknownSourcesEnabled,omitempty"`
 
-	// VerifyAppsEnabled: Whether Verify Apps (Google Play Protect
-	// (https://support.google.com/googleplay/answer/2812853)) is enabled on
+	// VerifyAppsEnabled: Whether Google Play Protect verification
+	// (https://support.google.com/accounts/answer/2812853) is enforced on
 	// the device.
 	VerifyAppsEnabled bool `json:"verifyAppsEnabled,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AdbEnabled") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AdbEnabled") to include in
@@ -1305,10 +2286,10 @@ type Display struct {
 
 	// ForceSendFields is a list of field names (e.g. "Density") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Density") to include in
@@ -1326,15 +2307,53 @@ func (s *Display) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// DnsEvent: A DNS lookup event was initiated through the standard
+// network stack.
+type DnsEvent struct {
+	// Hostname: The hostname that was looked up.
+	Hostname string `json:"hostname,omitempty"`
+
+	// IpAddresses: The (possibly truncated) list of the IP addresses
+	// returned for DNS lookup (max 10 IPv4 or IPv6 addresses).
+	IpAddresses []string `json:"ipAddresses,omitempty"`
+
+	// PackageName: The package name of the UID that performed the DNS
+	// lookup.
+	PackageName string `json:"packageName,omitempty"`
+
+	// TotalIpAddressesReturned: The number of IP addresses returned from
+	// the DNS lookup event. May be higher than the amount of ip_addresses
+	// if there were too many addresses to log.
+	TotalIpAddressesReturned int64 `json:"totalIpAddressesReturned,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "Hostname") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Hostname") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DnsEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod DnsEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
-// instance:
-// service Foo {
-//   rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty);
-// }
-// The JSON representation for Empty is empty JSON object {}.
+// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); }
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -1351,9 +2370,31 @@ type EnrollmentToken struct {
 	// 1024 characters or less; otherwise, the creation request will fail.
 	AdditionalData string `json:"additionalData,omitempty"`
 
+	// AllowPersonalUsage: Controls whether personal usage is allowed on a
+	// device provisioned with this enrollment token.For company-owned
+	// devices: Enabling personal usage allows the user to set up a work
+	// profile on the device. Disabling personal usage requires the user
+	// provision the device as a fully managed device.For personally-owned
+	// devices: Enabling personal usage allows the user to set up a work
+	// profile on the device. Disabling personal usage will prevent the
+	// device from provisioning. Personal usage cannot be disabled on
+	// personally-owned device.
+	//
+	// Possible values:
+	//   "ALLOW_PERSONAL_USAGE_UNSPECIFIED" - Personal usage restriction is
+	// not specified
+	//   "PERSONAL_USAGE_ALLOWED" - Personal usage is allowed
+	//   "PERSONAL_USAGE_DISALLOWED" - Personal usage is disallowed
+	AllowPersonalUsage string `json:"allowPersonalUsage,omitempty"`
+
 	// Duration: The length of time the enrollment token is valid, ranging
-	// from 1 minute to 30 days. If not specified, the default duration is 1
-	// hour.
+	// from 1 minute to Durations.MAX_VALUE
+	// (https://developers.google.com/protocol-buffers/docs/reference/java/com/google/protobuf/util/Durations.html#MAX_VALUE),
+	// approximately 10,000 years. If not specified, the default duration is
+	// 1 hour. Please note that if requested duration causes the resulting
+	// expiration_timestamp to exceed Timestamps.MAX_VALUE
+	// (https://developers.google.com/protocol-buffers/docs/reference/java/com/google/protobuf/util/Timestamps.html#MAX_VALUE),
+	// then expiration_timestamp is coerced to Timestamps.MAX_VALUE.
 	Duration string `json:"duration,omitempty"`
 
 	// ExpirationTimestamp: The expiration time of the token. This is a
@@ -1403,10 +2444,10 @@ type EnrollmentToken struct {
 
 	// ForceSendFields is a list of field names (e.g. "AdditionalData") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AdditionalData") to
@@ -1430,6 +2471,10 @@ type Enterprise struct {
 	// AppAutoApprovalEnabled: Deprecated and unused.
 	AppAutoApprovalEnabled bool `json:"appAutoApprovalEnabled,omitempty"`
 
+	// ContactInfo: The enterprise contact info of an EMM-managed
+	// enterprise.
+	ContactInfo *ContactInfo `json:"contactInfo,omitempty"`
+
 	// EnabledNotificationTypes: The types of Google Pub/Sub notifications
 	// enabled for the enterprise.
 	//
@@ -1441,6 +2486,8 @@ type Enterprise struct {
 	// report.
 	//   "COMMAND" - A notification sent when a device command has
 	// completed.
+	//   "USAGE_LOGS" - A notification sent when device sends
+	// BatchUsageLogEvents.
 	EnabledNotificationTypes []string `json:"enabledNotificationTypes,omitempty"`
 
 	// EnterpriseDisplayName: The name of the enterprise displayed to users.
@@ -1461,8 +2508,8 @@ type Enterprise struct {
 	// where the value of each component is between 0 and 255, inclusive.
 	PrimaryColor int64 `json:"primaryColor,omitempty"`
 
-	// PubsubTopic: The topic that Cloud Pub/Sub notifications are published
-	// to, in the form projects/{project}/topics/{topic}. This field is only
+	// PubsubTopic: The topic which Pub/Sub notifications are published to,
+	// in the form projects/{project}/topics/{topic}. This field is only
 	// required if Pub/Sub notifications are enabled.
 	PubsubTopic string `json:"pubsubTopic,omitempty"`
 
@@ -1480,8 +2527,8 @@ type Enterprise struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "AppAutoApprovalEnabled") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -1503,6 +2550,62 @@ func (s *Enterprise) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ExtensionConfig: Configuration to enable an app as an extension app,
+// with the capability of interacting with Android Device Policy
+// offline. For Android versions 13 and above, extension apps are exempt
+// from battery restrictions so will not be placed into the restricted
+// App Standby Bucket
+// (https://developer.android.com/topic/performance/appstandby#restricted-bucket).
+// Extensions apps are also protected against users clearing their data
+// or force-closing the application, although admins can continue to use
+// the clear app data command
+// (https://developer.android.com/management/reference/rest/v1/enterprises.devices/issueCommand#CommandType)
+// on extension apps if needed for Android 13 and above.
+type ExtensionConfig struct {
+	// NotificationReceiver: Fully qualified class name of the receiver
+	// service class for Android Device Policy to notify the extension app
+	// of any local command status updates.
+	NotificationReceiver string `json:"notificationReceiver,omitempty"`
+
+	// SigningKeyFingerprintsSha256: Hex-encoded SHA-256 hash of the signing
+	// certificate of the extension app. Only hexadecimal string
+	// representations of 64 characters are valid.If not specified, the
+	// signature for the corresponding package name is obtained from the
+	// Play Store instead.If this list is empty, the signature of the
+	// extension app on the device must match the signature obtained from
+	// the Play Store for the app to be able to communicate with Android
+	// Device Policy.If this list is not empty, the signature of the
+	// extension app on the device must match one of the entries in this
+	// list for the app to be able to communicate with Android Device
+	// Policy.In production use cases, it is recommended to leave this
+	// empty.
+	SigningKeyFingerprintsSha256 []string `json:"signingKeyFingerprintsSha256,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "NotificationReceiver") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NotificationReceiver") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ExtensionConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ExtensionConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ExternalData: Data hosted at an external location. The data is to be
 // downloaded by Android Device Policy and verified against the hash.
 type ExternalData struct {
@@ -1520,10 +2623,10 @@ type ExternalData struct {
 
 	// ForceSendFields is a list of field names (e.g. "Sha256Hash") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Sha256Hash") to include in
@@ -1541,6 +2644,62 @@ func (s *ExternalData) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// FilePulledEvent: A file was downloaded from the device.
+type FilePulledEvent struct {
+	// FilePath: The path of the file being pulled.
+	FilePath string `json:"filePath,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FilePath") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FilePath") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FilePulledEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod FilePulledEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// FilePushedEvent: A file was uploaded onto the device.
+type FilePushedEvent struct {
+	// FilePath: The path of the file being pushed.
+	FilePath string `json:"filePath,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FilePath") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FilePath") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FilePushedEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod FilePushedEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // FreezePeriod: A system freeze period. When a device’s clock is
 // within the freeze period, all incoming system updates (including
 // security patches) are blocked and won’t be installed. When a device
@@ -1551,7 +2710,9 @@ func (s *ExternalData) MarshalJSON() ([]byte, error) {
 // device’s system clock reads Feb. 29th, it’s treated as Feb. 28th.
 // * When calculating the number of days in a freeze period or the time
 // between two freeze periods, Feb. 29th is ignored and not counted as a
-// day.
+// day.Note: For Freeze Periods to take effect, SystemUpdateType cannot
+// be specified as SYSTEM_UPDATE_TYPE_UNSPECIFIED, because freeze
+// periods require a defined policy to be specified.
 type FreezePeriod struct {
 	// EndDate: The end date (inclusive) of the freeze period. Must be no
 	// later than 90 days from the start date. If the end date is earlier
@@ -1566,10 +2727,10 @@ type FreezePeriod struct {
 
 	// ForceSendFields is a list of field names (e.g. "EndDate") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "EndDate") to include in
@@ -1614,6 +2775,14 @@ type HardwareInfo struct {
 	// MDM9625_104662.22.05.34p.
 	DeviceBasebandVersion string `json:"deviceBasebandVersion,omitempty"`
 
+	// EnterpriseSpecificId: Output only. ID that uniquely identifies a
+	// personally-owned device in a particular organization. On the same
+	// physical device when enrolled with the same organization, this ID
+	// persists across setups and even factory resets. This ID is available
+	// on personally-owned devices with a work profile on devices running
+	// Android 12 and above.
+	EnterpriseSpecificId string `json:"enterpriseSpecificId,omitempty"`
+
 	// GpuShutdownTemperatures: GPU shutdown temperature thresholds in
 	// Celsius for each GPU on the device.
 	GpuShutdownTemperatures []float64 `json:"gpuShutdownTemperatures,omitempty"`
@@ -1644,11 +2813,11 @@ type HardwareInfo struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "BatteryShutdownTemperatures") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g.
@@ -1701,10 +2870,10 @@ type HardwareStatus struct {
 
 	// ForceSendFields is a list of field names (e.g. "BatteryTemperatures")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BatteryTemperatures") to
@@ -1719,6 +2888,165 @@ type HardwareStatus struct {
 
 func (s *HardwareStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod HardwareStatus
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// IssueCommandResponse: Response on issuing a command. This is
+// currently empty as a placeholder.
+type IssueCommandResponse struct {
+}
+
+// KeyDestructionEvent: A cryptographic key including user installed,
+// admin installed and system maintained private key is removed from the
+// device either by the user or management. This is available
+// device-wide on fully managed devices and within the work profile on
+// organization-owned devices with a work profile.
+type KeyDestructionEvent struct {
+	// ApplicationUid: UID of the application which owns the key.
+	ApplicationUid int64 `json:"applicationUid,omitempty"`
+
+	// KeyAlias: Alias of the key.
+	KeyAlias string `json:"keyAlias,omitempty"`
+
+	// Success: Whether the operation was successful.
+	Success bool `json:"success,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ApplicationUid") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ApplicationUid") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *KeyDestructionEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod KeyDestructionEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// KeyGeneratedEvent: A cryptographic key including user installed,
+// admin installed and system maintained private key is installed on the
+// device either by the user or management.This is available device-wide
+// on fully managed devices and within the work profile on
+// organization-owned devices with a work profile.
+type KeyGeneratedEvent struct {
+	// ApplicationUid: UID of the application which generated the key.
+	ApplicationUid int64 `json:"applicationUid,omitempty"`
+
+	// KeyAlias: Alias of the key.
+	KeyAlias string `json:"keyAlias,omitempty"`
+
+	// Success: Whether the operation was successful.
+	Success bool `json:"success,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ApplicationUid") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ApplicationUid") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *KeyGeneratedEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod KeyGeneratedEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// KeyImportEvent: A cryptographic key including user installed, admin
+// installed and system maintained private key is imported on the device
+// either by the user or management. This is available device-wide on
+// fully managed devices and within the work profile on
+// organization-owned devices with a work profile.
+type KeyImportEvent struct {
+	// ApplicationUid: UID of the application which imported the key
+	ApplicationUid int64 `json:"applicationUid,omitempty"`
+
+	// KeyAlias: Alias of the key.
+	KeyAlias string `json:"keyAlias,omitempty"`
+
+	// Success: Whether the operation was successful.
+	Success bool `json:"success,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ApplicationUid") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ApplicationUid") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *KeyImportEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod KeyImportEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// KeyIntegrityViolationEvent: A cryptographic key including user
+// installed, admin installed and system maintained private key is
+// determined to be corrupted due to storage corruption, hardware
+// failure or some OS issue. This is available device-wide on fully
+// managed devices and within the work profile on organization-owned
+// devices with a work profile.
+type KeyIntegrityViolationEvent struct {
+	// ApplicationUid: UID of the application which owns the key
+	ApplicationUid int64 `json:"applicationUid,omitempty"`
+
+	// KeyAlias: Alias of the key.
+	KeyAlias string `json:"keyAlias,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ApplicationUid") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ApplicationUid") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *KeyIntegrityViolationEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod KeyIntegrityViolationEvent
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1760,10 +3088,10 @@ type KeyedAppState struct {
 
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CreateTime") to include in
@@ -1779,6 +3107,51 @@ func (s *KeyedAppState) MarshalJSON() ([]byte, error) {
 	type NoMethod KeyedAppState
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// KeyguardDismissAuthAttemptEvent: An attempt was made to unlock the
+// device.
+type KeyguardDismissAuthAttemptEvent struct {
+	// StrongAuthMethodUsed: Whether a strong form of authentication
+	// (password, PIN, or pattern) was used to unlock device.
+	StrongAuthMethodUsed bool `json:"strongAuthMethodUsed,omitempty"`
+
+	// Success: Whether the unlock attempt was successful.
+	Success bool `json:"success,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "StrongAuthMethodUsed") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "StrongAuthMethodUsed") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *KeyguardDismissAuthAttemptEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod KeyguardDismissAuthAttemptEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// KeyguardDismissedEvent: The keyguard was dismissed. Intentionally
+// empty.
+type KeyguardDismissedEvent struct {
+}
+
+// KeyguardSecuredEvent: The device was locked either by user or
+// timeout. Intentionally empty.
+type KeyguardSecuredEvent struct {
 }
 
 // KioskCustomization: Settings controlling the behavior of a device in
@@ -1855,10 +3228,10 @@ type KioskCustomization struct {
 
 	// ForceSendFields is a list of field names (e.g. "DeviceSettings") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DeviceSettings") to
@@ -1884,10 +3257,10 @@ type LaunchAppAction struct {
 
 	// ForceSendFields is a list of field names (e.g. "PackageName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "PackageName") to include
@@ -1921,10 +3294,10 @@ type ListDevicesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Devices") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Devices") to include in
@@ -1938,6 +3311,80 @@ type ListDevicesResponse struct {
 
 func (s *ListDevicesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListDevicesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListEnrollmentTokensResponse: Response to a request to list
+// enrollment tokens for a given enterprise.
+type ListEnrollmentTokensResponse struct {
+	// EnrollmentTokens: The list of enrollment tokens.
+	EnrollmentTokens []*EnrollmentToken `json:"enrollmentTokens,omitempty"`
+
+	// NextPageToken: If there are more results, a token to retrieve next
+	// page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "EnrollmentTokens") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EnrollmentTokens") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListEnrollmentTokensResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListEnrollmentTokensResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListEnterprisesResponse: Response to a request to list enterprises.
+type ListEnterprisesResponse struct {
+	// Enterprises: The list of enterprises.
+	Enterprises []*Enterprise `json:"enterprises,omitempty"`
+
+	// NextPageToken: If there are more results, a token to retrieve next
+	// page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Enterprises") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Enterprises") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListEnterprisesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListEnterprisesResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1958,10 +3405,10 @@ type ListOperationsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -1995,10 +3442,10 @@ type ListPoliciesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -2032,10 +3479,10 @@ type ListWebAppsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -2053,11 +3500,27 @@ func (s *ListWebAppsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// LogBufferSizeCriticalEvent: The usageLog buffer on the device has
+// reached 90% of its capacity, therefore older events may be dropped.
+// Intentionally empty.
+type LogBufferSizeCriticalEvent struct {
+}
+
+// LoggingStartedEvent: usageLog policy has been enabled. Intentionally
+// empty.
+type LoggingStartedEvent struct {
+}
+
+// LoggingStoppedEvent: usageLog policy has been disabled. Intentionally
+// empty.
+type LoggingStoppedEvent struct {
+}
+
 // ManagedConfigurationTemplate: The managed configurations template for
 // the app, saved from the managed configurations iframe.
 type ManagedConfigurationTemplate struct {
-	// ConfigurationVariables: Optional, a map containing <key, value>
-	// configuration variables defined for the configuration.
+	// ConfigurationVariables: Optional, a map containing configuration
+	// variables defined for the configuration.
 	ConfigurationVariables map[string]string `json:"configurationVariables,omitempty"`
 
 	// TemplateId: The ID of the managed configurations template.
@@ -2065,8 +3528,8 @@ type ManagedConfigurationTemplate struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "ConfigurationVariables") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -2131,10 +3594,10 @@ type ManagedProperty struct {
 
 	// ForceSendFields is a list of field names (e.g. "DefaultValue") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DefaultValue") to include
@@ -2163,10 +3626,10 @@ type ManagedPropertyEntry struct {
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Name") to include in API
@@ -2180,6 +3643,70 @@ type ManagedPropertyEntry struct {
 
 func (s *ManagedPropertyEntry) MarshalJSON() ([]byte, error) {
 	type NoMethod ManagedPropertyEntry
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MediaMountEvent: Removable media was mounted.
+type MediaMountEvent struct {
+	// MountPoint: Mount point.
+	MountPoint string `json:"mountPoint,omitempty"`
+
+	// VolumeLabel: Volume label. Redacted to empty string on
+	// organization-owned managed profile devices.
+	VolumeLabel string `json:"volumeLabel,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MountPoint") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MountPoint") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MediaMountEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod MediaMountEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MediaUnmountEvent: Removable media was unmounted.
+type MediaUnmountEvent struct {
+	// MountPoint: Mount point.
+	MountPoint string `json:"mountPoint,omitempty"`
+
+	// VolumeLabel: Volume label. Redacted to empty string on
+	// organization-owned managed profile devices.
+	VolumeLabel string `json:"volumeLabel,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MountPoint") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MountPoint") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MediaUnmountEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod MediaUnmountEvent
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2213,10 +3740,10 @@ type MemoryEvent struct {
 
 	// ForceSendFields is a list of field names (e.g. "ByteCount") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ByteCount") to include in
@@ -2244,8 +3771,8 @@ type MemoryInfo struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "TotalInternalStorage") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -2279,16 +3806,21 @@ type NetworkInfo struct {
 	// For example, Vodafone.
 	NetworkOperatorName string `json:"networkOperatorName,omitempty"`
 
+	// TelephonyInfos: Provides telephony information associated with each
+	// SIM card on the device. Only supported on fully managed devices
+	// starting from Android API level 23.
+	TelephonyInfos []*TelephonyInfo `json:"telephonyInfos,omitempty"`
+
 	// WifiMacAddress: Wi-Fi MAC address of the device. For example,
 	// 7c:11:11:11:11:11.
 	WifiMacAddress string `json:"wifiMacAddress,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Imei") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Imei") to include in API
@@ -2319,7 +3851,7 @@ type NonComplianceDetail struct {
 	// JSON field would be referenced in JavaScript, that is: 1) For
 	// object-typed fields, the field name is followed by a dot then by a
 	// subfield name. 2) For array-typed fields, the field name is followed
-	// by the array index  enclosed in brackets. For example, to indicate a
+	// by the array index enclosed in brackets. For example, to indicate a
 	// problem with the url field in the externalData field in the 3rd
 	// application, the path would be applications[2].externalData.url
 	FieldPath string `json:"fieldPath,omitempty"`
@@ -2347,9 +3879,9 @@ type NonComplianceDetail struct {
 	// country.
 	//   "NO_LICENSES_REMAINING" - There are no licenses available to assign
 	// to the user.
-	//   "NOT_ENROLLED" - The enterprise is no longer enrolled with managed
-	// Play or the admin has not accepted the latest managed Play terms of
-	// service.
+	//   "NOT_ENROLLED" - The enterprise is no longer enrolled with Managed
+	// Google Play or the admin has not accepted the latest Managed Google
+	// Play Terms of Service.
 	//   "USER_INVALID" - The user is no longer valid. The user may have
 	// been deleted or disabled.
 	InstallationFailureReason string `json:"installationFailureReason,omitempty"`
@@ -2385,15 +3917,45 @@ type NonComplianceDetail struct {
 	PackageName string `json:"packageName,omitempty"`
 
 	// SettingName: The name of the policy setting. This is the JSON field
-	// name of a top-level Policy  field.
+	// name of a top-level Policy field.
 	SettingName string `json:"settingName,omitempty"`
+
+	// SpecificNonComplianceContext: Additional context for
+	// specific_non_compliance_reason.
+	SpecificNonComplianceContext *SpecificNonComplianceContext `json:"specificNonComplianceContext,omitempty"`
+
+	// SpecificNonComplianceReason: The policy-specific reason the device is
+	// not in compliance with the setting.
+	//
+	// Possible values:
+	//   "SPECIFIC_NON_COMPLIANCE_REASON_UNSPECIFIED" - Specific
+	// non-compliance reason is not specified. Fields in
+	// specific_non_compliance_context are not set.
+	//   "PASSWORD_POLICIES_USER_CREDENTIALS_CONFIRMATION_REQUIRED" - User
+	// needs to confirm credentials by entering the screen lock. Fields in
+	// specific_non_compliance_context are not set. nonComplianceReason is
+	// set to USER_ACTION.
+	//   "PASSWORD_POLICIES_PASSWORD_EXPIRED" - The device or profile
+	// password has expired. passwordPoliciesContext is set.
+	// nonComplianceReason is set to USER_ACTION.
+	//   "PASSWORD_POLICIES_PASSWORD_NOT_SUFFICIENT" - The device password
+	// does not satisfy password requirements. passwordPoliciesContext is
+	// set. nonComplianceReason is set to USER_ACTION.
+	//   "ONC_WIFI_INVALID_VALUE" - There is an incorrect value in ONC Wi-Fi
+	// configuration. fieldPath specifies which field value is incorrect.
+	// oncWifiContext is set. nonComplianceReason is set to INVALID_VALUE.
+	//   "ONC_WIFI_API_LEVEL" - The ONC Wi-Fi setting is not supported in
+	// the API level of the Android version running on the device. fieldPath
+	// specifies which field value is not supported. oncWifiContext is set.
+	// nonComplianceReason is set to API_LEVEL.
+	SpecificNonComplianceReason string `json:"specificNonComplianceReason,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CurrentValue") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CurrentValue") to include
@@ -2455,10 +4017,10 @@ type NonComplianceDetailCondition struct {
 
 	// ForceSendFields is a list of field names (e.g. "NonComplianceReason")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NonComplianceReason") to
@@ -2473,6 +4035,68 @@ type NonComplianceDetailCondition struct {
 
 func (s *NonComplianceDetailCondition) MarshalJSON() ([]byte, error) {
 	type NoMethod NonComplianceDetailCondition
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// OncCertificateProvider: This feature is not generally available.
+type OncCertificateProvider struct {
+	// CertificateReferences: This feature is not generally available.
+	CertificateReferences []string `json:"certificateReferences,omitempty"`
+
+	// ContentProviderEndpoint: This feature is not generally available.
+	ContentProviderEndpoint *ContentProviderEndpoint `json:"contentProviderEndpoint,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CertificateReferences") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CertificateReferences") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OncCertificateProvider) MarshalJSON() ([]byte, error) {
+	type NoMethod OncCertificateProvider
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// OncWifiContext: Additional context for non-compliance related to
+// Wi-Fi configuration.
+type OncWifiContext struct {
+	// WifiGuid: The GUID of non-compliant Wi-Fi configuration.
+	WifiGuid string `json:"wifiGuid,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "WifiGuid") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "WifiGuid") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OncWifiContext) MarshalJSON() ([]byte, error) {
+	type NoMethod OncWifiContext
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2517,10 +4141,10 @@ type Operation struct {
 
 	// ForceSendFields is a list of field names (e.g. "Done") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Done") to include in API
@@ -2538,6 +4162,60 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// OsShutdownEvent: Device was shutdown. Intentionally empty.
+type OsShutdownEvent struct {
+}
+
+// OsStartupEvent: Device was started.
+type OsStartupEvent struct {
+	// VerifiedBootState: Verified Boot state.
+	//
+	// Possible values:
+	//   "VERIFIED_BOOT_STATE_UNSPECIFIED" - Unknown value.
+	//   "GREEN" - Indicates that there is a full chain of trust extending
+	// from the bootloader to verified partitions including the bootloader,
+	// boot partition, and all verified partitions.
+	//   "YELLOW" - Indicates that the boot partition has been verified
+	// using the embedded certificate and the signature is valid.
+	//   "ORANGE" - Indicates that the device may be freely modified. Device
+	// integrity is left to the user to verify out-of-band.
+	VerifiedBootState string `json:"verifiedBootState,omitempty"`
+
+	// VerityMode: dm-verity mode.
+	//
+	// Possible values:
+	//   "DM_VERITY_MODE_UNSPECIFIED" - Unknown value.
+	//   "ENFORCING" - Indicates that the device will be restarted when
+	// corruption is detected.
+	//   "IO_ERROR" - Indicates that an I/O error will be returned for an
+	// attempt to read corrupted data blocks (also known as eio boot state).
+	//   "DISABLED" - Indicates that dm-verity is disabled on device.
+	VerityMode string `json:"verityMode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "VerifiedBootState")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "VerifiedBootState") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OsStartupEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod OsStartupEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // PackageNameList: A list of package names.
 type PackageNameList struct {
 	// PackageNames: A list of package names.
@@ -2545,10 +4223,10 @@ type PackageNameList struct {
 
 	// ForceSendFields is a list of field names (e.g. "PackageNames") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "PackageNames") to include
@@ -2562,6 +4240,45 @@ type PackageNameList struct {
 
 func (s *PackageNameList) MarshalJSON() ([]byte, error) {
 	type NoMethod PackageNameList
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PasswordPoliciesContext: Additional context for non-compliance
+// related to password policies.
+type PasswordPoliciesContext struct {
+	// PasswordPolicyScope: The scope of non-compliant password.
+	//
+	// Possible values:
+	//   "SCOPE_UNSPECIFIED" - The scope is unspecified. The password
+	// requirements are applied to the work profile for work profile devices
+	// and the whole device for fully managed or dedicated devices.
+	//   "SCOPE_DEVICE" - The password requirements are only applied to the
+	// device.
+	//   "SCOPE_PROFILE" - The password requirements are only applied to the
+	// work profile.
+	PasswordPolicyScope string `json:"passwordPolicyScope,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PasswordPolicyScope")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PasswordPolicyScope") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PasswordPoliciesContext) MarshalJSON() ([]byte, error) {
+	type NoMethod PasswordPoliciesContext
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2625,20 +4342,61 @@ type PasswordRequirements struct {
 	// biometric recognition technology, at minimum. This includes
 	// technologies that can recognize the identity of an individual that
 	// are roughly equivalent to a 3-digit PIN (false detection is less than
-	// 1 in 1,000).
+	// 1 in 1,000).This, when applied on personally owned work profile
+	// devices on Android 12 device-scoped, will be treated as
+	// COMPLEXITY_LOW for application. See PasswordQuality for details.
 	//   "SOMETHING" - A password is required, but there are no restrictions
-	// on what the password must contain.
-	//   "NUMERIC" - The password must contain numeric characters.
+	// on what the password must contain.This, when applied on personally
+	// owned work profile devices on Android 12 device-scoped, will be
+	// treated as COMPLEXITY_LOW for application. See PasswordQuality for
+	// details.
+	//   "NUMERIC" - The password must contain numeric characters.This, when
+	// applied on personally owned work profile devices on Android 12
+	// device-scoped, will be treated as COMPLEXITY_MEDIUM for application.
+	// See PasswordQuality for details.
 	//   "NUMERIC_COMPLEX" - The password must contain numeric characters
-	// with no repeating (4444) or ordered (1234, 4321, 2468) sequences.
+	// with no repeating (4444) or ordered (1234, 4321, 2468)
+	// sequences.This, when applied on personally owned work profile devices
+	// on Android 12 device-scoped, will be treated as COMPLEXITY_MEDIUM for
+	// application. See PasswordQuality for details.
 	//   "ALPHABETIC" - The password must contain alphabetic (or symbol)
-	// characters.
+	// characters.This, when applied on personally owned work profile
+	// devices on Android 12 device-scoped, will be treated as
+	// COMPLEXITY_HIGH for application. See PasswordQuality for details.
 	//   "ALPHANUMERIC" - The password must contain both numeric and
-	// alphabetic (or symbol) characters.
+	// alphabetic (or symbol) characters.This, when applied on personally
+	// owned work profile devices on Android 12 device-scoped, will be
+	// treated as COMPLEXITY_HIGH for application. See PasswordQuality for
+	// details.
 	//   "COMPLEX" - The password must meet the minimum requirements
 	// specified in passwordMinimumLength, passwordMinimumLetters,
 	// passwordMinimumSymbols, etc. For example, if passwordMinimumSymbols
-	// is 2, the password must contain at least two symbols.
+	// is 2, the password must contain at least two symbols.This, when
+	// applied on personally owned work profile devices on Android 12
+	// device-scoped, will be treated as COMPLEXITY_HIGH for application. In
+	// this case, the requirements in passwordMinimumLength,
+	// passwordMinimumLetters, passwordMinimumSymbols, etc are not applied.
+	// See PasswordQuality for details.
+	//   "COMPLEXITY_LOW" - Define the low password complexity band as:
+	// pattern PIN with repeating (4444) or ordered (1234, 4321, 2468)
+	// sequencesThis sets the minimum complexity band which the password
+	// must meet.Enforcement varies among different Android versions,
+	// management modes and password scopes. See PasswordQuality for
+	// details.
+	//   "COMPLEXITY_MEDIUM" - Define the medium password complexity band
+	// as: PIN with no repeating (4444) or ordered (1234, 4321, 2468)
+	// sequences, length at least 4 alphabetic, length at least 4
+	// alphanumeric, length at least 4This sets the minimum complexity band
+	// which the password must meet.Enforcement varies among different
+	// Android versions, management modes and password scopes. See
+	// PasswordQuality for details.
+	//   "COMPLEXITY_HIGH" - Define the high password complexity band as:On
+	// Android 12 and above: PIN with no repeating (4444) or ordered (1234,
+	// 4321, 2468) sequences, length at least 8 alphabetic, length at least
+	// 6 alphanumeric, length at least 6This sets the minimum complexity
+	// band which the password must meet.Enforcement varies among different
+	// Android versions, management modes and password scopes. See
+	// PasswordQuality for details.
 	PasswordQuality string `json:"passwordQuality,omitempty"`
 
 	// PasswordScope: The scope that the password requirement applies to.
@@ -2668,13 +4426,30 @@ type PasswordRequirements struct {
 	//   "REQUIRE_EVERY_DAY" - The timeout period is set to 24 hours.
 	RequirePasswordUnlock string `json:"requirePasswordUnlock,omitempty"`
 
+	// UnifiedLockSettings: Controls whether a unified lock is allowed for
+	// the device and the work profile, on devices running Android 9 and
+	// above with a work profile. This can be set only if password_scope is
+	// set to SCOPE_PROFILE, the policy will be rejected otherwise. If user
+	// has not set a separate work lock and this field is set to
+	// REQUIRE_SEPARATE_WORK_LOCK, a NonComplianceDetail is reported with
+	// nonComplianceReason set to USER_ACTION.
+	//
+	// Possible values:
+	//   "UNIFIED_LOCK_SETTINGS_UNSPECIFIED" - Unspecified. Defaults to
+	// ALLOW_UNIFIED_WORK_AND_PERSONAL_LOCK.
+	//   "ALLOW_UNIFIED_WORK_AND_PERSONAL_LOCK" - A common lock for the
+	// device and the work profile is allowed.
+	//   "REQUIRE_SEPARATE_WORK_LOCK" - A separate lock for the work profile
+	// is required.
+	UnifiedLockSettings string `json:"unifiedLockSettings,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g.
 	// "MaximumFailedPasswordsForWipe") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g.
@@ -2689,6 +4464,48 @@ type PasswordRequirements struct {
 
 func (s *PasswordRequirements) MarshalJSON() ([]byte, error) {
 	type NoMethod PasswordRequirements
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PerAppResult: The result of an attempt to clear the data of a single
+// app.
+type PerAppResult struct {
+	// ClearingResult: The result of an attempt to clear the data of a
+	// single app.
+	//
+	// Possible values:
+	//   "CLEARING_RESULT_UNSPECIFIED" - Unspecified result.
+	//   "SUCCESS" - This app’s data was successfully cleared.
+	//   "APP_NOT_FOUND" - This app’s data could not be cleared because
+	// the app was not found.
+	//   "APP_PROTECTED" - This app’s data could not be cleared because
+	// the app is protected. For example, this may apply to apps critical to
+	// the functioning of the device, such as Google Play Store.
+	//   "API_LEVEL" - This app’s data could not be cleared because the
+	// device API level does not support this command.
+	ClearingResult string `json:"clearingResult,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ClearingResult") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ClearingResult") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PerAppResult) MarshalJSON() ([]byte, error) {
+	type NoMethod PerAppResult
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2714,10 +4531,10 @@ type PermissionGrant struct {
 
 	// ForceSendFields is a list of field names (e.g. "Permission") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Permission") to include in
@@ -2761,10 +4578,10 @@ type PersistentPreferredActivity struct {
 
 	// ForceSendFields is a list of field names (e.g. "Actions") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Actions") to include in
@@ -2782,6 +4599,109 @@ func (s *PersistentPreferredActivity) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// PersonalApplicationPolicy: Policies for apps in the personal profile
+// of a company-owned device with a work profile.
+type PersonalApplicationPolicy struct {
+	// InstallType: The type of installation to perform.
+	//
+	// Possible values:
+	//   "INSTALL_TYPE_UNSPECIFIED" - Unspecified. Defaults to AVAILABLE.
+	//   "BLOCKED" - The app is blocked and can't be installed in the
+	// personal profile.
+	//   "AVAILABLE" - The app is available to install in the personal
+	// profile.
+	InstallType string `json:"installType,omitempty"`
+
+	// PackageName: The package name of the application.
+	PackageName string `json:"packageName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "InstallType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "InstallType") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PersonalApplicationPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod PersonalApplicationPolicy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PersonalUsagePolicies: Policies controlling personal usage on a
+// company-owned device with a work profile.
+type PersonalUsagePolicies struct {
+	// AccountTypesWithManagementDisabled: Account types that can't be
+	// managed by the user.
+	AccountTypesWithManagementDisabled []string `json:"accountTypesWithManagementDisabled,omitempty"`
+
+	// CameraDisabled: If true, the camera is disabled on the personal
+	// profile.
+	CameraDisabled bool `json:"cameraDisabled,omitempty"`
+
+	// MaxDaysWithWorkOff: Controls how long the work profile can stay off.
+	// The duration must be at least 3 days.
+	MaxDaysWithWorkOff int64 `json:"maxDaysWithWorkOff,omitempty"`
+
+	// PersonalApplications: Policy applied to applications in the personal
+	// profile.
+	PersonalApplications []*PersonalApplicationPolicy `json:"personalApplications,omitempty"`
+
+	// PersonalPlayStoreMode: Used together with personalApplications to
+	// control how apps in the personal profile are allowed or blocked.
+	//
+	// Possible values:
+	//   "PLAY_STORE_MODE_UNSPECIFIED" - Unspecified. Defaults to BLOCKLIST.
+	//   "BLACKLIST" - All Play Store apps are available for installation in
+	// the personal profile, except those whose installType is BLOCKED in
+	// personalApplications.
+	//   "BLOCKLIST" - All Play Store apps are available for installation in
+	// the personal profile, except those whose installType is BLOCKED in
+	// personalApplications.
+	//   "ALLOWLIST" - Only apps explicitly specified in
+	// personalApplications with installType set to AVAILABLE are allowed to
+	// be installed in the personal profile.
+	PersonalPlayStoreMode string `json:"personalPlayStoreMode,omitempty"`
+
+	// ScreenCaptureDisabled: If true, screen capture is disabled for all
+	// users.
+	ScreenCaptureDisabled bool `json:"screenCaptureDisabled,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AccountTypesWithManagementDisabled") to unconditionally include in
+	// API requests. By default, fields with empty or default values are
+	// omitted from API requests. However, any non-pointer, non-interface
+	// field appearing in ForceSendFields will be sent to the server
+	// regardless of whether the field is empty or not. This may be used to
+	// include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "AccountTypesWithManagementDisabled") to include in API requests with
+	// the JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PersonalUsagePolicies) MarshalJSON() ([]byte, error) {
+	type NoMethod PersonalUsagePolicies
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Policy: A policy resource represents a group of settings that govern
 // the behavior of a managed device and the apps installed on it.
 type Policy struct {
@@ -2793,12 +4713,12 @@ type Policy struct {
 	AddUserDisabled bool `json:"addUserDisabled,omitempty"`
 
 	// AdjustVolumeDisabled: Whether adjusting the master volume is
-	// disabled.
+	// disabled. Also mutes the device.
 	AdjustVolumeDisabled bool `json:"adjustVolumeDisabled,omitempty"`
 
-	// AdvancedSecurityOverrides: Security policies set to the most secure
-	// values by default. To maintain the security posture of a device, we
-	// don't recommend overriding any of the default values.
+	// AdvancedSecurityOverrides: Security policies set to secure values by
+	// default. To maintain the security posture of a device, we don't
+	// recommend overriding any of the default values.
 	AdvancedSecurityOverrides *AdvancedSecurityOverrides `json:"advancedSecurityOverrides,omitempty"`
 
 	// AlwaysOnVpnPackage: Configuration for an always-on VPN connection.
@@ -2817,8 +4737,11 @@ type Policy struct {
 	//   "BETA" - The beta track, which provides the latest beta release.
 	AndroidDevicePolicyTracks []string `json:"androidDevicePolicyTracks,omitempty"`
 
-	// AppAutoUpdatePolicy: The app auto update policy, which controls when
-	// automatic app updates can be applied.
+	// AppAutoUpdatePolicy: Deprecated. Use autoUpdateMode instead.When
+	// autoUpdateMode is set to AUTO_UPDATE_POSTPONED or
+	// AUTO_UPDATE_HIGH_PRIORITY, this field has no effect.The app auto
+	// update policy, which controls when automatic app updates can be
+	// applied.
 	//
 	// Possible values:
 	//   "APP_AUTO_UPDATE_POLICY_UNSPECIFIED" - The auto-update policy is
@@ -2833,8 +4756,22 @@ type Policy struct {
 	// Applications: Policy applied to apps.
 	Applications []*ApplicationPolicy `json:"applications,omitempty"`
 
+	// AutoDateAndTimeZone: Whether auto date, time, and time zone are
+	// enabled on a company-owned device. If this is set, then
+	// autoTimeRequired is ignored.
+	//
+	// Possible values:
+	//   "AUTO_DATE_AND_TIME_ZONE_UNSPECIFIED" - Unspecified. Defaults to
+	// AUTO_DATE_AND_TIME_ZONE_USER_CHOICE.
+	//   "AUTO_DATE_AND_TIME_ZONE_USER_CHOICE" - Auto date, time, and time
+	// zone are left to user's choice.
+	//   "AUTO_DATE_AND_TIME_ZONE_ENFORCED" - Enforce auto date, time, and
+	// time zone on the device.
+	AutoDateAndTimeZone string `json:"autoDateAndTimeZone,omitempty"`
+
 	// AutoTimeRequired: Whether auto time is required, which prevents the
-	// user from manually setting the date and time.
+	// user from manually setting the date and time. If autoDateAndTimeZone
+	// is set, this field is ignored.
 	AutoTimeRequired bool `json:"autoTimeRequired,omitempty"`
 
 	// BlockApplicationsEnabled: Whether applications other than the ones
@@ -2855,17 +4792,48 @@ type Policy struct {
 	// be bypassed by the user.
 	BluetoothDisabled bool `json:"bluetoothDisabled,omitempty"`
 
-	// CameraDisabled: Whether all cameras on the device are disabled.
+	// CameraAccess: Controls the use of the camera and whether the user has
+	// access to the camera access toggle.
+	//
+	// Possible values:
+	//   "CAMERA_ACCESS_UNSPECIFIED" - If camera_disabled is true, this is
+	// equivalent to CAMERA_ACCESS_DISABLED. Otherwise, this is equivalent
+	// to CAMERA_ACCESS_USER_CHOICE.
+	//   "CAMERA_ACCESS_USER_CHOICE" - The field camera_disabled is ignored.
+	// This is the default device behaviour: all cameras on the device are
+	// available. On Android 12 and above, the user can use the camera
+	// access toggle.
+	//   "CAMERA_ACCESS_DISABLED" - The field camera_disabled is ignored.
+	// All cameras on the device are disabled (for fully managed devices,
+	// this applies device-wide and for work profiles this applies only to
+	// the work profile).There are no explicit restrictions placed on the
+	// camera access toggle on Android 12 and above: on fully managed
+	// devices, the camera access toggle has no effect as all cameras are
+	// disabled. On devices with a work profile, this toggle has no effect
+	// on apps in the work profile, but it affects apps outside the work
+	// profile.
+	//   "CAMERA_ACCESS_ENFORCED" - The field camera_disabled is ignored.
+	// All cameras on the device are available. On fully managed devices
+	// running Android 12 and above, the user is unable to use the camera
+	// access toggle. On devices which are not fully managed or which run
+	// Android 11 or below, this is equivalent to CAMERA_ACCESS_USER_CHOICE.
+	CameraAccess string `json:"cameraAccess,omitempty"`
+
+	// CameraDisabled: If camera_access is set to any value other than
+	// CAMERA_ACCESS_UNSPECIFIED, this has no effect. Otherwise this field
+	// controls whether cameras are disabled: If true, all cameras are
+	// disabled, otherwise they are available. For fully managed devices
+	// this field applies for all apps on the device. For work profiles,
+	// this field applies only to apps in the work profile, and the camera
+	// access of apps outside the work profile is unaffected.
 	CameraDisabled bool `json:"cameraDisabled,omitempty"`
 
 	// CellBroadcastsConfigDisabled: Whether configuring cell broadcast is
 	// disabled.
 	CellBroadcastsConfigDisabled bool `json:"cellBroadcastsConfigDisabled,omitempty"`
 
-	// ChoosePrivateKeyRules: Rules for automatically choosing a private key
-	// and certificate to authenticate the device to a server. The rules are
-	// ordered by increasing precedence, so if an outgoing request matches
-	// more than one rule, the last rule defines which private key to use.
+	// ChoosePrivateKeyRules: Rules for determining apps' access to private
+	// keys. See ChoosePrivateKeyRule for details.
 	ChoosePrivateKeyRules []*ChoosePrivateKeyRule `json:"choosePrivateKeyRules,omitempty"`
 
 	// ComplianceRules: Rules declaring which mitigating actions to take
@@ -2882,6 +4850,9 @@ type Policy struct {
 	// CredentialsConfigDisabled: Whether configuring user credentials is
 	// disabled.
 	CredentialsConfigDisabled bool `json:"credentialsConfigDisabled,omitempty"`
+
+	// CrossProfilePolicies: Cross-profile policies applied on the device.
+	CrossProfilePolicies *CrossProfilePolicies `json:"crossProfilePolicies,omitempty"`
 
 	// DataRoamingDisabled: Whether roaming data services are disabled.
 	DataRoamingDisabled bool `json:"dataRoamingDisabled,omitempty"`
@@ -2938,12 +4909,12 @@ type Policy struct {
 	// InstallAppsDisabled: Whether user installation of apps is disabled.
 	InstallAppsDisabled bool `json:"installAppsDisabled,omitempty"`
 
-	// InstallUnknownSourcesAllowed: Whether the user is allowed to enable
-	// the "Unknown Sources" setting, which allows installation of apps from
-	// unknown sources.
+	// InstallUnknownSourcesAllowed: This field has no effect.
 	InstallUnknownSourcesAllowed bool `json:"installUnknownSourcesAllowed,omitempty"`
 
-	// KeyguardDisabled: Whether the keyguard is disabled.
+	// KeyguardDisabled: If true, this disables the Lock Screen
+	// (https://source.android.com/docs/core/display/multi_display/lock-screen)
+	// for primary and/or secondary displays.
 	KeyguardDisabled bool `json:"keyguardDisabled,omitempty"`
 
 	// KeyguardDisabledFeatures: Disabled keyguard customizations, such as
@@ -2961,8 +4932,9 @@ type Policy struct {
 	// screens.
 	//   "DISABLE_FINGERPRINT" - Disable fingerprint sensor on secure
 	// keyguard screens.
-	//   "DISABLE_REMOTE_INPUT" - Disable text entry into notifications on
-	// secure keyguard screens.
+	//   "DISABLE_REMOTE_INPUT" - On devices running Android 6 and below,
+	// disables text entry into notifications on secure keyguard screens.
+	// Has no effect on Android 7 and above.
 	//   "FACE" - Disable face authentication on secure keyguard screens.
 	//   "IRIS" - Disable iris authentication on secure keyguard screens.
 	//   "BIOMETRICS" - Disable all biometric authentication on secure
@@ -2983,18 +4955,26 @@ type Policy struct {
 	// true or specify an app in the policy with installType KIOSK.
 	KioskCustomization *KioskCustomization `json:"kioskCustomization,omitempty"`
 
-	// LocationMode: The degree of location detection enabled. The user may
-	// change the value unless the user is otherwise blocked from accessing
-	// device settings.
+	// LocationMode: The degree of location detection enabled.
 	//
 	// Possible values:
-	//   "LOCATION_MODE_UNSPECIFIED" - The current device value is not
-	// modified.
-	//   "HIGH_ACCURACY" - All location detection methods are enabled,
-	// including GPS, networks, and other sensors.
-	//   "SENSORS_ONLY" - Only GPS and other sensors are enabled.
-	//   "BATTERY_SAVING" - Only the network location provider is enabled.
-	//   "OFF" - Location detection is disabled.
+	//   "LOCATION_MODE_UNSPECIFIED" - Defaults to LOCATION_USER_CHOICE.
+	//   "HIGH_ACCURACY" - On Android 8 and below, all location detection
+	// methods are enabled, including GPS, networks, and other sensors. On
+	// Android 9 and above, this is equivalent to LOCATION_ENFORCED.
+	//   "SENSORS_ONLY" - On Android 8 and below, only GPS and other sensors
+	// are enabled. On Android 9 and above, this is equivalent to
+	// LOCATION_ENFORCED.
+	//   "BATTERY_SAVING" - On Android 8 and below, only the network
+	// location provider is enabled. On Android 9 and above, this is
+	// equivalent to LOCATION_ENFORCED.
+	//   "OFF" - On Android 8 and below, location setting and accuracy are
+	// disabled. On Android 9 and above, this is equivalent to
+	// LOCATION_DISABLED.
+	//   "LOCATION_USER_CHOICE" - Location setting is not restricted on the
+	// device. No specific behavior is set or enforced.
+	//   "LOCATION_ENFORCED" - Enable location setting on the device.
+	//   "LOCATION_DISABLED" - Disable location setting on the device.
 	LocationMode string `json:"locationMode,omitempty"`
 
 	// LongSupportMessage: A message displayed to the user in the device
@@ -3004,6 +4984,29 @@ type Policy struct {
 	// MaximumTimeToLock: Maximum time in milliseconds for user activity
 	// until the device locks. A value of 0 means there is no restriction.
 	MaximumTimeToLock int64 `json:"maximumTimeToLock,omitempty,string"`
+
+	// MicrophoneAccess: Controls the use of the microphone and whether the
+	// user has access to the microphone access toggle. This applies only on
+	// fully managed devices.
+	//
+	// Possible values:
+	//   "MICROPHONE_ACCESS_UNSPECIFIED" - If unmute_microphone_disabled is
+	// true, this is equivalent to MICROPHONE_ACCESS_DISABLED. Otherwise,
+	// this is equivalent to MICROPHONE_ACCESS_USER_CHOICE.
+	//   "MICROPHONE_ACCESS_USER_CHOICE" - The field
+	// unmute_microphone_disabled is ignored. This is the default device
+	// behaviour: the microphone on the device is available. On Android 12
+	// and above, the user can use the microphone access toggle.
+	//   "MICROPHONE_ACCESS_DISABLED" - The field unmute_microphone_disabled
+	// is ignored. The microphone on the device is disabled (for fully
+	// managed devices, this applies device-wide).The microphone access
+	// toggle has no effect as the microphone is disabled.
+	//   "MICROPHONE_ACCESS_ENFORCED" - The field unmute_microphone_disabled
+	// is ignored. The microphone on the device is available. On devices
+	// running Android 12 and above, the user is unable to use the
+	// microphone access toggle. On devices which run Android 11 or below,
+	// this is equivalent to MICROPHONE_ACCESS_USER_CHOICE.
+	MicrophoneAccess string `json:"microphoneAccess,omitempty"`
 
 	// MinimumApiLevel: The minimum allowed Android API level.
 	MinimumApiLevel int64 `json:"minimumApiLevel,omitempty"`
@@ -3032,11 +5035,16 @@ type Policy struct {
 	// booting. This prevents being unable to connect to a network if there
 	// is no suitable network in the last policy and the device boots into
 	// an app in lock task mode, or the user is otherwise unable to reach
-	// device settings.
+	// device settings.Note: Setting wifiConfigDisabled to true will
+	// override this setting under specific circumstances. Please see
+	// wifiConfigDisabled for further details.
 	NetworkEscapeHatchEnabled bool `json:"networkEscapeHatchEnabled,omitempty"`
 
 	// NetworkResetDisabled: Whether resetting network settings is disabled.
 	NetworkResetDisabled bool `json:"networkResetDisabled,omitempty"`
+
+	// OncCertificateProviders: This feature is not generally available.
+	OncCertificateProviders []*OncCertificateProvider `json:"oncCertificateProviders,omitempty"`
 
 	// OpenNetworkConfiguration: Network configuration for the device. See
 	// configure networks for more information.
@@ -3056,7 +5064,10 @@ type Policy struct {
 
 	// PasswordRequirements: Password requirements. The field
 	// password_requirements.require_password_unlock must not be set.
-	// DEPRECATED - Use password_policies.
+	// DEPRECATED - Use passwordPolicies.Note:Complexity-based values of
+	// PasswordQuality, that is, COMPLEXITY_LOW, COMPLEXITY_MEDIUM, and
+	// COMPLEXITY_HIGH, cannot be used here. unified_lock_settings cannot be
+	// used here.
 	PasswordRequirements *PasswordRequirements `json:"passwordRequirements,omitempty"`
 
 	// PermissionGrants: Explicit permission or group grants or denials for
@@ -3068,7 +5079,9 @@ type Policy struct {
 	// used. If the field is set, only the accessibility services in this
 	// list and the system's built-in accessibility service can be used. In
 	// particular, if the field is set to empty, only the system's built-in
-	// accessibility servicess can be used.
+	// accessibility servicess can be used. This can be set on fully managed
+	// devices and on work profiles. When applied to a work profile, this
+	// affects both the personal profile and the work profile.
 	PermittedAccessibilityServices *PackageNameList `json:"permittedAccessibilityServices,omitempty"`
 
 	// PermittedInputMethods: If present, only the input methods provided by
@@ -3078,6 +5091,10 @@ type Policy struct {
 
 	// PersistentPreferredActivities: Default intent handler activities.
 	PersistentPreferredActivities []*PersistentPreferredActivity `json:"persistentPreferredActivities,omitempty"`
+
+	// PersonalUsagePolicies: Policies managing personal usage on a
+	// company-owned device.
+	PersonalUsagePolicies *PersonalUsagePolicies `json:"personalUsagePolicies,omitempty"`
 
 	// PlayStoreMode: This mode controls which apps are available to the
 	// user in the Play Store and the behavior on the device when apps are
@@ -3096,6 +5113,23 @@ type Policy struct {
 	// PolicyEnforcementRules: Rules that define the behavior when a
 	// particular policy can not be applied on device
 	PolicyEnforcementRules []*PolicyEnforcementRule `json:"policyEnforcementRules,omitempty"`
+
+	// PreferentialNetworkService: Controls whether preferential network
+	// service is enabled on the work profile. For example, an organization
+	// may have an agreement with a carrier that all of the work data from
+	// its employees' devices will be sent via a network service dedicated
+	// for enterprise use. An example of a supported preferential network
+	// service is the enterprise slice on 5G networks. This has no effect on
+	// fully managed devices.
+	//
+	// Possible values:
+	//   "PREFERENTIAL_NETWORK_SERVICE_UNSPECIFIED" - Unspecified. Defaults
+	// to PREFERENTIAL_NETWORK_SERVICES_DISABLED.
+	//   "PREFERENTIAL_NETWORK_SERVICE_DISABLED" - Preferential network
+	// service is disabled on the work profile.
+	//   "PREFERENTIAL_NETWORK_SERVICE_ENABLED" - Preferential network
+	// service is enabled on the work profile.
+	PreferentialNetworkService string `json:"preferentialNetworkService,omitempty"`
 
 	// PrivateKeySelectionEnabled: Allows showing UI on a device for a user
 	// to choose a private key alias if there are no matching rules in
@@ -3127,10 +5161,13 @@ type Policy struct {
 	// SetWallpaperDisabled: Whether changing the wallpaper is disabled.
 	SetWallpaperDisabled bool `json:"setWallpaperDisabled,omitempty"`
 
-	// SetupActions: Actions to take during the setup process.
+	// SetupActions: Action to take during the setup process. At most one
+	// action may be specified.
 	SetupActions []*SetupAction `json:"setupActions,omitempty"`
 
 	// ShareLocationDisabled: Whether location sharing is disabled.
+	// share_location_disabled is supported for both fully managed devices
+	// and personally owned work profiles.
 	ShareLocationDisabled bool `json:"shareLocationDisabled,omitempty"`
 
 	// ShortSupportMessage: A message displayed to the user in the settings
@@ -3179,15 +5216,22 @@ type Policy struct {
 	TetheringConfigDisabled bool `json:"tetheringConfigDisabled,omitempty"`
 
 	// UninstallAppsDisabled: Whether user uninstallation of applications is
-	// disabled.
+	// disabled. This prevents apps from being uninstalled, even those
+	// removed using applications
 	UninstallAppsDisabled bool `json:"uninstallAppsDisabled,omitempty"`
 
-	// UnmuteMicrophoneDisabled: Whether the microphone is muted and
-	// adjusting microphone volume is disabled.
+	// UnmuteMicrophoneDisabled: If microphone_access is set to any value
+	// other than MICROPHONE_ACCESS_UNSPECIFIED, this has no effect.
+	// Otherwise this field controls whether microphones are disabled: If
+	// true, all microphones are disabled, otherwise they are available.
+	// This is available only on fully managed devices.
 	UnmuteMicrophoneDisabled bool `json:"unmuteMicrophoneDisabled,omitempty"`
 
+	// UsageLog: Configuration of device activity logging.
+	UsageLog *UsageLog `json:"usageLog,omitempty"`
+
 	// UsbFileTransferDisabled: Whether transferring files over USB is
-	// disabled.
+	// disabled. This is supported only on company-owned devices.
 	UsbFileTransferDisabled bool `json:"usbFileTransferDisabled,omitempty"`
 
 	// UsbMassStorageEnabled: Whether USB storage is enabled. Deprecated.
@@ -3201,7 +5245,10 @@ type Policy struct {
 	VpnConfigDisabled bool `json:"vpnConfigDisabled,omitempty"`
 
 	// WifiConfigDisabled: Whether configuring Wi-Fi access points is
-	// disabled.
+	// disabled. Note: If a network connection can't be made at boot time
+	// and configuring Wi-Fi is disabled then network escape hatch will be
+	// shown in order to refresh the device policy (see
+	// networkEscapeHatchEnabled).
 	WifiConfigDisabled bool `json:"wifiConfigDisabled,omitempty"`
 
 	// WifiConfigsLockdownEnabled: DEPRECATED - Use wifi_config_disabled.
@@ -3213,11 +5260,11 @@ type Policy struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "AccountTypesWithManagementDisabled") to unconditionally include in
-	// API requests. By default, fields with empty values are omitted from
-	// API requests. However, any non-pointer, non-interface field appearing
-	// in ForceSendFields will be sent to the server regardless of whether
-	// the field is empty or not. This may be used to include empty fields
-	// in Patch requests.
+	// API requests. By default, fields with empty or default values are
+	// omitted from API requests. However, any non-pointer, non-interface
+	// field appearing in ForceSendFields will be sent to the server
+	// regardless of whether the field is empty or not. This may be used to
+	// include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g.
@@ -3240,8 +5287,8 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 // device or work profile is not compliant with the policy specified in
 // settingName.
 type PolicyEnforcementRule struct {
-	// BlockAction: An action to block access to apps and data on a fully
-	// managed device or in a work profile. This action also triggers a
+	// BlockAction: An action to block access to apps and data on a company
+	// owned device or in a work profile. This action also triggers a
 	// user-facing notification with information (where possible) on how to
 	// correct the compliance issue. Note: wipeAction must also be
 	// specified.
@@ -3251,16 +5298,16 @@ type PolicyEnforcementRule struct {
 	// applications or passwordPolicies.
 	SettingName string `json:"settingName,omitempty"`
 
-	// WipeAction: An action to reset a fully managed device or delete a
+	// WipeAction: An action to reset a company owned device or delete a
 	// work profile. Note: blockAction must also be specified.
 	WipeAction *WipeAction `json:"wipeAction,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BlockAction") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BlockAction") to include
@@ -3294,14 +5341,18 @@ type PostureDetail struct {
 	// unknown OS (basicIntegrity check succeeds but ctsProfileMatch fails).
 	//   "COMPROMISED_OS" - SafetyNet detects that the device is running a
 	// compromised OS (basicIntegrity check fails).
+	//   "HARDWARE_BACKED_EVALUATION_FAILED" - SafetyNet detects that the
+	// device does not have a strong guarantee of system integrity, such as
+	// a hardware-backed keystore
+	// (https://developer.android.com/training/articles/security-key-attestation).
 	SecurityRisk string `json:"securityRisk,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Advice") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Advice") to include in API
@@ -3344,10 +5395,10 @@ type PowerManagementEvent struct {
 
 	// ForceSendFields is a list of field names (e.g. "BatteryLevel") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BatteryLevel") to include
@@ -3398,10 +5449,10 @@ type ProxyInfo struct {
 
 	// ForceSendFields is a list of field names (e.g. "ExcludedHosts") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ExcludedHosts") to include
@@ -3415,6 +5466,44 @@ type ProxyInfo struct {
 
 func (s *ProxyInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod ProxyInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RemoteLockEvent: The device or profile has been remotely locked via
+// the LOCK command.
+type RemoteLockEvent struct {
+	// AdminPackageName: Package name of the admin app requesting the
+	// change.
+	AdminPackageName string `json:"adminPackageName,omitempty"`
+
+	// AdminUserId: User ID of the admin app from the which the change was
+	// requested.
+	AdminUserId int64 `json:"adminUserId,omitempty"`
+
+	// TargetUserId: User ID in which the change was requested in.
+	TargetUserId int64 `json:"targetUserId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AdminPackageName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdminPackageName") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RemoteLockEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod RemoteLockEvent
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3440,10 +5529,10 @@ type SecurityPosture struct {
 
 	// ForceSendFields is a list of field names (e.g. "DevicePosture") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DevicePosture") to include
@@ -3466,7 +5555,13 @@ type SetupAction struct {
 	// Description: Description of this action.
 	Description *UserFacingMessage `json:"description,omitempty"`
 
-	// LaunchApp: An action to launch an app.
+	// LaunchApp: An action to launch an app. The app will be launched with
+	// an intent containing an extra with key
+	// com.google.android.apps.work.clouddpc.EXTRA_LAUNCHED_AS_SETUP_ACTION
+	// set to the boolean value true to indicate that this is a setup action
+	// flow. If SetupAction references an app, the corresponding installType
+	// in the application policy must be set as REQUIRED_FOR_SETUP or said
+	// setup will fail.
 	LaunchApp *LaunchAppAction `json:"launchApp,omitempty"`
 
 	// Title: Title of this action.
@@ -3474,10 +5569,10 @@ type SetupAction struct {
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Description") to include
@@ -3498,6 +5593,23 @@ func (s *SetupAction) MarshalJSON() ([]byte, error) {
 // SigninDetail: A resource containing sign in details for an
 // enterprise.
 type SigninDetail struct {
+	// AllowPersonalUsage: Controls whether personal usage is allowed on a
+	// device provisioned with this enrollment token.For company-owned
+	// devices: Enabling personal usage allows the user to set up a work
+	// profile on the device. Disabling personal usage requires the user
+	// provision the device as a fully managed device.For personally-owned
+	// devices: Enabling personal usage allows the user to set up a work
+	// profile on the device. Disabling personal usage will prevent the
+	// device from provisioning. Personal usage cannot be disabled on
+	// personally-owned device.
+	//
+	// Possible values:
+	//   "ALLOW_PERSONAL_USAGE_UNSPECIFIED" - Personal usage restriction is
+	// not specified
+	//   "PERSONAL_USAGE_ALLOWED" - Personal usage is allowed
+	//   "PERSONAL_USAGE_DISALLOWED" - Personal usage is disallowed
+	AllowPersonalUsage string `json:"allowPersonalUsage,omitempty"`
+
 	// QrCode: A JSON string whose UTF-8 representation can be used to
 	// generate a QR code to enroll a device with this enrollment token. To
 	// enroll a device using NFC, the NFC record must contain a serialized
@@ -3513,26 +5625,26 @@ type SigninDetail struct {
 	// SigninUrl: Sign-in URL for authentication when device is provisioned
 	// with a sign-in enrollment token. The sign-in endpoint should finish
 	// authentication flow with a URL in the form of
-	// https://enterprise.google.com/android/enroll?et=<token> for a
-	// successful login, or
-	// https://enterprise.google.com/android/enroll/invalid for a failed
-	// login.
+	// https://enterprise.google.com/android/enroll?et= for a successful
+	// login, or https://enterprise.google.com/android/enroll/invalid for a
+	// failed login.
 	SigninUrl string `json:"signinUrl,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "QrCode") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AllowPersonalUsage")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "QrCode") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AllowPersonalUsage") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -3559,10 +5671,10 @@ type SignupUrl struct {
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Name") to include in API
@@ -3605,9 +5717,9 @@ type SoftwareInfo struct {
 	BootloaderVersion string `json:"bootloaderVersion,omitempty"`
 
 	// DeviceBuildSignature: SHA-256 hash of android.content.pm.Signature
-	// (https://developer.android.com/reference/android/content/pm/Signature.
-	// html) associated with the system package, which can be used to verify
-	// that the system build hasn't been modified.
+	// (https://developer.android.com/reference/android/content/pm/Signature.html)
+	// associated with the system package, which can be used to verify that
+	// the system build hasn't been modified.
 	DeviceBuildSignature string `json:"deviceBuildSignature,omitempty"`
 
 	// DeviceKernelVersion: Kernel version, for example, 2.6.32.9-g103d848.
@@ -3620,12 +5732,16 @@ type SoftwareInfo struct {
 	// SecurityPatchLevel: Security patch level, e.g. 2016-05-01.
 	SecurityPatchLevel string `json:"securityPatchLevel,omitempty"`
 
+	// SystemUpdateInfo: Information about a potential pending system
+	// update.
+	SystemUpdateInfo *SystemUpdateInfo `json:"systemUpdateInfo,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "AndroidBuildNumber")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AndroidBuildNumber") to
@@ -3640,6 +5756,43 @@ type SoftwareInfo struct {
 
 func (s *SoftwareInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod SoftwareInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SpecificNonComplianceContext: Additional context for
+// SpecificNonComplianceReason.
+type SpecificNonComplianceContext struct {
+	// OncWifiContext: Additional context for non-compliance related to
+	// Wi-Fi configuration. See ONC_WIFI_INVALID_VALUE and
+	// ONC_WIFI_API_LEVEL
+	OncWifiContext *OncWifiContext `json:"oncWifiContext,omitempty"`
+
+	// PasswordPoliciesContext: Additional context for non-compliance
+	// related to password policies. See PASSWORD_POLICIES_PASSWORD_EXPIRED
+	// and PASSWORD_POLICIES_PASSWORD_NOT_SUFFICIENT.
+	PasswordPoliciesContext *PasswordPoliciesContext `json:"passwordPoliciesContext,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "OncWifiContext") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "OncWifiContext") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SpecificNonComplianceContext) MarshalJSON() ([]byte, error) {
+	type NoMethod SpecificNonComplianceContext
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3667,10 +5820,10 @@ type Status struct {
 
 	// ForceSendFields is a list of field names (e.g. "Code") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Code") to include in API
@@ -3698,6 +5851,10 @@ type StatusReportingSettings struct {
 	// ApplicationReportsEnabled: Whether app reports are enabled.
 	ApplicationReportsEnabled bool `json:"applicationReportsEnabled,omitempty"`
 
+	// CommonCriteriaModeEnabled: Whether Common Criteria Mode reporting is
+	// enabled.
+	CommonCriteriaModeEnabled bool `json:"commonCriteriaModeEnabled,omitempty"`
+
 	// DeviceSettingsEnabled: Whether device settings reporting is enabled.
 	DeviceSettingsEnabled bool `json:"deviceSettingsEnabled,omitempty"`
 
@@ -3711,7 +5868,7 @@ type StatusReportingSettings struct {
 	// profiles.
 	HardwareStatusEnabled bool `json:"hardwareStatusEnabled,omitempty"`
 
-	// MemoryInfoEnabled: Whether memory reporting is enabled.
+	// MemoryInfoEnabled: Whether memory event reporting is enabled.
 	MemoryInfoEnabled bool `json:"memoryInfoEnabled,omitempty"`
 
 	// NetworkInfoEnabled: Whether network info reporting is enabled.
@@ -3731,11 +5888,11 @@ type StatusReportingSettings struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "ApplicationReportingSettings") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g.
@@ -3790,16 +5947,19 @@ type SystemUpdate struct {
 	// window. This also configures Play apps to be updated within the
 	// window. This is strongly recommended for kiosk devices because this
 	// is the only way apps persistently pinned to the foreground can be
-	// updated by Play.
+	// updated by Play.If autoUpdateMode is set to AUTO_UPDATE_HIGH_PRIORITY
+	// for an app, then the maintenance window is ignored for that app and
+	// it is updated as soon as possible even outside of the maintenance
+	// window.
 	//   "POSTPONE" - Postpone automatic install up to a maximum of 30 days.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EndMinutes") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "EndMinutes") to include in
@@ -3817,6 +5977,89 @@ func (s *SystemUpdate) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// SystemUpdateInfo: Information about a potential pending system
+// update.
+type SystemUpdateInfo struct {
+	// UpdateReceivedTime: The time when the update was first available. A
+	// zero value indicates that this field is not set. This field is set
+	// only if an update is available (that is, updateStatus is neither
+	// UPDATE_STATUS_UNKNOWN nor UP_TO_DATE).
+	UpdateReceivedTime string `json:"updateReceivedTime,omitempty"`
+
+	// UpdateStatus: The status of an update: whether an update exists and
+	// what type it is.
+	//
+	// Possible values:
+	//   "UPDATE_STATUS_UNKNOWN" - It is unknown whether there is a pending
+	// system update. This happens when, for example, the device API level
+	// is less than 26, or if the version of Android Device Policy is
+	// outdated.
+	//   "UP_TO_DATE" - There is no pending system update available on the
+	// device.
+	//   "UNKNOWN_UPDATE_AVAILABLE" - There is a pending system update
+	// available, but its type is not known.
+	//   "SECURITY_UPDATE_AVAILABLE" - There is a pending security update
+	// available.
+	//   "OS_UPDATE_AVAILABLE" - There is a pending OS update available.
+	UpdateStatus string `json:"updateStatus,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "UpdateReceivedTime")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "UpdateReceivedTime") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SystemUpdateInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod SystemUpdateInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// TelephonyInfo: Telephony information associated with a given SIM card
+// on the device. Only supported on fully managed devices starting from
+// Android API level 23.
+type TelephonyInfo struct {
+	// CarrierName: The carrier name associated with this SIM card.
+	CarrierName string `json:"carrierName,omitempty"`
+
+	// PhoneNumber: The phone number associated with this SIM card.
+	PhoneNumber string `json:"phoneNumber,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CarrierName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CarrierName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TelephonyInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod TelephonyInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // TermsAndConditions: A terms and conditions page to be accepted during
 // provisioning.
 type TermsAndConditions struct {
@@ -3829,10 +6072,10 @@ type TermsAndConditions struct {
 
 	// ForceSendFields is a list of field names (e.g. "Content") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Content") to include in
@@ -3850,6 +6093,274 @@ func (s *TermsAndConditions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// UsageLog: Controls types of device activity logs collected from the
+// device and reported via Pub/Sub notification
+// (https://developers.google.com/android/management/notifications).
+type UsageLog struct {
+	// EnabledLogTypes: Specifies which log types are enabled. Note that
+	// users will receive on-device messaging when usage logging is enabled.
+	//
+	// Possible values:
+	//   "LOG_TYPE_UNSPECIFIED" - This value is not used.
+	//   "SECURITY_LOGS" - Enable logging of on-device security events, like
+	// when the device password is incorrectly entered or removable storage
+	// is mounted. See UsageLogEvent for a complete description of the
+	// logged security events. Supported for fully managed devices on
+	// Android 7 and above. Supported for company-owned devices with a work
+	// profile on Android 12 and above, on which only security events from
+	// the work profile are logged. Can be overridden by the application
+	// delegated scope SECURITY_LOGS
+	//   "NETWORK_ACTIVITY_LOGS" - Enable logging of on-device network
+	// events, like DNS lookups and TCP connections. See UsageLogEvent for a
+	// complete description of the logged network events. Supported for
+	// fully managed devices on Android 8 and above. Supported for
+	// company-owned devices with a work profile on Android 12 and above, on
+	// which only network events from the work profile are logged. Can be
+	// overridden by the application delegated scope NETWORK_ACTIVITY_LOGS
+	EnabledLogTypes []string `json:"enabledLogTypes,omitempty"`
+
+	// UploadOnCellularAllowed: Specifies which of the enabled log types can
+	// be uploaded over mobile data. By default logs are queued for upload
+	// when the device connects to WiFi.
+	//
+	// Possible values:
+	//   "LOG_TYPE_UNSPECIFIED" - This value is not used.
+	//   "SECURITY_LOGS" - Enable logging of on-device security events, like
+	// when the device password is incorrectly entered or removable storage
+	// is mounted. See UsageLogEvent for a complete description of the
+	// logged security events. Supported for fully managed devices on
+	// Android 7 and above. Supported for company-owned devices with a work
+	// profile on Android 12 and above, on which only security events from
+	// the work profile are logged. Can be overridden by the application
+	// delegated scope SECURITY_LOGS
+	//   "NETWORK_ACTIVITY_LOGS" - Enable logging of on-device network
+	// events, like DNS lookups and TCP connections. See UsageLogEvent for a
+	// complete description of the logged network events. Supported for
+	// fully managed devices on Android 8 and above. Supported for
+	// company-owned devices with a work profile on Android 12 and above, on
+	// which only network events from the work profile are logged. Can be
+	// overridden by the application delegated scope NETWORK_ACTIVITY_LOGS
+	UploadOnCellularAllowed []string `json:"uploadOnCellularAllowed,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EnabledLogTypes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EnabledLogTypes") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UsageLog) MarshalJSON() ([]byte, error) {
+	type NoMethod UsageLog
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// UsageLogEvent: An event logged on the device.
+type UsageLogEvent struct {
+	// AdbShellCommandEvent: A shell command was issued over ADB via “adb
+	// shell command”. Part of SECURITY_LOGS.
+	AdbShellCommandEvent *AdbShellCommandEvent `json:"adbShellCommandEvent,omitempty"`
+
+	// AdbShellInteractiveEvent: An ADB interactive shell was opened via
+	// “adb shell”. Part of SECURITY_LOGS.
+	AdbShellInteractiveEvent *AdbShellInteractiveEvent `json:"adbShellInteractiveEvent,omitempty"`
+
+	// AppProcessStartEvent: An app process was started. Part of
+	// SECURITY_LOGS.
+	AppProcessStartEvent *AppProcessStartEvent `json:"appProcessStartEvent,omitempty"`
+
+	// CertAuthorityInstalledEvent: A new root certificate was installed
+	// into the system's trusted credential storage. Part of SECURITY_LOGS.
+	CertAuthorityInstalledEvent *CertAuthorityInstalledEvent `json:"certAuthorityInstalledEvent,omitempty"`
+
+	// CertAuthorityRemovedEvent: A root certificate was removed from the
+	// system's trusted credential storage. Part of SECURITY_LOGS.
+	CertAuthorityRemovedEvent *CertAuthorityRemovedEvent `json:"certAuthorityRemovedEvent,omitempty"`
+
+	// CertValidationFailureEvent: An X.509v3 certificate failed to
+	// validate, currently this validation is performed on the Wi-FI access
+	// point and failure may be due to a mismatch upon server certificate
+	// validation. However it may in the future include other validation
+	// events of an X.509v3 certificate. Part of SECURITY_LOGS.
+	CertValidationFailureEvent *CertValidationFailureEvent `json:"certValidationFailureEvent,omitempty"`
+
+	// ConnectEvent: A TCP connect event was initiated through the standard
+	// network stack. Part of NETWORK_ACTIVITY_LOGS.
+	ConnectEvent *ConnectEvent `json:"connectEvent,omitempty"`
+
+	// CryptoSelfTestCompletedEvent: Validates whether Android’s built-in
+	// cryptographic library (BoringSSL) is valid. Should always succeed on
+	// device boot, if it fails, the device should be considered untrusted.
+	// Part of SECURITY_LOGS.
+	CryptoSelfTestCompletedEvent *CryptoSelfTestCompletedEvent `json:"cryptoSelfTestCompletedEvent,omitempty"`
+
+	// DnsEvent: A DNS lookup event was initiated through the standard
+	// network stack. Part of NETWORK_ACTIVITY_LOGS.
+	DnsEvent *DnsEvent `json:"dnsEvent,omitempty"`
+
+	// EventId: Unique id of the event.
+	EventId int64 `json:"eventId,omitempty,string"`
+
+	// EventTime: Device timestamp when the event was logged.
+	EventTime string `json:"eventTime,omitempty"`
+
+	// EventType: The particular usage log event type that was reported on
+	// the device. Use this to determine which event field to access.
+	//
+	// Possible values:
+	//   "EVENT_TYPE_UNSPECIFIED" - This value is not used
+	//   "ADB_SHELL_COMMAND" - Indicates adb_shell_command_event has been
+	// set.
+	//   "ADB_SHELL_INTERACTIVE" - Indicates adb_shell_interactive_event has
+	// been set.
+	//   "APP_PROCESS_START" - Indicates app_process_start_event has been
+	// set.
+	//   "KEYGUARD_DISMISSED" - Indicates keyguard_dismissed_event has been
+	// set.
+	//   "KEYGUARD_DISMISS_AUTH_ATTEMPT" - Indicates
+	// keyguard_dismiss_auth_attempt_event has been set.
+	//   "KEYGUARD_SECURED" - Indicates keyguard_secured_event has been set.
+	//   "FILE_PULLED" - Indicates file_pulled_event has been set.
+	//   "FILE_PUSHED" - Indicates file_pushed_event has been set.
+	//   "CERT_AUTHORITY_INSTALLED" - Indicates
+	// cert_authority_installed_event has been set.
+	//   "CERT_AUTHORITY_REMOVED" - Indicates cert_authority_removed_event
+	// has been set.
+	//   "CERT_VALIDATION_FAILURE" - Indicates cert_validation_failure_event
+	// has been set.
+	//   "CRYPTO_SELF_TEST_COMPLETED" - Indicates
+	// crypto_self_test_completed_event has been set.
+	//   "KEY_DESTRUCTION" - Indicates key_destruction_event has been set.
+	//   "KEY_GENERATED" - Indicates key_generated_event has been set.
+	//   "KEY_IMPORT" - Indicates key_import_event has been set.
+	//   "KEY_INTEGRITY_VIOLATION" - Indicates key_integrity_violation_event
+	// has been set.
+	//   "LOGGING_STARTED" - Indicates logging_started_event has been set.
+	//   "LOGGING_STOPPED" - Indicates logging_stopped_event has been set.
+	//   "LOG_BUFFER_SIZE_CRITICAL" - Indicates
+	// log_buffer_size_critical_event has been set.
+	//   "MEDIA_MOUNT" - Indicates media_mount_event has been set.
+	//   "MEDIA_UNMOUNT" - Indicates media_unmount_event has been set.
+	//   "OS_SHUTDOWN" - Indicates os_shutdown_event has been set.
+	//   "OS_STARTUP" - Indicates os_startup_event has been set.
+	//   "REMOTE_LOCK" - Indicates remote_lock_event has been set.
+	//   "WIPE_FAILURE" - Indicates wipe_failure_event has been set.
+	//   "CONNECT" - Indicates connect_event has been set.
+	//   "DNS" - Indicates dns_event has been set.
+	EventType string `json:"eventType,omitempty"`
+
+	// FilePulledEvent: A file was downloaded from the device. Part of
+	// SECURITY_LOGS.
+	FilePulledEvent *FilePulledEvent `json:"filePulledEvent,omitempty"`
+
+	// FilePushedEvent: A file was uploaded onto the device. Part of
+	// SECURITY_LOGS.
+	FilePushedEvent *FilePushedEvent `json:"filePushedEvent,omitempty"`
+
+	// KeyDestructionEvent: A cryptographic key including user installed,
+	// admin installed and system maintained private key is removed from the
+	// device either by the user or management. Part of SECURITY_LOGS.
+	KeyDestructionEvent *KeyDestructionEvent `json:"keyDestructionEvent,omitempty"`
+
+	// KeyGeneratedEvent: A cryptographic key including user installed,
+	// admin installed and system maintained private key is installed on the
+	// device either by the user or management. Part of SECURITY_LOGS.
+	KeyGeneratedEvent *KeyGeneratedEvent `json:"keyGeneratedEvent,omitempty"`
+
+	// KeyImportEvent: A cryptographic key including user installed, admin
+	// installed and system maintained private key is imported on the device
+	// either by the user or management. Part of SECURITY_LOGS.
+	KeyImportEvent *KeyImportEvent `json:"keyImportEvent,omitempty"`
+
+	// KeyIntegrityViolationEvent: A cryptographic key including user
+	// installed, admin installed and system maintained private key is
+	// determined to be corrupted due to storage corruption, hardware
+	// failure or some OS issue. Part of SECURITY_LOGS.
+	KeyIntegrityViolationEvent *KeyIntegrityViolationEvent `json:"keyIntegrityViolationEvent,omitempty"`
+
+	// KeyguardDismissAuthAttemptEvent: An attempt was made to unlock the
+	// device. Part of SECURITY_LOGS.
+	KeyguardDismissAuthAttemptEvent *KeyguardDismissAuthAttemptEvent `json:"keyguardDismissAuthAttemptEvent,omitempty"`
+
+	// KeyguardDismissedEvent: The keyguard was dismissed. Part of
+	// SECURITY_LOGS.
+	KeyguardDismissedEvent *KeyguardDismissedEvent `json:"keyguardDismissedEvent,omitempty"`
+
+	// KeyguardSecuredEvent: The device was locked either by user or
+	// timeout. Part of SECURITY_LOGS.
+	KeyguardSecuredEvent *KeyguardSecuredEvent `json:"keyguardSecuredEvent,omitempty"`
+
+	// LogBufferSizeCriticalEvent: The audit log buffer has reached 90% of
+	// its capacity, therefore older events may be dropped. Part of
+	// SECURITY_LOGS.
+	LogBufferSizeCriticalEvent *LogBufferSizeCriticalEvent `json:"logBufferSizeCriticalEvent,omitempty"`
+
+	// LoggingStartedEvent: usageLog policy has been enabled. Part of
+	// SECURITY_LOGS.
+	LoggingStartedEvent *LoggingStartedEvent `json:"loggingStartedEvent,omitempty"`
+
+	// LoggingStoppedEvent: usageLog policy has been disabled. Part of
+	// SECURITY_LOGS.
+	LoggingStoppedEvent *LoggingStoppedEvent `json:"loggingStoppedEvent,omitempty"`
+
+	// MediaMountEvent: Removable media was mounted. Part of SECURITY_LOGS.
+	MediaMountEvent *MediaMountEvent `json:"mediaMountEvent,omitempty"`
+
+	// MediaUnmountEvent: Removable media was unmounted. Part of
+	// SECURITY_LOGS.
+	MediaUnmountEvent *MediaUnmountEvent `json:"mediaUnmountEvent,omitempty"`
+
+	// OsShutdownEvent: Device was shutdown. Part of SECURITY_LOGS.
+	OsShutdownEvent *OsShutdownEvent `json:"osShutdownEvent,omitempty"`
+
+	// OsStartupEvent: Device was started. Part of SECURITY_LOGS.
+	OsStartupEvent *OsStartupEvent `json:"osStartupEvent,omitempty"`
+
+	// RemoteLockEvent: The device or profile has been remotely locked via
+	// the LOCK command. Part of SECURITY_LOGS.
+	RemoteLockEvent *RemoteLockEvent `json:"remoteLockEvent,omitempty"`
+
+	// WipeFailureEvent: The work profile or company-owned device failed to
+	// wipe when requested. This could be user initiated or admin initiated
+	// e.g. delete was received. Part of SECURITY_LOGS.
+	WipeFailureEvent *WipeFailureEvent `json:"wipeFailureEvent,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AdbShellCommandEvent") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdbShellCommandEvent") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UsageLogEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod UsageLogEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // User: A user belonging to an enterprise.
 type User struct {
 	// AccountIdentifier: A unique identifier you create for this user, such
@@ -3861,10 +6372,10 @@ type User struct {
 
 	// ForceSendFields is a list of field names (e.g. "AccountIdentifier")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AccountIdentifier") to
@@ -3892,18 +6403,18 @@ type UserFacingMessage struct {
 	// localized messages are provided.
 	DefaultMessage string `json:"defaultMessage,omitempty"`
 
-	// LocalizedMessages: A map containing <locale, message> pairs, where
-	// locale is a well-formed BCP 47 language
+	// LocalizedMessages: A map containing pairs, where locale is a
+	// well-formed BCP 47 language
 	// (https://www.w3.org/International/articles/language-tags/) code, such
 	// as en-US, es-ES, or fr.
 	LocalizedMessages map[string]string `json:"localizedMessages,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DefaultMessage") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DefaultMessage") to
@@ -3967,10 +6478,10 @@ type WebApp struct {
 
 	// ForceSendFields is a list of field names (e.g. "DisplayMode") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DisplayMode") to include
@@ -3993,17 +6504,17 @@ func (s *WebApp) MarshalJSON() ([]byte, error) {
 type WebAppIcon struct {
 	// ImageData: The actual bytes of the image in a base64url encoded
 	// string (c.f. RFC4648, section 5 "Base 64 Encoding with URL and
-	// Filename Safe Alphabet"). <ul> <li>The image type can be png or jpg.
-	// <li>The image should ideally be square. <li>The image should ideally
-	// have a size of 512x512. </ul>
+	// Filename Safe Alphabet"). - The image type can be png or jpg. - The
+	// image should ideally be square. - The image should ideally have a
+	// size of 512x512.
 	ImageData string `json:"imageData,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ImageData") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ImageData") to include in
@@ -4025,11 +6536,11 @@ func (s *WebAppIcon) MarshalJSON() ([]byte, error) {
 type WebToken struct {
 	// EnabledFeatures: The features to enable. Use this if you want to
 	// control exactly which feature(s) will be activated; leave empty to
-	// allow all features.Restrictions / things to note: <ul> <li> If no
-	// features are listed here, all features are enabled — this is the
-	// default behavior where you give access to all features to your
-	// admins. <li> This must not contain any FEATURE_UNSPECIFIED values.
-	// <li> Repeated values are ignored </ul>
+	// allow all features.Restrictions / things to note: - If no features
+	// are listed here, all features are enabled — this is the default
+	// behavior where you give access to all features to your admins. - This
+	// must not contain any FEATURE_UNSPECIFIED values. - Repeated values
+	// are ignored
 	//
 	// Possible values:
 	//   "FEATURE_UNSPECIFIED" - Unspecified feature.
@@ -4042,8 +6553,9 @@ type WebToken struct {
 	//   "STORE_BUILDER" - The organize apps page
 	// (https://developers.google.com/android/management/apps#organize-apps).
 	//   "MANAGED_CONFIGURATIONS" - The managed configurations page
-	// (https://developers.google.com/android/management/managed-configuratio
-	// ns-iframe).
+	// (https://developers.google.com/android/management/managed-configurations-iframe).
+	//   "ZERO_TOUCH_CUSTOMER_MANAGEMENT" - The zero-touch iframe
+	// (https://developers.google.com/android/management/zero-touch-iframe).
 	EnabledFeatures []string `json:"enabledFeatures,omitempty"`
 
 	// Name: The name of the web token, which is generated by the server
@@ -4076,10 +6588,10 @@ type WebToken struct {
 
 	// ForceSendFields is a list of field names (e.g. "EnabledFeatures") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "EnabledFeatures") to
@@ -4098,7 +6610,7 @@ func (s *WebToken) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// WipeAction: An action to reset a fully managed device or delete a
+// WipeAction: An action to reset a company owned device or delete a
 // work profile. Note: blockAction must also be specified.
 type WipeAction struct {
 	// PreserveFrp: Whether the factory-reset protection data is preserved
@@ -4112,10 +6624,10 @@ type WipeAction struct {
 
 	// ForceSendFields is a list of field names (e.g. "PreserveFrp") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "PreserveFrp") to include
@@ -4131,6 +6643,12 @@ func (s *WipeAction) MarshalJSON() ([]byte, error) {
 	type NoMethod WipeAction
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// WipeFailureEvent: The work profile or company-owned device failed to
+// wipe when requested. This could be user initiated or admin initiated
+// e.g. delete was received. Intentionally empty.
+type WipeFailureEvent struct {
 }
 
 // method id "androidmanagement.enterprises.create":
@@ -4151,8 +6669,24 @@ func (r *EnterprisesService) Create(enterprise *Enterprise) *EnterprisesCreateCa
 	return c
 }
 
+// AgreementAccepted sets the optional parameter "agreementAccepted":
+// Whether the enterprise admin has seen and agreed to the managed
+// Google Play Agreement (https://www.android.com/enterprise/terms/). Do
+// not set this field for any customer-managed enterprise
+// (https://developers.google.com/android/management/create-enterprise#customer-managed_enterprises).
+// Set this to field to true for all EMM-managed enterprises
+// (https://developers.google.com/android/management/create-enterprise#emm-managed_enterprises).
+func (c *EnterprisesCreateCall) AgreementAccepted(agreementAccepted bool) *EnterprisesCreateCall {
+	c.urlParams_.Set("agreementAccepted", fmt.Sprint(agreementAccepted))
+	return c
+}
+
 // EnterpriseToken sets the optional parameter "enterpriseToken": The
-// enterprise token appended to the callback URL.
+// enterprise token appended to the callback URL. Set this when creating
+// a customer-managed enterprise
+// (https://developers.google.com/android/management/create-enterprise#customer-managed_enterprises)
+// and not when creating a deprecated EMM-managed enterprise
+// (https://developers.google.com/android/management/create-enterprise#emm-managed_enterprises).
 func (c *EnterprisesCreateCall) EnterpriseToken(enterpriseToken string) *EnterprisesCreateCall {
 	c.urlParams_.Set("enterpriseToken", enterpriseToken)
 	return c
@@ -4166,7 +6700,11 @@ func (c *EnterprisesCreateCall) ProjectId(projectId string) *EnterprisesCreateCa
 }
 
 // SignupUrlName sets the optional parameter "signupUrlName": The name
-// of the SignupUrl used to sign up for the enterprise.
+// of the SignupUrl used to sign up for the enterprise. Set this when
+// creating a customer-managed enterprise
+// (https://developers.google.com/android/management/create-enterprise#customer-managed_enterprises)
+// and not when creating a deprecated EMM-managed enterprise
+// (https://developers.google.com/android/management/create-enterprise#emm-managed_enterprises).
 func (c *EnterprisesCreateCall) SignupUrlName(signupUrlName string) *EnterprisesCreateCall {
 	c.urlParams_.Set("signupUrlName", signupUrlName)
 	return c
@@ -4199,7 +6737,7 @@ func (c *EnterprisesCreateCall) Header() http.Header {
 
 func (c *EnterprisesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4236,17 +6774,17 @@ func (c *EnterprisesCreateCall) Do(opts ...googleapi.CallOption) (*Enterprise, e
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Enterprise{
 		ServerResponse: googleapi.ServerResponse{
@@ -4266,8 +6804,13 @@ func (c *EnterprisesCreateCall) Do(opts ...googleapi.CallOption) (*Enterprise, e
 	//   "id": "androidmanagement.enterprises.create",
 	//   "parameterOrder": [],
 	//   "parameters": {
+	//     "agreementAccepted": {
+	//       "description": "Whether the enterprise admin has seen and agreed to the managed Google Play Agreement (https://www.android.com/enterprise/terms/). Do not set this field for any customer-managed enterprise (https://developers.google.com/android/management/create-enterprise#customer-managed_enterprises). Set this to field to true for all EMM-managed enterprises (https://developers.google.com/android/management/create-enterprise#emm-managed_enterprises).",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "enterpriseToken": {
-	//       "description": "The enterprise token appended to the callback URL.",
+	//       "description": "The enterprise token appended to the callback URL. Set this when creating a customer-managed enterprise (https://developers.google.com/android/management/create-enterprise#customer-managed_enterprises) and not when creating a deprecated EMM-managed enterprise (https://developers.google.com/android/management/create-enterprise#emm-managed_enterprises).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4277,7 +6820,7 @@ func (c *EnterprisesCreateCall) Do(opts ...googleapi.CallOption) (*Enterprise, e
 	//       "type": "string"
 	//     },
 	//     "signupUrlName": {
-	//       "description": "The name of the SignupUrl used to sign up for the enterprise.",
+	//       "description": "The name of the SignupUrl used to sign up for the enterprise. Set this when creating a customer-managed enterprise (https://developers.google.com/android/management/create-enterprise#customer-managed_enterprises) and not when creating a deprecated EMM-managed enterprise (https://developers.google.com/android/management/create-enterprise#emm-managed_enterprises).",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -4288,6 +6831,140 @@ func (c *EnterprisesCreateCall) Do(opts ...googleapi.CallOption) (*Enterprise, e
 	//   },
 	//   "response": {
 	//     "$ref": "Enterprise"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidmanagement"
+	//   ]
+	// }
+
+}
+
+// method id "androidmanagement.enterprises.delete":
+
+type EnterprisesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes an enterprise. Only available for EMM-managed
+// enterprises.
+//
+//   - name: The name of the enterprise in the form
+//     enterprises/{enterpriseId}.
+func (r *EnterprisesService) Delete(name string) *EnterprisesDeleteCall {
+	c := &EnterprisesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *EnterprisesDeleteCall) Fields(s ...googleapi.Field) *EnterprisesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *EnterprisesDeleteCall) Context(ctx context.Context) *EnterprisesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *EnterprisesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *EnterprisesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidmanagement.enterprises.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *EnterprisesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes an enterprise. Only available for EMM-managed enterprises.",
+	//   "flatPath": "v1/enterprises/{enterprisesId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "androidmanagement.enterprises.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The name of the enterprise in the form enterprises/{enterpriseId}.",
+	//       "location": "path",
+	//       "pattern": "^enterprises/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Empty"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/androidmanagement"
@@ -4308,6 +6985,9 @@ type EnterprisesGetCall struct {
 }
 
 // Get: Gets an enterprise.
+//
+//   - name: The name of the enterprise in the form
+//     enterprises/{enterpriseId}.
 func (r *EnterprisesService) Get(name string) *EnterprisesGetCall {
 	c := &EnterprisesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4351,7 +7031,7 @@ func (c *EnterprisesGetCall) Header() http.Header {
 
 func (c *EnterprisesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4389,17 +7069,17 @@ func (c *EnterprisesGetCall) Do(opts ...googleapi.CallOption) (*Enterprise, erro
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Enterprise{
 		ServerResponse: googleapi.ServerResponse{
@@ -4440,6 +7120,222 @@ func (c *EnterprisesGetCall) Do(opts ...googleapi.CallOption) (*Enterprise, erro
 
 }
 
+// method id "androidmanagement.enterprises.list":
+
+type EnterprisesListCall struct {
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists EMM-managed enterprises. Only BASIC fields are returned.
+func (r *EnterprisesService) List() *EnterprisesListCall {
+	c := &EnterprisesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The requested page
+// size. The actual page size may be fixed to a min or max value.
+func (c *EnterprisesListCall) PageSize(pageSize int64) *EnterprisesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token
+// identifying a page of results returned by the server.
+func (c *EnterprisesListCall) PageToken(pageToken string) *EnterprisesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ProjectId sets the optional parameter "projectId": Required. The
+// Cloud project ID of the EMM managing the enterprises.
+func (c *EnterprisesListCall) ProjectId(projectId string) *EnterprisesListCall {
+	c.urlParams_.Set("projectId", projectId)
+	return c
+}
+
+// View sets the optional parameter "view": Specifies which Enterprise
+// fields to return. This method only supports BASIC.
+//
+// Possible values:
+//
+//	"ENTERPRISE_VIEW_UNSPECIFIED" - The API will default to the BASIC
+//
+// view for the List method.
+//
+//	"BASIC" - Includes name and enterprise_display_name fields.
+func (c *EnterprisesListCall) View(view string) *EnterprisesListCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *EnterprisesListCall) Fields(s ...googleapi.Field) *EnterprisesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *EnterprisesListCall) IfNoneMatch(entityTag string) *EnterprisesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *EnterprisesListCall) Context(ctx context.Context) *EnterprisesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *EnterprisesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *EnterprisesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/enterprises")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidmanagement.enterprises.list" call.
+// Exactly one of *ListEnterprisesResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListEnterprisesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *EnterprisesListCall) Do(opts ...googleapi.CallOption) (*ListEnterprisesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListEnterprisesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists EMM-managed enterprises. Only BASIC fields are returned.",
+	//   "flatPath": "v1/enterprises",
+	//   "httpMethod": "GET",
+	//   "id": "androidmanagement.enterprises.list",
+	//   "parameterOrder": [],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The requested page size. The actual page size may be fixed to a min or max value.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A token identifying a page of results returned by the server.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "projectId": {
+	//       "description": "Required. The Cloud project ID of the EMM managing the enterprises.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "view": {
+	//       "description": "Specifies which Enterprise fields to return. This method only supports BASIC.",
+	//       "enum": [
+	//         "ENTERPRISE_VIEW_UNSPECIFIED",
+	//         "BASIC"
+	//       ],
+	//       "enumDescriptions": [
+	//         "The API will default to the BASIC view for the List method.",
+	//         "Includes name and enterprise_display_name fields."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/enterprises",
+	//   "response": {
+	//     "$ref": "ListEnterprisesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidmanagement"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *EnterprisesListCall) Pages(ctx context.Context, f func(*ListEnterprisesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "androidmanagement.enterprises.patch":
 
 type EnterprisesPatchCall struct {
@@ -4452,6 +7348,9 @@ type EnterprisesPatchCall struct {
 }
 
 // Patch: Updates an enterprise.
+//
+//   - name: The name of the enterprise in the form
+//     enterprises/{enterpriseId}.
 func (r *EnterprisesService) Patch(name string, enterprise *Enterprise) *EnterprisesPatchCall {
 	c := &EnterprisesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4494,7 +7393,7 @@ func (c *EnterprisesPatchCall) Header() http.Header {
 
 func (c *EnterprisesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4534,17 +7433,17 @@ func (c *EnterprisesPatchCall) Do(opts ...googleapi.CallOption) (*Enterprise, er
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Enterprise{
 		ServerResponse: googleapi.ServerResponse{
@@ -4606,6 +7505,9 @@ type EnterprisesApplicationsGetCall struct {
 }
 
 // Get: Gets info about an application.
+//
+//   - name: The name of the application in the form
+//     enterprises/{enterpriseId}/applications/{package_name}.
 func (r *EnterprisesApplicationsService) Get(name string) *EnterprisesApplicationsGetCall {
 	c := &EnterprisesApplicationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4658,7 +7560,7 @@ func (c *EnterprisesApplicationsGetCall) Header() http.Header {
 
 func (c *EnterprisesApplicationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4696,17 +7598,17 @@ func (c *EnterprisesApplicationsGetCall) Do(opts ...googleapi.CallOption) (*Appl
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Application{
 		ServerResponse: googleapi.ServerResponse{
@@ -4762,7 +7664,12 @@ type EnterprisesDevicesDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a device. This operation wipes the device.
+// Delete: Deletes a device. This operation wipes the device. Deleted
+// devices do not show up in enterprises.devices.list calls and a 404 is
+// returned from enterprises.devices.get.
+//
+//   - name: The name of the device in the form
+//     enterprises/{enterpriseId}/devices/{deviceId}.
 func (r *EnterprisesDevicesService) Delete(name string) *EnterprisesDevicesDeleteCall {
 	c := &EnterprisesDevicesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4773,9 +7680,15 @@ func (r *EnterprisesDevicesService) Delete(name string) *EnterprisesDevicesDelet
 // flags that control the device wiping behavior.
 //
 // Possible values:
-//   "WIPE_DATA_FLAG_UNSPECIFIED"
-//   "PRESERVE_RESET_PROTECTION_DATA"
-//   "WIPE_EXTERNAL_STORAGE"
+//
+//	"WIPE_DATA_FLAG_UNSPECIFIED" - This value is ignored.
+//	"PRESERVE_RESET_PROTECTION_DATA" - Preserve the factory reset
+//
+// protection data on the device.
+//
+//	"WIPE_EXTERNAL_STORAGE" - Additionally wipe the device's external
+//
+// storage (such as SD cards).
 func (c *EnterprisesDevicesDeleteCall) WipeDataFlags(wipeDataFlags ...string) *EnterprisesDevicesDeleteCall {
 	c.urlParams_.SetMulti("wipeDataFlags", append([]string{}, wipeDataFlags...))
 	return c
@@ -4817,7 +7730,7 @@ func (c *EnterprisesDevicesDeleteCall) Header() http.Header {
 
 func (c *EnterprisesDevicesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4852,17 +7765,17 @@ func (c *EnterprisesDevicesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty,
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -4876,7 +7789,7 @@ func (c *EnterprisesDevicesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty,
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a device. This operation wipes the device.",
+	//   "description": "Deletes a device. This operation wipes the device. Deleted devices do not show up in enterprises.devices.list calls and a 404 is returned from enterprises.devices.get.",
 	//   "flatPath": "v1/enterprises/{enterprisesId}/devices/{devicesId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "androidmanagement.enterprises.devices.delete",
@@ -4897,6 +7810,11 @@ func (c *EnterprisesDevicesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty,
 	//         "WIPE_DATA_FLAG_UNSPECIFIED",
 	//         "PRESERVE_RESET_PROTECTION_DATA",
 	//         "WIPE_EXTERNAL_STORAGE"
+	//       ],
+	//       "enumDescriptions": [
+	//         "This value is ignored.",
+	//         "Preserve the factory reset protection data on the device.",
+	//         "Additionally wipe the device's external storage (such as SD cards)."
 	//       ],
 	//       "location": "query",
 	//       "repeated": true,
@@ -4930,7 +7848,10 @@ type EnterprisesDevicesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a device.
+// Get: Gets a device. Deleted devices will respond with a 404 error.
+//
+//   - name: The name of the device in the form
+//     enterprises/{enterpriseId}/devices/{deviceId}.
 func (r *EnterprisesDevicesService) Get(name string) *EnterprisesDevicesGetCall {
 	c := &EnterprisesDevicesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4974,7 +7895,7 @@ func (c *EnterprisesDevicesGetCall) Header() http.Header {
 
 func (c *EnterprisesDevicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5012,17 +7933,17 @@ func (c *EnterprisesDevicesGetCall) Do(opts ...googleapi.CallOption) (*Device, e
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Device{
 		ServerResponse: googleapi.ServerResponse{
@@ -5036,7 +7957,7 @@ func (c *EnterprisesDevicesGetCall) Do(opts ...googleapi.CallOption) (*Device, e
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets a device.",
+	//   "description": "Gets a device. Deleted devices will respond with a 404 error.",
 	//   "flatPath": "v1/enterprises/{enterprisesId}/devices/{devicesId}",
 	//   "httpMethod": "GET",
 	//   "id": "androidmanagement.enterprises.devices.get",
@@ -5077,6 +7998,9 @@ type EnterprisesDevicesIssueCommandCall struct {
 // IssueCommand: Issues a command to a device. The Operation resource
 // returned contains a Command in its metadata field. Use the get
 // operation method to get the status of the command.
+//
+//   - name: The name of the device in the form
+//     enterprises/{enterpriseId}/devices/{deviceId}.
 func (r *EnterprisesDevicesService) IssueCommand(name string, command *Command) *EnterprisesDevicesIssueCommandCall {
 	c := &EnterprisesDevicesIssueCommandCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5111,7 +8035,7 @@ func (c *EnterprisesDevicesIssueCommandCall) Header() http.Header {
 
 func (c *EnterprisesDevicesIssueCommandCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5151,17 +8075,17 @@ func (c *EnterprisesDevicesIssueCommandCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -5216,7 +8140,11 @@ type EnterprisesDevicesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists devices for a given enterprise.
+// List: Lists devices for a given enterprise. Deleted devices are not
+// returned in the response.
+//
+//   - parent: The name of the enterprise in the form
+//     enterprises/{enterpriseId}.
 func (r *EnterprisesDevicesService) List(parent string) *EnterprisesDevicesListCall {
 	c := &EnterprisesDevicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5274,7 +8202,7 @@ func (c *EnterprisesDevicesListCall) Header() http.Header {
 
 func (c *EnterprisesDevicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5312,17 +8240,17 @@ func (c *EnterprisesDevicesListCall) Do(opts ...googleapi.CallOption) (*ListDevi
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListDevicesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -5336,7 +8264,7 @@ func (c *EnterprisesDevicesListCall) Do(opts ...googleapi.CallOption) (*ListDevi
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists devices for a given enterprise.",
+	//   "description": "Lists devices for a given enterprise. Deleted devices are not returned in the response.",
 	//   "flatPath": "v1/enterprises/{enterprisesId}/devices",
 	//   "httpMethod": "GET",
 	//   "id": "androidmanagement.enterprises.devices.list",
@@ -5407,6 +8335,9 @@ type EnterprisesDevicesPatchCall struct {
 }
 
 // Patch: Updates a device.
+//
+//   - name: The name of the device in the form
+//     enterprises/{enterpriseId}/devices/{deviceId}.
 func (r *EnterprisesDevicesService) Patch(name string, device *Device) *EnterprisesDevicesPatchCall {
 	c := &EnterprisesDevicesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5449,7 +8380,7 @@ func (c *EnterprisesDevicesPatchCall) Header() http.Header {
 
 func (c *EnterprisesDevicesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5489,17 +8420,17 @@ func (c *EnterprisesDevicesPatchCall) Do(opts ...googleapi.CallOption) (*Device,
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Device{
 		ServerResponse: googleapi.ServerResponse{
@@ -5569,6 +8500,8 @@ type EnterprisesDevicesOperationsCancelCall struct {
 // deleted; instead, it becomes an operation with an Operation.error
 // value with a google.rpc.Status.code of 1, corresponding to
 // Code.CANCELLED.
+//
+// - name: The name of the operation resource to be cancelled.
 func (r *EnterprisesDevicesOperationsService) Cancel(name string) *EnterprisesDevicesOperationsCancelCall {
 	c := &EnterprisesDevicesOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5602,7 +8535,7 @@ func (c *EnterprisesDevicesOperationsCancelCall) Header() http.Header {
 
 func (c *EnterprisesDevicesOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5637,17 +8570,17 @@ func (c *EnterprisesDevicesOperationsCancelCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -5702,6 +8635,8 @@ type EnterprisesDevicesOperationsDeleteCall struct {
 // the client is no longer interested in the operation result. It does
 // not cancel the operation. If the server doesn't support this method,
 // it returns google.rpc.Code.UNIMPLEMENTED.
+//
+// - name: The name of the operation resource to be deleted.
 func (r *EnterprisesDevicesOperationsService) Delete(name string) *EnterprisesDevicesOperationsDeleteCall {
 	c := &EnterprisesDevicesOperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5735,7 +8670,7 @@ func (c *EnterprisesDevicesOperationsDeleteCall) Header() http.Header {
 
 func (c *EnterprisesDevicesOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5770,17 +8705,17 @@ func (c *EnterprisesDevicesOperationsDeleteCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -5835,6 +8770,8 @@ type EnterprisesDevicesOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *EnterprisesDevicesOperationsService) Get(name string) *EnterprisesDevicesOperationsGetCall {
 	c := &EnterprisesDevicesOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5878,7 +8815,7 @@ func (c *EnterprisesDevicesOperationsGetCall) Header() http.Header {
 
 func (c *EnterprisesDevicesOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5916,17 +8853,17 @@ func (c *EnterprisesDevicesOperationsGetCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -5988,6 +8925,8 @@ type EnterprisesDevicesOperationsListCall struct {
 // the operations collection id, however overriding users must ensure
 // the name binding is the parent resource, without the operations
 // collection id.
+//
+// - name: The name of the operation's parent resource.
 func (r *EnterprisesDevicesOperationsService) List(name string) *EnterprisesDevicesOperationsListCall {
 	c := &EnterprisesDevicesOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6052,7 +8991,7 @@ func (c *EnterprisesDevicesOperationsListCall) Header() http.Header {
 
 func (c *EnterprisesDevicesOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6090,17 +9029,17 @@ func (c *EnterprisesDevicesOperationsListCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListOperationsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -6189,7 +9128,16 @@ type EnterprisesEnrollmentTokensCreateCall struct {
 	header_         http.Header
 }
 
-// Create: Creates an enrollment token for a given enterprise.
+// Create: Creates an enrollment token for a given enterprise. It's up
+// to the caller's responsibility to manage the lifecycle of newly
+// created tokens and deleting them when they're not intended to be used
+// anymore. Once an enrollment token has been created, it's not possible
+// to retrieve the token's content anymore using AM API. It is
+// recommended for EMMs to securely store the token if it's intended to
+// be reused.
+//
+//   - parent: The name of the enterprise in the form
+//     enterprises/{enterpriseId}.
 func (r *EnterprisesEnrollmentTokensService) Create(parent string, enrollmenttoken *EnrollmentToken) *EnterprisesEnrollmentTokensCreateCall {
 	c := &EnterprisesEnrollmentTokensCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6224,7 +9172,7 @@ func (c *EnterprisesEnrollmentTokensCreateCall) Header() http.Header {
 
 func (c *EnterprisesEnrollmentTokensCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6264,17 +9212,17 @@ func (c *EnterprisesEnrollmentTokensCreateCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &EnrollmentToken{
 		ServerResponse: googleapi.ServerResponse{
@@ -6288,7 +9236,7 @@ func (c *EnterprisesEnrollmentTokensCreateCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates an enrollment token for a given enterprise.",
+	//   "description": "Creates an enrollment token for a given enterprise. It's up to the caller's responsibility to manage the lifecycle of newly created tokens and deleting them when they're not intended to be used anymore. Once an enrollment token has been created, it's not possible to retrieve the token's content anymore using AM API. It is recommended for EMMs to securely store the token if it's intended to be reused.",
 	//   "flatPath": "v1/enterprises/{enterprisesId}/enrollmentTokens",
 	//   "httpMethod": "POST",
 	//   "id": "androidmanagement.enterprises.enrollmentTokens.create",
@@ -6330,6 +9278,9 @@ type EnterprisesEnrollmentTokensDeleteCall struct {
 
 // Delete: Deletes an enrollment token. This operation invalidates the
 // token, preventing its future use.
+//
+//   - name: The name of the enrollment token in the form
+//     enterprises/{enterpriseId}/enrollmentTokens/{enrollmentTokenId}.
 func (r *EnterprisesEnrollmentTokensService) Delete(name string) *EnterprisesEnrollmentTokensDeleteCall {
 	c := &EnterprisesEnrollmentTokensDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6363,7 +9314,7 @@ func (c *EnterprisesEnrollmentTokensDeleteCall) Header() http.Header {
 
 func (c *EnterprisesEnrollmentTokensDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6398,17 +9349,17 @@ func (c *EnterprisesEnrollmentTokensDeleteCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -6449,6 +9400,358 @@ func (c *EnterprisesEnrollmentTokensDeleteCall) Do(opts ...googleapi.CallOption)
 
 }
 
+// method id "androidmanagement.enterprises.enrollmentTokens.get":
+
+type EnterprisesEnrollmentTokensGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets an active, unexpired enrollment token. Only a partial view
+// of EnrollmentToken is returned: all the fields but name and
+// expiration_timestamp are empty. This method is meant to help manage
+// active enrollment tokens lifecycle. For security reasons, it's
+// recommended to delete active enrollment tokens as soon as they're not
+// intended to be used anymore.
+//
+//   - name: The name of the enrollment token in the form
+//     enterprises/{enterpriseId}/enrollmentTokens/{enrollmentTokenId}.
+func (r *EnterprisesEnrollmentTokensService) Get(name string) *EnterprisesEnrollmentTokensGetCall {
+	c := &EnterprisesEnrollmentTokensGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *EnterprisesEnrollmentTokensGetCall) Fields(s ...googleapi.Field) *EnterprisesEnrollmentTokensGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *EnterprisesEnrollmentTokensGetCall) IfNoneMatch(entityTag string) *EnterprisesEnrollmentTokensGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *EnterprisesEnrollmentTokensGetCall) Context(ctx context.Context) *EnterprisesEnrollmentTokensGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *EnterprisesEnrollmentTokensGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *EnterprisesEnrollmentTokensGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidmanagement.enterprises.enrollmentTokens.get" call.
+// Exactly one of *EnrollmentToken or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *EnrollmentToken.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *EnterprisesEnrollmentTokensGetCall) Do(opts ...googleapi.CallOption) (*EnrollmentToken, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &EnrollmentToken{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets an active, unexpired enrollment token. Only a partial view of EnrollmentToken is returned: all the fields but name and expiration_timestamp are empty. This method is meant to help manage active enrollment tokens lifecycle. For security reasons, it's recommended to delete active enrollment tokens as soon as they're not intended to be used anymore.",
+	//   "flatPath": "v1/enterprises/{enterprisesId}/enrollmentTokens/{enrollmentTokensId}",
+	//   "httpMethod": "GET",
+	//   "id": "androidmanagement.enterprises.enrollmentTokens.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the enrollment token in the form enterprises/{enterpriseId}/enrollmentTokens/{enrollmentTokenId}.",
+	//       "location": "path",
+	//       "pattern": "^enterprises/[^/]+/enrollmentTokens/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "EnrollmentToken"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidmanagement"
+	//   ]
+	// }
+
+}
+
+// method id "androidmanagement.enterprises.enrollmentTokens.list":
+
+type EnterprisesEnrollmentTokensListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists active, unexpired enrollment tokens for a given
+// enterprise. The list items contain only a partial view of
+// EnrollmentToken: all the fields but name and expiration_timestamp are
+// empty. This method is meant to help manage active enrollment tokens
+// lifecycle. For security reasons, it's recommended to delete active
+// enrollment tokens as soon as they're not intended to be used anymore.
+//
+//   - parent: The name of the enterprise in the form
+//     enterprises/{enterpriseId}.
+func (r *EnterprisesEnrollmentTokensService) List(parent string) *EnterprisesEnrollmentTokensListCall {
+	c := &EnterprisesEnrollmentTokensListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The requested page
+// size. The service may return fewer than this value. If unspecified,
+// at most 10 items will be returned. The maximum value is 100; values
+// above 100 will be coerced to 100.
+func (c *EnterprisesEnrollmentTokensListCall) PageSize(pageSize int64) *EnterprisesEnrollmentTokensListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token
+// identifying a page of results returned by the server.
+func (c *EnterprisesEnrollmentTokensListCall) PageToken(pageToken string) *EnterprisesEnrollmentTokensListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *EnterprisesEnrollmentTokensListCall) Fields(s ...googleapi.Field) *EnterprisesEnrollmentTokensListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *EnterprisesEnrollmentTokensListCall) IfNoneMatch(entityTag string) *EnterprisesEnrollmentTokensListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *EnterprisesEnrollmentTokensListCall) Context(ctx context.Context) *EnterprisesEnrollmentTokensListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *EnterprisesEnrollmentTokensListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *EnterprisesEnrollmentTokensListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/enrollmentTokens")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidmanagement.enterprises.enrollmentTokens.list" call.
+// Exactly one of *ListEnrollmentTokensResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListEnrollmentTokensResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *EnterprisesEnrollmentTokensListCall) Do(opts ...googleapi.CallOption) (*ListEnrollmentTokensResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListEnrollmentTokensResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists active, unexpired enrollment tokens for a given enterprise. The list items contain only a partial view of EnrollmentToken: all the fields but name and expiration_timestamp are empty. This method is meant to help manage active enrollment tokens lifecycle. For security reasons, it's recommended to delete active enrollment tokens as soon as they're not intended to be used anymore.",
+	//   "flatPath": "v1/enterprises/{enterprisesId}/enrollmentTokens",
+	//   "httpMethod": "GET",
+	//   "id": "androidmanagement.enterprises.enrollmentTokens.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The requested page size. The service may return fewer than this value. If unspecified, at most 10 items will be returned. The maximum value is 100; values above 100 will be coerced to 100.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A token identifying a page of results returned by the server.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The name of the enterprise in the form enterprises/{enterpriseId}.",
+	//       "location": "path",
+	//       "pattern": "^enterprises/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/enrollmentTokens",
+	//   "response": {
+	//     "$ref": "ListEnrollmentTokensResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidmanagement"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *EnterprisesEnrollmentTokensListCall) Pages(ctx context.Context, f func(*ListEnrollmentTokensResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "androidmanagement.enterprises.policies.delete":
 
 type EnterprisesPoliciesDeleteCall struct {
@@ -6461,6 +9764,9 @@ type EnterprisesPoliciesDeleteCall struct {
 
 // Delete: Deletes a policy. This operation is only permitted if no
 // devices are currently referencing the policy.
+//
+//   - name: The name of the policy in the form
+//     enterprises/{enterpriseId}/policies/{policyId}.
 func (r *EnterprisesPoliciesService) Delete(name string) *EnterprisesPoliciesDeleteCall {
 	c := &EnterprisesPoliciesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6494,7 +9800,7 @@ func (c *EnterprisesPoliciesDeleteCall) Header() http.Header {
 
 func (c *EnterprisesPoliciesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6529,17 +9835,17 @@ func (c *EnterprisesPoliciesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -6592,6 +9898,9 @@ type EnterprisesPoliciesGetCall struct {
 }
 
 // Get: Gets a policy.
+//
+//   - name: The name of the policy in the form
+//     enterprises/{enterpriseId}/policies/{policyId}.
 func (r *EnterprisesPoliciesService) Get(name string) *EnterprisesPoliciesGetCall {
 	c := &EnterprisesPoliciesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6635,7 +9944,7 @@ func (c *EnterprisesPoliciesGetCall) Header() http.Header {
 
 func (c *EnterprisesPoliciesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6673,17 +9982,17 @@ func (c *EnterprisesPoliciesGetCall) Do(opts ...googleapi.CallOption) (*Policy, 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -6736,6 +10045,9 @@ type EnterprisesPoliciesListCall struct {
 }
 
 // List: Lists policies for a given enterprise.
+//
+//   - parent: The name of the enterprise in the form
+//     enterprises/{enterpriseId}.
 func (r *EnterprisesPoliciesService) List(parent string) *EnterprisesPoliciesListCall {
 	c := &EnterprisesPoliciesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6793,7 +10105,7 @@ func (c *EnterprisesPoliciesListCall) Header() http.Header {
 
 func (c *EnterprisesPoliciesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6831,17 +10143,17 @@ func (c *EnterprisesPoliciesListCall) Do(opts ...googleapi.CallOption) (*ListPol
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListPoliciesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -6926,6 +10238,9 @@ type EnterprisesPoliciesPatchCall struct {
 }
 
 // Patch: Updates or creates a policy.
+//
+//   - name: The name of the policy in the form
+//     enterprises/{enterpriseId}/policies/{policyId}.
 func (r *EnterprisesPoliciesService) Patch(name string, policy *Policy) *EnterprisesPoliciesPatchCall {
 	c := &EnterprisesPoliciesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6968,7 +10283,7 @@ func (c *EnterprisesPoliciesPatchCall) Header() http.Header {
 
 func (c *EnterprisesPoliciesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7008,17 +10323,17 @@ func (c *EnterprisesPoliciesPatchCall) Do(opts ...googleapi.CallOption) (*Policy
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -7080,6 +10395,9 @@ type EnterprisesWebAppsCreateCall struct {
 }
 
 // Create: Creates a web app.
+//
+//   - parent: The name of the enterprise in the form
+//     enterprises/{enterpriseId}.
 func (r *EnterprisesWebAppsService) Create(parent string, webapp *WebApp) *EnterprisesWebAppsCreateCall {
 	c := &EnterprisesWebAppsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7114,7 +10432,7 @@ func (c *EnterprisesWebAppsCreateCall) Header() http.Header {
 
 func (c *EnterprisesWebAppsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7154,17 +10472,17 @@ func (c *EnterprisesWebAppsCreateCall) Do(opts ...googleapi.CallOption) (*WebApp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &WebApp{
 		ServerResponse: googleapi.ServerResponse{
@@ -7219,6 +10537,9 @@ type EnterprisesWebAppsDeleteCall struct {
 }
 
 // Delete: Deletes a web app.
+//
+//   - name: The name of the web app in the form
+//     enterprises/{enterpriseId}/webApps/{packageName}.
 func (r *EnterprisesWebAppsService) Delete(name string) *EnterprisesWebAppsDeleteCall {
 	c := &EnterprisesWebAppsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7252,7 +10573,7 @@ func (c *EnterprisesWebAppsDeleteCall) Header() http.Header {
 
 func (c *EnterprisesWebAppsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7287,17 +10608,17 @@ func (c *EnterprisesWebAppsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty,
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -7350,6 +10671,9 @@ type EnterprisesWebAppsGetCall struct {
 }
 
 // Get: Gets a web app.
+//
+//   - name: The name of the web app in the form
+//     enterprises/{enterpriseId}/webApp/{packageName}.
 func (r *EnterprisesWebAppsService) Get(name string) *EnterprisesWebAppsGetCall {
 	c := &EnterprisesWebAppsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7393,7 +10717,7 @@ func (c *EnterprisesWebAppsGetCall) Header() http.Header {
 
 func (c *EnterprisesWebAppsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7431,17 +10755,17 @@ func (c *EnterprisesWebAppsGetCall) Do(opts ...googleapi.CallOption) (*WebApp, e
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &WebApp{
 		ServerResponse: googleapi.ServerResponse{
@@ -7494,6 +10818,9 @@ type EnterprisesWebAppsListCall struct {
 }
 
 // List: Lists web apps for a given enterprise.
+//
+//   - parent: The name of the enterprise in the form
+//     enterprises/{enterpriseId}.
 func (r *EnterprisesWebAppsService) List(parent string) *EnterprisesWebAppsListCall {
 	c := &EnterprisesWebAppsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7501,7 +10828,8 @@ func (r *EnterprisesWebAppsService) List(parent string) *EnterprisesWebAppsListC
 }
 
 // PageSize sets the optional parameter "pageSize": The requested page
-// size. The actual page size may be fixed to a min or max value.
+// size. This is a hint and the actual page size in the response may be
+// different.
 func (c *EnterprisesWebAppsListCall) PageSize(pageSize int64) *EnterprisesWebAppsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -7551,7 +10879,7 @@ func (c *EnterprisesWebAppsListCall) Header() http.Header {
 
 func (c *EnterprisesWebAppsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7589,17 +10917,17 @@ func (c *EnterprisesWebAppsListCall) Do(opts ...googleapi.CallOption) (*ListWebA
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListWebAppsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -7622,7 +10950,7 @@ func (c *EnterprisesWebAppsListCall) Do(opts ...googleapi.CallOption) (*ListWebA
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "The requested page size. The actual page size may be fixed to a min or max value.",
+	//       "description": "The requested page size. This is a hint and the actual page size in the response may be different.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -7684,6 +11012,9 @@ type EnterprisesWebAppsPatchCall struct {
 }
 
 // Patch: Updates a web app.
+//
+//   - name: The name of the web app in the form
+//     enterprises/{enterpriseId}/webApps/{packageName}.
 func (r *EnterprisesWebAppsService) Patch(name string, webapp *WebApp) *EnterprisesWebAppsPatchCall {
 	c := &EnterprisesWebAppsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7726,7 +11057,7 @@ func (c *EnterprisesWebAppsPatchCall) Header() http.Header {
 
 func (c *EnterprisesWebAppsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7766,17 +11097,17 @@ func (c *EnterprisesWebAppsPatchCall) Do(opts ...googleapi.CallOption) (*WebApp,
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &WebApp{
 		ServerResponse: googleapi.ServerResponse{
@@ -7839,6 +11170,9 @@ type EnterprisesWebTokensCreateCall struct {
 
 // Create: Creates a web token to access an embeddable managed Google
 // Play web UI for a given enterprise.
+//
+//   - parent: The name of the enterprise in the form
+//     enterprises/{enterpriseId}.
 func (r *EnterprisesWebTokensService) Create(parent string, webtoken *WebToken) *EnterprisesWebTokensCreateCall {
 	c := &EnterprisesWebTokensCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7873,7 +11207,7 @@ func (c *EnterprisesWebTokensCreateCall) Header() http.Header {
 
 func (c *EnterprisesWebTokensCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7913,17 +11247,17 @@ func (c *EnterprisesWebTokensCreateCall) Do(opts ...googleapi.CallOption) (*WebT
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &WebToken{
 		ServerResponse: googleapi.ServerResponse{
@@ -8028,7 +11362,7 @@ func (c *SignupUrlsCreateCall) Header() http.Header {
 
 func (c *SignupUrlsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8060,17 +11394,17 @@ func (c *SignupUrlsCreateCall) Do(opts ...googleapi.CallOption) (*SignupUrl, err
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &SignupUrl{
 		ServerResponse: googleapi.ServerResponse{

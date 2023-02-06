@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -8,35 +8,35 @@
 //
 // For product documentation, see: https://developers.google.com/apps-script/api/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/script/v1"
-//   ...
-//   ctx := context.Background()
-//   scriptService, err := script.NewService(ctx)
+//	import "google.golang.org/api/script/v1"
+//	...
+//	ctx := context.Background()
+//	scriptService, err := script.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//   scriptService, err := script.NewService(ctx, option.WithScopes(script.UserinfoEmailScope))
+//	scriptService, err := script.NewService(ctx, option.WithScopes(script.UserinfoEmailScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   scriptService, err := script.NewService(ctx, option.WithAPIKey("AIza..."))
+//	scriptService, err := script.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   scriptService, err := script.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	scriptService, err := script.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package script // import "google.golang.org/api/script/v1"
@@ -54,6 +54,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -79,6 +80,7 @@ const apiId = "script:v1"
 const apiName = "script"
 const apiVersion = "v1"
 const basePath = "https://script.googleapis.com/"
+const mtlsBasePath = "https://script.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
@@ -98,7 +100,7 @@ const (
 	// View and manage the provisioning of users on your domain
 	AdminDirectoryUserScope = "https://www.googleapis.com/auth/admin.directory.user"
 
-	// View and manage your Google Docs documents
+	// See, edit, create, and delete all your Google Docs documents
 	DocumentsScope = "https://www.googleapis.com/auth/documents"
 
 	// See, edit, create, and delete all of your Google Drive files
@@ -131,16 +133,16 @@ const (
 	// View Google Apps Script projects
 	ScriptProjectsReadonlyScope = "https://www.googleapis.com/auth/script.projects.readonly"
 
-	// See, edit, create, and delete your spreadsheets in Google Drive
+	// See, edit, create, and delete all your Google Sheets spreadsheets
 	SpreadsheetsScope = "https://www.googleapis.com/auth/spreadsheets"
 
-	// View your email address
+	// See your primary Google Account email address
 	UserinfoEmailScope = "https://www.googleapis.com/auth/userinfo.email"
 )
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://mail.google.com/",
 		"https://www.google.com/calendar/feeds",
 		"https://www.google.com/m8/feeds",
@@ -163,6 +165,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -265,12 +268,9 @@ type ScriptsService struct {
 
 // Content: The Content resource.
 type Content struct {
-	// Files: The list of script project files.
-	// One of the files is a script manifest; it must be named
-	// "appsscript",
-	// must have type of JSON, and include the manifest configurations for
-	// the
-	// project.
+	// Files: The list of script project files. One of the files is a script
+	// manifest; it must be named "appsscript", must have type of JSON, and
+	// include the manifest configurations for the project.
 	Files []*File `json:"files,omitempty"`
 
 	// ScriptId: The script project's Drive ID.
@@ -282,10 +282,10 @@ type Content struct {
 
 	// ForceSendFields is a list of field names (e.g. "Files") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Files") to include in API
@@ -303,14 +303,13 @@ func (s *Content) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// CreateProjectRequest: Request to create a script project.
+// CreateProjectRequest: Request to create a script project. Request to
+// create a script project.
 type CreateProjectRequest struct {
 	// ParentId: The Drive ID of a parent file that the created script
-	// project is bound to.
-	// This is usually the ID of a Google Doc, Google Sheet, Google Form,
-	// or
-	// Google Slides file. If not set, a standalone script project is
-	// created.
+	// project is bound to. This is usually the ID of a Google Doc, Google
+	// Sheet, Google Form, or Google Slides file. If not set, a standalone
+	// script project is created.
 	ParentId string `json:"parentId,omitempty"`
 
 	// Title: The title for the project.
@@ -318,10 +317,10 @@ type CreateProjectRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "ParentId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ParentId") to include in
@@ -359,10 +358,10 @@ type Deployment struct {
 
 	// ForceSendFields is a list of field names (e.g. "DeploymentConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DeploymentConfig") to
@@ -398,10 +397,10 @@ type DeploymentConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Description") to include
@@ -420,17 +419,10 @@ func (s *DeploymentConfig) MarshalJSON() ([]byte, error) {
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
-// duplicated
-// empty messages in your APIs. A typical example is to use it as the
-// request
-// or the response type of an API method. For instance:
-//
-//     service Foo {
-//       rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty);
-//     }
-//
-// The JSON representation for `Empty` is empty JSON object `{}`.
+// duplicated empty messages in your APIs. A typical example is to use
+// it as the request or the response type of an API method. For
+// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); }
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -461,10 +453,10 @@ type EntryPoint struct {
 
 	// ForceSendFields is a list of field names (e.g. "AddOn") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AddOn") to include in API
@@ -490,10 +482,10 @@ type ExecuteStreamResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Result") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Result") to include in API
@@ -512,39 +504,33 @@ func (s *ExecuteStreamResponse) MarshalJSON() ([]byte, error) {
 }
 
 // ExecutionError: An object that provides information about the nature
-// of an error resulting
-// from an attempted execution of a script function using the Apps
-// Script API.
-// If a run call
-// succeeds but the script function (or Apps Script itself) throws an
-// exception,
-// the response body's error field
-// contains a
-// Status object. The `Status` object's `details` field
-// contains an array with a single one of these `ExecutionError`
-// objects.
+// of an error resulting from an attempted execution of a script
+// function using the Apps Script API. If a run call succeeds but the
+// script function (or Apps Script itself) throws an exception, the
+// response body's error field contains a Status object. The `Status`
+// object's `details` field contains an array with a single one of these
+// `ExecutionError` objects.
 type ExecutionError struct {
 	// ErrorMessage: The error message thrown by Apps Script, usually
-	// localized into the user's
-	// language.
+	// localized into the user's language.
 	ErrorMessage string `json:"errorMessage,omitempty"`
 
 	// ErrorType: The error type, for example `TypeError` or
-	// `ReferenceError`. If the error
-	// type is unavailable, this field is not included.
+	// `ReferenceError`. If the error type is unavailable, this field is not
+	// included.
 	ErrorType string `json:"errorType,omitempty"`
 
 	// ScriptStackTraceElements: An array of objects that provide a stack
-	// trace through the script to show
-	// where the execution failed, with the deepest call first.
+	// trace through the script to show where the execution failed, with the
+	// deepest call first.
 	ScriptStackTraceElements []*ScriptStackTraceElement `json:"scriptStackTraceElements,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ErrorMessage") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ErrorMessage") to include
@@ -563,67 +549,49 @@ func (s *ExecutionError) MarshalJSON() ([]byte, error) {
 }
 
 // ExecutionRequest: A request to run the function in a script. The
-// script is identified by the
-// specified `script_id`. Executing a function on a script returns
-// results
-// based on the implementation of the script.
+// script is identified by the specified `script_id`. Executing a
+// function on a script returns results based on the implementation of
+// the script.
 type ExecutionRequest struct {
 	// DevMode: If `true` and the user is an owner of the script, the script
-	// runs at the
-	// most recently saved version rather than the version deployed for use
-	// with
-	// the Apps Script API. Optional; default is `false`.
+	// runs at the most recently saved version rather than the version
+	// deployed for use with the Apps Script API. Optional; default is
+	// `false`.
 	DevMode bool `json:"devMode,omitempty"`
 
 	// Function: The name of the function to execute in the given script.
-	// The name does not
-	// include parentheses or parameters. It can reference a function in
-	// an
-	// included library such as `Library.libFunction1`.
+	// The name does not include parentheses or parameters. It can reference
+	// a function in an included library such as `Library.libFunction1`.
 	Function string `json:"function,omitempty"`
 
 	// Parameters: The parameters to be passed to the function being
-	// executed. The object type
-	// for each parameter should match the expected type in Apps
-	// Script.
-	// Parameters cannot be Apps Script-specific object types (such as
-	// a
-	// `Document` or a `Calendar`); they can only be primitive types such
-	// as
-	// `string`, `number`, `array`, `object`, or `boolean`. Optional.
+	// executed. The object type for each parameter should match the
+	// expected type in Apps Script. Parameters cannot be Apps
+	// Script-specific object types (such as a `Document` or a `Calendar`);
+	// they can only be primitive types such as `string`, `number`, `array`,
+	// `object`, or `boolean`. Optional.
 	Parameters []interface{} `json:"parameters,omitempty"`
 
-	// SessionState: <b>Deprecated</b>. For use with Android add-ons only.
-	// An ID that represents
-	// the user's current session in the Android app for Google Docs or
-	// Sheets,
-	// included as extra data in
-	// the
-	// [Intent](https://developer.android.com/guide/components/intents-fi
-	// lters.html)
+	// SessionState: *Deprecated*. For use with Android add-ons only. An ID
+	// that represents the user's current session in the Android app for
+	// Google Docs or Sheets, included as extra data in the Intent
+	// (https://developer.android.com/guide/components/intents-filters.html)
 	// that launches the add-on. When an Android add-on is run with a
-	// session
-	// state, it gains the privileges of
-	// a
-	// [bound](https://developers.google.com/apps-script/guides/bound)
-	// scri
-	// pt&mdash;that is, it can access information like the user's
-	// current
+	// session state, it gains the privileges of a bound
+	// (https://developers.google.com/apps-script/guides/bound)
+	// script—that is, it can access information like the user's current
 	// cursor position (in Docs) or selected cell (in Sheets). To retrieve
-	// the
-	// state,
-	// call
-	// `Intent.getStringExtra("com.google.android.apps.docs.addons.Sessi
-	// onState")`.
-	// Optional.
+	// the state, call
+	// `Intent.getStringExtra("com.google.android.apps.docs.addons.SessionSta
+	// te")`. Optional.
 	SessionState string `json:"sessionState,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DevMode") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DevMode") to include in
@@ -642,29 +610,23 @@ func (s *ExecutionRequest) MarshalJSON() ([]byte, error) {
 }
 
 // ExecutionResponse: An object that provides the return value of a
-// function executed using the
-// Apps Script API. If the script function returns successfully, the
-// response
-// body's response field contains this
-// `ExecutionResponse` object.
+// function executed using the Apps Script API. If the script function
+// returns successfully, the response body's response field contains
+// this `ExecutionResponse` object.
 type ExecutionResponse struct {
 	// Result: The return value of the script function. The type matches the
-	// object type
-	// returned in Apps Script. Functions called using the Apps Script API
-	// cannot
-	// return Apps Script-specific objects (such as a `Document` or a
-	// `Calendar`);
-	// they can only return primitive types such as a `string`, `number`,
-	// `array`,
-	// `object`, or `boolean`.
+	// object type returned in Apps Script. Functions called using the Apps
+	// Script API cannot return Apps Script-specific objects (such as a
+	// `Document` or a `Calendar`); they can only return primitive types
+	// such as a `string`, `number`, `array`, `object`, or `boolean`.
 	Result interface{} `json:"result,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Result") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Result") to include in API
@@ -682,30 +644,25 @@ func (s *ExecutionResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// File: An individual file within a script project.
-// A file is a third-party source code created by one or
-// more
-// developers. It can be a server-side JS code, HTML, or a
-// configuration file. Each script project can contain multiple files.
+// File: An individual file within a script project. A file is a
+// third-party source code created by one or more developers. It can be
+// a server-side JS code, HTML, or a configuration file. Each script
+// project can contain multiple files.
 type File struct {
-	// CreateTime: Creation date timestamp.
-	// This read-only field is only visible to users who have
-	// WRITER
-	// permission for the script project.
+	// CreateTime: Creation date timestamp. This read-only field is only
+	// visible to users who have WRITER permission for the script project.
 	CreateTime string `json:"createTime,omitempty"`
 
 	// FunctionSet: The defined set of functions in the script file, if any.
 	FunctionSet *GoogleAppsScriptTypeFunctionSet `json:"functionSet,omitempty"`
 
-	// LastModifyUser: The user who modified the file most recently.
-	// This read-only field is only visible to users who have
-	// WRITER
-	// permission for the script project.
+	// LastModifyUser: The user who modified the file most recently. This
+	// read-only field is only visible to users who have WRITER permission
+	// for the script project.
 	LastModifyUser *GoogleAppsScriptTypeUser `json:"lastModifyUser,omitempty"`
 
 	// Name: The name of the file. The file extension is not part of the
-	// file
-	// name, which can be identified from the type field.
+	// file name, which can be identified from the type field.
 	Name string `json:"name,omitempty"`
 
 	// Source: The file content.
@@ -719,26 +676,22 @@ type File struct {
 	//   "SERVER_JS" - An Apps Script server-side code file.
 	//   "HTML" - A file containing client-side HTML.
 	//   "JSON" - A file in JSON format. This type is only used for the
-	// script
-	// project's manifest. The manifest file content must match
-	// the
-	// structure of a
-	// valid
+	// script project's manifest. The manifest file content must match the
+	// structure of a valid
 	// [ScriptManifest](/apps-script/concepts/manifests)
 	Type string `json:"type,omitempty"`
 
-	// UpdateTime: Last modified date timestamp.
-	// This read-only field is only visible to users who have
-	// WRITER
-	// permission for the script project.
+	// UpdateTime: Last modified date timestamp. This read-only field is
+	// only visible to users who have WRITER permission for the script
+	// project.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CreateTime") to include in
@@ -783,10 +736,10 @@ type GoogleAppsScriptTypeAddOnEntryPoint struct {
 
 	// ForceSendFields is a list of field names (e.g. "AddOnType") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AddOnType") to include in
@@ -812,11 +765,10 @@ type GoogleAppsScriptTypeExecutionApiConfig struct {
 	// Possible values:
 	//   "UNKNOWN_ACCESS" - Default value, should not be used.
 	//   "MYSELF" - Only the user who deployed the web app or executable can
-	// access it.
-	// Note that this is not necessarily the owner of the script project.
+	// access it. Note that this is not necessarily the owner of the script
+	// project.
 	//   "DOMAIN" - Only users in the same domain as the user who deployed
-	// the web app or
-	// executable can access it.
+	// the web app or executable can access it.
 	//   "ANYONE" - Any logged in user can access the web app or executable.
 	//   "ANYONE_ANONYMOUS" - Any user, logged in or not, can access the web
 	// app or executable.
@@ -824,10 +776,10 @@ type GoogleAppsScriptTypeExecutionApiConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "Access") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Access") to include in API
@@ -853,10 +805,10 @@ type GoogleAppsScriptTypeExecutionApiEntryPoint struct {
 
 	// ForceSendFields is a list of field names (e.g. "EntryPointConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "EntryPointConfig") to
@@ -881,12 +833,16 @@ type GoogleAppsScriptTypeFunction struct {
 	// Name: The function name in the script project.
 	Name string `json:"name,omitempty"`
 
+	// Parameters: The ordered list of parameter names of the function in
+	// the script project.
+	Parameters []string `json:"parameters,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Name") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Name") to include in API
@@ -912,10 +868,10 @@ type GoogleAppsScriptTypeFunctionSet struct {
 
 	// ForceSendFields is a list of field names (e.g. "Values") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Values") to include in API
@@ -934,12 +890,10 @@ func (s *GoogleAppsScriptTypeFunctionSet) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleAppsScriptTypeProcess: Representation of a single script
-// process execution that was started from
-// the script editor, a trigger, an application, or using the Apps
-// Script API.
-// This is distinct from the `Operation`
-// resource, which only represents executions started via the Apps
-// Script API.
+// process execution that was started from the script editor, a trigger,
+// an application, or using the Apps Script API. This is distinct from
+// the `Operation` resource, which only represents executions started
+// via the Apps Script API.
 type GoogleAppsScriptTypeProcess struct {
 	// Duration: Duration the execution spent executing.
 	Duration string `json:"duration,omitempty"`
@@ -996,10 +950,10 @@ type GoogleAppsScriptTypeProcess struct {
 
 	// ForceSendFields is a list of field names (e.g. "Duration") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Duration") to include in
@@ -1033,10 +987,10 @@ type GoogleAppsScriptTypeUser struct {
 
 	// ForceSendFields is a list of field names (e.g. "Domain") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Domain") to include in API
@@ -1061,11 +1015,10 @@ type GoogleAppsScriptTypeWebAppConfig struct {
 	// Possible values:
 	//   "UNKNOWN_ACCESS" - Default value, should not be used.
 	//   "MYSELF" - Only the user who deployed the web app or executable can
-	// access it.
-	// Note that this is not necessarily the owner of the script project.
+	// access it. Note that this is not necessarily the owner of the script
+	// project.
 	//   "DOMAIN" - Only users in the same domain as the user who deployed
-	// the web app or
-	// executable can access it.
+	// the web app or executable can access it.
 	//   "ANYONE" - Any logged in user can access the web app or executable.
 	//   "ANYONE_ANONYMOUS" - Any user, logged in or not, can access the web
 	// app or executable.
@@ -1078,16 +1031,16 @@ type GoogleAppsScriptTypeWebAppConfig struct {
 	//   "USER_ACCESSING" - The script runs as the user accessing the web
 	// app.
 	//   "USER_DEPLOYING" - The script runs as the user who deployed the web
-	// app. Note that this is
-	// not necessarily the owner of the script project.
+	// app. Note that this is not necessarily the owner of the script
+	// project.
 	ExecuteAs string `json:"executeAs,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Access") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Access") to include in API
@@ -1115,10 +1068,10 @@ type GoogleAppsScriptTypeWebAppEntryPoint struct {
 
 	// ForceSendFields is a list of field names (e.g. "EntryPointConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "EntryPointConfig") to
@@ -1144,8 +1097,7 @@ type ListDeploymentsResponse struct {
 	Deployments []*Deployment `json:"deployments,omitempty"`
 
 	// NextPageToken: The token that can be used in the next call to get the
-	// next page of
-	// results.
+	// next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1154,10 +1106,10 @@ type ListDeploymentsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Deployments") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Deployments") to include
@@ -1175,12 +1127,11 @@ func (s *ListDeploymentsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ListScriptProcessesResponse: Response with the list of
-// Process resources.
+// ListScriptProcessesResponse: Response with the list of Process
+// resources.
 type ListScriptProcessesResponse struct {
 	// NextPageToken: Token for the next page of results. If empty, there
-	// are no more pages
-	// remaining.
+	// are no more pages remaining.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// Processes: List of processes matching request parameters.
@@ -1192,10 +1143,10 @@ type ListScriptProcessesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -1213,12 +1164,11 @@ func (s *ListScriptProcessesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ListUserProcessesResponse: Response with the list of
-// Process resources.
+// ListUserProcessesResponse: Response with the list of Process
+// resources.
 type ListUserProcessesResponse struct {
 	// NextPageToken: Token for the next page of results. If empty, there
-	// are no more pages
-	// remaining.
+	// are no more pages remaining.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// Processes: List of processes matching request parameters.
@@ -1230,10 +1180,10 @@ type ListUserProcessesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -1259,10 +1209,10 @@ type ListValue struct {
 
 	// ForceSendFields is a list of field names (e.g. "Values") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Values") to include in API
@@ -1284,8 +1234,7 @@ func (s *ListValue) MarshalJSON() ([]byte, error) {
 // specified script project.
 type ListVersionsResponse struct {
 	// NextPageToken: The token use to fetch the next page of records. if
-	// not exist in the
-	// response, that means no more versions to list.
+	// not exist in the response, that means no more versions to list.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// Versions: The list of versions.
@@ -1297,10 +1246,10 @@ type ListVersionsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -1319,8 +1268,7 @@ func (s *ListVersionsResponse) MarshalJSON() ([]byte, error) {
 }
 
 // Metrics: Resource containing usage stats for a given script, based on
-// the supplied
-// filter and mask present in the request.
+// the supplied filter and mask present in the request.
 type Metrics struct {
 	// ActiveUsers: Number of active users.
 	ActiveUsers []*MetricsValue `json:"activeUsers,omitempty"`
@@ -1337,10 +1285,10 @@ type Metrics struct {
 
 	// ForceSendFields is a list of field names (e.g. "ActiveUsers") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ActiveUsers") to include
@@ -1371,10 +1319,10 @@ type MetricsValue struct {
 
 	// ForceSendFields is a list of field names (e.g. "EndTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "EndTime") to include in
@@ -1395,34 +1343,22 @@ func (s *MetricsValue) MarshalJSON() ([]byte, error) {
 // Operation: A representation of an execution of an Apps Script
 // function started with run. The execution response does not arrive
 // until the function finishes executing. The maximum execution runtime
-// is listed in the [Apps Script quotas
-// guide](/apps-script/guides/services/quotas#current_limitations).
-// <p>After execution has started, it can have one of four outcomes:</p>
-// <ul> <li> If the script function returns successfully, the
-//   response field contains an
-//   ExecutionResponse object
-//   with the function's return value in the object's `result`
-// field.</li>
-// <li> If the script function (or Apps Script itself) throws an
-// exception, the
-//   error field contains a
-//   Status object. The `Status` object's `details`
-//   field contains an array with a single
-//   ExecutionError object that
-//   provides information about the nature of the error.</li>
-// <li> If the execution has not yet completed,
-//   the done field is `false` and
-//   the neither the `response` nor `error` fields are
-// present.</li>
-// <li> If the `run` call itself fails (for example, because of a
-//   malformed request or an authorization error), the method returns an
-// HTTP
-//   response code in the 4XX range with a different format for the
-// response
-//   body. Client libraries automatically convert a 4XX response into
-// an
-//   exception class.</li>
-// </ul>
+// is listed in the Apps Script quotas guide
+// (/apps-script/guides/services/quotas#current_limitations). After
+// execution has started, it can have one of four outcomes: - If the
+// script function returns successfully, the response field contains an
+// ExecutionResponse object with the function's return value in the
+// object's `result` field. - If the script function (or Apps Script
+// itself) throws an exception, the error field contains a Status
+// object. The `Status` object's `details` field contains an array with
+// a single ExecutionError object that provides information about the
+// nature of the error. - If the execution has not yet completed, the
+// done field is `false` and the neither the `response` nor `error`
+// fields are present. - If the `run` call itself fails (for example,
+// because of a malformed request or an authorization error), the method
+// returns an HTTP response code in the 4XX range with a different
+// format for the response body. Client libraries automatically convert
+// a 4XX response into an exception class.
 type Operation struct {
 	// Done: This field indicates whether the script execution has
 	// completed. A completed execution has a populated `response` field
@@ -1447,10 +1383,10 @@ type Operation struct {
 
 	// ForceSendFields is a list of field names (e.g. "Done") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Done") to include in API
@@ -1480,10 +1416,9 @@ type Project struct {
 	LastModifyUser *GoogleAppsScriptTypeUser `json:"lastModifyUser,omitempty"`
 
 	// ParentId: The parent's Drive ID that the script will be attached to.
-	// This is usually
-	// the ID of a Google Document or Google Sheet. This filed is optional,
-	// and
-	// if not set, a stand-alone script will be created.
+	// This is usually the ID of a Google Document or Google Sheet. This
+	// filed is optional, and if not set, a stand-alone script will be
+	// created.
 	ParentId string `json:"parentId,omitempty"`
 
 	// ScriptId: The script project's Drive ID.
@@ -1501,10 +1436,10 @@ type Project struct {
 
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CreateTime") to include in
@@ -1529,10 +1464,10 @@ type ScriptExecutionResult struct {
 
 	// ForceSendFields is a list of field names (e.g. "ReturnValue") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ReturnValue") to include
@@ -1561,10 +1496,10 @@ type ScriptStackTraceElement struct {
 
 	// ForceSendFields is a list of field names (e.g. "Function") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Function") to include in
@@ -1586,10 +1521,9 @@ func (s *ScriptStackTraceElement) MarshalJSON() ([]byte, error) {
 // Script itself) throws an exception, the response body's error field
 // contains this `Status` object.
 type Status struct {
-	// Code: The status code. For this API, this value either: <ul> <li> 10,
-	// indicating a `SCRIPT_TIMEOUT` error,</li> <li> 3, indicating an
-	// `INVALID_ARGUMENT` error, or</li> <li> 1, indicating a `CANCELLED`
-	// execution.</li> </ul>
+	// Code: The status code. For this API, this value either: - 10,
+	// indicating a `SCRIPT_TIMEOUT` error, - 3, indicating an
+	// `INVALID_ARGUMENT` error, or - 1, indicating a `CANCELLED` execution.
 	Code int64 `json:"code,omitempty"`
 
 	// Details: An array that contains a single ExecutionError object that
@@ -1603,10 +1537,10 @@ type Status struct {
 
 	// ForceSendFields is a list of field names (e.g. "Code") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Code") to include in API
@@ -1625,18 +1559,17 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 }
 
 // Struct: `Struct` represents a structured data value, consisting of
-// fields which map
-// to dynamically typed values.
+// fields which map to dynamically typed values.
 type Struct struct {
 	// Fields: Unordered map of dynamically typed values.
 	Fields map[string]Value `json:"fields,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Fields") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Fields") to include in API
@@ -1662,10 +1595,10 @@ type UpdateDeploymentRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "DeploymentConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DeploymentConfig") to
@@ -1685,8 +1618,7 @@ func (s *UpdateDeploymentRequest) MarshalJSON() ([]byte, error) {
 }
 
 // Value: `Value` represents a dynamically typed value which is the
-// outcome of an
-// executed script.
+// outcome of an executed script.
 type Value struct {
 	// BoolValue: Represents a boolean value.
 	BoolValue bool `json:"boolValue,omitempty"`
@@ -1720,10 +1652,10 @@ type Value struct {
 
 	// ForceSendFields is a list of field names (e.g. "BoolValue") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BoolValue") to include in
@@ -1756,10 +1688,9 @@ func (s *Value) UnmarshalJSON(data []byte) error {
 }
 
 // Version: A resource representing a script project version. A version
-// is a "snapshot"
-// of a script project and is similar to a read-only branched release.
-// When
-// creating deployments, the version to use must be specified.
+// is a "snapshot" of a script project and is similar to a read-only
+// branched release. When creating deployments, the version to use must
+// be specified.
 type Version struct {
 	// CreateTime: When the version was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -1771,9 +1702,8 @@ type Version struct {
 	ScriptId string `json:"scriptId,omitempty"`
 
 	// VersionNumber: The incremental ID that is created by Apps Script when
-	// a version is
-	// created. This is system assigned number and is immutable once
-	// created.
+	// a version is created. This is system assigned number and is immutable
+	// once created.
 	VersionNumber int64 `json:"versionNumber,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1782,10 +1712,10 @@ type Version struct {
 
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CreateTime") to include in
@@ -1814,25 +1744,22 @@ type ProcessesListCall struct {
 }
 
 // List: List information about processes made by or on behalf of a
-// user,
-// such as process type and current status.
+// user, such as process type and current status.
 func (r *ProcessesService) List() *ProcessesListCall {
 	c := &ProcessesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of returned processes per page of results. Defaults to
-// 50.
+// of returned processes per page of results. Defaults to 50.
 func (c *ProcessesListCall) PageSize(pageSize int64) *ProcessesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": The token for
-// continuing a previous list request on the next page. This
-// should be set to the value of `nextPageToken` from a previous
-// response.
+// continuing a previous list request on the next page. This should be
+// set to the value of `nextPageToken` from a previous response.
 func (c *ProcessesListCall) PageToken(pageToken string) *ProcessesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -1840,8 +1767,8 @@ func (c *ProcessesListCall) PageToken(pageToken string) *ProcessesListCall {
 
 // UserProcessFilterDeploymentId sets the optional parameter
 // "userProcessFilter.deploymentId": Optional field used to limit
-// returned processes to those originating from
-// projects with a specific deployment ID.
+// returned processes to those originating from projects with a specific
+// deployment ID.
 func (c *ProcessesListCall) UserProcessFilterDeploymentId(userProcessFilterDeploymentId string) *ProcessesListCall {
 	c.urlParams_.Set("userProcessFilter.deploymentId", userProcessFilterDeploymentId)
 	return c
@@ -1849,8 +1776,7 @@ func (c *ProcessesListCall) UserProcessFilterDeploymentId(userProcessFilterDeplo
 
 // UserProcessFilterEndTime sets the optional parameter
 // "userProcessFilter.endTime": Optional field used to limit returned
-// processes to those that completed
-// on or before the given timestamp.
+// processes to those that completed on or before the given timestamp.
 func (c *ProcessesListCall) UserProcessFilterEndTime(userProcessFilterEndTime string) *ProcessesListCall {
 	c.urlParams_.Set("userProcessFilter.endTime", userProcessFilterEndTime)
 	return c
@@ -1858,8 +1784,8 @@ func (c *ProcessesListCall) UserProcessFilterEndTime(userProcessFilterEndTime st
 
 // UserProcessFilterFunctionName sets the optional parameter
 // "userProcessFilter.functionName": Optional field used to limit
-// returned processes to those originating from
-// a script function with the given function name.
+// returned processes to those originating from a script function with
+// the given function name.
 func (c *ProcessesListCall) UserProcessFilterFunctionName(userProcessFilterFunctionName string) *ProcessesListCall {
 	c.urlParams_.Set("userProcessFilter.functionName", userProcessFilterFunctionName)
 	return c
@@ -1867,8 +1793,8 @@ func (c *ProcessesListCall) UserProcessFilterFunctionName(userProcessFilterFunct
 
 // UserProcessFilterProjectName sets the optional parameter
 // "userProcessFilter.projectName": Optional field used to limit
-// returned processes to those originating from
-// projects with project names containing a specific string.
+// returned processes to those originating from projects with project
+// names containing a specific string.
 func (c *ProcessesListCall) UserProcessFilterProjectName(userProcessFilterProjectName string) *ProcessesListCall {
 	c.urlParams_.Set("userProcessFilter.projectName", userProcessFilterProjectName)
 	return c
@@ -1876,8 +1802,8 @@ func (c *ProcessesListCall) UserProcessFilterProjectName(userProcessFilterProjec
 
 // UserProcessFilterScriptId sets the optional parameter
 // "userProcessFilter.scriptId": Optional field used to limit returned
-// processes to those originating from
-// projects with a specific script ID.
+// processes to those originating from projects with a specific script
+// ID.
 func (c *ProcessesListCall) UserProcessFilterScriptId(userProcessFilterScriptId string) *ProcessesListCall {
 	c.urlParams_.Set("userProcessFilter.scriptId", userProcessFilterScriptId)
 	return c
@@ -1885,8 +1811,7 @@ func (c *ProcessesListCall) UserProcessFilterScriptId(userProcessFilterScriptId 
 
 // UserProcessFilterStartTime sets the optional parameter
 // "userProcessFilter.startTime": Optional field used to limit returned
-// processes to those that were
-// started on or after the given timestamp.
+// processes to those that were started on or after the given timestamp.
 func (c *ProcessesListCall) UserProcessFilterStartTime(userProcessFilterStartTime string) *ProcessesListCall {
 	c.urlParams_.Set("userProcessFilter.startTime", userProcessFilterStartTime)
 	return c
@@ -1894,19 +1819,19 @@ func (c *ProcessesListCall) UserProcessFilterStartTime(userProcessFilterStartTim
 
 // UserProcessFilterStatuses sets the optional parameter
 // "userProcessFilter.statuses": Optional field used to limit returned
-// processes to those having one of
-// the specified process statuses.
+// processes to those having one of the specified process statuses.
 //
 // Possible values:
-//   "PROCESS_STATUS_UNSPECIFIED"
-//   "RUNNING"
-//   "PAUSED"
-//   "COMPLETED"
-//   "CANCELED"
-//   "FAILED"
-//   "TIMED_OUT"
-//   "UNKNOWN"
-//   "DELAYED"
+//
+//	"PROCESS_STATUS_UNSPECIFIED" - Unspecified status.
+//	"RUNNING" - The process is currently running.
+//	"PAUSED" - The process has paused.
+//	"COMPLETED" - The process has completed.
+//	"CANCELED" - The process was cancelled.
+//	"FAILED" - The process failed.
+//	"TIMED_OUT" - The process timed out.
+//	"UNKNOWN" - Process status unknown.
+//	"DELAYED" - The process is delayed, waiting for quota.
 func (c *ProcessesListCall) UserProcessFilterStatuses(userProcessFilterStatuses ...string) *ProcessesListCall {
 	c.urlParams_.SetMulti("userProcessFilter.statuses", append([]string{}, userProcessFilterStatuses...))
 	return c
@@ -1914,20 +1839,26 @@ func (c *ProcessesListCall) UserProcessFilterStatuses(userProcessFilterStatuses 
 
 // UserProcessFilterTypes sets the optional parameter
 // "userProcessFilter.types": Optional field used to limit returned
-// processes to those having one of
-// the specified process types.
+// processes to those having one of the specified process types.
 //
 // Possible values:
-//   "PROCESS_TYPE_UNSPECIFIED"
-//   "ADD_ON"
-//   "EXECUTION_API"
-//   "TIME_DRIVEN"
-//   "TRIGGER"
-//   "WEBAPP"
-//   "EDITOR"
-//   "SIMPLE_TRIGGER"
-//   "MENU"
-//   "BATCH_TASK"
+//
+//	"PROCESS_TYPE_UNSPECIFIED" - Unspecified type.
+//	"ADD_ON" - The process was started from an add-on entry point.
+//	"EXECUTION_API" - The process was started using the Apps Script
+//
+// API.
+//
+//	"TIME_DRIVEN" - The process was started from a time-based trigger.
+//	"TRIGGER" - The process was started from an event-based trigger.
+//	"WEBAPP" - The process was started from a web app entry point.
+//	"EDITOR" - The process was started using the Apps Script IDE.
+//	"SIMPLE_TRIGGER" - The process was started from a G Suite simple
+//
+// trigger.
+//
+//	"MENU" - The process was started from a G Suite menu item.
+//	"BATCH_TASK" - The process was started as a task in a batch job.
 func (c *ProcessesListCall) UserProcessFilterTypes(userProcessFilterTypes ...string) *ProcessesListCall {
 	c.urlParams_.SetMulti("userProcessFilter.types", append([]string{}, userProcessFilterTypes...))
 	return c
@@ -1935,15 +1866,16 @@ func (c *ProcessesListCall) UserProcessFilterTypes(userProcessFilterTypes ...str
 
 // UserProcessFilterUserAccessLevels sets the optional parameter
 // "userProcessFilter.userAccessLevels": Optional field used to limit
-// returned processes to those having one of
-// the specified user access levels.
+// returned processes to those having one of the specified user access
+// levels.
 //
 // Possible values:
-//   "USER_ACCESS_LEVEL_UNSPECIFIED"
-//   "NONE"
-//   "READ"
-//   "WRITE"
-//   "OWNER"
+//
+//	"USER_ACCESS_LEVEL_UNSPECIFIED" - User access level unspecified
+//	"NONE" - The user has no access.
+//	"READ" - The user has read-only access.
+//	"WRITE" - The user has write access.
+//	"OWNER" - The user is an owner.
 func (c *ProcessesListCall) UserProcessFilterUserAccessLevels(userProcessFilterUserAccessLevels ...string) *ProcessesListCall {
 	c.urlParams_.SetMulti("userProcessFilter.userAccessLevels", append([]string{}, userProcessFilterUserAccessLevels...))
 	return c
@@ -1986,7 +1918,7 @@ func (c *ProcessesListCall) Header() http.Header {
 
 func (c *ProcessesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2021,17 +1953,17 @@ func (c *ProcessesListCall) Do(opts ...googleapi.CallOption) (*ListUserProcesses
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListUserProcessesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2045,57 +1977,57 @@ func (c *ProcessesListCall) Do(opts ...googleapi.CallOption) (*ListUserProcesses
 	}
 	return ret, nil
 	// {
-	//   "description": "List information about processes made by or on behalf of a user,\nsuch as process type and current status.",
+	//   "description": "List information about processes made by or on behalf of a user, such as process type and current status.",
 	//   "flatPath": "v1/processes",
 	//   "httpMethod": "GET",
 	//   "id": "script.processes.list",
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "The maximum number of returned processes per page of results. Defaults to\n50.",
+	//       "description": "The maximum number of returned processes per page of results. Defaults to 50.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The token for continuing a previous list request on the next page. This\nshould be set to the value of `nextPageToken` from a previous response.",
+	//       "description": "The token for continuing a previous list request on the next page. This should be set to the value of `nextPageToken` from a previous response.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "userProcessFilter.deploymentId": {
-	//       "description": "Optional field used to limit returned processes to those originating from\nprojects with a specific deployment ID.",
+	//       "description": "Optional field used to limit returned processes to those originating from projects with a specific deployment ID.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "userProcessFilter.endTime": {
-	//       "description": "Optional field used to limit returned processes to those that completed\non or before the given timestamp.",
+	//       "description": "Optional field used to limit returned processes to those that completed on or before the given timestamp.",
 	//       "format": "google-datetime",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "userProcessFilter.functionName": {
-	//       "description": "Optional field used to limit returned processes to those originating from\na script function with the given function name.",
+	//       "description": "Optional field used to limit returned processes to those originating from a script function with the given function name.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "userProcessFilter.projectName": {
-	//       "description": "Optional field used to limit returned processes to those originating from\nprojects with project names containing a specific string.",
+	//       "description": "Optional field used to limit returned processes to those originating from projects with project names containing a specific string.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "userProcessFilter.scriptId": {
-	//       "description": "Optional field used to limit returned processes to those originating from\nprojects with a specific script ID.",
+	//       "description": "Optional field used to limit returned processes to those originating from projects with a specific script ID.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "userProcessFilter.startTime": {
-	//       "description": "Optional field used to limit returned processes to those that were\nstarted on or after the given timestamp.",
+	//       "description": "Optional field used to limit returned processes to those that were started on or after the given timestamp.",
 	//       "format": "google-datetime",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "userProcessFilter.statuses": {
-	//       "description": "Optional field used to limit returned processes to those having one of\nthe specified process statuses.",
+	//       "description": "Optional field used to limit returned processes to those having one of the specified process statuses.",
 	//       "enum": [
 	//         "PROCESS_STATUS_UNSPECIFIED",
 	//         "RUNNING",
@@ -2107,12 +2039,23 @@ func (c *ProcessesListCall) Do(opts ...googleapi.CallOption) (*ListUserProcesses
 	//         "UNKNOWN",
 	//         "DELAYED"
 	//       ],
+	//       "enumDescriptions": [
+	//         "Unspecified status.",
+	//         "The process is currently running.",
+	//         "The process has paused.",
+	//         "The process has completed.",
+	//         "The process was cancelled.",
+	//         "The process failed.",
+	//         "The process timed out.",
+	//         "Process status unknown.",
+	//         "The process is delayed, waiting for quota."
+	//       ],
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
 	//     },
 	//     "userProcessFilter.types": {
-	//       "description": "Optional field used to limit returned processes to those having one of\nthe specified process types.",
+	//       "description": "Optional field used to limit returned processes to those having one of the specified process types.",
 	//       "enum": [
 	//         "PROCESS_TYPE_UNSPECIFIED",
 	//         "ADD_ON",
@@ -2125,18 +2068,37 @@ func (c *ProcessesListCall) Do(opts ...googleapi.CallOption) (*ListUserProcesses
 	//         "MENU",
 	//         "BATCH_TASK"
 	//       ],
+	//       "enumDescriptions": [
+	//         "Unspecified type.",
+	//         "The process was started from an add-on entry point.",
+	//         "The process was started using the Apps Script API.",
+	//         "The process was started from a time-based trigger.",
+	//         "The process was started from an event-based trigger.",
+	//         "The process was started from a web app entry point.",
+	//         "The process was started using the Apps Script IDE.",
+	//         "The process was started from a G Suite simple trigger.",
+	//         "The process was started from a G Suite menu item.",
+	//         "The process was started as a task in a batch job."
+	//       ],
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
 	//     },
 	//     "userProcessFilter.userAccessLevels": {
-	//       "description": "Optional field used to limit returned processes to those having one of\nthe specified user access levels.",
+	//       "description": "Optional field used to limit returned processes to those having one of the specified user access levels.",
 	//       "enum": [
 	//         "USER_ACCESS_LEVEL_UNSPECIFIED",
 	//         "NONE",
 	//         "READ",
 	//         "WRITE",
 	//         "OWNER"
+	//       ],
+	//       "enumDescriptions": [
+	//         "User access level unspecified",
+	//         "The user has no access.",
+	//         "The user has read-only access.",
+	//         "The user has write access.",
+	//         "The user is an owner."
 	//       ],
 	//       "location": "query",
 	//       "repeated": true,
@@ -2186,25 +2148,22 @@ type ProcessesListScriptProcessesCall struct {
 }
 
 // ListScriptProcesses: List information about a script's executed
-// processes, such as process type
-// and current status.
+// processes, such as process type and current status.
 func (r *ProcessesService) ListScriptProcesses() *ProcessesListScriptProcessesCall {
 	c := &ProcessesListScriptProcessesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of returned processes per page of results. Defaults to
-// 50.
+// of returned processes per page of results. Defaults to 50.
 func (c *ProcessesListScriptProcessesCall) PageSize(pageSize int64) *ProcessesListScriptProcessesCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": The token for
-// continuing a previous list request on the next page. This
-// should be set to the value of `nextPageToken` from a previous
-// response.
+// continuing a previous list request on the next page. This should be
+// set to the value of `nextPageToken` from a previous response.
 func (c *ProcessesListScriptProcessesCall) PageToken(pageToken string) *ProcessesListScriptProcessesCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -2219,8 +2178,8 @@ func (c *ProcessesListScriptProcessesCall) ScriptId(scriptId string) *ProcessesL
 
 // ScriptProcessFilterDeploymentId sets the optional parameter
 // "scriptProcessFilter.deploymentId": Optional field used to limit
-// returned processes to those originating from
-// projects with a specific deployment ID.
+// returned processes to those originating from projects with a specific
+// deployment ID.
 func (c *ProcessesListScriptProcessesCall) ScriptProcessFilterDeploymentId(scriptProcessFilterDeploymentId string) *ProcessesListScriptProcessesCall {
 	c.urlParams_.Set("scriptProcessFilter.deploymentId", scriptProcessFilterDeploymentId)
 	return c
@@ -2228,8 +2187,7 @@ func (c *ProcessesListScriptProcessesCall) ScriptProcessFilterDeploymentId(scrip
 
 // ScriptProcessFilterEndTime sets the optional parameter
 // "scriptProcessFilter.endTime": Optional field used to limit returned
-// processes to those that completed
-// on or before the given timestamp.
+// processes to those that completed on or before the given timestamp.
 func (c *ProcessesListScriptProcessesCall) ScriptProcessFilterEndTime(scriptProcessFilterEndTime string) *ProcessesListScriptProcessesCall {
 	c.urlParams_.Set("scriptProcessFilter.endTime", scriptProcessFilterEndTime)
 	return c
@@ -2237,8 +2195,8 @@ func (c *ProcessesListScriptProcessesCall) ScriptProcessFilterEndTime(scriptProc
 
 // ScriptProcessFilterFunctionName sets the optional parameter
 // "scriptProcessFilter.functionName": Optional field used to limit
-// returned processes to those originating from
-// a script function with the given function name.
+// returned processes to those originating from a script function with
+// the given function name.
 func (c *ProcessesListScriptProcessesCall) ScriptProcessFilterFunctionName(scriptProcessFilterFunctionName string) *ProcessesListScriptProcessesCall {
 	c.urlParams_.Set("scriptProcessFilter.functionName", scriptProcessFilterFunctionName)
 	return c
@@ -2246,8 +2204,8 @@ func (c *ProcessesListScriptProcessesCall) ScriptProcessFilterFunctionName(scrip
 
 // ScriptProcessFilterStartTime sets the optional parameter
 // "scriptProcessFilter.startTime": Optional field used to limit
-// returned processes to those that were
-// started on or after the given timestamp.
+// returned processes to those that were started on or after the given
+// timestamp.
 func (c *ProcessesListScriptProcessesCall) ScriptProcessFilterStartTime(scriptProcessFilterStartTime string) *ProcessesListScriptProcessesCall {
 	c.urlParams_.Set("scriptProcessFilter.startTime", scriptProcessFilterStartTime)
 	return c
@@ -2255,19 +2213,19 @@ func (c *ProcessesListScriptProcessesCall) ScriptProcessFilterStartTime(scriptPr
 
 // ScriptProcessFilterStatuses sets the optional parameter
 // "scriptProcessFilter.statuses": Optional field used to limit returned
-// processes to those having one of
-// the specified process statuses.
+// processes to those having one of the specified process statuses.
 //
 // Possible values:
-//   "PROCESS_STATUS_UNSPECIFIED"
-//   "RUNNING"
-//   "PAUSED"
-//   "COMPLETED"
-//   "CANCELED"
-//   "FAILED"
-//   "TIMED_OUT"
-//   "UNKNOWN"
-//   "DELAYED"
+//
+//	"PROCESS_STATUS_UNSPECIFIED" - Unspecified status.
+//	"RUNNING" - The process is currently running.
+//	"PAUSED" - The process has paused.
+//	"COMPLETED" - The process has completed.
+//	"CANCELED" - The process was cancelled.
+//	"FAILED" - The process failed.
+//	"TIMED_OUT" - The process timed out.
+//	"UNKNOWN" - Process status unknown.
+//	"DELAYED" - The process is delayed, waiting for quota.
 func (c *ProcessesListScriptProcessesCall) ScriptProcessFilterStatuses(scriptProcessFilterStatuses ...string) *ProcessesListScriptProcessesCall {
 	c.urlParams_.SetMulti("scriptProcessFilter.statuses", append([]string{}, scriptProcessFilterStatuses...))
 	return c
@@ -2275,20 +2233,26 @@ func (c *ProcessesListScriptProcessesCall) ScriptProcessFilterStatuses(scriptPro
 
 // ScriptProcessFilterTypes sets the optional parameter
 // "scriptProcessFilter.types": Optional field used to limit returned
-// processes to those having one of
-// the specified process types.
+// processes to those having one of the specified process types.
 //
 // Possible values:
-//   "PROCESS_TYPE_UNSPECIFIED"
-//   "ADD_ON"
-//   "EXECUTION_API"
-//   "TIME_DRIVEN"
-//   "TRIGGER"
-//   "WEBAPP"
-//   "EDITOR"
-//   "SIMPLE_TRIGGER"
-//   "MENU"
-//   "BATCH_TASK"
+//
+//	"PROCESS_TYPE_UNSPECIFIED" - Unspecified type.
+//	"ADD_ON" - The process was started from an add-on entry point.
+//	"EXECUTION_API" - The process was started using the Apps Script
+//
+// API.
+//
+//	"TIME_DRIVEN" - The process was started from a time-based trigger.
+//	"TRIGGER" - The process was started from an event-based trigger.
+//	"WEBAPP" - The process was started from a web app entry point.
+//	"EDITOR" - The process was started using the Apps Script IDE.
+//	"SIMPLE_TRIGGER" - The process was started from a G Suite simple
+//
+// trigger.
+//
+//	"MENU" - The process was started from a G Suite menu item.
+//	"BATCH_TASK" - The process was started as a task in a batch job.
 func (c *ProcessesListScriptProcessesCall) ScriptProcessFilterTypes(scriptProcessFilterTypes ...string) *ProcessesListScriptProcessesCall {
 	c.urlParams_.SetMulti("scriptProcessFilter.types", append([]string{}, scriptProcessFilterTypes...))
 	return c
@@ -2296,15 +2260,16 @@ func (c *ProcessesListScriptProcessesCall) ScriptProcessFilterTypes(scriptProces
 
 // ScriptProcessFilterUserAccessLevels sets the optional parameter
 // "scriptProcessFilter.userAccessLevels": Optional field used to limit
-// returned processes to those having one of
-// the specified user access levels.
+// returned processes to those having one of the specified user access
+// levels.
 //
 // Possible values:
-//   "USER_ACCESS_LEVEL_UNSPECIFIED"
-//   "NONE"
-//   "READ"
-//   "WRITE"
-//   "OWNER"
+//
+//	"USER_ACCESS_LEVEL_UNSPECIFIED" - User access level unspecified
+//	"NONE" - The user has no access.
+//	"READ" - The user has read-only access.
+//	"WRITE" - The user has write access.
+//	"OWNER" - The user is an owner.
 func (c *ProcessesListScriptProcessesCall) ScriptProcessFilterUserAccessLevels(scriptProcessFilterUserAccessLevels ...string) *ProcessesListScriptProcessesCall {
 	c.urlParams_.SetMulti("scriptProcessFilter.userAccessLevels", append([]string{}, scriptProcessFilterUserAccessLevels...))
 	return c
@@ -2347,7 +2312,7 @@ func (c *ProcessesListScriptProcessesCall) Header() http.Header {
 
 func (c *ProcessesListScriptProcessesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2382,17 +2347,17 @@ func (c *ProcessesListScriptProcessesCall) Do(opts ...googleapi.CallOption) (*Li
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListScriptProcessesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2406,20 +2371,20 @@ func (c *ProcessesListScriptProcessesCall) Do(opts ...googleapi.CallOption) (*Li
 	}
 	return ret, nil
 	// {
-	//   "description": "List information about a script's executed processes, such as process type\nand current status.",
+	//   "description": "List information about a script's executed processes, such as process type and current status.",
 	//   "flatPath": "v1/processes:listScriptProcesses",
 	//   "httpMethod": "GET",
 	//   "id": "script.processes.listScriptProcesses",
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "The maximum number of returned processes per page of results. Defaults to\n50.",
+	//       "description": "The maximum number of returned processes per page of results. Defaults to 50.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The token for continuing a previous list request on the next page. This\nshould be set to the value of `nextPageToken` from a previous response.",
+	//       "description": "The token for continuing a previous list request on the next page. This should be set to the value of `nextPageToken` from a previous response.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2429,29 +2394,29 @@ func (c *ProcessesListScriptProcessesCall) Do(opts ...googleapi.CallOption) (*Li
 	//       "type": "string"
 	//     },
 	//     "scriptProcessFilter.deploymentId": {
-	//       "description": "Optional field used to limit returned processes to those originating from\nprojects with a specific deployment ID.",
+	//       "description": "Optional field used to limit returned processes to those originating from projects with a specific deployment ID.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "scriptProcessFilter.endTime": {
-	//       "description": "Optional field used to limit returned processes to those that completed\non or before the given timestamp.",
+	//       "description": "Optional field used to limit returned processes to those that completed on or before the given timestamp.",
 	//       "format": "google-datetime",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "scriptProcessFilter.functionName": {
-	//       "description": "Optional field used to limit returned processes to those originating from\na script function with the given function name.",
+	//       "description": "Optional field used to limit returned processes to those originating from a script function with the given function name.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "scriptProcessFilter.startTime": {
-	//       "description": "Optional field used to limit returned processes to those that were\nstarted on or after the given timestamp.",
+	//       "description": "Optional field used to limit returned processes to those that were started on or after the given timestamp.",
 	//       "format": "google-datetime",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "scriptProcessFilter.statuses": {
-	//       "description": "Optional field used to limit returned processes to those having one of\nthe specified process statuses.",
+	//       "description": "Optional field used to limit returned processes to those having one of the specified process statuses.",
 	//       "enum": [
 	//         "PROCESS_STATUS_UNSPECIFIED",
 	//         "RUNNING",
@@ -2463,12 +2428,23 @@ func (c *ProcessesListScriptProcessesCall) Do(opts ...googleapi.CallOption) (*Li
 	//         "UNKNOWN",
 	//         "DELAYED"
 	//       ],
+	//       "enumDescriptions": [
+	//         "Unspecified status.",
+	//         "The process is currently running.",
+	//         "The process has paused.",
+	//         "The process has completed.",
+	//         "The process was cancelled.",
+	//         "The process failed.",
+	//         "The process timed out.",
+	//         "Process status unknown.",
+	//         "The process is delayed, waiting for quota."
+	//       ],
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
 	//     },
 	//     "scriptProcessFilter.types": {
-	//       "description": "Optional field used to limit returned processes to those having one of\nthe specified process types.",
+	//       "description": "Optional field used to limit returned processes to those having one of the specified process types.",
 	//       "enum": [
 	//         "PROCESS_TYPE_UNSPECIFIED",
 	//         "ADD_ON",
@@ -2481,18 +2457,37 @@ func (c *ProcessesListScriptProcessesCall) Do(opts ...googleapi.CallOption) (*Li
 	//         "MENU",
 	//         "BATCH_TASK"
 	//       ],
+	//       "enumDescriptions": [
+	//         "Unspecified type.",
+	//         "The process was started from an add-on entry point.",
+	//         "The process was started using the Apps Script API.",
+	//         "The process was started from a time-based trigger.",
+	//         "The process was started from an event-based trigger.",
+	//         "The process was started from a web app entry point.",
+	//         "The process was started using the Apps Script IDE.",
+	//         "The process was started from a G Suite simple trigger.",
+	//         "The process was started from a G Suite menu item.",
+	//         "The process was started as a task in a batch job."
+	//       ],
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
 	//     },
 	//     "scriptProcessFilter.userAccessLevels": {
-	//       "description": "Optional field used to limit returned processes to those having one of\nthe specified user access levels.",
+	//       "description": "Optional field used to limit returned processes to those having one of the specified user access levels.",
 	//       "enum": [
 	//         "USER_ACCESS_LEVEL_UNSPECIFIED",
 	//         "NONE",
 	//         "READ",
 	//         "WRITE",
 	//         "OWNER"
+	//       ],
+	//       "enumDescriptions": [
+	//         "User access level unspecified",
+	//         "The user has no access.",
+	//         "The user has read-only access.",
+	//         "The user has write access.",
+	//         "The user is an owner."
 	//       ],
 	//       "location": "query",
 	//       "repeated": true,
@@ -2542,8 +2537,7 @@ type ProjectsCreateCall struct {
 }
 
 // Create: Creates a new, empty script project with no script files and
-// a base
-// manifest file.
+// a base manifest file.
 func (r *ProjectsService) Create(createprojectrequest *CreateProjectRequest) *ProjectsCreateCall {
 	c := &ProjectsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.createprojectrequest = createprojectrequest
@@ -2577,7 +2571,7 @@ func (c *ProjectsCreateCall) Header() http.Header {
 
 func (c *ProjectsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2614,17 +2608,17 @@ func (c *ProjectsCreateCall) Do(opts ...googleapi.CallOption) (*Project, error) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Project{
 		ServerResponse: googleapi.ServerResponse{
@@ -2638,7 +2632,7 @@ func (c *ProjectsCreateCall) Do(opts ...googleapi.CallOption) (*Project, error) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new, empty script project with no script files and a base\nmanifest file.",
+	//   "description": "Creates a new, empty script project with no script files and a base manifest file.",
 	//   "flatPath": "v1/projects",
 	//   "httpMethod": "POST",
 	//   "id": "script.projects.create",
@@ -2670,6 +2664,8 @@ type ProjectsGetCall struct {
 }
 
 // Get: Gets a script project's metadata.
+//
+// - scriptId: The script project's Drive ID.
 func (r *ProjectsService) Get(scriptId string) *ProjectsGetCall {
 	c := &ProjectsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.scriptId = scriptId
@@ -2713,7 +2709,7 @@ func (c *ProjectsGetCall) Header() http.Header {
 
 func (c *ProjectsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2751,17 +2747,17 @@ func (c *ProjectsGetCall) Do(opts ...googleapi.CallOption) (*Project, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Project{
 		ServerResponse: googleapi.ServerResponse{
@@ -2814,8 +2810,9 @@ type ProjectsGetContentCall struct {
 }
 
 // GetContent: Gets the content of the script project, including the
-// code source and
-// metadata for each script file.
+// code source and metadata for each script file.
+//
+// - scriptId: The script project's Drive ID.
 func (r *ProjectsService) GetContent(scriptId string) *ProjectsGetContentCall {
 	c := &ProjectsGetContentCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.scriptId = scriptId
@@ -2823,8 +2820,7 @@ func (r *ProjectsService) GetContent(scriptId string) *ProjectsGetContentCall {
 }
 
 // VersionNumber sets the optional parameter "versionNumber": The
-// version number of the project to retrieve. If not provided,
-// the
+// version number of the project to retrieve. If not provided, the
 // project's HEAD version is returned.
 func (c *ProjectsGetContentCall) VersionNumber(versionNumber int64) *ProjectsGetContentCall {
 	c.urlParams_.Set("versionNumber", fmt.Sprint(versionNumber))
@@ -2868,7 +2864,7 @@ func (c *ProjectsGetContentCall) Header() http.Header {
 
 func (c *ProjectsGetContentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2906,17 +2902,17 @@ func (c *ProjectsGetContentCall) Do(opts ...googleapi.CallOption) (*Content, err
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Content{
 		ServerResponse: googleapi.ServerResponse{
@@ -2930,7 +2926,7 @@ func (c *ProjectsGetContentCall) Do(opts ...googleapi.CallOption) (*Content, err
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the content of the script project, including the code source and\nmetadata for each script file.",
+	//   "description": "Gets the content of the script project, including the code source and metadata for each script file.",
 	//   "flatPath": "v1/projects/{scriptId}/content",
 	//   "httpMethod": "GET",
 	//   "id": "script.projects.getContent",
@@ -2945,7 +2941,7 @@ func (c *ProjectsGetContentCall) Do(opts ...googleapi.CallOption) (*Content, err
 	//       "type": "string"
 	//     },
 	//     "versionNumber": {
-	//       "description": "The version number of the project to retrieve. If not provided, the\nproject's HEAD version is returned.",
+	//       "description": "The version number of the project to retrieve. If not provided, the project's HEAD version is returned.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -2975,8 +2971,9 @@ type ProjectsGetMetricsCall struct {
 }
 
 // GetMetrics: Get metrics data for scripts, such as number of
-// executions and
-// active users.
+// executions and active users.
+//
+// - scriptId: Required field indicating the script to get metrics for.
 func (r *ProjectsService) GetMetrics(scriptId string) *ProjectsGetMetricsCall {
 	c := &ProjectsGetMetricsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.scriptId = scriptId
@@ -2995,9 +2992,13 @@ func (c *ProjectsGetMetricsCall) MetricsFilterDeploymentId(metricsFilterDeployme
 // Required field indicating what granularity of metrics are returned.
 //
 // Possible values:
-//   "UNSPECIFIED_GRANULARITY"
-//   "WEEKLY"
-//   "DAILY"
+//
+//	"UNSPECIFIED_GRANULARITY" - Default metric granularity used to
+//
+// query no metrics.
+//
+//	"WEEKLY" - Represents weekly metrics.
+//	"DAILY" - Represents daily metrics over a period of 7 days.
 func (c *ProjectsGetMetricsCall) MetricsGranularity(metricsGranularity string) *ProjectsGetMetricsCall {
 	c.urlParams_.Set("metricsGranularity", metricsGranularity)
 	return c
@@ -3040,7 +3041,7 @@ func (c *ProjectsGetMetricsCall) Header() http.Header {
 
 func (c *ProjectsGetMetricsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3078,17 +3079,17 @@ func (c *ProjectsGetMetricsCall) Do(opts ...googleapi.CallOption) (*Metrics, err
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Metrics{
 		ServerResponse: googleapi.ServerResponse{
@@ -3102,7 +3103,7 @@ func (c *ProjectsGetMetricsCall) Do(opts ...googleapi.CallOption) (*Metrics, err
 	}
 	return ret, nil
 	// {
-	//   "description": "Get metrics data for scripts, such as number of executions and\nactive users.",
+	//   "description": "Get metrics data for scripts, such as number of executions and active users.",
 	//   "flatPath": "v1/projects/{scriptId}/metrics",
 	//   "httpMethod": "GET",
 	//   "id": "script.projects.getMetrics",
@@ -3121,6 +3122,11 @@ func (c *ProjectsGetMetricsCall) Do(opts ...googleapi.CallOption) (*Metrics, err
 	//         "UNSPECIFIED_GRANULARITY",
 	//         "WEEKLY",
 	//         "DAILY"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Default metric granularity used to query no metrics.",
+	//         "Represents weekly metrics.",
+	//         "Represents daily metrics over a period of 7 days."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -3154,15 +3160,13 @@ type ProjectsUpdateContentCall struct {
 	header_    http.Header
 }
 
-// UpdateContent: Updates the content of the specified script
-// project.
+// UpdateContent: Updates the content of the specified script project.
 // This content is stored as the HEAD version, and is used when the
-// script is
-// executed as a trigger, in the script editor, in add-on preview mode,
-// or as
-// a web app or Apps Script API in development mode. This clears all
-// the
-// existing files in the project.
+// script is executed as a trigger, in the script editor, in add-on
+// preview mode, or as a web app or Apps Script API in development mode.
+// This clears all the existing files in the project.
+//
+// - scriptId: The script project's Drive ID.
 func (r *ProjectsService) UpdateContent(scriptId string, content *Content) *ProjectsUpdateContentCall {
 	c := &ProjectsUpdateContentCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.scriptId = scriptId
@@ -3197,7 +3201,7 @@ func (c *ProjectsUpdateContentCall) Header() http.Header {
 
 func (c *ProjectsUpdateContentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3237,17 +3241,17 @@ func (c *ProjectsUpdateContentCall) Do(opts ...googleapi.CallOption) (*Content, 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Content{
 		ServerResponse: googleapi.ServerResponse{
@@ -3261,7 +3265,7 @@ func (c *ProjectsUpdateContentCall) Do(opts ...googleapi.CallOption) (*Content, 
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the content of the specified script project.\nThis content is stored as the HEAD version, and is used when the script is\nexecuted as a trigger, in the script editor, in add-on preview mode, or as\na web app or Apps Script API in development mode. This clears all the\nexisting files in the project.",
+	//   "description": "Updates the content of the specified script project. This content is stored as the HEAD version, and is used when the script is executed as a trigger, in the script editor, in add-on preview mode, or as a web app or Apps Script API in development mode. This clears all the existing files in the project.",
 	//   "flatPath": "v1/projects/{scriptId}/content",
 	//   "httpMethod": "PUT",
 	//   "id": "script.projects.updateContent",
@@ -3302,6 +3306,8 @@ type ProjectsDeploymentsCreateCall struct {
 }
 
 // Create: Creates a deployment of an Apps Script project.
+//
+// - scriptId: The script project's Drive ID.
 func (r *ProjectsDeploymentsService) Create(scriptId string, deploymentconfig *DeploymentConfig) *ProjectsDeploymentsCreateCall {
 	c := &ProjectsDeploymentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.scriptId = scriptId
@@ -3336,7 +3342,7 @@ func (c *ProjectsDeploymentsCreateCall) Header() http.Header {
 
 func (c *ProjectsDeploymentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3376,17 +3382,17 @@ func (c *ProjectsDeploymentsCreateCall) Do(opts ...googleapi.CallOption) (*Deplo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Deployment{
 		ServerResponse: googleapi.ServerResponse{
@@ -3441,6 +3447,9 @@ type ProjectsDeploymentsDeleteCall struct {
 }
 
 // Delete: Deletes a deployment of an Apps Script project.
+//
+// - deploymentId: The deployment ID to be undeployed.
+// - scriptId: The script project's Drive ID.
 func (r *ProjectsDeploymentsService) Delete(scriptId string, deploymentId string) *ProjectsDeploymentsDeleteCall {
 	c := &ProjectsDeploymentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.scriptId = scriptId
@@ -3475,7 +3484,7 @@ func (c *ProjectsDeploymentsDeleteCall) Header() http.Header {
 
 func (c *ProjectsDeploymentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3511,17 +3520,17 @@ func (c *ProjectsDeploymentsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -3581,6 +3590,9 @@ type ProjectsDeploymentsGetCall struct {
 }
 
 // Get: Gets a deployment of an Apps Script project.
+//
+// - deploymentId: The deployment ID.
+// - scriptId: The script project's Drive ID.
 func (r *ProjectsDeploymentsService) Get(scriptId string, deploymentId string) *ProjectsDeploymentsGetCall {
 	c := &ProjectsDeploymentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.scriptId = scriptId
@@ -3625,7 +3637,7 @@ func (c *ProjectsDeploymentsGetCall) Header() http.Header {
 
 func (c *ProjectsDeploymentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3664,17 +3676,17 @@ func (c *ProjectsDeploymentsGetCall) Do(opts ...googleapi.CallOption) (*Deployme
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Deployment{
 		ServerResponse: googleapi.ServerResponse{
@@ -3734,6 +3746,8 @@ type ProjectsDeploymentsListCall struct {
 }
 
 // List: Lists the deployments of an Apps Script project.
+//
+// - scriptId: The script project's Drive ID.
 func (r *ProjectsDeploymentsService) List(scriptId string) *ProjectsDeploymentsListCall {
 	c := &ProjectsDeploymentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.scriptId = scriptId
@@ -3748,9 +3762,8 @@ func (c *ProjectsDeploymentsListCall) PageSize(pageSize int64) *ProjectsDeployme
 }
 
 // PageToken sets the optional parameter "pageToken": The token for
-// continuing a previous list request on the next page. This
-// should be set to the value of `nextPageToken` from a previous
-// response.
+// continuing a previous list request on the next page. This should be
+// set to the value of `nextPageToken` from a previous response.
 func (c *ProjectsDeploymentsListCall) PageToken(pageToken string) *ProjectsDeploymentsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -3793,7 +3806,7 @@ func (c *ProjectsDeploymentsListCall) Header() http.Header {
 
 func (c *ProjectsDeploymentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3831,17 +3844,17 @@ func (c *ProjectsDeploymentsListCall) Do(opts ...googleapi.CallOption) (*ListDep
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListDeploymentsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3870,7 +3883,7 @@ func (c *ProjectsDeploymentsListCall) Do(opts ...googleapi.CallOption) (*ListDep
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The token for continuing a previous list request on the next page. This\nshould be set to the value of `nextPageToken` from a previous response.",
+	//       "description": "The token for continuing a previous list request on the next page. This should be set to the value of `nextPageToken` from a previous response.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3927,6 +3940,9 @@ type ProjectsDeploymentsUpdateCall struct {
 }
 
 // Update: Updates a deployment of an Apps Script project.
+//
+// - deploymentId: The deployment ID for this deployment.
+// - scriptId: The script project's Drive ID.
 func (r *ProjectsDeploymentsService) Update(scriptId string, deploymentId string, updatedeploymentrequest *UpdateDeploymentRequest) *ProjectsDeploymentsUpdateCall {
 	c := &ProjectsDeploymentsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.scriptId = scriptId
@@ -3962,7 +3978,7 @@ func (c *ProjectsDeploymentsUpdateCall) Header() http.Header {
 
 func (c *ProjectsDeploymentsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4003,17 +4019,17 @@ func (c *ProjectsDeploymentsUpdateCall) Do(opts ...googleapi.CallOption) (*Deplo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Deployment{
 		ServerResponse: googleapi.ServerResponse{
@@ -4075,8 +4091,9 @@ type ProjectsVersionsCreateCall struct {
 }
 
 // Create: Creates a new immutable version using the current code, with
-// a unique
-// version number.
+// a unique version number.
+//
+// - scriptId: The script project's Drive ID.
 func (r *ProjectsVersionsService) Create(scriptId string, version *Version) *ProjectsVersionsCreateCall {
 	c := &ProjectsVersionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.scriptId = scriptId
@@ -4111,7 +4128,7 @@ func (c *ProjectsVersionsCreateCall) Header() http.Header {
 
 func (c *ProjectsVersionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4151,17 +4168,17 @@ func (c *ProjectsVersionsCreateCall) Do(opts ...googleapi.CallOption) (*Version,
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Version{
 		ServerResponse: googleapi.ServerResponse{
@@ -4175,7 +4192,7 @@ func (c *ProjectsVersionsCreateCall) Do(opts ...googleapi.CallOption) (*Version,
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new immutable version using the current code, with a unique\nversion number.",
+	//   "description": "Creates a new immutable version using the current code, with a unique version number.",
 	//   "flatPath": "v1/projects/{scriptId}/versions",
 	//   "httpMethod": "POST",
 	//   "id": "script.projects.versions.create",
@@ -4217,6 +4234,9 @@ type ProjectsVersionsGetCall struct {
 }
 
 // Get: Gets a version of a script project.
+//
+// - scriptId: The script project's Drive ID.
+// - versionNumber: The version number.
 func (r *ProjectsVersionsService) Get(scriptId string, versionNumber int64) *ProjectsVersionsGetCall {
 	c := &ProjectsVersionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.scriptId = scriptId
@@ -4261,7 +4281,7 @@ func (c *ProjectsVersionsGetCall) Header() http.Header {
 
 func (c *ProjectsVersionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4300,17 +4320,17 @@ func (c *ProjectsVersionsGetCall) Do(opts ...googleapi.CallOption) (*Version, er
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Version{
 		ServerResponse: googleapi.ServerResponse{
@@ -4371,6 +4391,8 @@ type ProjectsVersionsListCall struct {
 }
 
 // List: List the versions of a script project.
+//
+// - scriptId: The script project's Drive ID.
 func (r *ProjectsVersionsService) List(scriptId string) *ProjectsVersionsListCall {
 	c := &ProjectsVersionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.scriptId = scriptId
@@ -4385,9 +4407,8 @@ func (c *ProjectsVersionsListCall) PageSize(pageSize int64) *ProjectsVersionsLis
 }
 
 // PageToken sets the optional parameter "pageToken": The token for
-// continuing a previous list request on the next page. This
-// should be set to the value of `nextPageToken` from a previous
-// response.
+// continuing a previous list request on the next page. This should be
+// set to the value of `nextPageToken` from a previous response.
 func (c *ProjectsVersionsListCall) PageToken(pageToken string) *ProjectsVersionsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -4430,7 +4451,7 @@ func (c *ProjectsVersionsListCall) Header() http.Header {
 
 func (c *ProjectsVersionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4468,17 +4489,17 @@ func (c *ProjectsVersionsListCall) Do(opts ...googleapi.CallOption) (*ListVersio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListVersionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4507,7 +4528,7 @@ func (c *ProjectsVersionsListCall) Do(opts ...googleapi.CallOption) (*ListVersio
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The token for continuing a previous list request on the next page. This\nshould be set to the value of `nextPageToken` from a previous response.",
+	//       "description": "The token for continuing a previous list request on the next page. This should be set to the value of `nextPageToken` from a previous response.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4563,30 +4584,20 @@ type ScriptsRunCall struct {
 }
 
 // Run: Runs a function in an Apps Script project. The script project
-// must be
-// deployed for use with the Apps Script API and the calling application
-// must
-// share the same Cloud Platform project.
+// must be deployed for use with the Apps Script API and the calling
+// application must share the same Cloud Platform project. This method
+// requires authorization with an OAuth 2.0 token that includes at least
+// one of the scopes listed in the Authorization (#authorization-scopes)
+// section; script projects that do not require authorization cannot be
+// executed through this API. To find the correct scopes to include in
+// the authentication token, open the script project **Overview** page
+// and scroll down to "Project OAuth Scopes." The error `403,
+// PERMISSION_DENIED: The caller does not have permission` indicates
+// that the Cloud Platform project used to authorize the request is not
+// the same as the one used by the script.
 //
-// This method requires authorization with an OAuth 2.0 token that
-// includes at
-// least one of the scopes listed in
-// the
-// [Authorization](#authorization-scopes) section; script projects that
-// do not
-// require authorization cannot be executed through this API. To find
-// the
-// correct scopes to include in the authentication token, open the
-// project in
-// the script editor, then select **File > Project properties** and
-// click the
-// **Scopes** tab.
-//
-// The error `403, PERMISSION_DENIED: The caller does not have
-// permission`
-// indicates that the Cloud Platform project used to authorize the
-// request is
-// not the same as the one used by the script.
+//   - scriptId: The script ID of the script to be executed. Find the
+//     script ID on the **Project settings** page under "IDs.".
 func (r *ScriptsService) Run(scriptId string, executionrequest *ExecutionRequest) *ScriptsRunCall {
 	c := &ScriptsRunCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.scriptId = scriptId
@@ -4621,7 +4632,7 @@ func (c *ScriptsRunCall) Header() http.Header {
 
 func (c *ScriptsRunCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4661,17 +4672,17 @@ func (c *ScriptsRunCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -4685,7 +4696,7 @@ func (c *ScriptsRunCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Runs a function in an Apps Script project. The script project must be\ndeployed for use with the Apps Script API and the calling application must\nshare the same Cloud Platform project.\n\nThis method requires authorization with an OAuth 2.0 token that includes at\nleast one of the scopes listed in the\n[Authorization](#authorization-scopes) section; script projects that do not\nrequire authorization cannot be executed through this API. To find the\ncorrect scopes to include in the authentication token, open the project in\nthe script editor, then select **File \u003e Project properties** and click the\n**Scopes** tab.\n\nThe error `403, PERMISSION_DENIED: The caller does not have permission`\nindicates that the Cloud Platform project used to authorize the request is\nnot the same as the one used by the script.",
+	//   "description": "Runs a function in an Apps Script project. The script project must be deployed for use with the Apps Script API and the calling application must share the same Cloud Platform project. This method requires authorization with an OAuth 2.0 token that includes at least one of the scopes listed in the [Authorization](#authorization-scopes) section; script projects that do not require authorization cannot be executed through this API. To find the correct scopes to include in the authentication token, open the script project **Overview** page and scroll down to \"Project OAuth Scopes.\" The error `403, PERMISSION_DENIED: The caller does not have permission` indicates that the Cloud Platform project used to authorize the request is not the same as the one used by the script.",
 	//   "flatPath": "v1/scripts/{scriptId}:run",
 	//   "httpMethod": "POST",
 	//   "id": "script.scripts.run",
@@ -4694,7 +4705,7 @@ func (c *ScriptsRunCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	//   ],
 	//   "parameters": {
 	//     "scriptId": {
-	//       "description": "The script ID of the script to be executed. To find the script ID, open\nthe project in the script editor and select **File \u003e Project properties**.",
+	//       "description": "The script ID of the script to be executed. Find the script ID on the **Project settings** page under \"IDs.\"",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"

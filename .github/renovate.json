@@ -1,0 +1,24 @@
+{
+  "extends": [
+    "config:base",
+    "schedule:weekly",
+    ":disableDependencyDashboard"
+  ],
+  "semanticCommits": false,
+  "postUpdateOptions": [
+    "gomodTidy"
+  ],
+  "commitMessagePrefix": "chore(all): ",
+  "commitMessageAction": "update",
+  "groupName": "all",
+  "ignoreDeps": [
+    "golang.org/x/net",
+    "golang.org/x/sys",
+    "golang.org/x/oauth2"
+  ],
+  "force": {
+    "constraints": {
+      "go": "1.19"
+    }
+  }
+}

@@ -21,6 +21,7 @@
  "baseUrl": "https://www.googleapis.com/blogger/v3/",
  "basePath": "/blogger/v3/",
  "rootUrl": "https://www.googleapis.com/",
+ "mtlsRootUrl": "https://www.mtls.googleapis.com/",
  "servicePath": "blogger/v3/",
  "batchPath": "batch",
  "parameters": {

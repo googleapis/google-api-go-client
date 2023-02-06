@@ -24,18 +24,22 @@ import (
 //
 // The create function should create and return a new iterator.
 // It will typically look like
-//    func() interface{} { return client.Items(ctx) }
+//
+//	func() interface{} { return client.Items(ctx) }
 //
 // The next function takes the return value of create and should return the
 // result of calling Next on the iterator. It can usually be defined as
-//     func(it interface{}) (interface{}, error) { return it.(*ItemIterator).Next() }
+//
+//	func(it interface{}) (interface{}, error) { return it.(*ItemIterator).Next() }
 //
 // TestIterator checks that the iterator returns all the elements of want
 // in order, followed by (zero, done). It also confirms that subsequent calls
 // to next also return (zero, done).
 //
 // If the iterator implements the method
-//     PageInfo() *iterator.PageInfo
+//
+//	PageInfo() *iterator.PageInfo
+//
 // then exact pagination with iterator.Pager is also tested. Pagination testing
 // will be more informative if the want slice contains at least three elements.
 //

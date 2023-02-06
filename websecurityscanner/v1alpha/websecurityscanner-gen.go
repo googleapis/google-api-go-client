@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -6,33 +6,33 @@
 
 // Package websecurityscanner provides access to the Web Security Scanner API.
 //
-// For product documentation, see: https://cloud.google.com/security-scanner/
+// For product documentation, see: https://cloud.google.com/security-command-center/docs/concepts-web-security-scanner-overview/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/websecurityscanner/v1alpha"
-//   ...
-//   ctx := context.Background()
-//   websecurityscannerService, err := websecurityscanner.NewService(ctx)
+//	import "google.golang.org/api/websecurityscanner/v1alpha"
+//	...
+//	ctx := context.Background()
+//	websecurityscannerService, err := websecurityscanner.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   websecurityscannerService, err := websecurityscanner.NewService(ctx, option.WithAPIKey("AIza..."))
+//	websecurityscannerService, err := websecurityscanner.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   websecurityscannerService, err := websecurityscanner.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	websecurityscannerService, err := websecurityscanner.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package websecurityscanner // import "google.golang.org/api/websecurityscanner/v1alpha"
@@ -50,6 +50,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -75,21 +76,24 @@ const apiId = "websecurityscanner:v1alpha"
 const apiName = "websecurityscanner"
 const apiVersion = "v1alpha"
 const basePath = "https://websecurityscanner.googleapis.com/"
+const mtlsBasePath = "https://websecurityscanner.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud data and see the
+	// email address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -212,10 +216,10 @@ type Authentication struct {
 
 	// ForceSendFields is a list of field names (e.g. "CustomAccount") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CustomAccount") to include
@@ -234,18 +238,16 @@ func (s *Authentication) MarshalJSON() ([]byte, error) {
 }
 
 // CrawledUrl: A CrawledUrl resource represents a URL that was crawled
-// during a ScanRun. Web
-// Security Scanner Service crawls the web applications, following all
-// links
-// within the scope of sites, to find the URLs to test against.
+// during a ScanRun. Web Security Scanner Service crawls the web
+// applications, following all links within the scope of sites, to find
+// the URLs to test against.
 type CrawledUrl struct {
 	// Body: Output only. The body of the request that was used to visit the
 	// URL.
 	Body string `json:"body,omitempty"`
 
 	// HttpMethod: Output only. The http method of the request that was used
-	// to visit the URL, in
-	// uppercase.
+	// to visit the URL, in uppercase.
 	HttpMethod string `json:"httpMethod,omitempty"`
 
 	// Url: Output only. The URL that was crawled.
@@ -253,10 +255,10 @@ type CrawledUrl struct {
 
 	// ForceSendFields is a list of field names (e.g. "Body") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Body") to include in API
@@ -281,8 +283,8 @@ type CustomAccount struct {
 	LoginUrl string `json:"loginUrl,omitempty"`
 
 	// Password: Required. Input only. The password of the custom account.
-	// The credential is stored encrypted
-	// and not returned in any response nor included in audit logs.
+	// The credential is stored encrypted and not returned in any response
+	// nor included in audit logs.
 	Password string `json:"password,omitempty"`
 
 	// Username: Required. The user name of the custom account.
@@ -290,10 +292,10 @@ type CustomAccount struct {
 
 	// ForceSendFields is a list of field names (e.g. "LoginUrl") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "LoginUrl") to include in
@@ -312,17 +314,10 @@ func (s *CustomAccount) MarshalJSON() ([]byte, error) {
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
-// duplicated
-// empty messages in your APIs. A typical example is to use it as the
-// request
-// or the response type of an API method. For instance:
-//
-//     service Foo {
-//       rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty);
-//     }
-//
-// The JSON representation for `Empty` is empty JSON object `{}`.
+// duplicated empty messages in your APIs. A typical example is to use
+// it as the request or the response type of an API method. For
+// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); }
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -330,8 +325,7 @@ type Empty struct {
 }
 
 // Finding: A Finding resource represents a vulnerability instance
-// identified during a
-// ScanRun.
+// identified during a ScanRun.
 type Finding struct {
 	// Body: The body of the request that triggered the vulnerability.
 	Body string `json:"body,omitempty"`
@@ -348,62 +342,42 @@ type Finding struct {
 	// Possible values:
 	//   "FINDING_TYPE_UNSPECIFIED" - The invalid finding type.
 	//   "MIXED_CONTENT" - A page that was served over HTTPS also resources
-	// over HTTP. A
-	// man-in-the-middle attacker could tamper with the HTTP resource and
-	// gain
-	// full access to the website that loads the resource or to monitor
-	// the
-	// actions taken by the user.
+	// over HTTP. A man-in-the-middle attacker could tamper with the HTTP
+	// resource and gain full access to the website that loads the resource
+	// or to monitor the actions taken by the user.
 	//   "OUTDATED_LIBRARY" - The version of an included library is known to
-	// contain a security issue.
-	// The scanner checks the version of library in use against a known list
-	// of
-	// vulnerable libraries. False positives are possible if the
-	// version
-	// detection fails or if the library has been manually patched.
+	// contain a security issue. The scanner checks the version of library
+	// in use against a known list of vulnerable libraries. False positives
+	// are possible if the version detection fails or if the library has
+	// been manually patched.
 	//   "ROSETTA_FLASH" - This type of vulnerability occurs when the value
-	// of a request parameter
-	// is reflected at the beginning of the response, for example, in
-	// requests
-	// using JSONP. Under certain circumstances, an attacker may be able
-	// to
-	// supply an alphanumeric-only Flash file in the vulnerable
-	// parameter
-	// causing the browser to execute the Flash file as if it originated on
-	// the
-	// vulnerable server.
+	// of a request parameter is reflected at the beginning of the response,
+	// for example, in requests using JSONP. Under certain circumstances, an
+	// attacker may be able to supply an alphanumeric-only Flash file in the
+	// vulnerable parameter causing the browser to execute the Flash file as
+	// if it originated on the vulnerable server.
 	//   "XSS_CALLBACK" - A cross-site scripting (XSS) bug is found via
-	// JavaScript callback. For
-	// detailed explanations on XSS,
-	// see
+	// JavaScript callback. For detailed explanations on XSS, see
 	// https://www.google.com/about/appsecurity/learning/xss/.
 	//   "XSS_ERROR" - A potential cross-site scripting (XSS) bug due to
-	// JavaScript breakage.
-	// In some circumstances, the application under test might modify the
-	// test
-	// string before it is parsed by the browser. When the browser attempts
-	// to
-	// runs this modified test string, it will likely break and throw
-	// a
-	// JavaScript execution error, thus an injection issue is
-	// occurring.
-	// However, it may not be exploitable. Manual verification is needed to
-	// see
-	// if the test string modifications can be evaded and confirm that the
-	// issue
-	// is in fact an XSS vulnerability. For detailed explanations on XSS,
-	// see
+	// JavaScript breakage. In some circumstances, the application under
+	// test might modify the test string before it is parsed by the browser.
+	// When the browser attempts to runs this modified test string, it will
+	// likely break and throw a JavaScript execution error, thus an
+	// injection issue is occurring. However, it may not be exploitable.
+	// Manual verification is needed to see if the test string modifications
+	// can be evaded and confirm that the issue is in fact an XSS
+	// vulnerability. For detailed explanations on XSS, see
 	// https://www.google.com/about/appsecurity/learning/xss/.
 	//   "CLEAR_TEXT_PASSWORD" - An application appears to be transmitting a
-	// password field in clear text.
-	// An attacker can eavesdrop network traffic and sniff the password
-	// field.
+	// password field in clear text. An attacker can eavesdrop network
+	// traffic and sniff the password field.
 	//   "INVALID_CONTENT_TYPE" - An application returns sensitive content
-	// with an invalid content type,
-	// or without an 'X-Content-Type-Options: nosniff' header.
+	// with an invalid content type, or without an 'X-Content-Type-Options:
+	// nosniff' header.
 	//   "XSS_ANGULAR_CALLBACK" - A cross-site scripting (XSS) vulnerability
-	// in AngularJS module that
-	// occurs when a user-provided string is interpolated by Angular.
+	// in AngularJS module that occurs when a user-provided string is
+	// interpolated by Angular.
 	//   "INVALID_HEADER" - A malformed or invalid valued header.
 	//   "MISSPELLED_SECURITY_HEADER_NAME" - Misspelled security header
 	// name.
@@ -412,25 +386,21 @@ type Finding struct {
 	FindingType string `json:"findingType,omitempty"`
 
 	// FrameUrl: If the vulnerability was originated from nested IFrame, the
-	// immediate
-	// parent IFrame is reported.
+	// immediate parent IFrame is reported.
 	FrameUrl string `json:"frameUrl,omitempty"`
 
 	// FuzzedUrl: The URL produced by the server-side fuzzer and used in the
-	// request that
-	// triggered the vulnerability.
+	// request that triggered the vulnerability.
 	FuzzedUrl string `json:"fuzzedUrl,omitempty"`
 
 	// HttpMethod: The http method of the request that triggered the
-	// vulnerability, in
-	// uppercase.
+	// vulnerability, in uppercase.
 	HttpMethod string `json:"httpMethod,omitempty"`
 
 	// Name: The resource name of the Finding. The name follows the format
 	// of
-	// 'projects/{projectId}/scanConfigs/{scanConfigId}/scanruns/{scanRunI
-	// d}/findings/{findingId}'.
-	// The finding IDs are generated by the system.
+	// 'projects/{projectId}/scanConfigs/{scanConfigId}/scanruns/{scanRunId}/
+	// findings/{findingId}'. The finding IDs are generated by the system.
 	Name string `json:"name,omitempty"`
 
 	// OutdatedLibrary: An addon containing information about outdated
@@ -438,18 +408,16 @@ type Finding struct {
 	OutdatedLibrary *OutdatedLibrary `json:"outdatedLibrary,omitempty"`
 
 	// ReproductionUrl: The URL containing human-readable payload that user
-	// can leverage to
-	// reproduce the vulnerability.
+	// can leverage to reproduce the vulnerability.
 	ReproductionUrl string `json:"reproductionUrl,omitempty"`
 
 	// TrackingId: The tracking ID uniquely identifies a vulnerability
-	// instance across
-	// multiple ScanRuns.
+	// instance across multiple ScanRuns.
 	TrackingId string `json:"trackingId,omitempty"`
 
 	// ViolatingResource: An addon containing detailed information regarding
-	// any resource causing the
-	// vulnerability such as JavaScript sources, image, audio files, etc.
+	// any resource causing the vulnerability such as JavaScript sources,
+	// image, audio files, etc.
 	ViolatingResource *ViolatingResource `json:"violatingResource,omitempty"`
 
 	// VulnerableHeaders: An addon containing information about vulnerable
@@ -457,8 +425,7 @@ type Finding struct {
 	VulnerableHeaders *VulnerableHeaders `json:"vulnerableHeaders,omitempty"`
 
 	// VulnerableParameters: An addon containing information about request
-	// parameters which were found
-	// to be vulnerable.
+	// parameters which were found to be vulnerable.
 	VulnerableParameters *VulnerableParameters `json:"vulnerableParameters,omitempty"`
 
 	// Xss: An addon containing information reported for an XSS, if any.
@@ -470,10 +437,10 @@ type Finding struct {
 
 	// ForceSendFields is a list of field names (e.g. "Body") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Body") to include in API
@@ -492,8 +459,7 @@ func (s *Finding) MarshalJSON() ([]byte, error) {
 }
 
 // FindingTypeStats: A FindingTypeStats resource represents stats
-// regarding a specific FindingType
-// of Findings under a given ScanRun.
+// regarding a specific FindingType of Findings under a given ScanRun.
 type FindingTypeStats struct {
 	// FindingCount: The count of findings belonging to this finding type.
 	FindingCount int64 `json:"findingCount,omitempty"`
@@ -503,62 +469,42 @@ type FindingTypeStats struct {
 	// Possible values:
 	//   "FINDING_TYPE_UNSPECIFIED" - The invalid finding type.
 	//   "MIXED_CONTENT" - A page that was served over HTTPS also resources
-	// over HTTP. A
-	// man-in-the-middle attacker could tamper with the HTTP resource and
-	// gain
-	// full access to the website that loads the resource or to monitor
-	// the
-	// actions taken by the user.
+	// over HTTP. A man-in-the-middle attacker could tamper with the HTTP
+	// resource and gain full access to the website that loads the resource
+	// or to monitor the actions taken by the user.
 	//   "OUTDATED_LIBRARY" - The version of an included library is known to
-	// contain a security issue.
-	// The scanner checks the version of library in use against a known list
-	// of
-	// vulnerable libraries. False positives are possible if the
-	// version
-	// detection fails or if the library has been manually patched.
+	// contain a security issue. The scanner checks the version of library
+	// in use against a known list of vulnerable libraries. False positives
+	// are possible if the version detection fails or if the library has
+	// been manually patched.
 	//   "ROSETTA_FLASH" - This type of vulnerability occurs when the value
-	// of a request parameter
-	// is reflected at the beginning of the response, for example, in
-	// requests
-	// using JSONP. Under certain circumstances, an attacker may be able
-	// to
-	// supply an alphanumeric-only Flash file in the vulnerable
-	// parameter
-	// causing the browser to execute the Flash file as if it originated on
-	// the
-	// vulnerable server.
+	// of a request parameter is reflected at the beginning of the response,
+	// for example, in requests using JSONP. Under certain circumstances, an
+	// attacker may be able to supply an alphanumeric-only Flash file in the
+	// vulnerable parameter causing the browser to execute the Flash file as
+	// if it originated on the vulnerable server.
 	//   "XSS_CALLBACK" - A cross-site scripting (XSS) bug is found via
-	// JavaScript callback. For
-	// detailed explanations on XSS,
-	// see
+	// JavaScript callback. For detailed explanations on XSS, see
 	// https://www.google.com/about/appsecurity/learning/xss/.
 	//   "XSS_ERROR" - A potential cross-site scripting (XSS) bug due to
-	// JavaScript breakage.
-	// In some circumstances, the application under test might modify the
-	// test
-	// string before it is parsed by the browser. When the browser attempts
-	// to
-	// runs this modified test string, it will likely break and throw
-	// a
-	// JavaScript execution error, thus an injection issue is
-	// occurring.
-	// However, it may not be exploitable. Manual verification is needed to
-	// see
-	// if the test string modifications can be evaded and confirm that the
-	// issue
-	// is in fact an XSS vulnerability. For detailed explanations on XSS,
-	// see
+	// JavaScript breakage. In some circumstances, the application under
+	// test might modify the test string before it is parsed by the browser.
+	// When the browser attempts to runs this modified test string, it will
+	// likely break and throw a JavaScript execution error, thus an
+	// injection issue is occurring. However, it may not be exploitable.
+	// Manual verification is needed to see if the test string modifications
+	// can be evaded and confirm that the issue is in fact an XSS
+	// vulnerability. For detailed explanations on XSS, see
 	// https://www.google.com/about/appsecurity/learning/xss/.
 	//   "CLEAR_TEXT_PASSWORD" - An application appears to be transmitting a
-	// password field in clear text.
-	// An attacker can eavesdrop network traffic and sniff the password
-	// field.
+	// password field in clear text. An attacker can eavesdrop network
+	// traffic and sniff the password field.
 	//   "INVALID_CONTENT_TYPE" - An application returns sensitive content
-	// with an invalid content type,
-	// or without an 'X-Content-Type-Options: nosniff' header.
+	// with an invalid content type, or without an 'X-Content-Type-Options:
+	// nosniff' header.
 	//   "XSS_ANGULAR_CALLBACK" - A cross-site scripting (XSS) vulnerability
-	// in AngularJS module that
-	// occurs when a user-provided string is interpolated by Angular.
+	// in AngularJS module that occurs when a user-provided string is
+	// interpolated by Angular.
 	//   "INVALID_HEADER" - A malformed or invalid valued header.
 	//   "MISSPELLED_SECURITY_HEADER_NAME" - Misspelled security header
 	// name.
@@ -568,10 +514,10 @@ type FindingTypeStats struct {
 
 	// ForceSendFields is a list of field names (e.g. "FindingCount") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "FindingCount") to include
@@ -593,8 +539,8 @@ func (s *FindingTypeStats) MarshalJSON() ([]byte, error) {
 // Google account.
 type GoogleAccount struct {
 	// Password: Required. Input only. The password of the Google account.
-	// The credential is stored encrypted
-	// and not returned in any response nor included in audit logs.
+	// The credential is stored encrypted and not returned in any response
+	// nor included in audit logs.
 	Password string `json:"password,omitempty"`
 
 	// Username: Required. The user name of the Google account.
@@ -602,10 +548,10 @@ type GoogleAccount struct {
 
 	// ForceSendFields is a list of field names (e.g. "Password") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Password") to include in
@@ -633,10 +579,10 @@ type Header struct {
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Name") to include in API
@@ -660,8 +606,7 @@ type ListCrawledUrlsResponse struct {
 	CrawledUrls []*CrawledUrl `json:"crawledUrls,omitempty"`
 
 	// NextPageToken: Token to retrieve the next page of results, or empty
-	// if there are no
-	// more results in the list.
+	// if there are no more results in the list.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -670,10 +615,10 @@ type ListCrawledUrlsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "CrawledUrls") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CrawledUrls") to include
@@ -703,10 +648,10 @@ type ListFindingTypeStatsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "FindingTypeStats") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "FindingTypeStats") to
@@ -731,8 +676,7 @@ type ListFindingsResponse struct {
 	Findings []*Finding `json:"findings,omitempty"`
 
 	// NextPageToken: Token to retrieve the next page of results, or empty
-	// if there are no
-	// more results in the list.
+	// if there are no more results in the list.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -741,10 +685,10 @@ type ListFindingsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Findings") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Findings") to include in
@@ -765,8 +709,7 @@ func (s *ListFindingsResponse) MarshalJSON() ([]byte, error) {
 // ListScanConfigsResponse: Response for the `ListScanConfigs` method.
 type ListScanConfigsResponse struct {
 	// NextPageToken: Token to retrieve the next page of results, or empty
-	// if there are no
-	// more results in the list.
+	// if there are no more results in the list.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ScanConfigs: The list of ScanConfigs returned.
@@ -778,10 +721,10 @@ type ListScanConfigsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -802,8 +745,7 @@ func (s *ListScanConfigsResponse) MarshalJSON() ([]byte, error) {
 // ListScanRunsResponse: Response for the `ListScanRuns` method.
 type ListScanRunsResponse struct {
 	// NextPageToken: Token to retrieve the next page of results, or empty
-	// if there are no
-	// more results in the list.
+	// if there are no more results in the list.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ScanRuns: The list of ScanRuns returned.
@@ -815,10 +757,10 @@ type ListScanRunsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -850,10 +792,10 @@ type OutdatedLibrary struct {
 
 	// ForceSendFields is a list of field names (e.g. "LearnMoreUrls") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "LearnMoreUrls") to include
@@ -872,17 +814,14 @@ func (s *OutdatedLibrary) MarshalJSON() ([]byte, error) {
 }
 
 // ScanConfig: A ScanConfig resource contains the configurations to
-// launch a scan.
-// next id: 12
+// launch a scan. next id: 12
 type ScanConfig struct {
 	// Authentication: The authentication configuration. If specified,
-	// service will use the
-	// authentication configuration during scanning.
+	// service will use the authentication configuration during scanning.
 	Authentication *Authentication `json:"authentication,omitempty"`
 
-	// BlacklistPatterns: The blacklist URL patterns as described
-	// in
-	// https://cloud.google.com/security-scanner/docs/excluded-urls
+	// BlacklistPatterns: The excluded URL patterns as described in
+	// https://cloud.google.com/security-command-center/docs/how-to-use-web-security-scanner#excluding_urls
 	BlacklistPatterns []string `json:"blacklistPatterns,omitempty"`
 
 	// DisplayName: Required. The user provided display name of the
@@ -893,19 +832,14 @@ type ScanConfig struct {
 	LatestRun *ScanRun `json:"latestRun,omitempty"`
 
 	// MaxQps: The maximum QPS during scanning. A valid value ranges from 5
-	// to 20
-	// inclusively. If the field is unspecified or its value is set 0,
-	// server will
-	// default to 15. Other values outside of [5, 20] range will be rejected
-	// with
-	// INVALID_ARGUMENT error.
+	// to 20 inclusively. If the field is unspecified or its value is set 0,
+	// server will default to 15. Other values outside of [5, 20] range will
+	// be rejected with INVALID_ARGUMENT error.
 	MaxQps int64 `json:"maxQps,omitempty"`
 
 	// Name: The resource name of the ScanConfig. The name follows the
-	// format of
-	// 'projects/{projectId}/scanConfigs/{scanConfigId}'. The ScanConfig IDs
-	// are
-	// generated by the system.
+	// format of 'projects/{projectId}/scanConfigs/{scanConfigId}'. The
+	// ScanConfig IDs are generated by the system.
 	Name string `json:"name,omitempty"`
 
 	// Schedule: The schedule of the ScanConfig.
@@ -915,16 +849,17 @@ type ScanConfig struct {
 	// finds site pages.
 	StartingUrls []string `json:"startingUrls,omitempty"`
 
-	// TargetPlatforms: Set of Cloud Platforms targeted by the scan. If
-	// empty, APP_ENGINE will be
-	// used as a default.
+	// TargetPlatforms: Set of Google Cloud platforms targeted by the scan.
+	// If empty, APP_ENGINE will be used as a default.
 	//
 	// Possible values:
 	//   "TARGET_PLATFORM_UNSPECIFIED" - The target platform is unknown.
-	// Requests with this enum value will be
-	// rejected with INVALID_ARGUMENT error.
+	// Requests with this enum value will be rejected with INVALID_ARGUMENT
+	// error.
 	//   "APP_ENGINE" - Google App Engine service.
 	//   "COMPUTE" - Google Compute Engine service.
+	//   "CLOUD_RUN" - Google Cloud Run service.
+	//   "CLOUD_FUNCTIONS" - Google Cloud Function service.
 	TargetPlatforms []string `json:"targetPlatforms,omitempty"`
 
 	// UserAgent: The user agent used during scanning.
@@ -944,10 +879,10 @@ type ScanConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "Authentication") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Authentication") to
@@ -970,16 +905,14 @@ func (s *ScanConfig) MarshalJSON() ([]byte, error) {
 // run of the scan.
 type ScanRun struct {
 	// EndTime: The time at which the ScanRun reached termination state -
-	// that the ScanRun
-	// is either finished or stopped by user.
+	// that the ScanRun is either finished or stopped by user.
 	EndTime string `json:"endTime,omitempty"`
 
 	// ExecutionState: The execution state of the ScanRun.
 	//
 	// Possible values:
 	//   "EXECUTION_STATE_UNSPECIFIED" - Represents an invalid state caused
-	// by internal server error. This value
-	// should never be returned.
+	// by internal server error. This value should never be returned.
 	//   "QUEUED" - The scan is waiting in the queue.
 	//   "SCANNING" - The scan is in progress.
 	//   "FINISHED" - The scan is either finished or stopped by user.
@@ -991,26 +924,22 @@ type ScanRun struct {
 
 	// Name: The resource name of the ScanRun. The name follows the format
 	// of
-	// 'projects/{projectId}/scanConfigs/{scanConfigId}/scanRuns/{scanRunI
-	// d}'.
-	// The ScanRun IDs are generated by the system.
+	// 'projects/{projectId}/scanConfigs/{scanConfigId}/scanRuns/{scanRunId}'
+	// . The ScanRun IDs are generated by the system.
 	Name string `json:"name,omitempty"`
 
 	// ProgressPercent: The percentage of total completion ranging from 0 to
+	// 100. If the scan is in queue, the value is 0. If the scan is running,
+	// the value ranges from 0 to 100. If the scan is finished, the value is
 	// 100.
-	// If the scan is in queue, the value is 0.
-	// If the scan is running, the value ranges from 0 to 100.
-	// If the scan is finished, the value is 100.
 	ProgressPercent int64 `json:"progressPercent,omitempty"`
 
 	// ResultState: The result state of the ScanRun. This field is only
-	// available after the
-	// execution state reaches "FINISHED".
+	// available after the execution state reaches "FINISHED".
 	//
 	// Possible values:
 	//   "RESULT_STATE_UNSPECIFIED" - Default value. This value is returned
-	// when the ScanRun is not yet
-	// finished.
+	// when the ScanRun is not yet finished.
 	//   "SUCCESS" - The scan finished without errors.
 	//   "ERROR" - The scan finished with errors.
 	//   "KILLED" - The scan was terminated by user.
@@ -1020,17 +949,15 @@ type ScanRun struct {
 	StartTime string `json:"startTime,omitempty"`
 
 	// UrlsCrawledCount: The number of URLs crawled during this ScanRun. If
-	// the scan is in progress,
-	// the value represents the number of URLs crawled up to now.
+	// the scan is in progress, the value represents the number of URLs
+	// crawled up to now.
 	UrlsCrawledCount int64 `json:"urlsCrawledCount,omitempty,string"`
 
 	// UrlsTestedCount: The number of URLs tested during this ScanRun. If
-	// the scan is in progress,
-	// the value represents the number of URLs tested up to now. The number
-	// of
-	// URLs tested is usually larger than the number URLS crawled
-	// because
-	// typically a crawled URL is tested with multiple test payloads.
+	// the scan is in progress, the value represents the number of URLs
+	// tested up to now. The number of URLs tested is usually larger than
+	// the number URLS crawled because typically a crawled URL is tested
+	// with multiple test payloads.
 	UrlsTestedCount int64 `json:"urlsTestedCount,omitempty,string"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1039,10 +966,10 @@ type ScanRun struct {
 
 	// ForceSendFields is a list of field names (e.g. "EndTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "EndTime") to include in
@@ -1067,18 +994,15 @@ type Schedule struct {
 	IntervalDurationDays int64 `json:"intervalDurationDays,omitempty"`
 
 	// ScheduleTime: A timestamp indicates when the next run will be
-	// scheduled. The value is
-	// refreshed by the server after each run. If unspecified, it will
-	// default
-	// to current server time, which means the scan will be scheduled to
-	// start
-	// immediately.
+	// scheduled. The value is refreshed by the server after each run. If
+	// unspecified, it will default to current server time, which means the
+	// scan will be scheduled to start immediately.
 	ScheduleTime string `json:"scheduleTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "IntervalDurationDays") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -1109,8 +1033,7 @@ type StopScanRunRequest struct {
 }
 
 // ViolatingResource: Information regarding any resource causing the
-// vulnerability such
-// as JavaScript sources, image, audio files, etc.
+// vulnerability such as JavaScript sources, image, audio files, etc.
 type ViolatingResource struct {
 	// ContentType: The MIME type of this resource.
 	ContentType string `json:"contentType,omitempty"`
@@ -1120,10 +1043,10 @@ type ViolatingResource struct {
 
 	// ForceSendFields is a list of field names (e.g. "ContentType") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ContentType") to include
@@ -1152,10 +1075,10 @@ type VulnerableHeaders struct {
 
 	// ForceSendFields is a list of field names (e.g. "Headers") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Headers") to include in
@@ -1181,10 +1104,10 @@ type VulnerableParameters struct {
 
 	// ForceSendFields is a list of field names (e.g. "ParameterNames") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ParameterNames") to
@@ -1214,10 +1137,10 @@ type Xss struct {
 
 	// ForceSendFields is a list of field names (e.g. "ErrorMessage") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ErrorMessage") to include
@@ -1247,6 +1170,10 @@ type ProjectsScanConfigsCreateCall struct {
 }
 
 // Create: Creates a new ScanConfig.
+//
+//   - parent: The parent resource name where the scan is created, which
+//     should be a project resource name in the format
+//     'projects/{projectId}'.
 func (r *ProjectsScanConfigsService) Create(parent string, scanconfig *ScanConfig) *ProjectsScanConfigsCreateCall {
 	c := &ProjectsScanConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1281,7 +1208,7 @@ func (c *ProjectsScanConfigsCreateCall) Header() http.Header {
 
 func (c *ProjectsScanConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1321,17 +1248,17 @@ func (c *ProjectsScanConfigsCreateCall) Do(opts ...googleapi.CallOption) (*ScanC
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ScanConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -1354,7 +1281,7 @@ func (c *ProjectsScanConfigsCreateCall) Do(opts ...googleapi.CallOption) (*ScanC
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The parent resource name where the scan is created, which should be a\nproject resource name in the format 'projects/{projectId}'.",
+	//       "description": "Required. The parent resource name where the scan is created, which should be a project resource name in the format 'projects/{projectId}'.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -1386,6 +1313,10 @@ type ProjectsScanConfigsDeleteCall struct {
 }
 
 // Delete: Deletes an existing ScanConfig and its child resources.
+//
+//   - name: The resource name of the ScanConfig to be deleted. The name
+//     follows the format of
+//     'projects/{projectId}/scanConfigs/{scanConfigId}'.
 func (r *ProjectsScanConfigsService) Delete(name string) *ProjectsScanConfigsDeleteCall {
 	c := &ProjectsScanConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1419,7 +1350,7 @@ func (c *ProjectsScanConfigsDeleteCall) Header() http.Header {
 
 func (c *ProjectsScanConfigsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1454,17 +1385,17 @@ func (c *ProjectsScanConfigsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -1487,7 +1418,7 @@ func (c *ProjectsScanConfigsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the ScanConfig to be deleted. The name follows the\nformat of 'projects/{projectId}/scanConfigs/{scanConfigId}'.",
+	//       "description": "Required. The resource name of the ScanConfig to be deleted. The name follows the format of 'projects/{projectId}/scanConfigs/{scanConfigId}'.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/scanConfigs/[^/]+$",
 	//       "required": true,
@@ -1517,6 +1448,10 @@ type ProjectsScanConfigsGetCall struct {
 }
 
 // Get: Gets a ScanConfig.
+//
+//   - name: The resource name of the ScanConfig to be returned. The name
+//     follows the format of
+//     'projects/{projectId}/scanConfigs/{scanConfigId}'.
 func (r *ProjectsScanConfigsService) Get(name string) *ProjectsScanConfigsGetCall {
 	c := &ProjectsScanConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1560,7 +1495,7 @@ func (c *ProjectsScanConfigsGetCall) Header() http.Header {
 
 func (c *ProjectsScanConfigsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1598,17 +1533,17 @@ func (c *ProjectsScanConfigsGetCall) Do(opts ...googleapi.CallOption) (*ScanConf
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ScanConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -1631,7 +1566,7 @@ func (c *ProjectsScanConfigsGetCall) Do(opts ...googleapi.CallOption) (*ScanConf
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the ScanConfig to be returned. The name follows the\nformat of 'projects/{projectId}/scanConfigs/{scanConfigId}'.",
+	//       "description": "Required. The resource name of the ScanConfig to be returned. The name follows the format of 'projects/{projectId}/scanConfigs/{scanConfigId}'.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/scanConfigs/[^/]+$",
 	//       "required": true,
@@ -1661,6 +1596,9 @@ type ProjectsScanConfigsListCall struct {
 }
 
 // List: Lists ScanConfigs under a given project.
+//
+//   - parent: The parent resource name, which should be a project
+//     resource name in the format 'projects/{projectId}'.
 func (r *ProjectsScanConfigsService) List(parent string) *ProjectsScanConfigsListCall {
 	c := &ProjectsScanConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1668,20 +1606,17 @@ func (r *ProjectsScanConfigsService) List(parent string) *ProjectsScanConfigsLis
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of ScanConfigs to return, can be limited by server.
-// If not specified or not positive, the implementation will select
-// a
-// reasonable value.
+// of ScanConfigs to return, can be limited by server. If not specified
+// or not positive, the implementation will select a reasonable value.
 func (c *ProjectsScanConfigsListCall) PageSize(pageSize int64) *ProjectsScanConfigsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results to be returned. This should be
-// a
-// `next_page_token` value returned from a previous List request.
-// If unspecified, the first page of results is returned.
+// identifying a page of results to be returned. This should be a
+// `next_page_token` value returned from a previous List request. If
+// unspecified, the first page of results is returned.
 func (c *ProjectsScanConfigsListCall) PageToken(pageToken string) *ProjectsScanConfigsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -1724,7 +1659,7 @@ func (c *ProjectsScanConfigsListCall) Header() http.Header {
 
 func (c *ProjectsScanConfigsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1762,17 +1697,17 @@ func (c *ProjectsScanConfigsListCall) Do(opts ...googleapi.CallOption) (*ListSca
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListScanConfigsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1795,18 +1730,18 @@ func (c *ProjectsScanConfigsListCall) Do(opts ...googleapi.CallOption) (*ListSca
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "The maximum number of ScanConfigs to return, can be limited by server.\nIf not specified or not positive, the implementation will select a\nreasonable value.",
+	//       "description": "The maximum number of ScanConfigs to return, can be limited by server. If not specified or not positive, the implementation will select a reasonable value.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token identifying a page of results to be returned. This should be a\n`next_page_token` value returned from a previous List request.\nIf unspecified, the first page of results is returned.",
+	//       "description": "A token identifying a page of results to be returned. This should be a `next_page_token` value returned from a previous List request. If unspecified, the first page of results is returned.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent resource name, which should be a project resource name in the\nformat 'projects/{projectId}'.",
+	//       "description": "Required. The parent resource name, which should be a project resource name in the format 'projects/{projectId}'.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -1858,6 +1793,10 @@ type ProjectsScanConfigsPatchCall struct {
 
 // Patch: Updates a ScanConfig. This method support partial update of a
 // ScanConfig.
+//
+//   - name: The resource name of the ScanConfig. The name follows the
+//     format of 'projects/{projectId}/scanConfigs/{scanConfigId}'. The
+//     ScanConfig IDs are generated by the system.
 func (r *ProjectsScanConfigsService) Patch(name string, scanconfig *ScanConfig) *ProjectsScanConfigsPatchCall {
 	c := &ProjectsScanConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1866,11 +1805,9 @@ func (r *ProjectsScanConfigsService) Patch(name string, scanconfig *ScanConfig) 
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. The
-// update mask applies to the resource. For the `FieldMask`
-// definition,
+// update mask applies to the resource. For the `FieldMask` definition,
 // see
-// https://developers.google.com/protocol-buffers/docs/re
-// ference/google.protobuf#fieldmask
+// https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
 func (c *ProjectsScanConfigsPatchCall) UpdateMask(updateMask string) *ProjectsScanConfigsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -1903,7 +1840,7 @@ func (c *ProjectsScanConfigsPatchCall) Header() http.Header {
 
 func (c *ProjectsScanConfigsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1943,17 +1880,17 @@ func (c *ProjectsScanConfigsPatchCall) Do(opts ...googleapi.CallOption) (*ScanCo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ScanConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -1976,14 +1913,14 @@ func (c *ProjectsScanConfigsPatchCall) Do(opts ...googleapi.CallOption) (*ScanCo
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the ScanConfig. The name follows the format of\n'projects/{projectId}/scanConfigs/{scanConfigId}'. The ScanConfig IDs are\ngenerated by the system.",
+	//       "description": "The resource name of the ScanConfig. The name follows the format of 'projects/{projectId}/scanConfigs/{scanConfigId}'. The ScanConfig IDs are generated by the system.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/scanConfigs/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. The update mask applies to the resource. For the `FieldMask` definition,\nsee\nhttps://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask",
+	//       "description": "Required. The update mask applies to the resource. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -2015,6 +1952,10 @@ type ProjectsScanConfigsStartCall struct {
 }
 
 // Start: Start a ScanRun according to the given ScanConfig.
+//
+//   - name: The resource name of the ScanConfig to be used. The name
+//     follows the format of
+//     'projects/{projectId}/scanConfigs/{scanConfigId}'.
 func (r *ProjectsScanConfigsService) Start(name string, startscanrunrequest *StartScanRunRequest) *ProjectsScanConfigsStartCall {
 	c := &ProjectsScanConfigsStartCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2049,7 +1990,7 @@ func (c *ProjectsScanConfigsStartCall) Header() http.Header {
 
 func (c *ProjectsScanConfigsStartCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2089,17 +2030,17 @@ func (c *ProjectsScanConfigsStartCall) Do(opts ...googleapi.CallOption) (*ScanRu
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ScanRun{
 		ServerResponse: googleapi.ServerResponse{
@@ -2122,7 +2063,7 @@ func (c *ProjectsScanConfigsStartCall) Do(opts ...googleapi.CallOption) (*ScanRu
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the ScanConfig to be used. The name follows the\nformat of 'projects/{projectId}/scanConfigs/{scanConfigId}'.",
+	//       "description": "Required. The resource name of the ScanConfig to be used. The name follows the format of 'projects/{projectId}/scanConfigs/{scanConfigId}'.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/scanConfigs/[^/]+$",
 	//       "required": true,
@@ -2155,6 +2096,11 @@ type ProjectsScanConfigsScanRunsGetCall struct {
 }
 
 // Get: Gets a ScanRun.
+//
+//   - name: The resource name of the ScanRun to be returned. The name
+//     follows the format of
+//     'projects/{projectId}/scanConfigs/{scanConfigId}/scanRuns/{scanRunId
+//     }'.
 func (r *ProjectsScanConfigsScanRunsService) Get(name string) *ProjectsScanConfigsScanRunsGetCall {
 	c := &ProjectsScanConfigsScanRunsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2198,7 +2144,7 @@ func (c *ProjectsScanConfigsScanRunsGetCall) Header() http.Header {
 
 func (c *ProjectsScanConfigsScanRunsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2236,17 +2182,17 @@ func (c *ProjectsScanConfigsScanRunsGetCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ScanRun{
 		ServerResponse: googleapi.ServerResponse{
@@ -2269,7 +2215,7 @@ func (c *ProjectsScanConfigsScanRunsGetCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the ScanRun to be returned. The name follows the\nformat of\n'projects/{projectId}/scanConfigs/{scanConfigId}/scanRuns/{scanRunId}'.",
+	//       "description": "Required. The resource name of the ScanRun to be returned. The name follows the format of 'projects/{projectId}/scanConfigs/{scanConfigId}/scanRuns/{scanRunId}'.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/scanConfigs/[^/]+/scanRuns/[^/]+$",
 	//       "required": true,
@@ -2299,8 +2245,11 @@ type ProjectsScanConfigsScanRunsListCall struct {
 }
 
 // List: Lists ScanRuns under a given ScanConfig, in descending order of
-// ScanRun
-// stop time.
+// ScanRun stop time.
+//
+//   - parent: The parent resource name, which should be a scan resource
+//     name in the format
+//     'projects/{projectId}/scanConfigs/{scanConfigId}'.
 func (r *ProjectsScanConfigsScanRunsService) List(parent string) *ProjectsScanConfigsScanRunsListCall {
 	c := &ProjectsScanConfigsScanRunsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2308,20 +2257,17 @@ func (r *ProjectsScanConfigsScanRunsService) List(parent string) *ProjectsScanCo
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of ScanRuns to return, can be limited by server.
-// If not specified or not positive, the implementation will select
-// a
-// reasonable value.
+// of ScanRuns to return, can be limited by server. If not specified or
+// not positive, the implementation will select a reasonable value.
 func (c *ProjectsScanConfigsScanRunsListCall) PageSize(pageSize int64) *ProjectsScanConfigsScanRunsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results to be returned. This should be
-// a
-// `next_page_token` value returned from a previous List request.
-// If unspecified, the first page of results is returned.
+// identifying a page of results to be returned. This should be a
+// `next_page_token` value returned from a previous List request. If
+// unspecified, the first page of results is returned.
 func (c *ProjectsScanConfigsScanRunsListCall) PageToken(pageToken string) *ProjectsScanConfigsScanRunsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -2364,7 +2310,7 @@ func (c *ProjectsScanConfigsScanRunsListCall) Header() http.Header {
 
 func (c *ProjectsScanConfigsScanRunsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2402,17 +2348,17 @@ func (c *ProjectsScanConfigsScanRunsListCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListScanRunsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2426,7 +2372,7 @@ func (c *ProjectsScanConfigsScanRunsListCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists ScanRuns under a given ScanConfig, in descending order of ScanRun\nstop time.",
+	//   "description": "Lists ScanRuns under a given ScanConfig, in descending order of ScanRun stop time.",
 	//   "flatPath": "v1alpha/projects/{projectsId}/scanConfigs/{scanConfigsId}/scanRuns",
 	//   "httpMethod": "GET",
 	//   "id": "websecurityscanner.projects.scanConfigs.scanRuns.list",
@@ -2435,18 +2381,18 @@ func (c *ProjectsScanConfigsScanRunsListCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "The maximum number of ScanRuns to return, can be limited by server.\nIf not specified or not positive, the implementation will select a\nreasonable value.",
+	//       "description": "The maximum number of ScanRuns to return, can be limited by server. If not specified or not positive, the implementation will select a reasonable value.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token identifying a page of results to be returned. This should be a\n`next_page_token` value returned from a previous List request.\nIf unspecified, the first page of results is returned.",
+	//       "description": "A token identifying a page of results to be returned. This should be a `next_page_token` value returned from a previous List request. If unspecified, the first page of results is returned.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent resource name, which should be a scan resource name in the\nformat 'projects/{projectId}/scanConfigs/{scanConfigId}'.",
+	//       "description": "Required. The parent resource name, which should be a scan resource name in the format 'projects/{projectId}/scanConfigs/{scanConfigId}'.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/scanConfigs/[^/]+$",
 	//       "required": true,
@@ -2497,6 +2443,11 @@ type ProjectsScanConfigsScanRunsStopCall struct {
 }
 
 // Stop: Stops a ScanRun. The stopped ScanRun is returned.
+//
+//   - name: The resource name of the ScanRun to be stopped. The name
+//     follows the format of
+//     'projects/{projectId}/scanConfigs/{scanConfigId}/scanRuns/{scanRunId
+//     }'.
 func (r *ProjectsScanConfigsScanRunsService) Stop(name string, stopscanrunrequest *StopScanRunRequest) *ProjectsScanConfigsScanRunsStopCall {
 	c := &ProjectsScanConfigsScanRunsStopCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2531,7 +2482,7 @@ func (c *ProjectsScanConfigsScanRunsStopCall) Header() http.Header {
 
 func (c *ProjectsScanConfigsScanRunsStopCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2571,17 +2522,17 @@ func (c *ProjectsScanConfigsScanRunsStopCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ScanRun{
 		ServerResponse: googleapi.ServerResponse{
@@ -2604,7 +2555,7 @@ func (c *ProjectsScanConfigsScanRunsStopCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the ScanRun to be stopped. The name follows the\nformat of\n'projects/{projectId}/scanConfigs/{scanConfigId}/scanRuns/{scanRunId}'.",
+	//       "description": "Required. The resource name of the ScanRun to be stopped. The name follows the format of 'projects/{projectId}/scanConfigs/{scanConfigId}/scanRuns/{scanRunId}'.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/scanConfigs/[^/]+/scanRuns/[^/]+$",
 	//       "required": true,
@@ -2637,6 +2588,11 @@ type ProjectsScanConfigsScanRunsCrawledUrlsListCall struct {
 }
 
 // List: List CrawledUrls under a given ScanRun.
+//
+//   - parent: The parent resource name, which should be a scan run
+//     resource name in the format
+//     'projects/{projectId}/scanConfigs/{scanConfigId}/scanRuns/{scanRunId
+//     }'.
 func (r *ProjectsScanConfigsScanRunsCrawledUrlsService) List(parent string) *ProjectsScanConfigsScanRunsCrawledUrlsListCall {
 	c := &ProjectsScanConfigsScanRunsCrawledUrlsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2644,20 +2600,17 @@ func (r *ProjectsScanConfigsScanRunsCrawledUrlsService) List(parent string) *Pro
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of CrawledUrls to return, can be limited by server.
-// If not specified or not positive, the implementation will select
-// a
-// reasonable value.
+// of CrawledUrls to return, can be limited by server. If not specified
+// or not positive, the implementation will select a reasonable value.
 func (c *ProjectsScanConfigsScanRunsCrawledUrlsListCall) PageSize(pageSize int64) *ProjectsScanConfigsScanRunsCrawledUrlsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results to be returned. This should be
-// a
-// `next_page_token` value returned from a previous List request.
-// If unspecified, the first page of results is returned.
+// identifying a page of results to be returned. This should be a
+// `next_page_token` value returned from a previous List request. If
+// unspecified, the first page of results is returned.
 func (c *ProjectsScanConfigsScanRunsCrawledUrlsListCall) PageToken(pageToken string) *ProjectsScanConfigsScanRunsCrawledUrlsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -2700,7 +2653,7 @@ func (c *ProjectsScanConfigsScanRunsCrawledUrlsListCall) Header() http.Header {
 
 func (c *ProjectsScanConfigsScanRunsCrawledUrlsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2738,17 +2691,17 @@ func (c *ProjectsScanConfigsScanRunsCrawledUrlsListCall) Do(opts ...googleapi.Ca
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListCrawledUrlsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2771,18 +2724,18 @@ func (c *ProjectsScanConfigsScanRunsCrawledUrlsListCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "The maximum number of CrawledUrls to return, can be limited by server.\nIf not specified or not positive, the implementation will select a\nreasonable value.",
+	//       "description": "The maximum number of CrawledUrls to return, can be limited by server. If not specified or not positive, the implementation will select a reasonable value.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token identifying a page of results to be returned. This should be a\n`next_page_token` value returned from a previous List request.\nIf unspecified, the first page of results is returned.",
+	//       "description": "A token identifying a page of results to be returned. This should be a `next_page_token` value returned from a previous List request. If unspecified, the first page of results is returned.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent resource name, which should be a scan run resource name in the\nformat\n'projects/{projectId}/scanConfigs/{scanConfigId}/scanRuns/{scanRunId}'.",
+	//       "description": "Required. The parent resource name, which should be a scan run resource name in the format 'projects/{projectId}/scanConfigs/{scanConfigId}/scanRuns/{scanRunId}'.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/scanConfigs/[^/]+/scanRuns/[^/]+$",
 	//       "required": true,
@@ -2833,6 +2786,11 @@ type ProjectsScanConfigsScanRunsFindingTypeStatsListCall struct {
 }
 
 // List: List all FindingTypeStats under a given ScanRun.
+//
+//   - parent: The parent resource name, which should be a scan run
+//     resource name in the format
+//     'projects/{projectId}/scanConfigs/{scanConfigId}/scanRuns/{scanRunId
+//     }'.
 func (r *ProjectsScanConfigsScanRunsFindingTypeStatsService) List(parent string) *ProjectsScanConfigsScanRunsFindingTypeStatsListCall {
 	c := &ProjectsScanConfigsScanRunsFindingTypeStatsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2876,7 +2834,7 @@ func (c *ProjectsScanConfigsScanRunsFindingTypeStatsListCall) Header() http.Head
 
 func (c *ProjectsScanConfigsScanRunsFindingTypeStatsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2914,17 +2872,17 @@ func (c *ProjectsScanConfigsScanRunsFindingTypeStatsListCall) Do(opts ...googlea
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListFindingTypeStatsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2947,7 +2905,7 @@ func (c *ProjectsScanConfigsScanRunsFindingTypeStatsListCall) Do(opts ...googlea
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The parent resource name, which should be a scan run resource name in the\nformat\n'projects/{projectId}/scanConfigs/{scanConfigId}/scanRuns/{scanRunId}'.",
+	//       "description": "Required. The parent resource name, which should be a scan run resource name in the format 'projects/{projectId}/scanConfigs/{scanConfigId}/scanRuns/{scanRunId}'.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/scanConfigs/[^/]+/scanRuns/[^/]+$",
 	//       "required": true,
@@ -2977,6 +2935,11 @@ type ProjectsScanConfigsScanRunsFindingsGetCall struct {
 }
 
 // Get: Gets a Finding.
+//
+//   - name: The resource name of the Finding to be returned. The name
+//     follows the format of
+//     'projects/{projectId}/scanConfigs/{scanConfigId}/scanRuns/{scanRunId
+//     }/findings/{findingId}'.
 func (r *ProjectsScanConfigsScanRunsFindingsService) Get(name string) *ProjectsScanConfigsScanRunsFindingsGetCall {
 	c := &ProjectsScanConfigsScanRunsFindingsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3020,7 +2983,7 @@ func (c *ProjectsScanConfigsScanRunsFindingsGetCall) Header() http.Header {
 
 func (c *ProjectsScanConfigsScanRunsFindingsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3058,17 +3021,17 @@ func (c *ProjectsScanConfigsScanRunsFindingsGetCall) Do(opts ...googleapi.CallOp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Finding{
 		ServerResponse: googleapi.ServerResponse{
@@ -3091,7 +3054,7 @@ func (c *ProjectsScanConfigsScanRunsFindingsGetCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the Finding to be returned. The name follows the\nformat of\n'projects/{projectId}/scanConfigs/{scanConfigId}/scanRuns/{scanRunId}/findings/{findingId}'.",
+	//       "description": "Required. The resource name of the Finding to be returned. The name follows the format of 'projects/{projectId}/scanConfigs/{scanConfigId}/scanRuns/{scanRunId}/findings/{findingId}'.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/scanConfigs/[^/]+/scanRuns/[^/]+/findings/[^/]+$",
 	//       "required": true,
@@ -3121,6 +3084,11 @@ type ProjectsScanConfigsScanRunsFindingsListCall struct {
 }
 
 // List: List Findings under a given ScanRun.
+//
+//   - parent: The parent resource name, which should be a scan run
+//     resource name in the format
+//     'projects/{projectId}/scanConfigs/{scanConfigId}/scanRuns/{scanRunId
+//     }'.
 func (r *ProjectsScanConfigsScanRunsFindingsService) List(parent string) *ProjectsScanConfigsScanRunsFindingsListCall {
 	c := &ProjectsScanConfigsScanRunsFindingsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3128,30 +3096,25 @@ func (r *ProjectsScanConfigsScanRunsFindingsService) List(parent string) *Projec
 }
 
 // Filter sets the optional parameter "filter": Required. The filter
-// expression. The expression must be in the format: <field>
-// <operator> <value>.
-// Supported field: 'finding_type'.
-// Supported operator: '='.
+// expression. The expression must be in the format: . Supported field:
+// 'finding_type'. Supported operator: '='.
 func (c *ProjectsScanConfigsScanRunsFindingsListCall) Filter(filter string) *ProjectsScanConfigsScanRunsFindingsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of Findings to return, can be limited by server.
-// If not specified or not positive, the implementation will select
-// a
-// reasonable value.
+// of Findings to return, can be limited by server. If not specified or
+// not positive, the implementation will select a reasonable value.
 func (c *ProjectsScanConfigsScanRunsFindingsListCall) PageSize(pageSize int64) *ProjectsScanConfigsScanRunsFindingsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results to be returned. This should be
-// a
-// `next_page_token` value returned from a previous List request.
-// If unspecified, the first page of results is returned.
+// identifying a page of results to be returned. This should be a
+// `next_page_token` value returned from a previous List request. If
+// unspecified, the first page of results is returned.
 func (c *ProjectsScanConfigsScanRunsFindingsListCall) PageToken(pageToken string) *ProjectsScanConfigsScanRunsFindingsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -3194,7 +3157,7 @@ func (c *ProjectsScanConfigsScanRunsFindingsListCall) Header() http.Header {
 
 func (c *ProjectsScanConfigsScanRunsFindingsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3232,17 +3195,17 @@ func (c *ProjectsScanConfigsScanRunsFindingsListCall) Do(opts ...googleapi.CallO
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListFindingsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3265,23 +3228,23 @@ func (c *ProjectsScanConfigsScanRunsFindingsListCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Required. The filter expression. The expression must be in the format: \u003cfield\u003e\n\u003coperator\u003e \u003cvalue\u003e.\nSupported field: 'finding_type'.\nSupported operator: '='.",
+	//       "description": "Required. The filter expression. The expression must be in the format: . Supported field: 'finding_type'. Supported operator: '='.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The maximum number of Findings to return, can be limited by server.\nIf not specified or not positive, the implementation will select a\nreasonable value.",
+	//       "description": "The maximum number of Findings to return, can be limited by server. If not specified or not positive, the implementation will select a reasonable value.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token identifying a page of results to be returned. This should be a\n`next_page_token` value returned from a previous List request.\nIf unspecified, the first page of results is returned.",
+	//       "description": "A token identifying a page of results to be returned. This should be a `next_page_token` value returned from a previous List request. If unspecified, the first page of results is returned.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent resource name, which should be a scan run resource name in the\nformat\n'projects/{projectId}/scanConfigs/{scanConfigId}/scanRuns/{scanRunId}'.",
+	//       "description": "Required. The parent resource name, which should be a scan run resource name in the format 'projects/{projectId}/scanConfigs/{scanConfigId}/scanRuns/{scanRunId}'.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/scanConfigs/[^/]+/scanRuns/[^/]+$",
 	//       "required": true,

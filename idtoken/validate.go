@@ -17,7 +17,10 @@ import (
 	"math/big"
 	"net/http"
 	"strings"
+	"time"
 
+	"google.golang.org/api/option"
+	"google.golang.org/api/option/internaloption"
 	htransport "google.golang.org/api/transport/http"
 )
 
@@ -27,7 +30,18 @@ const (
 	googleSACertsURL  string = "https://www.googleapis.com/oauth2/v3/certs"
 )
 
-var defaultValidator = &Validator{client: newCachingClient(http.DefaultClient)}
+var (
+	defaultValidator = &Validator{client: newCachingClient(http.DefaultClient)}
+	// now aliases time.Now for testing.
+	now = time.Now
+)
+
+func defaultValidatorOpts() []ClientOption {
+	return []ClientOption{
+		internaloption.WithDefaultScopes("https://www.googleapis.com/auth/cloud-platform"),
+		option.WithoutAuthentication(),
+	}
+}
 
 // Payload represents a decoded payload of an ID Token.
 type Payload struct {
@@ -83,6 +97,7 @@ type Validator struct {
 // NewValidator creates a Validator that uses the options provided to configure
 // a the internal http.Client that will be used to make requests to fetch JWKs.
 func NewValidator(ctx context.Context, opts ...ClientOption) (*Validator, error) {
+	opts = append(defaultValidatorOpts(), opts...)
 	client, _, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -127,6 +142,10 @@ func (v *Validator) validate(ctx context.Context, idToken string, audience strin
 
 	if audience != "" && payload.Audience != audience {
 		return nil, fmt.Errorf("idtoken: audience provided does not match aud claim in the JWT")
+	}
+
+	if now().Unix() > payload.Expires {
+		return nil, fmt.Errorf("idtoken: token expired")
 	}
 
 	switch header.Algorithm {
@@ -273,9 +292,11 @@ func (j *jwt) parsedPayload() (*Payload, error) {
 	if err != nil {
 		return nil, err
 	}
-	err = json.Unmarshal(dp, &p)
-	if err != nil {
+	if err := json.Unmarshal(dp, &p); err != nil {
 		return nil, fmt.Errorf("idtoken: unable to unmarshal JWT payload: %v", err)
+	}
+	if err := json.Unmarshal(dp, &p.Claims); err != nil {
+		return nil, fmt.Errorf("idtoken: unable to unmarshal JWT payload claims: %v", err)
 	}
 	return &p, nil
 }

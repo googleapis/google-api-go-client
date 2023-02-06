@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://developers.google.com/digital-asset-links/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/digitalassetlinks/v1"
-//   ...
-//   ctx := context.Background()
-//   digitalassetlinksService, err := digitalassetlinks.NewService(ctx)
+//	import "google.golang.org/api/digitalassetlinks/v1"
+//	...
+//	ctx := context.Background()
+//	digitalassetlinksService, err := digitalassetlinks.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   digitalassetlinksService, err := digitalassetlinks.NewService(ctx, option.WithAPIKey("AIza..."))
+//	digitalassetlinksService, err := digitalassetlinks.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   digitalassetlinksService, err := digitalassetlinks.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	digitalassetlinksService, err := digitalassetlinks.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package digitalassetlinks // import "google.golang.org/api/digitalassetlinks/v1"
@@ -50,6 +50,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -75,10 +76,12 @@ const apiId = "digitalassetlinks:v1"
 const apiName = "digitalassetlinks"
 const apiVersion = "v1"
 const basePath = "https://digitalassetlinks.googleapis.com/"
+const mtlsBasePath = "https://digitalassetlinks.mtls.googleapis.com/"
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -146,45 +149,30 @@ type StatementsService struct {
 // AndroidAppAsset: Describes an android app asset.
 type AndroidAppAsset struct {
 	// Certificate: Because there is no global enforcement of package name
-	// uniqueness, we also
-	// require a signing certificate, which in combination with the package
-	// name
-	// uniquely identifies an app.
-	//
-	// Some apps' signing keys are rotated, so they may be signed by
-	// different
-	// keys over time.  We treat these as distinct assets, since we use
-	// (package
-	// name, cert) as the unique ID.  This should not normally pose any
-	// problems
-	// as both versions of the app will make the same or similar
-	// statements.
-	// Other assets making statements about the app will have to be updated
-	// when a
-	// key is rotated, however.
-	//
-	// (Note that the syntaxes for publishing and querying for statements
-	// contain
-	// syntactic sugar to easily let you specify apps that are known by
-	// multiple
-	// certificates.)
-	// REQUIRED
+	// uniqueness, we also require a signing certificate, which in
+	// combination with the package name uniquely identifies an app. Some
+	// apps' signing keys are rotated, so they may be signed by different
+	// keys over time. We treat these as distinct assets, since we use
+	// (package name, cert) as the unique ID. This should not normally pose
+	// any problems as both versions of the app will make the same or
+	// similar statements. Other assets making statements about the app will
+	// have to be updated when a key is rotated, however. (Note that the
+	// syntaxes for publishing and querying for statements contain syntactic
+	// sugar to easily let you specify apps that are known by multiple
+	// certificates.) REQUIRED
 	Certificate *CertificateInfo `json:"certificate,omitempty"`
 
 	// PackageName: Android App assets are naturally identified by their
-	// Java package name.
-	// For example, the Google Maps app uses the package
-	// name
-	// `com.google.android.apps.maps`.
-	// REQUIRED
+	// Java package name. For example, the Google Maps app uses the package
+	// name `com.google.android.apps.maps`. REQUIRED
 	PackageName string `json:"packageName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Certificate") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Certificate") to include
@@ -202,13 +190,10 @@ func (s *AndroidAppAsset) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Asset: Uniquely identifies an asset.
-//
-// A digital asset is an identifiable and addressable online entity
-// that
-// typically provides some service or content.  Examples of assets are
-// websites,
-// Android apps, Twitter feeds, and Plus Pages.
+// Asset: Uniquely identifies an asset. A digital asset is an
+// identifiable and addressable online entity that typically provides
+// some service or content. Examples of assets are websites, Android
+// apps, Twitter feeds, and Plus Pages.
 type Asset struct {
 	// AndroidApp: Set if this is an Android App asset.
 	AndroidApp *AndroidAppAsset `json:"androidApp,omitempty"`
@@ -218,10 +203,10 @@ type Asset struct {
 
 	// ForceSendFields is a list of field names (e.g. "AndroidApp") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AndroidApp") to include in
@@ -239,45 +224,143 @@ func (s *Asset) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// BulkCheckRequest: Message used to check for the existence of multiple
+// digital asset links within a single RPC.
+type BulkCheckRequest struct {
+	// AllowGoogleInternalDataSources: Same configuration as in Check
+	// request, all statements checks will use same configurations.
+	AllowGoogleInternalDataSources bool `json:"allowGoogleInternalDataSources,omitempty"`
+
+	// DefaultRelation: If specified, will be used in any given template
+	// statement that doesn’t specify a relation.
+	DefaultRelation string `json:"defaultRelation,omitempty"`
+
+	// DefaultSource: If specified, will be used in any given template
+	// statement that doesn’t specify a source.
+	DefaultSource *Asset `json:"defaultSource,omitempty"`
+
+	// DefaultTarget: If specified, will be used in any given template
+	// statement that doesn’t specify a target.
+	DefaultTarget *Asset `json:"defaultTarget,omitempty"`
+
+	// SkipCacheLookup: Same configuration as in Check request, all
+	// statements checks will use same configurations.
+	SkipCacheLookup bool `json:"skipCacheLookup,omitempty"`
+
+	// Statements: List of statements to check. For each statement, you can
+	// omit a field if the corresponding default_* field below was supplied.
+	// Minimum 1 statement; maximum 1,000 statements. Any additional
+	// statements will be ignored.
+	Statements []*StatementTemplate `json:"statements,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AllowGoogleInternalDataSources") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "AllowGoogleInternalDataSources") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BulkCheckRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod BulkCheckRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BulkCheckResponse: Response for BulkCheck call. Results are sent in a
+// list in the same order in which they were sent. Individual check
+// errors are described in the appropriate check_results entry. If the
+// entire call fails, the response will include a bulk_error_code field
+// describing the error.
+type BulkCheckResponse struct {
+	// BulkErrorCode: Error code for the entire request. Present only if the
+	// entire request failed. Individual check errors will not trigger the
+	// presence of this field.
+	//
+	// Possible values:
+	//   "ERROR_CODE_UNSPECIFIED"
+	//   "ERROR_CODE_INVALID_QUERY" - Unable to parse query.
+	//   "ERROR_CODE_FETCH_ERROR" - Unable to fetch the asset links data.
+	//   "ERROR_CODE_FAILED_SSL_VALIDATION" - Invalid HTTPS certificate .
+	//   "ERROR_CODE_REDIRECT" - HTTP redirects (e.g, 301) are not allowed.
+	//   "ERROR_CODE_TOO_LARGE" - Asset links data exceeds maximum size.
+	//   "ERROR_CODE_MALFORMED_HTTP_RESPONSE" - Can't parse HTTP response.
+	//   "ERROR_CODE_WRONG_CONTENT_TYPE" - HTTP Content-type should be
+	// application/json.
+	//   "ERROR_CODE_MALFORMED_CONTENT" - JSON content is malformed.
+	//   "ERROR_CODE_SECURE_ASSET_INCLUDES_INSECURE" - A secure asset
+	// includes an insecure asset (security downgrade).
+	//   "ERROR_CODE_FETCH_BUDGET_EXHAUSTED" - Too many includes (maybe a
+	// loop).
+	BulkErrorCode string `json:"bulkErrorCode,omitempty"`
+
+	// CheckResults: List of results for each check request. Results are
+	// returned in the same order in which they were sent in the request.
+	CheckResults []*CheckResponse `json:"checkResults,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "BulkErrorCode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BulkErrorCode") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BulkCheckResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod BulkCheckResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // CertificateInfo: Describes an X509 certificate.
 type CertificateInfo struct {
 	// Sha256Fingerprint: The uppercase SHA-265 fingerprint of the
-	// certificate.  From the PEM
-	//  certificate, it can be acquired like this:
-	//
-	//     $ keytool -printcert -file $CERTFILE | grep SHA256:
-	//     SHA256: 14:6D:E9:83:C5:73:06:50:D8:EE:B9:95:2F:34:FC:64:16:A0:83:
-	// \
-	//         42:E6:1D:BE:A8:8A:04:96:B2:3F:CF:44:E5
-	//
-	// or like this:
-	//
-	//     $ openssl x509 -in $CERTFILE -noout -fingerprint -sha256
-	//     SHA256
+	// certificate. From the PEM certificate, it can be acquired like this:
+	// $ keytool -printcert -file $CERTFILE | grep SHA256: SHA256:
+	// 14:6D:E9:83:C5:73:06:50:D8:EE:B9:95:2F:34:FC:64:16:A0:83: \
+	// 42:E6:1D:BE:A8:8A:04:96:B2:3F:CF:44:E5 or like this: $ openssl x509
+	// -in $CERTFILE -noout -fingerprint -sha256 SHA256
 	// Fingerprint=14:6D:E9:83:C5:73:06:50:D8:EE:B9:95:2F:34:FC:64: \
-	//         16:A0:83:42:E6:1D:BE:A8:8A:04:96:B2:3F:CF:44:E5
-	//
-	// In this example, the contents of this field would be
-	// `14:6D:E9:83:C5:73:
-	// 06:50:D8:EE:B9:95:2F:34:FC:64:16:A0:83:42:E6:1D:BE
-	// :A8:8A:04:96:B2:3F:CF:
-	// 44:E5`.
-	//
-	// If these tools are not available to you, you can convert the
-	// PEM
-	// certificate into the DER format, compute the SHA-256 hash of that
-	// string
-	// and represent the result as a hexstring (that is, uppercase
-	// hexadecimal
-	// representations of each octet, separated by colons).
+	// 16:A0:83:42:E6:1D:BE:A8:8A:04:96:B2:3F:CF:44:E5 In this example, the
+	// contents of this field would be `14:6D:E9:83:C5:73:
+	// 06:50:D8:EE:B9:95:2F:34:FC:64:16:A0:83:42:E6:1D:BE:A8:8A:04:96:B2:3F:C
+	// F: 44:E5`. If these tools are not available to you, you can convert
+	// the PEM certificate into the DER format, compute the SHA-256 hash of
+	// that string and represent the result as a hexstring (that is,
+	// uppercase hexadecimal representations of each octet, separated by
+	// colons).
 	Sha256Fingerprint string `json:"sha256Fingerprint,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Sha256Fingerprint")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Sha256Fingerprint") to
@@ -299,21 +382,13 @@ func (s *CertificateInfo) MarshalJSON() ([]byte, error) {
 // CheckResponse: Response message for the CheckAssetLinks call.
 type CheckResponse struct {
 	// DebugString: Human-readable message containing information intended
-	// to help end users
-	// understand, reproduce and debug the result.
-	//
-	//
-	// The message will be in English and we are currently not planning to
-	// offer
-	// any translations.
-	//
-	// Please note that no guarantees are made about the contents or format
-	// of
-	// this string.  Any aspect of it may be subject to change without
-	// notice.
-	// You should not attempt to programmatically parse this data.
-	// For
-	// programmatic access, use the error_code field below.
+	// to help end users understand, reproduce and debug the result. The
+	// message will be in English and we are currently not planning to offer
+	// any translations. Please note that no guarantees are made about the
+	// contents or format of this string. Any aspect of it may be subject to
+	// change without notice. You should not attempt to programmatically
+	// parse this data. For programmatic access, use the error_code field
+	// below.
 	DebugString string `json:"debugString,omitempty"`
 
 	// ErrorCode: Error codes that describe the result of the Check
@@ -337,14 +412,11 @@ type CheckResponse struct {
 	ErrorCode []string `json:"errorCode,omitempty"`
 
 	// Linked: Set to true if the assets specified in the request are linked
-	// by the
-	// relation specified in the request.
+	// by the relation specified in the request.
 	Linked bool `json:"linked,omitempty"`
 
 	// MaxAge: From serving time, how much longer the response should be
-	// considered valid
-	// barring further updates.
-	// REQUIRED
+	// considered valid barring further updates. REQUIRED
 	MaxAge string `json:"maxAge,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -353,10 +425,10 @@ type CheckResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "DebugString") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DebugString") to include
@@ -377,21 +449,13 @@ func (s *CheckResponse) MarshalJSON() ([]byte, error) {
 // ListResponse: Response message for the List call.
 type ListResponse struct {
 	// DebugString: Human-readable message containing information intended
-	// to help end users
-	// understand, reproduce and debug the result.
-	//
-	//
-	// The message will be in English and we are currently not planning to
-	// offer
-	// any translations.
-	//
-	// Please note that no guarantees are made about the contents or format
-	// of
-	// this string.  Any aspect of it may be subject to change without
-	// notice.
-	// You should not attempt to programmatically parse this data.
-	// For
-	// programmatic access, use the error_code field below.
+	// to help end users understand, reproduce and debug the result. The
+	// message will be in English and we are currently not planning to offer
+	// any translations. Please note that no guarantees are made about the
+	// contents or format of this string. Any aspect of it may be subject to
+	// change without notice. You should not attempt to programmatically
+	// parse this data. For programmatic access, use the error_code field
+	// below.
 	DebugString string `json:"debugString,omitempty"`
 
 	// ErrorCode: Error codes that describe the result of the List
@@ -415,9 +479,7 @@ type ListResponse struct {
 	ErrorCode []string `json:"errorCode,omitempty"`
 
 	// MaxAge: From serving time, how much longer the response should be
-	// considered valid
-	// barring further updates.
-	// REQUIRED
+	// considered valid barring further updates. REQUIRED
 	MaxAge string `json:"maxAge,omitempty"`
 
 	// Statements: A list of all the matching statements that have been
@@ -430,10 +492,10 @@ type ListResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "DebugString") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DebugString") to include
@@ -452,55 +514,37 @@ func (s *ListResponse) MarshalJSON() ([]byte, error) {
 }
 
 // Statement: Describes a reliable statement that has been made about
-// the relationship
-// between a source asset and a target asset.
-//
-// Statements are always made by the source asset, either directly or
-// by
-// delegating to a statement list that is stored elsewhere.
-//
-// For more detailed definitions of statements and assets, please
-// refer
-// to our [API documentation
-// landing
-// page](/digital-asset-links/v1/getting-started).
+// the relationship between a source asset and a target asset.
+// Statements are always made by the source asset, either directly or by
+// delegating to a statement list that is stored elsewhere. For more
+// detailed definitions of statements and assets, please refer to our
+// API documentation landing page
+// (/digital-asset-links/v1/getting-started).
 type Statement struct {
 	// Relation: The relation identifies the use of the statement as
-	// intended by the source
-	// asset's owner (that is, the person or entity who issued the
-	// statement).
-	// Every complete statement has a relation.
-	//
-	// We identify relations with strings of the format `<kind>/<detail>`,
-	// where
-	// `<kind>` must be one of a set of pre-defined purpose categories,
-	// and
-	// `<detail>` is a free-form lowercase alphanumeric string that
-	// describes the
-	// specific use case of the statement.
-	//
-	// Refer to [our API
-	// documentation](/digital-asset-links/v1/relation-strings)
-	// for the current list of supported relations.
-	//
-	// Example: `delegate_permission/common.handle_all_urls`
-	// REQUIRED
+	// intended by the source asset's owner (that is, the person or entity
+	// who issued the statement). Every complete statement has a relation.
+	// We identify relations with strings of the format `/`, where `` must
+	// be one of a set of pre-defined purpose categories, and `` is a
+	// free-form lowercase alphanumeric string that describes the specific
+	// use case of the statement. Refer to our API documentation
+	// (/digital-asset-links/v1/relation-strings) for the current list of
+	// supported relations. Example:
+	// `delegate_permission/common.handle_all_urls` REQUIRED
 	Relation string `json:"relation,omitempty"`
 
-	// Source: Every statement has a source asset.
-	// REQUIRED
+	// Source: Every statement has a source asset. REQUIRED
 	Source *Asset `json:"source,omitempty"`
 
-	// Target: Every statement has a target asset.
-	// REQUIRED
+	// Target: Every statement has a target asset. REQUIRED
 	Target *Asset `json:"target,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Relation") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Relation") to include in
@@ -518,55 +562,73 @@ func (s *Statement) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// StatementTemplate: A single statement to check in a bulk call using
+// BulkCheck. See CheckRequest for details about each field.
+type StatementTemplate struct {
+	// Relation: The relationship being asserted between the source and
+	// target. If omitted, you must specify a
+	// BulkCheckRequest.default_relation value to use here.
+	Relation string `json:"relation,omitempty"`
+
+	// Source: The source asset that is asserting the statement. If omitted,
+	// you must specify a BulkCheckRequest.default_source value to use here.
+	Source *Asset `json:"source,omitempty"`
+
+	// Target: The target that the source is declaring the relationship
+	// with. If omitted, you must specify a BulkCheckRequest.default_target
+	// to use here.
+	Target *Asset `json:"target,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Relation") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Relation") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *StatementTemplate) MarshalJSON() ([]byte, error) {
+	type NoMethod StatementTemplate
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // WebAsset: Describes a web asset.
 type WebAsset struct {
 	// Site: Web assets are identified by a URL that contains only the
-	// scheme, hostname
-	// and port parts.  The format is
-	//
-	//     http[s]://<hostname>[:<port>]
-	//
-	// Hostnames must be fully qualified: they must end in a single
-	// period
-	// (".").
-	//
-	// Only the schemes "http" and "https" are currently allowed.
-	//
+	// scheme, hostname and port parts. The format is http[s]://[:]
+	// Hostnames must be fully qualified: they must end in a single period
+	// ("."). Only the schemes "http" and "https" are currently allowed.
 	// Port numbers are given as a decimal number, and they must be omitted
-	// if the
-	// standard port numbers are used: 80 for http and 443 for https.
-	//
-	// We call this limited URL the "site".  All URLs that share the same
-	// scheme,
-	// hostname and port are considered to be a part of the site and thus
-	// belong
-	// to the web asset.
-	//
-	// Example: the asset with the site `https://www.google.com` contains
-	// all
-	// these URLs:
-	//
-	//   *   `https://www.google.com/`
-	//   *   `https://www.google.com:443/`
-	//   *   `https://www.google.com/foo`
-	//   *   `https://www.google.com/foo?bar`
-	//   *   `https://www.google.com/foo#bar`
-	//   *   `https://user@password:www.google.com/`
-	//
-	// But it does not contain these URLs:
-	//
-	//   *   `http://www.google.com/`       (wrong scheme)
-	//   *   `https://google.com/`          (hostname does not match)
-	//   *   `https://www.google.com:444/`  (port does not match)
-	// REQUIRED
+	// if the standard port numbers are used: 80 for http and 443 for https.
+	// We call this limited URL the "site". All URLs that share the same
+	// scheme, hostname and port are considered to be a part of the site and
+	// thus belong to the web asset. Example: the asset with the site
+	// `https://www.google.com` contains all these URLs: *
+	// `https://www.google.com/` * `https://www.google.com:443/` *
+	// `https://www.google.com/foo` * `https://www.google.com/foo?bar` *
+	// `https://www.google.com/foo#bar` *
+	// `https://user@password:www.google.com/` But it does not contain these
+	// URLs: * `http://www.google.com/` (wrong scheme) *
+	// `https://google.com/` (hostname does not match) *
+	// `https://www.google.com:444/` (port does not match) REQUIRED
 	Site string `json:"site,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Site") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Site") to include in API
@@ -584,6 +646,131 @@ func (s *WebAsset) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// method id "digitalassetlinks.assetlinks.bulkCheck":
+
+type AssetlinksBulkCheckCall struct {
+	s                *Service
+	bulkcheckrequest *BulkCheckRequest
+	urlParams_       gensupport.URLParams
+	ctx_             context.Context
+	header_          http.Header
+}
+
+// BulkCheck: Send a bundle of statement checks in a single RPC to
+// minimize latency and service load. Statements need not be all for the
+// same source and/or target. We recommend using this method when you
+// need to check more than one statement in a short period of time.
+func (r *AssetlinksService) BulkCheck(bulkcheckrequest *BulkCheckRequest) *AssetlinksBulkCheckCall {
+	c := &AssetlinksBulkCheckCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.bulkcheckrequest = bulkcheckrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AssetlinksBulkCheckCall) Fields(s ...googleapi.Field) *AssetlinksBulkCheckCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AssetlinksBulkCheckCall) Context(ctx context.Context) *AssetlinksBulkCheckCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AssetlinksBulkCheckCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AssetlinksBulkCheckCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.bulkcheckrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/assetlinks:bulkCheck")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "digitalassetlinks.assetlinks.bulkCheck" call.
+// Exactly one of *BulkCheckResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *BulkCheckResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AssetlinksBulkCheckCall) Do(opts ...googleapi.CallOption) (*BulkCheckResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &BulkCheckResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Send a bundle of statement checks in a single RPC to minimize latency and service load. Statements need not be all for the same source and/or target. We recommend using this method when you need to check more than one statement in a short period of time.",
+	//   "flatPath": "v1/assetlinks:bulkCheck",
+	//   "httpMethod": "POST",
+	//   "id": "digitalassetlinks.assetlinks.bulkCheck",
+	//   "parameterOrder": [],
+	//   "parameters": {},
+	//   "path": "v1/assetlinks:bulkCheck",
+	//   "request": {
+	//     "$ref": "BulkCheckRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "BulkCheckResponse"
+	//   }
+	// }
+
+}
+
 // method id "digitalassetlinks.assetlinks.check":
 
 type AssetlinksCheckCall struct {
@@ -595,73 +782,41 @@ type AssetlinksCheckCall struct {
 }
 
 // Check: Determines whether the specified (directional) relationship
-// exists between
-// the specified source and target assets.
-//
-// The relation describes the intent of the link between the two assets
-// as
-// claimed by the source asset.  An example for such relationships is
-// the
-// delegation of privileges or permissions.
-//
-// This command is most often used by infrastructure systems to
-// check
-// preconditions for an action.  For example, a client may want to know
-// if it
-// is OK to send a web URL to a particular mobile app instead. The
-// client can
-// check for the relevant asset link from the website to the mobile app
-// to
-// decide if the operation should be allowed.
-//
-// A note about security: if you specify a secure asset as the source,
-// such as
-// an HTTPS website or an Android app, the API will ensure that
-// any
-// statements used to generate the response have been made in a secure
-// way by
-// the owner of that asset.  Conversely, if the source asset is an
-// insecure
-// HTTP website (that is, the URL starts with `http://` instead
-// of
-// `https://`), the API cannot verify its statements securely, and it is
-// not
-// possible to ensure that the website's statements have not been
-// altered by a
-// third party.  For more information, see the [Digital Asset Links
-// technical
-// design
-// specification](https://github.com/google/digitalasset
-// links/blob/master/well-known/details.md).
+// exists between the specified source and target assets. The relation
+// describes the intent of the link between the two assets as claimed by
+// the source asset. An example for such relationships is the delegation
+// of privileges or permissions. This command is most often used by
+// infrastructure systems to check preconditions for an action. For
+// example, a client may want to know if it is OK to send a web URL to a
+// particular mobile app instead. The client can check for the relevant
+// asset link from the website to the mobile app to decide if the
+// operation should be allowed. A note about security: if you specify a
+// secure asset as the source, such as an HTTPS website or an Android
+// app, the API will ensure that any statements used to generate the
+// response have been made in a secure way by the owner of that asset.
+// Conversely, if the source asset is an insecure HTTP website (that is,
+// the URL starts with `http://` instead of `https://`), the API cannot
+// verify its statements securely, and it is not possible to ensure that
+// the website's statements have not been altered by a third party. For
+// more information, see the Digital Asset Links technical design
+// specification
+// (https://github.com/google/digitalassetlinks/blob/master/well-known/details.md).
 func (r *AssetlinksService) Check() *AssetlinksCheckCall {
 	c := &AssetlinksCheckCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
 }
 
 // Relation sets the optional parameter "relation": Query string for the
-// relation.
-//
-// We identify relations with strings of the format `<kind>/<detail>`,
-// where
-// `<kind>` must be one of a set of pre-defined purpose categories,
-// and
-// `<detail>` is a free-form lowercase alphanumeric string that
-// describes the
-// specific use case of the statement.
-//
-// Refer to [our API
-// documentation](/digital-asset-links/v1/relation-strings)
-// for the current list of supported relations.
-//
-// For a query to match an asset link, both the query's and the asset
-// link's
-// relation strings must match exactly.
-//
+// relation. We identify relations with strings of the format `/`, where
+// “ must be one of a set of pre-defined purpose categories, and “ is
+// a free-form lowercase alphanumeric string that describes the specific
+// use case of the statement. Refer to our API documentation
+// (/digital-asset-links/v1/relation-strings) for the current list of
+// supported relations. For a query to match an asset link, both the
+// query's and the asset link's relation strings must match exactly.
 // Example: A query with relation
-// `delegate_permission/common.handle_all_urls`
-// matches an asset link with
-// relation
-// `delegate_permission/common.handle_all_urls`.
+// `delegate_permission/common.handle_all_urls` matches an asset link
+// with relation `delegate_permission/common.handle_all_urls`.
 func (c *AssetlinksCheckCall) Relation(relation string) *AssetlinksCheckCall {
 	c.urlParams_.Set("relation", relation)
 	return c
@@ -669,34 +824,21 @@ func (c *AssetlinksCheckCall) Relation(relation string) *AssetlinksCheckCall {
 
 // SourceAndroidAppCertificateSha256Fingerprint sets the optional
 // parameter "source.androidApp.certificate.sha256Fingerprint": The
-// uppercase SHA-265 fingerprint of the certificate.  From the PEM
-//  certificate, it can be acquired like this:
-//
-//     $ keytool -printcert -file $CERTFILE | grep SHA256:
-//     SHA256: 14:6D:E9:83:C5:73:06:50:D8:EE:B9:95:2F:34:FC:64:16:A0:83:
-// \
-//         42:E6:1D:BE:A8:8A:04:96:B2:3F:CF:44:E5
-//
-// or like this:
-//
-//     $ openssl x509 -in $CERTFILE -noout -fingerprint -sha256
-//     SHA256
+// uppercase SHA-265 fingerprint of the certificate. From the PEM
+// certificate, it can be acquired like this: $ keytool -printcert -file
+// $CERTFILE | grep SHA256: SHA256:
+// 14:6D:E9:83:C5:73:06:50:D8:EE:B9:95:2F:34:FC:64:16:A0:83: \
+// 42:E6:1D:BE:A8:8A:04:96:B2:3F:CF:44:E5 or like this: $ openssl x509
+// -in $CERTFILE -noout -fingerprint -sha256 SHA256
 // Fingerprint=14:6D:E9:83:C5:73:06:50:D8:EE:B9:95:2F:34:FC:64: \
-//         16:A0:83:42:E6:1D:BE:A8:8A:04:96:B2:3F:CF:44:E5
-//
-// In this example, the contents of this field would be
-// `14:6D:E9:83:C5:73:
-// 06:50:D8:EE:B9:95:2F:34:FC:64:16:A0:83:42:E6:1D:BE
-// :A8:8A:04:96:B2:3F:CF:
-// 44:E5`.
-//
-// If these tools are not available to you, you can convert the
-// PEM
-// certificate into the DER format, compute the SHA-256 hash of that
-// string
-// and represent the result as a hexstring (that is, uppercase
-// hexadecimal
-// representations of each octet, separated by colons).
+// 16:A0:83:42:E6:1D:BE:A8:8A:04:96:B2:3F:CF:44:E5 In this example, the
+// contents of this field would be `14:6D:E9:83:C5:73:
+// 06:50:D8:EE:B9:95:2F:34:FC:64:16:A0:83:42:E6:1D:BE:A8:8A:04:96:B2:3F:C
+// F: 44:E5`. If these tools are not available to you, you can convert
+// the PEM certificate into the DER format, compute the SHA-256 hash of
+// that string and represent the result as a hexstring (that is,
+// uppercase hexadecimal representations of each octet, separated by
+// colons).
 func (c *AssetlinksCheckCall) SourceAndroidAppCertificateSha256Fingerprint(sourceAndroidAppCertificateSha256Fingerprint string) *AssetlinksCheckCall {
 	c.urlParams_.Set("source.androidApp.certificate.sha256Fingerprint", sourceAndroidAppCertificateSha256Fingerprint)
 	return c
@@ -704,11 +846,8 @@ func (c *AssetlinksCheckCall) SourceAndroidAppCertificateSha256Fingerprint(sourc
 
 // SourceAndroidAppPackageName sets the optional parameter
 // "source.androidApp.packageName": Android App assets are naturally
-// identified by their Java package name.
-// For example, the Google Maps app uses the package
-// name
-// `com.google.android.apps.maps`.
-// REQUIRED
+// identified by their Java package name. For example, the Google Maps
+// app uses the package name `com.google.android.apps.maps`. REQUIRED
 func (c *AssetlinksCheckCall) SourceAndroidAppPackageName(sourceAndroidAppPackageName string) *AssetlinksCheckCall {
 	c.urlParams_.Set("source.androidApp.packageName", sourceAndroidAppPackageName)
 	return c
@@ -716,44 +855,22 @@ func (c *AssetlinksCheckCall) SourceAndroidAppPackageName(sourceAndroidAppPackag
 
 // SourceWebSite sets the optional parameter "source.web.site": Web
 // assets are identified by a URL that contains only the scheme,
-// hostname
-// and port parts.  The format is
-//
-//     http[s]://<hostname>[:<port>]
-//
-// Hostnames must be fully qualified: they must end in a single
-// period
-// (".").
-//
-// Only the schemes "http" and "https" are currently allowed.
-//
-// Port numbers are given as a decimal number, and they must be omitted
-// if the
-// standard port numbers are used: 80 for http and 443 for https.
-//
-// We call this limited URL the "site".  All URLs that share the same
-// scheme,
-// hostname and port are considered to be a part of the site and thus
-// belong
-// to the web asset.
-//
-// Example: the asset with the site `https://www.google.com` contains
-// all
-// these URLs:
-//
-//   *   `https://www.google.com/`
-//   *   `https://www.google.com:443/`
-//   *   `https://www.google.com/foo`
-//   *   `https://www.google.com/foo?bar`
-//   *   `https://www.google.com/foo#bar`
-//   *   `https://user@password:www.google.com/`
-//
-// But it does not contain these URLs:
-//
-//   *   `http://www.google.com/`       (wrong scheme)
-//   *   `https://google.com/`          (hostname does not match)
-//   *   `https://www.google.com:444/`  (port does not match)
-// REQUIRED
+// hostname and port parts. The format is http[s]://[:] Hostnames must
+// be fully qualified: they must end in a single period ("."). Only
+// the schemes "http" and "https" are currently allowed. Port numbers
+// are given as a decimal number, and they must be omitted if the
+// standard port numbers are used: 80 for http and 443 for https. We
+// call this limited URL the "site". All URLs that share the same
+// scheme, hostname and port are considered to be a part of the site and
+// thus belong to the web asset. Example: the asset with the site
+// `https://www.google.com` contains all these URLs: *
+// `https://www.google.com/` * `https://www.google.com:443/` *
+// `https://www.google.com/foo` * `https://www.google.com/foo?bar` *
+// `https://www.google.com/foo#bar` *
+// `https://user@password:www.google.com/` But it does not contain these
+// URLs: * `http://www.google.com/` (wrong scheme) *
+// `https://google.com/` (hostname does not match) *
+// `https://www.google.com:444/` (port does not match) REQUIRED
 func (c *AssetlinksCheckCall) SourceWebSite(sourceWebSite string) *AssetlinksCheckCall {
 	c.urlParams_.Set("source.web.site", sourceWebSite)
 	return c
@@ -761,34 +878,21 @@ func (c *AssetlinksCheckCall) SourceWebSite(sourceWebSite string) *AssetlinksChe
 
 // TargetAndroidAppCertificateSha256Fingerprint sets the optional
 // parameter "target.androidApp.certificate.sha256Fingerprint": The
-// uppercase SHA-265 fingerprint of the certificate.  From the PEM
-//  certificate, it can be acquired like this:
-//
-//     $ keytool -printcert -file $CERTFILE | grep SHA256:
-//     SHA256: 14:6D:E9:83:C5:73:06:50:D8:EE:B9:95:2F:34:FC:64:16:A0:83:
-// \
-//         42:E6:1D:BE:A8:8A:04:96:B2:3F:CF:44:E5
-//
-// or like this:
-//
-//     $ openssl x509 -in $CERTFILE -noout -fingerprint -sha256
-//     SHA256
+// uppercase SHA-265 fingerprint of the certificate. From the PEM
+// certificate, it can be acquired like this: $ keytool -printcert -file
+// $CERTFILE | grep SHA256: SHA256:
+// 14:6D:E9:83:C5:73:06:50:D8:EE:B9:95:2F:34:FC:64:16:A0:83: \
+// 42:E6:1D:BE:A8:8A:04:96:B2:3F:CF:44:E5 or like this: $ openssl x509
+// -in $CERTFILE -noout -fingerprint -sha256 SHA256
 // Fingerprint=14:6D:E9:83:C5:73:06:50:D8:EE:B9:95:2F:34:FC:64: \
-//         16:A0:83:42:E6:1D:BE:A8:8A:04:96:B2:3F:CF:44:E5
-//
-// In this example, the contents of this field would be
-// `14:6D:E9:83:C5:73:
-// 06:50:D8:EE:B9:95:2F:34:FC:64:16:A0:83:42:E6:1D:BE
-// :A8:8A:04:96:B2:3F:CF:
-// 44:E5`.
-//
-// If these tools are not available to you, you can convert the
-// PEM
-// certificate into the DER format, compute the SHA-256 hash of that
-// string
-// and represent the result as a hexstring (that is, uppercase
-// hexadecimal
-// representations of each octet, separated by colons).
+// 16:A0:83:42:E6:1D:BE:A8:8A:04:96:B2:3F:CF:44:E5 In this example, the
+// contents of this field would be `14:6D:E9:83:C5:73:
+// 06:50:D8:EE:B9:95:2F:34:FC:64:16:A0:83:42:E6:1D:BE:A8:8A:04:96:B2:3F:C
+// F: 44:E5`. If these tools are not available to you, you can convert
+// the PEM certificate into the DER format, compute the SHA-256 hash of
+// that string and represent the result as a hexstring (that is,
+// uppercase hexadecimal representations of each octet, separated by
+// colons).
 func (c *AssetlinksCheckCall) TargetAndroidAppCertificateSha256Fingerprint(targetAndroidAppCertificateSha256Fingerprint string) *AssetlinksCheckCall {
 	c.urlParams_.Set("target.androidApp.certificate.sha256Fingerprint", targetAndroidAppCertificateSha256Fingerprint)
 	return c
@@ -796,11 +900,8 @@ func (c *AssetlinksCheckCall) TargetAndroidAppCertificateSha256Fingerprint(targe
 
 // TargetAndroidAppPackageName sets the optional parameter
 // "target.androidApp.packageName": Android App assets are naturally
-// identified by their Java package name.
-// For example, the Google Maps app uses the package
-// name
-// `com.google.android.apps.maps`.
-// REQUIRED
+// identified by their Java package name. For example, the Google Maps
+// app uses the package name `com.google.android.apps.maps`. REQUIRED
 func (c *AssetlinksCheckCall) TargetAndroidAppPackageName(targetAndroidAppPackageName string) *AssetlinksCheckCall {
 	c.urlParams_.Set("target.androidApp.packageName", targetAndroidAppPackageName)
 	return c
@@ -808,44 +909,22 @@ func (c *AssetlinksCheckCall) TargetAndroidAppPackageName(targetAndroidAppPackag
 
 // TargetWebSite sets the optional parameter "target.web.site": Web
 // assets are identified by a URL that contains only the scheme,
-// hostname
-// and port parts.  The format is
-//
-//     http[s]://<hostname>[:<port>]
-//
-// Hostnames must be fully qualified: they must end in a single
-// period
-// (".").
-//
-// Only the schemes "http" and "https" are currently allowed.
-//
-// Port numbers are given as a decimal number, and they must be omitted
-// if the
-// standard port numbers are used: 80 for http and 443 for https.
-//
-// We call this limited URL the "site".  All URLs that share the same
-// scheme,
-// hostname and port are considered to be a part of the site and thus
-// belong
-// to the web asset.
-//
-// Example: the asset with the site `https://www.google.com` contains
-// all
-// these URLs:
-//
-//   *   `https://www.google.com/`
-//   *   `https://www.google.com:443/`
-//   *   `https://www.google.com/foo`
-//   *   `https://www.google.com/foo?bar`
-//   *   `https://www.google.com/foo#bar`
-//   *   `https://user@password:www.google.com/`
-//
-// But it does not contain these URLs:
-//
-//   *   `http://www.google.com/`       (wrong scheme)
-//   *   `https://google.com/`          (hostname does not match)
-//   *   `https://www.google.com:444/`  (port does not match)
-// REQUIRED
+// hostname and port parts. The format is http[s]://[:] Hostnames must
+// be fully qualified: they must end in a single period ("."). Only
+// the schemes "http" and "https" are currently allowed. Port numbers
+// are given as a decimal number, and they must be omitted if the
+// standard port numbers are used: 80 for http and 443 for https. We
+// call this limited URL the "site". All URLs that share the same
+// scheme, hostname and port are considered to be a part of the site and
+// thus belong to the web asset. Example: the asset with the site
+// `https://www.google.com` contains all these URLs: *
+// `https://www.google.com/` * `https://www.google.com:443/` *
+// `https://www.google.com/foo` * `https://www.google.com/foo?bar` *
+// `https://www.google.com/foo#bar` *
+// `https://user@password:www.google.com/` But it does not contain these
+// URLs: * `http://www.google.com/` (wrong scheme) *
+// `https://google.com/` (hostname does not match) *
+// `https://www.google.com:444/` (port does not match) REQUIRED
 func (c *AssetlinksCheckCall) TargetWebSite(targetWebSite string) *AssetlinksCheckCall {
 	c.urlParams_.Set("target.web.site", targetWebSite)
 	return c
@@ -888,7 +967,7 @@ func (c *AssetlinksCheckCall) Header() http.Header {
 
 func (c *AssetlinksCheckCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -923,17 +1002,17 @@ func (c *AssetlinksCheckCall) Do(opts ...googleapi.CallOption) (*CheckResponse, 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &CheckResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -947,44 +1026,44 @@ func (c *AssetlinksCheckCall) Do(opts ...googleapi.CallOption) (*CheckResponse, 
 	}
 	return ret, nil
 	// {
-	//   "description": "Determines whether the specified (directional) relationship exists between\nthe specified source and target assets.\n\nThe relation describes the intent of the link between the two assets as\nclaimed by the source asset.  An example for such relationships is the\ndelegation of privileges or permissions.\n\nThis command is most often used by infrastructure systems to check\npreconditions for an action.  For example, a client may want to know if it\nis OK to send a web URL to a particular mobile app instead. The client can\ncheck for the relevant asset link from the website to the mobile app to\ndecide if the operation should be allowed.\n\nA note about security: if you specify a secure asset as the source, such as\nan HTTPS website or an Android app, the API will ensure that any\nstatements used to generate the response have been made in a secure way by\nthe owner of that asset.  Conversely, if the source asset is an insecure\nHTTP website (that is, the URL starts with `http://` instead of\n`https://`), the API cannot verify its statements securely, and it is not\npossible to ensure that the website's statements have not been altered by a\nthird party.  For more information, see the [Digital Asset Links technical\ndesign\nspecification](https://github.com/google/digitalassetlinks/blob/master/well-known/details.md).",
+	//   "description": "Determines whether the specified (directional) relationship exists between the specified source and target assets. The relation describes the intent of the link between the two assets as claimed by the source asset. An example for such relationships is the delegation of privileges or permissions. This command is most often used by infrastructure systems to check preconditions for an action. For example, a client may want to know if it is OK to send a web URL to a particular mobile app instead. The client can check for the relevant asset link from the website to the mobile app to decide if the operation should be allowed. A note about security: if you specify a secure asset as the source, such as an HTTPS website or an Android app, the API will ensure that any statements used to generate the response have been made in a secure way by the owner of that asset. Conversely, if the source asset is an insecure HTTP website (that is, the URL starts with `http://` instead of `https://`), the API cannot verify its statements securely, and it is not possible to ensure that the website's statements have not been altered by a third party. For more information, see the [Digital Asset Links technical design specification](https://github.com/google/digitalassetlinks/blob/master/well-known/details.md).",
 	//   "flatPath": "v1/assetlinks:check",
 	//   "httpMethod": "GET",
 	//   "id": "digitalassetlinks.assetlinks.check",
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "relation": {
-	//       "description": "Query string for the relation.\n\nWe identify relations with strings of the format `\u003ckind\u003e/\u003cdetail\u003e`, where\n`\u003ckind\u003e` must be one of a set of pre-defined purpose categories, and\n`\u003cdetail\u003e` is a free-form lowercase alphanumeric string that describes the\nspecific use case of the statement.\n\nRefer to [our API documentation](/digital-asset-links/v1/relation-strings)\nfor the current list of supported relations.\n\nFor a query to match an asset link, both the query's and the asset link's\nrelation strings must match exactly.\n\nExample: A query with relation `delegate_permission/common.handle_all_urls`\nmatches an asset link with relation\n`delegate_permission/common.handle_all_urls`.",
+	//       "description": "Query string for the relation. We identify relations with strings of the format `/`, where `` must be one of a set of pre-defined purpose categories, and `` is a free-form lowercase alphanumeric string that describes the specific use case of the statement. Refer to [our API documentation](/digital-asset-links/v1/relation-strings) for the current list of supported relations. For a query to match an asset link, both the query's and the asset link's relation strings must match exactly. Example: A query with relation `delegate_permission/common.handle_all_urls` matches an asset link with relation `delegate_permission/common.handle_all_urls`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "source.androidApp.certificate.sha256Fingerprint": {
-	//       "description": "The uppercase SHA-265 fingerprint of the certificate.  From the PEM\n certificate, it can be acquired like this:\n\n    $ keytool -printcert -file $CERTFILE | grep SHA256:\n    SHA256: 14:6D:E9:83:C5:73:06:50:D8:EE:B9:95:2F:34:FC:64:16:A0:83: \\\n        42:E6:1D:BE:A8:8A:04:96:B2:3F:CF:44:E5\n\nor like this:\n\n    $ openssl x509 -in $CERTFILE -noout -fingerprint -sha256\n    SHA256 Fingerprint=14:6D:E9:83:C5:73:06:50:D8:EE:B9:95:2F:34:FC:64: \\\n        16:A0:83:42:E6:1D:BE:A8:8A:04:96:B2:3F:CF:44:E5\n\nIn this example, the contents of this field would be `14:6D:E9:83:C5:73:\n06:50:D8:EE:B9:95:2F:34:FC:64:16:A0:83:42:E6:1D:BE:A8:8A:04:96:B2:3F:CF:\n44:E5`.\n\nIf these tools are not available to you, you can convert the PEM\ncertificate into the DER format, compute the SHA-256 hash of that string\nand represent the result as a hexstring (that is, uppercase hexadecimal\nrepresentations of each octet, separated by colons).",
+	//       "description": "The uppercase SHA-265 fingerprint of the certificate. From the PEM certificate, it can be acquired like this: $ keytool -printcert -file $CERTFILE | grep SHA256: SHA256: 14:6D:E9:83:C5:73:06:50:D8:EE:B9:95:2F:34:FC:64:16:A0:83: \\ 42:E6:1D:BE:A8:8A:04:96:B2:3F:CF:44:E5 or like this: $ openssl x509 -in $CERTFILE -noout -fingerprint -sha256 SHA256 Fingerprint=14:6D:E9:83:C5:73:06:50:D8:EE:B9:95:2F:34:FC:64: \\ 16:A0:83:42:E6:1D:BE:A8:8A:04:96:B2:3F:CF:44:E5 In this example, the contents of this field would be `14:6D:E9:83:C5:73: 06:50:D8:EE:B9:95:2F:34:FC:64:16:A0:83:42:E6:1D:BE:A8:8A:04:96:B2:3F:CF: 44:E5`. If these tools are not available to you, you can convert the PEM certificate into the DER format, compute the SHA-256 hash of that string and represent the result as a hexstring (that is, uppercase hexadecimal representations of each octet, separated by colons).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "source.androidApp.packageName": {
-	//       "description": "Android App assets are naturally identified by their Java package name.\nFor example, the Google Maps app uses the package name\n`com.google.android.apps.maps`.\nREQUIRED",
+	//       "description": "Android App assets are naturally identified by their Java package name. For example, the Google Maps app uses the package name `com.google.android.apps.maps`. REQUIRED",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "source.web.site": {
-	//       "description": "Web assets are identified by a URL that contains only the scheme, hostname\nand port parts.  The format is\n\n    http[s]://\u003chostname\u003e[:\u003cport\u003e]\n\nHostnames must be fully qualified: they must end in a single period\n(\"`.`\").\n\nOnly the schemes \"http\" and \"https\" are currently allowed.\n\nPort numbers are given as a decimal number, and they must be omitted if the\nstandard port numbers are used: 80 for http and 443 for https.\n\nWe call this limited URL the \"site\".  All URLs that share the same scheme,\nhostname and port are considered to be a part of the site and thus belong\nto the web asset.\n\nExample: the asset with the site `https://www.google.com` contains all\nthese URLs:\n\n  *   `https://www.google.com/`\n  *   `https://www.google.com:443/`\n  *   `https://www.google.com/foo`\n  *   `https://www.google.com/foo?bar`\n  *   `https://www.google.com/foo#bar`\n  *   `https://user@password:www.google.com/`\n\nBut it does not contain these URLs:\n\n  *   `http://www.google.com/`       (wrong scheme)\n  *   `https://google.com/`          (hostname does not match)\n  *   `https://www.google.com:444/`  (port does not match)\nREQUIRED",
+	//       "description": "Web assets are identified by a URL that contains only the scheme, hostname and port parts. The format is http[s]://[:] Hostnames must be fully qualified: they must end in a single period (\"`.`\"). Only the schemes \"http\" and \"https\" are currently allowed. Port numbers are given as a decimal number, and they must be omitted if the standard port numbers are used: 80 for http and 443 for https. We call this limited URL the \"site\". All URLs that share the same scheme, hostname and port are considered to be a part of the site and thus belong to the web asset. Example: the asset with the site `https://www.google.com` contains all these URLs: * `https://www.google.com/` * `https://www.google.com:443/` * `https://www.google.com/foo` * `https://www.google.com/foo?bar` * `https://www.google.com/foo#bar` * `https://user@password:www.google.com/` But it does not contain these URLs: * `http://www.google.com/` (wrong scheme) * `https://google.com/` (hostname does not match) * `https://www.google.com:444/` (port does not match) REQUIRED",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "target.androidApp.certificate.sha256Fingerprint": {
-	//       "description": "The uppercase SHA-265 fingerprint of the certificate.  From the PEM\n certificate, it can be acquired like this:\n\n    $ keytool -printcert -file $CERTFILE | grep SHA256:\n    SHA256: 14:6D:E9:83:C5:73:06:50:D8:EE:B9:95:2F:34:FC:64:16:A0:83: \\\n        42:E6:1D:BE:A8:8A:04:96:B2:3F:CF:44:E5\n\nor like this:\n\n    $ openssl x509 -in $CERTFILE -noout -fingerprint -sha256\n    SHA256 Fingerprint=14:6D:E9:83:C5:73:06:50:D8:EE:B9:95:2F:34:FC:64: \\\n        16:A0:83:42:E6:1D:BE:A8:8A:04:96:B2:3F:CF:44:E5\n\nIn this example, the contents of this field would be `14:6D:E9:83:C5:73:\n06:50:D8:EE:B9:95:2F:34:FC:64:16:A0:83:42:E6:1D:BE:A8:8A:04:96:B2:3F:CF:\n44:E5`.\n\nIf these tools are not available to you, you can convert the PEM\ncertificate into the DER format, compute the SHA-256 hash of that string\nand represent the result as a hexstring (that is, uppercase hexadecimal\nrepresentations of each octet, separated by colons).",
+	//       "description": "The uppercase SHA-265 fingerprint of the certificate. From the PEM certificate, it can be acquired like this: $ keytool -printcert -file $CERTFILE | grep SHA256: SHA256: 14:6D:E9:83:C5:73:06:50:D8:EE:B9:95:2F:34:FC:64:16:A0:83: \\ 42:E6:1D:BE:A8:8A:04:96:B2:3F:CF:44:E5 or like this: $ openssl x509 -in $CERTFILE -noout -fingerprint -sha256 SHA256 Fingerprint=14:6D:E9:83:C5:73:06:50:D8:EE:B9:95:2F:34:FC:64: \\ 16:A0:83:42:E6:1D:BE:A8:8A:04:96:B2:3F:CF:44:E5 In this example, the contents of this field would be `14:6D:E9:83:C5:73: 06:50:D8:EE:B9:95:2F:34:FC:64:16:A0:83:42:E6:1D:BE:A8:8A:04:96:B2:3F:CF: 44:E5`. If these tools are not available to you, you can convert the PEM certificate into the DER format, compute the SHA-256 hash of that string and represent the result as a hexstring (that is, uppercase hexadecimal representations of each octet, separated by colons).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "target.androidApp.packageName": {
-	//       "description": "Android App assets are naturally identified by their Java package name.\nFor example, the Google Maps app uses the package name\n`com.google.android.apps.maps`.\nREQUIRED",
+	//       "description": "Android App assets are naturally identified by their Java package name. For example, the Google Maps app uses the package name `com.google.android.apps.maps`. REQUIRED",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "target.web.site": {
-	//       "description": "Web assets are identified by a URL that contains only the scheme, hostname\nand port parts.  The format is\n\n    http[s]://\u003chostname\u003e[:\u003cport\u003e]\n\nHostnames must be fully qualified: they must end in a single period\n(\"`.`\").\n\nOnly the schemes \"http\" and \"https\" are currently allowed.\n\nPort numbers are given as a decimal number, and they must be omitted if the\nstandard port numbers are used: 80 for http and 443 for https.\n\nWe call this limited URL the \"site\".  All URLs that share the same scheme,\nhostname and port are considered to be a part of the site and thus belong\nto the web asset.\n\nExample: the asset with the site `https://www.google.com` contains all\nthese URLs:\n\n  *   `https://www.google.com/`\n  *   `https://www.google.com:443/`\n  *   `https://www.google.com/foo`\n  *   `https://www.google.com/foo?bar`\n  *   `https://www.google.com/foo#bar`\n  *   `https://user@password:www.google.com/`\n\nBut it does not contain these URLs:\n\n  *   `http://www.google.com/`       (wrong scheme)\n  *   `https://google.com/`          (hostname does not match)\n  *   `https://www.google.com:444/`  (port does not match)\nREQUIRED",
+	//       "description": "Web assets are identified by a URL that contains only the scheme, hostname and port parts. The format is http[s]://[:] Hostnames must be fully qualified: they must end in a single period (\"`.`\"). Only the schemes \"http\" and \"https\" are currently allowed. Port numbers are given as a decimal number, and they must be omitted if the standard port numbers are used: 80 for http and 443 for https. We call this limited URL the \"site\". All URLs that share the same scheme, hostname and port are considered to be a part of the site and thus belong to the web asset. Example: the asset with the site `https://www.google.com` contains all these URLs: * `https://www.google.com/` * `https://www.google.com:443/` * `https://www.google.com/foo` * `https://www.google.com/foo?bar` * `https://www.google.com/foo#bar` * `https://user@password:www.google.com/` But it does not contain these URLs: * `http://www.google.com/` (wrong scheme) * `https://google.com/` (hostname does not match) * `https://www.google.com:444/` (port does not match) REQUIRED",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -1008,59 +1087,35 @@ type StatementsListCall struct {
 }
 
 // List: Retrieves a list of all statements from a given source that
-// match the
-// specified target and statement string.
-//
-// The API guarantees that all statements with secure source assets,
-// such as
-// HTTPS websites or Android apps, have been made in a secure way by the
-// owner
-// of those assets, as described in the [Digital Asset Links technical
-// design
-// specification](https://github.com/google/digitalassetlinks/blob
-// /master/well-known/details.md).
+// match the specified target and statement string. The API guarantees
+// that all statements with secure source assets, such as HTTPS websites
+// or Android apps, have been made in a secure way by the owner of those
+// assets, as described in the Digital Asset Links technical design
+// specification
+// (https://github.com/google/digitalassetlinks/blob/master/well-known/details.md).
 // Specifically, you should consider that for insecure websites (that
-// is,
-// where the URL starts with `http://` instead of `https://`), this
-// guarantee
-// cannot be made.
-//
-// The `List` command is most useful in cases where the API client wants
-// to
-// know all the ways in which two assets are related, or enumerate all
-// the
-// relationships from a particular source asset.  Example: a feature
-// that
-// helps users navigate to related items.  When a mobile app is running
-// on a
-// device, the feature would make it easy to navigate to the
-// corresponding web
-// site or Google+ profile.
+// is, where the URL starts with `http://` instead of `https://`), this
+// guarantee cannot be made. The `List` command is most useful in cases
+// where the API client wants to know all the ways in which two assets
+// are related, or enumerate all the relationships from a particular
+// source asset. Example: a feature that helps users navigate to related
+// items. When a mobile app is running on a device, the feature would
+// make it easy to navigate to the corresponding web site or Google+
+// profile.
 func (r *StatementsService) List() *StatementsListCall {
 	c := &StatementsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
 }
 
 // Relation sets the optional parameter "relation": Use only
-// associations that match the specified relation.
-//
-// See the [`Statement`](#Statement) message for a detailed definition
-// of
-// relation strings.
-//
-// For a query to match a statement, one of the following must be
-// true:
-//
-// *    both the query's and the statement's relation strings match
-// exactly,
-//      or
-// *    the query's relation string is empty or missing.
-//
+// associations that match the specified relation. See the `Statement`
+// (#Statement) message for a detailed definition of relation strings.
+// For a query to match a statement, one of the following must be true:
+// * both the query's and the statement's relation strings match
+// exactly, or * the query's relation string is empty or missing.
 // Example: A query with relation
-// `delegate_permission/common.handle_all_urls`
-// matches an asset link with
-// relation
-// `delegate_permission/common.handle_all_urls`.
+// `delegate_permission/common.handle_all_urls` matches an asset link
+// with relation `delegate_permission/common.handle_all_urls`.
 func (c *StatementsListCall) Relation(relation string) *StatementsListCall {
 	c.urlParams_.Set("relation", relation)
 	return c
@@ -1068,34 +1123,21 @@ func (c *StatementsListCall) Relation(relation string) *StatementsListCall {
 
 // SourceAndroidAppCertificateSha256Fingerprint sets the optional
 // parameter "source.androidApp.certificate.sha256Fingerprint": The
-// uppercase SHA-265 fingerprint of the certificate.  From the PEM
-//  certificate, it can be acquired like this:
-//
-//     $ keytool -printcert -file $CERTFILE | grep SHA256:
-//     SHA256: 14:6D:E9:83:C5:73:06:50:D8:EE:B9:95:2F:34:FC:64:16:A0:83:
-// \
-//         42:E6:1D:BE:A8:8A:04:96:B2:3F:CF:44:E5
-//
-// or like this:
-//
-//     $ openssl x509 -in $CERTFILE -noout -fingerprint -sha256
-//     SHA256
+// uppercase SHA-265 fingerprint of the certificate. From the PEM
+// certificate, it can be acquired like this: $ keytool -printcert -file
+// $CERTFILE | grep SHA256: SHA256:
+// 14:6D:E9:83:C5:73:06:50:D8:EE:B9:95:2F:34:FC:64:16:A0:83: \
+// 42:E6:1D:BE:A8:8A:04:96:B2:3F:CF:44:E5 or like this: $ openssl x509
+// -in $CERTFILE -noout -fingerprint -sha256 SHA256
 // Fingerprint=14:6D:E9:83:C5:73:06:50:D8:EE:B9:95:2F:34:FC:64: \
-//         16:A0:83:42:E6:1D:BE:A8:8A:04:96:B2:3F:CF:44:E5
-//
-// In this example, the contents of this field would be
-// `14:6D:E9:83:C5:73:
-// 06:50:D8:EE:B9:95:2F:34:FC:64:16:A0:83:42:E6:1D:BE
-// :A8:8A:04:96:B2:3F:CF:
-// 44:E5`.
-//
-// If these tools are not available to you, you can convert the
-// PEM
-// certificate into the DER format, compute the SHA-256 hash of that
-// string
-// and represent the result as a hexstring (that is, uppercase
-// hexadecimal
-// representations of each octet, separated by colons).
+// 16:A0:83:42:E6:1D:BE:A8:8A:04:96:B2:3F:CF:44:E5 In this example, the
+// contents of this field would be `14:6D:E9:83:C5:73:
+// 06:50:D8:EE:B9:95:2F:34:FC:64:16:A0:83:42:E6:1D:BE:A8:8A:04:96:B2:3F:C
+// F: 44:E5`. If these tools are not available to you, you can convert
+// the PEM certificate into the DER format, compute the SHA-256 hash of
+// that string and represent the result as a hexstring (that is,
+// uppercase hexadecimal representations of each octet, separated by
+// colons).
 func (c *StatementsListCall) SourceAndroidAppCertificateSha256Fingerprint(sourceAndroidAppCertificateSha256Fingerprint string) *StatementsListCall {
 	c.urlParams_.Set("source.androidApp.certificate.sha256Fingerprint", sourceAndroidAppCertificateSha256Fingerprint)
 	return c
@@ -1103,11 +1145,8 @@ func (c *StatementsListCall) SourceAndroidAppCertificateSha256Fingerprint(source
 
 // SourceAndroidAppPackageName sets the optional parameter
 // "source.androidApp.packageName": Android App assets are naturally
-// identified by their Java package name.
-// For example, the Google Maps app uses the package
-// name
-// `com.google.android.apps.maps`.
-// REQUIRED
+// identified by their Java package name. For example, the Google Maps
+// app uses the package name `com.google.android.apps.maps`. REQUIRED
 func (c *StatementsListCall) SourceAndroidAppPackageName(sourceAndroidAppPackageName string) *StatementsListCall {
 	c.urlParams_.Set("source.androidApp.packageName", sourceAndroidAppPackageName)
 	return c
@@ -1115,44 +1154,22 @@ func (c *StatementsListCall) SourceAndroidAppPackageName(sourceAndroidAppPackage
 
 // SourceWebSite sets the optional parameter "source.web.site": Web
 // assets are identified by a URL that contains only the scheme,
-// hostname
-// and port parts.  The format is
-//
-//     http[s]://<hostname>[:<port>]
-//
-// Hostnames must be fully qualified: they must end in a single
-// period
-// (".").
-//
-// Only the schemes "http" and "https" are currently allowed.
-//
-// Port numbers are given as a decimal number, and they must be omitted
-// if the
-// standard port numbers are used: 80 for http and 443 for https.
-//
-// We call this limited URL the "site".  All URLs that share the same
-// scheme,
-// hostname and port are considered to be a part of the site and thus
-// belong
-// to the web asset.
-//
-// Example: the asset with the site `https://www.google.com` contains
-// all
-// these URLs:
-//
-//   *   `https://www.google.com/`
-//   *   `https://www.google.com:443/`
-//   *   `https://www.google.com/foo`
-//   *   `https://www.google.com/foo?bar`
-//   *   `https://www.google.com/foo#bar`
-//   *   `https://user@password:www.google.com/`
-//
-// But it does not contain these URLs:
-//
-//   *   `http://www.google.com/`       (wrong scheme)
-//   *   `https://google.com/`          (hostname does not match)
-//   *   `https://www.google.com:444/`  (port does not match)
-// REQUIRED
+// hostname and port parts. The format is http[s]://[:] Hostnames must
+// be fully qualified: they must end in a single period ("."). Only
+// the schemes "http" and "https" are currently allowed. Port numbers
+// are given as a decimal number, and they must be omitted if the
+// standard port numbers are used: 80 for http and 443 for https. We
+// call this limited URL the "site". All URLs that share the same
+// scheme, hostname and port are considered to be a part of the site and
+// thus belong to the web asset. Example: the asset with the site
+// `https://www.google.com` contains all these URLs: *
+// `https://www.google.com/` * `https://www.google.com:443/` *
+// `https://www.google.com/foo` * `https://www.google.com/foo?bar` *
+// `https://www.google.com/foo#bar` *
+// `https://user@password:www.google.com/` But it does not contain these
+// URLs: * `http://www.google.com/` (wrong scheme) *
+// `https://google.com/` (hostname does not match) *
+// `https://www.google.com:444/` (port does not match) REQUIRED
 func (c *StatementsListCall) SourceWebSite(sourceWebSite string) *StatementsListCall {
 	c.urlParams_.Set("source.web.site", sourceWebSite)
 	return c
@@ -1195,7 +1212,7 @@ func (c *StatementsListCall) Header() http.Header {
 
 func (c *StatementsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1230,17 +1247,17 @@ func (c *StatementsListCall) Do(opts ...googleapi.CallOption) (*ListResponse, er
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1254,29 +1271,29 @@ func (c *StatementsListCall) Do(opts ...googleapi.CallOption) (*ListResponse, er
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves a list of all statements from a given source that match the\nspecified target and statement string.\n\nThe API guarantees that all statements with secure source assets, such as\nHTTPS websites or Android apps, have been made in a secure way by the owner\nof those assets, as described in the [Digital Asset Links technical design\nspecification](https://github.com/google/digitalassetlinks/blob/master/well-known/details.md).\nSpecifically, you should consider that for insecure websites (that is,\nwhere the URL starts with `http://` instead of `https://`), this guarantee\ncannot be made.\n\nThe `List` command is most useful in cases where the API client wants to\nknow all the ways in which two assets are related, or enumerate all the\nrelationships from a particular source asset.  Example: a feature that\nhelps users navigate to related items.  When a mobile app is running on a\ndevice, the feature would make it easy to navigate to the corresponding web\nsite or Google+ profile.",
+	//   "description": "Retrieves a list of all statements from a given source that match the specified target and statement string. The API guarantees that all statements with secure source assets, such as HTTPS websites or Android apps, have been made in a secure way by the owner of those assets, as described in the [Digital Asset Links technical design specification](https://github.com/google/digitalassetlinks/blob/master/well-known/details.md). Specifically, you should consider that for insecure websites (that is, where the URL starts with `http://` instead of `https://`), this guarantee cannot be made. The `List` command is most useful in cases where the API client wants to know all the ways in which two assets are related, or enumerate all the relationships from a particular source asset. Example: a feature that helps users navigate to related items. When a mobile app is running on a device, the feature would make it easy to navigate to the corresponding web site or Google+ profile.",
 	//   "flatPath": "v1/statements:list",
 	//   "httpMethod": "GET",
 	//   "id": "digitalassetlinks.statements.list",
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "relation": {
-	//       "description": "Use only associations that match the specified relation.\n\nSee the [`Statement`](#Statement) message for a detailed definition of\nrelation strings.\n\nFor a query to match a statement, one of the following must be true:\n\n*    both the query's and the statement's relation strings match exactly,\n     or\n*    the query's relation string is empty or missing.\n\nExample: A query with relation `delegate_permission/common.handle_all_urls`\nmatches an asset link with relation\n`delegate_permission/common.handle_all_urls`.",
+	//       "description": "Use only associations that match the specified relation. See the [`Statement`](#Statement) message for a detailed definition of relation strings. For a query to match a statement, one of the following must be true: * both the query's and the statement's relation strings match exactly, or * the query's relation string is empty or missing. Example: A query with relation `delegate_permission/common.handle_all_urls` matches an asset link with relation `delegate_permission/common.handle_all_urls`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "source.androidApp.certificate.sha256Fingerprint": {
-	//       "description": "The uppercase SHA-265 fingerprint of the certificate.  From the PEM\n certificate, it can be acquired like this:\n\n    $ keytool -printcert -file $CERTFILE | grep SHA256:\n    SHA256: 14:6D:E9:83:C5:73:06:50:D8:EE:B9:95:2F:34:FC:64:16:A0:83: \\\n        42:E6:1D:BE:A8:8A:04:96:B2:3F:CF:44:E5\n\nor like this:\n\n    $ openssl x509 -in $CERTFILE -noout -fingerprint -sha256\n    SHA256 Fingerprint=14:6D:E9:83:C5:73:06:50:D8:EE:B9:95:2F:34:FC:64: \\\n        16:A0:83:42:E6:1D:BE:A8:8A:04:96:B2:3F:CF:44:E5\n\nIn this example, the contents of this field would be `14:6D:E9:83:C5:73:\n06:50:D8:EE:B9:95:2F:34:FC:64:16:A0:83:42:E6:1D:BE:A8:8A:04:96:B2:3F:CF:\n44:E5`.\n\nIf these tools are not available to you, you can convert the PEM\ncertificate into the DER format, compute the SHA-256 hash of that string\nand represent the result as a hexstring (that is, uppercase hexadecimal\nrepresentations of each octet, separated by colons).",
+	//       "description": "The uppercase SHA-265 fingerprint of the certificate. From the PEM certificate, it can be acquired like this: $ keytool -printcert -file $CERTFILE | grep SHA256: SHA256: 14:6D:E9:83:C5:73:06:50:D8:EE:B9:95:2F:34:FC:64:16:A0:83: \\ 42:E6:1D:BE:A8:8A:04:96:B2:3F:CF:44:E5 or like this: $ openssl x509 -in $CERTFILE -noout -fingerprint -sha256 SHA256 Fingerprint=14:6D:E9:83:C5:73:06:50:D8:EE:B9:95:2F:34:FC:64: \\ 16:A0:83:42:E6:1D:BE:A8:8A:04:96:B2:3F:CF:44:E5 In this example, the contents of this field would be `14:6D:E9:83:C5:73: 06:50:D8:EE:B9:95:2F:34:FC:64:16:A0:83:42:E6:1D:BE:A8:8A:04:96:B2:3F:CF: 44:E5`. If these tools are not available to you, you can convert the PEM certificate into the DER format, compute the SHA-256 hash of that string and represent the result as a hexstring (that is, uppercase hexadecimal representations of each octet, separated by colons).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "source.androidApp.packageName": {
-	//       "description": "Android App assets are naturally identified by their Java package name.\nFor example, the Google Maps app uses the package name\n`com.google.android.apps.maps`.\nREQUIRED",
+	//       "description": "Android App assets are naturally identified by their Java package name. For example, the Google Maps app uses the package name `com.google.android.apps.maps`. REQUIRED",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "source.web.site": {
-	//       "description": "Web assets are identified by a URL that contains only the scheme, hostname\nand port parts.  The format is\n\n    http[s]://\u003chostname\u003e[:\u003cport\u003e]\n\nHostnames must be fully qualified: they must end in a single period\n(\"`.`\").\n\nOnly the schemes \"http\" and \"https\" are currently allowed.\n\nPort numbers are given as a decimal number, and they must be omitted if the\nstandard port numbers are used: 80 for http and 443 for https.\n\nWe call this limited URL the \"site\".  All URLs that share the same scheme,\nhostname and port are considered to be a part of the site and thus belong\nto the web asset.\n\nExample: the asset with the site `https://www.google.com` contains all\nthese URLs:\n\n  *   `https://www.google.com/`\n  *   `https://www.google.com:443/`\n  *   `https://www.google.com/foo`\n  *   `https://www.google.com/foo?bar`\n  *   `https://www.google.com/foo#bar`\n  *   `https://user@password:www.google.com/`\n\nBut it does not contain these URLs:\n\n  *   `http://www.google.com/`       (wrong scheme)\n  *   `https://google.com/`          (hostname does not match)\n  *   `https://www.google.com:444/`  (port does not match)\nREQUIRED",
+	//       "description": "Web assets are identified by a URL that contains only the scheme, hostname and port parts. The format is http[s]://[:] Hostnames must be fully qualified: they must end in a single period (\"`.`\"). Only the schemes \"http\" and \"https\" are currently allowed. Port numbers are given as a decimal number, and they must be omitted if the standard port numbers are used: 80 for http and 443 for https. We call this limited URL the \"site\". All URLs that share the same scheme, hostname and port are considered to be a part of the site and thus belong to the web asset. Example: the asset with the site `https://www.google.com` contains all these URLs: * `https://www.google.com/` * `https://www.google.com:443/` * `https://www.google.com/foo` * `https://www.google.com/foo?bar` * `https://www.google.com/foo#bar` * `https://user@password:www.google.com/` But it does not contain these URLs: * `http://www.google.com/` (wrong scheme) * `https://google.com/` (hostname does not match) * `https://www.google.com:444/` (port does not match) REQUIRED",
 	//       "location": "query",
 	//       "type": "string"
 	//     }

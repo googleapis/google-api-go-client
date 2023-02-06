@@ -12,7 +12,7 @@
           "description": "View events on all your calendars"
         },
         "https://www.googleapis.com/auth/calendar.readonly": {
-          "description": "View your calendars"
+          "description": "See and download any calendar you can access using your Google Calendar"
         },
         "https://www.googleapis.com/auth/calendar.settings.readonly": {
           "description": "View your Calendar settings"
@@ -26,10 +26,9 @@
   "description": "Manipulates events and other calendar data.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/google-apps/calendar/firstapp",
-  "etag": "\"u9GIe6H63LSGq-9_t39K2Zx_EAc/ec22hi9jBIRxWxCoPiZbFINc_VE\"",
   "icons": {
-    "x16": "http://www.google.com/images/icons/product/calendar-16.png",
-    "x32": "http://www.google.com/images/icons/product/calendar-32.png"
+    "x16": "http://fonts.gstatic.com/s/i/productlogos/calendar_2020q4/v8/web-16dp/logo_calendar_2020q4_color_1x_web_16dp.png",
+    "x32": "http://fonts.gstatic.com/s/i/productlogos/calendar_2020q4/v8/web-32dp/logo_calendar_2020q4_color_1x_web_32dp.png"
   },
   "id": "calendar:v3",
   "kind": "discovery#restDescription",
@@ -815,7 +814,7 @@
               "enumDescriptions": [
                 "Notifications are sent to all guests.",
                 "Notifications are sent to non-Google Calendar guests only.",
-                "No notifications are sent. This value should only be used for migration use cases (note that in most migration cases the import method should be used)."
+                "No notifications are sent. For calendar migration tasks, consider using the Events.import method instead."
               ],
               "location": "query",
               "type": "string"
@@ -828,7 +827,7 @@
           ]
         },
         "get": {
-          "description": "Returns an event.",
+          "description": "Returns an event based on its Google Calendar ID. To retrieve an event using its iCalendar ID, call the events.list method using the iCalUID parameter.",
           "httpMethod": "GET",
           "id": "calendar.events.get",
           "parameterOrder": [
@@ -961,7 +960,7 @@
               "enumDescriptions": [
                 "Notifications are sent to all guests.",
                 "Notifications are sent to non-Google Calendar guests only.",
-                "No notifications are sent. This value should only be used for migration use cases (note that in most migration cases the import method should be used)."
+                "No notifications are sent. Warning: Using the value none can have significant adverse effects, including events not syncing to external calendars or events being lost altogether for some users. For calendar migration tasks, consider using the events.import method instead."
               ],
               "location": "query",
               "type": "string"
@@ -1089,7 +1088,7 @@
               "type": "string"
             },
             "iCalUID": {
-              "description": "Specifies event ID in the iCalendar format to be included in the response. Optional.",
+              "description": "Specifies an event ID in the iCalendar format to be provided in the response. Optional. Use this if you want to search for an event by its iCalendar ID.",
               "location": "query",
               "type": "string"
             },
@@ -1133,7 +1132,7 @@
               "type": "string"
             },
             "q": {
-              "description": "Free text search terms to find events that match these terms in any field, except for extended properties. Optional.",
+              "description": "Free text search terms to find events that match these terms in the following fields: summary, description, location, attendee's displayName, attendee's email. Optional.",
               "location": "query",
               "type": "string"
             },
@@ -1242,7 +1241,7 @@
               "enumDescriptions": [
                 "Notifications are sent to all guests.",
                 "Notifications are sent to non-Google Calendar guests only.",
-                "No notifications are sent. This value should only be used for migration use cases (note that in most migration cases the import method should be used)."
+                "No notifications are sent. For calendar migration tasks, consider using the Events.import method instead."
               ],
               "location": "query",
               "type": "string"
@@ -1313,7 +1312,7 @@
               "enumDescriptions": [
                 "Notifications are sent to all guests.",
                 "Notifications are sent to non-Google Calendar guests only.",
-                "No notifications are sent. This value should only be used for migration use cases (note that in most migration cases the import method should be used)."
+                "No notifications are sent. For calendar migration tasks, consider using the Events.import method instead."
               ],
               "location": "query",
               "type": "string"
@@ -1366,7 +1365,7 @@
               "enumDescriptions": [
                 "Notifications are sent to all guests.",
                 "Notifications are sent to non-Google Calendar guests only.",
-                "No notifications are sent. This value should only be used for migration use cases (note that in most migration cases the import method should be used)."
+                "No notifications are sent. For calendar migration tasks, consider using the Events.import method instead."
               ],
               "location": "query",
               "type": "string"
@@ -1443,7 +1442,7 @@
               "enumDescriptions": [
                 "Notifications are sent to all guests.",
                 "Notifications are sent to non-Google Calendar guests only.",
-                "No notifications are sent. This value should only be used for migration use cases (note that in most migration cases the import method should be used)."
+                "No notifications are sent. For calendar migration tasks, consider using the Events.import method instead."
               ],
               "location": "query",
               "type": "string"
@@ -1486,7 +1485,7 @@
               "type": "string"
             },
             "iCalUID": {
-              "description": "Specifies event ID in the iCalendar format to be included in the response. Optional.",
+              "description": "Specifies an event ID in the iCalendar format to be provided in the response. Optional. Use this if you want to search for an event by its iCalendar ID.",
               "location": "query",
               "type": "string"
             },
@@ -1530,7 +1529,7 @@
               "type": "string"
             },
             "q": {
-              "description": "Free text search terms to find events that match these terms in any field, except for extended properties. Optional.",
+              "description": "Free text search terms to find events that match these terms in the following fields: summary, description, location, attendee's displayName, attendee's email. Optional.",
               "location": "query",
               "type": "string"
             },
@@ -1724,7 +1723,7 @@
       }
     }
   },
-  "revision": "20200428",
+  "revision": "20220722",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Acl": {
@@ -1765,7 +1764,7 @@
           "type": "string"
         },
         "id": {
-          "description": "Identifier of the ACL rule.",
+          "description": "Identifier of the Access Control List (ACL) rule. See Sharing calendars.",
           "type": "string"
         },
         "kind": {
@@ -1789,7 +1788,7 @@
               "calendar.acl.update"
             ]
           },
-          "description": "The scope of the rule.",
+          "description": "The extent to which calendar access is granted by this ACL rule.",
           "properties": {
             "type": {
               "annotations": {
@@ -2049,7 +2048,7 @@
           "type": "string"
         },
         "type": {
-          "description": "The type of delivery mechanism used for this channel.",
+          "description": "The type of delivery mechanism used for this channel. Valid values are \"web_hook\" (or \"webhook\"). Both values refer to a channel where Http requests are used to deliver messages.",
           "type": "string"
         }
       },
@@ -2075,9 +2074,9 @@
         "calendar": {
           "additionalProperties": {
             "$ref": "ColorDefinition",
-            "description": "A calendar color defintion."
+            "description": "A calendar color definition."
           },
-          "description": "A global palette of calendar colors, mapping from the color ID to its definition. A calendarListEntry resource refers to one of these color IDs in its color field. Read-only.",
+          "description": "A global palette of calendar colors, mapping from the color ID to its definition. A calendarListEntry resource refers to one of these color IDs in its colorId field. Read-only.",
           "type": "object"
         },
         "event": {
@@ -2085,7 +2084,7 @@
             "$ref": "ColorDefinition",
             "description": "An event color definition."
           },
-          "description": "A global palette of event colors, mapping from the color ID to its definition. An event resource may refer to one of these color IDs in its color field. Read-only.",
+          "description": "A global palette of event colors, mapping from the color ID to its definition. An event resource may refer to one of these color IDs in its colorId field. Read-only.",
           "type": "object"
         },
         "kind": {
@@ -2105,12 +2104,12 @@
       "id": "ConferenceData",
       "properties": {
         "conferenceId": {
-          "description": "The ID of the conference.\nCan be used by developers to keep track of conferences, should not be displayed to users.\nValues for solution types:  \n- \"eventHangout\": unset.\n- \"eventNamedHangout\": the name of the Hangout.\n- \"hangoutsMeet\": the 10-letter meeting code, for example \"aaa-bbbb-ccc\".\n- \"addOn\": defined by 3P conference provider.  Optional.",
+          "description": "The ID of the conference.\nCan be used by developers to keep track of conferences, should not be displayed to users.\nThe ID value is formed differently for each conference solution type:  \n- eventHangout: ID is not set. (This conference type is deprecated.)\n- eventNamedHangout: ID is the name of the Hangout. (This conference type is deprecated.)\n- hangoutsMeet: ID is the 10-letter meeting code, for example aaa-bbbb-ccc.\n- addOn: ID is defined by the third-party provider.  Optional.",
           "type": "string"
         },
         "conferenceSolution": {
           "$ref": "ConferenceSolution",
-          "description": "The conference solution, such as Hangouts or Google Meet.\nUnset for a conference with a failed create request.\nEither conferenceSolution and at least one entryPoint, or createRequest is required."
+          "description": "The conference solution, such as Google Meet.\nUnset for a conference with a failed create request.\nEither conferenceSolution and at least one entryPoint, or createRequest is required."
         },
         "createRequest": {
           "$ref": "CreateConferenceRequest",
@@ -2132,7 +2131,7 @@
           "description": "Additional properties related to a conference. An example would be a solution-specific setting for enabling video streaming."
         },
         "signature": {
-          "description": "The signature of the conference data.\nGenerated on server side. Must be preserved while copying the conference data between events, otherwise the conference data will not be copied.\nUnset for a conference with a failed create request.\nOptional for a conference with a pending create request.",
+          "description": "The signature of the conference data.\nGenerated on server side.\nUnset for a conference with a failed create request.\nOptional for a conference with a pending create request.",
           "type": "string"
         }
       },
@@ -2205,7 +2204,7 @@
       "id": "ConferenceSolutionKey",
       "properties": {
         "type": {
-          "description": "The conference solution type.\nIf a client encounters an unfamiliar or empty type, it should still be able to display the entry points. However, it should disallow modifications.\nThe possible values are:  \n- \"eventHangout\" for Hangouts for consumers (http://hangouts.google.com)\n- \"eventNamedHangout\" for classic Hangouts for G Suite users (http://hangouts.google.com)\n- \"hangoutsMeet\" for Hangouts Meet (http://meet.google.com)\n- \"addOn\" for 3P conference providers",
+          "description": "The conference solution type.\nIf a client encounters an unfamiliar or empty type, it should still be able to display the entry points. However, it should disallow modifications.\nThe possible values are:  \n- \"eventHangout\" for Hangouts for consumers (deprecated; existing events may show this conference solution type but new conferences cannot be created)\n- \"eventNamedHangout\" for classic Hangouts for Google Workspace users (deprecated; existing events may show this conference solution type but new conferences cannot be created)\n- \"hangoutsMeet\" for Google Meet (http://meet.google.com)\n- \"addOn\" for 3P conference providers",
           "type": "string"
         }
       },
@@ -2297,18 +2296,18 @@
       "properties": {
         "anyoneCanAddSelf": {
           "default": "false",
-          "description": "Whether anyone can invite themselves to the event (currently works for Google+ events only). Optional. The default is False.",
+          "description": "Whether anyone can invite themselves to the event (deprecated). Optional. The default is False.",
           "type": "boolean"
         },
         "attachments": {
-          "description": "File attachments for the event. Currently only Google Drive attachments are supported.\nIn order to modify attachments the supportsAttachments request parameter should be set to true.\nThere can be at most 25 attachments per event,",
+          "description": "File attachments for the event.\nIn order to modify attachments the supportsAttachments request parameter should be set to true.\nThere can be at most 25 attachments per event,",
           "items": {
             "$ref": "EventAttachment"
           },
           "type": "array"
         },
         "attendees": {
-          "description": "The attendees of the event. See the Events with attendees guide for more information on scheduling events with other calendar users.",
+          "description": "The attendees of the event. See the Events with attendees guide for more information on scheduling events with other calendar users. Service accounts need to use domain-wide delegation of authority to populate the attendee list.",
           "items": {
             "$ref": "EventAttendee"
           },
@@ -2344,7 +2343,7 @@
               "type": "string"
             },
             "id": {
-              "description": "The creator's Profile ID, if available. It corresponds to the id field in the People collection of the Google+ API",
+              "description": "The creator's Profile ID, if available.",
               "type": "string"
             },
             "self": {
@@ -2379,6 +2378,11 @@
           "description": "ETag of the resource.",
           "type": "string"
         },
+        "eventType": {
+          "default": "default",
+          "description": "Specific type of the event. Read-only. Possible values are:  \n- \"default\" - A regular event or not further specified. \n- \"outOfOffice\" - An out-of-office event. \n- \"focusTime\" - A focus-time event.",
+          "type": "string"
+        },
         "extendedProperties": {
           "description": "Extended properties of the event.",
           "properties": {
@@ -2402,23 +2406,23 @@
           "type": "object"
         },
         "gadget": {
-          "description": "A gadget that extends this event.",
+          "description": "A gadget that extends this event. Gadgets are deprecated; this structure is instead only used for returning birthday calendar metadata.",
           "properties": {
             "display": {
-              "description": "The gadget's display mode. Optional. Possible values are:  \n- \"icon\" - The gadget displays next to the event's title in the calendar view. \n- \"chip\" - The gadget displays when the event is clicked.",
+              "description": "The gadget's display mode. Deprecated. Possible values are:  \n- \"icon\" - The gadget displays next to the event's title in the calendar view. \n- \"chip\" - The gadget displays when the event is clicked.",
               "type": "string"
             },
             "height": {
-              "description": "The gadget's height in pixels. The height must be an integer greater than 0. Optional.",
+              "description": "The gadget's height in pixels. The height must be an integer greater than 0. Optional. Deprecated.",
               "format": "int32",
               "type": "integer"
             },
             "iconLink": {
-              "description": "The gadget's icon URL. The URL scheme must be HTTPS.",
+              "description": "The gadget's icon URL. The URL scheme must be HTTPS. Deprecated.",
               "type": "string"
             },
             "link": {
-              "description": "The gadget's URL. The URL scheme must be HTTPS.",
+              "description": "The gadget's URL. The URL scheme must be HTTPS. Deprecated.",
               "type": "string"
             },
             "preferences": {
@@ -2430,15 +2434,15 @@
               "type": "object"
             },
             "title": {
-              "description": "The gadget's title.",
+              "description": "The gadget's title. Deprecated.",
               "type": "string"
             },
             "type": {
-              "description": "The gadget's type.",
+              "description": "The gadget's type. Deprecated.",
               "type": "string"
             },
             "width": {
-              "description": "The gadget's width in pixels. The width must be an integer greater than 0. Optional.",
+              "description": "The gadget's width in pixels. The width must be an integer greater than 0. Optional. Deprecated.",
               "format": "int32",
               "type": "integer"
             }
@@ -2461,7 +2465,7 @@
           "type": "boolean"
         },
         "hangoutLink": {
-          "description": "An absolute link to the Google+ hangout associated with this event. Read-only.",
+          "description": "An absolute link to the Google Hangout associated with this event. Read-only.",
           "type": "string"
         },
         "htmlLink": {
@@ -2474,7 +2478,7 @@
               "calendar.events.import"
             ]
           },
-          "description": "Event unique identifier as defined in RFC5545. It is used to uniquely identify events accross calendaring systems and must be supplied when importing events via the import method.\nNote that the icalUID and the id are not identical and only one of them should be supplied at event creation time. One difference in their semantics is that in recurring events, all occurrences of one event have different ids while they all share the same icalUIDs.",
+          "description": "Event unique identifier as defined in RFC5545. It is used to uniquely identify events accross calendaring systems and must be supplied when importing events via the import method.\nNote that the iCalUID and the id are not identical and only one of them should be supplied at event creation time. One difference in their semantics is that in recurring events, all occurrences of one event have different ids while they all share the same iCalUIDs. To retrieve an event using its iCalUID, call the events.list method using the iCalUID parameter. To retrieve an event using its id, call the events.get method.",
           "type": "string"
         },
         "id": {
@@ -2507,7 +2511,7 @@
               "type": "string"
             },
             "id": {
-              "description": "The organizer's Profile ID, if available. It corresponds to the id field in the People collection of the Google+ API",
+              "description": "The organizer's Profile ID, if available.",
               "type": "string"
             },
             "self": {
@@ -2623,7 +2627,7 @@
           "type": "string"
         },
         "iconLink": {
-          "description": "URL link to the attachment's icon. Read-only.",
+          "description": "URL link to the attachment's icon. This field can only be modified for custom third-party attachments.",
           "type": "string"
         },
         "mimeType": {
@@ -2659,7 +2663,7 @@
           "type": "string"
         },
         "id": {
-          "description": "The attendee's Profile ID, if available. It corresponds to the id field in the People collection of the Google+ API",
+          "description": "The attendee's Profile ID, if available.",
           "type": "string"
         },
         "optional": {
@@ -2677,7 +2681,7 @@
           "type": "boolean"
         },
         "responseStatus": {
-          "description": "The attendee's response status. Possible values are:  \n- \"needsAction\" - The attendee has not responded to the invitation. \n- \"declined\" - The attendee has declined the invitation. \n- \"tentative\" - The attendee has tentatively accepted the invitation. \n- \"accepted\" - The attendee has accepted the invitation.",
+          "description": "The attendee's response status. Possible values are:  \n- \"needsAction\" - The attendee has not responded to the invitation (recommended for new events). \n- \"declined\" - The attendee has declined the invitation. \n- \"tentative\" - The attendee has tentatively accepted the invitation. \n- \"accepted\" - The attendee has accepted the invitation.  Warning: If you add an event using the values declined, tentative, or accepted, attendees with the \"Add invitations to my calendar\" setting set to \"When I respond to invitation in email\" won't see an event on their calendar unless they choose to change their invitation response in the event invitation email.",
           "type": "string"
         },
         "self": {

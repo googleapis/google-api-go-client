@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://developers.google.com/authorized-buyers/apis/reference/rest/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/adexchangebuyer2/v2beta1"
-//   ...
-//   ctx := context.Background()
-//   adexchangebuyer2Service, err := adexchangebuyer2.NewService(ctx)
+//	import "google.golang.org/api/adexchangebuyer2/v2beta1"
+//	...
+//	ctx := context.Background()
+//	adexchangebuyer2Service, err := adexchangebuyer2.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   adexchangebuyer2Service, err := adexchangebuyer2.NewService(ctx, option.WithAPIKey("AIza..."))
+//	adexchangebuyer2Service, err := adexchangebuyer2.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   adexchangebuyer2Service, err := adexchangebuyer2.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	adexchangebuyer2Service, err := adexchangebuyer2.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package adexchangebuyer2 // import "google.golang.org/api/adexchangebuyer2/v2beta1"
@@ -50,6 +50,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -75,6 +76,7 @@ const apiId = "adexchangebuyer2:v2beta1"
 const apiName = "adexchangebuyer2"
 const apiVersion = "v2beta1"
 const basePath = "https://adexchangebuyer.googleapis.com/"
+const mtlsBasePath = "https://adexchangebuyer.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
@@ -84,12 +86,13 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/adexchange.buyer",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -539,33 +542,27 @@ type BiddersFilterSetsNonBillableWinningBidsService struct {
 }
 
 // AbsoluteDateRange: An absolute date range, specified by its start
-// date and end date.
-// The supported range of dates begins 30 days before today and ends
-// today.
-// Validity checked upon filter set creation. If a filter set with an
-// absolute
-// date range is run at a later date more than 30 days after start_date,
-// it will
-// fail.
+// date and end date. The supported range of dates begins 30 days before
+// today and ends today. Validity checked upon filter set creation. If a
+// filter set with an absolute date range is run at a later date more
+// than 30 days after start_date, it will fail.
 type AbsoluteDateRange struct {
-	// EndDate: The end date of the range (inclusive).
-	// Must be within the 30 days leading up to current date, and must be
-	// equal to
-	// or after start_date.
+	// EndDate: The end date of the range (inclusive). Must be within the 30
+	// days leading up to current date, and must be equal to or after
+	// start_date.
 	EndDate *Date `json:"endDate,omitempty"`
 
-	// StartDate: The start date of the range (inclusive).
-	// Must be within the 30 days leading up to current date, and must be
-	// equal to
-	// or before end_date.
+	// StartDate: The start date of the range (inclusive). Must be within
+	// the 30 days leading up to current date, and must be equal to or
+	// before end_date.
 	StartDate *Date `json:"startDate,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EndDate") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "EndDate") to include in
@@ -591,10 +588,10 @@ type AcceptProposalRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "ProposalRevision") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ProposalRevision") to
@@ -615,8 +612,8 @@ func (s *AcceptProposalRequest) MarshalJSON() ([]byte, error) {
 
 // AdSize: Represents size of a single ad slot, or a creative.
 type AdSize struct {
-	// Height: The height of the ad slot in pixels.
-	// This field will be present only when size type is `PIXEL`.
+	// Height: The height of the ad slot in pixels. This field will be
+	// present only when size type is `PIXEL`.
 	Height int64 `json:"height,omitempty,string"`
 
 	// SizeType: The size type of the ad slot.
@@ -627,21 +624,20 @@ type AdSize struct {
 	// pixels.
 	//   "INTERSTITIAL" - Special size to describe an interstitial ad slot.
 	//   "NATIVE" - Native (mobile) ads rendered by the publisher.
-	//   "FLUID" - Fluid size (i.e., responsive size) can be resized
-	// automatically with the
-	// change of outside environment.
+	//   "FLUID" - Fluid size (for example, responsive size) can be resized
+	// automatically with the change of outside environment.
 	SizeType string `json:"sizeType,omitempty"`
 
-	// Width: The width of the ad slot in pixels.
-	// This field will be present only when size type is `PIXEL`.
+	// Width: The width of the ad slot in pixels. This field will be present
+	// only when size type is `PIXEL`.
 	Width int64 `json:"width,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "Height") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Height") to include in API
@@ -662,51 +658,36 @@ func (s *AdSize) MarshalJSON() ([]byte, error) {
 // AdTechnologyProviders: Detected ad technology provider information.
 type AdTechnologyProviders struct {
 	// DetectedProviderIds: The detected ad technology provider IDs for this
-	// creative.
-	// See https://storage.googleapis.com/adx-rtb-dictionaries/providers.csv
-	// for
+	// creative. See
+	// https://storage.googleapis.com/adx-rtb-dictionaries/providers.csv for
 	// mapping of provider ID to provided name, a privacy policy URL, and a
-	// list
-	// of domains which can be attributed to the provider.
-	//
-	// If the creative contains provider IDs that are outside of those
-	// listed in
+	// list of domains which can be attributed to the provider. If the
+	// creative contains provider IDs that are outside of those listed in
 	// the
 	// `BidRequest.adslot.consented_providers_settings.consented_providers`
-	// f
-	// ield on the (Google
-	// bid
-	// protocol)[https://developers.google.com/authorized-buyers/rtb/down
-	// loads/realtime-bidding-proto]
-	// and
-	// the
-	// `BidRequest.user.ext.consented_providers_settings.consented_provid
-	// ers`
-	// field on the
-	// (OpenRTB
-	// protocol)[https://developers.google.com/authorized-buyers/rtb
-	// /downloads/openrtb-adx-proto],
-	// and a bid is submitted with that creative for an impression that
-	// will
-	// serve to an EEA user, the bid will be filtered before the auction.
+	// field on the (Google bid
+	// protocol)[https://developers.google.com/authorized-buyers/rtb/download
+	// s/realtime-bidding-proto] and the
+	// `BidRequest.user.ext.consented_providers_settings.consented_providers`
+	//  field on the (OpenRTB
+	// protocol)[https://developers.google.com/authorized-buyers/rtb/download
+	// s/openrtb-adx-proto], and a bid is submitted with that creative for
+	// an impression that will serve to an EEA user, the bid will be
+	// filtered before the auction.
 	DetectedProviderIds googleapi.Int64s `json:"detectedProviderIds,omitempty"`
 
 	// HasUnidentifiedProvider: Whether the creative contains an
-	// unidentified ad technology provider.
-	//
-	// If true for a given creative, any bid submitted with that creative
-	// for an
-	// impression that will serve to an EEA user will be filtered before
-	// the
-	// auction.
+	// unidentified ad technology provider. If true for a given creative,
+	// any bid submitted with that creative for an impression that will
+	// serve to an EEA user will be filtered before the auction.
 	HasUnidentifiedProvider bool `json:"hasUnidentifiedProvider,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DetectedProviderIds")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DetectedProviderIds") to
@@ -734,10 +715,10 @@ type AddDealAssociationRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "Association") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Association") to include
@@ -763,10 +744,10 @@ type AddNoteRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "Note") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Note") to include in API
@@ -796,10 +777,10 @@ type AppContext struct {
 
 	// ForceSendFields is a list of field names (e.g. "AppTypes") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AppTypes") to include in
@@ -829,10 +810,10 @@ type AuctionContext struct {
 
 	// ForceSendFields is a list of field names (e.g. "AuctionTypes") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AuctionTypes") to include
@@ -851,10 +832,8 @@ func (s *AuctionContext) MarshalJSON() ([]byte, error) {
 }
 
 // BidMetricsRow: The set of metrics that are measured in numbers of
-// bids, representing how
-// many bids with the specified dimension values were considered
-// eligible at
-// each stage of the bidding funnel;
+// bids, representing how many bids with the specified dimension values
+// were considered eligible at each stage of the bidding funnel;
 type BidMetricsRow struct {
 	// Bids: The number of bids that Ad Exchange received from the buyer.
 	Bids *MetricValue `json:"bids,omitempty"`
@@ -870,13 +849,12 @@ type BidMetricsRow struct {
 	ImpressionsWon *MetricValue `json:"impressionsWon,omitempty"`
 
 	// MeasurableImpressions: The number of bids for which the corresponding
-	// impression was measurable
-	// for viewability (as defined by Active View).
+	// impression was measurable for viewability (as defined by Active
+	// View).
 	MeasurableImpressions *MetricValue `json:"measurableImpressions,omitempty"`
 
 	// ReachedQueries: The number of bids that won the auction and also won
-	// the mediation
-	// waterfall (if any).
+	// the mediation waterfall (if any).
 	ReachedQueries *MetricValue `json:"reachedQueries,omitempty"`
 
 	// RowDimensions: The values of all dimensions associated with metric
@@ -884,16 +862,15 @@ type BidMetricsRow struct {
 	RowDimensions *RowDimensions `json:"rowDimensions,omitempty"`
 
 	// ViewableImpressions: The number of bids for which the corresponding
-	// impression was viewable (as
-	// defined by Active View).
+	// impression was viewable (as defined by Active View).
 	ViewableImpressions *MetricValue `json:"viewableImpressions,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Bids") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Bids") to include in API
@@ -912,13 +889,11 @@ func (s *BidMetricsRow) MarshalJSON() ([]byte, error) {
 }
 
 // BidResponseWithoutBidsStatusRow: The number of impressions with the
-// specified dimension values that were
-// considered to have no applicable bids, as described by the specified
-// status.
+// specified dimension values that were considered to have no applicable
+// bids, as described by the specified status.
 type BidResponseWithoutBidsStatusRow struct {
 	// ImpressionCount: The number of impressions for which there was a bid
-	// response with the
-	// specified status.
+	// response with the specified status.
 	ImpressionCount *MetricValue `json:"impressionCount,omitempty"`
 
 	// RowDimensions: The values of all dimensions associated with metric
@@ -926,37 +901,31 @@ type BidResponseWithoutBidsStatusRow struct {
 	RowDimensions *RowDimensions `json:"rowDimensions,omitempty"`
 
 	// Status: The status specifying why the bid responses were considered
-	// to have no
-	// applicable bids.
+	// to have no applicable bids.
 	//
 	// Possible values:
-	//   "STATUS_UNSPECIFIED" - A placeholder for an undefined status.
-	// This value will never be returned in responses.
+	//   "STATUS_UNSPECIFIED" - A placeholder for an undefined status. This
+	// value will never be returned in responses.
 	//   "RESPONSES_WITHOUT_BIDS" - The response had no bids.
 	//   "RESPONSES_WITHOUT_BIDS_FOR_ACCOUNT" - The response had no bids for
-	// the specified account, though it may have
-	// included bids on behalf of other accounts.
-	// Applies if:
-	// 1. Request is on behalf of a bidder and an account filter is
-	// present.
-	// 2. Request is on behalf of a child seat.
+	// the specified account, though it may have included bids on behalf of
+	// other accounts. Applies if: 1. Request is on behalf of a bidder and
+	// an account filter is present. 2. Request is on behalf of a child
+	// seat.
 	//   "RESPONSES_WITHOUT_BIDS_FOR_DEAL" - The response had no bids for
-	// the specified deal, though it may have
-	// included bids on other deals on behalf of the account to which the
-	// deal
-	// belongs. If request is on behalf of a bidder and an account filter is
-	// not
-	// present, this also includes responses that have bids on behalf
-	// of
-	// accounts other than the account to which the deal belongs.
+	// the specified deal, though it may have included bids on other deals
+	// on behalf of the account to which the deal belongs. If request is on
+	// behalf of a bidder and an account filter is not present, this also
+	// includes responses that have bids on behalf of accounts other than
+	// the account to which the deal belongs.
 	Status string `json:"status,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ImpressionCount") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ImpressionCount") to
@@ -976,18 +945,17 @@ func (s *BidResponseWithoutBidsStatusRow) MarshalJSON() ([]byte, error) {
 }
 
 // Buyer: Represents a buyer of inventory. Each buyer is identified by a
-// unique
-// Authorized Buyers account ID.
+// unique Authorized Buyers account ID.
 type Buyer struct {
 	// AccountId: Authorized Buyers account ID of the buyer.
 	AccountId string `json:"accountId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AccountId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AccountId") to include in
@@ -1006,21 +974,16 @@ func (s *Buyer) MarshalJSON() ([]byte, error) {
 }
 
 // CalloutStatusRow: The number of impressions with the specified
-// dimension values where the
-// corresponding bid request or bid response was not successful, as
-// described by
-// the specified callout status.
+// dimension values where the corresponding bid request or bid response
+// was not successful, as described by the specified callout status.
 type CalloutStatusRow struct {
-	// CalloutStatusId: The ID of the callout
-	// status.
-	// See
-	// [callout-status-codes](https://developers.google.com/autho
-	// rized-buyers/rtb/downloads/callout-status-codes).
+	// CalloutStatusId: The ID of the callout status. See
+	// callout-status-codes
+	// (https://developers.google.com/authorized-buyers/rtb/downloads/callout-status-codes).
 	CalloutStatusId int64 `json:"calloutStatusId,omitempty"`
 
 	// ImpressionCount: The number of impressions for which there was a bid
-	// request or bid response
-	// with the specified callout status.
+	// request or bid response with the specified callout status.
 	ImpressionCount *MetricValue `json:"impressionCount,omitempty"`
 
 	// RowDimensions: The values of all dimensions associated with metric
@@ -1029,10 +992,10 @@ type CalloutStatusRow struct {
 
 	// ForceSendFields is a list of field names (e.g. "CalloutStatusId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CalloutStatusId") to
@@ -1055,60 +1018,47 @@ func (s *CalloutStatusRow) MarshalJSON() ([]byte, error) {
 type CancelNegotiationRequest struct {
 }
 
-// Client: A client resource represents a client buyer&mdash;an agency,
-// a brand, or an
-// advertiser customer of the sponsor buyer. Users associated with the
-// client
-// buyer have restricted access to the Marketplace and certain other
-// sections of
-// the Authorized Buyers UI based on the role granted to the client
-// buyer. All
-// fields are required unless otherwise specified.
+// Client: A client resource represents a client buyer—an agency, a
+// brand, or an advertiser customer of the sponsor buyer. Users
+// associated with the client buyer have restricted access to the
+// Marketplace and certain other sections of the Authorized Buyers UI
+// based on the role granted to the client buyer. All fields are
+// required unless otherwise specified.
 type Client struct {
-	// ClientAccountId: The globally-unique numerical ID of the client.
-	// The value of this field is ignored in create and update operations.
+	// ClientAccountId: The globally-unique numerical ID of the client. The
+	// value of this field is ignored in create and update operations.
 	ClientAccountId int64 `json:"clientAccountId,omitempty,string"`
 
-	// ClientName: Name used to represent this client to publishers.
-	// You may have multiple clients that map to the same entity,
-	// but for each client the combination of `clientName` and entity
-	// must be unique.
-	// You can specify this field as empty.
+	// ClientName: Name used to represent this client to publishers. You may
+	// have multiple clients that map to the same entity, but for each
+	// client the combination of `clientName` and entity must be unique. You
+	// can specify this field as empty. Maximum length of 255 characters is
+	// allowed.
 	ClientName string `json:"clientName,omitempty"`
 
-	// EntityId: Numerical identifier of the client entity.
-	// The entity can be an advertiser, a brand, or an agency.
-	// This identifier is unique among all the entities with the same
-	// type.
-	//
-	// A list of all known advertisers with their identifiers is available
-	// in
-	// the
-	// [advertisers.txt](https://storage.googleapis.com/adx-rtb-dictionar
-	// ies/advertisers.txt)
-	// file.
-	//
-	// A list of all known brands with their identifiers is available in
-	// the
-	// [brands.txt](https://storage.googleapis.com/adx-rtb-dictionaries/b
-	// rands.txt)
-	// file.
-	//
-	// A list of all known agencies with their identifiers is available in
-	// the
-	// [agencies.txt](https://storage.googleapis.com/adx-rtb-dictionaries
-	// /agencies.txt)
+	// EntityId: Numerical identifier of the client entity. The entity can
+	// be an advertiser, a brand, or an agency. This identifier is unique
+	// among all the entities with the same type. The value of this field is
+	// ignored if the entity type is not provided. A list of all known
+	// advertisers with their identifiers is available in the
+	// advertisers.txt
+	// (https://storage.googleapis.com/adx-rtb-dictionaries/advertisers.txt)
+	// file. A list of all known brands with their identifiers is available
+	// in the brands.txt
+	// (https://storage.googleapis.com/adx-rtb-dictionaries/brands.txt)
+	// file. A list of all known agencies with their identifiers is
+	// available in the agencies.txt
+	// (https://storage.googleapis.com/adx-rtb-dictionaries/agencies.txt)
 	// file.
 	EntityId int64 `json:"entityId,omitempty,string"`
 
 	// EntityName: The name of the entity. This field is automatically
-	// fetched based on
-	// the type and ID.
-	// The value of this field is ignored in create and update operations.
+	// fetched based on the type and ID. The value of this field is ignored
+	// in create and update operations.
 	EntityName string `json:"entityName,omitempty"`
 
-	// EntityType: The type of the client entity: `ADVERTISER`, `BRAND`, or
-	// `AGENCY`.
+	// EntityType: An optional field for specifying the type of the client
+	// entity: `ADVERTISER`, `BRAND`, or `AGENCY`.
 	//
 	// Possible values:
 	//   "ENTITY_TYPE_UNSPECIFIED" - A placeholder for an undefined client
@@ -1117,52 +1067,38 @@ type Client struct {
 	//   "BRAND" - A brand.
 	//   "AGENCY" - An advertising agency.
 	//   "ENTITY_TYPE_UNCLASSIFIED" - An explicit value for a client that
-	// was not yet classified
-	// as any particular entity.
+	// was not yet classified as any particular entity.
 	EntityType string `json:"entityType,omitempty"`
 
 	// PartnerClientId: Optional arbitrary unique identifier of this client
-	// buyer from the
-	// standpoint of its Ad Exchange sponsor buyer.
-	//
-	// This field can be used to associate a client buyer with the
-	// identifier
-	// in the namespace of its sponsor buyer, lookup client buyers by
-	// that
+	// buyer from the standpoint of its Ad Exchange sponsor buyer. This
+	// field can be used to associate a client buyer with the identifier in
+	// the namespace of its sponsor buyer, lookup client buyers by that
 	// identifier and verify whether an Ad Exchange counterpart of a given
-	// client
-	// buyer already exists.
-	//
-	// If present, must be unique among all the client buyers for its
-	// Ad Exchange sponsor buyer.
+	// client buyer already exists. If present, must be unique among all the
+	// client buyers for its Ad Exchange sponsor buyer.
 	PartnerClientId string `json:"partnerClientId,omitempty"`
 
 	// Role: The role which is assigned to the client buyer. Each role
-	// implies a set of
-	// permissions granted to the client. Must be one of
-	// `CLIENT_DEAL_VIEWER`,
-	// `CLIENT_DEAL_NEGOTIATOR` or `CLIENT_DEAL_APPROVER`.
+	// implies a set of permissions granted to the client. Must be one of
+	// `CLIENT_DEAL_VIEWER`, `CLIENT_DEAL_NEGOTIATOR` or
+	// `CLIENT_DEAL_APPROVER`.
 	//
 	// Possible values:
 	//   "CLIENT_ROLE_UNSPECIFIED" - A placeholder for an undefined client
 	// role.
 	//   "CLIENT_DEAL_VIEWER" - Users associated with this client can see
-	// publisher deal offers
-	// in the Marketplace.
-	// They can neither negotiate proposals nor approve deals.
-	// If this client is visible to publishers, they can send deal
-	// proposals
-	// to this client.
+	// publisher deal offers in the Marketplace. They can neither negotiate
+	// proposals nor approve deals. If this client is visible to publishers,
+	// they can send deal proposals to this client.
 	//   "CLIENT_DEAL_NEGOTIATOR" - Users associated with this client can
-	// respond to deal proposals
-	// sent to them by publishers. They can also initiate deal proposals
-	// of their own.
+	// respond to deal proposals sent to them by publishers. They can also
+	// initiate deal proposals of their own.
 	//   "CLIENT_DEAL_APPROVER" - Users associated with this client can
-	// approve eligible deals
-	// on your behalf. Some deals may still explicitly require
-	// publisher
-	// finalization. If this role is not selected, the sponsor buyer
-	// will need to manually approve each of their deals.
+	// approve eligible deals on your behalf. Some deals may still
+	// explicitly require publisher finalization. If this role is not
+	// selected, the sponsor buyer will need to manually approve each of
+	// their deals.
 	Role string `json:"role,omitempty"`
 
 	// Status: The status of the client buyer.
@@ -1183,10 +1119,10 @@ type Client struct {
 
 	// ForceSendFields is a list of field names (e.g. "ClientAccountId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ClientAccountId") to
@@ -1206,28 +1142,21 @@ func (s *Client) MarshalJSON() ([]byte, error) {
 }
 
 // ClientUser: A client user is created under a client buyer and has
-// restricted access to
-// the Marketplace and certain other sections of the Authorized Buyers
-// UI based
-// on the role granted to the associated client buyer.
-//
-// The only way a new client user can be created is via accepting
-// an
-// email invitation
-// (see the
-// accounts.clients.invitations.create
-// method).
-//
-// All fields are required unless otherwise specified.
+// restricted access to the Marketplace and certain other sections of
+// the Authorized Buyers UI based on the role granted to the associated
+// client buyer. The only way a new client user can be created is
+// through accepting an email invitation (see the
+// accounts.clients.invitations.create method). All fields are required
+// unless otherwise specified.
 type ClientUser struct {
-	// ClientAccountId: Numerical account ID of the client buyer
-	// with which the user is associated; the
-	// buyer must be a client of the current sponsor buyer.
-	// The value of this field is ignored in an update operation.
+	// ClientAccountId: Numerical account ID of the client buyer with which
+	// the user is associated; the buyer must be a client of the current
+	// sponsor buyer. The value of this field is ignored in an update
+	// operation.
 	ClientAccountId int64 `json:"clientAccountId,omitempty,string"`
 
-	// Email: User's email address. The value of this field
-	// is ignored in an update operation.
+	// Email: User's email address. The value of this field is ignored in an
+	// update operation.
 	Email string `json:"email,omitempty"`
 
 	// Status: The status of the client user.
@@ -1241,9 +1170,9 @@ type ClientUser struct {
 	//   "DISABLED" - A user that is currently disabled.
 	Status string `json:"status,omitempty"`
 
-	// UserId: The unique numerical ID of the client user
-	// that has accepted an invitation.
-	// The value of this field is ignored in an update operation.
+	// UserId: The unique numerical ID of the client user that has accepted
+	// an invitation. The value of this field is ignored in an update
+	// operation.
 	UserId int64 `json:"userId,omitempty,string"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1252,10 +1181,10 @@ type ClientUser struct {
 
 	// ForceSendFields is a list of field names (e.g. "ClientAccountId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ClientAccountId") to
@@ -1275,24 +1204,21 @@ func (s *ClientUser) MarshalJSON() ([]byte, error) {
 }
 
 // ClientUserInvitation: An invitation for a new client user to get
-// access to the Authorized Buyers
-// UI. All fields are required unless otherwise specified.
+// access to the Authorized Buyers UI. All fields are required unless
+// otherwise specified.
 type ClientUserInvitation struct {
-	// ClientAccountId: Numerical account ID of the client buyer
-	// that the invited user is associated with.
-	// The value of this field is ignored in create operations.
+	// ClientAccountId: Numerical account ID of the client buyer that the
+	// invited user is associated with. The value of this field is ignored
+	// in create operations.
 	ClientAccountId int64 `json:"clientAccountId,omitempty,string"`
 
-	// Email: The email address to which the invitation is sent.
-	// Email
-	// addresses should be unique among all client users under each
-	// sponsor
+	// Email: The email address to which the invitation is sent. Email
+	// addresses should be unique among all client users under each sponsor
 	// buyer.
 	Email string `json:"email,omitempty"`
 
 	// InvitationId: The unique numerical ID of the invitation that is sent
-	// to the user.
-	// The value of this field is ignored in create operations.
+	// to the user. The value of this field is ignored in create operations.
 	InvitationId int64 `json:"invitationId,omitempty,string"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1301,10 +1227,10 @@ type ClientUserInvitation struct {
 
 	// ForceSendFields is a list of field names (e.g. "ClientAccountId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ClientAccountId") to
@@ -1339,10 +1265,10 @@ type ContactInformation struct {
 
 	// ForceSendFields is a list of field names (e.g. "Email") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Email") to include in API
@@ -1375,43 +1301,36 @@ type Correction struct {
 	//   "CORRECTION_TYPE_UNSPECIFIED" - The correction type is unknown.
 	// Refer to the details for more information.
 	//   "VENDOR_IDS_ADDED" - The ad's declared vendors did not match the
-	// vendors that were detected.
-	// The detected vendors were added.
+	// vendors that were detected. The detected vendors were added.
 	//   "SSL_ATTRIBUTE_REMOVED" - The ad had the SSL attribute declared but
-	// was not SSL-compliant.
-	// The SSL attribute was removed.
+	// was not SSL-compliant. The SSL attribute was removed.
 	//   "FLASH_FREE_ATTRIBUTE_REMOVED" - The ad was declared as Flash-free
-	// but contained Flash, so the Flash-free
-	// attribute was removed.
+	// but contained Flash, so the Flash-free attribute was removed.
 	//   "FLASH_FREE_ATTRIBUTE_ADDED" - The ad was not declared as
-	// Flash-free but it did not reference any flash
-	// content, so the Flash-free attribute was added.
+	// Flash-free but it did not reference any flash content, so the
+	// Flash-free attribute was added.
 	//   "REQUIRED_ATTRIBUTE_ADDED" - The ad did not declare a required
-	// creative attribute.
-	// The attribute was added.
+	// creative attribute. The attribute was added.
 	//   "REQUIRED_VENDOR_ADDED" - The ad did not declare a required
-	// technology vendor.
-	// The technology vendor was added.
+	// technology vendor. The technology vendor was added.
 	//   "SSL_ATTRIBUTE_ADDED" - The ad did not declare the SSL attribute
-	// but was SSL-compliant, so the
-	// SSL attribute was added.
+	// but was SSL-compliant, so the SSL attribute was added.
 	//   "IN_BANNER_VIDEO_ATTRIBUTE_ADDED" - Properties consistent with
-	// In-banner video were found, so an
-	// In-Banner Video attribute was added.
+	// In-banner video were found, so an In-Banner Video attribute was
+	// added.
 	//   "MRAID_ATTRIBUTE_ADDED" - The ad makes calls to the MRAID API so
 	// the MRAID attribute was added.
 	//   "FLASH_ATTRIBUTE_REMOVED" - The ad unnecessarily declared the Flash
-	// attribute, so the Flash attribute
-	// was removed.
+	// attribute, so the Flash attribute was removed.
 	//   "VIDEO_IN_SNIPPET_ATTRIBUTE_ADDED" - The ad contains video content.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Contexts") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Contexts") to include in
@@ -1431,10 +1350,8 @@ func (s *Correction) MarshalJSON() ([]byte, error) {
 
 // Creative: A creative and its classification data.
 type Creative struct {
-	// AccountId: The account that this creative belongs to.
-	// Can be used to filter the response of the
-	// creatives.list
-	// method.
+	// AccountId: The account that this creative belongs to. Can be used to
+	// filter the response of the creatives.list method.
 	AccountId string `json:"accountId,omitempty"`
 
 	// AdChoicesDestinationUrl: The link to AdChoices destination page.
@@ -1452,13 +1369,11 @@ type Creative struct {
 	AgencyId int64 `json:"agencyId,omitempty,string"`
 
 	// ApiUpdateTime: Output only. The last update timestamp of the creative
-	// via API.
+	// through the API.
 	ApiUpdateTime string `json:"apiUpdateTime,omitempty"`
 
 	// Attributes: All attributes for the ads that may be shown from this
-	// creative.
-	// Can be used to filter the response of the
-	// creatives.list
+	// creative. Can be used to filter the response of the creatives.list
 	// method.
 	//
 	// Possible values:
@@ -1498,28 +1413,23 @@ type Creative struct {
 	//   "RICH_MEDIA_CAPABILITY_TYPE_FLASH" - The creative is Flash.
 	//   "RICH_MEDIA_CAPABILITY_TYPE_HTML5" - The creative is HTML5.
 	//   "SKIPPABLE_INSTREAM_VIDEO" - The creative has an instream VAST
-	// video type of skippable instream video.
-	// For pretargeting.
+	// video type of skippable instream video. For pretargeting.
 	//   "RICH_MEDIA_CAPABILITY_TYPE_SSL" - The creative is SSL.
 	//   "RICH_MEDIA_CAPABILITY_TYPE_NON_SSL" - The creative is non-SSL.
 	//   "RICH_MEDIA_CAPABILITY_TYPE_INTERSTITIAL" - The creative is an
 	// interstitial.
 	//   "NON_SKIPPABLE_INSTREAM_VIDEO" - The creative has an instream VAST
-	// video type of non-skippable instream
-	// video. For pretargeting.
+	// video type of non-skippable instream video. For pretargeting.
 	//   "NATIVE_ELIGIBILITY_ELIGIBLE" - The creative is eligible for
 	// native.
 	//   "NON_VPAID" - The creative has an instream VAST video type of
-	// non-VPAID. For
-	// pretargeting.
+	// non-VPAID. For pretargeting.
 	//   "NATIVE_ELIGIBILITY_NOT_ELIGIBLE" - The creative is not eligible
 	// for native.
 	//   "ANY_INTERSTITIAL" - The creative has an interstitial size of any
-	// interstitial. For
-	// pretargeting.
+	// interstitial. For pretargeting.
 	//   "NON_INTERSTITIAL" - The creative has an interstitial size of non
-	// interstitial. For
-	// pretargeting.
+	// interstitial. For pretargeting.
 	//   "IN_BANNER_VIDEO" - The video type is in-banner video.
 	//   "RENDERING_SIZELESS_ADX" - The creative can dynamically resize to
 	// fill a variety of slot sizes.
@@ -1533,30 +1443,22 @@ type Creative struct {
 	// this creative.
 	Corrections []*Correction `json:"corrections,omitempty"`
 
-	// CreativeId: The buyer-defined creative ID of this creative.
-	// Can be used to filter the response of the
-	// creatives.list
-	// method.
+	// CreativeId: The buyer-defined creative ID of this creative. Can be
+	// used to filter the response of the creatives.list method.
 	CreativeId string `json:"creativeId,omitempty"`
 
 	// DealsStatus: Output only. The top-level deals status of this
-	// creative.
-	// If disapproved, an entry for 'auctionType=DIRECT_DEALS' (or 'ALL')
-	// in
-	// serving_restrictions will also exist. Note
-	// that this may be nuanced with other contextual restrictions, in which
-	// case,
-	// it may be preferable to read from serving_restrictions directly.
-	// Can be used to filter the response of the
-	// creatives.list
-	// method.
+	// creative. If disapproved, an entry for 'auctionType=DIRECT_DEALS' (or
+	// 'ALL') in serving_restrictions will also exist. Note that this may be
+	// nuanced with other contextual restrictions, in which case, it may be
+	// preferable to read from serving_restrictions directly. Can be used to
+	// filter the response of the creatives.list method.
 	//
 	// Possible values:
 	//   "STATUS_UNSPECIFIED" - The status is unknown.
 	//   "NOT_CHECKED" - The creative has not been checked.
 	//   "CONDITIONALLY_APPROVED" - The creative has been conditionally
-	// approved.
-	// See serving_restrictions for details.
+	// approved. See serving_restrictions for details.
 	//   "APPROVED" - The creative has been approved.
 	//   "DISAPPROVED" - The creative has been disapproved.
 	//   "PENDING_REVIEW" - Placeholder for transition to v1beta1. Currently
@@ -1576,28 +1478,21 @@ type Creative struct {
 	DetectedDomains []string `json:"detectedDomains,omitempty"`
 
 	// DetectedLanguages: Output only. The detected languages for this
-	// creative. The order is
-	// arbitrary. The codes are 2 or 5 characters and are documented
-	// at
-	// https://developers.google.com/adwords/api/docs/appendix/languagecod
-	// es.
+	// creative. The order is arbitrary. The codes are 2 or 5 characters and
+	// are documented at
+	// https://developers.google.com/adwords/api/docs/appendix/languagecodes.
 	DetectedLanguages []string `json:"detectedLanguages,omitempty"`
 
 	// DetectedProductCategories: Output only. Detected product categories,
-	// if any.
-	// See the ad-product-categories.txt file in the technical
-	// documentation
-	// for a list of IDs.
+	// if any. See the ad-product-categories.txt file in the technical
+	// documentation for a list of IDs.
 	DetectedProductCategories []int64 `json:"detectedProductCategories,omitempty"`
 
 	// DetectedSensitiveCategories: Output only. Detected sensitive
-	// categories, if any.
-	// See the ad-sensitive-categories.txt file in the technical
-	// documentation for
-	// a list of IDs. You should use these IDs along with
-	// the
-	// excluded-sensitive-category field in the bid request to filter your
-	// bids.
+	// categories, if any. See the ad-sensitive-categories.txt file in the
+	// technical documentation for a list of IDs. You should use these IDs
+	// along with the excluded-sensitive-category field in the bid request
+	// to filter your bids.
 	DetectedSensitiveCategories []int64 `json:"detectedSensitiveCategories,omitempty"`
 
 	// Html: An HTML creative.
@@ -1611,23 +1506,18 @@ type Creative struct {
 	Native *NativeContent `json:"native,omitempty"`
 
 	// OpenAuctionStatus: Output only. The top-level open auction status of
-	// this creative.
-	// If disapproved, an entry for 'auctionType = OPEN_AUCTION' (or 'ALL')
-	// in
-	// serving_restrictions will also exist. Note
-	// that this may be nuanced with other contextual restrictions, in which
-	// case,
-	// it may be preferable to read from serving_restrictions directly.
-	// Can be used to filter the response of the
-	// creatives.list
+	// this creative. If disapproved, an entry for 'auctionType =
+	// OPEN_AUCTION' (or 'ALL') in serving_restrictions will also exist.
+	// Note that this may be nuanced with other contextual restrictions, in
+	// which case, it may be preferable to read from serving_restrictions
+	// directly. Can be used to filter the response of the creatives.list
 	// method.
 	//
 	// Possible values:
 	//   "STATUS_UNSPECIFIED" - The status is unknown.
 	//   "NOT_CHECKED" - The creative has not been checked.
 	//   "CONDITIONALLY_APPROVED" - The creative has been conditionally
-	// approved.
-	// See serving_restrictions for details.
+	// approved. See serving_restrictions for details.
 	//   "APPROVED" - The creative has been approved.
 	//   "DISAPPROVED" - The creative has been disapproved.
 	//   "PENDING_REVIEW" - Placeholder for transition to v1beta1. Currently
@@ -1645,19 +1535,15 @@ type Creative struct {
 	RestrictedCategories []string `json:"restrictedCategories,omitempty"`
 
 	// ServingRestrictions: Output only. The granular status of this ad in
-	// specific contexts.
-	// A context here relates to where something ultimately serves (for
-	// example,
-	// a physical location, a platform, an HTTPS vs HTTP request, or the
-	// type
-	// of auction).
+	// specific contexts. A context here relates to where something
+	// ultimately serves (for example, a physical location, a platform, an
+	// HTTPS versus HTTP request, or the type of auction).
 	ServingRestrictions []*ServingRestriction `json:"servingRestrictions,omitempty"`
 
 	// VendorIds: All vendor IDs for the ads that may be shown from this
-	// creative.
-	// See
-	// https://storage.googleapis.com/adx-rtb-dictionaries/vendors.txt
-	// for possible values.
+	// creative. See
+	// https://storage.googleapis.com/adx-rtb-dictionaries/vendors.txt for
+	// possible values.
 	VendorIds []int64 `json:"vendorIds,omitempty"`
 
 	// Version: Output only. The version of this creative.
@@ -1672,10 +1558,10 @@ type Creative struct {
 
 	// ForceSendFields is a list of field names (e.g. "AccountId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AccountId") to include in
@@ -1708,10 +1594,10 @@ type CreativeDealAssociation struct {
 
 	// ForceSendFields is a list of field names (e.g. "AccountId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AccountId") to include in
@@ -1730,9 +1616,8 @@ func (s *CreativeDealAssociation) MarshalJSON() ([]byte, error) {
 }
 
 // CreativeRestrictions: Represents creative restrictions associated to
-// Programmatic Guaranteed/
-// Preferred Deal in Ad Manager.
-// This doesn't apply to Private Auction and AdX Preferred Deals.
+// Programmatic Guaranteed/ Preferred Deal in Ad Manager. This doesn't
+// apply to Private Auction and AdX Preferred Deals.
 type CreativeRestrictions struct {
 	// CreativeFormat: The format of the environment that the creatives will
 	// be displayed in.
@@ -1743,8 +1628,7 @@ type CreativeRestrictions struct {
 	//   "DISPLAY" - A creative that will be displayed in environments such
 	// as a browser.
 	//   "VIDEO" - A video creative that will be displayed in environments
-	// such as a video
-	// player.
+	// such as a video player.
 	CreativeFormat string `json:"creativeFormat,omitempty"`
 
 	CreativeSpecifications []*CreativeSpecification `json:"creativeSpecifications,omitempty"`
@@ -1757,19 +1641,18 @@ type CreativeRestrictions struct {
 	// skippable ad type.
 	//   "SKIPPABLE" - This video ad can be skipped after 5 seconds.
 	//   "INSTREAM_SELECT" - This video ad can be skipped after 5 seconds,
-	// and is counted as
-	// engaged view after 30 seconds. The creative is hosted on
-	// YouTube only, and viewcount of the YouTube video increments
+	// and is counted as engaged view after 30 seconds. The creative is
+	// hosted on YouTube only, and viewcount of the YouTube video increments
 	// after the engaged view.
 	//   "NOT_SKIPPABLE" - This video ad is not skippable.
 	SkippableAdType string `json:"skippableAdType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CreativeFormat") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CreativeFormat") to
@@ -1790,11 +1673,10 @@ func (s *CreativeRestrictions) MarshalJSON() ([]byte, error) {
 
 // CreativeSize: Specifies the size of the creative.
 type CreativeSize struct {
-	// AllowedFormats: What formats are allowed by the publisher.
-	// If this repeated field is empty then all formats are allowed.
-	// For example, if this field contains AllowedFormatType.AUDIO then
-	// the
-	// publisher only allows an audio ad (without any video).
+	// AllowedFormats: What formats are allowed by the publisher. If this
+	// repeated field is empty then all formats are allowed. For example, if
+	// this field contains AllowedFormatType.AUDIO then the publisher only
+	// allows an audio ad (without any video).
 	//
 	// Possible values:
 	//   "UNKNOWN" - A placeholder for an undefined allowed format.
@@ -1802,8 +1684,8 @@ type CreativeSize struct {
 	AllowedFormats []string `json:"allowedFormats,omitempty"`
 
 	// CompanionSizes: For video creatives specifies the sizes of companion
-	// ads (if present).
-	// Companion sizes may be filled in only when creative_size_type = VIDEO
+	// ads (if present). Companion sizes may be filled in only when
+	// creative_size_type = VIDEO
 	CompanionSizes []*Size `json:"companionSizes,omitempty"`
 
 	// CreativeSizeType: The creative size type.
@@ -1818,8 +1700,8 @@ type CreativeSize struct {
 	CreativeSizeType string `json:"creativeSizeType,omitempty"`
 
 	// NativeTemplate: Output only. The native template for this creative.
-	// It will have a value
-	// only if creative_size_type = CreativeSizeType.NATIVE.
+	// It will have a value only if creative_size_type =
+	// CreativeSizeType.NATIVE.
 	//
 	// Possible values:
 	//   "UNKNOWN_NATIVE_TEMPLATE" - A placeholder for an undefined native
@@ -1833,32 +1715,30 @@ type CreativeSize struct {
 	// video app install ad.
 	NativeTemplate string `json:"nativeTemplate,omitempty"`
 
-	// Size: For regular or video creative size type, specifies the size
-	// of the creative
+	// Size: For regular or video creative size type, specifies the size of
+	// the creative
 	Size *Size `json:"size,omitempty"`
 
 	// SkippableAdType: The type of skippable ad for this creative. It will
-	// have a value only if
-	// creative_size_type = CreativeSizeType.VIDEO.
+	// have a value only if creative_size_type = CreativeSizeType.VIDEO.
 	//
 	// Possible values:
 	//   "SKIPPABLE_AD_TYPE_UNSPECIFIED" - A placeholder for an undefined
 	// skippable ad type.
 	//   "GENERIC" - This video ad can be skipped after 5 seconds.
 	//   "INSTREAM_SELECT" - This video ad can be skipped after 5 seconds,
-	// and count as
-	// engaged view after 30 seconds. The creative is hosted on
-	// YouTube only, and viewcount of the YouTube video increments
-	// after the engaged view.
+	// and count as engaged view after 30 seconds. The creative is hosted on
+	// YouTube only, and viewcount of the YouTube video increments after the
+	// engaged view.
 	//   "NOT_SKIPPABLE" - This video ad is not skippable.
 	SkippableAdType string `json:"skippableAdType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AllowedFormats") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AllowedFormats") to
@@ -1878,8 +1758,8 @@ func (s *CreativeSize) MarshalJSON() ([]byte, error) {
 }
 
 // CreativeSpecification: Represents information for a creative that is
-// associated with a Programmatic
-// Guaranteed/Preferred Deal in Ad Manager.
+// associated with a Programmatic Guaranteed/Preferred Deal in Ad
+// Manager.
 type CreativeSpecification struct {
 	// CreativeCompanionSizes: Companion sizes may be filled in only when
 	// this is a video creative.
@@ -1890,8 +1770,8 @@ type CreativeSpecification struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "CreativeCompanionSizes") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -1914,19 +1794,15 @@ func (s *CreativeSpecification) MarshalJSON() ([]byte, error) {
 }
 
 // CreativeStatusRow: The number of bids with the specified dimension
-// values that did not win the
-// auction (either were filtered pre-auction or lost the auction), as
-// described
-// by the specified creative status.
+// values that did not win the auction (either were filtered pre-auction
+// or lost the auction), as described by the specified creative status.
 type CreativeStatusRow struct {
 	// BidCount: The number of bids with the specified status.
 	BidCount *MetricValue `json:"bidCount,omitempty"`
 
-	// CreativeStatusId: The ID of the creative
-	// status.
-	// See
-	// [creative-status-codes](https://developers.google.com/auth
-	// orized-buyers/rtb/downloads/creative-status-codes).
+	// CreativeStatusId: The ID of the creative status. See
+	// creative-status-codes
+	// (https://developers.google.com/authorized-buyers/rtb/downloads/creative-status-codes).
 	CreativeStatusId int64 `json:"creativeStatusId,omitempty"`
 
 	// RowDimensions: The values of all dimensions associated with metric
@@ -1935,10 +1811,10 @@ type CreativeStatusRow struct {
 
 	// ForceSendFields is a list of field names (e.g. "BidCount") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BidCount") to include in
@@ -1957,8 +1833,7 @@ func (s *CreativeStatusRow) MarshalJSON() ([]byte, error) {
 }
 
 // CriteriaTargeting: Generic targeting used for targeting dimensions
-// that contains a list of
-// included and excluded numeric IDs.
+// that contains a list of included and excluded numeric IDs.
 type CriteriaTargeting struct {
 	// ExcludedCriteriaIds: A list of numeric IDs to be excluded.
 	ExcludedCriteriaIds googleapi.Int64s `json:"excludedCriteriaIds,omitempty"`
@@ -1968,10 +1843,10 @@ type CriteriaTargeting struct {
 
 	// ForceSendFields is a list of field names (e.g. "ExcludedCriteriaIds")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ExcludedCriteriaIds") to
@@ -1990,45 +1865,36 @@ func (s *CriteriaTargeting) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Date: Represents a whole or partial calendar date, e.g. a birthday.
-// The time of day
-// and time zone are either specified elsewhere or are not significant.
-// The date
-// is relative to the Proleptic Gregorian Calendar. This can
-// represent:
-//
-// * A full date, with non-zero year, month and day values
-// * A month and day value, with a zero year, e.g. an anniversary
-// * A year on its own, with zero month and day values
-// * A year and month value, with a zero day, e.g. a credit card
-// expiration date
-//
-// Related types are google.type.TimeOfDay and
-// `google.protobuf.Timestamp`.
+// Date: Represents a whole or partial calendar date, such as a
+// birthday. The time of day and time zone are either specified
+// elsewhere or are insignificant. The date is relative to the Gregorian
+// Calendar. This can represent one of the following: * A full date,
+// with non-zero year, month, and day values. * A month and day, with a
+// zero year (for example, an anniversary). * A year on its own, with a
+// zero month and a zero day. * A year and month, with a zero day (for
+// example, a credit card expiration date). Related types: *
+// google.type.TimeOfDay * google.type.DateTime *
+// google.protobuf.Timestamp
 type Date struct {
-	// Day: Day of month. Must be from 1 to 31 and valid for the year and
-	// month, or 0
-	// if specifying a year by itself or a year and month where the day is
-	// not
-	// significant.
+	// Day: Day of a month. Must be from 1 to 31 and valid for the year and
+	// month, or 0 to specify a year by itself or a year and month where the
+	// day isn't significant.
 	Day int64 `json:"day,omitempty"`
 
-	// Month: Month of year. Must be from 1 to 12, or 0 if specifying a year
-	// without a
-	// month and day.
+	// Month: Month of a year. Must be from 1 to 12, or 0 to specify a year
+	// without a month and day.
 	Month int64 `json:"month,omitempty"`
 
-	// Year: Year of date. Must be from 1 to 9999, or 0 if specifying a date
-	// without
-	// a year.
+	// Year: Year of the date. Must be from 1 to 9999, or 0 to specify a
+	// date without a year.
 	Year int64 `json:"year,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Day") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Day") to include in API
@@ -2047,8 +1913,7 @@ func (s *Date) MarshalJSON() ([]byte, error) {
 }
 
 // DayPart: Daypart targeting message that specifies if the ad can be
-// shown
-// only during certain parts of a day/week.
+// shown only during certain parts of a day/week.
 type DayPart struct {
 	// DayOfWeek: The day of the week to target. If unspecified, applicable
 	// to all days.
@@ -2065,25 +1930,22 @@ type DayPart struct {
 	//   "SUNDAY" - Sunday
 	DayOfWeek string `json:"dayOfWeek,omitempty"`
 
-	// EndTime: The ending time of the day for the ad to show (minute
-	// level
-	// granularity). The end time is exclusive. This field is not
-	// available
+	// EndTime: The ending time of the day for the ad to show (minute level
+	// granularity). The end time is exclusive. This field is not available
 	// for filtering in PQL queries.
 	EndTime *TimeOfDay `json:"endTime,omitempty"`
 
 	// StartTime: The starting time of day for the ad to show (minute level
-	// granularity).
-	// The start time is inclusive.
-	// This field is not available for filtering in PQL queries.
+	// granularity). The start time is inclusive. This field is not
+	// available for filtering in PQL queries.
 	StartTime *TimeOfDay `json:"startTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DayOfWeek") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DayOfWeek") to include in
@@ -2118,10 +1980,10 @@ type DayPartTargeting struct {
 
 	// ForceSendFields is a list of field names (e.g. "DayParts") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DayParts") to include in
@@ -2139,50 +2001,37 @@ func (s *DayPartTargeting) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Deal: A deal represents a segment of inventory for displaying ads
-// on.
-// A proposal can contain multiple deals. A deal contains the terms
-// and
+// Deal: A deal represents a segment of inventory for displaying ads on.
+// A proposal can contain multiple deals. A deal contains the terms and
 // targeting information that is used for serving.
 type Deal struct {
-	// AvailableEndTime: Proposed flight end time of the deal.
-	// This will generally be stored in a granularity of a second.
-	// A value is not required for Private Auction deals or Preferred Deals.
+	// AvailableEndTime: Proposed flight end time of the deal. This will
+	// generally be stored in a granularity of a second. A value is not
+	// required for Private Auction deals or Preferred Deals.
 	AvailableEndTime string `json:"availableEndTime,omitempty"`
 
-	// AvailableStartTime: Optional proposed flight start time of the
-	// deal.
+	// AvailableStartTime: Optional. Proposed flight start time of the deal.
 	// This will generally be stored in the granularity of one second since
-	// deal
-	// serving starts at seconds boundary. Any time specified with
-	// more
-	// granularity (e.g., in milliseconds) will be truncated towards the
-	// start of
-	// time in seconds.
+	// deal serving starts at seconds boundary. Any time specified with more
+	// granularity (for example, in milliseconds) will be truncated towards
+	// the start of time in seconds.
 	AvailableStartTime string `json:"availableStartTime,omitempty"`
 
 	// BuyerPrivateData: Buyer private data (hidden from seller).
 	BuyerPrivateData *PrivateData `json:"buyerPrivateData,omitempty"`
 
-	// CreateProductId: The product ID from which this deal was
-	// created.
-	//
+	// CreateProductId: The product ID from which this deal was created.
 	// Note: This field may be set only when creating the resource.
-	// Modifying
-	// this field while updating the resource will result in an error.
+	// Modifying this field while updating the resource will result in an
+	// error.
 	CreateProductId string `json:"createProductId,omitempty"`
 
-	// CreateProductRevision: Optional revision number of the product that
-	// the deal was created from.
-	// If present on create, and the server `product_revision` has advanced
-	// sinced
-	// the passed-in `create_product_revision`, an `ABORTED` error will
-	// be
-	// returned.
-	//
-	// Note: This field may be set only when creating the resource.
-	// Modifying
-	// this field while updating the resource will result in an error.
+	// CreateProductRevision: Optional. Revision number of the product that
+	// the deal was created from. If present on create, and the server
+	// `product_revision` has advanced since the passed-in
+	// `create_product_revision`, an `ABORTED` error will be returned. Note:
+	// This field may be set only when creating the resource. Modifying this
+	// field while updating the resource will result in an error.
 	CreateProductRevision int64 `json:"createProductRevision,omitempty,string"`
 
 	// CreateTime: Output only. The time of the deal creation.
@@ -2201,10 +2050,8 @@ type Deal struct {
 	CreativePreApprovalPolicy string `json:"creativePreApprovalPolicy,omitempty"`
 
 	// CreativeRestrictions: Output only. Restricitions about the creatives
-	// associated with the deal
-	// (i.e., size) This is available for Programmatic Guaranteed/Preferred
-	// Deals
-	// in Ad Manager.
+	// associated with the deal (for example, size) This is available for
+	// Programmatic Guaranteed/Preferred Deals in Ad Manager.
 	CreativeRestrictions *CreativeRestrictions `json:"creativeRestrictions,omitempty"`
 
 	// CreativeSafeFrameCompatibility: Output only. Specifies whether the
@@ -2230,8 +2077,8 @@ type Deal struct {
 	DealTerms *DealTerms `json:"dealTerms,omitempty"`
 
 	// DeliveryControl: The set of fields around delivery control that are
-	// interesting for a buyer
-	// to see but are non-negotiable. These are set by the publisher.
+	// interesting for a buyer to see but are non-negotiable. These are set
+	// by the publisher.
 	DeliveryControl *DeliveryControl `json:"deliveryControl,omitempty"`
 
 	// Description: Description for the deal terms.
@@ -2241,21 +2088,17 @@ type Deal struct {
 	DisplayName string `json:"displayName,omitempty"`
 
 	// ExternalDealId: Output only. The external deal ID assigned to this
-	// deal once the deal is
-	// finalized. This is the deal ID that shows up in serving/reporting
-	// etc.
+	// deal once the deal is finalized. This is the deal ID that shows up in
+	// serving/reporting etc.
 	ExternalDealId string `json:"externalDealId,omitempty"`
 
 	// IsSetupComplete: Output only. True, if the buyside inventory setup is
-	// complete for this
-	// deal.
+	// complete for this deal.
 	IsSetupComplete bool `json:"isSetupComplete,omitempty"`
 
 	// ProgrammaticCreativeSource: Output only. Specifies the creative
-	// source for programmatic deals.
-	// PUBLISHER means creative is provided by seller and ADVERTISER
-	// means
-	// creative is provided by buyer.
+	// source for programmatic deals. PUBLISHER means creative is provided
+	// by seller and ADVERTISER means creative is provided by buyer.
 	//
 	// Possible values:
 	//   "PROGRAMMATIC_CREATIVE_SOURCE_UNSPECIFIED" - A placeholder for an
@@ -2271,12 +2114,10 @@ type Deal struct {
 	// SellerContacts: Output only. Seller contact information for the deal.
 	SellerContacts []*ContactInformation `json:"sellerContacts,omitempty"`
 
-	// SyndicationProduct: The syndication product associated with the
-	// deal.
-	//
+	// SyndicationProduct: The syndication product associated with the deal.
 	// Note: This field may be set only when creating the resource.
-	// Modifying
-	// this field while updating the resource will result in an error.
+	// Modifying this field while updating the resource will result in an
+	// error.
 	//
 	// Possible values:
 	//   "SYNDICATION_PRODUCT_UNSPECIFIED" - A placeholder for an undefined
@@ -2292,8 +2133,7 @@ type Deal struct {
 	Targeting *MarketplaceTargeting `json:"targeting,omitempty"`
 
 	// TargetingCriterion: The shared targeting visible to buyers and
-	// sellers. Each shared
-	// targeting entity is AND'd together.
+	// sellers. Each shared targeting entity is AND'd together.
 	TargetingCriterion []*TargetingCriteria `json:"targetingCriterion,omitempty"`
 
 	// UpdateTime: Output only. The time when the deal was last updated.
@@ -2305,10 +2145,10 @@ type Deal struct {
 
 	// ForceSendFields is a list of field names (e.g. "AvailableEndTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AvailableEndTime") to
@@ -2327,10 +2167,8 @@ func (s *Deal) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DealPauseStatus: Tracks which parties (if any) have paused a
-// deal.
-// The deal is considered paused if either hasBuyerPaused
-// or
+// DealPauseStatus: Tracks which parties (if any) have paused a deal.
+// The deal is considered paused if either hasBuyerPaused or
 // hasSellPaused is true.
 type DealPauseStatus struct {
 	// BuyerPauseReason: The buyer's reason for pausing, if the buyer paused
@@ -2359,10 +2197,10 @@ type DealPauseStatus struct {
 
 	// ForceSendFields is a list of field names (e.g. "BuyerPauseReason") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BuyerPauseReason") to
@@ -2390,10 +2228,10 @@ type DealServingMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "DealPauseStatus") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DealPauseStatus") to
@@ -2413,10 +2251,9 @@ func (s *DealServingMetadata) MarshalJSON() ([]byte, error) {
 }
 
 // DealTerms: The deal terms specify the details of a Product/deal. They
-// specify things
-// like price per buyer, the type of pricing model (e.g., fixed price,
-// auction)
-// and expected impressions from the publisher.
+// specify things like price per buyer, the type of pricing model (for
+// example, fixed price, auction) and expected impressions from the
+// publisher.
 type DealTerms struct {
 	// BrandingType: Visibility of the URL in bid requests. (default:
 	// BRANDED)
@@ -2426,21 +2263,18 @@ type DealTerms struct {
 	// branding type.
 	//   "BRANDED" - Full URL is included in bid requests.
 	//   "SEMI_TRANSPARENT" - A TopLevelDomain or masked URL is sent in bid
-	// requests
-	// rather than the full one.
+	// requests rather than the full one.
 	BrandingType string `json:"brandingType,omitempty"`
 
 	// Description: Publisher provided description for the terms.
 	Description string `json:"description,omitempty"`
 
 	// EstimatedGrossSpend: Non-binding estimate of the estimated gross
-	// spend for this deal.
-	// Can be set by buyer or seller.
+	// spend for this deal. Can be set by buyer or seller.
 	EstimatedGrossSpend *Price `json:"estimatedGrossSpend,omitempty"`
 
 	// EstimatedImpressionsPerDay: Non-binding estimate of the impressions
-	// served per day.
-	// Can be set by buyer or seller.
+	// served per day. Can be set by buyer or seller.
 	EstimatedImpressionsPerDay int64 `json:"estimatedImpressionsPerDay,omitempty,string"`
 
 	// GuaranteedFixedPriceTerms: The terms for guaranteed fixed price
@@ -2456,19 +2290,18 @@ type DealTerms struct {
 	NonGuaranteedFixedPriceTerms *NonGuaranteedFixedPriceTerms `json:"nonGuaranteedFixedPriceTerms,omitempty"`
 
 	// SellerTimeZone: The time zone name. For deals with Cost Per Day
-	// billing, defines the
-	// time zone used to mark the boundaries of a day. It should be an
-	// IANA TZ name, such as "America/Los_Angeles". For more
-	// information,
-	// see https://en.wikipedia.org/wiki/List_of_tz_database_time_zones.
+	// billing, defines the time zone used to mark the boundaries of a day.
+	// It should be an IANA TZ name, such as "America/Los_Angeles". For more
+	// information, see
+	// https://en.wikipedia.org/wiki/List_of_tz_database_time_zones.
 	SellerTimeZone string `json:"sellerTimeZone,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BrandingType") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BrandingType") to include
@@ -2518,8 +2351,8 @@ type DeliveryControl struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "CreativeBlockingLevel") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -2557,18 +2390,15 @@ type Disapproval struct {
 	//   "INVALID_FOURTH_PARTY_CALL" - The ad makes a fourth party call to
 	// an unapproved vendor.
 	//   "INCORRECT_REMARKETING_DECLARATION" - The ad targets consumers
-	// using remarketing lists and/or collects
-	// data for subsequent use in retargeting, but does not correctly
-	// declare
-	// that use.
+	// using remarketing lists and/or collects data for subsequent use in
+	// retargeting, but does not correctly declare that use.
 	//   "LANDING_PAGE_ERROR" - Clicking on the ad leads to an error page.
 	//   "AD_SIZE_DOES_NOT_MATCH_AD_SLOT" - The ad size when rendered does
 	// not match the declaration.
 	//   "NO_BORDER" - Ads with a white background require a border, which
 	// was missing.
 	//   "FOURTH_PARTY_BROWSER_COOKIES" - The creative attempts to set
-	// cookies from a fourth party that is not
-	// certified.
+	// cookies from a fourth party that is not certified.
 	//   "LSO_OBJECTS" - The creative sets an LSO object.
 	//   "BLANK_CREATIVE" - The ad serves a blank.
 	//   "DESTINATION_URLS_UNDECLARED" - The ad uses rotation, but not all
@@ -2610,8 +2440,8 @@ type Disapproval struct {
 	//   "RAW_IP_ADDRESS_IN_SNIPPET" - The ad contains a URL that uses a
 	// numeric IP address for the domain.
 	//   "UNACCEPTABLE_CONTENT_SOFTWARE" - The ad or landing page contains
-	// unacceptable content because it initiated
-	// a software or executable download.
+	// unacceptable content because it initiated a software or executable
+	// download.
 	//   "UNAUTHORIZED_COOKIE_ON_GOOGLE_DOMAIN" - The ad set an unauthorized
 	// cookie on a Google domain.
 	//   "UNDECLARED_FLASH_OBJECTS" - Flash content found when no flash was
@@ -2625,8 +2455,7 @@ type Disapproval struct {
 	// Not Crawlable.
 	//   "BAD_URL_LEGAL_DISAPPROVAL" - Bad URL: Legal disapproval.
 	//   "PHARMA_GAMBLING_ALCOHOL_NOT_ALLOWED" - Pharmaceuticals, Gambling,
-	// Alcohol not allowed and at least one was
-	// detected.
+	// Alcohol not allowed and at least one was detected.
 	//   "DYNAMIC_DNS_AT_DESTINATION_URL" - Dynamic DNS at Destination URL.
 	//   "POOR_IMAGE_OR_VIDEO_QUALITY" - Poor Image / Video Quality.
 	//   "UNACCEPTABLE_IMAGE_CONTENT" - For example, Image Trick to Click.
@@ -2638,13 +2467,12 @@ type Disapproval struct {
 	//   "UNACCEPTABLE_CONTENT" - Unacceptable content. For example,
 	// malware.
 	//   "AUTOMATED_AD_CLICKING" - The ad automatically redirects to the
-	// destination site without a click,
-	// or reports a click when none were made.
+	// destination site without a click, or reports a click when none were
+	// made.
 	//   "INVALID_URL_PROTOCOL" - The ad uses URL protocols that do not
 	// exist or are not allowed on AdX.
 	//   "UNDECLARED_RESTRICTED_CONTENT" - Restricted content (for example,
-	// alcohol) was found in the ad but not
-	// declared.
+	// alcohol) was found in the ad but not declared.
 	//   "INVALID_REMARKETING_LIST_USAGE" - Violation of the remarketing
 	// list policy.
 	//   "DESTINATION_SITE_NOT_CRAWLABLE_ROBOTS_TXT" - The destination
@@ -2709,7 +2537,7 @@ type Disapproval struct {
 	// unsupported context.
 	//   "MISUSE_BY_OMID_SCRIPT" - Misuse by an Open Measurement SDK script.
 	//   "NON_WHITELISTED_OMID_VENDOR" - Use of an Open Measurement SDK
-	// vendor not on approved whitelist.
+	// vendor not on approved vendor list.
 	//   "DESTINATION_EXPERIENCE" - Unacceptable landing page.
 	//   "UNSUPPORTED_LANGUAGE" - Unsupported language.
 	//   "NON_SSL_COMPLIANT" - Non-SSL compliant.
@@ -2721,10 +2549,10 @@ type Disapproval struct {
 
 	// ForceSendFields is a list of field names (e.g. "Details") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Details") to include in
@@ -2743,78 +2571,56 @@ func (s *Disapproval) MarshalJSON() ([]byte, error) {
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
-// duplicated
-// empty messages in your APIs. A typical example is to use it as the
-// request
-// or the response type of an API method. For instance:
-//
-//     service Foo {
-//       rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty);
-//     }
-//
-// The JSON representation for `Empty` is empty JSON object `{}`.
+// duplicated empty messages in your APIs. A typical example is to use
+// it as the request or the response type of an API method. For
+// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); }
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
 }
 
-// FilterSet: A set of filters that is applied to a request for
-// data.
-// Within a filter set, an AND operation is performed across the
-// filters
+// FilterSet: A set of filters that is applied to a request for data.
+// Within a filter set, an AND operation is performed across the filters
 // represented by each field. An OR operation is performed across the
-// filters
-// represented by the multiple values of a repeated field,
-// e.g.,
-// "format=VIDEO AND deal_id=12 AND (seller_network_id=34
-// OR
+// filters represented by the multiple values of a repeated field, for
+// example, "format=VIDEO AND deal_id=12 AND (seller_network_id=34 OR
 // seller_network_id=56)".
 type FilterSet struct {
 	// AbsoluteDateRange: An absolute date range, defined by a start date
-	// and an end date.
-	// Interpreted relative to Pacific time zone.
+	// and an end date. Interpreted relative to Pacific time zone.
 	AbsoluteDateRange *AbsoluteDateRange `json:"absoluteDateRange,omitempty"`
 
 	// BreakdownDimensions: The set of dimensions along which to break down
-	// the response; may be empty.
-	// If multiple dimensions are requested, the breakdown is along the
-	// Cartesian
-	// product of the requested dimensions.
+	// the response; may be empty. If multiple dimensions are requested, the
+	// breakdown is along the Cartesian product of the requested dimensions.
 	//
 	// Possible values:
 	//   "BREAKDOWN_DIMENSION_UNSPECIFIED" - A placeholder for an
 	// unspecified dimension; should not be used.
 	//   "PUBLISHER_IDENTIFIER" - The response should be broken down by
-	// publisher identifier.
-	// This option is available only for Open Bidding buyers.
+	// publisher identifier. This option is available only for Open Bidding
+	// buyers.
 	BreakdownDimensions []string `json:"breakdownDimensions,omitempty"`
 
 	// CreativeId: The ID of the creative on which to filter; optional. This
-	// field may be set
-	// only for a filter set that accesses account-level troubleshooting
-	// data,
-	// i.e., one whose name matches the
-	// `bidders/*/accounts/*/filterSets/*`
-	// pattern.
+	// field may be set only for a filter set that accesses account-level
+	// troubleshooting data, for example, one whose name matches the
+	// `bidders/*/accounts/*/filterSets/*` pattern.
 	CreativeId string `json:"creativeId,omitempty"`
 
 	// DealId: The ID of the deal on which to filter; optional. This field
-	// may be set
-	// only for a filter set that accesses account-level troubleshooting
-	// data,
-	// i.e., one whose name matches the
-	// `bidders/*/accounts/*/filterSets/*`
-	// pattern.
+	// may be set only for a filter set that accesses account-level
+	// troubleshooting data, for example, one whose name matches the
+	// `bidders/*/accounts/*/filterSets/*` pattern.
 	DealId int64 `json:"dealId,omitempty,string"`
 
 	// Environment: The environment on which to filter; optional.
 	//
 	// Possible values:
 	//   "ENVIRONMENT_UNSPECIFIED" - A placeholder for an undefined
-	// environment; indicates that no environment
-	// filter will be applied.
+	// environment; indicates that no environment filter will be applied.
 	//   "WEB" - The ad impression appears on the web.
 	//   "APP" - The ad impression appears in an app.
 	Environment string `json:"environment,omitempty"`
@@ -2823,110 +2629,84 @@ type FilterSet struct {
 	//
 	// Possible values:
 	//   "FORMAT_UNSPECIFIED" - A placeholder for an undefined format;
-	// indicates that no format filter
-	// will be applied.
+	// indicates that no format filter will be applied.
 	//   "NATIVE_DISPLAY" - The ad impression is a native ad, and display
-	// (i.e., image) format.
+	// (for example, image) format.
 	//   "NATIVE_VIDEO" - The ad impression is a native ad, and video
 	// format.
 	//   "NON_NATIVE_DISPLAY" - The ad impression is not a native ad, and
-	// display (i.e., image) format.
+	// display (for example, image) format.
 	//   "NON_NATIVE_VIDEO" - The ad impression is not a native ad, and
 	// video format.
 	Format string `json:"format,omitempty"`
 
 	// Formats: Creative formats bidded on or allowed to bid on, can be
-	// empty. Although
-	// this field is a list, it can only be populated with a single item.
-	// A
-	// HTTP 400 bad request error will be returned in the response if you
-	// specify
-	// multiple items.
+	// empty. Although this field is a list, it can only be populated with a
+	// single item. A HTTP 400 bad request error will be returned in the
+	// response if you specify multiple items.
 	//
 	// Possible values:
 	//   "FORMAT_UNSPECIFIED" - A placeholder for an undefined format;
-	// indicates that no format filter
-	// will be applied.
+	// indicates that no format filter will be applied.
 	//   "NATIVE_DISPLAY" - The ad impression is a native ad, and display
-	// (i.e., image) format.
+	// (for example, image) format.
 	//   "NATIVE_VIDEO" - The ad impression is a native ad, and video
 	// format.
 	//   "NON_NATIVE_DISPLAY" - The ad impression is not a native ad, and
-	// display (i.e., image) format.
+	// display (for example, image) format.
 	//   "NON_NATIVE_VIDEO" - The ad impression is not a native ad, and
 	// video format.
 	Formats []string `json:"formats,omitempty"`
 
 	// Name: A user-defined name of the filter set. Filter set names must be
-	// unique
-	// globally and match one of the patterns:
-	//
-	// - `bidders/*/filterSets/*` (for accessing bidder-level
-	// troubleshooting
-	// data)
-	// - `bidders/*/accounts/*/filterSets/*` (for accessing
-	// account-level
-	// troubleshooting data)
-	//
-	// This field is required in create operations.
+	// unique globally and match one of the patterns: -
+	// `bidders/*/filterSets/*` (for accessing bidder-level troubleshooting
+	// data) - `bidders/*/accounts/*/filterSets/*` (for accessing
+	// account-level troubleshooting data) This field is required in create
+	// operations.
 	Name string `json:"name,omitempty"`
 
 	// Platforms: The list of platforms on which to filter; may be empty.
-	// The filters
-	// represented by multiple platforms are ORed together (i.e., if
-	// non-empty,
-	// results must match any one of the platforms).
+	// The filters represented by multiple platforms are ORed together (for
+	// example, if non-empty, results must match any one of the platforms).
 	//
 	// Possible values:
 	//   "PLATFORM_UNSPECIFIED" - A placeholder for an undefined platform;
-	// indicates that no platform
-	// filter will be applied.
+	// indicates that no platform filter will be applied.
 	//   "DESKTOP" - The ad impression appears on a desktop.
 	//   "TABLET" - The ad impression appears on a tablet.
 	//   "MOBILE" - The ad impression appears on a mobile device.
 	Platforms []string `json:"platforms,omitempty"`
 
-	// PublisherIdentifiers: For Open Bidding partners only.
-	// The list of publisher identifiers on which to filter; may be
-	// empty.
-	// The filters represented by multiple publisher identifiers are
-	// ORed
-	// together.
+	// PublisherIdentifiers: For Open Bidding partners only. The list of
+	// publisher identifiers on which to filter; may be empty. The filters
+	// represented by multiple publisher identifiers are ORed together.
 	PublisherIdentifiers []string `json:"publisherIdentifiers,omitempty"`
 
 	// RealtimeTimeRange: An open-ended realtime time range, defined by the
-	// aggregation start
-	// timestamp.
+	// aggregation start timestamp.
 	RealtimeTimeRange *RealtimeTimeRange `json:"realtimeTimeRange,omitempty"`
 
 	// RelativeDateRange: A relative date range, defined by an offset from
-	// today and a duration.
-	// Interpreted relative to Pacific time zone.
+	// today and a duration. Interpreted relative to Pacific time zone.
 	RelativeDateRange *RelativeDateRange `json:"relativeDateRange,omitempty"`
 
-	// SellerNetworkIds: For Authorized Buyers only.
-	// The list of IDs of the seller (publisher) networks on which to
-	// filter;
-	// may be empty. The filters represented by multiple seller network IDs
-	// are
-	// ORed together (i.e., if non-empty, results must match any one of
-	// the
-	// publisher networks).
-	// See
-	// [seller-network-ids](https://developers.google.com/authorized-buye
-	// rs/rtb/downloads/seller-network-ids)
+	// SellerNetworkIds: For Authorized Buyers only. The list of IDs of the
+	// seller (publisher) networks on which to filter; may be empty. The
+	// filters represented by multiple seller network IDs are ORed together
+	// (for example, if non-empty, results must match any one of the
+	// publisher networks). See seller-network-ids
+	// (https://developers.google.com/authorized-buyers/rtb/downloads/seller-network-ids)
 	// file for the set of existing seller network IDs.
 	SellerNetworkIds []int64 `json:"sellerNetworkIds,omitempty"`
 
 	// TimeSeriesGranularity: The granularity of time intervals if a time
-	// series breakdown is desired;
-	// optional.
+	// series breakdown is preferred; optional.
 	//
 	// Possible values:
 	//   "TIME_SERIES_GRANULARITY_UNSPECIFIED" - A placeholder for an
-	// unspecified interval; no time series is applied.
-	// All rows in response will contain data for the entire requested time
-	// range.
+	// unspecified interval; no time series is applied. All rows in response
+	// will contain data for the entire requested time range.
 	//   "HOURLY" - Indicates that data will be broken down by the hour.
 	//   "DAILY" - Indicates that data will be broken down by the day.
 	TimeSeriesGranularity string `json:"timeSeriesGranularity,omitempty"`
@@ -2937,10 +2717,10 @@ type FilterSet struct {
 
 	// ForceSendFields is a list of field names (e.g. "AbsoluteDateRange")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AbsoluteDateRange") to
@@ -2960,8 +2740,7 @@ func (s *FilterSet) MarshalJSON() ([]byte, error) {
 }
 
 // FilteredBidCreativeRow: The number of filtered bids with the
-// specified dimension values that have the
-// specified creative.
+// specified dimension values that have the specified creative.
 type FilteredBidCreativeRow struct {
 	// BidCount: The number of bids with the specified creative.
 	BidCount *MetricValue `json:"bidCount,omitempty"`
@@ -2975,10 +2754,10 @@ type FilteredBidCreativeRow struct {
 
 	// ForceSendFields is a list of field names (e.g. "BidCount") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BidCount") to include in
@@ -2997,18 +2776,24 @@ func (s *FilteredBidCreativeRow) MarshalJSON() ([]byte, error) {
 }
 
 // FilteredBidDetailRow: The number of filtered bids with the specified
-// dimension values, among those
-// filtered due to the requested filtering reason (i.e. creative
-// status), that
-// have the specified detail.
+// dimension values, among those filtered due to the requested filtering
+// reason (for example, creative status), that have the specified
+// detail.
 type FilteredBidDetailRow struct {
 	// BidCount: The number of bids with the specified detail.
 	BidCount *MetricValue `json:"bidCount,omitempty"`
 
-	// DetailId: The ID of the detail. The associated value can be looked up
-	// in the
-	// dictionary file corresponding to the DetailType in the response
-	// message.
+	// Detail: The ID of the detail, can be numeric or text. The associated
+	// value can be looked up in the dictionary file corresponding to the
+	// DetailType in the response message.
+	Detail string `json:"detail,omitempty"`
+
+	// DetailId: Note: this field will be deprecated, use "detail" field
+	// instead. When "detail" field represents an integer value, this field
+	// is populated as the same integer value "detail" field represents,
+	// otherwise this field will be 0. The ID of the detail. The associated
+	// value can be looked up in the dictionary file corresponding to the
+	// DetailType in the response message.
 	DetailId int64 `json:"detailId,omitempty"`
 
 	// RowDimensions: The values of all dimensions associated with metric
@@ -3017,10 +2802,10 @@ type FilteredBidDetailRow struct {
 
 	// ForceSendFields is a list of field names (e.g. "BidCount") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BidCount") to include in
@@ -3039,16 +2824,12 @@ func (s *FilteredBidDetailRow) MarshalJSON() ([]byte, error) {
 }
 
 // FirstPartyMobileApplicationTargeting: Represents a list of targeted
-// and excluded mobile application IDs that
-// publishers own.
-// Mobile application IDs are from App Store and Google Play
-// Store.
-// Android App ID, for example, com.google.android.apps.maps, can be
-// found in
-// Google Play Store URL.
-// iOS App ID (which is a number) can be found at the end of iTunes
-// store URL.
-// First party mobile applications is either included or excluded.
+// and excluded mobile application IDs that publishers own. Mobile
+// application IDs are from App Store and Google Play Store. Android App
+// ID, for example, com.google.android.apps.maps, can be found in Google
+// Play Store URL. iOS App ID (which is a number) can be found at the
+// end of iTunes store URL. First party mobile applications is either
+// included or excluded.
 type FirstPartyMobileApplicationTargeting struct {
 	// ExcludedAppIds: A list of application IDs to be excluded.
 	ExcludedAppIds []string `json:"excludedAppIds,omitempty"`
@@ -3058,10 +2839,10 @@ type FirstPartyMobileApplicationTargeting struct {
 
 	// ForceSendFields is a list of field names (e.g. "ExcludedAppIds") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ExcludedAppIds") to
@@ -3083,38 +2864,38 @@ func (s *FirstPartyMobileApplicationTargeting) MarshalJSON() ([]byte, error) {
 // FrequencyCap: Frequency cap.
 type FrequencyCap struct {
 	// MaxImpressions: The maximum number of impressions that can be served
-	// to a user within the
-	// specified time period.
+	// to a user within the specified time period.
 	MaxImpressions int64 `json:"maxImpressions,omitempty"`
 
 	// NumTimeUnits: The amount of time, in the units specified by
-	// time_unit_type. Defines the
-	// amount of time over which impressions per user are counted and
-	// capped.
+	// time_unit_type. Defines the amount of time over which impressions per
+	// user are counted and capped.
 	NumTimeUnits int64 `json:"numTimeUnits,omitempty"`
 
 	// TimeUnitType: The time unit. Along with num_time_units defines the
-	// amount of time over
-	// which impressions per user are counted and capped.
+	// amount of time over which impressions per user are counted and
+	// capped.
 	//
 	// Possible values:
 	//   "TIME_UNIT_TYPE_UNSPECIFIED" - A placeholder for an undefined time
-	// unit type. This just indicates the
-	// variable with this value hasn't been initialized.
+	// unit type. This just indicates the variable with this value hasn't
+	// been initialized.
 	//   "MINUTE" - Minute
 	//   "HOUR" - Hour
 	//   "DAY" - Day
 	//   "WEEK" - Week
 	//   "MONTH" - Month
 	//   "LIFETIME" - Lifetime
+	//   "POD" - Pod
+	//   "STREAM" - Stream
 	TimeUnitType string `json:"timeUnitType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "MaxImpressions") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "MaxImpressions") to
@@ -3139,23 +2920,46 @@ type GuaranteedFixedPriceTerms struct {
 	FixedPrices []*PricePerBuyer `json:"fixedPrices,omitempty"`
 
 	// GuaranteedImpressions: Guaranteed impressions as a percentage. This
-	// is the percentage
-	// of guaranteed looks that the buyer is guaranteeing to buy.
+	// is the percentage of guaranteed looks that the buyer is guaranteeing
+	// to buy.
 	GuaranteedImpressions int64 `json:"guaranteedImpressions,omitempty,string"`
 
 	// GuaranteedLooks: Count of guaranteed looks. Required for deal,
 	// optional for product.
 	GuaranteedLooks int64 `json:"guaranteedLooks,omitempty,string"`
 
+	// ImpressionCap: The lifetime impression cap for CPM sponsorship deals.
+	// The deal will stop serving when the cap is reached.
+	ImpressionCap int64 `json:"impressionCap,omitempty,string"`
+
 	// MinimumDailyLooks: Daily minimum looks for CPD deal types.
 	MinimumDailyLooks int64 `json:"minimumDailyLooks,omitempty,string"`
 
+	// PercentShareOfVoice: For sponsorship deals, this is the percentage of
+	// the seller's eligible impressions that the deal will serve until the
+	// cap is reached.
+	PercentShareOfVoice int64 `json:"percentShareOfVoice,omitempty,string"`
+
+	// ReservationType: The reservation type for a Programmatic Guaranteed
+	// deal. This indicates whether the number of impressions is fixed, or a
+	// percent of available impressions. If not specified, the default
+	// reservation type is STANDARD.
+	//
+	// Possible values:
+	//   "RESERVATION_TYPE_UNSPECIFIED" - An unspecified reservation type.
+	//   "STANDARD" - Non-sponsorship deal.
+	//   "SPONSORSHIP" - Sponsorship deals don't have impression goal
+	// (guaranteed_looks) and they are served based on the flight dates. For
+	// CPM Sponsorship deals, impression_cap is the lifetime impression
+	// limit.
+	ReservationType string `json:"reservationType,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "FixedPrices") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "FixedPrices") to include
@@ -3187,10 +2991,10 @@ type HtmlContent struct {
 
 	// ForceSendFields is a list of field names (e.g. "Height") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Height") to include in API
@@ -3209,8 +3013,7 @@ func (s *HtmlContent) MarshalJSON() ([]byte, error) {
 }
 
 // Image: An image resource. You may provide a larger image than was
-// requested,
-// so long as the aspect ratio is preserved.
+// requested, so long as the aspect ratio is preserved.
 type Image struct {
 	// Height: Image height in pixels.
 	Height int64 `json:"height,omitempty"`
@@ -3223,10 +3026,10 @@ type Image struct {
 
 	// ForceSendFields is a list of field names (e.g. "Height") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Height") to include in API
@@ -3245,19 +3048,16 @@ func (s *Image) MarshalJSON() ([]byte, error) {
 }
 
 // ImpressionMetricsRow: The set of metrics that are measured in numbers
-// of impressions, representing
-// how many impressions with the specified dimension values were
-// considered
-// eligible at each stage of the bidding funnel.
+// of impressions, representing how many impressions with the specified
+// dimension values were considered eligible at each stage of the
+// bidding funnel.
 type ImpressionMetricsRow struct {
 	// AvailableImpressions: The number of impressions available to the
-	// buyer on Ad Exchange.
-	// In some cases this value may be unavailable.
+	// buyer on Ad Exchange. In some cases this value may be unavailable.
 	AvailableImpressions *MetricValue `json:"availableImpressions,omitempty"`
 
 	// BidRequests: The number of impressions for which Ad Exchange sent the
-	// buyer a bid
-	// request.
+	// buyer a bid request.
 	BidRequests *MetricValue `json:"bidRequests,omitempty"`
 
 	// InventoryMatches: The number of impressions that match the buyer's
@@ -3265,8 +3065,8 @@ type ImpressionMetricsRow struct {
 	InventoryMatches *MetricValue `json:"inventoryMatches,omitempty"`
 
 	// ResponsesWithBids: The number of impressions for which Ad Exchange
-	// received a response from
-	// the buyer that contained at least one applicable bid.
+	// received a response from the buyer that contained at least one
+	// applicable bid.
 	ResponsesWithBids *MetricValue `json:"responsesWithBids,omitempty"`
 
 	// RowDimensions: The values of all dimensions associated with metric
@@ -3274,14 +3074,13 @@ type ImpressionMetricsRow struct {
 	RowDimensions *RowDimensions `json:"rowDimensions,omitempty"`
 
 	// SuccessfulResponses: The number of impressions for which the buyer
-	// successfully sent a response
-	// to Ad Exchange.
+	// successfully sent a response to Ad Exchange.
 	SuccessfulResponses *MetricValue `json:"successfulResponses,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "AvailableImpressions") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -3304,12 +3103,9 @@ func (s *ImpressionMetricsRow) MarshalJSON() ([]byte, error) {
 }
 
 // InventorySizeTargeting: Represents the size of an ad unit that can be
-// targeted on an ad
-// request. It only applies to Private Auction, AdX Preferred Deals
-// and
-// Auction Packages. This targeting does not apply to Programmatic
-// Guaranteed
-// and Preferred Deals in Ad Manager.
+// targeted on an ad request. It only applies to Private Auction, AdX
+// Preferred Deals and Auction Packages. This targeting does not apply
+// to Programmatic Guaranteed and Preferred Deals in Ad Manager.
 type InventorySizeTargeting struct {
 	// ExcludedInventorySizes: A list of inventory sizes to be excluded.
 	ExcludedInventorySizes []*AdSize `json:"excludedInventorySizes,omitempty"`
@@ -3319,8 +3115,8 @@ type InventorySizeTargeting struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "ExcludedInventorySizes") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -3348,11 +3144,10 @@ type ListBidMetricsResponse struct {
 	// BidMetricsRows: List of rows, each containing a set of bid metrics.
 	BidMetricsRows []*BidMetricsRow `json:"bidMetricsRows,omitempty"`
 
-	// NextPageToken: A token to retrieve the next page of results.
-	// Pass this value in the
-	// ListBidMetricsRequest.pageToken
-	// field in the subsequent call to the bidMetrics.list
-	// method to retrieve the next page of results.
+	// NextPageToken: A token to retrieve the next page of results. Pass
+	// this value in the ListBidMetricsRequest.pageToken field in the
+	// subsequent call to the bidMetrics.list method to retrieve the next
+	// page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -3361,10 +3156,10 @@ type ListBidMetricsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "BidMetricsRows") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BidMetricsRows") to
@@ -3384,18 +3179,16 @@ func (s *ListBidMetricsResponse) MarshalJSON() ([]byte, error) {
 }
 
 // ListBidResponseErrorsResponse: Response message for listing all
-// reasons that bid responses resulted in an
-// error.
+// reasons that bid responses resulted in an error.
 type ListBidResponseErrorsResponse struct {
 	// CalloutStatusRows: List of rows, with counts of bid responses
 	// aggregated by callout status.
 	CalloutStatusRows []*CalloutStatusRow `json:"calloutStatusRows,omitempty"`
 
-	// NextPageToken: A token to retrieve the next page of results.
-	// Pass this value in the
-	// ListBidResponseErrorsRequest.pageToken
-	// field in the subsequent call to the bidResponseErrors.list
-	// method to retrieve the next page of results.
+	// NextPageToken: A token to retrieve the next page of results. Pass
+	// this value in the ListBidResponseErrorsRequest.pageToken field in the
+	// subsequent call to the bidResponseErrors.list method to retrieve the
+	// next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -3404,10 +3197,10 @@ type ListBidResponseErrorsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "CalloutStatusRows")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CalloutStatusRows") to
@@ -3427,21 +3220,17 @@ func (s *ListBidResponseErrorsResponse) MarshalJSON() ([]byte, error) {
 }
 
 // ListBidResponsesWithoutBidsResponse: Response message for listing all
-// reasons that bid responses were considered
-// to have no applicable bids.
+// reasons that bid responses were considered to have no applicable
+// bids.
 type ListBidResponsesWithoutBidsResponse struct {
 	// BidResponseWithoutBidsStatusRows: List of rows, with counts of bid
-	// responses without bids aggregated by
-	// status.
+	// responses without bids aggregated by status.
 	BidResponseWithoutBidsStatusRows []*BidResponseWithoutBidsStatusRow `json:"bidResponseWithoutBidsStatusRows,omitempty"`
 
-	// NextPageToken: A token to retrieve the next page of results.
-	// Pass this value in
-	// the
-	// ListBidResponsesWithoutBidsRequest.pageToken
-	// field in the subsequent call to the
-	// bidResponsesWithoutBids.list
-	// method to retrieve the next page of results.
+	// NextPageToken: A token to retrieve the next page of results. Pass
+	// this value in the ListBidResponsesWithoutBidsRequest.pageToken field
+	// in the subsequent call to the bidResponsesWithoutBids.list method to
+	// retrieve the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -3450,11 +3239,11 @@ type ListBidResponsesWithoutBidsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "BidResponseWithoutBidsStatusRows") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g.
@@ -3477,14 +3266,10 @@ type ListClientUserInvitationsResponse struct {
 	// Invitations: The returned list of client users.
 	Invitations []*ClientUserInvitation `json:"invitations,omitempty"`
 
-	// NextPageToken: A token to retrieve the next page of results.
-	// Pass this value in
-	// the
-	// ListClientUserInvitationsRequest.pageToken
-	// field in the subsequent call to the
-	// clients.invitations.list
-	// method to retrieve the next
-	// page of results.
+	// NextPageToken: A token to retrieve the next page of results. Pass
+	// this value in the ListClientUserInvitationsRequest.pageToken field in
+	// the subsequent call to the clients.invitations.list method to
+	// retrieve the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -3493,10 +3278,10 @@ type ListClientUserInvitationsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Invitations") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Invitations") to include
@@ -3515,13 +3300,10 @@ func (s *ListClientUserInvitationsResponse) MarshalJSON() ([]byte, error) {
 }
 
 type ListClientUsersResponse struct {
-	// NextPageToken: A token to retrieve the next page of results.
-	// Pass this value in the
-	// ListClientUsersRequest.pageToken
-	// field in the subsequent call to the
-	// clients.invitations.list
-	// method to retrieve the next
-	// page of results.
+	// NextPageToken: A token to retrieve the next page of results. Pass
+	// this value in the ListClientUsersRequest.pageToken field in the
+	// subsequent call to the clients.invitations.list method to retrieve
+	// the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// Users: The returned list of client users.
@@ -3533,10 +3315,10 @@ type ListClientUsersResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -3558,12 +3340,10 @@ type ListClientsResponse struct {
 	// Clients: The returned list of clients.
 	Clients []*Client `json:"clients,omitempty"`
 
-	// NextPageToken: A token to retrieve the next page of results.
-	// Pass this value in the
-	// ListClientsRequest.pageToken
-	// field in the subsequent call to the
-	// accounts.clients.list
-	// method to retrieve the next page of results.
+	// NextPageToken: A token to retrieve the next page of results. Pass
+	// this value in the ListClientsRequest.pageToken field in the
+	// subsequent call to the accounts.clients.list method to retrieve the
+	// next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -3572,10 +3352,10 @@ type ListClientsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Clients") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Clients") to include in
@@ -3594,21 +3374,17 @@ func (s *ListClientsResponse) MarshalJSON() ([]byte, error) {
 }
 
 // ListCreativeStatusBreakdownByCreativeResponse: Response message for
-// listing all creatives associated with a given filtered
-// bid reason.
+// listing all creatives associated with a given filtered bid reason.
 type ListCreativeStatusBreakdownByCreativeResponse struct {
 	// FilteredBidCreativeRows: List of rows, with counts of bids with a
-	// given creative status aggregated
-	// by creative.
+	// given creative status aggregated by creative.
 	FilteredBidCreativeRows []*FilteredBidCreativeRow `json:"filteredBidCreativeRows,omitempty"`
 
-	// NextPageToken: A token to retrieve the next page of results.
-	// Pass this value in
-	// the
-	// ListCreativeStatusBreakdownByCreativeRequest.pageToken
-	// field in the subsequent call to the
-	// filteredBids.creatives.list
-	// method to retrieve the next page of results.
+	// NextPageToken: A token to retrieve the next page of results. Pass
+	// this value in the
+	// ListCreativeStatusBreakdownByCreativeRequest.pageToken field in the
+	// subsequent call to the filteredBids.creatives.list method to retrieve
+	// the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -3617,11 +3393,11 @@ type ListCreativeStatusBreakdownByCreativeResponse struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "FilteredBidCreativeRows") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "FilteredBidCreativeRows")
@@ -3641,54 +3417,59 @@ func (s *ListCreativeStatusBreakdownByCreativeResponse) MarshalJSON() ([]byte, e
 }
 
 // ListCreativeStatusBreakdownByDetailResponse: Response message for
-// listing all details associated with a given filtered bid
-// reason.
+// listing all details associated with a given filtered bid reason.
 type ListCreativeStatusBreakdownByDetailResponse struct {
 	// DetailType: The type of detail that the detail IDs represent.
 	//
 	// Possible values:
-	//   "DETAIL_TYPE_UNSPECIFIED" - A placeholder for an undefined
-	// status.
+	//   "DETAIL_TYPE_UNSPECIFIED" - A placeholder for an undefined status.
 	// This value will never be returned in responses.
 	//   "CREATIVE_ATTRIBUTE" - Indicates that the detail ID refers to a
-	// creative attribute;
-	// see
-	// [publisher-excludable-creative-attributes](https://developers.goog
-	// le.com/authorized-buyers/rtb/downloads/publisher-excludable-creative-a
-	// ttributes).
-	//   "VENDOR" - Indicates that the detail ID refers to a vendor;
-	// see
-	// [vendors](https://developers.google.com/authorized-buyers/rtb/down
-	// loads/vendors).
+	// creative attribute; see
+	// [publisher-excludable-creative-attributes](https://developers.google.c
+	// om/authorized-buyers/rtb/downloads/publisher-excludable-creative-attri
+	// butes).
+	//   "VENDOR" - Indicates that the detail ID refers to a vendor; see
+	// [vendors](https://developers.google.com/authorized-buyers/rtb/download
+	// s/vendors). This namespace is different from that of the `ATP_VENDOR`
+	// detail type.
 	//   "SENSITIVE_CATEGORY" - Indicates that the detail ID refers to a
-	// sensitive category;
-	// see
-	// [ad-sensitive-categories](https://developers.google.com/authorized
-	// -buyers/rtb/downloads/ad-sensitive-categories).
+	// sensitive category; see
+	// [ad-sensitive-categories](https://developers.google.com/authorized-buy
+	// ers/rtb/downloads/ad-sensitive-categories).
 	//   "PRODUCT_CATEGORY" - Indicates that the detail ID refers to a
-	// product category;
-	// see
-	// [ad-product-categories](https://developers.google.com/authorized-b
-	// uyers/rtb/downloads/ad-product-categories).
+	// product category; see
+	// [ad-product-categories](https://developers.google.com/authorized-buyer
+	// s/rtb/downloads/ad-product-categories).
 	//   "DISAPPROVAL_REASON" - Indicates that the detail ID refers to a
-	// disapproval reason; see
-	// DisapprovalReason enum
-	// in
-	// [snippet-status-report-proto](https://developers.google.com/authori
-	// zed-buyers/rtb/downloads/snippet-status-report-proto).
+	// disapproval reason; see DisapprovalReason enum in
+	// [snippet-status-report-proto](https://developers.google.com/authorized
+	// -buyers/rtb/downloads/snippet-status-report-proto).
+	//   "POLICY_TOPIC" - Indicates that the detail ID refers to a policy
+	// topic.
+	//   "ATP_VENDOR" - Indicates that the detail ID refers to an ad
+	// technology provider (ATP); see [providers]
+	// (https://storage.googleapis.com/adx-rtb-dictionaries/providers.csv).
+	// This namespace is different from the `VENDOR` detail type; see [ad
+	// technology
+	// providers](https://support.google.com/admanager/answer/9012903) for
+	// more information.
+	//   "VENDOR_DOMAIN" - Indicates that the detail string refers the
+	// domain of an unknown vendor.
+	//   "GVL_ID" - Indicates that the detail ID refers an IAB GVL ID which
+	// Google did not detect in the latest TCF Vendor List. See [Global
+	// Vendor List] (https://vendor-list.consensu.org/v2/vendor-list.json)
 	DetailType string `json:"detailType,omitempty"`
 
 	// FilteredBidDetailRows: List of rows, with counts of bids with a given
-	// creative status aggregated
-	// by detail.
+	// creative status aggregated by detail.
 	FilteredBidDetailRows []*FilteredBidDetailRow `json:"filteredBidDetailRows,omitempty"`
 
-	// NextPageToken: A token to retrieve the next page of results.
-	// Pass this value in
-	// the
-	// ListCreativeStatusBreakdownByDetailRequest.pageToken
-	// field in the subsequent call to the filteredBids.details.list
-	// method to retrieve the next page of results.
+	// NextPageToken: A token to retrieve the next page of results. Pass
+	// this value in the
+	// ListCreativeStatusBreakdownByDetailRequest.pageToken field in the
+	// subsequent call to the filteredBids.details.list method to retrieve
+	// the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -3697,10 +3478,10 @@ type ListCreativeStatusBreakdownByDetailResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "DetailType") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DetailType") to include in
@@ -3723,12 +3504,10 @@ type ListCreativesResponse struct {
 	// Creatives: The list of creatives.
 	Creatives []*Creative `json:"creatives,omitempty"`
 
-	// NextPageToken: A token to retrieve the next page of results.
-	// Pass this value in the
-	// ListCreativesRequest.page_token
-	// field in the subsequent call to `ListCreatives` method to retrieve
-	// the next
-	// page of results.
+	// NextPageToken: A token to retrieve the next page of results. Pass
+	// this value in the ListCreativesRequest.page_token field in the
+	// subsequent call to `ListCreatives` method to retrieve the next page
+	// of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -3737,10 +3516,10 @@ type ListCreativesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Creatives") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Creatives") to include in
@@ -3764,12 +3543,10 @@ type ListDealAssociationsResponse struct {
 	// Associations: The list of associations.
 	Associations []*CreativeDealAssociation `json:"associations,omitempty"`
 
-	// NextPageToken: A token to retrieve the next page of results.
-	// Pass this value in the
-	// ListDealAssociationsRequest.page_token
-	// field in the subsequent call to 'ListDealAssociation' method to
-	// retrieve
-	// the next page of results.
+	// NextPageToken: A token to retrieve the next page of results. Pass
+	// this value in the ListDealAssociationsRequest.page_token field in the
+	// subsequent call to 'ListDealAssociation' method to retrieve the next
+	// page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -3778,10 +3555,10 @@ type ListDealAssociationsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Associations") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Associations") to include
@@ -3804,12 +3581,10 @@ type ListFilterSetsResponse struct {
 	// FilterSets: The filter sets belonging to the buyer.
 	FilterSets []*FilterSet `json:"filterSets,omitempty"`
 
-	// NextPageToken: A token to retrieve the next page of results.
-	// Pass this value in the
-	// ListFilterSetsRequest.pageToken
-	// field in the subsequent call to the
-	// accounts.filterSets.list
-	// method to retrieve the next page of results.
+	// NextPageToken: A token to retrieve the next page of results. Pass
+	// this value in the ListFilterSetsRequest.pageToken field in the
+	// subsequent call to the accounts.filterSets.list method to retrieve
+	// the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -3818,10 +3593,10 @@ type ListFilterSetsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "FilterSets") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "FilterSets") to include in
@@ -3840,19 +3615,16 @@ func (s *ListFilterSetsResponse) MarshalJSON() ([]byte, error) {
 }
 
 // ListFilteredBidRequestsResponse: Response message for listing all
-// reasons that bid requests were filtered and
-// not sent to the buyer.
+// reasons that bid requests were filtered and not sent to the buyer.
 type ListFilteredBidRequestsResponse struct {
 	// CalloutStatusRows: List of rows, with counts of filtered bid requests
-	// aggregated by callout
-	// status.
+	// aggregated by callout status.
 	CalloutStatusRows []*CalloutStatusRow `json:"calloutStatusRows,omitempty"`
 
-	// NextPageToken: A token to retrieve the next page of results.
-	// Pass this value in the
-	// ListFilteredBidRequestsRequest.pageToken
-	// field in the subsequent call to the filteredBidRequests.list
-	// method to retrieve the next page of results.
+	// NextPageToken: A token to retrieve the next page of results. Pass
+	// this value in the ListFilteredBidRequestsRequest.pageToken field in
+	// the subsequent call to the filteredBidRequests.list method to
+	// retrieve the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -3861,10 +3633,10 @@ type ListFilteredBidRequestsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "CalloutStatusRows")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CalloutStatusRows") to
@@ -3884,19 +3656,16 @@ func (s *ListFilteredBidRequestsResponse) MarshalJSON() ([]byte, error) {
 }
 
 // ListFilteredBidsResponse: Response message for listing all reasons
-// that bids were filtered from the
-// auction.
+// that bids were filtered from the auction.
 type ListFilteredBidsResponse struct {
 	// CreativeStatusRows: List of rows, with counts of filtered bids
-	// aggregated by filtering reason
-	// (i.e. creative status).
+	// aggregated by filtering reason (for example, creative status).
 	CreativeStatusRows []*CreativeStatusRow `json:"creativeStatusRows,omitempty"`
 
-	// NextPageToken: A token to retrieve the next page of results.
-	// Pass this value in the
-	// ListFilteredBidsRequest.pageToken
-	// field in the subsequent call to the filteredBids.list
-	// method to retrieve the next page of results.
+	// NextPageToken: A token to retrieve the next page of results. Pass
+	// this value in the ListFilteredBidsRequest.pageToken field in the
+	// subsequent call to the filteredBids.list method to retrieve the next
+	// page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -3905,10 +3674,10 @@ type ListFilteredBidsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "CreativeStatusRows")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CreativeStatusRows") to
@@ -3928,18 +3697,16 @@ func (s *ListFilteredBidsResponse) MarshalJSON() ([]byte, error) {
 }
 
 // ListImpressionMetricsResponse: Response message for listing the
-// metrics that are measured in number of
-// impressions.
+// metrics that are measured in number of impressions.
 type ListImpressionMetricsResponse struct {
 	// ImpressionMetricsRows: List of rows, each containing a set of
 	// impression metrics.
 	ImpressionMetricsRows []*ImpressionMetricsRow `json:"impressionMetricsRows,omitempty"`
 
-	// NextPageToken: A token to retrieve the next page of results.
-	// Pass this value in the
-	// ListImpressionMetricsRequest.pageToken
-	// field in the subsequent call to the impressionMetrics.list
-	// method to retrieve the next page of results.
+	// NextPageToken: A token to retrieve the next page of results. Pass
+	// this value in the ListImpressionMetricsRequest.pageToken field in the
+	// subsequent call to the impressionMetrics.list method to retrieve the
+	// next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -3948,8 +3715,8 @@ type ListImpressionMetricsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "ImpressionMetricsRows") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -3975,15 +3742,13 @@ func (s *ListImpressionMetricsResponse) MarshalJSON() ([]byte, error) {
 // bids lost in the auction.
 type ListLosingBidsResponse struct {
 	// CreativeStatusRows: List of rows, with counts of losing bids
-	// aggregated by loss reason (i.e.
-	// creative status).
+	// aggregated by loss reason (for example, creative status).
 	CreativeStatusRows []*CreativeStatusRow `json:"creativeStatusRows,omitempty"`
 
-	// NextPageToken: A token to retrieve the next page of results.
-	// Pass this value in the
-	// ListLosingBidsRequest.pageToken
-	// field in the subsequent call to the losingBids.list
-	// method to retrieve the next page of results.
+	// NextPageToken: A token to retrieve the next page of results. Pass
+	// this value in the ListLosingBidsRequest.pageToken field in the
+	// subsequent call to the losingBids.list method to retrieve the next
+	// page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -3992,10 +3757,10 @@ type ListLosingBidsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "CreativeStatusRows")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CreativeStatusRows") to
@@ -4015,16 +3780,12 @@ func (s *ListLosingBidsResponse) MarshalJSON() ([]byte, error) {
 }
 
 // ListNonBillableWinningBidsResponse: Response message for listing all
-// reasons for which a buyer was not billed for
-// a winning bid.
+// reasons for which a buyer was not billed for a winning bid.
 type ListNonBillableWinningBidsResponse struct {
-	// NextPageToken: A token to retrieve the next page of results.
-	// Pass this value in
-	// the
-	// ListNonBillableWinningBidsRequest.pageToken
-	// field in the subsequent call to the
-	// nonBillableWinningBids.list
-	// method to retrieve the next page of results.
+	// NextPageToken: A token to retrieve the next page of results. Pass
+	// this value in the ListNonBillableWinningBidsRequest.pageToken field
+	// in the subsequent call to the nonBillableWinningBids.list method to
+	// retrieve the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// NonBillableWinningBidStatusRows: List of rows, with counts of bids
@@ -4037,10 +3798,10 @@ type ListNonBillableWinningBidsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -4074,10 +3835,10 @@ type ListProductsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -4110,10 +3871,10 @@ type ListProposalsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -4146,10 +3907,10 @@ type ListPublisherProfilesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -4170,21 +3931,18 @@ func (s *ListPublisherProfilesResponse) MarshalJSON() ([]byte, error) {
 // LocationContext: Output only. The Geo criteria the restriction
 // applies to.
 type LocationContext struct {
-	// GeoCriteriaIds: IDs representing the geo location for this
-	// context.
-	// Please refer to
-	// the
-	// [geo-table.csv](https://storage.googleapis.com/adx-rtb-dictionarie
-	// s/geo-table.csv)
+	// GeoCriteriaIds: IDs representing the geo location for this context.
+	// Refer to the geo-table.csv
+	// (https://storage.googleapis.com/adx-rtb-dictionaries/geo-table.csv)
 	// file for different geo criteria IDs.
 	GeoCriteriaIds []int64 `json:"geoCriteriaIds,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "GeoCriteriaIds") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "GeoCriteriaIds") to
@@ -4204,13 +3962,10 @@ func (s *LocationContext) MarshalJSON() ([]byte, error) {
 }
 
 // MarketplaceTargeting: Targeting represents different criteria that
-// can be used by advertisers to
-// target ad inventory. For example, they can choose to target ad
-// requests only
-// if the user is in the US.
+// can be used by advertisers to target ad inventory. For example, they
+// can choose to target ad requests only if the user is in the US.
 // Multiple types of targeting are always applied as a logical AND,
-// unless noted
-// otherwise.
+// unless noted otherwise.
 type MarketplaceTargeting struct {
 	// GeoTargeting: Geo criteria IDs to be included/excluded.
 	GeoTargeting *CriteriaTargeting `json:"geoTargeting,omitempty"`
@@ -4218,11 +3973,11 @@ type MarketplaceTargeting struct {
 	// InventorySizeTargeting: Inventory sizes to be included/excluded.
 	InventorySizeTargeting *InventorySizeTargeting `json:"inventorySizeTargeting,omitempty"`
 
-	// PlacementTargeting: Placement targeting information, e.g., URL,
-	// mobile applications.
+	// PlacementTargeting: Placement targeting information, for example,
+	// URL, mobile applications.
 	PlacementTargeting *PlacementTargeting `json:"placementTargeting,omitempty"`
 
-	// TechnologyTargeting: Technology targeting information, e.g.,
+	// TechnologyTargeting: Technology targeting information, for example,
 	// operating system, device category.
 	TechnologyTargeting *TechnologyTargeting `json:"technologyTargeting,omitempty"`
 
@@ -4231,10 +3986,10 @@ type MarketplaceTargeting struct {
 
 	// ForceSendFields is a list of field names (e.g. "GeoTargeting") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "GeoTargeting") to include
@@ -4253,32 +4008,27 @@ func (s *MarketplaceTargeting) MarshalJSON() ([]byte, error) {
 }
 
 // MetricValue: A metric value, with an expected value and a variance;
-// represents a count
-// that may be either exact or estimated (i.e. when sampled).
+// represents a count that may be either exact or estimated (for
+// example, when sampled).
 type MetricValue struct {
 	// Value: The expected value of the metric.
 	Value int64 `json:"value,omitempty,string"`
 
-	// Variance: The variance (i.e. square of the standard deviation) of the
-	// metric value.
-	// If value is exact, variance is 0.
-	// Can be used to calculate margin of error as a percentage of value,
-	// using
+	// Variance: The variance (for example, square of the standard
+	// deviation) of the metric value. If value is exact, variance is 0. Can
+	// be used to calculate margin of error as a percentage of value, using
 	// the following formula, where Z is the standard constant that depends
-	// on the
-	// desired size of the confidence interval (e.g. for 90% confidence
-	// interval,
-	// use Z = 1.645):
-	//
-	//   marginOfError = 100 * Z * sqrt(variance) / value
+	// on the preferred size of the confidence interval (for example, for
+	// 90% confidence interval, use Z = 1.645): marginOfError = 100 * Z *
+	// sqrt(variance) / value
 	Variance int64 `json:"variance,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "Value") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Value") to include in API
@@ -4299,16 +4049,15 @@ func (s *MetricValue) MarshalJSON() ([]byte, error) {
 // MobileApplicationTargeting: Mobile application targeting settings.
 type MobileApplicationTargeting struct {
 	// FirstPartyTargeting: Publisher owned apps to be targeted or excluded
-	// by the publisher to
-	// display the ads in.
+	// by the publisher to display the ads in.
 	FirstPartyTargeting *FirstPartyMobileApplicationTargeting `json:"firstPartyTargeting,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FirstPartyTargeting")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "FirstPartyTargeting") to
@@ -4329,29 +4078,27 @@ func (s *MobileApplicationTargeting) MarshalJSON() ([]byte, error) {
 
 // Money: Represents an amount of money with its currency type.
 type Money struct {
-	// CurrencyCode: The 3-letter currency code defined in ISO 4217.
+	// CurrencyCode: The three-letter currency code defined in ISO 4217.
 	CurrencyCode string `json:"currencyCode,omitempty"`
 
-	// Nanos: Number of nano (10^-9) units of the amount.
-	// The value must be between -999,999,999 and +999,999,999 inclusive.
-	// If `units` is positive, `nanos` must be positive or zero.
-	// If `units` is zero, `nanos` can be positive, zero, or negative.
-	// If `units` is negative, `nanos` must be negative or zero.
-	// For example $-1.75 is represented as `units`=-1 and
-	// `nanos`=-750,000,000.
+	// Nanos: Number of nano (10^-9) units of the amount. The value must be
+	// between -999,999,999 and +999,999,999 inclusive. If `units` is
+	// positive, `nanos` must be positive or zero. If `units` is zero,
+	// `nanos` can be positive, zero, or negative. If `units` is negative,
+	// `nanos` must be negative or zero. For example $-1.75 is represented
+	// as `units`=-1 and `nanos`=-750,000,000.
 	Nanos int64 `json:"nanos,omitempty"`
 
-	// Units: The whole units of the amount.
-	// For example if `currencyCode` is "USD", then 1 unit is one US
-	// dollar.
+	// Units: The whole units of the amount. For example if `currencyCode`
+	// is "USD", then 1 unit is one US dollar.
 	Units int64 `json:"units,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "CurrencyCode") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CurrencyCode") to include
@@ -4418,10 +4165,10 @@ type NativeContent struct {
 
 	// ForceSendFields is a list of field names (e.g. "AdvertiserName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AdvertiserName") to
@@ -4455,8 +4202,8 @@ func (s *NativeContent) UnmarshalJSON(data []byte) error {
 }
 
 // NonBillableWinningBidStatusRow: The number of winning bids with the
-// specified dimension values for which the
-// buyer was not billed, as described by the specified status.
+// specified dimension values for which the buyer was not billed, as
+// described by the specified status.
 type NonBillableWinningBidStatusRow struct {
 	// BidCount: The number of bids with the specified status.
 	BidCount *MetricValue `json:"bidCount,omitempty"`
@@ -4468,28 +4215,24 @@ type NonBillableWinningBidStatusRow struct {
 	// Status: The status specifying why the winning bids were not billed.
 	//
 	// Possible values:
-	//   "STATUS_UNSPECIFIED" - A placeholder for an undefined status.
-	// This value will never be returned in responses.
+	//   "STATUS_UNSPECIFIED" - A placeholder for an undefined status. This
+	// value will never be returned in responses.
 	//   "AD_NOT_RENDERED" - The buyer was not billed because the ad was not
-	// rendered by the
-	// publisher.
+	// rendered by the publisher.
 	//   "INVALID_IMPRESSION" - The buyer was not billed because the
-	// impression won by the bid was
-	// determined to be invalid.
+	// impression won by the bid was determined to be invalid.
 	//   "FATAL_VAST_ERROR" - A video impression was served but a fatal
-	// error was reported from the
-	// client during playback.
+	// error was reported from the client during playback.
 	//   "LOST_IN_MEDIATION" - The buyer was not billed because the ad was
-	// outplaced in the mediation
-	// waterfall.
+	// outplaced in the mediation waterfall.
 	Status string `json:"status,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BidCount") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BidCount") to include in
@@ -4508,12 +4251,11 @@ func (s *NonBillableWinningBidStatusRow) MarshalJSON() ([]byte, error) {
 }
 
 // NonGuaranteedAuctionTerms: Terms for Private Auctions. Note that
-// Private Auctions can be created only
-// by the seller, but they can be returned in a get or list request.
+// Private Auctions can be created only by the seller, but they can be
+// returned in a get or list request.
 type NonGuaranteedAuctionTerms struct {
 	// AutoOptimizePrivateAuction: True if open auction buyers are allowed
-	// to compete with invited buyers
-	// in this private auction.
+	// to compete with invited buyers in this private auction.
 	AutoOptimizePrivateAuction bool `json:"autoOptimizePrivateAuction,omitempty"`
 
 	// ReservePricesPerBuyer: Reserve price for the specified buyer.
@@ -4521,11 +4263,11 @@ type NonGuaranteedAuctionTerms struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "AutoOptimizePrivateAuction") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g.
@@ -4544,19 +4286,17 @@ func (s *NonGuaranteedAuctionTerms) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// NonGuaranteedFixedPriceTerms: Terms for Preferred Deals. Note that
-// Preferred Deals cannot be created via
-// the API at this time, but can be returned in a get or list request.
+// NonGuaranteedFixedPriceTerms: Terms for Preferred Deals.
 type NonGuaranteedFixedPriceTerms struct {
 	// FixedPrices: Fixed price for the specified buyer.
 	FixedPrices []*PricePerBuyer `json:"fixedPrices,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FixedPrices") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "FixedPrices") to include
@@ -4590,12 +4330,10 @@ type Note struct {
 	//   "SELLER" - Specifies the role as seller.
 	CreatorRole string `json:"creatorRole,omitempty"`
 
-	// Note: The actual note to attach.
-	// (max-length: 1024 unicode code units)
-	//
-	// Note: This field may be set only when creating the resource.
-	// Modifying
-	// this field while updating the resource will result in an error.
+	// Note: The actual note to attach. (max-length: 1024 unicode code
+	// units) Note: This field may be set only when creating the resource.
+	// Modifying this field while updating the resource will result in an
+	// error.
 	Note string `json:"note,omitempty"`
 
 	// NoteId: Output only. The unique ID for the note.
@@ -4611,10 +4349,10 @@ type Note struct {
 
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CreateTime") to include in
@@ -4645,11 +4383,11 @@ type OperatingSystemTargeting struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "OperatingSystemCriteria") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "OperatingSystemCriteria")
@@ -4668,21 +4406,56 @@ func (s *OperatingSystemTargeting) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// PauseProposalDealsRequest: Request message to pause serving for
+// finalized deals.
+type PauseProposalDealsRequest struct {
+	// ExternalDealIds: The external_deal_id's of the deals to be paused. If
+	// empty, all the deals in the proposal will be paused.
+	ExternalDealIds []string `json:"externalDealIds,omitempty"`
+
+	// Reason: The reason why the deals are being paused. This human
+	// readable message will be displayed in the seller's UI. (Max length:
+	// 1000 unicode code units.)
+	Reason string `json:"reason,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ExternalDealIds") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ExternalDealIds") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PauseProposalDealsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod PauseProposalDealsRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // PauseProposalRequest: Request message to pause serving for an
 // already-finalized proposal.
 type PauseProposalRequest struct {
-	// Reason: The reason why the proposal is being paused.
-	// This human readable message will be displayed in the seller's
-	// UI.
-	// (Max length: 1000 unicode code units.)
+	// Reason: The reason why the proposal is being paused. This human
+	// readable message will be displayed in the seller's UI. (Max length:
+	// 1000 unicode code units.)
 	Reason string `json:"reason,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Reason") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Reason") to include in API
@@ -4701,13 +4474,11 @@ func (s *PauseProposalRequest) MarshalJSON() ([]byte, error) {
 }
 
 // PlacementTargeting: Represents targeting about where the ads can
-// appear, e.g., certain sites or
-// mobile applications.
-// Different placement targeting types will be logically OR'ed.
+// appear, for example, certain sites or mobile applications. Different
+// placement targeting types will be logically OR'ed.
 type PlacementTargeting struct {
 	// MobileApplicationTargeting: Mobile application targeting information
-	// in a deal.
-	// This doesn't apply to Auction Packages.
+	// in a deal. This doesn't apply to Auction Packages.
 	MobileApplicationTargeting *MobileApplicationTargeting `json:"mobileApplicationTargeting,omitempty"`
 
 	// UrlTargeting: URLs to be included/excluded.
@@ -4715,11 +4486,11 @@ type PlacementTargeting struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "MobileApplicationTargeting") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g.
@@ -4751,10 +4522,10 @@ type PlatformContext struct {
 
 	// ForceSendFields is a list of field names (e.g. "Platforms") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Platforms") to include in
@@ -4781,18 +4552,18 @@ type Price struct {
 	//
 	// Possible values:
 	//   "PRICING_TYPE_UNSPECIFIED" - A placeholder for an undefined pricing
-	// type. If the pricing type is
-	// unpsecified, `COST_PER_MILLE` will be used instead.
+	// type. If the pricing type is unpsecified, `COST_PER_MILLE` will be
+	// used instead.
 	//   "COST_PER_MILLE" - Cost per thousand impressions.
 	//   "COST_PER_DAY" - Cost per day
 	PricingType string `json:"pricingType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Amount") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Amount") to include in API
@@ -4811,27 +4582,21 @@ func (s *Price) MarshalJSON() ([]byte, error) {
 }
 
 // PricePerBuyer: Used to specify pricing rules for buyers/advertisers.
-// Each PricePerBuyer in
-// a product can become 0 or 1 deals. To check if there is a
-// PricePerBuyer for
-// a particular buyer or buyer/advertiser pair, we look for the most
-// specific
-// matching rule - we first look for a rule matching the buyer and
-// advertiser,
-// next a rule with the buyer but an empty advertiser list, and
-// otherwise look
-// for a matching rule where no buyer is set.
+// Each PricePerBuyer in a product can become 0 or 1 deals. To check if
+// there is a PricePerBuyer for a particular buyer or buyer/advertiser
+// pair, we look for the most specific matching rule - we first look for
+// a rule matching the buyer and advertiser, next a rule with the buyer
+// but an empty advertiser list, and otherwise look for a matching rule
+// where no buyer is set.
 type PricePerBuyer struct {
 	// AdvertiserIds: The list of advertisers for this price when associated
-	// with this buyer.
-	// If empty, all advertisers with this buyer pay this price.
+	// with this buyer. If empty, all advertisers with this buyer pay this
+	// price.
 	AdvertiserIds []string `json:"advertiserIds,omitempty"`
 
 	// Buyer: The buyer who will pay this price. If unset, all buyers can
-	// pay this price
-	// (if the
-	// advertisers match, and there's no more specific rule matching the
-	// buyer).
+	// pay this price (if the advertisers match, and there's no more
+	// specific rule matching the buyer).
 	Buyer *Buyer `json:"buyer,omitempty"`
 
 	// Price: The specified price.
@@ -4839,10 +4604,10 @@ type PricePerBuyer struct {
 
 	// ForceSendFields is a list of field names (e.g. "AdvertiserIds") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AdvertiserIds") to include
@@ -4864,16 +4629,15 @@ func (s *PricePerBuyer) MarshalJSON() ([]byte, error) {
 // data in a proposal/deal.
 type PrivateData struct {
 	// ReferenceId: A buyer or seller specified reference ID. This can be
-	// queried in the list
-	// operations (max-length: 1024 unicode code units).
+	// queried in the list operations (max-length: 1024 unicode code units).
 	ReferenceId string `json:"referenceId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ReferenceId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ReferenceId") to include
@@ -4891,26 +4655,17 @@ func (s *PrivateData) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Product: Note: this resource requires whitelisting for access. Please
-// contact your
-// account manager for access to Marketplace resources.
-//
-// A product is a segment of inventory that a seller wishes to sell. It
-// is
-// associated with certain terms and targeting information which helps
-// the buyer
-// know more about the inventory.
+// Product: A product is a segment of inventory that a seller wants to
+// sell. It is associated with certain terms and targeting information
+// which helps the buyer know more about the inventory.
 type Product struct {
 	// AvailableEndTime: The proposed end time for the deal. The field will
-	// be truncated to the
-	// order of seconds during serving.
+	// be truncated to the order of seconds during serving.
 	AvailableEndTime string `json:"availableEndTime,omitempty"`
 
 	// AvailableStartTime: Inventory availability dates. The start time will
-	// be truncated to seconds
-	// during serving. Thus, a field specified as 3:23:34.456 (HH:mm:ss.SSS)
-	// will
-	// be truncated to 3:23:34 when serving.
+	// be truncated to seconds during serving. Thus, a field specified as
+	// 3:23:34.456 (HH:mm:ss.SSS) will be truncated to 3:23:34 when serving.
 	AvailableStartTime string `json:"availableStartTime,omitempty"`
 
 	// CreateTime: Creation time.
@@ -4924,12 +4679,9 @@ type Product struct {
 	DisplayName string `json:"displayName,omitempty"`
 
 	// HasCreatorSignedOff: If the creator has already signed off on the
-	// product, then the buyer can
-	// finalize the deal by accepting the product as is. When copying to
-	// a
-	// proposal, if any of the terms are changed, then auto_finalize
-	// is
-	// automatically set to false.
+	// product, then the buyer can finalize the deal by accepting the
+	// product as is. When copying to a proposal, if any of the terms are
+	// changed, then auto_finalize is automatically set to false.
 	HasCreatorSignedOff bool `json:"hasCreatorSignedOff,omitempty"`
 
 	// ProductId: The unique ID for the product.
@@ -4940,8 +4692,8 @@ type Product struct {
 	ProductRevision int64 `json:"productRevision,omitempty,string"`
 
 	// PublisherProfileId: An ID which can be used by the Publisher Profile
-	// API to get more
-	// information about the seller that created this product.
+	// API to get more information about the seller that created this
+	// product.
 	PublisherProfileId string `json:"publisherProfileId,omitempty"`
 
 	// Seller: Information about the seller that created this product.
@@ -4959,10 +4711,8 @@ type Product struct {
 	SyndicationProduct string `json:"syndicationProduct,omitempty"`
 
 	// TargetingCriterion: Targeting that is shared between the buyer and
-	// the seller. Each targeting
-	// criterion has a specified key and for each key there is a list of
-	// inclusion
-	// value or exclusion values.
+	// the seller. Each targeting criterion has a specified key and for each
+	// key there is a list of inclusion value or exclusion values.
 	TargetingCriterion []*TargetingCriteria `json:"targetingCriterion,omitempty"`
 
 	// Terms: The negotiable terms of the deal.
@@ -4972,8 +4722,7 @@ type Product struct {
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// WebPropertyCode: The web-property code for the seller. This needs to
-	// be copied as is when
-	// adding a new deal to a proposal.
+	// be copied as is when adding a new deal to a proposal.
 	WebPropertyCode string `json:"webPropertyCode,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -4982,10 +4731,10 @@ type Product struct {
 
 	// ForceSendFields is a list of field names (e.g. "AvailableEndTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AvailableEndTime") to
@@ -5004,29 +4753,19 @@ func (s *Product) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Proposal: Note: this resource requires whitelisting for access.
-// Please contact your
-// account manager for access to Marketplace resources.
-//
-// Represents a proposal in the Marketplace. A proposal is the unit
-// of
-// negotiation between a seller and a buyer and contains deals which
-// are served.
-//
-// Note: you can not update, create, or otherwise modify Private
-// Auction or Preferred Deals deals through the API.
-//
-// Fields are updatable unless noted otherwise.
+// Proposal: Represents a proposal in the Marketplace. A proposal is the
+// unit of negotiation between a seller and a buyer and contains deals
+// which are served. Note: You can't update, create, or otherwise modify
+// Private Auction deals through the API. Fields are updatable unless
+// noted otherwise.
 type Proposal struct {
 	// BilledBuyer: Output only. Reference to the buyer that will get billed
 	// for this proposal.
 	BilledBuyer *Buyer `json:"billedBuyer,omitempty"`
 
-	// Buyer: Reference to the buyer on the proposal.
-	//
-	// Note: This field may be set only when creating the resource.
-	// Modifying
-	// this field while updating the resource will result in an error.
+	// Buyer: Reference to the buyer on the proposal. Note: This field may
+	// be set only when creating the resource. Modifying this field while
+	// updating the resource will result in an error.
 	Buyer *Buyer `json:"buyer,omitempty"`
 
 	// BuyerContacts: Contact information for the buyer.
@@ -5036,9 +4775,8 @@ type Proposal struct {
 	BuyerPrivateData *PrivateData `json:"buyerPrivateData,omitempty"`
 
 	// Deals: The deals associated with this proposal. For Private Auction
-	// proposals
-	// (whose deals have NonGuaranteedAuctionTerms), there will only be one
-	// deal.
+	// proposals (whose deals have NonGuaranteedAuctionTerms), there will
+	// only be one deal.
 	Deals []*Deal `json:"deals,omitempty"`
 
 	// DisplayName: The name for the proposal.
@@ -5049,13 +4787,11 @@ type Proposal struct {
 	IsRenegotiating bool `json:"isRenegotiating,omitempty"`
 
 	// IsSetupComplete: Output only. True, if the buyside inventory setup is
-	// complete for this
-	// proposal.
+	// complete for this proposal.
 	IsSetupComplete bool `json:"isSetupComplete,omitempty"`
 
 	// LastUpdaterOrCommentorRole: Output only. The role of the last user
-	// that either updated the proposal or
-	// left a comment.
+	// that either updated the proposal or left a comment.
 	//
 	// Possible values:
 	//   "BUYER_SELLER_ROLE_UNSPECIFIED" - A placeholder for an undefined
@@ -5078,26 +4814,19 @@ type Proposal struct {
 	OriginatorRole string `json:"originatorRole,omitempty"`
 
 	// PrivateAuctionId: Output only. Private auction ID if this proposal is
-	// a private auction
-	// proposal.
+	// a private auction proposal.
 	PrivateAuctionId string `json:"privateAuctionId,omitempty"`
 
 	// ProposalId: Output only. The unique ID of the proposal.
 	ProposalId string `json:"proposalId,omitempty"`
 
-	// ProposalRevision: Output only. The revision number for the
-	// proposal.
+	// ProposalRevision: Output only. The revision number for the proposal.
 	// Each update to the proposal or the deal causes the proposal revision
-	// number
-	// to auto-increment. The buyer keeps track of the last revision number
-	// they
-	// know of and pass it in when making an update. If the head revision
-	// number
-	// on the server has since incremented, then an ABORTED error is
-	// returned
-	// during the update operation to let the buyer know that a subsequent
-	// update
-	// was made.
+	// number to auto-increment. The buyer keeps track of the last revision
+	// number they know of and pass it in when making an update. If the head
+	// revision number on the server has since incremented, then an ABORTED
+	// error is returned during the update operation to let the buyer know
+	// that a subsequent update was made.
 	ProposalRevision int64 `json:"proposalRevision,omitempty,string"`
 
 	// ProposalState: Output only. The current state of the proposal.
@@ -5109,22 +4838,22 @@ type Proposal struct {
 	//   "BUYER_ACCEPTED" - The proposal has been accepted by the buyer.
 	//   "SELLER_ACCEPTED" - The proposal has been accepted by the seller.
 	//   "CANCELED" - The negotiations on the proposal were canceled and the
-	// proposal was never
-	// finalized.
+	// proposal was never finalized.
 	//   "FINALIZED" - The proposal is finalized. During renegotiation, the
-	// proposal may
-	// not be in this state.
+	// proposal may not be in this state.
 	ProposalState string `json:"proposalState,omitempty"`
 
-	// Seller: Reference to the seller on the proposal.
-	//
-	// Note: This field may be set only when creating the resource.
-	// Modifying
-	// this field while updating the resource will result in an error.
+	// Seller: Reference to the seller on the proposal. Note: This field may
+	// be set only when creating the resource. Modifying this field while
+	// updating the resource will result in an error.
 	Seller *Seller `json:"seller,omitempty"`
 
 	// SellerContacts: Output only. Contact information for the seller.
 	SellerContacts []*ContactInformation `json:"sellerContacts,omitempty"`
+
+	// TermsAndConditions: Output only. The terms and conditions set by the
+	// publisher for this proposal.
+	TermsAndConditions string `json:"termsAndConditions,omitempty"`
 
 	// UpdateTime: Output only. The time when the proposal was last revised.
 	UpdateTime string `json:"updateTime,omitempty"`
@@ -5135,10 +4864,10 @@ type Proposal struct {
 
 	// ForceSendFields is a list of field names (e.g. "BilledBuyer") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BilledBuyer") to include
@@ -5156,81 +4885,63 @@ func (s *Proposal) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// PublisherProfile: Note: this resource requires whitelisting for
-// access. Please contact your
-// account manager for access to Marketplace resources.
-//
-// Represents a publisher
-// profile
-// (https://support.google.com/admanager/answer/6035806?hl=en) in
-// Marketplace.
-//
+// PublisherProfile: Represents a publisher profile
+// (https://support.google.com/admanager/answer/6035806) in Marketplace.
 // All fields are read only. All string fields are free-form text
-// entered by the
-// publisher unless noted otherwise.
+// entered by the publisher unless noted otherwise.
 type PublisherProfile struct {
 	// AudienceDescription: Description on the publisher's audience.
 	AudienceDescription string `json:"audienceDescription,omitempty"`
 
 	// BuyerPitchStatement: Statement explaining what's unique about
-	// publisher's business, and why
-	// buyers should partner with the publisher.
+	// publisher's business, and why buyers should partner with the
+	// publisher.
 	BuyerPitchStatement string `json:"buyerPitchStatement,omitempty"`
 
 	// DirectDealsContact: Contact information for direct reservation deals.
-	// This is free text entered
-	// by the publisher and may include information like names, phone
-	// numbers and
-	// email addresses.
+	// This is free text entered by the publisher and may include
+	// information like names, phone numbers and email addresses.
 	DirectDealsContact string `json:"directDealsContact,omitempty"`
 
 	// DisplayName: Name of the publisher profile.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Domains: The list of domains represented in this publisher profile.
-	// Empty if this is
-	// a parent profile. These are top private domains, meaning that these
-	// will
-	// not contain a string like "photos.google.co.uk/123", but will
-	// instead
-	// contain "google.co.uk".
+	// Empty if this is a parent profile. These are top private domains,
+	// meaning that these will not contain a string like
+	// "photos.google.co.uk/123", but will instead contain "google.co.uk".
 	Domains []string `json:"domains,omitempty"`
 
 	// GooglePlusUrl: URL to publisher's Google+ page.
 	GooglePlusUrl string `json:"googlePlusUrl,omitempty"`
 
 	// IsParent: Indicates if this profile is the parent profile of the
-	// seller. A parent
-	// profile represents all the inventory from the seller, as opposed to
-	// child
-	// profile that is created to brand a portion of inventory. One seller
-	// should
-	// have only one parent publisher profile, and can have multiple
-	// child
-	// profiles. Publisher profiles for the same seller will have same value
-	// of
-	// field
-	// google.ads.adexchange.buyer.v2beta1.PublisherProfile.seller.
-	// See https://support.google.com/admanager/answer/6035806?hl=en for
-	// details.
+	// seller. A parent profile represents all the inventory from the
+	// seller, as opposed to child profile that is created to brand a
+	// portion of inventory. One seller should have only one parent
+	// publisher profile, and can have multiple child profiles. Publisher
+	// profiles for the same seller will have same value of field
+	// google.ads.adexchange.buyer.v2beta1.PublisherProfile.seller. See
+	// https://support.google.com/admanager/answer/6035806 for details.
 	IsParent bool `json:"isParent,omitempty"`
 
 	// LogoUrl: A Google public URL to the logo for this publisher profile.
-	// The logo is
-	// stored as a PNG, JPG, or GIF image.
+	// The logo is stored as a PNG, JPG, or GIF image.
 	LogoUrl string `json:"logoUrl,omitempty"`
 
 	// MediaKitUrl: URL to additional marketing and sales materials.
 	MediaKitUrl string `json:"mediaKitUrl,omitempty"`
 
+	// MobileApps: The list of apps represented in this publisher profile.
+	// Empty if this is a parent profile.
+	MobileApps []*PublisherProfileMobileApplication `json:"mobileApps,omitempty"`
+
 	// Overview: Overview of the publisher.
 	Overview string `json:"overview,omitempty"`
 
 	// ProgrammaticDealsContact: Contact information for programmatic deals.
-	// This is free text entered by
-	// the publisher and may include information like names, phone numbers
-	// and
-	// email addresses.
+	// This is free text entered by the publisher and may include
+	// information like names, phone numbers and email addresses.
 	ProgrammaticDealsContact string `json:"programmaticDealsContact,omitempty"`
 
 	// PublisherProfileId: Unique ID for publisher profile.
@@ -5246,8 +4957,8 @@ type PublisherProfile struct {
 	Seller *Seller `json:"seller,omitempty"`
 
 	// TopHeadlines: Up to three key metrics and rankings. Max 100
-	// characters each.
-	// For example "#1 Mobile News Site for 20 Straight Months".
+	// characters each. For example "#1 Mobile News Site for 20 Straight
+	// Months".
 	TopHeadlines []string `json:"topHeadlines,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -5256,10 +4967,10 @@ type PublisherProfile struct {
 
 	// ForceSendFields is a list of field names (e.g. "AudienceDescription")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AudienceDescription") to
@@ -5278,11 +4989,61 @@ func (s *PublisherProfile) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// PublisherProfileMobileApplication: A mobile application that contains
+// a external app ID, name, and app store.
+type PublisherProfileMobileApplication struct {
+	// AppStore: The app store the app belongs to.
+	//
+	// Possible values:
+	//   "APP_STORE_TYPE_UNSPECIFIED" - A placeholder for an unknown app
+	// store.
+	//   "APPLE_ITUNES" - Apple iTunes
+	//   "GOOGLE_PLAY" - Google Play
+	//   "ROKU" - Roku
+	//   "AMAZON_FIRETV" - Amazon Fire TV
+	//   "PLAYSTATION" - Playstation
+	//   "XBOX" - Xbox
+	//   "SAMSUNG_TV" - Samsung TV
+	//   "AMAZON" - Amazon Appstore
+	//   "OPPO" - OPPO App Market
+	//   "SAMSUNG" - Samsung Galaxy Store
+	//   "VIVO" - VIVO App Store
+	//   "XIAOMI" - Xiaomi GetApps
+	AppStore string `json:"appStore,omitempty"`
+
+	// ExternalAppId: The external ID for the app from its app store.
+	ExternalAppId string `json:"externalAppId,omitempty"`
+
+	// Name: The name of the app.
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AppStore") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AppStore") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PublisherProfileMobileApplication) MarshalJSON() ([]byte, error) {
+	type NoMethod PublisherProfileMobileApplication
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // RealtimeTimeRange: An open-ended realtime time range specified by the
-// start timestamp.
-// For filter sets that specify a realtime time range RTB metrics
-// continue to
-// be aggregated throughout the lifetime of the filter set.
+// start timestamp. For filter sets that specify a realtime time range
+// RTB metrics continue to be aggregated throughout the lifetime of the
+// filter set.
 type RealtimeTimeRange struct {
 	// StartTimestamp: The start timestamp of the real-time RTB metrics
 	// aggregation.
@@ -5290,10 +5051,10 @@ type RealtimeTimeRange struct {
 
 	// ForceSendFields is a list of field names (e.g. "StartTimestamp") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "StartTimestamp") to
@@ -5313,30 +5074,26 @@ func (s *RealtimeTimeRange) MarshalJSON() ([]byte, error) {
 }
 
 // RelativeDateRange: A relative date range, specified by an offset and
-// a duration.
-// The supported range of dates begins 30 days before today and ends
-// today,
-// i.e., the limits for these values are:
-// offset_days >= 0
-// duration_days >= 1
-// offset_days + duration_days <= 30
+// a duration. The supported range of dates begins 30 days before today
+// and ends today, for example, the limits for these values are:
+// offset_days >= 0 duration_days >= 1 offset_days + duration_days <= 30
 type RelativeDateRange struct {
-	// DurationDays: The number of days in the requested date range, e.g.,
-	// for a range spanning
-	// today: 1. For a range spanning the last 7 days: 7.
+	// DurationDays: The number of days in the requested date range, for
+	// example, for a range spanning today: 1. For a range spanning the last
+	// 7 days: 7.
 	DurationDays int64 `json:"durationDays,omitempty"`
 
 	// OffsetDays: The end date of the filter set, specified as the number
-	// of days before
-	// today, e.g., for a range where the last date is today: 0.
+	// of days before today, for example, for a range where the last date is
+	// today: 0.
 	OffsetDays int64 `json:"offsetDays,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DurationDays") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DurationDays") to include
@@ -5363,10 +5120,10 @@ type RemoveDealAssociationRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "Association") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Association") to include
@@ -5384,22 +5141,49 @@ func (s *RemoveDealAssociationRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ResumeProposalDealsRequest: Request message to resume (unpause)
+// serving for already-finalized deals.
+type ResumeProposalDealsRequest struct {
+	// ExternalDealIds: The external_deal_id's of the deals to resume. If
+	// empty, all the deals in the proposal will be resumed.
+	ExternalDealIds []string `json:"externalDealIds,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ExternalDealIds") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ExternalDealIds") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ResumeProposalDealsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ResumeProposalDealsRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ResumeProposalRequest: Request message to resume (unpause) serving
-// for an already-finalized
-// proposal.
+// for an already-finalized proposal.
 type ResumeProposalRequest struct {
 }
 
 // RowDimensions: A response may include multiple rows, breaking down
-// along various dimensions.
-// Encapsulates the values of all dimensions for a given row.
+// along various dimensions. Encapsulates the values of all dimensions
+// for a given row.
 type RowDimensions struct {
 	// PublisherIdentifier: The publisher identifier for this row, if a
-	// breakdown
-	// by
-	// [BreakdownDimension.PUBLISHER_IDENTIFIER](https://developers.google
-	// .com/authorized-buyers/apis/reference/rest/v2beta1/bidders.accounts.fi
-	// lterSets#FilterSet.BreakdownDimension)
+	// breakdown by BreakdownDimension.PUBLISHER_IDENTIFIER
+	// (https://developers.google.com/authorized-buyers/apis/reference/rest/v2beta1/bidders.accounts.filterSets#FilterSet.BreakdownDimension)
 	// was requested.
 	PublisherIdentifier string `json:"publisherIdentifier,omitempty"`
 
@@ -5408,10 +5192,10 @@ type RowDimensions struct {
 
 	// ForceSendFields is a list of field names (e.g. "PublisherIdentifier")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "PublisherIdentifier") to
@@ -5442,10 +5226,10 @@ type SecurityContext struct {
 
 	// ForceSendFields is a list of field names (e.g. "Securities") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Securities") to include in
@@ -5464,23 +5248,22 @@ func (s *SecurityContext) MarshalJSON() ([]byte, error) {
 }
 
 // Seller: Represents a seller of inventory. Each seller is identified
-// by a unique
-// Ad Manager account ID.
+// by a unique Ad Manager account ID.
 type Seller struct {
 	// AccountId: The unique ID for the seller. The seller fills in this
-	// field.
-	// The seller account ID is then available to buyer in the product.
+	// field. The seller account ID is then available to buyer in the
+	// product.
 	AccountId string `json:"accountId,omitempty"`
 
-	// SubAccountId: Optional sub-account ID for the seller.
+	// SubAccountId: Output only. Ad manager network code for the seller.
 	SubAccountId string `json:"subAccountId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AccountId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AccountId") to include in
@@ -5513,8 +5296,7 @@ type ServingContext struct {
 	AuctionType *AuctionContext `json:"auctionType,omitempty"`
 
 	// Location: Matches impressions coming from users *or* publishers in a
-	// specific
-	// location.
+	// specific location.
 	Location *LocationContext `json:"location,omitempty"`
 
 	// Platform: Matches impressions coming from a particular platform.
@@ -5525,10 +5307,10 @@ type ServingContext struct {
 
 	// ForceSendFields is a list of field names (e.g. "All") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "All") to include in API
@@ -5547,37 +5329,25 @@ func (s *ServingContext) MarshalJSON() ([]byte, error) {
 }
 
 // ServingRestriction: Output only. A representation of the status of an
-// ad in a
-// specific context. A context here relates to where something
-// ultimately serves
-// (for example, a user or publisher geo, a platform, an HTTPS vs HTTP
-// request,
-// or the type of auction).
+// ad in a specific context. A context here relates to where something
+// ultimately serves (for example, a user or publisher geo, a platform,
+// an HTTPS versus HTTP request, or the type of auction).
 type ServingRestriction struct {
 	// Contexts: The contexts for the restriction.
 	Contexts []*ServingContext `json:"contexts,omitempty"`
 
-	// Disapproval: Disapproval bound to this restriction.
-	// Only present if status=DISAPPROVED.
-	// Can be used to filter the response of the
-	// creatives.list
-	// method.
+	// Disapproval: Disapproval bound to this restriction. Only present if
+	// status=DISAPPROVED. Can be used to filter the response of the
+	// creatives.list method.
 	Disapproval *Disapproval `json:"disapproval,omitempty"`
 
-	// DisapprovalReasons: Any disapprovals bound to this restriction.
-	// Only present if status=DISAPPROVED.
-	// Can be used to filter the response of
-	// the
-	// creatives.list
-	// method.
-	// Deprecated; please use
-	// disapproval
-	// field instead.
+	// DisapprovalReasons: Any disapprovals bound to this restriction. Only
+	// present if status=DISAPPROVED. Can be used to filter the response of
+	// the creatives.list method. Deprecated; use disapproval field instead.
 	DisapprovalReasons []*Disapproval `json:"disapprovalReasons,omitempty"`
 
 	// Status: The status of the creative in this context (for example, it
-	// has been
-	// explicitly disapproved or is pending review).
+	// has been explicitly disapproved or is pending review).
 	//
 	// Possible values:
 	//   "STATUS_UNSPECIFIED" - The status is not known.
@@ -5587,10 +5357,10 @@ type ServingRestriction struct {
 
 	// ForceSendFields is a list of field names (e.g. "Contexts") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Contexts") to include in
@@ -5609,8 +5379,7 @@ func (s *ServingRestriction) MarshalJSON() ([]byte, error) {
 }
 
 // Size: Message depicting the size of the creative. The units of width
-// and
-// height depend on the type of the targeting.
+// and height depend on the type of the targeting.
 type Size struct {
 	// Height: The height of the creative.
 	Height int64 `json:"height,omitempty"`
@@ -5620,10 +5389,10 @@ type Size struct {
 
 	// ForceSendFields is a list of field names (e.g. "Height") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Height") to include in API
@@ -5647,36 +5416,31 @@ type StopWatchingCreativeRequest struct {
 }
 
 // TargetingCriteria: Advertisers can target different attributes of an
-// ad slot. For example,
-// they can choose to show ads only if the user is in the U.S.
-// Such
-// targeting criteria can be specified as part of Shared Targeting.
+// ad slot. For example, they can choose to show ads only if the user is
+// in the U.S. Such targeting criteria can be specified as part of
+// Shared Targeting.
 type TargetingCriteria struct {
 	// Exclusions: The list of values to exclude from targeting. Each value
-	// is AND'd
-	// together.
+	// is AND'd together.
 	Exclusions []*TargetingValue `json:"exclusions,omitempty"`
 
 	// Inclusions: The list of value to include as part of the targeting.
-	// Each value is OR'd
-	// together.
+	// Each value is OR'd together.
 	Inclusions []*TargetingValue `json:"inclusions,omitempty"`
 
-	// Key: The key representing the shared targeting criterion.
-	// Targeting criteria defined by Google ad servers will begin with
-	// GOOG_.
-	// Third parties may define their own keys.
-	// A list of permissible keys along with the acceptable values will
-	// be
-	// provided as part of the external documentation.
+	// Key: The key representing the shared targeting criterion. Targeting
+	// criteria defined by Google ad servers will begin with GOOG_. Third
+	// parties may define their own keys. A list of permissible keys along
+	// with the acceptable values will be provided as part of the external
+	// documentation.
 	Key string `json:"key,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Exclusions") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Exclusions") to include in
@@ -5697,15 +5461,13 @@ func (s *TargetingCriteria) MarshalJSON() ([]byte, error) {
 // TargetingValue: A polymorphic targeting value used as part of Shared
 // Targeting.
 type TargetingValue struct {
-	// CreativeSizeValue: The creative size value to include/exclude.
-	// Filled in when key = GOOG_CREATIVE_SIZE
+	// CreativeSizeValue: The creative size value to include/exclude. Filled
+	// in when key = GOOG_CREATIVE_SIZE
 	CreativeSizeValue *CreativeSize `json:"creativeSizeValue,omitempty"`
 
-	// DayPartTargetingValue: The daypart targeting to include /
-	// exclude.
-	// Filled in when the key is GOOG_DAYPART_TARGETING.
-	// The definition of this targeting is derived from the structure
-	// used by Ad Manager.
+	// DayPartTargetingValue: The daypart targeting to include / exclude.
+	// Filled in when the key is GOOG_DAYPART_TARGETING. The definition of
+	// this targeting is derived from the structure used by Ad Manager.
 	DayPartTargetingValue *DayPartTargeting `json:"dayPartTargetingValue,omitempty"`
 
 	// LongValue: The long value to include/exclude.
@@ -5716,10 +5478,10 @@ type TargetingValue struct {
 
 	// ForceSendFields is a list of field names (e.g. "CreativeSizeValue")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CreativeSizeValue") to
@@ -5755,11 +5517,11 @@ type TechnologyTargeting struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "DeviceCapabilityTargeting") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g.
@@ -5781,21 +5543,19 @@ func (s *TechnologyTargeting) MarshalJSON() ([]byte, error) {
 // TimeInterval: An interval of time, with an absolute start and end.
 type TimeInterval struct {
 	// EndTime: The timestamp marking the end of the range (exclusive) for
-	// which data is
-	// included.
+	// which data is included.
 	EndTime string `json:"endTime,omitempty"`
 
 	// StartTime: The timestamp marking the start of the range (inclusive)
-	// for which data is
-	// included.
+	// for which data is included.
 	StartTime string `json:"startTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EndTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "EndTime") to include in
@@ -5814,15 +5574,13 @@ func (s *TimeInterval) MarshalJSON() ([]byte, error) {
 }
 
 // TimeOfDay: Represents a time of day. The date and time zone are
-// either not significant
-// or are specified elsewhere. An API may choose to allow leap seconds.
-// Related
-// types are google.type.Date and `google.protobuf.Timestamp`.
+// either not significant or are specified elsewhere. An API may choose
+// to allow leap seconds. Related types are google.type.Date and
+// `google.protobuf.Timestamp`.
 type TimeOfDay struct {
 	// Hours: Hours of day in 24 hour format. Should be from 0 to 23. An API
-	// may choose
-	// to allow the value "24:00:00" for scenarios like business closing
-	// time.
+	// may choose to allow the value "24:00:00" for scenarios like business
+	// closing time.
 	Hours int64 `json:"hours,omitempty"`
 
 	// Minutes: Minutes of hour of day. Must be from 0 to 59.
@@ -5833,16 +5591,15 @@ type TimeOfDay struct {
 	Nanos int64 `json:"nanos,omitempty"`
 
 	// Seconds: Seconds of minutes of the time. Must normally be from 0 to
-	// 59. An API may
-	// allow the value 60 if it allows leap-seconds.
+	// 59. An API may allow the value 60 if it allows leap-seconds.
 	Seconds int64 `json:"seconds,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Hours") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Hours") to include in API
@@ -5860,13 +5617,10 @@ func (s *TimeOfDay) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// UrlTargeting: Represents a list of targeted and excluded URLs (e.g.,
-// google.com).
-// For Private Auction and AdX Preferred Deals, URLs are either included
-// or
-// excluded.
-// For Programmatic Guaranteed and Preferred Deals, this doesn't
-// apply.
+// UrlTargeting: Represents a list of targeted and excluded URLs (for
+// example, google.com). For Private Auction and AdX Preferred Deals,
+// URLs are either included or excluded. For Programmatic Guaranteed and
+// Preferred Deals, this doesn't apply.
 type UrlTargeting struct {
 	// ExcludedUrls: A list of URLs to be excluded.
 	ExcludedUrls []string `json:"excludedUrls,omitempty"`
@@ -5876,10 +5630,10 @@ type UrlTargeting struct {
 
 	// ForceSendFields is a list of field names (e.g. "ExcludedUrls") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ExcludedUrls") to include
@@ -5902,16 +5656,16 @@ type VideoContent struct {
 	// VideoUrl: The URL to fetch a video ad.
 	VideoUrl string `json:"videoUrl,omitempty"`
 
-	// VideoVastXml: The contents of a VAST document for a video ad.
-	// This document should conform to the VAST 2.0 or 3.0 standard.
+	// VideoVastXml: The contents of a VAST document for a video ad. This
+	// document should conform to the VAST 2.0 or 3.0 standard.
 	VideoVastXml string `json:"videoVastXml,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "VideoUrl") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "VideoUrl") to include in
@@ -5931,8 +5685,7 @@ func (s *VideoContent) MarshalJSON() ([]byte, error) {
 
 // VideoTargeting: Represents targeting information about video.
 type VideoTargeting struct {
-	// ExcludedPositionTypes: A list of video positions to be
-	// excluded.
+	// ExcludedPositionTypes: A list of video positions to be excluded.
 	// Position types can either be included or excluded (XOR).
 	//
 	// Possible values:
@@ -5943,10 +5696,9 @@ type VideoTargeting struct {
 	//   "POSTROLL" - Ad is played after the video.
 	ExcludedPositionTypes []string `json:"excludedPositionTypes,omitempty"`
 
-	// TargetedPositionTypes: A list of video positions to be included.
-	// When the included list is present, the excluded list must be
-	// empty.
-	// When the excluded list is present, the included list must be empty.
+	// TargetedPositionTypes: A list of video positions to be included. When
+	// the included list is present, the excluded list must be empty. When
+	// the excluded list is present, the included list must be empty.
 	//
 	// Possible values:
 	//   "POSITION_TYPE_UNSPECIFIED" - A placeholder for an undefined video
@@ -5958,8 +5710,8 @@ type VideoTargeting struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "ExcludedPositionTypes") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -5984,21 +5736,19 @@ func (s *VideoTargeting) MarshalJSON() ([]byte, error) {
 // WatchCreativeRequest: A request for watching changes to creative
 // Status.
 type WatchCreativeRequest struct {
-	// Topic: The Pub/Sub topic to publish notifications to.
-	// This topic must already exist and must give permission
-	// to
-	// ad-exchange-buyside-reports@google.com to write to the topic.
-	// This should be the full resource name
-	// in
+	// Topic: The Pub/Sub topic to publish notifications to. This topic must
+	// already exist and must give permission to
+	// ad-exchange-buyside-reports@google.com to write to the topic. This
+	// should be the full resource name in
 	// "projects/{project_id}/topics/{topic_id}" format.
 	Topic string `json:"topic,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Topic") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Topic") to include in API
@@ -6028,6 +5778,10 @@ type AccountsClientsCreateCall struct {
 }
 
 // Create: Creates a new client buyer.
+//
+//   - accountId: Unique numerical account ID for the buyer of which the
+//     client buyer is a customer; the sponsor buyer to create a client
+//     for. (required).
 func (r *AccountsClientsService) Create(accountId int64, client *Client) *AccountsClientsCreateCall {
 	c := &AccountsClientsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -6062,7 +5816,7 @@ func (c *AccountsClientsCreateCall) Header() http.Header {
 
 func (c *AccountsClientsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6102,17 +5856,17 @@ func (c *AccountsClientsCreateCall) Do(opts ...googleapi.CallOption) (*Client, e
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Client{
 		ServerResponse: googleapi.ServerResponse{
@@ -6135,7 +5889,7 @@ func (c *AccountsClientsCreateCall) Do(opts ...googleapi.CallOption) (*Client, e
 	//   ],
 	//   "parameters": {
 	//     "accountId": {
-	//       "description": "Unique numerical account ID for the buyer of which the client buyer\nis a customer; the sponsor buyer to create a client for. (required)",
+	//       "description": "Unique numerical account ID for the buyer of which the client buyer is a customer; the sponsor buyer to create a client for. (required)",
 	//       "format": "int64",
 	//       "location": "path",
 	//       "required": true,
@@ -6169,6 +5923,11 @@ type AccountsClientsGetCall struct {
 }
 
 // Get: Gets a client buyer with a given client account ID.
+//
+//   - accountId: Numerical account ID of the client's sponsor buyer.
+//     (required).
+//   - clientAccountId: Numerical account ID of the client buyer to
+//     retrieve. (required).
 func (r *AccountsClientsService) Get(accountId int64, clientAccountId int64) *AccountsClientsGetCall {
 	c := &AccountsClientsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -6213,7 +5972,7 @@ func (c *AccountsClientsGetCall) Header() http.Header {
 
 func (c *AccountsClientsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6252,17 +6011,17 @@ func (c *AccountsClientsGetCall) Do(opts ...googleapi.CallOption) (*Client, erro
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Client{
 		ServerResponse: googleapi.ServerResponse{
@@ -6323,6 +6082,9 @@ type AccountsClientsListCall struct {
 }
 
 // List: Lists all the clients for the current sponsor buyer.
+//
+//   - accountId: Unique numerical account ID of the sponsor buyer to list
+//     the clients for.
 func (r *AccountsClientsService) List(accountId int64) *AccountsClientsListCall {
 	c := &AccountsClientsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -6330,21 +6092,17 @@ func (r *AccountsClientsService) List(accountId int64) *AccountsClientsListCall 
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// The server may return fewer clients than requested.
-// If unspecified, the server will pick an appropriate default.
+// The server may return fewer clients than requested. If unspecified,
+// the server will pick an appropriate default.
 func (c *AccountsClientsListCall) PageSize(pageSize int64) *AccountsClientsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results the server should return.
-// Typically, this is the value
-// of
-// ListClientsResponse.nextPageToken
-// returned from the previous call to the
-// accounts.clients.list
-// method.
+// identifying a page of results the server should return. Typically,
+// this is the value of ListClientsResponse.nextPageToken returned from
+// the previous call to the accounts.clients.list method.
 func (c *AccountsClientsListCall) PageToken(pageToken string) *AccountsClientsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -6352,9 +6110,8 @@ func (c *AccountsClientsListCall) PageToken(pageToken string) *AccountsClientsLi
 
 // PartnerClientId sets the optional parameter "partnerClientId":
 // Optional unique identifier (from the standpoint of an Ad Exchange
-// sponsor
-// buyer partner) of the client to return.
-// If specified, at most one client will be returned in the response.
+// sponsor buyer partner) of the client to return. If specified, at most
+// one client will be returned in the response.
 func (c *AccountsClientsListCall) PartnerClientId(partnerClientId string) *AccountsClientsListCall {
 	c.urlParams_.Set("partnerClientId", partnerClientId)
 	return c
@@ -6397,7 +6154,7 @@ func (c *AccountsClientsListCall) Header() http.Header {
 
 func (c *AccountsClientsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6435,17 +6192,17 @@ func (c *AccountsClientsListCall) Do(opts ...googleapi.CallOption) (*ListClients
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListClientsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -6475,18 +6232,18 @@ func (c *AccountsClientsListCall) Do(opts ...googleapi.CallOption) (*ListClients
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. The server may return fewer clients than requested.\nIf unspecified, the server will pick an appropriate default.",
+	//       "description": "Requested page size. The server may return fewer clients than requested. If unspecified, the server will pick an appropriate default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nListClientsResponse.nextPageToken\nreturned from the previous call to the\naccounts.clients.list\nmethod.",
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of ListClientsResponse.nextPageToken returned from the previous call to the accounts.clients.list method.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "partnerClientId": {
-	//       "description": "Optional unique identifier (from the standpoint of an Ad Exchange sponsor\nbuyer partner) of the client to return.\nIf specified, at most one client will be returned in the response.",
+	//       "description": "Optional unique identifier (from the standpoint of an Ad Exchange sponsor buyer partner) of the client to return. If specified, at most one client will be returned in the response.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -6536,6 +6293,12 @@ type AccountsClientsUpdateCall struct {
 }
 
 // Update: Updates an existing client buyer.
+//
+//   - accountId: Unique numerical account ID for the buyer of which the
+//     client buyer is a customer; the sponsor buyer to update a client
+//     for. (required).
+//   - clientAccountId: Unique numerical account ID of the client to
+//     update. (required).
 func (r *AccountsClientsService) Update(accountId int64, clientAccountId int64, client *Client) *AccountsClientsUpdateCall {
 	c := &AccountsClientsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -6571,7 +6334,7 @@ func (c *AccountsClientsUpdateCall) Header() http.Header {
 
 func (c *AccountsClientsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6612,17 +6375,17 @@ func (c *AccountsClientsUpdateCall) Do(opts ...googleapi.CallOption) (*Client, e
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Client{
 		ServerResponse: googleapi.ServerResponse{
@@ -6646,7 +6409,7 @@ func (c *AccountsClientsUpdateCall) Do(opts ...googleapi.CallOption) (*Client, e
 	//   ],
 	//   "parameters": {
 	//     "accountId": {
-	//       "description": "Unique numerical account ID for the buyer of which the client buyer\nis a customer; the sponsor buyer to update a client for. (required)",
+	//       "description": "Unique numerical account ID for the buyer of which the client buyer is a customer; the sponsor buyer to update a client for. (required)",
 	//       "format": "int64",
 	//       "location": "path",
 	//       "required": true,
@@ -6686,8 +6449,13 @@ type AccountsClientsInvitationsCreateCall struct {
 	header_              http.Header
 }
 
-// Create: Creates and sends out an email invitation to access
-// an Ad Exchange client buyer account.
+// Create: Creates and sends out an email invitation to access an Ad
+// Exchange client buyer account.
+//
+//   - accountId: Numerical account ID of the client's sponsor buyer.
+//     (required).
+//   - clientAccountId: Numerical account ID of the client buyer that the
+//     user should be associated with. (required).
 func (r *AccountsClientsInvitationsService) Create(accountId int64, clientAccountId int64, clientuserinvitation *ClientUserInvitation) *AccountsClientsInvitationsCreateCall {
 	c := &AccountsClientsInvitationsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -6723,7 +6491,7 @@ func (c *AccountsClientsInvitationsCreateCall) Header() http.Header {
 
 func (c *AccountsClientsInvitationsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6764,17 +6532,17 @@ func (c *AccountsClientsInvitationsCreateCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ClientUserInvitation{
 		ServerResponse: googleapi.ServerResponse{
@@ -6788,7 +6556,7 @@ func (c *AccountsClientsInvitationsCreateCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates and sends out an email invitation to access\nan Ad Exchange client buyer account.",
+	//   "description": "Creates and sends out an email invitation to access an Ad Exchange client buyer account.",
 	//   "flatPath": "v2beta1/accounts/{accountId}/clients/{clientAccountId}/invitations",
 	//   "httpMethod": "POST",
 	//   "id": "adexchangebuyer2.accounts.clients.invitations.create",
@@ -6805,7 +6573,7 @@ func (c *AccountsClientsInvitationsCreateCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     },
 	//     "clientAccountId": {
-	//       "description": "Numerical account ID of the client buyer that the user\nshould be associated with. (required)",
+	//       "description": "Numerical account ID of the client buyer that the user should be associated with. (required)",
 	//       "format": "int64",
 	//       "location": "path",
 	//       "required": true,
@@ -6840,6 +6608,13 @@ type AccountsClientsInvitationsGetCall struct {
 }
 
 // Get: Retrieves an existing client user invitation.
+//
+//   - accountId: Numerical account ID of the client's sponsor buyer.
+//     (required).
+//   - clientAccountId: Numerical account ID of the client buyer that the
+//     user invitation to be retrieved is associated with. (required).
+//   - invitationId: Numerical identifier of the user invitation to
+//     retrieve. (required).
 func (r *AccountsClientsInvitationsService) Get(accountId int64, clientAccountId int64, invitationId int64) *AccountsClientsInvitationsGetCall {
 	c := &AccountsClientsInvitationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -6885,7 +6660,7 @@ func (c *AccountsClientsInvitationsGetCall) Header() http.Header {
 
 func (c *AccountsClientsInvitationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6925,17 +6700,17 @@ func (c *AccountsClientsInvitationsGetCall) Do(opts ...googleapi.CallOption) (*C
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ClientUserInvitation{
 		ServerResponse: googleapi.ServerResponse{
@@ -6967,7 +6742,7 @@ func (c *AccountsClientsInvitationsGetCall) Do(opts ...googleapi.CallOption) (*C
 	//       "type": "string"
 	//     },
 	//     "clientAccountId": {
-	//       "description": "Numerical account ID of the client buyer that the user invitation\nto be retrieved is associated with. (required)",
+	//       "description": "Numerical account ID of the client buyer that the user invitation to be retrieved is associated with. (required)",
 	//       "format": "int64",
 	//       "location": "path",
 	//       "required": true,
@@ -7004,8 +6779,16 @@ type AccountsClientsInvitationsListCall struct {
 	header_         http.Header
 }
 
-// List: Lists all the client users invitations for a client
-// with a given account ID.
+// List: Lists all the client users invitations for a client with a
+// given account ID.
+//
+//   - accountId: Numerical account ID of the client's sponsor buyer.
+//     (required).
+//   - clientAccountId: Numerical account ID of the client buyer to list
+//     invitations for. (required) You must either specify a string
+//     representation of a numerical account identifier or the `-`
+//     character to list all the invitations for all the clients of a
+//     given sponsor buyer.
 func (r *AccountsClientsInvitationsService) List(accountId int64, clientAccountId string) *AccountsClientsInvitationsListCall {
 	c := &AccountsClientsInvitationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -7014,21 +6797,17 @@ func (r *AccountsClientsInvitationsService) List(accountId int64, clientAccountI
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Server may return fewer clients than requested.
-// If unspecified, server will pick an appropriate default.
+// Server may return fewer clients than requested. If unspecified,
+// server will pick an appropriate default.
 func (c *AccountsClientsInvitationsListCall) PageSize(pageSize int64) *AccountsClientsInvitationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results the server should return.
-// Typically, this is the value
-// of
-// ListClientUserInvitationsResponse.nextPageToken
-// returned from the previous call to
-// the
-// clients.invitations.list
+// identifying a page of results the server should return. Typically,
+// this is the value of ListClientUserInvitationsResponse.nextPageToken
+// returned from the previous call to the clients.invitations.list
 // method.
 func (c *AccountsClientsInvitationsListCall) PageToken(pageToken string) *AccountsClientsInvitationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
@@ -7072,7 +6851,7 @@ func (c *AccountsClientsInvitationsListCall) Header() http.Header {
 
 func (c *AccountsClientsInvitationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7112,17 +6891,17 @@ func (c *AccountsClientsInvitationsListCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListClientUserInvitationsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -7136,7 +6915,7 @@ func (c *AccountsClientsInvitationsListCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists all the client users invitations for a client\nwith a given account ID.",
+	//   "description": "Lists all the client users invitations for a client with a given account ID.",
 	//   "flatPath": "v2beta1/accounts/{accountId}/clients/{clientAccountId}/invitations",
 	//   "httpMethod": "GET",
 	//   "id": "adexchangebuyer2.accounts.clients.invitations.list",
@@ -7153,19 +6932,19 @@ func (c *AccountsClientsInvitationsListCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "clientAccountId": {
-	//       "description": "Numerical account ID of the client buyer to list invitations for.\n(required)\nYou must either specify a string representation of a\nnumerical account identifier or the `-` character\nto list all the invitations for all the clients\nof a given sponsor buyer.",
+	//       "description": "Numerical account ID of the client buyer to list invitations for. (required) You must either specify a string representation of a numerical account identifier or the `-` character to list all the invitations for all the clients of a given sponsor buyer.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Server may return fewer clients than requested.\nIf unspecified, server will pick an appropriate default.",
+	//       "description": "Requested page size. Server may return fewer clients than requested. If unspecified, server will pick an appropriate default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nListClientUserInvitationsResponse.nextPageToken\nreturned from the previous call to the\nclients.invitations.list\nmethod.",
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of ListClientUserInvitationsResponse.nextPageToken returned from the previous call to the clients.invitations.list method.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -7216,6 +6995,12 @@ type AccountsClientsUsersGetCall struct {
 }
 
 // Get: Retrieves an existing client user.
+//
+//   - accountId: Numerical account ID of the client's sponsor buyer.
+//     (required).
+//   - clientAccountId: Numerical account ID of the client buyer that the
+//     user to be retrieved is associated with. (required).
+//   - userId: Numerical identifier of the user to retrieve. (required).
 func (r *AccountsClientsUsersService) Get(accountId int64, clientAccountId int64, userId int64) *AccountsClientsUsersGetCall {
 	c := &AccountsClientsUsersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -7261,7 +7046,7 @@ func (c *AccountsClientsUsersGetCall) Header() http.Header {
 
 func (c *AccountsClientsUsersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7301,17 +7086,17 @@ func (c *AccountsClientsUsersGetCall) Do(opts ...googleapi.CallOption) (*ClientU
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ClientUser{
 		ServerResponse: googleapi.ServerResponse{
@@ -7343,7 +7128,7 @@ func (c *AccountsClientsUsersGetCall) Do(opts ...googleapi.CallOption) (*ClientU
 	//       "type": "string"
 	//     },
 	//     "clientAccountId": {
-	//       "description": "Numerical account ID of the client buyer\nthat the user to be retrieved is associated with. (required)",
+	//       "description": "Numerical account ID of the client buyer that the user to be retrieved is associated with. (required)",
 	//       "format": "int64",
 	//       "location": "path",
 	//       "required": true,
@@ -7380,8 +7165,15 @@ type AccountsClientsUsersListCall struct {
 	header_         http.Header
 }
 
-// List: Lists all the known client users for a specified
-// sponsor buyer account ID.
+// List: Lists all the known client users for a specified sponsor buyer
+// account ID.
+//
+//   - accountId: Numerical account ID of the sponsor buyer of the client
+//     to list users for. (required).
+//   - clientAccountId: The account ID of the client buyer to list users
+//     for. (required) You must specify either a string representation of
+//     a numerical account identifier or the `-` character to list all the
+//     client users for all the clients of a given sponsor buyer.
 func (r *AccountsClientsUsersService) List(accountId int64, clientAccountId string) *AccountsClientsUsersListCall {
 	c := &AccountsClientsUsersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -7390,22 +7182,17 @@ func (r *AccountsClientsUsersService) List(accountId int64, clientAccountId stri
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// The server may return fewer clients than requested.
-// If unspecified, the server will pick an appropriate default.
+// The server may return fewer clients than requested. If unspecified,
+// the server will pick an appropriate default.
 func (c *AccountsClientsUsersListCall) PageSize(pageSize int64) *AccountsClientsUsersListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results the server should return.
-// Typically, this is the value
-// of
-// ListClientUsersResponse.nextPageToken
-// returned from the previous call to
-// the
-// accounts.clients.users.list
-// method.
+// identifying a page of results the server should return. Typically,
+// this is the value of ListClientUsersResponse.nextPageToken returned
+// from the previous call to the accounts.clients.users.list method.
 func (c *AccountsClientsUsersListCall) PageToken(pageToken string) *AccountsClientsUsersListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -7448,7 +7235,7 @@ func (c *AccountsClientsUsersListCall) Header() http.Header {
 
 func (c *AccountsClientsUsersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7487,17 +7274,17 @@ func (c *AccountsClientsUsersListCall) Do(opts ...googleapi.CallOption) (*ListCl
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListClientUsersResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -7511,7 +7298,7 @@ func (c *AccountsClientsUsersListCall) Do(opts ...googleapi.CallOption) (*ListCl
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists all the known client users for a specified\nsponsor buyer account ID.",
+	//   "description": "Lists all the known client users for a specified sponsor buyer account ID.",
 	//   "flatPath": "v2beta1/accounts/{accountId}/clients/{clientAccountId}/users",
 	//   "httpMethod": "GET",
 	//   "id": "adexchangebuyer2.accounts.clients.users.list",
@@ -7521,26 +7308,26 @@ func (c *AccountsClientsUsersListCall) Do(opts ...googleapi.CallOption) (*ListCl
 	//   ],
 	//   "parameters": {
 	//     "accountId": {
-	//       "description": "Numerical account ID of the sponsor buyer of the client to list users for.\n(required)",
+	//       "description": "Numerical account ID of the sponsor buyer of the client to list users for. (required)",
 	//       "format": "int64",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "clientAccountId": {
-	//       "description": "The account ID of the client buyer to list users for. (required)\nYou must specify either a string representation of a\nnumerical account identifier or the `-` character\nto list all the client users for all the clients\nof a given sponsor buyer.",
+	//       "description": "The account ID of the client buyer to list users for. (required) You must specify either a string representation of a numerical account identifier or the `-` character to list all the client users for all the clients of a given sponsor buyer.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. The server may return fewer clients than requested.\nIf unspecified, the server will pick an appropriate default.",
+	//       "description": "Requested page size. The server may return fewer clients than requested. If unspecified, the server will pick an appropriate default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nListClientUsersResponse.nextPageToken\nreturned from the previous call to the\naccounts.clients.users.list\nmethod.",
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of ListClientUsersResponse.nextPageToken returned from the previous call to the accounts.clients.users.list method.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -7590,8 +7377,14 @@ type AccountsClientsUsersUpdateCall struct {
 	header_         http.Header
 }
 
-// Update: Updates an existing client user.
-// Only the user status can be changed on update.
+// Update: Updates an existing client user. Only the user status can be
+// changed on update.
+//
+//   - accountId: Numerical account ID of the client's sponsor buyer.
+//     (required).
+//   - clientAccountId: Numerical account ID of the client buyer that the
+//     user to be retrieved is associated with. (required).
+//   - userId: Numerical identifier of the user to retrieve. (required).
 func (r *AccountsClientsUsersService) Update(accountId int64, clientAccountId int64, userId int64, clientuser *ClientUser) *AccountsClientsUsersUpdateCall {
 	c := &AccountsClientsUsersUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -7628,7 +7421,7 @@ func (c *AccountsClientsUsersUpdateCall) Header() http.Header {
 
 func (c *AccountsClientsUsersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7670,17 +7463,17 @@ func (c *AccountsClientsUsersUpdateCall) Do(opts ...googleapi.CallOption) (*Clie
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ClientUser{
 		ServerResponse: googleapi.ServerResponse{
@@ -7694,7 +7487,7 @@ func (c *AccountsClientsUsersUpdateCall) Do(opts ...googleapi.CallOption) (*Clie
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates an existing client user.\nOnly the user status can be changed on update.",
+	//   "description": "Updates an existing client user. Only the user status can be changed on update.",
 	//   "flatPath": "v2beta1/accounts/{accountId}/clients/{clientAccountId}/users/{userId}",
 	//   "httpMethod": "PUT",
 	//   "id": "adexchangebuyer2.accounts.clients.users.update",
@@ -7712,7 +7505,7 @@ func (c *AccountsClientsUsersUpdateCall) Do(opts ...googleapi.CallOption) (*Clie
 	//       "type": "string"
 	//     },
 	//     "clientAccountId": {
-	//       "description": "Numerical account ID of the client buyer that the user to be retrieved\nis associated with. (required)",
+	//       "description": "Numerical account ID of the client buyer that the user to be retrieved is associated with. (required)",
 	//       "format": "int64",
 	//       "location": "path",
 	//       "required": true,
@@ -7752,6 +7545,9 @@ type AccountsCreativesCreateCall struct {
 }
 
 // Create: Creates a creative.
+//
+//   - accountId: The account that this creative belongs to. Can be used
+//     to filter the response of the creatives.list method.
 func (r *AccountsCreativesService) Create(accountId string, creative *Creative) *AccountsCreativesCreateCall {
 	c := &AccountsCreativesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -7760,13 +7556,22 @@ func (r *AccountsCreativesService) Create(accountId string, creative *Creative) 
 }
 
 // DuplicateIdMode sets the optional parameter "duplicateIdMode":
-// Indicates if multiple creatives can share an ID or not. Default
-// is
+// Indicates if multiple creatives can share an ID or not. Default is
 // NO_DUPLICATES (one ID per creative).
 //
 // Possible values:
-//   "NO_DUPLICATES"
-//   "FORCE_ENABLE_DUPLICATE_IDS"
+//
+//	"NO_DUPLICATES" - Recommended. This means that an ID will be unique
+//
+// to a single creative. Multiple creatives will not share an ID.
+//
+//	"FORCE_ENABLE_DUPLICATE_IDS" - Not recommended. Using this option
+//
+// will allow multiple creatives to share the same ID. Get and Update
+// requests will not be possible for any ID that has more than one
+// creative associated. (List will still function.) This is only
+// intended for backwards compatibility in cases where a single ID is
+// already shared by multiple creatives from previous APIs.
 func (c *AccountsCreativesCreateCall) DuplicateIdMode(duplicateIdMode string) *AccountsCreativesCreateCall {
 	c.urlParams_.Set("duplicateIdMode", duplicateIdMode)
 	return c
@@ -7799,7 +7604,7 @@ func (c *AccountsCreativesCreateCall) Header() http.Header {
 
 func (c *AccountsCreativesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7839,17 +7644,17 @@ func (c *AccountsCreativesCreateCall) Do(opts ...googleapi.CallOption) (*Creativ
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Creative{
 		ServerResponse: googleapi.ServerResponse{
@@ -7872,16 +7677,20 @@ func (c *AccountsCreativesCreateCall) Do(opts ...googleapi.CallOption) (*Creativ
 	//   ],
 	//   "parameters": {
 	//     "accountId": {
-	//       "description": "The account that this creative belongs to.\nCan be used to filter the response of the\ncreatives.list\nmethod.",
+	//       "description": "The account that this creative belongs to. Can be used to filter the response of the creatives.list method.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "duplicateIdMode": {
-	//       "description": "Indicates if multiple creatives can share an ID or not. Default is\nNO_DUPLICATES (one ID per creative).",
+	//       "description": "Indicates if multiple creatives can share an ID or not. Default is NO_DUPLICATES (one ID per creative).",
 	//       "enum": [
 	//         "NO_DUPLICATES",
 	//         "FORCE_ENABLE_DUPLICATE_IDS"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Recommended. This means that an ID will be unique to a single creative. Multiple creatives will not share an ID.",
+	//         "Not recommended. Using this option will allow multiple creatives to share the same ID. Get and Update requests will not be possible for any ID that has more than one creative associated. (List will still function.) This is only intended for backwards compatibility in cases where a single ID is already shared by multiple creatives from previous APIs."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -7914,6 +7723,9 @@ type AccountsCreativesGetCall struct {
 }
 
 // Get: Gets a creative.
+//
+// - accountId: The account the creative belongs to.
+// - creativeId: The ID of the creative to retrieve.
 func (r *AccountsCreativesService) Get(accountId string, creativeId string) *AccountsCreativesGetCall {
 	c := &AccountsCreativesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -7958,7 +7770,7 @@ func (c *AccountsCreativesGetCall) Header() http.Header {
 
 func (c *AccountsCreativesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7997,17 +7809,17 @@ func (c *AccountsCreativesGetCall) Do(opts ...googleapi.CallOption) (*Creative, 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Creative{
 		ServerResponse: googleapi.ServerResponse{
@@ -8066,6 +7878,9 @@ type AccountsCreativesListCall struct {
 }
 
 // List: Lists creatives.
+//
+//   - accountId: The account to list the creatives from. Specify "-" to
+//     list all creatives the current user has access to.
 func (r *AccountsCreativesService) List(accountId string) *AccountsCreativesListCall {
 	c := &AccountsCreativesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -8073,50 +7888,35 @@ func (r *AccountsCreativesService) List(accountId string) *AccountsCreativesList
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// The server may return fewer creatives than requested
-// (due to timeout constraint) even if more are available via another
-// call.
-// If unspecified, server will pick an appropriate default.
-// Acceptable values are 1 to 1000, inclusive.
+// The server may return fewer creatives than requested (due to timeout
+// constraint) even if more are available through another call. If
+// unspecified, server will pick an appropriate default. Acceptable
+// values are 1 to 1000, inclusive.
 func (c *AccountsCreativesListCall) PageSize(pageSize int64) *AccountsCreativesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results the server should return.
-// Typically, this is the value
-// of
-// ListCreativesResponse.next_page_token
-// returned from the previous call to 'ListCreatives' method.
+// identifying a page of results the server should return. Typically,
+// this is the value of ListCreativesResponse.next_page_token returned
+// from the previous call to 'ListCreatives' method.
 func (c *AccountsCreativesListCall) PageToken(pageToken string) *AccountsCreativesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Query sets the optional parameter "query": An optional query string
-// to filter creatives. If no filter is specified,
-// all active creatives will be returned.
-// <p>Supported queries
-// are:
-// <ul>
-// <li>accountId=<i>account_id_string</i>
-// <li>creativeId=<i>cre
-// ative_id_string</i>
-// <li>dealsStatus: {approved, conditionally_approved, disapproved,
-//                    not_checked}
-// <li>openAuctionStatus: {approved, conditionally_approved,
-// disapproved,
-//                           not_checked}
-// <li>attribute: {a numeric attribute from the list of
-// attributes}
-// <li>disapprovalReason: {a reason
-// from
-// DisapprovalReason}
-// </ul>
-// Example: 'accountId=12345 AND (dealsStatus:disapproved
-// AND
-// disapprovalReason:unacceptable_content) OR attribute:47'
+// to filter creatives. If no filter is specified, all active creatives
+// will be returned. Supported queries are: -
+// accountId=*account_id_string* - creativeId=*creative_id_string* -
+// dealsStatus: {approved, conditionally_approved, disapproved,
+// not_checked} - openAuctionStatus: {approved, conditionally_approved,
+// disapproved, not_checked} - attribute: {a numeric attribute from the
+// list of attributes} - disapprovalReason: {a reason from
+// DisapprovalReason} Example: 'accountId=12345 AND
+// (dealsStatus:disapproved AND disapprovalReason:unacceptable_content)
+// OR attribute:47'
 func (c *AccountsCreativesListCall) Query(query string) *AccountsCreativesListCall {
 	c.urlParams_.Set("query", query)
 	return c
@@ -8159,7 +7959,7 @@ func (c *AccountsCreativesListCall) Header() http.Header {
 
 func (c *AccountsCreativesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8197,17 +7997,17 @@ func (c *AccountsCreativesListCall) Do(opts ...googleapi.CallOption) (*ListCreat
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListCreativesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -8230,24 +8030,24 @@ func (c *AccountsCreativesListCall) Do(opts ...googleapi.CallOption) (*ListCreat
 	//   ],
 	//   "parameters": {
 	//     "accountId": {
-	//       "description": "The account to list the creatives from.\nSpecify \"-\" to list all creatives the current user has access to.",
+	//       "description": "The account to list the creatives from. Specify \"-\" to list all creatives the current user has access to.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. The server may return fewer creatives than requested\n(due to timeout constraint) even if more are available via another call.\nIf unspecified, server will pick an appropriate default.\nAcceptable values are 1 to 1000, inclusive.",
+	//       "description": "Requested page size. The server may return fewer creatives than requested (due to timeout constraint) even if more are available through another call. If unspecified, server will pick an appropriate default. Acceptable values are 1 to 1000, inclusive.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nListCreativesResponse.next_page_token\nreturned from the previous call to 'ListCreatives' method.",
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of ListCreativesResponse.next_page_token returned from the previous call to 'ListCreatives' method.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "query": {
-	//       "description": "An optional query string to filter creatives. If no filter is specified,\nall active creatives will be returned.\n\u003cp\u003eSupported queries are:\n\u003cul\u003e\n\u003cli\u003eaccountId=\u003ci\u003eaccount_id_string\u003c/i\u003e\n\u003cli\u003ecreativeId=\u003ci\u003ecreative_id_string\u003c/i\u003e\n\u003cli\u003edealsStatus: {approved, conditionally_approved, disapproved,\n                   not_checked}\n\u003cli\u003eopenAuctionStatus: {approved, conditionally_approved, disapproved,\n                          not_checked}\n\u003cli\u003eattribute: {a numeric attribute from the list of attributes}\n\u003cli\u003edisapprovalReason: {a reason from\nDisapprovalReason}\n\u003c/ul\u003e\nExample: 'accountId=12345 AND (dealsStatus:disapproved AND\ndisapprovalReason:unacceptable_content) OR attribute:47'",
+	//       "description": "An optional query string to filter creatives. If no filter is specified, all active creatives will be returned. Supported queries are: - accountId=*account_id_string* - creativeId=*creative_id_string* - dealsStatus: {approved, conditionally_approved, disapproved, not_checked} - openAuctionStatus: {approved, conditionally_approved, disapproved, not_checked} - attribute: {a numeric attribute from the list of attributes} - disapprovalReason: {a reason from DisapprovalReason} Example: 'accountId=12345 AND (dealsStatus:disapproved AND disapprovalReason:unacceptable_content) OR attribute:47'",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -8297,8 +8097,11 @@ type AccountsCreativesStopWatchingCall struct {
 }
 
 // StopWatching: Stops watching a creative. Will stop push notifications
-// being sent to the
-// topics when the creative changes status.
+// being sent to the topics when the creative changes status.
+//
+//   - accountId: The account of the creative to stop notifications for.
+//   - creativeId: The creative ID of the creative to stop notifications
+//     for. Specify "-" to specify stopping account level notifications.
 func (r *AccountsCreativesService) StopWatching(accountId string, creativeId string, stopwatchingcreativerequest *StopWatchingCreativeRequest) *AccountsCreativesStopWatchingCall {
 	c := &AccountsCreativesStopWatchingCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -8334,7 +8137,7 @@ func (c *AccountsCreativesStopWatchingCall) Header() http.Header {
 
 func (c *AccountsCreativesStopWatchingCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8375,17 +8178,17 @@ func (c *AccountsCreativesStopWatchingCall) Do(opts ...googleapi.CallOption) (*E
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -8399,7 +8202,7 @@ func (c *AccountsCreativesStopWatchingCall) Do(opts ...googleapi.CallOption) (*E
 	}
 	return ret, nil
 	// {
-	//   "description": "Stops watching a creative. Will stop push notifications being sent to the\ntopics when the creative changes status.",
+	//   "description": "Stops watching a creative. Will stop push notifications being sent to the topics when the creative changes status.",
 	//   "flatPath": "v2beta1/accounts/{accountId}/creatives/{creativeId}:stopWatching",
 	//   "httpMethod": "POST",
 	//   "id": "adexchangebuyer2.accounts.creatives.stopWatching",
@@ -8415,7 +8218,7 @@ func (c *AccountsCreativesStopWatchingCall) Do(opts ...googleapi.CallOption) (*E
 	//       "type": "string"
 	//     },
 	//     "creativeId": {
-	//       "description": "The creative ID of the creative to stop notifications for.\nSpecify \"-\" to specify stopping account level notifications.",
+	//       "description": "The creative ID of the creative to stop notifications for. Specify \"-\" to specify stopping account level notifications.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -8448,6 +8251,11 @@ type AccountsCreativesUpdateCall struct {
 }
 
 // Update: Updates a creative.
+//
+//   - accountId: The account that this creative belongs to. Can be used
+//     to filter the response of the creatives.list method.
+//   - creativeId: The buyer-defined creative ID of this creative. Can be
+//     used to filter the response of the creatives.list method.
 func (r *AccountsCreativesService) Update(accountId string, creativeId string, creative *Creative) *AccountsCreativesUpdateCall {
 	c := &AccountsCreativesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -8483,7 +8291,7 @@ func (c *AccountsCreativesUpdateCall) Header() http.Header {
 
 func (c *AccountsCreativesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8524,17 +8332,17 @@ func (c *AccountsCreativesUpdateCall) Do(opts ...googleapi.CallOption) (*Creativ
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Creative{
 		ServerResponse: googleapi.ServerResponse{
@@ -8558,13 +8366,13 @@ func (c *AccountsCreativesUpdateCall) Do(opts ...googleapi.CallOption) (*Creativ
 	//   ],
 	//   "parameters": {
 	//     "accountId": {
-	//       "description": "The account that this creative belongs to.\nCan be used to filter the response of the\ncreatives.list\nmethod.",
+	//       "description": "The account that this creative belongs to. Can be used to filter the response of the creatives.list method.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "creativeId": {
-	//       "description": "The buyer-defined creative ID of this creative.\nCan be used to filter the response of the\ncreatives.list\nmethod.",
+	//       "description": "The buyer-defined creative ID of this creative. Can be used to filter the response of the creatives.list method.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -8597,8 +8405,14 @@ type AccountsCreativesWatchCall struct {
 }
 
 // Watch: Watches a creative. Will result in push notifications being
-// sent to the
-// topic when the creative changes status.
+// sent to the topic when the creative changes status.
+//
+//   - accountId: The account of the creative to watch.
+//   - creativeId: The creative ID to watch for status changes. Specify
+//     "-" to watch all creatives under the above account. If both
+//     creative-level and account-level notifications are sent, only a
+//     single notification will be sent to the creative-level notification
+//     topic.
 func (r *AccountsCreativesService) Watch(accountId string, creativeId string, watchcreativerequest *WatchCreativeRequest) *AccountsCreativesWatchCall {
 	c := &AccountsCreativesWatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -8634,7 +8448,7 @@ func (c *AccountsCreativesWatchCall) Header() http.Header {
 
 func (c *AccountsCreativesWatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8675,17 +8489,17 @@ func (c *AccountsCreativesWatchCall) Do(opts ...googleapi.CallOption) (*Empty, e
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -8699,7 +8513,7 @@ func (c *AccountsCreativesWatchCall) Do(opts ...googleapi.CallOption) (*Empty, e
 	}
 	return ret, nil
 	// {
-	//   "description": "Watches a creative. Will result in push notifications being sent to the\ntopic when the creative changes status.",
+	//   "description": "Watches a creative. Will result in push notifications being sent to the topic when the creative changes status.",
 	//   "flatPath": "v2beta1/accounts/{accountId}/creatives/{creativeId}:watch",
 	//   "httpMethod": "POST",
 	//   "id": "adexchangebuyer2.accounts.creatives.watch",
@@ -8715,7 +8529,7 @@ func (c *AccountsCreativesWatchCall) Do(opts ...googleapi.CallOption) (*Empty, e
 	//       "type": "string"
 	//     },
 	//     "creativeId": {
-	//       "description": "The creative ID to watch for status changes.\nSpecify \"-\" to watch all creatives under the above account.\nIf both creative-level and account-level notifications are\nsent, only a single notification will be sent to the\ncreative-level notification topic.",
+	//       "description": "The creative ID to watch for status changes. Specify \"-\" to watch all creatives under the above account. If both creative-level and account-level notifications are sent, only a single notification will be sent to the creative-level notification topic.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -8748,6 +8562,9 @@ type AccountsCreativesDealAssociationsAddCall struct {
 }
 
 // Add: Associate an existing deal with a creative.
+//
+// - accountId: The account the creative belongs to.
+// - creativeId: The ID of the creative associated with the deal.
 func (r *AccountsCreativesDealAssociationsService) Add(accountId string, creativeId string, adddealassociationrequest *AddDealAssociationRequest) *AccountsCreativesDealAssociationsAddCall {
 	c := &AccountsCreativesDealAssociationsAddCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -8783,7 +8600,7 @@ func (c *AccountsCreativesDealAssociationsAddCall) Header() http.Header {
 
 func (c *AccountsCreativesDealAssociationsAddCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8824,17 +8641,17 @@ func (c *AccountsCreativesDealAssociationsAddCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -8897,6 +8714,11 @@ type AccountsCreativesDealAssociationsListCall struct {
 }
 
 // List: List all creative-deal associations.
+//
+//   - accountId: The account to list the associations from. Specify "-"
+//     to list all creatives the current user has access to.
+//   - creativeId: The creative ID to list the associations from. Specify
+//     "-" to list all creatives under the above account.
 func (r *AccountsCreativesDealAssociationsService) List(accountId string, creativeId string) *AccountsCreativesDealAssociationsListCall {
 	c := &AccountsCreativesDealAssociationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -8905,18 +8727,16 @@ func (r *AccountsCreativesDealAssociationsService) List(accountId string, creati
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Server may return fewer associations than requested.
-// If unspecified, server will pick an appropriate default.
+// Server may return fewer associations than requested. If unspecified,
+// server will pick an appropriate default.
 func (c *AccountsCreativesDealAssociationsListCall) PageSize(pageSize int64) *AccountsCreativesDealAssociationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results the server should return.
-// Typically, this is the value
-// of
-// ListDealAssociationsResponse.next_page_token
+// identifying a page of results the server should return. Typically,
+// this is the value of ListDealAssociationsResponse.next_page_token
 // returned from the previous call to 'ListDealAssociations' method.
 func (c *AccountsCreativesDealAssociationsListCall) PageToken(pageToken string) *AccountsCreativesDealAssociationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
@@ -8924,23 +8744,13 @@ func (c *AccountsCreativesDealAssociationsListCall) PageToken(pageToken string) 
 }
 
 // Query sets the optional parameter "query": An optional query string
-// to filter deal associations. If no filter is
-// specified, all associations will be returned.
-// Supported queries
-// are:
-// <ul>
-// <li>accountId=<i>account_id_string</i>
-// <li>creativeId=<i>cre
-// ative_id_string</i>
-// <li>dealsId=<i>deals_id_string</i>
-// <li>dealsStatus
-// :{approved, conditionally_approved, disapproved,
-//                   not_checked}
-// <li>openAuctionStatus:{approved, conditionally_approved,
-// disapproved,
-//                          not_checked}
-// </ul>
-// Example: 'dealsId=12345 AND dealsStatus:disapproved'
+// to filter deal associations. If no filter is specified, all
+// associations will be returned. Supported queries are: -
+// accountId=*account_id_string* - creativeId=*creative_id_string* -
+// dealsId=*deals_id_string* - dealsStatus:{approved,
+// conditionally_approved, disapproved, not_checked} -
+// openAuctionStatus:{approved, conditionally_approved, disapproved,
+// not_checked} Example: 'dealsId=12345 AND dealsStatus:disapproved'
 func (c *AccountsCreativesDealAssociationsListCall) Query(query string) *AccountsCreativesDealAssociationsListCall {
 	c.urlParams_.Set("query", query)
 	return c
@@ -8983,7 +8793,7 @@ func (c *AccountsCreativesDealAssociationsListCall) Header() http.Header {
 
 func (c *AccountsCreativesDealAssociationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9022,17 +8832,17 @@ func (c *AccountsCreativesDealAssociationsListCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListDealAssociationsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -9056,30 +8866,30 @@ func (c *AccountsCreativesDealAssociationsListCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "accountId": {
-	//       "description": "The account to list the associations from.\nSpecify \"-\" to list all creatives the current user has access to.",
+	//       "description": "The account to list the associations from. Specify \"-\" to list all creatives the current user has access to.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "creativeId": {
-	//       "description": "The creative ID to list the associations from.\nSpecify \"-\" to list all creatives under the above account.",
+	//       "description": "The creative ID to list the associations from. Specify \"-\" to list all creatives under the above account.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Server may return fewer associations than requested.\nIf unspecified, server will pick an appropriate default.",
+	//       "description": "Requested page size. Server may return fewer associations than requested. If unspecified, server will pick an appropriate default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nListDealAssociationsResponse.next_page_token\nreturned from the previous call to 'ListDealAssociations' method.",
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of ListDealAssociationsResponse.next_page_token returned from the previous call to 'ListDealAssociations' method.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "query": {
-	//       "description": "An optional query string to filter deal associations. If no filter is\nspecified, all associations will be returned.\nSupported queries are:\n\u003cul\u003e\n\u003cli\u003eaccountId=\u003ci\u003eaccount_id_string\u003c/i\u003e\n\u003cli\u003ecreativeId=\u003ci\u003ecreative_id_string\u003c/i\u003e\n\u003cli\u003edealsId=\u003ci\u003edeals_id_string\u003c/i\u003e\n\u003cli\u003edealsStatus:{approved, conditionally_approved, disapproved,\n                  not_checked}\n\u003cli\u003eopenAuctionStatus:{approved, conditionally_approved, disapproved,\n                         not_checked}\n\u003c/ul\u003e\nExample: 'dealsId=12345 AND dealsStatus:disapproved'",
+	//       "description": "An optional query string to filter deal associations. If no filter is specified, all associations will be returned. Supported queries are: - accountId=*account_id_string* - creativeId=*creative_id_string* - dealsId=*deals_id_string* - dealsStatus:{approved, conditionally_approved, disapproved, not_checked} - openAuctionStatus:{approved, conditionally_approved, disapproved, not_checked} Example: 'dealsId=12345 AND dealsStatus:disapproved'",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -9129,6 +8939,9 @@ type AccountsCreativesDealAssociationsRemoveCall struct {
 }
 
 // Remove: Remove the association between a deal and a creative.
+//
+// - accountId: The account the creative belongs to.
+// - creativeId: The ID of the creative associated with the deal.
 func (r *AccountsCreativesDealAssociationsService) Remove(accountId string, creativeId string, removedealassociationrequest *RemoveDealAssociationRequest) *AccountsCreativesDealAssociationsRemoveCall {
 	c := &AccountsCreativesDealAssociationsRemoveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -9164,7 +8977,7 @@ func (c *AccountsCreativesDealAssociationsRemoveCall) Header() http.Header {
 
 func (c *AccountsCreativesDealAssociationsRemoveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9205,17 +9018,17 @@ func (c *AccountsCreativesDealAssociationsRemoveCall) Do(opts ...googleapi.CallO
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -9277,10 +9090,10 @@ type AccountsFinalizedProposalsListCall struct {
 }
 
 // List: List finalized proposals, regardless if a proposal is being
-// renegotiated.
-// A filter expression (PQL query) may be specified to filter the
-// results.
-// The notes will not be returned.
+// renegotiated. A filter expression (PQL query) may be specified to
+// filter the results. The notes will not be returned.
+//
+// - accountId: Account ID of the buyer.
 func (r *AccountsFinalizedProposalsService) List(accountId string) *AccountsFinalizedProposalsListCall {
 	c := &AccountsFinalizedProposalsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -9288,32 +9101,40 @@ func (r *AccountsFinalizedProposalsService) List(accountId string) *AccountsFina
 }
 
 // Filter sets the optional parameter "filter": An optional PQL filter
-// query used to query for proposals.
-//
-// Nested repeated fields, such as
-// proposal.deals.targetingCriterion,
-// cannot be filtered.
+// query used to query for proposals. Nested repeated fields, such as
+// proposal.deals.targetingCriterion, cannot be filtered.
 func (c *AccountsFinalizedProposalsListCall) Filter(filter string) *AccountsFinalizedProposalsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // FilterSyntax sets the optional parameter "filterSyntax": Syntax the
-// filter is written in. Current implementation defaults to PQL
-// but in the future it will be LIST_FILTER.
+// filter is written in. Current implementation defaults to PQL but in
+// the future it will be LIST_FILTER.
 //
 // Possible values:
-//   "FILTER_SYNTAX_UNSPECIFIED"
-//   "PQL"
-//   "LIST_FILTER"
+//
+//	"FILTER_SYNTAX_UNSPECIFIED" - A placeholder for an undefined filter
+//
+// syntax.
+//
+//	"PQL" - PQL query syntax. Visit
+//
+// https://developers.google.com/ad-manager/api/pqlreference for PQL
+// documentation and examples.
+//
+//	"LIST_FILTER" - API list filtering syntax. Read about syntax and
+//
+// usage at
+// https://developers.google.com/authorized-buyers/apis/guides/v2/list-filters.
 func (c *AccountsFinalizedProposalsListCall) FilterSyntax(filterSyntax string) *AccountsFinalizedProposalsListCall {
 	c.urlParams_.Set("filterSyntax", filterSyntax)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// The server may return fewer results than requested.
-// If unspecified, the server will pick an appropriate default.
+// The server may return fewer results than requested. If unspecified,
+// the server will pick an appropriate default.
 func (c *AccountsFinalizedProposalsListCall) PageSize(pageSize int64) *AccountsFinalizedProposalsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -9363,7 +9184,7 @@ func (c *AccountsFinalizedProposalsListCall) Header() http.Header {
 
 func (c *AccountsFinalizedProposalsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9401,17 +9222,17 @@ func (c *AccountsFinalizedProposalsListCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListProposalsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -9425,7 +9246,7 @@ func (c *AccountsFinalizedProposalsListCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "List finalized proposals, regardless if a proposal is being renegotiated.\nA filter expression (PQL query) may be specified to filter the results.\nThe notes will not be returned.",
+	//   "description": "List finalized proposals, regardless if a proposal is being renegotiated. A filter expression (PQL query) may be specified to filter the results. The notes will not be returned.",
 	//   "flatPath": "v2beta1/accounts/{accountId}/finalizedProposals",
 	//   "httpMethod": "GET",
 	//   "id": "adexchangebuyer2.accounts.finalizedProposals.list",
@@ -9440,22 +9261,27 @@ func (c *AccountsFinalizedProposalsListCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "An optional PQL filter query used to query for proposals.\n\nNested repeated fields, such as proposal.deals.targetingCriterion,\ncannot be filtered.",
+	//       "description": "An optional PQL filter query used to query for proposals. Nested repeated fields, such as proposal.deals.targetingCriterion, cannot be filtered.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "filterSyntax": {
-	//       "description": "Syntax the filter is written in. Current implementation defaults to PQL\nbut in the future it will be LIST_FILTER.",
+	//       "description": "Syntax the filter is written in. Current implementation defaults to PQL but in the future it will be LIST_FILTER.",
 	//       "enum": [
 	//         "FILTER_SYNTAX_UNSPECIFIED",
 	//         "PQL",
 	//         "LIST_FILTER"
 	//       ],
+	//       "enumDescriptions": [
+	//         "A placeholder for an undefined filter syntax.",
+	//         "PQL query syntax. Visit https://developers.google.com/ad-manager/api/pqlreference for PQL documentation and examples.",
+	//         "API list filtering syntax. Read about syntax and usage at https://developers.google.com/authorized-buyers/apis/guides/v2/list-filters."
+	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. The server may return fewer results than requested.\nIf unspecified, the server will pick an appropriate default.",
+	//       "description": "Requested page size. The server may return fewer results than requested. If unspecified, the server will pick an appropriate default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -9498,6 +9324,324 @@ func (c *AccountsFinalizedProposalsListCall) Pages(ctx context.Context, f func(*
 	}
 }
 
+// method id "adexchangebuyer2.accounts.finalizedProposals.pause":
+
+type AccountsFinalizedProposalsPauseCall struct {
+	s                         *Service
+	accountId                 string
+	proposalId                string
+	pauseproposaldealsrequest *PauseProposalDealsRequest
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// Pause: Update given deals to pause serving. This method will set the
+// `DealServingMetadata.DealPauseStatus.has_buyer_paused` bit to true
+// for all listed deals in the request. Currently, this method only
+// applies to PG and PD deals. For PA deals, call
+// accounts.proposals.pause endpoint. It is a no-op to pause
+// already-paused deals. It is an error to call PauseProposalDeals for
+// deals which are not part of the proposal of proposal_id or which are
+// not finalized or renegotiating.
+//
+// - accountId: Account ID of the buyer.
+// - proposalId: The proposal_id of the proposal containing the deals.
+func (r *AccountsFinalizedProposalsService) Pause(accountId string, proposalId string, pauseproposaldealsrequest *PauseProposalDealsRequest) *AccountsFinalizedProposalsPauseCall {
+	c := &AccountsFinalizedProposalsPauseCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.accountId = accountId
+	c.proposalId = proposalId
+	c.pauseproposaldealsrequest = pauseproposaldealsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsFinalizedProposalsPauseCall) Fields(s ...googleapi.Field) *AccountsFinalizedProposalsPauseCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsFinalizedProposalsPauseCall) Context(ctx context.Context) *AccountsFinalizedProposalsPauseCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsFinalizedProposalsPauseCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsFinalizedProposalsPauseCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.pauseproposaldealsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta1/accounts/{accountId}/finalizedProposals/{proposalId}:pause")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"accountId":  c.accountId,
+		"proposalId": c.proposalId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "adexchangebuyer2.accounts.finalizedProposals.pause" call.
+// Exactly one of *Proposal or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Proposal.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AccountsFinalizedProposalsPauseCall) Do(opts ...googleapi.CallOption) (*Proposal, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Proposal{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Update given deals to pause serving. This method will set the `DealServingMetadata.DealPauseStatus.has_buyer_paused` bit to true for all listed deals in the request. Currently, this method only applies to PG and PD deals. For PA deals, call accounts.proposals.pause endpoint. It is a no-op to pause already-paused deals. It is an error to call PauseProposalDeals for deals which are not part of the proposal of proposal_id or which are not finalized or renegotiating.",
+	//   "flatPath": "v2beta1/accounts/{accountId}/finalizedProposals/{proposalId}:pause",
+	//   "httpMethod": "POST",
+	//   "id": "adexchangebuyer2.accounts.finalizedProposals.pause",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "proposalId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account ID of the buyer.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "proposalId": {
+	//       "description": "The proposal_id of the proposal containing the deals.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2beta1/accounts/{accountId}/finalizedProposals/{proposalId}:pause",
+	//   "request": {
+	//     "$ref": "PauseProposalDealsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Proposal"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// method id "adexchangebuyer2.accounts.finalizedProposals.resume":
+
+type AccountsFinalizedProposalsResumeCall struct {
+	s                          *Service
+	accountId                  string
+	proposalId                 string
+	resumeproposaldealsrequest *ResumeProposalDealsRequest
+	urlParams_                 gensupport.URLParams
+	ctx_                       context.Context
+	header_                    http.Header
+}
+
+// Resume: Update given deals to resume serving. This method will set
+// the `DealServingMetadata.DealPauseStatus.has_buyer_paused` bit to
+// false for all listed deals in the request. Currently, this method
+// only applies to PG and PD deals. For PA deals, call
+// accounts.proposals.resume endpoint. It is a no-op to resume running
+// deals or deals paused by the other party. It is an error to call
+// ResumeProposalDeals for deals which are not part of the proposal of
+// proposal_id or which are not finalized or renegotiating.
+//
+// - accountId: Account ID of the buyer.
+// - proposalId: The proposal_id of the proposal containing the deals.
+func (r *AccountsFinalizedProposalsService) Resume(accountId string, proposalId string, resumeproposaldealsrequest *ResumeProposalDealsRequest) *AccountsFinalizedProposalsResumeCall {
+	c := &AccountsFinalizedProposalsResumeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.accountId = accountId
+	c.proposalId = proposalId
+	c.resumeproposaldealsrequest = resumeproposaldealsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsFinalizedProposalsResumeCall) Fields(s ...googleapi.Field) *AccountsFinalizedProposalsResumeCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsFinalizedProposalsResumeCall) Context(ctx context.Context) *AccountsFinalizedProposalsResumeCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsFinalizedProposalsResumeCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsFinalizedProposalsResumeCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.resumeproposaldealsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta1/accounts/{accountId}/finalizedProposals/{proposalId}:resume")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"accountId":  c.accountId,
+		"proposalId": c.proposalId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "adexchangebuyer2.accounts.finalizedProposals.resume" call.
+// Exactly one of *Proposal or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Proposal.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AccountsFinalizedProposalsResumeCall) Do(opts ...googleapi.CallOption) (*Proposal, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Proposal{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Update given deals to resume serving. This method will set the `DealServingMetadata.DealPauseStatus.has_buyer_paused` bit to false for all listed deals in the request. Currently, this method only applies to PG and PD deals. For PA deals, call accounts.proposals.resume endpoint. It is a no-op to resume running deals or deals paused by the other party. It is an error to call ResumeProposalDeals for deals which are not part of the proposal of proposal_id or which are not finalized or renegotiating.",
+	//   "flatPath": "v2beta1/accounts/{accountId}/finalizedProposals/{proposalId}:resume",
+	//   "httpMethod": "POST",
+	//   "id": "adexchangebuyer2.accounts.finalizedProposals.resume",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "proposalId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account ID of the buyer.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "proposalId": {
+	//       "description": "The proposal_id of the proposal containing the deals.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2beta1/accounts/{accountId}/finalizedProposals/{proposalId}:resume",
+	//   "request": {
+	//     "$ref": "ResumeProposalDealsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Proposal"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
 // method id "adexchangebuyer2.accounts.products.get":
 
 type AccountsProductsGetCall struct {
@@ -9511,6 +9655,9 @@ type AccountsProductsGetCall struct {
 }
 
 // Get: Gets the requested product by ID.
+//
+// - accountId: Account ID of the buyer.
+// - productId: The ID for the product to get the head revision for.
 func (r *AccountsProductsService) Get(accountId string, productId string) *AccountsProductsGetCall {
 	c := &AccountsProductsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -9555,7 +9702,7 @@ func (c *AccountsProductsGetCall) Header() http.Header {
 
 func (c *AccountsProductsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9594,17 +9741,17 @@ func (c *AccountsProductsGetCall) Do(opts ...googleapi.CallOption) (*Product, er
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Product{
 		ServerResponse: googleapi.ServerResponse{
@@ -9663,8 +9810,9 @@ type AccountsProductsListCall struct {
 }
 
 // List: List all products visible to the buyer (optionally filtered by
-// the
-// specified PQL query).
+// the specified PQL query).
+//
+// - accountId: Account ID of the buyer.
 func (r *AccountsProductsService) List(accountId string) *AccountsProductsListCall {
 	c := &AccountsProductsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -9672,22 +9820,18 @@ func (r *AccountsProductsService) List(accountId string) *AccountsProductsListCa
 }
 
 // Filter sets the optional parameter "filter": An optional PQL query
-// used to query for products.
-// See
-// https://developers.google.com/ad-manager/docs/pqlreference
-// for documentation about PQL and examples.
-//
-// Nested repeated fields, such as
-// product.targetingCriterion.inclusions,
-// cannot be filtered.
+// used to query for products. See
+// https://developers.google.com/ad-manager/docs/pqlreference for
+// documentation about PQL and examples. Nested repeated fields, such as
+// product.targetingCriterion.inclusions, cannot be filtered.
 func (c *AccountsProductsListCall) Filter(filter string) *AccountsProductsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// The server may return fewer results than requested.
-// If unspecified, the server will pick an appropriate default.
+// The server may return fewer results than requested. If unspecified,
+// the server will pick an appropriate default.
 func (c *AccountsProductsListCall) PageSize(pageSize int64) *AccountsProductsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -9737,7 +9881,7 @@ func (c *AccountsProductsListCall) Header() http.Header {
 
 func (c *AccountsProductsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9775,17 +9919,17 @@ func (c *AccountsProductsListCall) Do(opts ...googleapi.CallOption) (*ListProduc
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListProductsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -9799,7 +9943,7 @@ func (c *AccountsProductsListCall) Do(opts ...googleapi.CallOption) (*ListProduc
 	}
 	return ret, nil
 	// {
-	//   "description": "List all products visible to the buyer (optionally filtered by the\nspecified PQL query).",
+	//   "description": "List all products visible to the buyer (optionally filtered by the specified PQL query).",
 	//   "flatPath": "v2beta1/accounts/{accountId}/products",
 	//   "httpMethod": "GET",
 	//   "id": "adexchangebuyer2.accounts.products.list",
@@ -9814,12 +9958,12 @@ func (c *AccountsProductsListCall) Do(opts ...googleapi.CallOption) (*ListProduc
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "An optional PQL query used to query for products. See\nhttps://developers.google.com/ad-manager/docs/pqlreference\nfor documentation about PQL and examples.\n\nNested repeated fields, such as product.targetingCriterion.inclusions,\ncannot be filtered.",
+	//       "description": "An optional PQL query used to query for products. See https://developers.google.com/ad-manager/docs/pqlreference for documentation about PQL and examples. Nested repeated fields, such as product.targetingCriterion.inclusions, cannot be filtered.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. The server may return fewer results than requested.\nIf unspecified, the server will pick an appropriate default.",
+	//       "description": "Requested page size. The server may return fewer results than requested. If unspecified, the server will pick an appropriate default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -9875,12 +10019,15 @@ type AccountsProposalsAcceptCall struct {
 }
 
 // Accept: Mark the proposal as accepted at the given revision number.
-// If the number
-// does not match the server's revision number an `ABORTED` error
-// message will
-// be returned. This call updates the proposal_state from `PROPOSED`
-// to
-// `BUYER_ACCEPTED`, or from `SELLER_ACCEPTED` to `FINALIZED`.
+// If the number does not match the server's revision number an
+// `ABORTED` error message will be returned. This call updates the
+// proposal_state from `PROPOSED` to `BUYER_ACCEPTED`, or from
+// `SELLER_ACCEPTED` to `FINALIZED`. Upon calling this endpoint, the
+// buyer implicitly agrees to the terms and conditions optionally set
+// within the proposal by the publisher.
+//
+// - accountId: Account ID of the buyer.
+// - proposalId: The ID of the proposal to accept.
 func (r *AccountsProposalsService) Accept(accountId string, proposalId string, acceptproposalrequest *AcceptProposalRequest) *AccountsProposalsAcceptCall {
 	c := &AccountsProposalsAcceptCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -9916,7 +10063,7 @@ func (c *AccountsProposalsAcceptCall) Header() http.Header {
 
 func (c *AccountsProposalsAcceptCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9957,17 +10104,17 @@ func (c *AccountsProposalsAcceptCall) Do(opts ...googleapi.CallOption) (*Proposa
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Proposal{
 		ServerResponse: googleapi.ServerResponse{
@@ -9981,7 +10128,7 @@ func (c *AccountsProposalsAcceptCall) Do(opts ...googleapi.CallOption) (*Proposa
 	}
 	return ret, nil
 	// {
-	//   "description": "Mark the proposal as accepted at the given revision number. If the number\ndoes not match the server's revision number an `ABORTED` error message will\nbe returned. This call updates the proposal_state from `PROPOSED` to\n`BUYER_ACCEPTED`, or from `SELLER_ACCEPTED` to `FINALIZED`.",
+	//   "description": "Mark the proposal as accepted at the given revision number. If the number does not match the server's revision number an `ABORTED` error message will be returned. This call updates the proposal_state from `PROPOSED` to `BUYER_ACCEPTED`, or from `SELLER_ACCEPTED` to `FINALIZED`. Upon calling this endpoint, the buyer implicitly agrees to the terms and conditions optionally set within the proposal by the publisher.",
 	//   "flatPath": "v2beta1/accounts/{accountId}/proposals/{proposalId}:accept",
 	//   "httpMethod": "POST",
 	//   "id": "adexchangebuyer2.accounts.proposals.accept",
@@ -10030,11 +10177,11 @@ type AccountsProposalsAddNoteCall struct {
 }
 
 // AddNote: Create a new note and attach it to the proposal. The note is
-// assigned
-// a unique ID by the server.
-// The proposal revision number will not increase when associated with
-// a
-// new note.
+// assigned a unique ID by the server. The proposal revision number will
+// not increase when associated with a new note.
+//
+// - accountId: Account ID of the buyer.
+// - proposalId: The ID of the proposal to attach the note to.
 func (r *AccountsProposalsService) AddNote(accountId string, proposalId string, addnoterequest *AddNoteRequest) *AccountsProposalsAddNoteCall {
 	c := &AccountsProposalsAddNoteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -10070,7 +10217,7 @@ func (c *AccountsProposalsAddNoteCall) Header() http.Header {
 
 func (c *AccountsProposalsAddNoteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10111,17 +10258,17 @@ func (c *AccountsProposalsAddNoteCall) Do(opts ...googleapi.CallOption) (*Note, 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Note{
 		ServerResponse: googleapi.ServerResponse{
@@ -10135,7 +10282,7 @@ func (c *AccountsProposalsAddNoteCall) Do(opts ...googleapi.CallOption) (*Note, 
 	}
 	return ret, nil
 	// {
-	//   "description": "Create a new note and attach it to the proposal. The note is assigned\na unique ID by the server.\nThe proposal revision number will not increase when associated with a\nnew note.",
+	//   "description": "Create a new note and attach it to the proposal. The note is assigned a unique ID by the server. The proposal revision number will not increase when associated with a new note.",
 	//   "flatPath": "v2beta1/accounts/{accountId}/proposals/{proposalId}:addNote",
 	//   "httpMethod": "POST",
 	//   "id": "adexchangebuyer2.accounts.proposals.addNote",
@@ -10184,10 +10331,11 @@ type AccountsProposalsCancelNegotiationCall struct {
 }
 
 // CancelNegotiation: Cancel an ongoing negotiation on a proposal. This
-// does not cancel or end
-// serving for the deals if the proposal has been finalized, but only
-// cancels
-// a negotiation unilaterally.
+// does not cancel or end serving for the deals if the proposal has been
+// finalized, but only cancels a negotiation unilaterally.
+//
+// - accountId: Account ID of the buyer.
+// - proposalId: The ID of the proposal to cancel negotiation for.
 func (r *AccountsProposalsService) CancelNegotiation(accountId string, proposalId string, cancelnegotiationrequest *CancelNegotiationRequest) *AccountsProposalsCancelNegotiationCall {
 	c := &AccountsProposalsCancelNegotiationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -10223,7 +10371,7 @@ func (c *AccountsProposalsCancelNegotiationCall) Header() http.Header {
 
 func (c *AccountsProposalsCancelNegotiationCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10264,17 +10412,17 @@ func (c *AccountsProposalsCancelNegotiationCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Proposal{
 		ServerResponse: googleapi.ServerResponse{
@@ -10288,7 +10436,7 @@ func (c *AccountsProposalsCancelNegotiationCall) Do(opts ...googleapi.CallOption
 	}
 	return ret, nil
 	// {
-	//   "description": "Cancel an ongoing negotiation on a proposal. This does not cancel or end\nserving for the deals if the proposal has been finalized, but only cancels\na negotiation unilaterally.",
+	//   "description": "Cancel an ongoing negotiation on a proposal. This does not cancel or end serving for the deals if the proposal has been finalized, but only cancels a negotiation unilaterally.",
 	//   "flatPath": "v2beta1/accounts/{accountId}/proposals/{proposalId}:cancelNegotiation",
 	//   "httpMethod": "POST",
 	//   "id": "adexchangebuyer2.accounts.proposals.cancelNegotiation",
@@ -10336,18 +10484,19 @@ type AccountsProposalsCompleteSetupCall struct {
 	header_              http.Header
 }
 
-// CompleteSetup: Update the given proposal to indicate that setup has
-// been completed.
-// This method is called by the buyer when the line items have been
-// created
-// on their end for a finalized proposal and all the required
-// creatives
-// have been uploaded using the creatives API. This call updates
-// the
-// `is_setup_completed` bit on the proposal and also notifies the
-// seller.
-// The server will advance the revision number of the most recent
-// proposal.
+// CompleteSetup: You can opt-in to manually update proposals to
+// indicate that setup is complete. By default, proposal setup is
+// automatically completed after their deals are finalized. Contact your
+// Technical Account Manager to opt in. Buyers can call this method when
+// the proposal has been finalized, and all the required creatives have
+// been uploaded using the Creatives API. This call updates the
+// `is_setup_completed` field on the deals in the proposal, and notifies
+// the seller. The server then advances the revision number of the most
+// recent proposal. To mark an individual deal as ready to serve, call
+// `buyers.finalizedDeals.setReadyToServe` in the Marketplace API.
+//
+// - accountId: Account ID of the buyer.
+// - proposalId: The ID of the proposal to mark as setup completed.
 func (r *AccountsProposalsService) CompleteSetup(accountId string, proposalId string, completesetuprequest *CompleteSetupRequest) *AccountsProposalsCompleteSetupCall {
 	c := &AccountsProposalsCompleteSetupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -10383,7 +10532,7 @@ func (c *AccountsProposalsCompleteSetupCall) Header() http.Header {
 
 func (c *AccountsProposalsCompleteSetupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10424,17 +10573,17 @@ func (c *AccountsProposalsCompleteSetupCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Proposal{
 		ServerResponse: googleapi.ServerResponse{
@@ -10448,7 +10597,7 @@ func (c *AccountsProposalsCompleteSetupCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "Update the given proposal to indicate that setup has been completed.\nThis method is called by the buyer when the line items have been created\non their end for a finalized proposal and all the required creatives\nhave been uploaded using the creatives API. This call updates the\n`is_setup_completed` bit on the proposal and also notifies the seller.\nThe server will advance the revision number of the most recent proposal.",
+	//   "description": "You can opt-in to manually update proposals to indicate that setup is complete. By default, proposal setup is automatically completed after their deals are finalized. Contact your Technical Account Manager to opt in. Buyers can call this method when the proposal has been finalized, and all the required creatives have been uploaded using the Creatives API. This call updates the `is_setup_completed` field on the deals in the proposal, and notifies the seller. The server then advances the revision number of the most recent proposal. To mark an individual deal as ready to serve, call `buyers.finalizedDeals.setReadyToServe` in the Marketplace API.",
 	//   "flatPath": "v2beta1/accounts/{accountId}/proposals/{proposalId}:completeSetup",
 	//   "httpMethod": "POST",
 	//   "id": "adexchangebuyer2.accounts.proposals.completeSetup",
@@ -10496,8 +10645,9 @@ type AccountsProposalsCreateCall struct {
 }
 
 // Create: Create the given proposal. Each created proposal and any
-// deals it contains
-// are assigned a unique ID by the server.
+// deals it contains are assigned a unique ID by the server.
+//
+// - accountId: Account ID of the buyer.
 func (r *AccountsProposalsService) Create(accountId string, proposal *Proposal) *AccountsProposalsCreateCall {
 	c := &AccountsProposalsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -10532,7 +10682,7 @@ func (c *AccountsProposalsCreateCall) Header() http.Header {
 
 func (c *AccountsProposalsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10572,17 +10722,17 @@ func (c *AccountsProposalsCreateCall) Do(opts ...googleapi.CallOption) (*Proposa
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Proposal{
 		ServerResponse: googleapi.ServerResponse{
@@ -10596,7 +10746,7 @@ func (c *AccountsProposalsCreateCall) Do(opts ...googleapi.CallOption) (*Proposa
 	}
 	return ret, nil
 	// {
-	//   "description": "Create the given proposal. Each created proposal and any deals it contains\nare assigned a unique ID by the server.",
+	//   "description": "Create the given proposal. Each created proposal and any deals it contains are assigned a unique ID by the server.",
 	//   "flatPath": "v2beta1/accounts/{accountId}/proposals",
 	//   "httpMethod": "POST",
 	//   "id": "adexchangebuyer2.accounts.proposals.create",
@@ -10638,8 +10788,10 @@ type AccountsProposalsGetCall struct {
 }
 
 // Get: Gets a proposal given its ID. The proposal is returned at its
-// head
-// revision.
+// head revision.
+//
+// - accountId: Account ID of the buyer.
+// - proposalId: The unique ID of the proposal.
 func (r *AccountsProposalsService) Get(accountId string, proposalId string) *AccountsProposalsGetCall {
 	c := &AccountsProposalsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -10684,7 +10836,7 @@ func (c *AccountsProposalsGetCall) Header() http.Header {
 
 func (c *AccountsProposalsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10723,17 +10875,17 @@ func (c *AccountsProposalsGetCall) Do(opts ...googleapi.CallOption) (*Proposal, 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Proposal{
 		ServerResponse: googleapi.ServerResponse{
@@ -10747,7 +10899,7 @@ func (c *AccountsProposalsGetCall) Do(opts ...googleapi.CallOption) (*Proposal, 
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets a proposal given its ID. The proposal is returned at its head\nrevision.",
+	//   "description": "Gets a proposal given its ID. The proposal is returned at its head revision.",
 	//   "flatPath": "v2beta1/accounts/{accountId}/proposals/{proposalId}",
 	//   "httpMethod": "GET",
 	//   "id": "adexchangebuyer2.accounts.proposals.get",
@@ -10792,16 +10944,14 @@ type AccountsProposalsListCall struct {
 }
 
 // List: List proposals. A filter expression (PQL query) may be
-// specified to
-// filter the results. To retrieve all finalized proposals, regardless
-// if a
-// proposal is being renegotiated, see the FinalizedProposals
-// resource.
-// Note that Bidder/ChildSeat relationships differ from the usual
-// behavior.
-// A Bidder account can only see its child seats' proposals by
-// specifying
-// the ChildSeat's accountId in the request path.
+// specified to filter the results. To retrieve all finalized proposals,
+// regardless if a proposal is being renegotiated, see the
+// FinalizedProposals resource. Note that Bidder/ChildSeat relationships
+// differ from the usual behavior. A Bidder account can only see its
+// child seats' proposals by specifying the ChildSeat's accountId in the
+// request path.
+//
+// - accountId: Account ID of the buyer.
 func (r *AccountsProposalsService) List(accountId string) *AccountsProposalsListCall {
 	c := &AccountsProposalsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -10809,32 +10959,40 @@ func (r *AccountsProposalsService) List(accountId string) *AccountsProposalsList
 }
 
 // Filter sets the optional parameter "filter": An optional PQL filter
-// query used to query for proposals.
-//
-// Nested repeated fields, such as
-// proposal.deals.targetingCriterion,
-// cannot be filtered.
+// query used to query for proposals. Nested repeated fields, such as
+// proposal.deals.targetingCriterion, cannot be filtered.
 func (c *AccountsProposalsListCall) Filter(filter string) *AccountsProposalsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // FilterSyntax sets the optional parameter "filterSyntax": Syntax the
-// filter is written in. Current implementation defaults to PQL
-// but in the future it will be LIST_FILTER.
+// filter is written in. Current implementation defaults to PQL but in
+// the future it will be LIST_FILTER.
 //
 // Possible values:
-//   "FILTER_SYNTAX_UNSPECIFIED"
-//   "PQL"
-//   "LIST_FILTER"
+//
+//	"FILTER_SYNTAX_UNSPECIFIED" - A placeholder for an undefined filter
+//
+// syntax.
+//
+//	"PQL" - PQL query syntax. Visit
+//
+// https://developers.google.com/ad-manager/api/pqlreference for PQL
+// documentation and examples.
+//
+//	"LIST_FILTER" - API list filtering syntax. Read about syntax and
+//
+// usage at
+// https://developers.google.com/authorized-buyers/apis/guides/v2/list-filters.
 func (c *AccountsProposalsListCall) FilterSyntax(filterSyntax string) *AccountsProposalsListCall {
 	c.urlParams_.Set("filterSyntax", filterSyntax)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// The server may return fewer results than requested.
-// If unspecified, the server will pick an appropriate default.
+// The server may return fewer results than requested. If unspecified,
+// the server will pick an appropriate default.
 func (c *AccountsProposalsListCall) PageSize(pageSize int64) *AccountsProposalsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -10884,7 +11042,7 @@ func (c *AccountsProposalsListCall) Header() http.Header {
 
 func (c *AccountsProposalsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10922,17 +11080,17 @@ func (c *AccountsProposalsListCall) Do(opts ...googleapi.CallOption) (*ListPropo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListProposalsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -10946,7 +11104,7 @@ func (c *AccountsProposalsListCall) Do(opts ...googleapi.CallOption) (*ListPropo
 	}
 	return ret, nil
 	// {
-	//   "description": "List proposals. A filter expression (PQL query) may be specified to\nfilter the results. To retrieve all finalized proposals, regardless if a\nproposal is being renegotiated, see the FinalizedProposals resource.\nNote that Bidder/ChildSeat relationships differ from the usual behavior.\nA Bidder account can only see its child seats' proposals by specifying\nthe ChildSeat's accountId in the request path.",
+	//   "description": "List proposals. A filter expression (PQL query) may be specified to filter the results. To retrieve all finalized proposals, regardless if a proposal is being renegotiated, see the FinalizedProposals resource. Note that Bidder/ChildSeat relationships differ from the usual behavior. A Bidder account can only see its child seats' proposals by specifying the ChildSeat's accountId in the request path.",
 	//   "flatPath": "v2beta1/accounts/{accountId}/proposals",
 	//   "httpMethod": "GET",
 	//   "id": "adexchangebuyer2.accounts.proposals.list",
@@ -10961,22 +11119,27 @@ func (c *AccountsProposalsListCall) Do(opts ...googleapi.CallOption) (*ListPropo
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "An optional PQL filter query used to query for proposals.\n\nNested repeated fields, such as proposal.deals.targetingCriterion,\ncannot be filtered.",
+	//       "description": "An optional PQL filter query used to query for proposals. Nested repeated fields, such as proposal.deals.targetingCriterion, cannot be filtered.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "filterSyntax": {
-	//       "description": "Syntax the filter is written in. Current implementation defaults to PQL\nbut in the future it will be LIST_FILTER.",
+	//       "description": "Syntax the filter is written in. Current implementation defaults to PQL but in the future it will be LIST_FILTER.",
 	//       "enum": [
 	//         "FILTER_SYNTAX_UNSPECIFIED",
 	//         "PQL",
 	//         "LIST_FILTER"
 	//       ],
+	//       "enumDescriptions": [
+	//         "A placeholder for an undefined filter syntax.",
+	//         "PQL query syntax. Visit https://developers.google.com/ad-manager/api/pqlreference for PQL documentation and examples.",
+	//         "API list filtering syntax. Read about syntax and usage at https://developers.google.com/authorized-buyers/apis/guides/v2/list-filters."
+	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. The server may return fewer results than requested.\nIf unspecified, the server will pick an appropriate default.",
+	//       "description": "Requested page size. The server may return fewer results than requested. If unspecified, the server will pick an appropriate default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -11031,17 +11194,14 @@ type AccountsProposalsPauseCall struct {
 	header_              http.Header
 }
 
-// Pause: Update the given proposal to pause serving.
-// This method will set
-// the
-// `DealServingMetadata.DealPauseStatus.has_buyer_paused` bit to true
-// for all
-// deals in the proposal.
+// Pause: Update the given proposal to pause serving. This method will
+// set the `DealServingMetadata.DealPauseStatus.has_buyer_paused` bit to
+// true for all deals in the proposal. It is a no-op to pause an
+// already-paused proposal. It is an error to call PauseProposal for a
+// proposal that is not finalized or renegotiating.
 //
-// It is a no-op to pause an already-paused proposal.
-// It is an error to call PauseProposal for a proposal that is
-// not
-// finalized or renegotiating.
+// - accountId: Account ID of the buyer.
+// - proposalId: The ID of the proposal to pause.
 func (r *AccountsProposalsService) Pause(accountId string, proposalId string, pauseproposalrequest *PauseProposalRequest) *AccountsProposalsPauseCall {
 	c := &AccountsProposalsPauseCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -11077,7 +11237,7 @@ func (c *AccountsProposalsPauseCall) Header() http.Header {
 
 func (c *AccountsProposalsPauseCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11118,17 +11278,17 @@ func (c *AccountsProposalsPauseCall) Do(opts ...googleapi.CallOption) (*Proposal
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Proposal{
 		ServerResponse: googleapi.ServerResponse{
@@ -11142,7 +11302,7 @@ func (c *AccountsProposalsPauseCall) Do(opts ...googleapi.CallOption) (*Proposal
 	}
 	return ret, nil
 	// {
-	//   "description": "Update the given proposal to pause serving.\nThis method will set the\n`DealServingMetadata.DealPauseStatus.has_buyer_paused` bit to true for all\ndeals in the proposal.\n\nIt is a no-op to pause an already-paused proposal.\nIt is an error to call PauseProposal for a proposal that is not\nfinalized or renegotiating.",
+	//   "description": "Update the given proposal to pause serving. This method will set the `DealServingMetadata.DealPauseStatus.has_buyer_paused` bit to true for all deals in the proposal. It is a no-op to pause an already-paused proposal. It is an error to call PauseProposal for a proposal that is not finalized or renegotiating.",
 	//   "flatPath": "v2beta1/accounts/{accountId}/proposals/{proposalId}:pause",
 	//   "httpMethod": "POST",
 	//   "id": "adexchangebuyer2.accounts.proposals.pause",
@@ -11190,21 +11350,16 @@ type AccountsProposalsResumeCall struct {
 	header_               http.Header
 }
 
-// Resume: Update the given proposal to resume serving.
-// This method will set
-// the
-// `DealServingMetadata.DealPauseStatus.has_buyer_paused` bit to false
-// for all
-// deals in the proposal.
+// Resume: Update the given proposal to resume serving. This method will
+// set the `DealServingMetadata.DealPauseStatus.has_buyer_paused` bit to
+// false for all deals in the proposal. Note that if the
+// `has_seller_paused` bit is also set, serving will not resume until
+// the seller also resumes. It is a no-op to resume an already-running
+// proposal. It is an error to call ResumeProposal for a proposal that
+// is not finalized or renegotiating.
 //
-// Note that if the `has_seller_paused` bit is also set, serving will
-// not
-// resume until the seller also resumes.
-//
-// It is a no-op to resume an already-running proposal.
-// It is an error to call ResumeProposal for a proposal that is
-// not
-// finalized or renegotiating.
+// - accountId: Account ID of the buyer.
+// - proposalId: The ID of the proposal to resume.
 func (r *AccountsProposalsService) Resume(accountId string, proposalId string, resumeproposalrequest *ResumeProposalRequest) *AccountsProposalsResumeCall {
 	c := &AccountsProposalsResumeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -11240,7 +11395,7 @@ func (c *AccountsProposalsResumeCall) Header() http.Header {
 
 func (c *AccountsProposalsResumeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11281,17 +11436,17 @@ func (c *AccountsProposalsResumeCall) Do(opts ...googleapi.CallOption) (*Proposa
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Proposal{
 		ServerResponse: googleapi.ServerResponse{
@@ -11305,7 +11460,7 @@ func (c *AccountsProposalsResumeCall) Do(opts ...googleapi.CallOption) (*Proposa
 	}
 	return ret, nil
 	// {
-	//   "description": "Update the given proposal to resume serving.\nThis method will set the\n`DealServingMetadata.DealPauseStatus.has_buyer_paused` bit to false for all\ndeals in the proposal.\n\nNote that if the `has_seller_paused` bit is also set, serving will not\nresume until the seller also resumes.\n\nIt is a no-op to resume an already-running proposal.\nIt is an error to call ResumeProposal for a proposal that is not\nfinalized or renegotiating.",
+	//   "description": "Update the given proposal to resume serving. This method will set the `DealServingMetadata.DealPauseStatus.has_buyer_paused` bit to false for all deals in the proposal. Note that if the `has_seller_paused` bit is also set, serving will not resume until the seller also resumes. It is a no-op to resume an already-running proposal. It is an error to call ResumeProposal for a proposal that is not finalized or renegotiating.",
 	//   "flatPath": "v2beta1/accounts/{accountId}/proposals/{proposalId}:resume",
 	//   "httpMethod": "POST",
 	//   "id": "adexchangebuyer2.accounts.proposals.resume",
@@ -11354,27 +11509,19 @@ type AccountsProposalsUpdateCall struct {
 }
 
 // Update: Update the given proposal at the client known revision
-// number. If the
-// server revision has advanced since the
-// passed-in
+// number. If the server revision has advanced since the passed-in
 // `proposal.proposal_revision`, an `ABORTED` error message will be
-// returned.
-// Only the buyer-modifiable fields of the proposal will be
-// updated.
+// returned. Only the buyer-modifiable fields of the proposal will be
+// updated. Note that the deals in the proposal will be updated to match
+// the passed-in copy. If a passed-in deal does not have a `deal_id`,
+// the server will assign a new unique ID and create the deal. If
+// passed-in deal has a `deal_id`, it will be updated to match the
+// passed-in copy. Any existing deals not present in the passed-in
+// proposal will be deleted. It is an error to pass in a deal with a
+// `deal_id` not present at head.
 //
-// Note that the deals in the proposal will be updated to match the
-// passed-in
-// copy.
-// If a passed-in deal does not have a `deal_id`, the server will assign
-// a new
-// unique ID and create the deal.
-// If passed-in deal has a `deal_id`, it will be updated to match
-// the
-// passed-in copy.
-// Any existing deals not present in the passed-in proposal will be
-// deleted.
-// It is an error to pass in a deal with a `deal_id` not present at
-// head.
+// - accountId: Account ID of the buyer.
+// - proposalId: The unique ID of the proposal.
 func (r *AccountsProposalsService) Update(accountId string, proposalId string, proposal *Proposal) *AccountsProposalsUpdateCall {
 	c := &AccountsProposalsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -11410,7 +11557,7 @@ func (c *AccountsProposalsUpdateCall) Header() http.Header {
 
 func (c *AccountsProposalsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11451,17 +11598,17 @@ func (c *AccountsProposalsUpdateCall) Do(opts ...googleapi.CallOption) (*Proposa
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Proposal{
 		ServerResponse: googleapi.ServerResponse{
@@ -11475,7 +11622,7 @@ func (c *AccountsProposalsUpdateCall) Do(opts ...googleapi.CallOption) (*Proposa
 	}
 	return ret, nil
 	// {
-	//   "description": "Update the given proposal at the client known revision number. If the\nserver revision has advanced since the passed-in\n`proposal.proposal_revision`, an `ABORTED` error message will be returned.\nOnly the buyer-modifiable fields of the proposal will be updated.\n\nNote that the deals in the proposal will be updated to match the passed-in\ncopy.\nIf a passed-in deal does not have a `deal_id`, the server will assign a new\nunique ID and create the deal.\nIf passed-in deal has a `deal_id`, it will be updated to match the\npassed-in copy.\nAny existing deals not present in the passed-in proposal will be deleted.\nIt is an error to pass in a deal with a `deal_id` not present at head.",
+	//   "description": "Update the given proposal at the client known revision number. If the server revision has advanced since the passed-in `proposal.proposal_revision`, an `ABORTED` error message will be returned. Only the buyer-modifiable fields of the proposal will be updated. Note that the deals in the proposal will be updated to match the passed-in copy. If a passed-in deal does not have a `deal_id`, the server will assign a new unique ID and create the deal. If passed-in deal has a `deal_id`, it will be updated to match the passed-in copy. Any existing deals not present in the passed-in proposal will be deleted. It is an error to pass in a deal with a `deal_id` not present at head.",
 	//   "flatPath": "v2beta1/accounts/{accountId}/proposals/{proposalId}",
 	//   "httpMethod": "PUT",
 	//   "id": "adexchangebuyer2.accounts.proposals.update",
@@ -11524,6 +11671,9 @@ type AccountsPublisherProfilesGetCall struct {
 }
 
 // Get: Gets the requested publisher profile by id.
+//
+// - accountId: Account ID of the buyer.
+// - publisherProfileId: The id for the publisher profile to get.
 func (r *AccountsPublisherProfilesService) Get(accountId string, publisherProfileId string) *AccountsPublisherProfilesGetCall {
 	c := &AccountsPublisherProfilesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -11568,7 +11718,7 @@ func (c *AccountsPublisherProfilesGetCall) Header() http.Header {
 
 func (c *AccountsPublisherProfilesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11607,17 +11757,17 @@ func (c *AccountsPublisherProfilesGetCall) Do(opts ...googleapi.CallOption) (*Pu
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &PublisherProfile{
 		ServerResponse: googleapi.ServerResponse{
@@ -11676,6 +11826,8 @@ type AccountsPublisherProfilesListCall struct {
 }
 
 // List: List all publisher profiles visible to the buyer
+//
+// - accountId: Account ID of the buyer.
 func (r *AccountsPublisherProfilesService) List(accountId string) *AccountsPublisherProfilesListCall {
 	c := &AccountsPublisherProfilesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -11733,7 +11885,7 @@ func (c *AccountsPublisherProfilesListCall) Header() http.Header {
 
 func (c *AccountsPublisherProfilesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11771,17 +11923,17 @@ func (c *AccountsPublisherProfilesListCall) Do(opts ...googleapi.CallOption) (*L
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListPublisherProfilesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -11866,6 +12018,13 @@ type BiddersAccountsFilterSetsCreateCall struct {
 
 // Create: Creates the specified filter set for the account with the
 // given account ID.
+//
+//   - ownerName: Name of the owner (bidder or account) of the filter set
+//     to be created. For example: - For a bidder-level filter set for
+//     bidder 123: `bidders/123` - For an account-level filter set for the
+//     buyer account representing bidder 123: `bidders/123/accounts/123` -
+//     For an account-level filter set for the child seat buyer account
+//     456 whose bidder is 123: `bidders/123/accounts/456`.
 func (r *BiddersAccountsFilterSetsService) Create(ownerName string, filterset *FilterSet) *BiddersAccountsFilterSetsCreateCall {
 	c := &BiddersAccountsFilterSetsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.ownerName = ownerName
@@ -11874,10 +12033,9 @@ func (r *BiddersAccountsFilterSetsService) Create(ownerName string, filterset *F
 }
 
 // IsTransient sets the optional parameter "isTransient": Whether the
-// filter set is transient, or should be persisted indefinitely.
-// By default, filter sets are not transient.
-// If transient, it will be available for at least 1 hour after
-// creation.
+// filter set is transient, or should be persisted indefinitely. By
+// default, filter sets are not transient. If transient, it will be
+// available for at least 1 hour after creation.
 func (c *BiddersAccountsFilterSetsCreateCall) IsTransient(isTransient bool) *BiddersAccountsFilterSetsCreateCall {
 	c.urlParams_.Set("isTransient", fmt.Sprint(isTransient))
 	return c
@@ -11910,7 +12068,7 @@ func (c *BiddersAccountsFilterSetsCreateCall) Header() http.Header {
 
 func (c *BiddersAccountsFilterSetsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11950,17 +12108,17 @@ func (c *BiddersAccountsFilterSetsCreateCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &FilterSet{
 		ServerResponse: googleapi.ServerResponse{
@@ -11983,12 +12141,12 @@ func (c *BiddersAccountsFilterSetsCreateCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "isTransient": {
-	//       "description": "Whether the filter set is transient, or should be persisted indefinitely.\nBy default, filter sets are not transient.\nIf transient, it will be available for at least 1 hour after creation.",
+	//       "description": "Whether the filter set is transient, or should be persisted indefinitely. By default, filter sets are not transient. If transient, it will be available for at least 1 hour after creation.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "ownerName": {
-	//       "description": "Name of the owner (bidder or account) of the filter set to be created.\nFor example:\n\n- For a bidder-level filter set for bidder 123: `bidders/123`\n\n- For an account-level filter set for the buyer account representing bidder\n  123: `bidders/123/accounts/123`\n\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: `bidders/123/accounts/456`",
+	//       "description": "Name of the owner (bidder or account) of the filter set to be created. For example: - For a bidder-level filter set for bidder 123: `bidders/123` - For an account-level filter set for the buyer account representing bidder 123: `bidders/123/accounts/123` - For an account-level filter set for the child seat buyer account 456 whose bidder is 123: `bidders/123/accounts/456`",
 	//       "location": "path",
 	//       "pattern": "^bidders/[^/]+/accounts/[^/]+$",
 	//       "required": true,
@@ -12020,8 +12178,15 @@ type BiddersAccountsFilterSetsDeleteCall struct {
 }
 
 // Delete: Deletes the requested filter set from the account with the
-// given account
-// ID.
+// given account ID.
+//
+//   - name: Full name of the resource to delete. For example: - For a
+//     bidder-level filter set for bidder 123:
+//     `bidders/123/filterSets/abc` - For an account-level filter set for
+//     the buyer account representing bidder 123:
+//     `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//     filter set for the child seat buyer account 456 whose bidder is
+//     123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersAccountsFilterSetsService) Delete(name string) *BiddersAccountsFilterSetsDeleteCall {
 	c := &BiddersAccountsFilterSetsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12055,7 +12220,7 @@ func (c *BiddersAccountsFilterSetsDeleteCall) Header() http.Header {
 
 func (c *BiddersAccountsFilterSetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12090,17 +12255,17 @@ func (c *BiddersAccountsFilterSetsDeleteCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -12114,7 +12279,7 @@ func (c *BiddersAccountsFilterSetsDeleteCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes the requested filter set from the account with the given account\nID.",
+	//   "description": "Deletes the requested filter set from the account with the given account ID.",
 	//   "flatPath": "v2beta1/bidders/{biddersId}/accounts/{accountsId}/filterSets/{filterSetsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "adexchangebuyer2.bidders.accounts.filterSets.delete",
@@ -12123,7 +12288,7 @@ func (c *BiddersAccountsFilterSetsDeleteCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Full name of the resource to delete.\nFor example:\n\n- For a bidder-level filter set for bidder 123:\n  `bidders/123/filterSets/abc`\n\n- For an account-level filter set for the buyer account representing bidder\n  123: `bidders/123/accounts/123/filterSets/abc`\n\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
+	//       "description": "Full name of the resource to delete. For example: - For a bidder-level filter set for bidder 123: `bidders/123/filterSets/abc` - For an account-level filter set for the buyer account representing bidder 123: `bidders/123/accounts/123/filterSets/abc` - For an account-level filter set for the child seat buyer account 456 whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
 	//       "location": "path",
 	//       "pattern": "^bidders/[^/]+/accounts/[^/]+/filterSets/[^/]+$",
 	//       "required": true,
@@ -12153,8 +12318,15 @@ type BiddersAccountsFilterSetsGetCall struct {
 }
 
 // Get: Retrieves the requested filter set for the account with the
-// given account
-// ID.
+// given account ID.
+//
+//   - name: Full name of the resource being requested. For example: - For
+//     a bidder-level filter set for bidder 123:
+//     `bidders/123/filterSets/abc` - For an account-level filter set for
+//     the buyer account representing bidder 123:
+//     `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//     filter set for the child seat buyer account 456 whose bidder is
+//     123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersAccountsFilterSetsService) Get(name string) *BiddersAccountsFilterSetsGetCall {
 	c := &BiddersAccountsFilterSetsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12198,7 +12370,7 @@ func (c *BiddersAccountsFilterSetsGetCall) Header() http.Header {
 
 func (c *BiddersAccountsFilterSetsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12236,17 +12408,17 @@ func (c *BiddersAccountsFilterSetsGetCall) Do(opts ...googleapi.CallOption) (*Fi
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &FilterSet{
 		ServerResponse: googleapi.ServerResponse{
@@ -12260,7 +12432,7 @@ func (c *BiddersAccountsFilterSetsGetCall) Do(opts ...googleapi.CallOption) (*Fi
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves the requested filter set for the account with the given account\nID.",
+	//   "description": "Retrieves the requested filter set for the account with the given account ID.",
 	//   "flatPath": "v2beta1/bidders/{biddersId}/accounts/{accountsId}/filterSets/{filterSetsId}",
 	//   "httpMethod": "GET",
 	//   "id": "adexchangebuyer2.bidders.accounts.filterSets.get",
@@ -12269,7 +12441,7 @@ func (c *BiddersAccountsFilterSetsGetCall) Do(opts ...googleapi.CallOption) (*Fi
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Full name of the resource being requested.\nFor example:\n\n- For a bidder-level filter set for bidder 123:\n  `bidders/123/filterSets/abc`\n\n- For an account-level filter set for the buyer account representing bidder\n  123: `bidders/123/accounts/123/filterSets/abc`\n\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
+	//       "description": "Full name of the resource being requested. For example: - For a bidder-level filter set for bidder 123: `bidders/123/filterSets/abc` - For an account-level filter set for the buyer account representing bidder 123: `bidders/123/accounts/123/filterSets/abc` - For an account-level filter set for the child seat buyer account 456 whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
 	//       "location": "path",
 	//       "pattern": "^bidders/[^/]+/accounts/[^/]+/filterSets/[^/]+$",
 	//       "required": true,
@@ -12300,6 +12472,13 @@ type BiddersAccountsFilterSetsListCall struct {
 
 // List: Lists all filter sets for the account with the given account
 // ID.
+//
+//   - ownerName: Name of the owner (bidder or account) of the filter sets
+//     to be listed. For example: - For a bidder-level filter set for
+//     bidder 123: `bidders/123` - For an account-level filter set for the
+//     buyer account representing bidder 123: `bidders/123/accounts/123` -
+//     For an account-level filter set for the child seat buyer account
+//     456 whose bidder is 123: `bidders/123/accounts/456`.
 func (r *BiddersAccountsFilterSetsService) List(ownerName string) *BiddersAccountsFilterSetsListCall {
 	c := &BiddersAccountsFilterSetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.ownerName = ownerName
@@ -12307,22 +12486,17 @@ func (r *BiddersAccountsFilterSetsService) List(ownerName string) *BiddersAccoun
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// The server may return fewer results than requested.
-// If unspecified, the server will pick an appropriate default.
+// The server may return fewer results than requested. If unspecified,
+// the server will pick an appropriate default.
 func (c *BiddersAccountsFilterSetsListCall) PageSize(pageSize int64) *BiddersAccountsFilterSetsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results the server should return.
-// Typically, this is the value
-// of
-// ListFilterSetsResponse.nextPageToken
-// returned from the previous call to
-// the
-// accounts.filterSets.list
-// method.
+// identifying a page of results the server should return. Typically,
+// this is the value of ListFilterSetsResponse.nextPageToken returned
+// from the previous call to the accounts.filterSets.list method.
 func (c *BiddersAccountsFilterSetsListCall) PageToken(pageToken string) *BiddersAccountsFilterSetsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -12365,7 +12539,7 @@ func (c *BiddersAccountsFilterSetsListCall) Header() http.Header {
 
 func (c *BiddersAccountsFilterSetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12403,17 +12577,17 @@ func (c *BiddersAccountsFilterSetsListCall) Do(opts ...googleapi.CallOption) (*L
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListFilterSetsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -12436,20 +12610,20 @@ func (c *BiddersAccountsFilterSetsListCall) Do(opts ...googleapi.CallOption) (*L
 	//   ],
 	//   "parameters": {
 	//     "ownerName": {
-	//       "description": "Name of the owner (bidder or account) of the filter sets to be listed.\nFor example:\n\n- For a bidder-level filter set for bidder 123: `bidders/123`\n\n- For an account-level filter set for the buyer account representing bidder\n  123: `bidders/123/accounts/123`\n\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: `bidders/123/accounts/456`",
+	//       "description": "Name of the owner (bidder or account) of the filter sets to be listed. For example: - For a bidder-level filter set for bidder 123: `bidders/123` - For an account-level filter set for the buyer account representing bidder 123: `bidders/123/accounts/123` - For an account-level filter set for the child seat buyer account 456 whose bidder is 123: `bidders/123/accounts/456`",
 	//       "location": "path",
 	//       "pattern": "^bidders/[^/]+/accounts/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. The server may return fewer results than requested.\nIf unspecified, the server will pick an appropriate default.",
+	//       "description": "Requested page size. The server may return fewer results than requested. If unspecified, the server will pick an appropriate default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nListFilterSetsResponse.nextPageToken\nreturned from the previous call to the\naccounts.filterSets.list\nmethod.",
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of ListFilterSetsResponse.nextPageToken returned from the previous call to the accounts.filterSets.list method.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -12498,6 +12672,14 @@ type BiddersAccountsFilterSetsBidMetricsListCall struct {
 }
 
 // List: Lists all metrics that are measured in terms of number of bids.
+//
+//   - filterSetName: Name of the filter set that should be applied to the
+//     requested metrics. For example: - For a bidder-level filter set for
+//     bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//     filter set for the buyer account representing bidder 123:
+//     `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//     filter set for the child seat buyer account 456 whose bidder is
+//     123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersAccountsFilterSetsBidMetricsService) List(filterSetName string) *BiddersAccountsFilterSetsBidMetricsListCall {
 	c := &BiddersAccountsFilterSetsBidMetricsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -12505,20 +12687,17 @@ func (r *BiddersAccountsFilterSetsBidMetricsService) List(filterSetName string) 
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// The server may return fewer results than requested.
-// If unspecified, the server will pick an appropriate default.
+// The server may return fewer results than requested. If unspecified,
+// the server will pick an appropriate default.
 func (c *BiddersAccountsFilterSetsBidMetricsListCall) PageSize(pageSize int64) *BiddersAccountsFilterSetsBidMetricsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results the server should return.
-// Typically, this is the value
-// of
-// ListBidMetricsResponse.nextPageToken
-// returned from the previous call to the bidMetrics.list
-// method.
+// identifying a page of results the server should return. Typically,
+// this is the value of ListBidMetricsResponse.nextPageToken returned
+// from the previous call to the bidMetrics.list method.
 func (c *BiddersAccountsFilterSetsBidMetricsListCall) PageToken(pageToken string) *BiddersAccountsFilterSetsBidMetricsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -12561,7 +12740,7 @@ func (c *BiddersAccountsFilterSetsBidMetricsListCall) Header() http.Header {
 
 func (c *BiddersAccountsFilterSetsBidMetricsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12599,17 +12778,17 @@ func (c *BiddersAccountsFilterSetsBidMetricsListCall) Do(opts ...googleapi.CallO
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListBidMetricsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -12632,20 +12811,20 @@ func (c *BiddersAccountsFilterSetsBidMetricsListCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "filterSetName": {
-	//       "description": "Name of the filter set that should be applied to the requested metrics.\nFor example:\n\n- For a bidder-level filter set for bidder 123:\n  `bidders/123/filterSets/abc`\n\n- For an account-level filter set for the buyer account representing bidder\n  123: `bidders/123/accounts/123/filterSets/abc`\n\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
+	//       "description": "Name of the filter set that should be applied to the requested metrics. For example: - For a bidder-level filter set for bidder 123: `bidders/123/filterSets/abc` - For an account-level filter set for the buyer account representing bidder 123: `bidders/123/accounts/123/filterSets/abc` - For an account-level filter set for the child seat buyer account 456 whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
 	//       "location": "path",
 	//       "pattern": "^bidders/[^/]+/accounts/[^/]+/filterSets/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. The server may return fewer results than requested.\nIf unspecified, the server will pick an appropriate default.",
+	//       "description": "Requested page size. The server may return fewer results than requested. If unspecified, the server will pick an appropriate default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nListBidMetricsResponse.nextPageToken\nreturned from the previous call to the bidMetrics.list\nmethod.",
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of ListBidMetricsResponse.nextPageToken returned from the previous call to the bidMetrics.list method.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -12694,8 +12873,15 @@ type BiddersAccountsFilterSetsBidResponseErrorsListCall struct {
 }
 
 // List: List all errors that occurred in bid responses, with the number
-// of bid
-// responses affected for each reason.
+// of bid responses affected for each reason.
+//
+//   - filterSetName: Name of the filter set that should be applied to the
+//     requested metrics. For example: - For a bidder-level filter set for
+//     bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//     filter set for the buyer account representing bidder 123:
+//     `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//     filter set for the child seat buyer account 456 whose bidder is
+//     123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersAccountsFilterSetsBidResponseErrorsService) List(filterSetName string) *BiddersAccountsFilterSetsBidResponseErrorsListCall {
 	c := &BiddersAccountsFilterSetsBidResponseErrorsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -12703,20 +12889,17 @@ func (r *BiddersAccountsFilterSetsBidResponseErrorsService) List(filterSetName s
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// The server may return fewer results than requested.
-// If unspecified, the server will pick an appropriate default.
+// The server may return fewer results than requested. If unspecified,
+// the server will pick an appropriate default.
 func (c *BiddersAccountsFilterSetsBidResponseErrorsListCall) PageSize(pageSize int64) *BiddersAccountsFilterSetsBidResponseErrorsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results the server should return.
-// Typically, this is the value
-// of
-// ListBidResponseErrorsResponse.nextPageToken
-// returned from the previous call to the bidResponseErrors.list
-// method.
+// identifying a page of results the server should return. Typically,
+// this is the value of ListBidResponseErrorsResponse.nextPageToken
+// returned from the previous call to the bidResponseErrors.list method.
 func (c *BiddersAccountsFilterSetsBidResponseErrorsListCall) PageToken(pageToken string) *BiddersAccountsFilterSetsBidResponseErrorsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -12759,7 +12942,7 @@ func (c *BiddersAccountsFilterSetsBidResponseErrorsListCall) Header() http.Heade
 
 func (c *BiddersAccountsFilterSetsBidResponseErrorsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12797,17 +12980,17 @@ func (c *BiddersAccountsFilterSetsBidResponseErrorsListCall) Do(opts ...googleap
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListBidResponseErrorsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -12821,7 +13004,7 @@ func (c *BiddersAccountsFilterSetsBidResponseErrorsListCall) Do(opts ...googleap
 	}
 	return ret, nil
 	// {
-	//   "description": "List all errors that occurred in bid responses, with the number of bid\nresponses affected for each reason.",
+	//   "description": "List all errors that occurred in bid responses, with the number of bid responses affected for each reason.",
 	//   "flatPath": "v2beta1/bidders/{biddersId}/accounts/{accountsId}/filterSets/{filterSetsId}/bidResponseErrors",
 	//   "httpMethod": "GET",
 	//   "id": "adexchangebuyer2.bidders.accounts.filterSets.bidResponseErrors.list",
@@ -12830,20 +13013,20 @@ func (c *BiddersAccountsFilterSetsBidResponseErrorsListCall) Do(opts ...googleap
 	//   ],
 	//   "parameters": {
 	//     "filterSetName": {
-	//       "description": "Name of the filter set that should be applied to the requested metrics.\nFor example:\n\n- For a bidder-level filter set for bidder 123:\n  `bidders/123/filterSets/abc`\n\n- For an account-level filter set for the buyer account representing bidder\n  123: `bidders/123/accounts/123/filterSets/abc`\n\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
+	//       "description": "Name of the filter set that should be applied to the requested metrics. For example: - For a bidder-level filter set for bidder 123: `bidders/123/filterSets/abc` - For an account-level filter set for the buyer account representing bidder 123: `bidders/123/accounts/123/filterSets/abc` - For an account-level filter set for the child seat buyer account 456 whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
 	//       "location": "path",
 	//       "pattern": "^bidders/[^/]+/accounts/[^/]+/filterSets/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. The server may return fewer results than requested.\nIf unspecified, the server will pick an appropriate default.",
+	//       "description": "Requested page size. The server may return fewer results than requested. If unspecified, the server will pick an appropriate default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nListBidResponseErrorsResponse.nextPageToken\nreturned from the previous call to the bidResponseErrors.list\nmethod.",
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of ListBidResponseErrorsResponse.nextPageToken returned from the previous call to the bidResponseErrors.list method.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -12892,9 +13075,16 @@ type BiddersAccountsFilterSetsBidResponsesWithoutBidsListCall struct {
 }
 
 // List: List all reasons for which bid responses were considered to
-// have no
-// applicable bids, with the number of bid responses affected for each
-// reason.
+// have no applicable bids, with the number of bid responses affected
+// for each reason.
+//
+//   - filterSetName: Name of the filter set that should be applied to the
+//     requested metrics. For example: - For a bidder-level filter set for
+//     bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//     filter set for the buyer account representing bidder 123:
+//     `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//     filter set for the child seat buyer account 456 whose bidder is
+//     123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersAccountsFilterSetsBidResponsesWithoutBidsService) List(filterSetName string) *BiddersAccountsFilterSetsBidResponsesWithoutBidsListCall {
 	c := &BiddersAccountsFilterSetsBidResponsesWithoutBidsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -12902,21 +13092,18 @@ func (r *BiddersAccountsFilterSetsBidResponsesWithoutBidsService) List(filterSet
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// The server may return fewer results than requested.
-// If unspecified, the server will pick an appropriate default.
+// The server may return fewer results than requested. If unspecified,
+// the server will pick an appropriate default.
 func (c *BiddersAccountsFilterSetsBidResponsesWithoutBidsListCall) PageSize(pageSize int64) *BiddersAccountsFilterSetsBidResponsesWithoutBidsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results the server should return.
-// Typically, this is the value
-// of
-// ListBidResponsesWithoutBidsResponse.nextPageToken
-// returned from the previous call to the
-// bidResponsesWithoutBids.list
-// method.
+// identifying a page of results the server should return. Typically,
+// this is the value of
+// ListBidResponsesWithoutBidsResponse.nextPageToken returned from the
+// previous call to the bidResponsesWithoutBids.list method.
 func (c *BiddersAccountsFilterSetsBidResponsesWithoutBidsListCall) PageToken(pageToken string) *BiddersAccountsFilterSetsBidResponsesWithoutBidsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -12959,7 +13146,7 @@ func (c *BiddersAccountsFilterSetsBidResponsesWithoutBidsListCall) Header() http
 
 func (c *BiddersAccountsFilterSetsBidResponsesWithoutBidsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12998,17 +13185,17 @@ func (c *BiddersAccountsFilterSetsBidResponsesWithoutBidsListCall) Do(opts ...go
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListBidResponsesWithoutBidsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -13022,7 +13209,7 @@ func (c *BiddersAccountsFilterSetsBidResponsesWithoutBidsListCall) Do(opts ...go
 	}
 	return ret, nil
 	// {
-	//   "description": "List all reasons for which bid responses were considered to have no\napplicable bids, with the number of bid responses affected for each reason.",
+	//   "description": "List all reasons for which bid responses were considered to have no applicable bids, with the number of bid responses affected for each reason.",
 	//   "flatPath": "v2beta1/bidders/{biddersId}/accounts/{accountsId}/filterSets/{filterSetsId}/bidResponsesWithoutBids",
 	//   "httpMethod": "GET",
 	//   "id": "adexchangebuyer2.bidders.accounts.filterSets.bidResponsesWithoutBids.list",
@@ -13031,20 +13218,20 @@ func (c *BiddersAccountsFilterSetsBidResponsesWithoutBidsListCall) Do(opts ...go
 	//   ],
 	//   "parameters": {
 	//     "filterSetName": {
-	//       "description": "Name of the filter set that should be applied to the requested metrics.\nFor example:\n\n- For a bidder-level filter set for bidder 123:\n  `bidders/123/filterSets/abc`\n\n- For an account-level filter set for the buyer account representing bidder\n  123: `bidders/123/accounts/123/filterSets/abc`\n\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
+	//       "description": "Name of the filter set that should be applied to the requested metrics. For example: - For a bidder-level filter set for bidder 123: `bidders/123/filterSets/abc` - For an account-level filter set for the buyer account representing bidder 123: `bidders/123/accounts/123/filterSets/abc` - For an account-level filter set for the child seat buyer account 456 whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
 	//       "location": "path",
 	//       "pattern": "^bidders/[^/]+/accounts/[^/]+/filterSets/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. The server may return fewer results than requested.\nIf unspecified, the server will pick an appropriate default.",
+	//       "description": "Requested page size. The server may return fewer results than requested. If unspecified, the server will pick an appropriate default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nListBidResponsesWithoutBidsResponse.nextPageToken\nreturned from the previous call to the bidResponsesWithoutBids.list\nmethod.",
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of ListBidResponsesWithoutBidsResponse.nextPageToken returned from the previous call to the bidResponsesWithoutBids.list method.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -13093,8 +13280,16 @@ type BiddersAccountsFilterSetsFilteredBidRequestsListCall struct {
 }
 
 // List: List all reasons that caused a bid request not to be sent for
-// an
-// impression, with the number of bid requests not sent for each reason.
+// an impression, with the number of bid requests not sent for each
+// reason.
+//
+//   - filterSetName: Name of the filter set that should be applied to the
+//     requested metrics. For example: - For a bidder-level filter set for
+//     bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//     filter set for the buyer account representing bidder 123:
+//     `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//     filter set for the child seat buyer account 456 whose bidder is
+//     123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersAccountsFilterSetsFilteredBidRequestsService) List(filterSetName string) *BiddersAccountsFilterSetsFilteredBidRequestsListCall {
 	c := &BiddersAccountsFilterSetsFilteredBidRequestsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -13102,20 +13297,17 @@ func (r *BiddersAccountsFilterSetsFilteredBidRequestsService) List(filterSetName
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// The server may return fewer results than requested.
-// If unspecified, the server will pick an appropriate default.
+// The server may return fewer results than requested. If unspecified,
+// the server will pick an appropriate default.
 func (c *BiddersAccountsFilterSetsFilteredBidRequestsListCall) PageSize(pageSize int64) *BiddersAccountsFilterSetsFilteredBidRequestsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results the server should return.
-// Typically, this is the value
-// of
-// ListFilteredBidRequestsResponse.nextPageToken
-// returned from the previous call to the
-// filteredBidRequests.list
+// identifying a page of results the server should return. Typically,
+// this is the value of ListFilteredBidRequestsResponse.nextPageToken
+// returned from the previous call to the filteredBidRequests.list
 // method.
 func (c *BiddersAccountsFilterSetsFilteredBidRequestsListCall) PageToken(pageToken string) *BiddersAccountsFilterSetsFilteredBidRequestsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
@@ -13159,7 +13351,7 @@ func (c *BiddersAccountsFilterSetsFilteredBidRequestsListCall) Header() http.Hea
 
 func (c *BiddersAccountsFilterSetsFilteredBidRequestsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13197,17 +13389,17 @@ func (c *BiddersAccountsFilterSetsFilteredBidRequestsListCall) Do(opts ...google
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListFilteredBidRequestsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -13221,7 +13413,7 @@ func (c *BiddersAccountsFilterSetsFilteredBidRequestsListCall) Do(opts ...google
 	}
 	return ret, nil
 	// {
-	//   "description": "List all reasons that caused a bid request not to be sent for an\nimpression, with the number of bid requests not sent for each reason.",
+	//   "description": "List all reasons that caused a bid request not to be sent for an impression, with the number of bid requests not sent for each reason.",
 	//   "flatPath": "v2beta1/bidders/{biddersId}/accounts/{accountsId}/filterSets/{filterSetsId}/filteredBidRequests",
 	//   "httpMethod": "GET",
 	//   "id": "adexchangebuyer2.bidders.accounts.filterSets.filteredBidRequests.list",
@@ -13230,20 +13422,20 @@ func (c *BiddersAccountsFilterSetsFilteredBidRequestsListCall) Do(opts ...google
 	//   ],
 	//   "parameters": {
 	//     "filterSetName": {
-	//       "description": "Name of the filter set that should be applied to the requested metrics.\nFor example:\n\n- For a bidder-level filter set for bidder 123:\n  `bidders/123/filterSets/abc`\n\n- For an account-level filter set for the buyer account representing bidder\n  123: `bidders/123/accounts/123/filterSets/abc`\n\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
+	//       "description": "Name of the filter set that should be applied to the requested metrics. For example: - For a bidder-level filter set for bidder 123: `bidders/123/filterSets/abc` - For an account-level filter set for the buyer account representing bidder 123: `bidders/123/accounts/123/filterSets/abc` - For an account-level filter set for the child seat buyer account 456 whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
 	//       "location": "path",
 	//       "pattern": "^bidders/[^/]+/accounts/[^/]+/filterSets/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. The server may return fewer results than requested.\nIf unspecified, the server will pick an appropriate default.",
+	//       "description": "Requested page size. The server may return fewer results than requested. If unspecified, the server will pick an appropriate default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nListFilteredBidRequestsResponse.nextPageToken\nreturned from the previous call to the filteredBidRequests.list\nmethod.",
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of ListFilteredBidRequestsResponse.nextPageToken returned from the previous call to the filteredBidRequests.list method.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -13292,8 +13484,15 @@ type BiddersAccountsFilterSetsFilteredBidsListCall struct {
 }
 
 // List: List all reasons for which bids were filtered, with the number
-// of bids
-// filtered for each reason.
+// of bids filtered for each reason.
+//
+//   - filterSetName: Name of the filter set that should be applied to the
+//     requested metrics. For example: - For a bidder-level filter set for
+//     bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//     filter set for the buyer account representing bidder 123:
+//     `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//     filter set for the child seat buyer account 456 whose bidder is
+//     123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersAccountsFilterSetsFilteredBidsService) List(filterSetName string) *BiddersAccountsFilterSetsFilteredBidsListCall {
 	c := &BiddersAccountsFilterSetsFilteredBidsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -13301,20 +13500,17 @@ func (r *BiddersAccountsFilterSetsFilteredBidsService) List(filterSetName string
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// The server may return fewer results than requested.
-// If unspecified, the server will pick an appropriate default.
+// The server may return fewer results than requested. If unspecified,
+// the server will pick an appropriate default.
 func (c *BiddersAccountsFilterSetsFilteredBidsListCall) PageSize(pageSize int64) *BiddersAccountsFilterSetsFilteredBidsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results the server should return.
-// Typically, this is the value
-// of
-// ListFilteredBidsResponse.nextPageToken
-// returned from the previous call to the filteredBids.list
-// method.
+// identifying a page of results the server should return. Typically,
+// this is the value of ListFilteredBidsResponse.nextPageToken returned
+// from the previous call to the filteredBids.list method.
 func (c *BiddersAccountsFilterSetsFilteredBidsListCall) PageToken(pageToken string) *BiddersAccountsFilterSetsFilteredBidsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -13357,7 +13553,7 @@ func (c *BiddersAccountsFilterSetsFilteredBidsListCall) Header() http.Header {
 
 func (c *BiddersAccountsFilterSetsFilteredBidsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13395,17 +13591,17 @@ func (c *BiddersAccountsFilterSetsFilteredBidsListCall) Do(opts ...googleapi.Cal
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListFilteredBidsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -13419,7 +13615,7 @@ func (c *BiddersAccountsFilterSetsFilteredBidsListCall) Do(opts ...googleapi.Cal
 	}
 	return ret, nil
 	// {
-	//   "description": "List all reasons for which bids were filtered, with the number of bids\nfiltered for each reason.",
+	//   "description": "List all reasons for which bids were filtered, with the number of bids filtered for each reason.",
 	//   "flatPath": "v2beta1/bidders/{biddersId}/accounts/{accountsId}/filterSets/{filterSetsId}/filteredBids",
 	//   "httpMethod": "GET",
 	//   "id": "adexchangebuyer2.bidders.accounts.filterSets.filteredBids.list",
@@ -13428,20 +13624,20 @@ func (c *BiddersAccountsFilterSetsFilteredBidsListCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "filterSetName": {
-	//       "description": "Name of the filter set that should be applied to the requested metrics.\nFor example:\n\n- For a bidder-level filter set for bidder 123:\n  `bidders/123/filterSets/abc`\n\n- For an account-level filter set for the buyer account representing bidder\n  123: `bidders/123/accounts/123/filterSets/abc`\n\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
+	//       "description": "Name of the filter set that should be applied to the requested metrics. For example: - For a bidder-level filter set for bidder 123: `bidders/123/filterSets/abc` - For an account-level filter set for the buyer account representing bidder 123: `bidders/123/accounts/123/filterSets/abc` - For an account-level filter set for the child seat buyer account 456 whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
 	//       "location": "path",
 	//       "pattern": "^bidders/[^/]+/accounts/[^/]+/filterSets/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. The server may return fewer results than requested.\nIf unspecified, the server will pick an appropriate default.",
+	//       "description": "Requested page size. The server may return fewer results than requested. If unspecified, the server will pick an appropriate default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nListFilteredBidsResponse.nextPageToken\nreturned from the previous call to the filteredBids.list\nmethod.",
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of ListFilteredBidsResponse.nextPageToken returned from the previous call to the filteredBids.list method.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -13491,8 +13687,19 @@ type BiddersAccountsFilterSetsFilteredBidsCreativesListCall struct {
 }
 
 // List: List all creatives associated with a specific reason for which
-// bids were
-// filtered, with the number of bids filtered for each creative.
+// bids were filtered, with the number of bids filtered for each
+// creative.
+//
+//   - creativeStatusId: The ID of the creative status for which to
+//     retrieve a breakdown by creative. See creative-status-codes
+//     (https://developers.google.com/authorized-buyers/rtb/downloads/creative-status-codes).
+//   - filterSetName: Name of the filter set that should be applied to the
+//     requested metrics. For example: - For a bidder-level filter set for
+//     bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//     filter set for the buyer account representing bidder 123:
+//     `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//     filter set for the child seat buyer account 456 whose bidder is
+//     123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersAccountsFilterSetsFilteredBidsCreativesService) List(filterSetName string, creativeStatusId int64) *BiddersAccountsFilterSetsFilteredBidsCreativesListCall {
 	c := &BiddersAccountsFilterSetsFilteredBidsCreativesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -13501,21 +13708,18 @@ func (r *BiddersAccountsFilterSetsFilteredBidsCreativesService) List(filterSetNa
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// The server may return fewer results than requested.
-// If unspecified, the server will pick an appropriate default.
+// The server may return fewer results than requested. If unspecified,
+// the server will pick an appropriate default.
 func (c *BiddersAccountsFilterSetsFilteredBidsCreativesListCall) PageSize(pageSize int64) *BiddersAccountsFilterSetsFilteredBidsCreativesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results the server should return.
-// Typically, this is the value
-// of
-// ListCreativeStatusBreakdownByCreativeResponse.nextPageToken
-// returne
-// d from the previous call to the filteredBids.creatives.list
-// method.
+// identifying a page of results the server should return. Typically,
+// this is the value of
+// ListCreativeStatusBreakdownByCreativeResponse.nextPageToken returned
+// from the previous call to the filteredBids.creatives.list method.
 func (c *BiddersAccountsFilterSetsFilteredBidsCreativesListCall) PageToken(pageToken string) *BiddersAccountsFilterSetsFilteredBidsCreativesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -13558,7 +13762,7 @@ func (c *BiddersAccountsFilterSetsFilteredBidsCreativesListCall) Header() http.H
 
 func (c *BiddersAccountsFilterSetsFilteredBidsCreativesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13599,17 +13803,17 @@ func (c *BiddersAccountsFilterSetsFilteredBidsCreativesListCall) Do(opts ...goog
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListCreativeStatusBreakdownByCreativeResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -13623,7 +13827,7 @@ func (c *BiddersAccountsFilterSetsFilteredBidsCreativesListCall) Do(opts ...goog
 	}
 	return ret, nil
 	// {
-	//   "description": "List all creatives associated with a specific reason for which bids were\nfiltered, with the number of bids filtered for each creative.",
+	//   "description": "List all creatives associated with a specific reason for which bids were filtered, with the number of bids filtered for each creative.",
 	//   "flatPath": "v2beta1/bidders/{biddersId}/accounts/{accountsId}/filterSets/{filterSetsId}/filteredBids/{creativeStatusId}/creatives",
 	//   "httpMethod": "GET",
 	//   "id": "adexchangebuyer2.bidders.accounts.filterSets.filteredBids.creatives.list",
@@ -13633,27 +13837,27 @@ func (c *BiddersAccountsFilterSetsFilteredBidsCreativesListCall) Do(opts ...goog
 	//   ],
 	//   "parameters": {
 	//     "creativeStatusId": {
-	//       "description": "The ID of the creative status for which to retrieve a breakdown by\ncreative.\nSee\n[creative-status-codes](https://developers.google.com/authorized-buyers/rtb/downloads/creative-status-codes).",
+	//       "description": "The ID of the creative status for which to retrieve a breakdown by creative. See [creative-status-codes](https://developers.google.com/authorized-buyers/rtb/downloads/creative-status-codes).",
 	//       "format": "int32",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "integer"
 	//     },
 	//     "filterSetName": {
-	//       "description": "Name of the filter set that should be applied to the requested metrics.\nFor example:\n\n- For a bidder-level filter set for bidder 123:\n  `bidders/123/filterSets/abc`\n\n- For an account-level filter set for the buyer account representing bidder\n  123: `bidders/123/accounts/123/filterSets/abc`\n\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
+	//       "description": "Name of the filter set that should be applied to the requested metrics. For example: - For a bidder-level filter set for bidder 123: `bidders/123/filterSets/abc` - For an account-level filter set for the buyer account representing bidder 123: `bidders/123/accounts/123/filterSets/abc` - For an account-level filter set for the child seat buyer account 456 whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
 	//       "location": "path",
 	//       "pattern": "^bidders/[^/]+/accounts/[^/]+/filterSets/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. The server may return fewer results than requested.\nIf unspecified, the server will pick an appropriate default.",
+	//       "description": "Requested page size. The server may return fewer results than requested. If unspecified, the server will pick an appropriate default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nListCreativeStatusBreakdownByCreativeResponse.nextPageToken\nreturned from the previous call to the filteredBids.creatives.list\nmethod.",
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of ListCreativeStatusBreakdownByCreativeResponse.nextPageToken returned from the previous call to the filteredBids.creatives.list method.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -13703,8 +13907,20 @@ type BiddersAccountsFilterSetsFilteredBidsDetailsListCall struct {
 }
 
 // List: List all details associated with a specific reason for which
-// bids were
-// filtered, with the number of bids filtered for each detail.
+// bids were filtered, with the number of bids filtered for each detail.
+//
+//   - creativeStatusId: The ID of the creative status for which to
+//     retrieve a breakdown by detail. See creative-status-codes
+//     (https://developers.google.com/authorized-buyers/rtb/downloads/creative-status-codes).
+//     Details are only available for statuses 10, 14, 15, 17, 18, 19, 86,
+//     and 87.
+//   - filterSetName: Name of the filter set that should be applied to the
+//     requested metrics. For example: - For a bidder-level filter set for
+//     bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//     filter set for the buyer account representing bidder 123:
+//     `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//     filter set for the child seat buyer account 456 whose bidder is
+//     123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersAccountsFilterSetsFilteredBidsDetailsService) List(filterSetName string, creativeStatusId int64) *BiddersAccountsFilterSetsFilteredBidsDetailsListCall {
 	c := &BiddersAccountsFilterSetsFilteredBidsDetailsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -13713,21 +13929,18 @@ func (r *BiddersAccountsFilterSetsFilteredBidsDetailsService) List(filterSetName
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// The server may return fewer results than requested.
-// If unspecified, the server will pick an appropriate default.
+// The server may return fewer results than requested. If unspecified,
+// the server will pick an appropriate default.
 func (c *BiddersAccountsFilterSetsFilteredBidsDetailsListCall) PageSize(pageSize int64) *BiddersAccountsFilterSetsFilteredBidsDetailsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results the server should return.
-// Typically, this is the value
-// of
-// ListCreativeStatusBreakdownByDetailResponse.nextPageToken
-// returned from the previous call to the
-// filteredBids.details.list
-// method.
+// identifying a page of results the server should return. Typically,
+// this is the value of
+// ListCreativeStatusBreakdownByDetailResponse.nextPageToken returned
+// from the previous call to the filteredBids.details.list method.
 func (c *BiddersAccountsFilterSetsFilteredBidsDetailsListCall) PageToken(pageToken string) *BiddersAccountsFilterSetsFilteredBidsDetailsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -13770,7 +13983,7 @@ func (c *BiddersAccountsFilterSetsFilteredBidsDetailsListCall) Header() http.Hea
 
 func (c *BiddersAccountsFilterSetsFilteredBidsDetailsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13811,17 +14024,17 @@ func (c *BiddersAccountsFilterSetsFilteredBidsDetailsListCall) Do(opts ...google
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListCreativeStatusBreakdownByDetailResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -13835,7 +14048,7 @@ func (c *BiddersAccountsFilterSetsFilteredBidsDetailsListCall) Do(opts ...google
 	}
 	return ret, nil
 	// {
-	//   "description": "List all details associated with a specific reason for which bids were\nfiltered, with the number of bids filtered for each detail.",
+	//   "description": "List all details associated with a specific reason for which bids were filtered, with the number of bids filtered for each detail.",
 	//   "flatPath": "v2beta1/bidders/{biddersId}/accounts/{accountsId}/filterSets/{filterSetsId}/filteredBids/{creativeStatusId}/details",
 	//   "httpMethod": "GET",
 	//   "id": "adexchangebuyer2.bidders.accounts.filterSets.filteredBids.details.list",
@@ -13845,27 +14058,27 @@ func (c *BiddersAccountsFilterSetsFilteredBidsDetailsListCall) Do(opts ...google
 	//   ],
 	//   "parameters": {
 	//     "creativeStatusId": {
-	//       "description": "The ID of the creative status for which to retrieve a breakdown by detail.\nSee\n[creative-status-codes](https://developers.google.com/authorized-buyers/rtb/downloads/creative-status-codes).\nDetails are only available for statuses 10, 14, 15, 17, 18, 19, 86, and 87.",
+	//       "description": "The ID of the creative status for which to retrieve a breakdown by detail. See [creative-status-codes](https://developers.google.com/authorized-buyers/rtb/downloads/creative-status-codes). Details are only available for statuses 10, 14, 15, 17, 18, 19, 86, and 87.",
 	//       "format": "int32",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "integer"
 	//     },
 	//     "filterSetName": {
-	//       "description": "Name of the filter set that should be applied to the requested metrics.\nFor example:\n\n- For a bidder-level filter set for bidder 123:\n  `bidders/123/filterSets/abc`\n\n- For an account-level filter set for the buyer account representing bidder\n  123: `bidders/123/accounts/123/filterSets/abc`\n\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
+	//       "description": "Name of the filter set that should be applied to the requested metrics. For example: - For a bidder-level filter set for bidder 123: `bidders/123/filterSets/abc` - For an account-level filter set for the buyer account representing bidder 123: `bidders/123/accounts/123/filterSets/abc` - For an account-level filter set for the child seat buyer account 456 whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
 	//       "location": "path",
 	//       "pattern": "^bidders/[^/]+/accounts/[^/]+/filterSets/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. The server may return fewer results than requested.\nIf unspecified, the server will pick an appropriate default.",
+	//       "description": "Requested page size. The server may return fewer results than requested. If unspecified, the server will pick an appropriate default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nListCreativeStatusBreakdownByDetailResponse.nextPageToken\nreturned from the previous call to the filteredBids.details.list\nmethod.",
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of ListCreativeStatusBreakdownByDetailResponse.nextPageToken returned from the previous call to the filteredBids.details.list method.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -13915,6 +14128,14 @@ type BiddersAccountsFilterSetsImpressionMetricsListCall struct {
 
 // List: Lists all metrics that are measured in terms of number of
 // impressions.
+//
+//   - filterSetName: Name of the filter set that should be applied to the
+//     requested metrics. For example: - For a bidder-level filter set for
+//     bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//     filter set for the buyer account representing bidder 123:
+//     `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//     filter set for the child seat buyer account 456 whose bidder is
+//     123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersAccountsFilterSetsImpressionMetricsService) List(filterSetName string) *BiddersAccountsFilterSetsImpressionMetricsListCall {
 	c := &BiddersAccountsFilterSetsImpressionMetricsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -13922,20 +14143,17 @@ func (r *BiddersAccountsFilterSetsImpressionMetricsService) List(filterSetName s
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// The server may return fewer results than requested.
-// If unspecified, the server will pick an appropriate default.
+// The server may return fewer results than requested. If unspecified,
+// the server will pick an appropriate default.
 func (c *BiddersAccountsFilterSetsImpressionMetricsListCall) PageSize(pageSize int64) *BiddersAccountsFilterSetsImpressionMetricsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results the server should return.
-// Typically, this is the value
-// of
-// ListImpressionMetricsResponse.nextPageToken
-// returned from the previous call to the impressionMetrics.list
-// method.
+// identifying a page of results the server should return. Typically,
+// this is the value of ListImpressionMetricsResponse.nextPageToken
+// returned from the previous call to the impressionMetrics.list method.
 func (c *BiddersAccountsFilterSetsImpressionMetricsListCall) PageToken(pageToken string) *BiddersAccountsFilterSetsImpressionMetricsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -13978,7 +14196,7 @@ func (c *BiddersAccountsFilterSetsImpressionMetricsListCall) Header() http.Heade
 
 func (c *BiddersAccountsFilterSetsImpressionMetricsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14016,17 +14234,17 @@ func (c *BiddersAccountsFilterSetsImpressionMetricsListCall) Do(opts ...googleap
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListImpressionMetricsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -14049,20 +14267,20 @@ func (c *BiddersAccountsFilterSetsImpressionMetricsListCall) Do(opts ...googleap
 	//   ],
 	//   "parameters": {
 	//     "filterSetName": {
-	//       "description": "Name of the filter set that should be applied to the requested metrics.\nFor example:\n\n- For a bidder-level filter set for bidder 123:\n  `bidders/123/filterSets/abc`\n\n- For an account-level filter set for the buyer account representing bidder\n  123: `bidders/123/accounts/123/filterSets/abc`\n\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
+	//       "description": "Name of the filter set that should be applied to the requested metrics. For example: - For a bidder-level filter set for bidder 123: `bidders/123/filterSets/abc` - For an account-level filter set for the buyer account representing bidder 123: `bidders/123/accounts/123/filterSets/abc` - For an account-level filter set for the child seat buyer account 456 whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
 	//       "location": "path",
 	//       "pattern": "^bidders/[^/]+/accounts/[^/]+/filterSets/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. The server may return fewer results than requested.\nIf unspecified, the server will pick an appropriate default.",
+	//       "description": "Requested page size. The server may return fewer results than requested. If unspecified, the server will pick an appropriate default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nListImpressionMetricsResponse.nextPageToken\nreturned from the previous call to the impressionMetrics.list\nmethod.",
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of ListImpressionMetricsResponse.nextPageToken returned from the previous call to the impressionMetrics.list method.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -14111,8 +14329,15 @@ type BiddersAccountsFilterSetsLosingBidsListCall struct {
 }
 
 // List: List all reasons for which bids lost in the auction, with the
-// number of
-// bids that lost for each reason.
+// number of bids that lost for each reason.
+//
+//   - filterSetName: Name of the filter set that should be applied to the
+//     requested metrics. For example: - For a bidder-level filter set for
+//     bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//     filter set for the buyer account representing bidder 123:
+//     `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//     filter set for the child seat buyer account 456 whose bidder is
+//     123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersAccountsFilterSetsLosingBidsService) List(filterSetName string) *BiddersAccountsFilterSetsLosingBidsListCall {
 	c := &BiddersAccountsFilterSetsLosingBidsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -14120,20 +14345,17 @@ func (r *BiddersAccountsFilterSetsLosingBidsService) List(filterSetName string) 
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// The server may return fewer results than requested.
-// If unspecified, the server will pick an appropriate default.
+// The server may return fewer results than requested. If unspecified,
+// the server will pick an appropriate default.
 func (c *BiddersAccountsFilterSetsLosingBidsListCall) PageSize(pageSize int64) *BiddersAccountsFilterSetsLosingBidsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results the server should return.
-// Typically, this is the value
-// of
-// ListLosingBidsResponse.nextPageToken
-// returned from the previous call to the losingBids.list
-// method.
+// identifying a page of results the server should return. Typically,
+// this is the value of ListLosingBidsResponse.nextPageToken returned
+// from the previous call to the losingBids.list method.
 func (c *BiddersAccountsFilterSetsLosingBidsListCall) PageToken(pageToken string) *BiddersAccountsFilterSetsLosingBidsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -14176,7 +14398,7 @@ func (c *BiddersAccountsFilterSetsLosingBidsListCall) Header() http.Header {
 
 func (c *BiddersAccountsFilterSetsLosingBidsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14214,17 +14436,17 @@ func (c *BiddersAccountsFilterSetsLosingBidsListCall) Do(opts ...googleapi.CallO
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListLosingBidsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -14238,7 +14460,7 @@ func (c *BiddersAccountsFilterSetsLosingBidsListCall) Do(opts ...googleapi.CallO
 	}
 	return ret, nil
 	// {
-	//   "description": "List all reasons for which bids lost in the auction, with the number of\nbids that lost for each reason.",
+	//   "description": "List all reasons for which bids lost in the auction, with the number of bids that lost for each reason.",
 	//   "flatPath": "v2beta1/bidders/{biddersId}/accounts/{accountsId}/filterSets/{filterSetsId}/losingBids",
 	//   "httpMethod": "GET",
 	//   "id": "adexchangebuyer2.bidders.accounts.filterSets.losingBids.list",
@@ -14247,20 +14469,20 @@ func (c *BiddersAccountsFilterSetsLosingBidsListCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "filterSetName": {
-	//       "description": "Name of the filter set that should be applied to the requested metrics.\nFor example:\n\n- For a bidder-level filter set for bidder 123:\n  `bidders/123/filterSets/abc`\n\n- For an account-level filter set for the buyer account representing bidder\n  123: `bidders/123/accounts/123/filterSets/abc`\n\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
+	//       "description": "Name of the filter set that should be applied to the requested metrics. For example: - For a bidder-level filter set for bidder 123: `bidders/123/filterSets/abc` - For an account-level filter set for the buyer account representing bidder 123: `bidders/123/accounts/123/filterSets/abc` - For an account-level filter set for the child seat buyer account 456 whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
 	//       "location": "path",
 	//       "pattern": "^bidders/[^/]+/accounts/[^/]+/filterSets/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. The server may return fewer results than requested.\nIf unspecified, the server will pick an appropriate default.",
+	//       "description": "Requested page size. The server may return fewer results than requested. If unspecified, the server will pick an appropriate default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nListLosingBidsResponse.nextPageToken\nreturned from the previous call to the losingBids.list\nmethod.",
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of ListLosingBidsResponse.nextPageToken returned from the previous call to the losingBids.list method.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -14309,8 +14531,15 @@ type BiddersAccountsFilterSetsNonBillableWinningBidsListCall struct {
 }
 
 // List: List all reasons for which winning bids were not billable, with
-// the number
-// of bids not billed for each reason.
+// the number of bids not billed for each reason.
+//
+//   - filterSetName: Name of the filter set that should be applied to the
+//     requested metrics. For example: - For a bidder-level filter set for
+//     bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//     filter set for the buyer account representing bidder 123:
+//     `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//     filter set for the child seat buyer account 456 whose bidder is
+//     123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersAccountsFilterSetsNonBillableWinningBidsService) List(filterSetName string) *BiddersAccountsFilterSetsNonBillableWinningBidsListCall {
 	c := &BiddersAccountsFilterSetsNonBillableWinningBidsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -14318,20 +14547,17 @@ func (r *BiddersAccountsFilterSetsNonBillableWinningBidsService) List(filterSetN
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// The server may return fewer results than requested.
-// If unspecified, the server will pick an appropriate default.
+// The server may return fewer results than requested. If unspecified,
+// the server will pick an appropriate default.
 func (c *BiddersAccountsFilterSetsNonBillableWinningBidsListCall) PageSize(pageSize int64) *BiddersAccountsFilterSetsNonBillableWinningBidsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results the server should return.
-// Typically, this is the value
-// of
-// ListNonBillableWinningBidsResponse.nextPageToken
-// returned from the previous call to the
-// nonBillableWinningBids.list
+// identifying a page of results the server should return. Typically,
+// this is the value of ListNonBillableWinningBidsResponse.nextPageToken
+// returned from the previous call to the nonBillableWinningBids.list
 // method.
 func (c *BiddersAccountsFilterSetsNonBillableWinningBidsListCall) PageToken(pageToken string) *BiddersAccountsFilterSetsNonBillableWinningBidsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
@@ -14375,7 +14601,7 @@ func (c *BiddersAccountsFilterSetsNonBillableWinningBidsListCall) Header() http.
 
 func (c *BiddersAccountsFilterSetsNonBillableWinningBidsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14414,17 +14640,17 @@ func (c *BiddersAccountsFilterSetsNonBillableWinningBidsListCall) Do(opts ...goo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListNonBillableWinningBidsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -14438,7 +14664,7 @@ func (c *BiddersAccountsFilterSetsNonBillableWinningBidsListCall) Do(opts ...goo
 	}
 	return ret, nil
 	// {
-	//   "description": "List all reasons for which winning bids were not billable, with the number\nof bids not billed for each reason.",
+	//   "description": "List all reasons for which winning bids were not billable, with the number of bids not billed for each reason.",
 	//   "flatPath": "v2beta1/bidders/{biddersId}/accounts/{accountsId}/filterSets/{filterSetsId}/nonBillableWinningBids",
 	//   "httpMethod": "GET",
 	//   "id": "adexchangebuyer2.bidders.accounts.filterSets.nonBillableWinningBids.list",
@@ -14447,20 +14673,20 @@ func (c *BiddersAccountsFilterSetsNonBillableWinningBidsListCall) Do(opts ...goo
 	//   ],
 	//   "parameters": {
 	//     "filterSetName": {
-	//       "description": "Name of the filter set that should be applied to the requested metrics.\nFor example:\n\n- For a bidder-level filter set for bidder 123:\n  `bidders/123/filterSets/abc`\n\n- For an account-level filter set for the buyer account representing bidder\n  123: `bidders/123/accounts/123/filterSets/abc`\n\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
+	//       "description": "Name of the filter set that should be applied to the requested metrics. For example: - For a bidder-level filter set for bidder 123: `bidders/123/filterSets/abc` - For an account-level filter set for the buyer account representing bidder 123: `bidders/123/accounts/123/filterSets/abc` - For an account-level filter set for the child seat buyer account 456 whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
 	//       "location": "path",
 	//       "pattern": "^bidders/[^/]+/accounts/[^/]+/filterSets/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. The server may return fewer results than requested.\nIf unspecified, the server will pick an appropriate default.",
+	//       "description": "Requested page size. The server may return fewer results than requested. If unspecified, the server will pick an appropriate default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nListNonBillableWinningBidsResponse.nextPageToken\nreturned from the previous call to the nonBillableWinningBids.list\nmethod.",
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of ListNonBillableWinningBidsResponse.nextPageToken returned from the previous call to the nonBillableWinningBids.list method.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -14510,6 +14736,13 @@ type BiddersFilterSetsCreateCall struct {
 
 // Create: Creates the specified filter set for the account with the
 // given account ID.
+//
+//   - ownerName: Name of the owner (bidder or account) of the filter set
+//     to be created. For example: - For a bidder-level filter set for
+//     bidder 123: `bidders/123` - For an account-level filter set for the
+//     buyer account representing bidder 123: `bidders/123/accounts/123` -
+//     For an account-level filter set for the child seat buyer account
+//     456 whose bidder is 123: `bidders/123/accounts/456`.
 func (r *BiddersFilterSetsService) Create(ownerName string, filterset *FilterSet) *BiddersFilterSetsCreateCall {
 	c := &BiddersFilterSetsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.ownerName = ownerName
@@ -14518,10 +14751,9 @@ func (r *BiddersFilterSetsService) Create(ownerName string, filterset *FilterSet
 }
 
 // IsTransient sets the optional parameter "isTransient": Whether the
-// filter set is transient, or should be persisted indefinitely.
-// By default, filter sets are not transient.
-// If transient, it will be available for at least 1 hour after
-// creation.
+// filter set is transient, or should be persisted indefinitely. By
+// default, filter sets are not transient. If transient, it will be
+// available for at least 1 hour after creation.
 func (c *BiddersFilterSetsCreateCall) IsTransient(isTransient bool) *BiddersFilterSetsCreateCall {
 	c.urlParams_.Set("isTransient", fmt.Sprint(isTransient))
 	return c
@@ -14554,7 +14786,7 @@ func (c *BiddersFilterSetsCreateCall) Header() http.Header {
 
 func (c *BiddersFilterSetsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14594,17 +14826,17 @@ func (c *BiddersFilterSetsCreateCall) Do(opts ...googleapi.CallOption) (*FilterS
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &FilterSet{
 		ServerResponse: googleapi.ServerResponse{
@@ -14627,12 +14859,12 @@ func (c *BiddersFilterSetsCreateCall) Do(opts ...googleapi.CallOption) (*FilterS
 	//   ],
 	//   "parameters": {
 	//     "isTransient": {
-	//       "description": "Whether the filter set is transient, or should be persisted indefinitely.\nBy default, filter sets are not transient.\nIf transient, it will be available for at least 1 hour after creation.",
+	//       "description": "Whether the filter set is transient, or should be persisted indefinitely. By default, filter sets are not transient. If transient, it will be available for at least 1 hour after creation.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "ownerName": {
-	//       "description": "Name of the owner (bidder or account) of the filter set to be created.\nFor example:\n\n- For a bidder-level filter set for bidder 123: `bidders/123`\n\n- For an account-level filter set for the buyer account representing bidder\n  123: `bidders/123/accounts/123`\n\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: `bidders/123/accounts/456`",
+	//       "description": "Name of the owner (bidder or account) of the filter set to be created. For example: - For a bidder-level filter set for bidder 123: `bidders/123` - For an account-level filter set for the buyer account representing bidder 123: `bidders/123/accounts/123` - For an account-level filter set for the child seat buyer account 456 whose bidder is 123: `bidders/123/accounts/456`",
 	//       "location": "path",
 	//       "pattern": "^bidders/[^/]+$",
 	//       "required": true,
@@ -14664,8 +14896,15 @@ type BiddersFilterSetsDeleteCall struct {
 }
 
 // Delete: Deletes the requested filter set from the account with the
-// given account
-// ID.
+// given account ID.
+//
+//   - name: Full name of the resource to delete. For example: - For a
+//     bidder-level filter set for bidder 123:
+//     `bidders/123/filterSets/abc` - For an account-level filter set for
+//     the buyer account representing bidder 123:
+//     `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//     filter set for the child seat buyer account 456 whose bidder is
+//     123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersFilterSetsService) Delete(name string) *BiddersFilterSetsDeleteCall {
 	c := &BiddersFilterSetsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14699,7 +14938,7 @@ func (c *BiddersFilterSetsDeleteCall) Header() http.Header {
 
 func (c *BiddersFilterSetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14734,17 +14973,17 @@ func (c *BiddersFilterSetsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -14758,7 +14997,7 @@ func (c *BiddersFilterSetsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, 
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes the requested filter set from the account with the given account\nID.",
+	//   "description": "Deletes the requested filter set from the account with the given account ID.",
 	//   "flatPath": "v2beta1/bidders/{biddersId}/filterSets/{filterSetsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "adexchangebuyer2.bidders.filterSets.delete",
@@ -14767,7 +15006,7 @@ func (c *BiddersFilterSetsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Full name of the resource to delete.\nFor example:\n\n- For a bidder-level filter set for bidder 123:\n  `bidders/123/filterSets/abc`\n\n- For an account-level filter set for the buyer account representing bidder\n  123: `bidders/123/accounts/123/filterSets/abc`\n\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
+	//       "description": "Full name of the resource to delete. For example: - For a bidder-level filter set for bidder 123: `bidders/123/filterSets/abc` - For an account-level filter set for the buyer account representing bidder 123: `bidders/123/accounts/123/filterSets/abc` - For an account-level filter set for the child seat buyer account 456 whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
 	//       "location": "path",
 	//       "pattern": "^bidders/[^/]+/filterSets/[^/]+$",
 	//       "required": true,
@@ -14797,8 +15036,15 @@ type BiddersFilterSetsGetCall struct {
 }
 
 // Get: Retrieves the requested filter set for the account with the
-// given account
-// ID.
+// given account ID.
+//
+//   - name: Full name of the resource being requested. For example: - For
+//     a bidder-level filter set for bidder 123:
+//     `bidders/123/filterSets/abc` - For an account-level filter set for
+//     the buyer account representing bidder 123:
+//     `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//     filter set for the child seat buyer account 456 whose bidder is
+//     123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersFilterSetsService) Get(name string) *BiddersFilterSetsGetCall {
 	c := &BiddersFilterSetsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14842,7 +15088,7 @@ func (c *BiddersFilterSetsGetCall) Header() http.Header {
 
 func (c *BiddersFilterSetsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14880,17 +15126,17 @@ func (c *BiddersFilterSetsGetCall) Do(opts ...googleapi.CallOption) (*FilterSet,
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &FilterSet{
 		ServerResponse: googleapi.ServerResponse{
@@ -14904,7 +15150,7 @@ func (c *BiddersFilterSetsGetCall) Do(opts ...googleapi.CallOption) (*FilterSet,
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves the requested filter set for the account with the given account\nID.",
+	//   "description": "Retrieves the requested filter set for the account with the given account ID.",
 	//   "flatPath": "v2beta1/bidders/{biddersId}/filterSets/{filterSetsId}",
 	//   "httpMethod": "GET",
 	//   "id": "adexchangebuyer2.bidders.filterSets.get",
@@ -14913,7 +15159,7 @@ func (c *BiddersFilterSetsGetCall) Do(opts ...googleapi.CallOption) (*FilterSet,
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Full name of the resource being requested.\nFor example:\n\n- For a bidder-level filter set for bidder 123:\n  `bidders/123/filterSets/abc`\n\n- For an account-level filter set for the buyer account representing bidder\n  123: `bidders/123/accounts/123/filterSets/abc`\n\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
+	//       "description": "Full name of the resource being requested. For example: - For a bidder-level filter set for bidder 123: `bidders/123/filterSets/abc` - For an account-level filter set for the buyer account representing bidder 123: `bidders/123/accounts/123/filterSets/abc` - For an account-level filter set for the child seat buyer account 456 whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
 	//       "location": "path",
 	//       "pattern": "^bidders/[^/]+/filterSets/[^/]+$",
 	//       "required": true,
@@ -14944,6 +15190,13 @@ type BiddersFilterSetsListCall struct {
 
 // List: Lists all filter sets for the account with the given account
 // ID.
+//
+//   - ownerName: Name of the owner (bidder or account) of the filter sets
+//     to be listed. For example: - For a bidder-level filter set for
+//     bidder 123: `bidders/123` - For an account-level filter set for the
+//     buyer account representing bidder 123: `bidders/123/accounts/123` -
+//     For an account-level filter set for the child seat buyer account
+//     456 whose bidder is 123: `bidders/123/accounts/456`.
 func (r *BiddersFilterSetsService) List(ownerName string) *BiddersFilterSetsListCall {
 	c := &BiddersFilterSetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.ownerName = ownerName
@@ -14951,22 +15204,17 @@ func (r *BiddersFilterSetsService) List(ownerName string) *BiddersFilterSetsList
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// The server may return fewer results than requested.
-// If unspecified, the server will pick an appropriate default.
+// The server may return fewer results than requested. If unspecified,
+// the server will pick an appropriate default.
 func (c *BiddersFilterSetsListCall) PageSize(pageSize int64) *BiddersFilterSetsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results the server should return.
-// Typically, this is the value
-// of
-// ListFilterSetsResponse.nextPageToken
-// returned from the previous call to
-// the
-// accounts.filterSets.list
-// method.
+// identifying a page of results the server should return. Typically,
+// this is the value of ListFilterSetsResponse.nextPageToken returned
+// from the previous call to the accounts.filterSets.list method.
 func (c *BiddersFilterSetsListCall) PageToken(pageToken string) *BiddersFilterSetsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -15009,7 +15257,7 @@ func (c *BiddersFilterSetsListCall) Header() http.Header {
 
 func (c *BiddersFilterSetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15047,17 +15295,17 @@ func (c *BiddersFilterSetsListCall) Do(opts ...googleapi.CallOption) (*ListFilte
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListFilterSetsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -15080,20 +15328,20 @@ func (c *BiddersFilterSetsListCall) Do(opts ...googleapi.CallOption) (*ListFilte
 	//   ],
 	//   "parameters": {
 	//     "ownerName": {
-	//       "description": "Name of the owner (bidder or account) of the filter sets to be listed.\nFor example:\n\n- For a bidder-level filter set for bidder 123: `bidders/123`\n\n- For an account-level filter set for the buyer account representing bidder\n  123: `bidders/123/accounts/123`\n\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: `bidders/123/accounts/456`",
+	//       "description": "Name of the owner (bidder or account) of the filter sets to be listed. For example: - For a bidder-level filter set for bidder 123: `bidders/123` - For an account-level filter set for the buyer account representing bidder 123: `bidders/123/accounts/123` - For an account-level filter set for the child seat buyer account 456 whose bidder is 123: `bidders/123/accounts/456`",
 	//       "location": "path",
 	//       "pattern": "^bidders/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. The server may return fewer results than requested.\nIf unspecified, the server will pick an appropriate default.",
+	//       "description": "Requested page size. The server may return fewer results than requested. If unspecified, the server will pick an appropriate default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nListFilterSetsResponse.nextPageToken\nreturned from the previous call to the\naccounts.filterSets.list\nmethod.",
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of ListFilterSetsResponse.nextPageToken returned from the previous call to the accounts.filterSets.list method.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -15142,6 +15390,14 @@ type BiddersFilterSetsBidMetricsListCall struct {
 }
 
 // List: Lists all metrics that are measured in terms of number of bids.
+//
+//   - filterSetName: Name of the filter set that should be applied to the
+//     requested metrics. For example: - For a bidder-level filter set for
+//     bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//     filter set for the buyer account representing bidder 123:
+//     `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//     filter set for the child seat buyer account 456 whose bidder is
+//     123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersFilterSetsBidMetricsService) List(filterSetName string) *BiddersFilterSetsBidMetricsListCall {
 	c := &BiddersFilterSetsBidMetricsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -15149,20 +15405,17 @@ func (r *BiddersFilterSetsBidMetricsService) List(filterSetName string) *Bidders
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// The server may return fewer results than requested.
-// If unspecified, the server will pick an appropriate default.
+// The server may return fewer results than requested. If unspecified,
+// the server will pick an appropriate default.
 func (c *BiddersFilterSetsBidMetricsListCall) PageSize(pageSize int64) *BiddersFilterSetsBidMetricsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results the server should return.
-// Typically, this is the value
-// of
-// ListBidMetricsResponse.nextPageToken
-// returned from the previous call to the bidMetrics.list
-// method.
+// identifying a page of results the server should return. Typically,
+// this is the value of ListBidMetricsResponse.nextPageToken returned
+// from the previous call to the bidMetrics.list method.
 func (c *BiddersFilterSetsBidMetricsListCall) PageToken(pageToken string) *BiddersFilterSetsBidMetricsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -15205,7 +15458,7 @@ func (c *BiddersFilterSetsBidMetricsListCall) Header() http.Header {
 
 func (c *BiddersFilterSetsBidMetricsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15243,17 +15496,17 @@ func (c *BiddersFilterSetsBidMetricsListCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListBidMetricsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -15276,20 +15529,20 @@ func (c *BiddersFilterSetsBidMetricsListCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "filterSetName": {
-	//       "description": "Name of the filter set that should be applied to the requested metrics.\nFor example:\n\n- For a bidder-level filter set for bidder 123:\n  `bidders/123/filterSets/abc`\n\n- For an account-level filter set for the buyer account representing bidder\n  123: `bidders/123/accounts/123/filterSets/abc`\n\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
+	//       "description": "Name of the filter set that should be applied to the requested metrics. For example: - For a bidder-level filter set for bidder 123: `bidders/123/filterSets/abc` - For an account-level filter set for the buyer account representing bidder 123: `bidders/123/accounts/123/filterSets/abc` - For an account-level filter set for the child seat buyer account 456 whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
 	//       "location": "path",
 	//       "pattern": "^bidders/[^/]+/filterSets/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. The server may return fewer results than requested.\nIf unspecified, the server will pick an appropriate default.",
+	//       "description": "Requested page size. The server may return fewer results than requested. If unspecified, the server will pick an appropriate default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nListBidMetricsResponse.nextPageToken\nreturned from the previous call to the bidMetrics.list\nmethod.",
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of ListBidMetricsResponse.nextPageToken returned from the previous call to the bidMetrics.list method.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -15338,8 +15591,15 @@ type BiddersFilterSetsBidResponseErrorsListCall struct {
 }
 
 // List: List all errors that occurred in bid responses, with the number
-// of bid
-// responses affected for each reason.
+// of bid responses affected for each reason.
+//
+//   - filterSetName: Name of the filter set that should be applied to the
+//     requested metrics. For example: - For a bidder-level filter set for
+//     bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//     filter set for the buyer account representing bidder 123:
+//     `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//     filter set for the child seat buyer account 456 whose bidder is
+//     123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersFilterSetsBidResponseErrorsService) List(filterSetName string) *BiddersFilterSetsBidResponseErrorsListCall {
 	c := &BiddersFilterSetsBidResponseErrorsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -15347,20 +15607,17 @@ func (r *BiddersFilterSetsBidResponseErrorsService) List(filterSetName string) *
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// The server may return fewer results than requested.
-// If unspecified, the server will pick an appropriate default.
+// The server may return fewer results than requested. If unspecified,
+// the server will pick an appropriate default.
 func (c *BiddersFilterSetsBidResponseErrorsListCall) PageSize(pageSize int64) *BiddersFilterSetsBidResponseErrorsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results the server should return.
-// Typically, this is the value
-// of
-// ListBidResponseErrorsResponse.nextPageToken
-// returned from the previous call to the bidResponseErrors.list
-// method.
+// identifying a page of results the server should return. Typically,
+// this is the value of ListBidResponseErrorsResponse.nextPageToken
+// returned from the previous call to the bidResponseErrors.list method.
 func (c *BiddersFilterSetsBidResponseErrorsListCall) PageToken(pageToken string) *BiddersFilterSetsBidResponseErrorsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -15403,7 +15660,7 @@ func (c *BiddersFilterSetsBidResponseErrorsListCall) Header() http.Header {
 
 func (c *BiddersFilterSetsBidResponseErrorsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15441,17 +15698,17 @@ func (c *BiddersFilterSetsBidResponseErrorsListCall) Do(opts ...googleapi.CallOp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListBidResponseErrorsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -15465,7 +15722,7 @@ func (c *BiddersFilterSetsBidResponseErrorsListCall) Do(opts ...googleapi.CallOp
 	}
 	return ret, nil
 	// {
-	//   "description": "List all errors that occurred in bid responses, with the number of bid\nresponses affected for each reason.",
+	//   "description": "List all errors that occurred in bid responses, with the number of bid responses affected for each reason.",
 	//   "flatPath": "v2beta1/bidders/{biddersId}/filterSets/{filterSetsId}/bidResponseErrors",
 	//   "httpMethod": "GET",
 	//   "id": "adexchangebuyer2.bidders.filterSets.bidResponseErrors.list",
@@ -15474,20 +15731,20 @@ func (c *BiddersFilterSetsBidResponseErrorsListCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "filterSetName": {
-	//       "description": "Name of the filter set that should be applied to the requested metrics.\nFor example:\n\n- For a bidder-level filter set for bidder 123:\n  `bidders/123/filterSets/abc`\n\n- For an account-level filter set for the buyer account representing bidder\n  123: `bidders/123/accounts/123/filterSets/abc`\n\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
+	//       "description": "Name of the filter set that should be applied to the requested metrics. For example: - For a bidder-level filter set for bidder 123: `bidders/123/filterSets/abc` - For an account-level filter set for the buyer account representing bidder 123: `bidders/123/accounts/123/filterSets/abc` - For an account-level filter set for the child seat buyer account 456 whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
 	//       "location": "path",
 	//       "pattern": "^bidders/[^/]+/filterSets/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. The server may return fewer results than requested.\nIf unspecified, the server will pick an appropriate default.",
+	//       "description": "Requested page size. The server may return fewer results than requested. If unspecified, the server will pick an appropriate default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nListBidResponseErrorsResponse.nextPageToken\nreturned from the previous call to the bidResponseErrors.list\nmethod.",
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of ListBidResponseErrorsResponse.nextPageToken returned from the previous call to the bidResponseErrors.list method.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -15536,9 +15793,16 @@ type BiddersFilterSetsBidResponsesWithoutBidsListCall struct {
 }
 
 // List: List all reasons for which bid responses were considered to
-// have no
-// applicable bids, with the number of bid responses affected for each
-// reason.
+// have no applicable bids, with the number of bid responses affected
+// for each reason.
+//
+//   - filterSetName: Name of the filter set that should be applied to the
+//     requested metrics. For example: - For a bidder-level filter set for
+//     bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//     filter set for the buyer account representing bidder 123:
+//     `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//     filter set for the child seat buyer account 456 whose bidder is
+//     123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersFilterSetsBidResponsesWithoutBidsService) List(filterSetName string) *BiddersFilterSetsBidResponsesWithoutBidsListCall {
 	c := &BiddersFilterSetsBidResponsesWithoutBidsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -15546,21 +15810,18 @@ func (r *BiddersFilterSetsBidResponsesWithoutBidsService) List(filterSetName str
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// The server may return fewer results than requested.
-// If unspecified, the server will pick an appropriate default.
+// The server may return fewer results than requested. If unspecified,
+// the server will pick an appropriate default.
 func (c *BiddersFilterSetsBidResponsesWithoutBidsListCall) PageSize(pageSize int64) *BiddersFilterSetsBidResponsesWithoutBidsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results the server should return.
-// Typically, this is the value
-// of
-// ListBidResponsesWithoutBidsResponse.nextPageToken
-// returned from the previous call to the
-// bidResponsesWithoutBids.list
-// method.
+// identifying a page of results the server should return. Typically,
+// this is the value of
+// ListBidResponsesWithoutBidsResponse.nextPageToken returned from the
+// previous call to the bidResponsesWithoutBids.list method.
 func (c *BiddersFilterSetsBidResponsesWithoutBidsListCall) PageToken(pageToken string) *BiddersFilterSetsBidResponsesWithoutBidsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -15603,7 +15864,7 @@ func (c *BiddersFilterSetsBidResponsesWithoutBidsListCall) Header() http.Header 
 
 func (c *BiddersFilterSetsBidResponsesWithoutBidsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15642,17 +15903,17 @@ func (c *BiddersFilterSetsBidResponsesWithoutBidsListCall) Do(opts ...googleapi.
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListBidResponsesWithoutBidsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -15666,7 +15927,7 @@ func (c *BiddersFilterSetsBidResponsesWithoutBidsListCall) Do(opts ...googleapi.
 	}
 	return ret, nil
 	// {
-	//   "description": "List all reasons for which bid responses were considered to have no\napplicable bids, with the number of bid responses affected for each reason.",
+	//   "description": "List all reasons for which bid responses were considered to have no applicable bids, with the number of bid responses affected for each reason.",
 	//   "flatPath": "v2beta1/bidders/{biddersId}/filterSets/{filterSetsId}/bidResponsesWithoutBids",
 	//   "httpMethod": "GET",
 	//   "id": "adexchangebuyer2.bidders.filterSets.bidResponsesWithoutBids.list",
@@ -15675,20 +15936,20 @@ func (c *BiddersFilterSetsBidResponsesWithoutBidsListCall) Do(opts ...googleapi.
 	//   ],
 	//   "parameters": {
 	//     "filterSetName": {
-	//       "description": "Name of the filter set that should be applied to the requested metrics.\nFor example:\n\n- For a bidder-level filter set for bidder 123:\n  `bidders/123/filterSets/abc`\n\n- For an account-level filter set for the buyer account representing bidder\n  123: `bidders/123/accounts/123/filterSets/abc`\n\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
+	//       "description": "Name of the filter set that should be applied to the requested metrics. For example: - For a bidder-level filter set for bidder 123: `bidders/123/filterSets/abc` - For an account-level filter set for the buyer account representing bidder 123: `bidders/123/accounts/123/filterSets/abc` - For an account-level filter set for the child seat buyer account 456 whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
 	//       "location": "path",
 	//       "pattern": "^bidders/[^/]+/filterSets/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. The server may return fewer results than requested.\nIf unspecified, the server will pick an appropriate default.",
+	//       "description": "Requested page size. The server may return fewer results than requested. If unspecified, the server will pick an appropriate default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nListBidResponsesWithoutBidsResponse.nextPageToken\nreturned from the previous call to the bidResponsesWithoutBids.list\nmethod.",
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of ListBidResponsesWithoutBidsResponse.nextPageToken returned from the previous call to the bidResponsesWithoutBids.list method.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -15737,8 +15998,16 @@ type BiddersFilterSetsFilteredBidRequestsListCall struct {
 }
 
 // List: List all reasons that caused a bid request not to be sent for
-// an
-// impression, with the number of bid requests not sent for each reason.
+// an impression, with the number of bid requests not sent for each
+// reason.
+//
+//   - filterSetName: Name of the filter set that should be applied to the
+//     requested metrics. For example: - For a bidder-level filter set for
+//     bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//     filter set for the buyer account representing bidder 123:
+//     `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//     filter set for the child seat buyer account 456 whose bidder is
+//     123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersFilterSetsFilteredBidRequestsService) List(filterSetName string) *BiddersFilterSetsFilteredBidRequestsListCall {
 	c := &BiddersFilterSetsFilteredBidRequestsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -15746,20 +16015,17 @@ func (r *BiddersFilterSetsFilteredBidRequestsService) List(filterSetName string)
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// The server may return fewer results than requested.
-// If unspecified, the server will pick an appropriate default.
+// The server may return fewer results than requested. If unspecified,
+// the server will pick an appropriate default.
 func (c *BiddersFilterSetsFilteredBidRequestsListCall) PageSize(pageSize int64) *BiddersFilterSetsFilteredBidRequestsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results the server should return.
-// Typically, this is the value
-// of
-// ListFilteredBidRequestsResponse.nextPageToken
-// returned from the previous call to the
-// filteredBidRequests.list
+// identifying a page of results the server should return. Typically,
+// this is the value of ListFilteredBidRequestsResponse.nextPageToken
+// returned from the previous call to the filteredBidRequests.list
 // method.
 func (c *BiddersFilterSetsFilteredBidRequestsListCall) PageToken(pageToken string) *BiddersFilterSetsFilteredBidRequestsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
@@ -15803,7 +16069,7 @@ func (c *BiddersFilterSetsFilteredBidRequestsListCall) Header() http.Header {
 
 func (c *BiddersFilterSetsFilteredBidRequestsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15841,17 +16107,17 @@ func (c *BiddersFilterSetsFilteredBidRequestsListCall) Do(opts ...googleapi.Call
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListFilteredBidRequestsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -15865,7 +16131,7 @@ func (c *BiddersFilterSetsFilteredBidRequestsListCall) Do(opts ...googleapi.Call
 	}
 	return ret, nil
 	// {
-	//   "description": "List all reasons that caused a bid request not to be sent for an\nimpression, with the number of bid requests not sent for each reason.",
+	//   "description": "List all reasons that caused a bid request not to be sent for an impression, with the number of bid requests not sent for each reason.",
 	//   "flatPath": "v2beta1/bidders/{biddersId}/filterSets/{filterSetsId}/filteredBidRequests",
 	//   "httpMethod": "GET",
 	//   "id": "adexchangebuyer2.bidders.filterSets.filteredBidRequests.list",
@@ -15874,20 +16140,20 @@ func (c *BiddersFilterSetsFilteredBidRequestsListCall) Do(opts ...googleapi.Call
 	//   ],
 	//   "parameters": {
 	//     "filterSetName": {
-	//       "description": "Name of the filter set that should be applied to the requested metrics.\nFor example:\n\n- For a bidder-level filter set for bidder 123:\n  `bidders/123/filterSets/abc`\n\n- For an account-level filter set for the buyer account representing bidder\n  123: `bidders/123/accounts/123/filterSets/abc`\n\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
+	//       "description": "Name of the filter set that should be applied to the requested metrics. For example: - For a bidder-level filter set for bidder 123: `bidders/123/filterSets/abc` - For an account-level filter set for the buyer account representing bidder 123: `bidders/123/accounts/123/filterSets/abc` - For an account-level filter set for the child seat buyer account 456 whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
 	//       "location": "path",
 	//       "pattern": "^bidders/[^/]+/filterSets/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. The server may return fewer results than requested.\nIf unspecified, the server will pick an appropriate default.",
+	//       "description": "Requested page size. The server may return fewer results than requested. If unspecified, the server will pick an appropriate default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nListFilteredBidRequestsResponse.nextPageToken\nreturned from the previous call to the filteredBidRequests.list\nmethod.",
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of ListFilteredBidRequestsResponse.nextPageToken returned from the previous call to the filteredBidRequests.list method.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -15936,8 +16202,15 @@ type BiddersFilterSetsFilteredBidsListCall struct {
 }
 
 // List: List all reasons for which bids were filtered, with the number
-// of bids
-// filtered for each reason.
+// of bids filtered for each reason.
+//
+//   - filterSetName: Name of the filter set that should be applied to the
+//     requested metrics. For example: - For a bidder-level filter set for
+//     bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//     filter set for the buyer account representing bidder 123:
+//     `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//     filter set for the child seat buyer account 456 whose bidder is
+//     123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersFilterSetsFilteredBidsService) List(filterSetName string) *BiddersFilterSetsFilteredBidsListCall {
 	c := &BiddersFilterSetsFilteredBidsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -15945,20 +16218,17 @@ func (r *BiddersFilterSetsFilteredBidsService) List(filterSetName string) *Bidde
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// The server may return fewer results than requested.
-// If unspecified, the server will pick an appropriate default.
+// The server may return fewer results than requested. If unspecified,
+// the server will pick an appropriate default.
 func (c *BiddersFilterSetsFilteredBidsListCall) PageSize(pageSize int64) *BiddersFilterSetsFilteredBidsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results the server should return.
-// Typically, this is the value
-// of
-// ListFilteredBidsResponse.nextPageToken
-// returned from the previous call to the filteredBids.list
-// method.
+// identifying a page of results the server should return. Typically,
+// this is the value of ListFilteredBidsResponse.nextPageToken returned
+// from the previous call to the filteredBids.list method.
 func (c *BiddersFilterSetsFilteredBidsListCall) PageToken(pageToken string) *BiddersFilterSetsFilteredBidsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -16001,7 +16271,7 @@ func (c *BiddersFilterSetsFilteredBidsListCall) Header() http.Header {
 
 func (c *BiddersFilterSetsFilteredBidsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16039,17 +16309,17 @@ func (c *BiddersFilterSetsFilteredBidsListCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListFilteredBidsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -16063,7 +16333,7 @@ func (c *BiddersFilterSetsFilteredBidsListCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "List all reasons for which bids were filtered, with the number of bids\nfiltered for each reason.",
+	//   "description": "List all reasons for which bids were filtered, with the number of bids filtered for each reason.",
 	//   "flatPath": "v2beta1/bidders/{biddersId}/filterSets/{filterSetsId}/filteredBids",
 	//   "httpMethod": "GET",
 	//   "id": "adexchangebuyer2.bidders.filterSets.filteredBids.list",
@@ -16072,20 +16342,20 @@ func (c *BiddersFilterSetsFilteredBidsListCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "filterSetName": {
-	//       "description": "Name of the filter set that should be applied to the requested metrics.\nFor example:\n\n- For a bidder-level filter set for bidder 123:\n  `bidders/123/filterSets/abc`\n\n- For an account-level filter set for the buyer account representing bidder\n  123: `bidders/123/accounts/123/filterSets/abc`\n\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
+	//       "description": "Name of the filter set that should be applied to the requested metrics. For example: - For a bidder-level filter set for bidder 123: `bidders/123/filterSets/abc` - For an account-level filter set for the buyer account representing bidder 123: `bidders/123/accounts/123/filterSets/abc` - For an account-level filter set for the child seat buyer account 456 whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
 	//       "location": "path",
 	//       "pattern": "^bidders/[^/]+/filterSets/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. The server may return fewer results than requested.\nIf unspecified, the server will pick an appropriate default.",
+	//       "description": "Requested page size. The server may return fewer results than requested. If unspecified, the server will pick an appropriate default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nListFilteredBidsResponse.nextPageToken\nreturned from the previous call to the filteredBids.list\nmethod.",
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of ListFilteredBidsResponse.nextPageToken returned from the previous call to the filteredBids.list method.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -16135,8 +16405,19 @@ type BiddersFilterSetsFilteredBidsCreativesListCall struct {
 }
 
 // List: List all creatives associated with a specific reason for which
-// bids were
-// filtered, with the number of bids filtered for each creative.
+// bids were filtered, with the number of bids filtered for each
+// creative.
+//
+//   - creativeStatusId: The ID of the creative status for which to
+//     retrieve a breakdown by creative. See creative-status-codes
+//     (https://developers.google.com/authorized-buyers/rtb/downloads/creative-status-codes).
+//   - filterSetName: Name of the filter set that should be applied to the
+//     requested metrics. For example: - For a bidder-level filter set for
+//     bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//     filter set for the buyer account representing bidder 123:
+//     `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//     filter set for the child seat buyer account 456 whose bidder is
+//     123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersFilterSetsFilteredBidsCreativesService) List(filterSetName string, creativeStatusId int64) *BiddersFilterSetsFilteredBidsCreativesListCall {
 	c := &BiddersFilterSetsFilteredBidsCreativesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -16145,21 +16426,18 @@ func (r *BiddersFilterSetsFilteredBidsCreativesService) List(filterSetName strin
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// The server may return fewer results than requested.
-// If unspecified, the server will pick an appropriate default.
+// The server may return fewer results than requested. If unspecified,
+// the server will pick an appropriate default.
 func (c *BiddersFilterSetsFilteredBidsCreativesListCall) PageSize(pageSize int64) *BiddersFilterSetsFilteredBidsCreativesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results the server should return.
-// Typically, this is the value
-// of
-// ListCreativeStatusBreakdownByCreativeResponse.nextPageToken
-// returne
-// d from the previous call to the filteredBids.creatives.list
-// method.
+// identifying a page of results the server should return. Typically,
+// this is the value of
+// ListCreativeStatusBreakdownByCreativeResponse.nextPageToken returned
+// from the previous call to the filteredBids.creatives.list method.
 func (c *BiddersFilterSetsFilteredBidsCreativesListCall) PageToken(pageToken string) *BiddersFilterSetsFilteredBidsCreativesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -16202,7 +16480,7 @@ func (c *BiddersFilterSetsFilteredBidsCreativesListCall) Header() http.Header {
 
 func (c *BiddersFilterSetsFilteredBidsCreativesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16243,17 +16521,17 @@ func (c *BiddersFilterSetsFilteredBidsCreativesListCall) Do(opts ...googleapi.Ca
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListCreativeStatusBreakdownByCreativeResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -16267,7 +16545,7 @@ func (c *BiddersFilterSetsFilteredBidsCreativesListCall) Do(opts ...googleapi.Ca
 	}
 	return ret, nil
 	// {
-	//   "description": "List all creatives associated with a specific reason for which bids were\nfiltered, with the number of bids filtered for each creative.",
+	//   "description": "List all creatives associated with a specific reason for which bids were filtered, with the number of bids filtered for each creative.",
 	//   "flatPath": "v2beta1/bidders/{biddersId}/filterSets/{filterSetsId}/filteredBids/{creativeStatusId}/creatives",
 	//   "httpMethod": "GET",
 	//   "id": "adexchangebuyer2.bidders.filterSets.filteredBids.creatives.list",
@@ -16277,27 +16555,27 @@ func (c *BiddersFilterSetsFilteredBidsCreativesListCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "creativeStatusId": {
-	//       "description": "The ID of the creative status for which to retrieve a breakdown by\ncreative.\nSee\n[creative-status-codes](https://developers.google.com/authorized-buyers/rtb/downloads/creative-status-codes).",
+	//       "description": "The ID of the creative status for which to retrieve a breakdown by creative. See [creative-status-codes](https://developers.google.com/authorized-buyers/rtb/downloads/creative-status-codes).",
 	//       "format": "int32",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "integer"
 	//     },
 	//     "filterSetName": {
-	//       "description": "Name of the filter set that should be applied to the requested metrics.\nFor example:\n\n- For a bidder-level filter set for bidder 123:\n  `bidders/123/filterSets/abc`\n\n- For an account-level filter set for the buyer account representing bidder\n  123: `bidders/123/accounts/123/filterSets/abc`\n\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
+	//       "description": "Name of the filter set that should be applied to the requested metrics. For example: - For a bidder-level filter set for bidder 123: `bidders/123/filterSets/abc` - For an account-level filter set for the buyer account representing bidder 123: `bidders/123/accounts/123/filterSets/abc` - For an account-level filter set for the child seat buyer account 456 whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
 	//       "location": "path",
 	//       "pattern": "^bidders/[^/]+/filterSets/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. The server may return fewer results than requested.\nIf unspecified, the server will pick an appropriate default.",
+	//       "description": "Requested page size. The server may return fewer results than requested. If unspecified, the server will pick an appropriate default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nListCreativeStatusBreakdownByCreativeResponse.nextPageToken\nreturned from the previous call to the filteredBids.creatives.list\nmethod.",
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of ListCreativeStatusBreakdownByCreativeResponse.nextPageToken returned from the previous call to the filteredBids.creatives.list method.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -16347,8 +16625,20 @@ type BiddersFilterSetsFilteredBidsDetailsListCall struct {
 }
 
 // List: List all details associated with a specific reason for which
-// bids were
-// filtered, with the number of bids filtered for each detail.
+// bids were filtered, with the number of bids filtered for each detail.
+//
+//   - creativeStatusId: The ID of the creative status for which to
+//     retrieve a breakdown by detail. See creative-status-codes
+//     (https://developers.google.com/authorized-buyers/rtb/downloads/creative-status-codes).
+//     Details are only available for statuses 10, 14, 15, 17, 18, 19, 86,
+//     and 87.
+//   - filterSetName: Name of the filter set that should be applied to the
+//     requested metrics. For example: - For a bidder-level filter set for
+//     bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//     filter set for the buyer account representing bidder 123:
+//     `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//     filter set for the child seat buyer account 456 whose bidder is
+//     123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersFilterSetsFilteredBidsDetailsService) List(filterSetName string, creativeStatusId int64) *BiddersFilterSetsFilteredBidsDetailsListCall {
 	c := &BiddersFilterSetsFilteredBidsDetailsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -16357,21 +16647,18 @@ func (r *BiddersFilterSetsFilteredBidsDetailsService) List(filterSetName string,
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// The server may return fewer results than requested.
-// If unspecified, the server will pick an appropriate default.
+// The server may return fewer results than requested. If unspecified,
+// the server will pick an appropriate default.
 func (c *BiddersFilterSetsFilteredBidsDetailsListCall) PageSize(pageSize int64) *BiddersFilterSetsFilteredBidsDetailsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results the server should return.
-// Typically, this is the value
-// of
-// ListCreativeStatusBreakdownByDetailResponse.nextPageToken
-// returned from the previous call to the
-// filteredBids.details.list
-// method.
+// identifying a page of results the server should return. Typically,
+// this is the value of
+// ListCreativeStatusBreakdownByDetailResponse.nextPageToken returned
+// from the previous call to the filteredBids.details.list method.
 func (c *BiddersFilterSetsFilteredBidsDetailsListCall) PageToken(pageToken string) *BiddersFilterSetsFilteredBidsDetailsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -16414,7 +16701,7 @@ func (c *BiddersFilterSetsFilteredBidsDetailsListCall) Header() http.Header {
 
 func (c *BiddersFilterSetsFilteredBidsDetailsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16455,17 +16742,17 @@ func (c *BiddersFilterSetsFilteredBidsDetailsListCall) Do(opts ...googleapi.Call
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListCreativeStatusBreakdownByDetailResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -16479,7 +16766,7 @@ func (c *BiddersFilterSetsFilteredBidsDetailsListCall) Do(opts ...googleapi.Call
 	}
 	return ret, nil
 	// {
-	//   "description": "List all details associated with a specific reason for which bids were\nfiltered, with the number of bids filtered for each detail.",
+	//   "description": "List all details associated with a specific reason for which bids were filtered, with the number of bids filtered for each detail.",
 	//   "flatPath": "v2beta1/bidders/{biddersId}/filterSets/{filterSetsId}/filteredBids/{creativeStatusId}/details",
 	//   "httpMethod": "GET",
 	//   "id": "adexchangebuyer2.bidders.filterSets.filteredBids.details.list",
@@ -16489,27 +16776,27 @@ func (c *BiddersFilterSetsFilteredBidsDetailsListCall) Do(opts ...googleapi.Call
 	//   ],
 	//   "parameters": {
 	//     "creativeStatusId": {
-	//       "description": "The ID of the creative status for which to retrieve a breakdown by detail.\nSee\n[creative-status-codes](https://developers.google.com/authorized-buyers/rtb/downloads/creative-status-codes).\nDetails are only available for statuses 10, 14, 15, 17, 18, 19, 86, and 87.",
+	//       "description": "The ID of the creative status for which to retrieve a breakdown by detail. See [creative-status-codes](https://developers.google.com/authorized-buyers/rtb/downloads/creative-status-codes). Details are only available for statuses 10, 14, 15, 17, 18, 19, 86, and 87.",
 	//       "format": "int32",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "integer"
 	//     },
 	//     "filterSetName": {
-	//       "description": "Name of the filter set that should be applied to the requested metrics.\nFor example:\n\n- For a bidder-level filter set for bidder 123:\n  `bidders/123/filterSets/abc`\n\n- For an account-level filter set for the buyer account representing bidder\n  123: `bidders/123/accounts/123/filterSets/abc`\n\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
+	//       "description": "Name of the filter set that should be applied to the requested metrics. For example: - For a bidder-level filter set for bidder 123: `bidders/123/filterSets/abc` - For an account-level filter set for the buyer account representing bidder 123: `bidders/123/accounts/123/filterSets/abc` - For an account-level filter set for the child seat buyer account 456 whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
 	//       "location": "path",
 	//       "pattern": "^bidders/[^/]+/filterSets/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. The server may return fewer results than requested.\nIf unspecified, the server will pick an appropriate default.",
+	//       "description": "Requested page size. The server may return fewer results than requested. If unspecified, the server will pick an appropriate default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nListCreativeStatusBreakdownByDetailResponse.nextPageToken\nreturned from the previous call to the filteredBids.details.list\nmethod.",
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of ListCreativeStatusBreakdownByDetailResponse.nextPageToken returned from the previous call to the filteredBids.details.list method.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -16559,6 +16846,14 @@ type BiddersFilterSetsImpressionMetricsListCall struct {
 
 // List: Lists all metrics that are measured in terms of number of
 // impressions.
+//
+//   - filterSetName: Name of the filter set that should be applied to the
+//     requested metrics. For example: - For a bidder-level filter set for
+//     bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//     filter set for the buyer account representing bidder 123:
+//     `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//     filter set for the child seat buyer account 456 whose bidder is
+//     123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersFilterSetsImpressionMetricsService) List(filterSetName string) *BiddersFilterSetsImpressionMetricsListCall {
 	c := &BiddersFilterSetsImpressionMetricsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -16566,20 +16861,17 @@ func (r *BiddersFilterSetsImpressionMetricsService) List(filterSetName string) *
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// The server may return fewer results than requested.
-// If unspecified, the server will pick an appropriate default.
+// The server may return fewer results than requested. If unspecified,
+// the server will pick an appropriate default.
 func (c *BiddersFilterSetsImpressionMetricsListCall) PageSize(pageSize int64) *BiddersFilterSetsImpressionMetricsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results the server should return.
-// Typically, this is the value
-// of
-// ListImpressionMetricsResponse.nextPageToken
-// returned from the previous call to the impressionMetrics.list
-// method.
+// identifying a page of results the server should return. Typically,
+// this is the value of ListImpressionMetricsResponse.nextPageToken
+// returned from the previous call to the impressionMetrics.list method.
 func (c *BiddersFilterSetsImpressionMetricsListCall) PageToken(pageToken string) *BiddersFilterSetsImpressionMetricsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -16622,7 +16914,7 @@ func (c *BiddersFilterSetsImpressionMetricsListCall) Header() http.Header {
 
 func (c *BiddersFilterSetsImpressionMetricsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16660,17 +16952,17 @@ func (c *BiddersFilterSetsImpressionMetricsListCall) Do(opts ...googleapi.CallOp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListImpressionMetricsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -16693,20 +16985,20 @@ func (c *BiddersFilterSetsImpressionMetricsListCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "filterSetName": {
-	//       "description": "Name of the filter set that should be applied to the requested metrics.\nFor example:\n\n- For a bidder-level filter set for bidder 123:\n  `bidders/123/filterSets/abc`\n\n- For an account-level filter set for the buyer account representing bidder\n  123: `bidders/123/accounts/123/filterSets/abc`\n\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
+	//       "description": "Name of the filter set that should be applied to the requested metrics. For example: - For a bidder-level filter set for bidder 123: `bidders/123/filterSets/abc` - For an account-level filter set for the buyer account representing bidder 123: `bidders/123/accounts/123/filterSets/abc` - For an account-level filter set for the child seat buyer account 456 whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
 	//       "location": "path",
 	//       "pattern": "^bidders/[^/]+/filterSets/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. The server may return fewer results than requested.\nIf unspecified, the server will pick an appropriate default.",
+	//       "description": "Requested page size. The server may return fewer results than requested. If unspecified, the server will pick an appropriate default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nListImpressionMetricsResponse.nextPageToken\nreturned from the previous call to the impressionMetrics.list\nmethod.",
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of ListImpressionMetricsResponse.nextPageToken returned from the previous call to the impressionMetrics.list method.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -16755,8 +17047,15 @@ type BiddersFilterSetsLosingBidsListCall struct {
 }
 
 // List: List all reasons for which bids lost in the auction, with the
-// number of
-// bids that lost for each reason.
+// number of bids that lost for each reason.
+//
+//   - filterSetName: Name of the filter set that should be applied to the
+//     requested metrics. For example: - For a bidder-level filter set for
+//     bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//     filter set for the buyer account representing bidder 123:
+//     `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//     filter set for the child seat buyer account 456 whose bidder is
+//     123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersFilterSetsLosingBidsService) List(filterSetName string) *BiddersFilterSetsLosingBidsListCall {
 	c := &BiddersFilterSetsLosingBidsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -16764,20 +17063,17 @@ func (r *BiddersFilterSetsLosingBidsService) List(filterSetName string) *Bidders
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// The server may return fewer results than requested.
-// If unspecified, the server will pick an appropriate default.
+// The server may return fewer results than requested. If unspecified,
+// the server will pick an appropriate default.
 func (c *BiddersFilterSetsLosingBidsListCall) PageSize(pageSize int64) *BiddersFilterSetsLosingBidsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results the server should return.
-// Typically, this is the value
-// of
-// ListLosingBidsResponse.nextPageToken
-// returned from the previous call to the losingBids.list
-// method.
+// identifying a page of results the server should return. Typically,
+// this is the value of ListLosingBidsResponse.nextPageToken returned
+// from the previous call to the losingBids.list method.
 func (c *BiddersFilterSetsLosingBidsListCall) PageToken(pageToken string) *BiddersFilterSetsLosingBidsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -16820,7 +17116,7 @@ func (c *BiddersFilterSetsLosingBidsListCall) Header() http.Header {
 
 func (c *BiddersFilterSetsLosingBidsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16858,17 +17154,17 @@ func (c *BiddersFilterSetsLosingBidsListCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListLosingBidsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -16882,7 +17178,7 @@ func (c *BiddersFilterSetsLosingBidsListCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "List all reasons for which bids lost in the auction, with the number of\nbids that lost for each reason.",
+	//   "description": "List all reasons for which bids lost in the auction, with the number of bids that lost for each reason.",
 	//   "flatPath": "v2beta1/bidders/{biddersId}/filterSets/{filterSetsId}/losingBids",
 	//   "httpMethod": "GET",
 	//   "id": "adexchangebuyer2.bidders.filterSets.losingBids.list",
@@ -16891,20 +17187,20 @@ func (c *BiddersFilterSetsLosingBidsListCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "filterSetName": {
-	//       "description": "Name of the filter set that should be applied to the requested metrics.\nFor example:\n\n- For a bidder-level filter set for bidder 123:\n  `bidders/123/filterSets/abc`\n\n- For an account-level filter set for the buyer account representing bidder\n  123: `bidders/123/accounts/123/filterSets/abc`\n\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
+	//       "description": "Name of the filter set that should be applied to the requested metrics. For example: - For a bidder-level filter set for bidder 123: `bidders/123/filterSets/abc` - For an account-level filter set for the buyer account representing bidder 123: `bidders/123/accounts/123/filterSets/abc` - For an account-level filter set for the child seat buyer account 456 whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
 	//       "location": "path",
 	//       "pattern": "^bidders/[^/]+/filterSets/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. The server may return fewer results than requested.\nIf unspecified, the server will pick an appropriate default.",
+	//       "description": "Requested page size. The server may return fewer results than requested. If unspecified, the server will pick an appropriate default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nListLosingBidsResponse.nextPageToken\nreturned from the previous call to the losingBids.list\nmethod.",
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of ListLosingBidsResponse.nextPageToken returned from the previous call to the losingBids.list method.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -16953,8 +17249,15 @@ type BiddersFilterSetsNonBillableWinningBidsListCall struct {
 }
 
 // List: List all reasons for which winning bids were not billable, with
-// the number
-// of bids not billed for each reason.
+// the number of bids not billed for each reason.
+//
+//   - filterSetName: Name of the filter set that should be applied to the
+//     requested metrics. For example: - For a bidder-level filter set for
+//     bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//     filter set for the buyer account representing bidder 123:
+//     `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//     filter set for the child seat buyer account 456 whose bidder is
+//     123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersFilterSetsNonBillableWinningBidsService) List(filterSetName string) *BiddersFilterSetsNonBillableWinningBidsListCall {
 	c := &BiddersFilterSetsNonBillableWinningBidsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -16962,20 +17265,17 @@ func (r *BiddersFilterSetsNonBillableWinningBidsService) List(filterSetName stri
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// The server may return fewer results than requested.
-// If unspecified, the server will pick an appropriate default.
+// The server may return fewer results than requested. If unspecified,
+// the server will pick an appropriate default.
 func (c *BiddersFilterSetsNonBillableWinningBidsListCall) PageSize(pageSize int64) *BiddersFilterSetsNonBillableWinningBidsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results the server should return.
-// Typically, this is the value
-// of
-// ListNonBillableWinningBidsResponse.nextPageToken
-// returned from the previous call to the
-// nonBillableWinningBids.list
+// identifying a page of results the server should return. Typically,
+// this is the value of ListNonBillableWinningBidsResponse.nextPageToken
+// returned from the previous call to the nonBillableWinningBids.list
 // method.
 func (c *BiddersFilterSetsNonBillableWinningBidsListCall) PageToken(pageToken string) *BiddersFilterSetsNonBillableWinningBidsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
@@ -17019,7 +17319,7 @@ func (c *BiddersFilterSetsNonBillableWinningBidsListCall) Header() http.Header {
 
 func (c *BiddersFilterSetsNonBillableWinningBidsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17058,17 +17358,17 @@ func (c *BiddersFilterSetsNonBillableWinningBidsListCall) Do(opts ...googleapi.C
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListNonBillableWinningBidsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -17082,7 +17382,7 @@ func (c *BiddersFilterSetsNonBillableWinningBidsListCall) Do(opts ...googleapi.C
 	}
 	return ret, nil
 	// {
-	//   "description": "List all reasons for which winning bids were not billable, with the number\nof bids not billed for each reason.",
+	//   "description": "List all reasons for which winning bids were not billable, with the number of bids not billed for each reason.",
 	//   "flatPath": "v2beta1/bidders/{biddersId}/filterSets/{filterSetsId}/nonBillableWinningBids",
 	//   "httpMethod": "GET",
 	//   "id": "adexchangebuyer2.bidders.filterSets.nonBillableWinningBids.list",
@@ -17091,20 +17391,20 @@ func (c *BiddersFilterSetsNonBillableWinningBidsListCall) Do(opts ...googleapi.C
 	//   ],
 	//   "parameters": {
 	//     "filterSetName": {
-	//       "description": "Name of the filter set that should be applied to the requested metrics.\nFor example:\n\n- For a bidder-level filter set for bidder 123:\n  `bidders/123/filterSets/abc`\n\n- For an account-level filter set for the buyer account representing bidder\n  123: `bidders/123/accounts/123/filterSets/abc`\n\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
+	//       "description": "Name of the filter set that should be applied to the requested metrics. For example: - For a bidder-level filter set for bidder 123: `bidders/123/filterSets/abc` - For an account-level filter set for the buyer account representing bidder 123: `bidders/123/accounts/123/filterSets/abc` - For an account-level filter set for the child seat buyer account 456 whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
 	//       "location": "path",
 	//       "pattern": "^bidders/[^/]+/filterSets/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. The server may return fewer results than requested.\nIf unspecified, the server will pick an appropriate default.",
+	//       "description": "Requested page size. The server may return fewer results than requested. If unspecified, the server will pick an appropriate default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nListNonBillableWinningBidsResponse.nextPageToken\nreturned from the previous call to the nonBillableWinningBids.list\nmethod.",
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of ListNonBillableWinningBidsResponse.nextPageToken returned from the previous call to the nonBillableWinningBids.list method.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }

@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/iap
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/iap/v1"
-//   ...
-//   ctx := context.Background()
-//   iapService, err := iap.NewService(ctx)
+//	import "google.golang.org/api/iap/v1"
+//	...
+//	ctx := context.Background()
+//	iapService, err := iap.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   iapService, err := iap.NewService(ctx, option.WithAPIKey("AIza..."))
+//	iapService, err := iap.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   iapService, err := iap.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	iapService, err := iap.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package iap // import "google.golang.org/api/iap/v1"
@@ -50,6 +50,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -75,21 +76,24 @@ const apiId = "iap:v1"
 const apiName = "iap"
 const apiVersion = "v1"
 const basePath = "https://iap.googleapis.com/"
+const mtlsBasePath = "https://iap.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud data and see the
+	// email address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -139,6 +143,7 @@ func (s *Service) userAgent() string {
 func NewProjectsService(s *Service) *ProjectsService {
 	rs := &ProjectsService{s: s}
 	rs.Brands = NewProjectsBrandsService(s)
+	rs.IapTunnel = NewProjectsIapTunnelService(s)
 	return rs
 }
 
@@ -146,6 +151,8 @@ type ProjectsService struct {
 	s *Service
 
 	Brands *ProjectsBrandsService
+
+	IapTunnel *ProjectsIapTunnelService
 }
 
 func NewProjectsBrandsService(s *Service) *ProjectsBrandsService {
@@ -169,6 +176,39 @@ type ProjectsBrandsIdentityAwareProxyClientsService struct {
 	s *Service
 }
 
+func NewProjectsIapTunnelService(s *Service) *ProjectsIapTunnelService {
+	rs := &ProjectsIapTunnelService{s: s}
+	rs.Locations = NewProjectsIapTunnelLocationsService(s)
+	return rs
+}
+
+type ProjectsIapTunnelService struct {
+	s *Service
+
+	Locations *ProjectsIapTunnelLocationsService
+}
+
+func NewProjectsIapTunnelLocationsService(s *Service) *ProjectsIapTunnelLocationsService {
+	rs := &ProjectsIapTunnelLocationsService{s: s}
+	rs.DestGroups = NewProjectsIapTunnelLocationsDestGroupsService(s)
+	return rs
+}
+
+type ProjectsIapTunnelLocationsService struct {
+	s *Service
+
+	DestGroups *ProjectsIapTunnelLocationsDestGroupsService
+}
+
+func NewProjectsIapTunnelLocationsDestGroupsService(s *Service) *ProjectsIapTunnelLocationsDestGroupsService {
+	rs := &ProjectsIapTunnelLocationsDestGroupsService{s: s}
+	return rs
+}
+
+type ProjectsIapTunnelLocationsDestGroupsService struct {
+	s *Service
+}
+
 func NewV1Service(s *Service) *V1Service {
 	rs := &V1Service{s: s}
 	return rs
@@ -179,23 +219,28 @@ type V1Service struct {
 }
 
 // AccessDeniedPageSettings: Custom content configuration for access
-// denied page.
-// IAP allows customers to define a custom URI to use as the error page
-// when
-// access is denied to users. If IAP prevents access to this page, the
-// default
-// IAP error page will be displayed instead.
+// denied page. IAP allows customers to define a custom URI to use as
+// the error page when access is denied to users. If IAP prevents access
+// to this page, the default IAP error page will be displayed instead.
 type AccessDeniedPageSettings struct {
 	// AccessDeniedPageUri: The URI to be redirected to when access is
 	// denied.
 	AccessDeniedPageUri string `json:"accessDeniedPageUri,omitempty"`
 
+	// GenerateTroubleshootingUri: Whether to generate a troubleshooting URL
+	// on access denied events to this application.
+	GenerateTroubleshootingUri bool `json:"generateTroubleshootingUri,omitempty"`
+
+	// RemediationTokenGenerationEnabled: Whether to generate remediation
+	// token on access denied events to this application.
+	RemediationTokenGenerationEnabled bool `json:"remediationTokenGenerationEnabled,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "AccessDeniedPageUri")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AccessDeniedPageUri") to
@@ -216,6 +261,10 @@ func (s *AccessDeniedPageSettings) MarshalJSON() ([]byte, error) {
 
 // AccessSettings: Access related settings for IAP protected apps.
 type AccessSettings struct {
+	// AllowedDomainsSettings: Settings to configure and enable allowed
+	// domains.
+	AllowedDomainsSettings *AllowedDomainsSettings `json:"allowedDomainsSettings,omitempty"`
+
 	// CorsSettings: Configuration to allow cross-origin requests via IAP.
 	CorsSettings *CorsSettings `json:"corsSettings,omitempty"`
 
@@ -227,29 +276,67 @@ type AccessSettings struct {
 	OauthSettings *OAuthSettings `json:"oauthSettings,omitempty"`
 
 	// PolicyDelegationSettings: Settings to configure Policy delegation for
-	// apps hosted in tenant projects.
-	// INTERNAL_ONLY.
+	// apps hosted in tenant projects. INTERNAL_ONLY.
 	PolicyDelegationSettings *PolicyDelegationSettings `json:"policyDelegationSettings,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "CorsSettings") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ReauthSettings: Settings to configure reauthentication policies in
+	// IAP.
+	ReauthSettings *ReauthSettings `json:"reauthSettings,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AllowedDomainsSettings") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CorsSettings") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AllowedDomainsSettings")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
 func (s *AccessSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod AccessSettings
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AllowedDomainsSettings: Configuration for IAP allowed domains. Lets
+// you to restrict access to an app and allow access to only the domains
+// that you list.
+type AllowedDomainsSettings struct {
+	// Domains: List of trusted domains.
+	Domains []string `json:"domains,omitempty"`
+
+	// Enable: Configuration for customers to opt in for the feature.
+	Enable bool `json:"enable,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Domains") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Domains") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AllowedDomainsSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod AllowedDomainsSettings
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -260,21 +347,25 @@ type ApplicationSettings struct {
 	// AccessDeniedPageSettings: Customization for Access Denied page.
 	AccessDeniedPageSettings *AccessDeniedPageSettings `json:"accessDeniedPageSettings,omitempty"`
 
+	// AttributePropagationSettings: Settings to configure attribute
+	// propagation.
+	AttributePropagationSettings *AttributePropagationSettings `json:"attributePropagationSettings,omitempty"`
+
 	// CookieDomain: The Domain value to set for cookies generated by IAP.
-	// This value is not
-	// validated by the API, but will be ignored at runtime if invalid.
+	// This value is not validated by the API, but will be ignored at
+	// runtime if invalid.
 	CookieDomain string `json:"cookieDomain,omitempty"`
 
-	// CsmSettings: Settings to configure IAP's behavior for a CSM mesh.
+	// CsmSettings: Settings to configure IAP's behavior for a service mesh.
 	CsmSettings *CsmSettings `json:"csmSettings,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "AccessDeniedPageSettings") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AccessDeniedPageSettings")
@@ -293,105 +384,131 @@ func (s *ApplicationSettings) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Binding: Associates `members` with a `role`.
+// AttributePropagationSettings: Configuration for propagating
+// attributes to applications protected by IAP.
+type AttributePropagationSettings struct {
+	// Enable: Whether the provided attribute propagation settings should be
+	// evaluated on user requests. If set to true, attributes returned from
+	// the expression will be propagated in the set output credentials.
+	Enable bool `json:"enable,omitempty"`
+
+	// Expression: Raw string CEL expression. Must return a list of
+	// attributes. Maximum of 45 attributes can be selected. Expressions can
+	// select different attribute types from `attributes`:
+	// `attributes.saml_attributes`, `attributes.iap_attributes`. Limited
+	// functions are supported: - filter: .filter(, ) -> returns a subset of
+	// where is true for every item - in: in -> returns true if contains -
+	// selectByName: .selectByName() -> returns the attribute in with the
+	// given name, otherwise returns empty. - emitAs: .emitAs() -> sets the
+	// name field to the given for propagation in selected output
+	// credentials. - strict: .strict() -> ignore the `x-goog-iap-attr-`
+	// prefix for the provided attribute when propagating via the `HEADER`
+	// output credential, i.e. request headers. - append: .append() OR
+	// .append() -> append the provided or onto the end of Example
+	// expression: attributes.saml_attributes.filter(x, x.name in
+	// ['test']).append(attributes.iap_attributes.selectByName('exact').emitA
+	// s('custom').strict())
+	Expression string `json:"expression,omitempty"`
+
+	// OutputCredentials: Which output credentials attributes selected by
+	// the CEL expression should be propagated in. All attributes will be
+	// fully duplicated in each selected output credential.
+	//
+	// Possible values:
+	//   "OUTPUT_CREDENTIALS_UNSPECIFIED" - No output credential. This is
+	// unsupported in IAP, there must be an output credential.
+	//   "HEADER" - Propagate attributes in the headers with
+	// "x-goog-iap-attr-" prefix.
+	//   "JWT" - Propagate attributes in the JWT of the form:
+	// "additional_claims": { "my_attribute": ["value1", "value2"] }
+	//   "RCTOKEN" - Propagate attributes in the RCToken of the form:
+	// "additional_claims": { "my_attribute": ["value1", "value2"] }
+	OutputCredentials []string `json:"outputCredentials,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Enable") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Enable") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AttributePropagationSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod AttributePropagationSettings
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Binding: Associates `members`, or principals, with a `role`.
 type Binding struct {
-	// Condition: The condition that is associated with this binding.
-	//
-	// If the condition evaluates to `true`, then this binding applies to
-	// the
-	// current request.
-	//
-	// If the condition evaluates to `false`, then this binding does not
-	// apply to
-	// the current request. However, a different role binding might grant
-	// the same
-	// role to one or more of the members in this binding.
-	//
-	// To learn which resources support conditions in their IAM policies,
-	// see
-	// the
-	// [IAM
-	// documentation](https://cloud.google.com/iam/help/conditions/r
-	// esource-policies).
+	// Condition: The condition that is associated with this binding. If the
+	// condition evaluates to `true`, then this binding applies to the
+	// current request. If the condition evaluates to `false`, then this
+	// binding does not apply to the current request. However, a different
+	// role binding might grant the same role to one or more of the
+	// principals in this binding. To learn which resources support
+	// conditions in their IAM policies, see the IAM documentation
+	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Condition *Expr `json:"condition,omitempty"`
 
-	// Members: Specifies the identities requesting access for a Cloud
-	// Platform resource.
-	// `members` can have the following values:
-	//
-	// * `allUsers`: A special identifier that represents anyone who is
-	//    on the internet; with or without a Google account.
-	//
-	// * `allAuthenticatedUsers`: A special identifier that represents
-	// anyone
-	//    who is authenticated with a Google account or a service
-	// account.
-	//
-	// * `user:{emailid}`: An email address that represents a specific
-	// Google
-	//    account. For example, `alice@example.com` .
-	//
-	//
-	// * `serviceAccount:{emailid}`: An email address that represents a
-	// service
-	//    account. For example,
-	// `my-other-app@appspot.gserviceaccount.com`.
-	//
-	// * `group:{emailid}`: An email address that represents a Google
-	// group.
-	//    For example, `admins@example.com`.
-	//
-	// * `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
-	// unique
-	//    identifier) representing a user that has been recently deleted.
-	// For
-	//    example, `alice@example.com?uid=123456789012345678901`. If the
-	// user is
-	//    recovered, this value reverts to `user:{emailid}` and the
-	// recovered user
-	//    retains the role in the binding.
-	//
-	// * `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
-	// (plus
-	//    unique identifier) representing a service account that has been
-	// recently
-	//    deleted. For example,
-	//
+	// Members: Specifies the principals requesting access for a Google
+	// Cloud resource. `members` can have the following values: *
+	// `allUsers`: A special identifier that represents anyone who is on the
+	// internet; with or without a Google account. *
+	// `allAuthenticatedUsers`: A special identifier that represents anyone
+	// who is authenticated with a Google account or a service account. Does
+	// not include identities that come from external identity providers
+	// (IdPs) through identity federation. * `user:{emailid}`: An email
+	// address that represents a specific Google account. For example,
+	// `alice@example.com` . * `serviceAccount:{emailid}`: An email address
+	// that represents a Google service account. For example,
+	// `my-other-app@appspot.gserviceaccount.com`. *
+	// `serviceAccount:{projectid}.svc.id.goog[{namespace}/{kubernetes-sa}]`:
+	//  An identifier for a Kubernetes service account
+	// (https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts).
+	// For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`.
+	// * `group:{emailid}`: An email address that represents a Google group.
+	// For example, `admins@example.com`. * `domain:{domain}`: The G Suite
+	// domain (primary) that represents all the users of that domain. For
+	// example, `google.com` or `example.com`. *
+	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
+	// unique identifier) representing a user that has been recently
+	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
+	// If the user is recovered, this value reverts to `user:{emailid}` and
+	// the recovered user retains the role in the binding. *
+	// `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
+	// (plus unique identifier) representing a service account that has been
+	// recently deleted. For example,
 	// `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`.
-	//
-	//    If the service account is undeleted, this value reverts to
-	//    `serviceAccount:{emailid}` and the undeleted service account
-	// retains the
-	//    role in the binding.
-	//
-	// * `deleted:group:{emailid}?uid={uniqueid}`: An email address (plus
-	// unique
-	//    identifier) representing a Google group that has been recently
-	//    deleted. For example,
-	// `admins@example.com?uid=123456789012345678901`. If
-	//    the group is recovered, this value reverts to `group:{emailid}`
-	// and the
-	//    recovered group retains the role in the binding.
-	//
-	//
-	// * `domain:{domain}`: The G Suite domain (primary) that represents all
-	// the
-	//    users of that domain. For example, `google.com` or
-	// `example.com`.
-	//
-	//
+	// If the service account is undeleted, this value reverts to
+	// `serviceAccount:{emailid}` and the undeleted service account retains
+	// the role in the binding. * `deleted:group:{emailid}?uid={uniqueid}`:
+	// An email address (plus unique identifier) representing a Google group
+	// that has been recently deleted. For example,
+	// `admins@example.com?uid=123456789012345678901`. If the group is
+	// recovered, this value reverts to `group:{emailid}` and the recovered
+	// group retains the role in the binding.
 	Members []string `json:"members,omitempty"`
 
-	// Role: Role that is assigned to `members`.
+	// Role: Role that is assigned to the list of `members`, or principals.
 	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`.
 	Role string `json:"role,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Condition") to include in
@@ -409,21 +526,19 @@ func (s *Binding) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Brand: OAuth brand data.
-// NOTE: Only contains a portion of the data that describes a brand.
+// Brand: OAuth brand data. NOTE: Only contains a portion of the data
+// that describes a brand.
 type Brand struct {
 	// ApplicationTitle: Application name displayed on OAuth consent screen.
 	ApplicationTitle string `json:"applicationTitle,omitempty"`
 
-	// Name: Output only. Identifier of the brand.
-	// NOTE: GCP project number achieves the same brand identification
-	// purpose as
-	// only one brand per project can be created.
+	// Name: Output only. Identifier of the brand. NOTE: GCP project number
+	// achieves the same brand identification purpose as only one brand per
+	// project can be created.
 	Name string `json:"name,omitempty"`
 
 	// OrgInternalOnly: Output only. Whether the brand is only intended for
-	// usage inside the
-	// G Suite organization only.
+	// usage inside the G Suite organization only.
 	OrgInternalOnly bool `json:"orgInternalOnly,omitempty"`
 
 	// SupportEmail: Support email displayed on the OAuth consent screen.
@@ -435,10 +550,10 @@ type Brand struct {
 
 	// ForceSendFields is a list of field names (e.g. "ApplicationTitle") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ApplicationTitle") to
@@ -458,20 +573,20 @@ func (s *Brand) MarshalJSON() ([]byte, error) {
 }
 
 // CorsSettings: Allows customers to configure HTTP request paths
-// that'll allow HTTP OPTIONS
-// call to bypass authentication and authorization.
+// that'll allow HTTP OPTIONS call to bypass authentication and
+// authorization.
 type CorsSettings struct {
 	// AllowHttpOptions: Configuration to allow HTTP OPTIONS calls to skip
-	// authorization. If
-	// undefined, IAP will not apply any special logic to OPTIONS requests.
+	// authorization. If undefined, IAP will not apply any special logic to
+	// OPTIONS requests.
 	AllowHttpOptions bool `json:"allowHttpOptions,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AllowHttpOptions") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AllowHttpOptions") to
@@ -490,25 +605,22 @@ func (s *CorsSettings) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// CsmSettings: Configuration for RCTokens generated for CSM workloads
-// protected by IAP.
-// RCTokens are IAP generated JWTs that can be verified at the
-// application. The
-// RCToken is primarily used for ISTIO deployments, and can be scoped to
-// a
-// single mesh by configuring the audience field accordingly
+// CsmSettings: Configuration for RCToken generated for service mesh
+// workloads protected by IAP. RCToken are IAP generated JWTs that can
+// be verified at the application. The RCToken is primarily used for
+// service mesh deployments, and can be scoped to a single mesh by
+// configuring the audience field accordingly.
 type CsmSettings struct {
 	// RctokenAud: Audience claim set in the generated RCToken. This value
-	// is not validated by
-	// IAP.
+	// is not validated by IAP.
 	RctokenAud string `json:"rctokenAud,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "RctokenAud") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "RctokenAud") to include in
@@ -527,17 +639,10 @@ func (s *CsmSettings) MarshalJSON() ([]byte, error) {
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
-// duplicated
-// empty messages in your APIs. A typical example is to use it as the
-// request
-// or the response type of an API method. For instance:
-//
-//     service Foo {
-//       rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty);
-//     }
-//
-// The JSON representation for `Empty` is empty JSON object `{}`.
+// duplicated empty messages in your APIs. A typical example is to use
+// it as the request or the response type of an API method. For
+// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); }
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -545,73 +650,48 @@ type Empty struct {
 }
 
 // Expr: Represents a textual expression in the Common Expression
-// Language (CEL)
-// syntax. CEL is a C-like expression language. The syntax and semantics
-// of CEL
-// are documented at https://github.com/google/cel-spec.
-//
-// Example (Comparison):
-//
-//     title: "Summary size limit"
-//     description: "Determines if a summary is less than 100 chars"
-//     expression: "document.summary.size() < 100"
-//
-// Example (Equality):
-//
-//     title: "Requestor is owner"
-//     description: "Determines if requestor is the document owner"
-//     expression: "document.owner ==
-// request.auth.claims.email"
-//
-// Example (Logic):
-//
-//     title: "Public documents"
-//     description: "Determine whether the document should be publicly
-// visible"
-//     expression: "document.type != 'private' && document.type !=
-// 'internal'"
-//
-// Example (Data Manipulation):
-//
-//     title: "Notification string"
-//     description: "Create a notification string with a timestamp."
-//     expression: "'New message received at ' +
-// string(document.create_time)"
-//
-// The exact variables and functions that may be referenced within an
-// expression
-// are determined by the service that evaluates it. See the
-// service
-// documentation for additional information.
+// Language (CEL) syntax. CEL is a C-like expression language. The
+// syntax and semantics of CEL are documented at
+// https://github.com/google/cel-spec. Example (Comparison): title:
+// "Summary size limit" description: "Determines if a summary is less
+// than 100 chars" expression: "document.summary.size() < 100" Example
+// (Equality): title: "Requestor is owner" description: "Determines if
+// requestor is the document owner" expression: "document.owner ==
+// request.auth.claims.email" Example (Logic): title: "Public documents"
+// description: "Determine whether the document should be publicly
+// visible" expression: "document.type != 'private' && document.type !=
+// 'internal'" Example (Data Manipulation): title: "Notification string"
+// description: "Create a notification string with a timestamp."
+// expression: "'New message received at ' +
+// string(document.create_time)" The exact variables and functions that
+// may be referenced within an expression are determined by the service
+// that evaluates it. See the service documentation for additional
+// information.
 type Expr struct {
 	// Description: Optional. Description of the expression. This is a
-	// longer text which
-	// describes the expression, e.g. when hovered over it in a UI.
+	// longer text which describes the expression, e.g. when hovered over it
+	// in a UI.
 	Description string `json:"description,omitempty"`
 
 	// Expression: Textual representation of an expression in Common
-	// Expression Language
-	// syntax.
+	// Expression Language syntax.
 	Expression string `json:"expression,omitempty"`
 
 	// Location: Optional. String indicating the location of the expression
-	// for error
-	// reporting, e.g. a file name and a position in the file.
+	// for error reporting, e.g. a file name and a position in the file.
 	Location string `json:"location,omitempty"`
 
 	// Title: Optional. Title for the expression, i.e. a short string
-	// describing
-	// its purpose. This can be used e.g. in UIs which allow to enter
-	// the
-	// expression.
+	// describing its purpose. This can be used e.g. in UIs which allow to
+	// enter the expression.
 	Title string `json:"title,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Description") to include
@@ -632,31 +712,25 @@ func (s *Expr) MarshalJSON() ([]byte, error) {
 // GcipSettings: Allows customers to configure tenant_id for GCIP
 // instance per-app.
 type GcipSettings struct {
-	// LoginPageUri: Login page URI associated with the GCIP
-	// tenants.
+	// LoginPageUri: Login page URI associated with the GCIP tenants.
 	// Typically, all resources within the same project share the same login
-	// page,
-	// though it could be overridden at the sub resource level.
+	// page, though it could be overridden at the sub resource level.
 	LoginPageUri string `json:"loginPageUri,omitempty"`
 
-	// TenantIds: GCIP tenant ids that are linked to the IAP
-	// resource.
+	// TenantIds: GCIP tenant ids that are linked to the IAP resource.
 	// tenant_ids could be a string beginning with a number character to
-	// indicate
-	// authenticating with GCIP tenant flow, or in the format of
-	// _<ProjectNumber>
-	// to indicate authenticating with GCIP agent flow.
-	// If agent flow is used, tenant_ids should only contain one single
-	// element,
-	// while for tenant flow, tenant_ids can contain multiple elements.
+	// indicate authenticating with GCIP tenant flow, or in the format of _
+	// to indicate authenticating with GCIP agent flow. If agent flow is
+	// used, tenant_ids should only contain one single element, while for
+	// tenant flow, tenant_ids can contain multiple elements.
 	TenantIds []string `json:"tenantIds,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LoginPageUri") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "LoginPageUri") to include
@@ -677,16 +751,15 @@ func (s *GcipSettings) MarshalJSON() ([]byte, error) {
 // GetIamPolicyRequest: Request message for `GetIamPolicy` method.
 type GetIamPolicyRequest struct {
 	// Options: OPTIONAL: A `GetPolicyOptions` object for specifying options
-	// to
-	// `GetIamPolicy`.
+	// to `GetIamPolicy`.
 	Options *GetPolicyOptions `json:"options,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Options") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Options") to include in
@@ -706,31 +779,24 @@ func (s *GetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 
 // GetPolicyOptions: Encapsulates settings provided to GetIamPolicy.
 type GetPolicyOptions struct {
-	// RequestedPolicyVersion: Optional. The policy format version to be
-	// returned.
-	//
-	// Valid values are 0, 1, and 3. Requests specifying an invalid value
-	// will be
-	// rejected.
-	//
-	// Requests for policies with any conditional bindings must specify
-	// version 3.
-	// Policies without any conditional bindings may specify any valid value
-	// or
-	// leave the field unset.
-	//
-	// To learn which resources support conditions in their IAM policies,
-	// see
-	// the
-	// [IAM
-	// documentation](https://cloud.google.com/iam/help/conditions/r
-	// esource-policies).
+	// RequestedPolicyVersion: Optional. The maximum policy version that
+	// will be used to format the policy. Valid values are 0, 1, and 3.
+	// Requests specifying an invalid value will be rejected. Requests for
+	// policies with any conditional role bindings must specify version 3.
+	// Policies with no conditional role bindings may specify any valid
+	// value or leave the field unset. The policy in the response might use
+	// the policy version that you specified, or it might use a lower policy
+	// version. For example, if you specify version 3, but the policy has no
+	// conditional role bindings, the response uses version 1. To learn
+	// which resources support conditions in their IAM policies, see the IAM
+	// documentation
+	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	RequestedPolicyVersion int64 `json:"requestedPolicyVersion,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "RequestedPolicyVersion") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -771,10 +837,10 @@ type IapSettings struct {
 
 	// ForceSendFields is a list of field names (e.g. "AccessSettings") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AccessSettings") to
@@ -811,10 +877,10 @@ type IdentityAwareProxyClient struct {
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DisplayName") to include
@@ -843,10 +909,10 @@ type ListBrandsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Brands") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Brands") to include in API
@@ -871,8 +937,8 @@ type ListIdentityAwareProxyClientsResponse struct {
 	IdentityAwareProxyClients []*IdentityAwareProxyClient `json:"identityAwareProxyClients,omitempty"`
 
 	// NextPageToken: A token, which can be send as `page_token` to retrieve
-	// the next page.
-	// If this field is omitted, there are no subsequent pages.
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -881,11 +947,11 @@ type ListIdentityAwareProxyClientsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "IdentityAwareProxyClients") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g.
@@ -904,45 +970,63 @@ func (s *ListIdentityAwareProxyClientsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// OAuthSettings: Configuration for OAuth login&consent flow behavior as
-// well as for OAuth
-// Credentials.
-type OAuthSettings struct {
-	// ClientId: OAuth 2.0 client ID used in the OAuth flow to generate an
-	// access token. If
-	// this field is set, you can skip obtaining the OAuth credentials in
-	// this
-	// step:
-	// https://developers.google.com/identity/protocols/OAuth2?hl=
-	// en_US#1.-obtain-oauth-2.0-credentials-from-the-google-api-console.
-	// How
-	// ever, this could allow for client sharing. The risks of client
-	// sharing
-	// are outlined
-	// here:
-	// https://cloud.google.com/iap/docs/sharing-oauth-clients#risks.
-	ClientId string `json:"clientId,omitempty"`
+// ListTunnelDestGroupsResponse: The response from ListTunnelDestGroups.
+type ListTunnelDestGroupsResponse struct {
+	// NextPageToken: A token that you can send as `page_token` to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// LoginHint: Domain hint to send as hd=? parameter in OAuth request
-	// flow. Enables
-	// redirect to primary IDP by skipping Google's login
-	// screen.
-	// https://developers.google.com/identity/protocols/OpenIDConnect
-	// #hd-param
-	// Note: IAP does not verify that the id token's hd claim matches this
-	// value
-	// since access behavior is managed by IAM policies.
-	LoginHint string `json:"loginHint,omitempty"`
+	// TunnelDestGroups: TunnelDestGroup existing in the project.
+	TunnelDestGroups []*TunnelDestGroup `json:"tunnelDestGroups,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "ClientId") to
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ClientId") to include in
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListTunnelDestGroupsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListTunnelDestGroupsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// OAuthSettings: Configuration for OAuth login&consent flow behavior as
+// well as for OAuth Credentials.
+type OAuthSettings struct {
+	// LoginHint: Domain hint to send as hd=? parameter in OAuth request
+	// flow. Enables redirect to primary IDP by skipping Google's login
+	// screen.
+	// https://developers.google.com/identity/protocols/OpenIDConnect#hd-param
+	// Note: IAP does not verify that the id token's hd claim matches this
+	// value since access behavior is managed by IAM policies.
+	LoginHint string `json:"loginHint,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "LoginHint") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LoginHint") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -958,152 +1042,82 @@ func (s *OAuthSettings) MarshalJSON() ([]byte, error) {
 }
 
 // Policy: An Identity and Access Management (IAM) policy, which
-// specifies access
-// controls for Google Cloud resources.
-//
-//
-// A `Policy` is a collection of `bindings`. A `binding` binds one or
-// more
-// `members` to a single `role`. Members can be user accounts, service
-// accounts,
-// Google groups, and domains (such as G Suite). A `role` is a named
-// list of
-// permissions; each `role` can be an IAM predefined role or a
-// user-created
-// custom role.
-//
-// For some types of Google Cloud resources, a `binding` can also
-// specify a
-// `condition`, which is a logical expression that allows access to a
-// resource
-// only if the expression evaluates to `true`. A condition can add
-// constraints
-// based on attributes of the request, the resource, or both. To learn
-// which
-// resources support conditions in their IAM policies, see the
-// [IAM
-// documentation](https://cloud.google.com/iam/help/conditions/resource-p
-// olicies).
-//
-// **JSON example:**
-//
-//     {
-//       "bindings": [
-//         {
-//           "role": "roles/resourcemanager.organizationAdmin",
-//           "members": [
-//             "user:mike@example.com",
-//             "group:admins@example.com",
-//             "domain:google.com",
-//
-// "serviceAccount:my-project-id@appspot.gserviceaccount.com"
-//           ]
-//         },
-//         {
-//           "role": "roles/resourcemanager.organizationViewer",
-//           "members": [
-//             "user:eve@example.com"
-//           ],
-//           "condition": {
-//             "title": "expirable access",
-//             "description": "Does not grant access after Sep 2020",
-//             "expression": "request.time <
-// timestamp('2020-10-01T00:00:00.000Z')",
-//           }
-//         }
-//       ],
-//       "etag": "BwWWja0YfJA=",
-//       "version": 3
-//     }
-//
-// **YAML example:**
-//
-//     bindings:
-//     - members:
-//       - user:mike@example.com
-//       - group:admins@example.com
-//       - domain:google.com
-//       - serviceAccount:my-project-id@appspot.gserviceaccount.com
-//       role: roles/resourcemanager.organizationAdmin
-//     - members:
-//       - user:eve@example.com
-//       role: roles/resourcemanager.organizationViewer
-//       condition:
-//         title: expirable access
-//         description: Does not grant access after Sep 2020
-//         expression: request.time <
-// timestamp('2020-10-01T00:00:00.000Z')
-//     - etag: BwWWja0YfJA=
-//     - version: 3
-//
-// For a description of IAM and its features, see the
-// [IAM documentation](https://cloud.google.com/iam/docs/).
+// specifies access controls for Google Cloud resources. A `Policy` is a
+// collection of `bindings`. A `binding` binds one or more `members`, or
+// principals, to a single `role`. Principals can be user accounts,
+// service accounts, Google groups, and domains (such as G Suite). A
+// `role` is a named list of permissions; each `role` can be an IAM
+// predefined role or a user-created custom role. For some types of
+// Google Cloud resources, a `binding` can also specify a `condition`,
+// which is a logical expression that allows access to a resource only
+// if the expression evaluates to `true`. A condition can add
+// constraints based on attributes of the request, the resource, or
+// both. To learn which resources support conditions in their IAM
+// policies, see the IAM documentation
+// (https://cloud.google.com/iam/help/conditions/resource-policies).
+// **JSON example:** { "bindings": [ { "role":
+// "roles/resourcemanager.organizationAdmin", "members": [
+// "user:mike@example.com", "group:admins@example.com",
+// "domain:google.com",
+// "serviceAccount:my-project-id@appspot.gserviceaccount.com" ] }, {
+// "role": "roles/resourcemanager.organizationViewer", "members": [
+// "user:eve@example.com" ], "condition": { "title": "expirable access",
+// "description": "Does not grant access after Sep 2020", "expression":
+// "request.time < timestamp('2020-10-01T00:00:00.000Z')", } } ],
+// "etag": "BwWWja0YfJA=", "version": 3 } **YAML example:** bindings: -
+// members: - user:mike@example.com - group:admins@example.com -
+// domain:google.com -
+// serviceAccount:my-project-id@appspot.gserviceaccount.com role:
+// roles/resourcemanager.organizationAdmin - members: -
+// user:eve@example.com role: roles/resourcemanager.organizationViewer
+// condition: title: expirable access description: Does not grant access
+// after Sep 2020 expression: request.time <
+// timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3
+// For a description of IAM and its features, see the IAM documentation
+// (https://cloud.google.com/iam/docs/).
 type Policy struct {
-	// Bindings: Associates a list of `members` to a `role`. Optionally, may
-	// specify a
-	// `condition` that determines how and when the `bindings` are applied.
-	// Each
-	// of the `bindings` must contain at least one member.
+	// Bindings: Associates a list of `members`, or principals, with a
+	// `role`. Optionally, may specify a `condition` that determines how and
+	// when the `bindings` are applied. Each of the `bindings` must contain
+	// at least one principal. The `bindings` in a `Policy` can refer to up
+	// to 1,500 principals; up to 250 of these principals can be Google
+	// groups. Each occurrence of a principal counts towards these limits.
+	// For example, if the `bindings` grant 50 different roles to
+	// `user:alice@example.com`, and not to any other principal, then you
+	// can add another 1,450 principals to the `bindings` in the `Policy`.
 	Bindings []*Binding `json:"bindings,omitempty"`
 
 	// Etag: `etag` is used for optimistic concurrency control as a way to
-	// help
-	// prevent simultaneous updates of a policy from overwriting each
-	// other.
-	// It is strongly suggested that systems make use of the `etag` in
-	// the
-	// read-modify-write cycle to perform policy updates in order to avoid
-	// race
-	// conditions: An `etag` is returned in the response to `getIamPolicy`,
-	// and
-	// systems are expected to put that etag in the request to
-	// `setIamPolicy` to
-	// ensure that their change will be applied to the same version of the
-	// policy.
-	//
-	// **Important:** If you use IAM Conditions, you must include the `etag`
-	// field
-	// whenever you call `setIamPolicy`. If you omit this field, then IAM
-	// allows
-	// you to overwrite a version `3` policy with a version `1` policy, and
-	// all of
+	// help prevent simultaneous updates of a policy from overwriting each
+	// other. It is strongly suggested that systems make use of the `etag`
+	// in the read-modify-write cycle to perform policy updates in order to
+	// avoid race conditions: An `etag` is returned in the response to
+	// `getIamPolicy`, and systems are expected to put that etag in the
+	// request to `setIamPolicy` to ensure that their change will be applied
+	// to the same version of the policy. **Important:** If you use IAM
+	// Conditions, you must include the `etag` field whenever you call
+	// `setIamPolicy`. If you omit this field, then IAM allows you to
+	// overwrite a version `3` policy with a version `1` policy, and all of
 	// the conditions in the version `3` policy are lost.
 	Etag string `json:"etag,omitempty"`
 
-	// Version: Specifies the format of the policy.
-	//
-	// Valid values are `0`, `1`, and `3`. Requests that specify an invalid
-	// value
-	// are rejected.
-	//
+	// Version: Specifies the format of the policy. Valid values are `0`,
+	// `1`, and `3`. Requests that specify an invalid value are rejected.
 	// Any operation that affects conditional role bindings must specify
-	// version
-	// `3`. This requirement applies to the following operations:
-	//
-	// * Getting a policy that includes a conditional role binding
-	// * Adding a conditional role binding to a policy
-	// * Changing a conditional role binding in a policy
-	// * Removing any role binding, with or without a condition, from a
-	// policy
-	//   that includes conditions
-	//
-	// **Important:** If you use IAM Conditions, you must include the `etag`
-	// field
-	// whenever you call `setIamPolicy`. If you omit this field, then IAM
-	// allows
-	// you to overwrite a version `3` policy with a version `1` policy, and
-	// all of
-	// the conditions in the version `3` policy are lost.
-	//
-	// If a policy does not include any conditions, operations on that
-	// policy may
-	// specify any valid version or leave the field unset.
-	//
-	// To learn which resources support conditions in their IAM policies,
-	// see the
-	// [IAM
-	// documentation](https://cloud.google.com/iam/help/conditions/resource-p
-	// olicies).
+	// version `3`. This requirement applies to the following operations: *
+	// Getting a policy that includes a conditional role binding * Adding a
+	// conditional role binding to a policy * Changing a conditional role
+	// binding in a policy * Removing any role binding, with or without a
+	// condition, from a policy that includes conditions **Important:** If
+	// you use IAM Conditions, you must include the `etag` field whenever
+	// you call `setIamPolicy`. If you omit this field, then IAM allows you
+	// to overwrite a version `3` policy with a version `1` policy, and all
+	// of the conditions in the version `3` policy are lost. If a policy
+	// does not include any conditions, operations on that policy may
+	// specify any valid version or leave the field unset. To learn which
+	// resources support conditions in their IAM policies, see the IAM
+	// documentation
+	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Version int64 `json:"version,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1112,10 +1126,10 @@ type Policy struct {
 
 	// ForceSendFields is a list of field names (e.g. "Bindings") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Bindings") to include in
@@ -1134,25 +1148,20 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 }
 
 // PolicyDelegationSettings: PolicyDelegationConfig allows
-// google-internal teams to use IAP for apps
-// hosted in a tenant project. Using these settings, the app can
-// delegate
-// permission check to happen against the linked customer project.
-// This is only ever supposed to be used by google internal teams, hence
-// the
-// restriction on the proto.
+// google-internal teams to use IAP for apps hosted in a tenant project.
+// Using these settings, the app can delegate permission check to happen
+// against the linked customer project. This is only ever supposed to be
+// used by google internal teams, hence the restriction on the proto.
 type PolicyDelegationSettings struct {
 	// IamPermission: Permission to check in IAM.
 	IamPermission string `json:"iamPermission,omitempty"`
 
 	// IamServiceName: The DNS name of the service (e.g.
-	// "resourcemanager.googleapis.com").
-	// This should be the domain name part of the full resource names
-	// (see
-	// https://aip.dev/122#full-resource-names), which is usually
-	// the same as IamServiceSpec.service of the service where the resource
-	// type
-	// is defined.
+	// "resourcemanager.googleapis.com"). This should be the domain name
+	// part of the full resource names (see
+	// https://aip.dev/122#full-resource-names), which is usually the same
+	// as IamServiceSpec.service of the service where the resource type is
+	// defined.
 	IamServiceName string `json:"iamServiceName,omitempty"`
 
 	// PolicyName: Policy name to be checked
@@ -1163,10 +1172,10 @@ type PolicyDelegationSettings struct {
 
 	// ForceSendFields is a list of field names (e.g. "IamPermission") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "IamPermission") to include
@@ -1184,31 +1193,33 @@ func (s *PolicyDelegationSettings) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// PolicyName: An internal name for an IAM policy, based on the resource
+// to which the policy applies. Not to be confused with a resource's
+// external full resource name. For more information on this
+// distinction, see go/iam-full-resource-names.
 type PolicyName struct {
+	// Id: Identifies an instance of the type. ID format varies by type. The
+	// ID format is defined in the IAM .service file that defines the type,
+	// either in path_mapping or in a comment.
 	Id string `json:"id,omitempty"`
 
-	// Region: For Cloud IAM:
-	// The location of the Policy.
-	// Must be empty or "global" for Policies owned by global IAM.  Must
-	// name a
-	// region from prodspec/cloud-iam-cloudspec for Regional IAM Policies,
-	// see
-	// go/iam-faq#where-is-iam-currently-deployed.
-	//
-	// For Local IAM:
-	// This field should be set to "local".
+	// Region: For Cloud IAM: The location of the Policy. Must be empty or
+	// "global" for Policies owned by global IAM. Must name a region from
+	// prodspec/cloud-iam-cloudspec for Regional IAM Policies, see
+	// go/iam-faq#where-is-iam-currently-deployed. For Local IAM: This field
+	// should be set to "local".
 	Region string `json:"region,omitempty"`
 
-	// Type: Valid values for type might be 'gce', 'gcs', 'project',
-	// 'account' etc.
+	// Type: Resource type. Types are defined in IAM's .service files. Valid
+	// values for type might be 'gce', 'gcs', 'project', 'account' etc.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Id") to include in API
@@ -1226,6 +1237,57 @@ func (s *PolicyName) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ReauthSettings: Configuration for IAP reauthentication policies.
+type ReauthSettings struct {
+	// MaxAge: Reauth session lifetime, how long before a user has to
+	// reauthenticate again.
+	MaxAge string `json:"maxAge,omitempty"`
+
+	// Method: Reauth method requested.
+	//
+	// Possible values:
+	//   "METHOD_UNSPECIFIED" - Reauthentication disabled.
+	//   "LOGIN" - Prompts the user to log in again.
+	//   "PASSWORD" - Deprecated, no longer accepted by IAP APIs.
+	//   "SECURE_KEY" - User must use their secure key 2nd factor device.
+	//   "ENROLLED_SECOND_FACTORS" - User can use any enabled 2nd factor.
+	Method string `json:"method,omitempty"`
+
+	// PolicyType: How IAP determines the effective policy in cases of
+	// hierarchial policies. Policies are merged from higher in the
+	// hierarchy to lower in the hierarchy.
+	//
+	// Possible values:
+	//   "POLICY_TYPE_UNSPECIFIED" - Default value. This value is unused.
+	//   "MINIMUM" - This policy acts as a minimum to other policies, lower
+	// in the hierarchy. Effective policy may only be the same or stricter.
+	//   "DEFAULT" - This policy acts as a default if no other reauth policy
+	// is set.
+	PolicyType string `json:"policyType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MaxAge") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MaxAge") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ReauthSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod ReauthSettings
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ResetIdentityAwareProxyClientSecretRequest: The request sent to
 // ResetIdentityAwareProxyClientSecret.
 type ResetIdentityAwareProxyClientSecretRequest struct {
@@ -1233,82 +1295,54 @@ type ResetIdentityAwareProxyClientSecretRequest struct {
 
 type Resource struct {
 	// Labels: The service defined labels of the resource on which the
-	// conditions will be
-	// evaluated. The semantics - including the key names - are vague to
-	// IAM.
-	// If the effective condition has a reference to a
-	// `resource.labels[foo]`
-	// construct, IAM consults with this map to retrieve the values
-	// associated
-	// with `foo` key for Conditions evaluation. If the provided key is not
-	// found
-	// in the labels map, the condition would evaluate to false.
-	//
-	// This field is in limited use. If your intended use case is not
-	// expected
-	// to express resource.labels attribute in IAM Conditions, leave this
-	// field
-	// empty. Before planning on using this attribute please:
-	// * Read go/iam-conditions-labels-comm and ensure your service can meet
-	// the
-	//   data availability and management requirements.
-	// * Talk to iam-conditions-eng@ about your use case.
+	// conditions will be evaluated. The semantics - including the key names
+	// - are vague to IAM. If the effective condition has a reference to a
+	// `resource.labels[foo]` construct, IAM consults with this map to
+	// retrieve the values associated with `foo` key for Conditions
+	// evaluation. If the provided key is not found in the labels map, the
+	// condition would evaluate to false. This field is in limited use. If
+	// your intended use case is not expected to express resource.labels
+	// attribute in IAM Conditions, leave this field empty. Before planning
+	// on using this attribute please: * Read go/iam-conditions-labels-comm
+	// and ensure your service can meet the data availability and management
+	// requirements. * Talk to iam-conditions-eng@ about your use case.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// Name: Name of the resource on which conditions will be
-	// evaluated.
-	// Must use the Relative Resource Name of the resource, which is the
-	// URI
-	// path of the resource without the leading "/". Examples
-	// are
-	// "projects/_/buckets/[BUCKET-ID]" for storage buckets
-	// or
+	// Name: Name of the resource on which conditions will be evaluated.
+	// Must use the Relative Resource Name of the resource, which is the URI
+	// path of the resource without the leading "/". Examples are
+	// "projects/_/buckets/[BUCKET-ID]" for storage buckets or
 	// "projects/[PROJECT-ID]/global/firewalls/[FIREWALL-ID]" for a
-	// firewall.
-	//
-	// This field is required for evaluating conditions with rules on
-	// resource
-	// names. For a `list` permission check, the resource.name value must be
-	// set
-	// to the parent resource. If the parent resource is a project, this
-	// field
-	// should be left unset.
+	// firewall. This field is required for evaluating conditions with rules
+	// on resource names. For a `list` permission check, the resource.name
+	// value must be set to the parent resource. If the parent resource is a
+	// project, this field should be left unset.
 	Name string `json:"name,omitempty"`
 
 	// Service: The name of the service this resource belongs to. It is
-	// configured using
-	// the official_service_name of the Service as defined in
-	// service
-	// configurations under //configs/cloud/resourcetypes.
-	// For example, the official_service_name of cloud resource manager
-	// service
-	// is set as 'cloudresourcemanager.googleapis.com' according
-	// to
-	// //configs/cloud/resourcetypes/google/cloud/resourcemanager/prod.yam
-	// l
+	// configured using the official_service_name of the Service as defined
+	// in service configurations under //configs/cloud/resourcetypes. For
+	// example, the official_service_name of cloud resource manager service
+	// is set as 'cloudresourcemanager.googleapis.com' according to
+	// //configs/cloud/resourcetypes/google/cloud/resourcemanager/prod.yaml
 	Service string `json:"service,omitempty"`
 
 	// Type: The public resource type name of the resource on which
-	// conditions will be
-	// evaluated. It is configured using the official_name of the
-	// ResourceType as
-	// defined in service configurations under
-	// //configs/cloud/resourcetypes.
-	// For example, the official_name for GCP projects is set
-	// as
-	// 'cloudresourcemanager.googleapis.com/Project' according
-	// to
-	// //configs/cloud/resourcetypes/google/cloud/resourcemanager/prod.yam
-	// l
+	// conditions will be evaluated. It is configured using the
+	// official_name of the ResourceType as defined in service
+	// configurations under //configs/cloud/resourcetypes. For example, the
+	// official_name for GCP projects is set as
+	// 'cloudresourcemanager.googleapis.com/Project' according to
+	// //configs/cloud/resourcetypes/google/cloud/resourcemanager/prod.yaml
 	// For details see go/iam-conditions-integration-guide.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Labels") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Labels") to include in API
@@ -1329,19 +1363,17 @@ func (s *Resource) MarshalJSON() ([]byte, error) {
 // SetIamPolicyRequest: Request message for `SetIamPolicy` method.
 type SetIamPolicyRequest struct {
 	// Policy: REQUIRED: The complete policy to be applied to the
-	// `resource`. The size of
-	// the policy is limited to a few 10s of KB. An empty policy is a
-	// valid policy but certain Cloud Platform services (such as
-	// Projects)
-	// might reject them.
+	// `resource`. The size of the policy is limited to a few 10s of KB. An
+	// empty policy is a valid policy but certain Google Cloud services
+	// (such as Projects) might reject them.
 	Policy *Policy `json:"policy,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Policy") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Policy") to include in API
@@ -1363,20 +1395,17 @@ func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 // method.
 type TestIamPermissionsRequest struct {
 	// Permissions: The set of permissions to check for the `resource`.
-	// Permissions with
-	// wildcards (such as '*' or 'storage.*') are not allowed. For
-	// more
-	// information see
-	// [IAM
-	// Overview](https://cloud.google.com/iam/docs/overview#permissions).
+	// Permissions with wildcards (such as `*` or `storage.*`) are not
+	// allowed. For more information see IAM Overview
+	// (https://cloud.google.com/iam/docs/overview#permissions).
 	Permissions []string `json:"permissions,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Permissions") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Permissions") to include
@@ -1398,8 +1427,7 @@ func (s *TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
 // method.
 type TestIamPermissionsResponse struct {
 	// Permissions: A subset of `TestPermissionsRequest.permissions` that
-	// the caller is
-	// allowed.
+	// the caller is allowed.
 	Permissions []string `json:"permissions,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1408,10 +1436,10 @@ type TestIamPermissionsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Permissions") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Permissions") to include
@@ -1429,6 +1457,46 @@ func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// TunnelDestGroup: A TunnelDestGroup.
+type TunnelDestGroup struct {
+	// Cidrs: Unordered list. List of CIDRs that this group applies to.
+	Cidrs []string `json:"cidrs,omitempty"`
+
+	// Fqdns: Unordered list. List of FQDNs that this group applies to.
+	Fqdns []string `json:"fqdns,omitempty"`
+
+	// Name: Required. Immutable. Identifier for the TunnelDestGroup. Must
+	// be unique within the project and contain only lower case letters
+	// (a-z) and dashes (-).
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Cidrs") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Cidrs") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TunnelDestGroup) MarshalJSON() ([]byte, error) {
+	type NoMethod TunnelDestGroup
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // method id "iap.projects.brands.create":
 
 type ProjectsBrandsCreateCall struct {
@@ -1441,18 +1509,16 @@ type ProjectsBrandsCreateCall struct {
 }
 
 // Create: Constructs a new OAuth brand for the project if one does not
-// exist.
-// The created brand is "internal only", meaning that OAuth clients
-// created
-// under it only accept requests from users who belong to the same G
-// Suite
-// organization as the project. The brand is created in an un-reviewed
-// status.
-// NOTE: The "internal only" status can be manually changed in the
-// Google
-// Cloud console. Requires that a brand does not already exist for
-// the
-// project, and that the specified support email is owned by the caller.
+// exist. The created brand is "internal only", meaning that OAuth
+// clients created under it only accept requests from users who belong
+// to the same Google Workspace organization as the project. The brand
+// is created in an un-reviewed status. NOTE: The "internal only" status
+// can be manually changed in the Google Cloud Console. Requires that a
+// brand does not already exist for the project, and that the specified
+// support email is owned by the caller.
+//
+//   - parent: GCP Project number/id under which the brand is to be
+//     created. In the following format: projects/{project_number/id}.
 func (r *ProjectsBrandsService) Create(parent string, brand *Brand) *ProjectsBrandsCreateCall {
 	c := &ProjectsBrandsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1487,7 +1553,7 @@ func (c *ProjectsBrandsCreateCall) Header() http.Header {
 
 func (c *ProjectsBrandsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1527,17 +1593,17 @@ func (c *ProjectsBrandsCreateCall) Do(opts ...googleapi.CallOption) (*Brand, err
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Brand{
 		ServerResponse: googleapi.ServerResponse{
@@ -1551,7 +1617,7 @@ func (c *ProjectsBrandsCreateCall) Do(opts ...googleapi.CallOption) (*Brand, err
 	}
 	return ret, nil
 	// {
-	//   "description": "Constructs a new OAuth brand for the project if one does not exist.\nThe created brand is \"internal only\", meaning that OAuth clients created\nunder it only accept requests from users who belong to the same G Suite\norganization as the project. The brand is created in an un-reviewed status.\nNOTE: The \"internal only\" status can be manually changed in the Google\nCloud console. Requires that a brand does not already exist for the\nproject, and that the specified support email is owned by the caller.",
+	//   "description": "Constructs a new OAuth brand for the project if one does not exist. The created brand is \"internal only\", meaning that OAuth clients created under it only accept requests from users who belong to the same Google Workspace organization as the project. The brand is created in an un-reviewed status. NOTE: The \"internal only\" status can be manually changed in the Google Cloud Console. Requires that a brand does not already exist for the project, and that the specified support email is owned by the caller.",
 	//   "flatPath": "v1/projects/{projectsId}/brands",
 	//   "httpMethod": "POST",
 	//   "id": "iap.projects.brands.create",
@@ -1560,7 +1626,7 @@ func (c *ProjectsBrandsCreateCall) Do(opts ...googleapi.CallOption) (*Brand, err
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. GCP Project number/id under which the brand is to be created.\nIn the following format: projects/{project_number/id}.",
+	//       "description": "Required. GCP Project number/id under which the brand is to be created. In the following format: projects/{project_number/id}.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -1593,6 +1659,9 @@ type ProjectsBrandsGetCall struct {
 }
 
 // Get: Retrieves the OAuth brand of the project.
+//
+//   - name: Name of the brand to be fetched. In the following format:
+//     projects/{project_number/id}/brands/{brand}.
 func (r *ProjectsBrandsService) Get(name string) *ProjectsBrandsGetCall {
 	c := &ProjectsBrandsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1636,7 +1705,7 @@ func (c *ProjectsBrandsGetCall) Header() http.Header {
 
 func (c *ProjectsBrandsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1674,17 +1743,17 @@ func (c *ProjectsBrandsGetCall) Do(opts ...googleapi.CallOption) (*Brand, error)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Brand{
 		ServerResponse: googleapi.ServerResponse{
@@ -1707,7 +1776,7 @@ func (c *ProjectsBrandsGetCall) Do(opts ...googleapi.CallOption) (*Brand, error)
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the brand to be fetched.\nIn the following format: projects/{project_number/id}/brands/{brand}.",
+	//       "description": "Required. Name of the brand to be fetched. In the following format: projects/{project_number/id}/brands/{brand}.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/brands/[^/]+$",
 	//       "required": true,
@@ -1737,6 +1806,9 @@ type ProjectsBrandsListCall struct {
 }
 
 // List: Lists the existing brands for the project.
+//
+//   - parent: GCP Project number/id. In the following format:
+//     projects/{project_number/id}.
 func (r *ProjectsBrandsService) List(parent string) *ProjectsBrandsListCall {
 	c := &ProjectsBrandsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1780,7 +1852,7 @@ func (c *ProjectsBrandsListCall) Header() http.Header {
 
 func (c *ProjectsBrandsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1818,17 +1890,17 @@ func (c *ProjectsBrandsListCall) Do(opts ...googleapi.CallOption) (*ListBrandsRe
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListBrandsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1851,7 +1923,7 @@ func (c *ProjectsBrandsListCall) Do(opts ...googleapi.CallOption) (*ListBrandsRe
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. GCP Project number/id.\nIn the following format: projects/{project_number/id}.",
+	//       "description": "Required. GCP Project number/id. In the following format: projects/{project_number/id}.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -1881,10 +1953,12 @@ type ProjectsBrandsIdentityAwareProxyClientsCreateCall struct {
 }
 
 // Create: Creates an Identity Aware Proxy (IAP) OAuth client. The
-// client is owned
-// by IAP. Requires that the brand for the project exists and that it
-// is
-// set for internal-only use.
+// client is owned by IAP. Requires that the brand for the project
+// exists and that it is set for internal-only use.
+//
+//   - parent: Path to create the client in. In the following format:
+//     projects/{project_number/id}/brands/{brand}. The project must
+//     belong to a G Suite account.
 func (r *ProjectsBrandsIdentityAwareProxyClientsService) Create(parent string, identityawareproxyclient *IdentityAwareProxyClient) *ProjectsBrandsIdentityAwareProxyClientsCreateCall {
 	c := &ProjectsBrandsIdentityAwareProxyClientsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1919,7 +1993,7 @@ func (c *ProjectsBrandsIdentityAwareProxyClientsCreateCall) Header() http.Header
 
 func (c *ProjectsBrandsIdentityAwareProxyClientsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1959,17 +2033,17 @@ func (c *ProjectsBrandsIdentityAwareProxyClientsCreateCall) Do(opts ...googleapi
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &IdentityAwareProxyClient{
 		ServerResponse: googleapi.ServerResponse{
@@ -1983,7 +2057,7 @@ func (c *ProjectsBrandsIdentityAwareProxyClientsCreateCall) Do(opts ...googleapi
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates an Identity Aware Proxy (IAP) OAuth client. The client is owned\nby IAP. Requires that the brand for the project exists and that it is\nset for internal-only use.",
+	//   "description": "Creates an Identity Aware Proxy (IAP) OAuth client. The client is owned by IAP. Requires that the brand for the project exists and that it is set for internal-only use.",
 	//   "flatPath": "v1/projects/{projectsId}/brands/{brandsId}/identityAwareProxyClients",
 	//   "httpMethod": "POST",
 	//   "id": "iap.projects.brands.identityAwareProxyClients.create",
@@ -1992,7 +2066,7 @@ func (c *ProjectsBrandsIdentityAwareProxyClientsCreateCall) Do(opts ...googleapi
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Path to create the client in.\nIn the following format:\nprojects/{project_number/id}/brands/{brand}.\nThe project must belong to a G Suite account.",
+	//       "description": "Required. Path to create the client in. In the following format: projects/{project_number/id}/brands/{brand}. The project must belong to a G Suite account.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/brands/[^/]+$",
 	//       "required": true,
@@ -2024,10 +2098,14 @@ type ProjectsBrandsIdentityAwareProxyClientsDeleteCall struct {
 }
 
 // Delete: Deletes an Identity Aware Proxy (IAP) OAuth client. Useful
-// for removing
-// obsolete clients, managing the number of clients in a given project,
-// and
-// cleaning up after tests. Requires that the client is owned by IAP.
+// for removing obsolete clients, managing the number of clients in a
+// given project, and cleaning up after tests. Requires that the client
+// is owned by IAP.
+//
+//   - name: Name of the Identity Aware Proxy client to be deleted. In the
+//     following format:
+//     projects/{project_number/id}/brands/{brand}/identityAwareProxyClient
+//     s/{client_id}.
 func (r *ProjectsBrandsIdentityAwareProxyClientsService) Delete(name string) *ProjectsBrandsIdentityAwareProxyClientsDeleteCall {
 	c := &ProjectsBrandsIdentityAwareProxyClientsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2061,7 +2139,7 @@ func (c *ProjectsBrandsIdentityAwareProxyClientsDeleteCall) Header() http.Header
 
 func (c *ProjectsBrandsIdentityAwareProxyClientsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2096,17 +2174,17 @@ func (c *ProjectsBrandsIdentityAwareProxyClientsDeleteCall) Do(opts ...googleapi
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -2120,7 +2198,7 @@ func (c *ProjectsBrandsIdentityAwareProxyClientsDeleteCall) Do(opts ...googleapi
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes an Identity Aware Proxy (IAP) OAuth client. Useful for removing\nobsolete clients, managing the number of clients in a given project, and\ncleaning up after tests. Requires that the client is owned by IAP.",
+	//   "description": "Deletes an Identity Aware Proxy (IAP) OAuth client. Useful for removing obsolete clients, managing the number of clients in a given project, and cleaning up after tests. Requires that the client is owned by IAP.",
 	//   "flatPath": "v1/projects/{projectsId}/brands/{brandsId}/identityAwareProxyClients/{identityAwareProxyClientsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "iap.projects.brands.identityAwareProxyClients.delete",
@@ -2129,7 +2207,7 @@ func (c *ProjectsBrandsIdentityAwareProxyClientsDeleteCall) Do(opts ...googleapi
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the Identity Aware Proxy client to be deleted.\nIn the following format:\nprojects/{project_number/id}/brands/{brand}/identityAwareProxyClients/{client_id}.",
+	//       "description": "Required. Name of the Identity Aware Proxy client to be deleted. In the following format: projects/{project_number/id}/brands/{brand}/identityAwareProxyClients/{client_id}.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/brands/[^/]+/identityAwareProxyClients/[^/]+$",
 	//       "required": true,
@@ -2158,8 +2236,13 @@ type ProjectsBrandsIdentityAwareProxyClientsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Retrieves an Identity Aware Proxy (IAP) OAuth client.
-// Requires that the client is owned by IAP.
+// Get: Retrieves an Identity Aware Proxy (IAP) OAuth client. Requires
+// that the client is owned by IAP.
+//
+//   - name: Name of the Identity Aware Proxy client to be fetched. In the
+//     following format:
+//     projects/{project_number/id}/brands/{brand}/identityAwareProxyClient
+//     s/{client_id}.
 func (r *ProjectsBrandsIdentityAwareProxyClientsService) Get(name string) *ProjectsBrandsIdentityAwareProxyClientsGetCall {
 	c := &ProjectsBrandsIdentityAwareProxyClientsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2203,7 +2286,7 @@ func (c *ProjectsBrandsIdentityAwareProxyClientsGetCall) Header() http.Header {
 
 func (c *ProjectsBrandsIdentityAwareProxyClientsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2241,17 +2324,17 @@ func (c *ProjectsBrandsIdentityAwareProxyClientsGetCall) Do(opts ...googleapi.Ca
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &IdentityAwareProxyClient{
 		ServerResponse: googleapi.ServerResponse{
@@ -2265,7 +2348,7 @@ func (c *ProjectsBrandsIdentityAwareProxyClientsGetCall) Do(opts ...googleapi.Ca
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves an Identity Aware Proxy (IAP) OAuth client.\nRequires that the client is owned by IAP.",
+	//   "description": "Retrieves an Identity Aware Proxy (IAP) OAuth client. Requires that the client is owned by IAP.",
 	//   "flatPath": "v1/projects/{projectsId}/brands/{brandsId}/identityAwareProxyClients/{identityAwareProxyClientsId}",
 	//   "httpMethod": "GET",
 	//   "id": "iap.projects.brands.identityAwareProxyClients.get",
@@ -2274,7 +2357,7 @@ func (c *ProjectsBrandsIdentityAwareProxyClientsGetCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the Identity Aware Proxy client to be fetched.\nIn the following format:\nprojects/{project_number/id}/brands/{brand}/identityAwareProxyClients/{client_id}.",
+	//       "description": "Required. Name of the Identity Aware Proxy client to be fetched. In the following format: projects/{project_number/id}/brands/{brand}/identityAwareProxyClients/{client_id}.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/brands/[^/]+/identityAwareProxyClients/[^/]+$",
 	//       "required": true,
@@ -2304,6 +2387,9 @@ type ProjectsBrandsIdentityAwareProxyClientsListCall struct {
 }
 
 // List: Lists the existing clients for the brand.
+//
+//   - parent: Full brand path. In the following format:
+//     projects/{project_number/id}/brands/{brand}.
 func (r *ProjectsBrandsIdentityAwareProxyClientsService) List(parent string) *ProjectsBrandsIdentityAwareProxyClientsListCall {
 	c := &ProjectsBrandsIdentityAwareProxyClientsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2311,24 +2397,19 @@ func (r *ProjectsBrandsIdentityAwareProxyClientsService) List(parent string) *Pr
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of clients to return. The service may return fewer than
-// this value.
-// If unspecified, at most 100 clients will be returned.
-// The maximum value is 1000; values above 1000 will be coerced to 1000.
+// of clients to return. The service may return fewer than this value.
+// If unspecified, at most 100 clients will be returned. The maximum
+// value is 1000; values above 1000 will be coerced to 1000.
 func (c *ProjectsBrandsIdentityAwareProxyClientsListCall) PageSize(pageSize int64) *ProjectsBrandsIdentityAwareProxyClientsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A page token,
-// received from a previous `ListIdentityAwareProxyClients`
-// call. Provide this to retrieve the subsequent page.
-//
-// When paginating, all other parameters provided
-// to
-// `ListIdentityAwareProxyClients` must match the call that provided the
-// page
-// token.
+// received from a previous `ListIdentityAwareProxyClients` call.
+// Provide this to retrieve the subsequent page. When paginating, all
+// other parameters provided to `ListIdentityAwareProxyClients` must
+// match the call that provided the page token.
 func (c *ProjectsBrandsIdentityAwareProxyClientsListCall) PageToken(pageToken string) *ProjectsBrandsIdentityAwareProxyClientsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -2371,7 +2452,7 @@ func (c *ProjectsBrandsIdentityAwareProxyClientsListCall) Header() http.Header {
 
 func (c *ProjectsBrandsIdentityAwareProxyClientsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2410,17 +2491,17 @@ func (c *ProjectsBrandsIdentityAwareProxyClientsListCall) Do(opts ...googleapi.C
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListIdentityAwareProxyClientsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2443,18 +2524,18 @@ func (c *ProjectsBrandsIdentityAwareProxyClientsListCall) Do(opts ...googleapi.C
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "The maximum number of clients to return. The service may return fewer than\nthis value.\nIf unspecified, at most 100 clients will be returned.\nThe maximum value is 1000; values above 1000 will be coerced to 1000.",
+	//       "description": "The maximum number of clients to return. The service may return fewer than this value. If unspecified, at most 100 clients will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A page token, received from a previous `ListIdentityAwareProxyClients`\ncall. Provide this to retrieve the subsequent page.\n\nWhen paginating, all other parameters provided to\n`ListIdentityAwareProxyClients` must match the call that provided the page\ntoken.",
+	//       "description": "A page token, received from a previous `ListIdentityAwareProxyClients` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListIdentityAwareProxyClients` must match the call that provided the page token.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Full brand path.\nIn the following format: projects/{project_number/id}/brands/{brand}.",
+	//       "description": "Required. Full brand path. In the following format: projects/{project_number/id}/brands/{brand}.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/brands/[^/]+$",
 	//       "required": true,
@@ -2505,8 +2586,13 @@ type ProjectsBrandsIdentityAwareProxyClientsResetSecretCall struct {
 }
 
 // ResetSecret: Resets an Identity Aware Proxy (IAP) OAuth client
-// secret. Useful if the
-// secret was compromised. Requires that the client is owned by IAP.
+// secret. Useful if the secret was compromised. Requires that the
+// client is owned by IAP.
+//
+//   - name: Name of the Identity Aware Proxy client to that will have its
+//     secret reset. In the following format:
+//     projects/{project_number/id}/brands/{brand}/identityAwareProxyClient
+//     s/{client_id}.
 func (r *ProjectsBrandsIdentityAwareProxyClientsService) ResetSecret(name string, resetidentityawareproxyclientsecretrequest *ResetIdentityAwareProxyClientSecretRequest) *ProjectsBrandsIdentityAwareProxyClientsResetSecretCall {
 	c := &ProjectsBrandsIdentityAwareProxyClientsResetSecretCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2541,7 +2627,7 @@ func (c *ProjectsBrandsIdentityAwareProxyClientsResetSecretCall) Header() http.H
 
 func (c *ProjectsBrandsIdentityAwareProxyClientsResetSecretCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2581,17 +2667,17 @@ func (c *ProjectsBrandsIdentityAwareProxyClientsResetSecretCall) Do(opts ...goog
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &IdentityAwareProxyClient{
 		ServerResponse: googleapi.ServerResponse{
@@ -2605,7 +2691,7 @@ func (c *ProjectsBrandsIdentityAwareProxyClientsResetSecretCall) Do(opts ...goog
 	}
 	return ret, nil
 	// {
-	//   "description": "Resets an Identity Aware Proxy (IAP) OAuth client secret. Useful if the\nsecret was compromised. Requires that the client is owned by IAP.",
+	//   "description": "Resets an Identity Aware Proxy (IAP) OAuth client secret. Useful if the secret was compromised. Requires that the client is owned by IAP.",
 	//   "flatPath": "v1/projects/{projectsId}/brands/{brandsId}/identityAwareProxyClients/{identityAwareProxyClientsId}:resetSecret",
 	//   "httpMethod": "POST",
 	//   "id": "iap.projects.brands.identityAwareProxyClients.resetSecret",
@@ -2614,7 +2700,7 @@ func (c *ProjectsBrandsIdentityAwareProxyClientsResetSecretCall) Do(opts ...goog
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the Identity Aware Proxy client to that will have its\nsecret reset. In the following format:\nprojects/{project_number/id}/brands/{brand}/identityAwareProxyClients/{client_id}.",
+	//       "description": "Required. Name of the Identity Aware Proxy client to that will have its secret reset. In the following format: projects/{project_number/id}/brands/{brand}/identityAwareProxyClients/{client_id}.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/brands/[^/]+/identityAwareProxyClients/[^/]+$",
 	//       "required": true,
@@ -2635,6 +2721,809 @@ func (c *ProjectsBrandsIdentityAwareProxyClientsResetSecretCall) Do(opts ...goog
 
 }
 
+// method id "iap.projects.iap_tunnel.locations.destGroups.create":
+
+type ProjectsIapTunnelLocationsDestGroupsCreateCall struct {
+	s               *Service
+	parent          string
+	tunneldestgroup *TunnelDestGroup
+	urlParams_      gensupport.URLParams
+	ctx_            context.Context
+	header_         http.Header
+}
+
+// Create: Creates a new TunnelDestGroup.
+//
+//   - parent: Google Cloud Project ID and location. In the following
+//     format:
+//     `projects/{project_number/id}/iap_tunnel/locations/{location}`.
+func (r *ProjectsIapTunnelLocationsDestGroupsService) Create(parent string, tunneldestgroup *TunnelDestGroup) *ProjectsIapTunnelLocationsDestGroupsCreateCall {
+	c := &ProjectsIapTunnelLocationsDestGroupsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.tunneldestgroup = tunneldestgroup
+	return c
+}
+
+// TunnelDestGroupId sets the optional parameter "tunnelDestGroupId":
+// Required. The ID to use for the TunnelDestGroup, which becomes the
+// final component of the resource name. This value must be 4-63
+// characters, and valid characters are `[a-z]-`.
+func (c *ProjectsIapTunnelLocationsDestGroupsCreateCall) TunnelDestGroupId(tunnelDestGroupId string) *ProjectsIapTunnelLocationsDestGroupsCreateCall {
+	c.urlParams_.Set("tunnelDestGroupId", tunnelDestGroupId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsIapTunnelLocationsDestGroupsCreateCall) Fields(s ...googleapi.Field) *ProjectsIapTunnelLocationsDestGroupsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsIapTunnelLocationsDestGroupsCreateCall) Context(ctx context.Context) *ProjectsIapTunnelLocationsDestGroupsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsIapTunnelLocationsDestGroupsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsIapTunnelLocationsDestGroupsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.tunneldestgroup)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/destGroups")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "iap.projects.iap_tunnel.locations.destGroups.create" call.
+// Exactly one of *TunnelDestGroup or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *TunnelDestGroup.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsIapTunnelLocationsDestGroupsCreateCall) Do(opts ...googleapi.CallOption) (*TunnelDestGroup, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &TunnelDestGroup{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new TunnelDestGroup.",
+	//   "flatPath": "v1/projects/{projectsId}/iap_tunnel/locations/{locationsId}/destGroups",
+	//   "httpMethod": "POST",
+	//   "id": "iap.projects.iap_tunnel.locations.destGroups.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. Google Cloud Project ID and location. In the following format: `projects/{project_number/id}/iap_tunnel/locations/{location}`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/iap_tunnel/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "tunnelDestGroupId": {
+	//       "description": "Required. The ID to use for the TunnelDestGroup, which becomes the final component of the resource name. This value must be 4-63 characters, and valid characters are `[a-z]-`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/destGroups",
+	//   "request": {
+	//     "$ref": "TunnelDestGroup"
+	//   },
+	//   "response": {
+	//     "$ref": "TunnelDestGroup"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "iap.projects.iap_tunnel.locations.destGroups.delete":
+
+type ProjectsIapTunnelLocationsDestGroupsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a TunnelDestGroup.
+//
+//   - name: Name of the TunnelDestGroup to delete. In the following
+//     format:
+//     `projects/{project_number/id}/iap_tunnel/locations/{location}/destGr
+//     oups/{dest_group}`.
+func (r *ProjectsIapTunnelLocationsDestGroupsService) Delete(name string) *ProjectsIapTunnelLocationsDestGroupsDeleteCall {
+	c := &ProjectsIapTunnelLocationsDestGroupsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsIapTunnelLocationsDestGroupsDeleteCall) Fields(s ...googleapi.Field) *ProjectsIapTunnelLocationsDestGroupsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsIapTunnelLocationsDestGroupsDeleteCall) Context(ctx context.Context) *ProjectsIapTunnelLocationsDestGroupsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsIapTunnelLocationsDestGroupsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsIapTunnelLocationsDestGroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "iap.projects.iap_tunnel.locations.destGroups.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsIapTunnelLocationsDestGroupsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a TunnelDestGroup.",
+	//   "flatPath": "v1/projects/{projectsId}/iap_tunnel/locations/{locationsId}/destGroups/{destGroupsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "iap.projects.iap_tunnel.locations.destGroups.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the TunnelDestGroup to delete. In the following format: `projects/{project_number/id}/iap_tunnel/locations/{location}/destGroups/{dest_group}`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/iap_tunnel/locations/[^/]+/destGroups/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "iap.projects.iap_tunnel.locations.destGroups.get":
+
+type ProjectsIapTunnelLocationsDestGroupsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Retrieves an existing TunnelDestGroup.
+//
+//   - name: Name of the TunnelDestGroup to be fetched. In the following
+//     format:
+//     `projects/{project_number/id}/iap_tunnel/locations/{location}/destGr
+//     oups/{dest_group}`.
+func (r *ProjectsIapTunnelLocationsDestGroupsService) Get(name string) *ProjectsIapTunnelLocationsDestGroupsGetCall {
+	c := &ProjectsIapTunnelLocationsDestGroupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsIapTunnelLocationsDestGroupsGetCall) Fields(s ...googleapi.Field) *ProjectsIapTunnelLocationsDestGroupsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsIapTunnelLocationsDestGroupsGetCall) IfNoneMatch(entityTag string) *ProjectsIapTunnelLocationsDestGroupsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsIapTunnelLocationsDestGroupsGetCall) Context(ctx context.Context) *ProjectsIapTunnelLocationsDestGroupsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsIapTunnelLocationsDestGroupsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsIapTunnelLocationsDestGroupsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "iap.projects.iap_tunnel.locations.destGroups.get" call.
+// Exactly one of *TunnelDestGroup or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *TunnelDestGroup.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsIapTunnelLocationsDestGroupsGetCall) Do(opts ...googleapi.CallOption) (*TunnelDestGroup, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &TunnelDestGroup{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves an existing TunnelDestGroup.",
+	//   "flatPath": "v1/projects/{projectsId}/iap_tunnel/locations/{locationsId}/destGroups/{destGroupsId}",
+	//   "httpMethod": "GET",
+	//   "id": "iap.projects.iap_tunnel.locations.destGroups.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the TunnelDestGroup to be fetched. In the following format: `projects/{project_number/id}/iap_tunnel/locations/{location}/destGroups/{dest_group}`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/iap_tunnel/locations/[^/]+/destGroups/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "TunnelDestGroup"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "iap.projects.iap_tunnel.locations.destGroups.list":
+
+type ProjectsIapTunnelLocationsDestGroupsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists the existing TunnelDestGroups. To group across all
+// locations, use a `-` as the location ID. For example:
+// `/v1/projects/123/iap_tunnel/locations/-/destGroups`
+//
+//   - parent: Google Cloud Project ID and location. In the following
+//     format:
+//     `projects/{project_number/id}/iap_tunnel/locations/{location}`. A
+//     `-` can be used for the location to group across all locations.
+func (r *ProjectsIapTunnelLocationsDestGroupsService) List(parent string) *ProjectsIapTunnelLocationsDestGroupsListCall {
+	c := &ProjectsIapTunnelLocationsDestGroupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of groups to return. The service might return fewer than this value.
+// If unspecified, at most 100 groups are returned. The maximum value is
+// 1000; values above 1000 are coerced to 1000.
+func (c *ProjectsIapTunnelLocationsDestGroupsListCall) PageSize(pageSize int64) *ProjectsIapTunnelLocationsDestGroupsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `ListTunnelDestGroups` call. Provide this to
+// retrieve the subsequent page. When paginating, all other parameters
+// provided to `ListTunnelDestGroups` must match the call that provided
+// the page token.
+func (c *ProjectsIapTunnelLocationsDestGroupsListCall) PageToken(pageToken string) *ProjectsIapTunnelLocationsDestGroupsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsIapTunnelLocationsDestGroupsListCall) Fields(s ...googleapi.Field) *ProjectsIapTunnelLocationsDestGroupsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsIapTunnelLocationsDestGroupsListCall) IfNoneMatch(entityTag string) *ProjectsIapTunnelLocationsDestGroupsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsIapTunnelLocationsDestGroupsListCall) Context(ctx context.Context) *ProjectsIapTunnelLocationsDestGroupsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsIapTunnelLocationsDestGroupsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsIapTunnelLocationsDestGroupsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/destGroups")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "iap.projects.iap_tunnel.locations.destGroups.list" call.
+// Exactly one of *ListTunnelDestGroupsResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListTunnelDestGroupsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsIapTunnelLocationsDestGroupsListCall) Do(opts ...googleapi.CallOption) (*ListTunnelDestGroupsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListTunnelDestGroupsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists the existing TunnelDestGroups. To group across all locations, use a `-` as the location ID. For example: `/v1/projects/123/iap_tunnel/locations/-/destGroups`",
+	//   "flatPath": "v1/projects/{projectsId}/iap_tunnel/locations/{locationsId}/destGroups",
+	//   "httpMethod": "GET",
+	//   "id": "iap.projects.iap_tunnel.locations.destGroups.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The maximum number of groups to return. The service might return fewer than this value. If unspecified, at most 100 groups are returned. The maximum value is 1000; values above 1000 are coerced to 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A page token, received from a previous `ListTunnelDestGroups` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListTunnelDestGroups` must match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Google Cloud Project ID and location. In the following format: `projects/{project_number/id}/iap_tunnel/locations/{location}`. A `-` can be used for the location to group across all locations.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/iap_tunnel/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/destGroups",
+	//   "response": {
+	//     "$ref": "ListTunnelDestGroupsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsIapTunnelLocationsDestGroupsListCall) Pages(ctx context.Context, f func(*ListTunnelDestGroupsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "iap.projects.iap_tunnel.locations.destGroups.patch":
+
+type ProjectsIapTunnelLocationsDestGroupsPatchCall struct {
+	s               *Service
+	name            string
+	tunneldestgroup *TunnelDestGroup
+	urlParams_      gensupport.URLParams
+	ctx_            context.Context
+	header_         http.Header
+}
+
+// Patch: Updates a TunnelDestGroup.
+//
+//   - name: Immutable. Identifier for the TunnelDestGroup. Must be unique
+//     within the project and contain only lower case letters (a-z) and
+//     dashes (-).
+func (r *ProjectsIapTunnelLocationsDestGroupsService) Patch(name string, tunneldestgroup *TunnelDestGroup) *ProjectsIapTunnelLocationsDestGroupsPatchCall {
+	c := &ProjectsIapTunnelLocationsDestGroupsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.tunneldestgroup = tunneldestgroup
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": A field mask
+// that specifies which IAP settings to update. If omitted, then all of
+// the settings are updated. See
+// https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
+func (c *ProjectsIapTunnelLocationsDestGroupsPatchCall) UpdateMask(updateMask string) *ProjectsIapTunnelLocationsDestGroupsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsIapTunnelLocationsDestGroupsPatchCall) Fields(s ...googleapi.Field) *ProjectsIapTunnelLocationsDestGroupsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsIapTunnelLocationsDestGroupsPatchCall) Context(ctx context.Context) *ProjectsIapTunnelLocationsDestGroupsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsIapTunnelLocationsDestGroupsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsIapTunnelLocationsDestGroupsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.tunneldestgroup)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "iap.projects.iap_tunnel.locations.destGroups.patch" call.
+// Exactly one of *TunnelDestGroup or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *TunnelDestGroup.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsIapTunnelLocationsDestGroupsPatchCall) Do(opts ...googleapi.CallOption) (*TunnelDestGroup, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &TunnelDestGroup{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a TunnelDestGroup.",
+	//   "flatPath": "v1/projects/{projectsId}/iap_tunnel/locations/{locationsId}/destGroups/{destGroupsId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "iap.projects.iap_tunnel.locations.destGroups.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Immutable. Identifier for the TunnelDestGroup. Must be unique within the project and contain only lower case letters (a-z) and dashes (-).",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/iap_tunnel/locations/[^/]+/destGroups/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "A field mask that specifies which IAP settings to update. If omitted, then all of the settings are updated. See https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "TunnelDestGroup"
+	//   },
+	//   "response": {
+	//     "$ref": "TunnelDestGroup"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "iap.getIamPolicy":
 
 type V1GetIamPolicyCall struct {
@@ -2647,12 +3536,14 @@ type V1GetIamPolicyCall struct {
 }
 
 // GetIamPolicy: Gets the access control policy for an Identity-Aware
-// Proxy protected
-// resource.
-// More information about managing access via IAP can be found
-// at:
-// https://cloud.google.com/iap/docs/managing-access#managing_access_
-// via_the_api
+// Proxy protected resource. More information about managing access via
+// IAP can be found at:
+// https://cloud.google.com/iap/docs/managing-access#managing_access_via_the_api
+//
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *V1Service) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *V1GetIamPolicyCall {
 	c := &V1GetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2687,7 +3578,7 @@ func (c *V1GetIamPolicyCall) Header() http.Header {
 
 func (c *V1GetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2727,17 +3618,17 @@ func (c *V1GetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -2751,7 +3642,7 @@ func (c *V1GetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the access control policy for an Identity-Aware Proxy protected\nresource.\nMore information about managing access via IAP can be found at:\nhttps://cloud.google.com/iap/docs/managing-access#managing_access_via_the_api",
+	//   "description": "Gets the access control policy for an Identity-Aware Proxy protected resource. More information about managing access via IAP can be found at: https://cloud.google.com/iap/docs/managing-access#managing_access_via_the_api",
 	//   "flatPath": "v1/{v1Id}:getIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "iap.getIamPolicy",
@@ -2760,7 +3651,7 @@ func (c *V1GetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested.\nSee the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^.*$",
 	//       "required": true,
@@ -2794,6 +3685,10 @@ type V1GetIapSettingsCall struct {
 
 // GetIapSettings: Gets the IAP settings on a particular IAP protected
 // resource.
+//
+//   - name: The resource name for which to retrieve the settings.
+//     Authorization: Requires the `getSettings` permission for the
+//     associated resource.
 func (r *V1Service) GetIapSettings(name string) *V1GetIapSettingsCall {
 	c := &V1GetIapSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2837,7 +3732,7 @@ func (c *V1GetIapSettingsCall) Header() http.Header {
 
 func (c *V1GetIapSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2875,17 +3770,17 @@ func (c *V1GetIapSettingsCall) Do(opts ...googleapi.CallOption) (*IapSettings, e
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &IapSettings{
 		ServerResponse: googleapi.ServerResponse{
@@ -2908,7 +3803,7 @@ func (c *V1GetIapSettingsCall) Do(opts ...googleapi.CallOption) (*IapSettings, e
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name for which to retrieve the settings.\nAuthorization: Requires the `getSettings` permission for the associated\nresource.",
+	//       "description": "Required. The resource name for which to retrieve the settings. Authorization: Requires the `getSettings` permission for the associated resource.",
 	//       "location": "path",
 	//       "pattern": "^.*$",
 	//       "required": true,
@@ -2938,12 +3833,14 @@ type V1SetIamPolicyCall struct {
 }
 
 // SetIamPolicy: Sets the access control policy for an Identity-Aware
-// Proxy protected
-// resource. Replaces any existing policy.
-// More information about managing access via IAP can be found
-// at:
-// https://cloud.google.com/iap/docs/managing-access#managing_access_
-// via_the_api
+// Proxy protected resource. Replaces any existing policy. More
+// information about managing access via IAP can be found at:
+// https://cloud.google.com/iap/docs/managing-access#managing_access_via_the_api
+//
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *V1Service) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *V1SetIamPolicyCall {
 	c := &V1SetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2978,7 +3875,7 @@ func (c *V1SetIamPolicyCall) Header() http.Header {
 
 func (c *V1SetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3018,17 +3915,17 @@ func (c *V1SetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -3042,7 +3939,7 @@ func (c *V1SetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets the access control policy for an Identity-Aware Proxy protected\nresource. Replaces any existing policy.\nMore information about managing access via IAP can be found at:\nhttps://cloud.google.com/iap/docs/managing-access#managing_access_via_the_api",
+	//   "description": "Sets the access control policy for an Identity-Aware Proxy protected resource. Replaces any existing policy. More information about managing access via IAP can be found at: https://cloud.google.com/iap/docs/managing-access#managing_access_via_the_api",
 	//   "flatPath": "v1/{v1Id}:setIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "iap.setIamPolicy",
@@ -3051,7 +3948,7 @@ func (c *V1SetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified.\nSee the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^.*$",
 	//       "required": true,
@@ -3084,12 +3981,14 @@ type V1TestIamPermissionsCall struct {
 }
 
 // TestIamPermissions: Returns permissions that a caller has on the
-// Identity-Aware Proxy protected
-// resource.
-// More information about managing access via IAP can be found
-// at:
-// https://cloud.google.com/iap/docs/managing-access#managing_access_
-// via_the_api
+// Identity-Aware Proxy protected resource. More information about
+// managing access via IAP can be found at:
+// https://cloud.google.com/iap/docs/managing-access#managing_access_via_the_api
+//
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *V1Service) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *V1TestIamPermissionsCall {
 	c := &V1TestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3124,7 +4023,7 @@ func (c *V1TestIamPermissionsCall) Header() http.Header {
 
 func (c *V1TestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3164,17 +4063,17 @@ func (c *V1TestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*TestIamPer
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TestIamPermissionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3188,7 +4087,7 @@ func (c *V1TestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*TestIamPer
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns permissions that a caller has on the Identity-Aware Proxy protected\nresource.\nMore information about managing access via IAP can be found at:\nhttps://cloud.google.com/iap/docs/managing-access#managing_access_via_the_api",
+	//   "description": "Returns permissions that a caller has on the Identity-Aware Proxy protected resource. More information about managing access via IAP can be found at: https://cloud.google.com/iap/docs/managing-access#managing_access_via_the_api",
 	//   "flatPath": "v1/{v1Id}:testIamPermissions",
 	//   "httpMethod": "POST",
 	//   "id": "iap.testIamPermissions",
@@ -3197,7 +4096,7 @@ func (c *V1TestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*TestIamPer
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested.\nSee the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^.*$",
 	//       "required": true,
@@ -3230,8 +4129,10 @@ type V1UpdateIapSettingsCall struct {
 }
 
 // UpdateIapSettings: Updates the IAP settings on a particular IAP
-// protected resource. It
-// replaces all fields unless the `update_mask` is set.
+// protected resource. It replaces all fields unless the `update_mask`
+// is set.
+//
+// - name: The resource name of the IAP protected resource.
 func (r *V1Service) UpdateIapSettings(name string, iapsettings *IapSettings) *V1UpdateIapSettingsCall {
 	c := &V1UpdateIapSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3240,11 +4141,9 @@ func (r *V1Service) UpdateIapSettings(name string, iapsettings *IapSettings) *V1
 }
 
 // UpdateMask sets the optional parameter "updateMask": The field mask
-// specifying which IAP settings should be updated.
-// If omitted, the all of the settings are updated.
-// See
-// https://developers.google.com/protocol-buffers/docs/reference/goog
-// le.protobuf#fieldmask
+// specifying which IAP settings should be updated. If omitted, the all
+// of the settings are updated. See
+// https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
 func (c *V1UpdateIapSettingsCall) UpdateMask(updateMask string) *V1UpdateIapSettingsCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -3277,7 +4176,7 @@ func (c *V1UpdateIapSettingsCall) Header() http.Header {
 
 func (c *V1UpdateIapSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3317,17 +4216,17 @@ func (c *V1UpdateIapSettingsCall) Do(opts ...googleapi.CallOption) (*IapSettings
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &IapSettings{
 		ServerResponse: googleapi.ServerResponse{
@@ -3341,7 +4240,7 @@ func (c *V1UpdateIapSettingsCall) Do(opts ...googleapi.CallOption) (*IapSettings
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the IAP settings on a particular IAP protected resource. It\nreplaces all fields unless the `update_mask` is set.",
+	//   "description": "Updates the IAP settings on a particular IAP protected resource. It replaces all fields unless the `update_mask` is set.",
 	//   "flatPath": "v1/{v1Id}:iapSettings",
 	//   "httpMethod": "PATCH",
 	//   "id": "iap.updateIapSettings",
@@ -3357,7 +4256,7 @@ func (c *V1UpdateIapSettingsCall) Do(opts ...googleapi.CallOption) (*IapSettings
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "The field mask specifying which IAP settings should be updated.\nIf omitted, the all of the settings are updated. See\nhttps://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask",
+	//       "description": "The field mask specifying which IAP settings should be updated. If omitted, the all of the settings are updated. See https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"

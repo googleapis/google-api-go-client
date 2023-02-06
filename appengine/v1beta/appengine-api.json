@@ -6,10 +6,10 @@
           "description": "View and manage your applications deployed on Google App Engine"
         },
         "https://www.googleapis.com/auth/cloud-platform": {
-          "description": "View and manage your data across Google Cloud Platform services"
+          "description": "See, edit, configure, and delete your Google Cloud data and see the email address for your Google Account."
         },
         "https://www.googleapis.com/auth/cloud-platform.read-only": {
-          "description": "View your data across Google Cloud Platform services"
+          "description": "View your data across Google Cloud services and see the email address of your Google Account"
         }
       }
     }
@@ -20,6 +20,7 @@
   "description": "Provisions and manages developers' App Engine applications.",
   "discoveryVersion": "v1",
   "documentationLink": "https://cloud.google.com/appengine/docs/admin-api/",
+  "fullyEncodeReservedExpansion": true,
   "icons": {
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
     "x32": "http://www.google.com/images/icons/product/search-32.gif"
@@ -112,12 +113,18 @@
     "apps": {
       "methods": {
         "create": {
-          "description": "Creates an App Engine application for a Google Cloud Platform project. Required fields:\nid - The ID of the target Cloud Platform project.\nlocation - The region (https://cloud.google.com/appengine/docs/locations) where you want the App Engine application located.For more information about App Engine applications, see Managing Projects, Applications, and Billing (https://cloud.google.com/appengine/docs/standard/python/console/).",
+          "description": "Creates an App Engine application for a Google Cloud Platform project. Required fields: id - The ID of the target Cloud Platform project. location - The region (https://cloud.google.com/appengine/docs/locations) where you want the App Engine application located.For more information about App Engine applications, see Managing Projects, Applications, and Billing (https://cloud.google.com/appengine/docs/standard/python/console/).",
           "flatPath": "v1beta/apps",
           "httpMethod": "POST",
           "id": "appengine.apps.create",
           "parameterOrder": [],
-          "parameters": {},
+          "parameters": {
+            "parent": {
+              "description": "The project and location in which the application should be created, specified in the format projects/*/locations/*",
+              "location": "query",
+              "type": "string"
+            }
+          },
           "path": "v1beta/apps",
           "request": {
             "$ref": "Application"
@@ -156,7 +163,7 @@
           ]
         },
         "patch": {
-          "description": "Updates the specified Application resource. You can update the following fields:\nauth_domain - Google authentication domain for controlling user access to the application.\ndefault_cookie_expiration - Cookie expiration policy for the application.",
+          "description": "Updates the specified Application resource. You can update the following fields: auth_domain - Google authentication domain for controlling user access to the application. default_cookie_expiration - Cookie expiration policy for the application. iap - Identity-Aware Proxy properties for the application.",
           "flatPath": "v1beta/apps/{appsId}",
           "httpMethod": "PATCH",
           "id": "appengine.apps.patch",
@@ -171,7 +178,7 @@
               "type": "string"
             },
             "updateMask": {
-              "description": "Standard field mask for the set of fields to be updated.",
+              "description": "Required. Standard field mask for the set of fields to be updated.",
               "format": "google-fieldmask",
               "location": "query",
               "type": "string"
@@ -305,6 +312,10 @@
                     "BASIC_CERTIFICATE",
                     "FULL_CERTIFICATE"
                   ],
+                  "enumDescriptions": [
+                    "Basic certificate information, including applicable domains and expiration date.",
+                    "The information from BASIC_CERTIFICATE, plus detailed information on the domain mappings that have this certificate mapped."
+                  ],
                   "location": "query",
                   "type": "string"
                 }
@@ -350,6 +361,10 @@
                   "enum": [
                     "BASIC_CERTIFICATE",
                     "FULL_CERTIFICATE"
+                  ],
+                  "enumDescriptions": [
+                    "Basic certificate information, including applicable domains and expiration date.",
+                    "The information from BASIC_CERTIFICATE, plus detailed information on the domain mappings that have this certificate mapped."
                   ],
                   "location": "query",
                   "type": "string"
@@ -471,6 +486,11 @@
                     "UNSPECIFIED_DOMAIN_OVERRIDE_STRATEGY",
                     "STRICT",
                     "OVERRIDE"
+                  ],
+                  "enumDescriptions": [
+                    "Strategy unspecified. Defaults to STRICT.",
+                    "Overrides not allowed. If a mapping already exists for the specified domain, the request will return an ALREADY_EXISTS (409).",
+                    "Overrides allowed. If a mapping already exists for the specified domain, the request will overwrite it. Note that this might stop another Google product from serving. For example, if the domain is mapped to another App Engine application, that app will no longer serve from that domain."
                   ],
                   "location": "query",
                   "type": "string"
@@ -611,7 +631,7 @@
                   "type": "string"
                 },
                 "updateMask": {
-                  "description": "Standard field mask for the set of fields to be updated.",
+                  "description": "Required. Standard field mask for the set of fields to be updated.",
                   "format": "google-fieldmask",
                   "location": "query",
                   "type": "string"
@@ -889,18 +909,18 @@
                   "type": "string"
                 },
                 "filter": {
-                  "description": "The standard list filter.",
+                  "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like \"displayName=tokyo\", and is documented in more detail in AIP-160 (https://google.aip.dev/160).",
                   "location": "query",
                   "type": "string"
                 },
                 "pageSize": {
-                  "description": "The standard list page size.",
+                  "description": "The maximum number of results to return. If not set, the service selects a default.",
                   "format": "int32",
                   "location": "query",
                   "type": "integer"
                 },
                 "pageToken": {
-                  "description": "The standard list page token.",
+                  "description": "A page token received from the next_page_token field in the response. Send that page token to receive the subsequent page.",
                   "location": "query",
                   "type": "string"
                 }
@@ -1127,7 +1147,7 @@
                   "type": "string"
                 },
                 "updateMask": {
-                  "description": "Standard field mask for the set of fields to be updated.",
+                  "description": "Required. Standard field mask for the set of fields to be updated.",
                   "format": "google-fieldmask",
                   "location": "query",
                   "type": "string"
@@ -1255,6 +1275,10 @@
                         "BASIC",
                         "FULL"
                       ],
+                      "enumDescriptions": [
+                        "Basic version information including scaling and inbound services, but not detailed deployment information.",
+                        "The information from BASIC, plus detailed information about the deployment. This format is required when creating resources, but is not returned in Get or List by default."
+                      ],
                       "location": "query",
                       "type": "string"
                     }
@@ -1308,6 +1332,10 @@
                         "BASIC",
                         "FULL"
                       ],
+                      "enumDescriptions": [
+                        "Basic version information including scaling and inbound services, but not detailed deployment information.",
+                        "The information from BASIC, plus detailed information about the deployment. This format is required when creating resources, but is not returned in Get or List by default."
+                      ],
                       "location": "query",
                       "type": "string"
                     }
@@ -1323,7 +1351,7 @@
                   ]
                 },
                 "patch": {
-                  "description": "Updates the specified Version resource. You can specify the following fields depending on the App Engine environment and type of scaling that the version resource uses:Standard environment\ninstance_class (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta/apps.services.versions#Version.FIELDS.instance_class)automatic scaling in the standard environment:\nautomatic_scaling.min_idle_instances (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta/apps.services.versions#Version.FIELDS.automatic_scaling)\nautomatic_scaling.max_idle_instances (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta/apps.services.versions#Version.FIELDS.automatic_scaling)\nautomaticScaling.standard_scheduler_settings.max_instances (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta/apps.services.versions#StandardSchedulerSettings)\nautomaticScaling.standard_scheduler_settings.min_instances (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta/apps.services.versions#StandardSchedulerSettings)\nautomaticScaling.standard_scheduler_settings.target_cpu_utilization (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta/apps.services.versions#StandardSchedulerSettings)\nautomaticScaling.standard_scheduler_settings.target_throughput_utilization (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta/apps.services.versions#StandardSchedulerSettings)basic scaling or manual scaling in the standard environment:\nserving_status (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta/apps.services.versions#Version.FIELDS.serving_status)Flexible environment\nserving_status (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta/apps.services.versions#Version.FIELDS.serving_status)automatic scaling in the flexible environment:\nautomatic_scaling.min_total_instances (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta/apps.services.versions#Version.FIELDS.automatic_scaling)\nautomatic_scaling.max_total_instances (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta/apps.services.versions#Version.FIELDS.automatic_scaling)\nautomatic_scaling.cool_down_period_sec (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta/apps.services.versions#Version.FIELDS.automatic_scaling)\nautomatic_scaling.cpu_utilization.target_utilization (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta/apps.services.versions#Version.FIELDS.automatic_scaling)",
+                  "description": "Updates the specified Version resource. You can specify the following fields depending on the App Engine environment and type of scaling that the version resource uses:Standard environment instance_class (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta/apps.services.versions#Version.FIELDS.instance_class)automatic scaling in the standard environment: automatic_scaling.min_idle_instances (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta/apps.services.versions#Version.FIELDS.automatic_scaling) automatic_scaling.max_idle_instances (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta/apps.services.versions#Version.FIELDS.automatic_scaling) automaticScaling.standard_scheduler_settings.max_instances (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta/apps.services.versions#StandardSchedulerSettings) automaticScaling.standard_scheduler_settings.min_instances (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta/apps.services.versions#StandardSchedulerSettings) automaticScaling.standard_scheduler_settings.target_cpu_utilization (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta/apps.services.versions#StandardSchedulerSettings) automaticScaling.standard_scheduler_settings.target_throughput_utilization (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta/apps.services.versions#StandardSchedulerSettings)basic scaling or manual scaling in the standard environment: serving_status (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta/apps.services.versions#Version.FIELDS.serving_status) manual_scaling.instances (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta/apps.services.versions#manualscaling)Flexible environment serving_status (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta/apps.services.versions#Version.FIELDS.serving_status)automatic scaling in the flexible environment: automatic_scaling.min_total_instances (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta/apps.services.versions#Version.FIELDS.automatic_scaling) automatic_scaling.max_total_instances (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta/apps.services.versions#Version.FIELDS.automatic_scaling) automatic_scaling.cool_down_period_sec (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta/apps.services.versions#Version.FIELDS.automatic_scaling) automatic_scaling.cpu_utilization.target_utilization (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta/apps.services.versions#Version.FIELDS.automatic_scaling)manual scaling in the flexible environment: manual_scaling.instances (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta/apps.services.versions#manualscaling)",
                   "flatPath": "v1beta/apps/{appsId}/services/{servicesId}/versions/{versionsId}",
                   "httpMethod": "PATCH",
                   "id": "appengine.apps.services.versions.patch",
@@ -1571,13 +1599,310 @@
           }
         }
       }
+    },
+    "projects": {
+      "resources": {
+        "locations": {
+          "methods": {
+            "get": {
+              "description": "Gets information about a location.",
+              "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}",
+              "httpMethod": "GET",
+              "id": "appengine.projects.locations.get",
+              "parameterOrder": [
+                "projectsId",
+                "locationsId"
+              ],
+              "parameters": {
+                "locationsId": {
+                  "description": "Part of `name`. See documentation of `projectsId`.",
+                  "location": "path",
+                  "required": true,
+                  "type": "string"
+                },
+                "projectsId": {
+                  "description": "Part of `name`. Resource name for the location.",
+                  "location": "path",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1beta/projects/{projectsId}/locations/{locationsId}",
+              "response": {
+                "$ref": "Location"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/appengine.admin",
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/cloud-platform.read-only"
+              ]
+            },
+            "list": {
+              "description": "Lists information about the supported locations for this service.",
+              "flatPath": "v1beta/projects/{projectsId}/locations",
+              "httpMethod": "GET",
+              "id": "appengine.projects.locations.list",
+              "parameterOrder": [
+                "projectsId"
+              ],
+              "parameters": {
+                "filter": {
+                  "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like \"displayName=tokyo\", and is documented in more detail in AIP-160 (https://google.aip.dev/160).",
+                  "location": "query",
+                  "type": "string"
+                },
+                "pageSize": {
+                  "description": "The maximum number of results to return. If not set, the service selects a default.",
+                  "format": "int32",
+                  "location": "query",
+                  "type": "integer"
+                },
+                "pageToken": {
+                  "description": "A page token received from the next_page_token field in the response. Send that page token to receive the subsequent page.",
+                  "location": "query",
+                  "type": "string"
+                },
+                "projectsId": {
+                  "description": "Part of `name`. The resource that owns the locations collection, if applicable.",
+                  "location": "path",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1beta/projects/{projectsId}/locations",
+              "response": {
+                "$ref": "ListLocationsResponse"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/appengine.admin",
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/cloud-platform.read-only"
+              ]
+            }
+          },
+          "resources": {
+            "applications": {
+              "methods": {
+                "create": {
+                  "description": "Creates an App Engine application for a Google Cloud Platform project. Required fields: id - The ID of the target Cloud Platform project. location - The region (https://cloud.google.com/appengine/docs/locations) where you want the App Engine application located.For more information about App Engine applications, see Managing Projects, Applications, and Billing (https://cloud.google.com/appengine/docs/standard/python/console/).",
+                  "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/applications",
+                  "httpMethod": "POST",
+                  "id": "appengine.projects.locations.applications.create",
+                  "parameterOrder": [
+                    "projectsId",
+                    "locationsId"
+                  ],
+                  "parameters": {
+                    "locationsId": {
+                      "description": "Part of `parent`. See documentation of `projectsId`.",
+                      "location": "path",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "projectsId": {
+                      "description": "Part of `parent`. The project and location in which the application should be created, specified in the format projects/*/locations/*",
+                      "location": "path",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1beta/projects/{projectsId}/locations/{locationsId}/applications",
+                  "request": {
+                    "$ref": "Application"
+                  },
+                  "response": {
+                    "$ref": "Operation"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "get": {
+                  "description": "Gets information about an application.",
+                  "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/applications/{applicationsId}",
+                  "httpMethod": "GET",
+                  "id": "appengine.projects.locations.applications.get",
+                  "parameterOrder": [
+                    "projectsId",
+                    "locationsId",
+                    "applicationsId"
+                  ],
+                  "parameters": {
+                    "applicationsId": {
+                      "description": "Part of `name`. See documentation of `projectsId`.",
+                      "location": "path",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "locationsId": {
+                      "description": "Part of `name`. See documentation of `projectsId`.",
+                      "location": "path",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "projectsId": {
+                      "description": "Part of `name`. Name of the Application resource to get. Example: apps/myapp.",
+                      "location": "path",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1beta/projects/{projectsId}/locations/{locationsId}/applications/{applicationsId}",
+                  "response": {
+                    "$ref": "Application"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/appengine.admin",
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/cloud-platform.read-only"
+                  ]
+                },
+                "repair": {
+                  "description": "Recreates the required App Engine features for the specified App Engine application, for example a Cloud Storage bucket or App Engine service account. Use this method if you receive an error message about a missing feature, for example, Error retrieving the App Engine service account. If you have deleted your App Engine service account, this will not be able to recreate it. Instead, you should attempt to use the IAM undelete API if possible at https://cloud.google.com/iam/reference/rest/v1/projects.serviceAccounts/undelete?apix_params=%7B\"name\"%3A\"projects%2F-%2FserviceAccounts%2Funique_id\"%2C\"resource\"%3A%7B%7D%7D . If the deletion was recent, the numeric ID can be found in the Cloud Console Activity Log.",
+                  "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/applications/{applicationsId}:repair",
+                  "httpMethod": "POST",
+                  "id": "appengine.projects.locations.applications.repair",
+                  "parameterOrder": [
+                    "projectsId",
+                    "locationsId",
+                    "applicationsId"
+                  ],
+                  "parameters": {
+                    "applicationsId": {
+                      "description": "Part of `name`. See documentation of `projectsId`.",
+                      "location": "path",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "locationsId": {
+                      "description": "Part of `name`. See documentation of `projectsId`.",
+                      "location": "path",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "projectsId": {
+                      "description": "Part of `name`. Name of the application to repair. Example: apps/myapp",
+                      "location": "path",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1beta/projects/{projectsId}/locations/{locationsId}/applications/{applicationsId}:repair",
+                  "request": {
+                    "$ref": "RepairApplicationRequest"
+                  },
+                  "response": {
+                    "$ref": "Operation"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                }
+              }
+            },
+            "operations": {
+              "methods": {
+                "get": {
+                  "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
+                  "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/operations/{operationsId}",
+                  "httpMethod": "GET",
+                  "id": "appengine.projects.locations.operations.get",
+                  "parameterOrder": [
+                    "projectsId",
+                    "locationsId",
+                    "operationsId"
+                  ],
+                  "parameters": {
+                    "locationsId": {
+                      "description": "Part of `name`. See documentation of `projectsId`.",
+                      "location": "path",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "operationsId": {
+                      "description": "Part of `name`. See documentation of `projectsId`.",
+                      "location": "path",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "projectsId": {
+                      "description": "Part of `name`. The name of the operation resource.",
+                      "location": "path",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1beta/projects/{projectsId}/locations/{locationsId}/operations/{operationsId}",
+                  "response": {
+                    "$ref": "Operation"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/appengine.admin",
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/cloud-platform.read-only"
+                  ]
+                },
+                "list": {
+                  "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns UNIMPLEMENTED.NOTE: the name binding allows API services to override the binding to use different resource name schemes, such as users/*/operations. To override the binding, API services can add a binding such as \"/v1/{name=users/*}/operations\" to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
+                  "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/operations",
+                  "httpMethod": "GET",
+                  "id": "appengine.projects.locations.operations.list",
+                  "parameterOrder": [
+                    "projectsId",
+                    "locationsId"
+                  ],
+                  "parameters": {
+                    "filter": {
+                      "description": "The standard list filter.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "locationsId": {
+                      "description": "Part of `name`. See documentation of `projectsId`.",
+                      "location": "path",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "pageSize": {
+                      "description": "The standard list page size.",
+                      "format": "int32",
+                      "location": "query",
+                      "type": "integer"
+                    },
+                    "pageToken": {
+                      "description": "The standard list page token.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "projectsId": {
+                      "description": "Part of `name`. The name of the operation's parent resource.",
+                      "location": "path",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1beta/projects/{projectsId}/locations/{locationsId}/operations",
+                  "response": {
+                    "$ref": "ListOperationsResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/appengine.admin",
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/cloud-platform.read-only"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
-  "revision": "20200403",
+  "revision": "20230114",
   "rootUrl": "https://appengine.googleapis.com/",
   "schemas": {
     "ApiConfigHandler": {
-      "description": "Google Cloud Endpoints (https://cloud.google.com/appengine/docs/python/endpoints/) configuration for API handlers.",
+      "description": "Google Cloud Endpoints (https://cloud.google.com/endpoints) configuration for API handlers.",
       "id": "ApiConfigHandler",
       "properties": {
         "authFailAction": {
@@ -1659,11 +1984,29 @@
           "type": "string"
         },
         "codeBucket": {
-          "description": "Google Cloud Storage bucket that can be used for storing files associated with this application. This bucket is associated with the application and can be used by the gcloud deployment commands.@OutputOnly",
+          "description": "Output only. Google Cloud Storage bucket that can be used for storing files associated with this application. This bucket is associated with the application and can be used by the gcloud deployment commands.@OutputOnly",
+          "readOnly": true,
+          "type": "string"
+        },
+        "databaseType": {
+          "description": "The type of the Cloud Firestore or Cloud Datastore database associated with this application.",
+          "enum": [
+            "DATABASE_TYPE_UNSPECIFIED",
+            "CLOUD_DATASTORE",
+            "CLOUD_FIRESTORE",
+            "CLOUD_DATASTORE_COMPATIBILITY"
+          ],
+          "enumDescriptions": [
+            "Database type is unspecified.",
+            "Cloud Datastore",
+            "Cloud Firestore Native",
+            "Cloud Firestore in Datastore Mode"
+          ],
           "type": "string"
         },
         "defaultBucket": {
-          "description": "Google Cloud Storage bucket that can be used by this application to store content.@OutputOnly",
+          "description": "Output only. Google Cloud Storage bucket that can be used by this application to store content.@OutputOnly",
+          "readOnly": true,
           "type": "string"
         },
         "defaultCookieExpiration": {
@@ -1672,7 +2015,8 @@
           "type": "string"
         },
         "defaultHostname": {
-          "description": "Hostname used to reach this application, as resolved by App Engine.@OutputOnly",
+          "description": "Output only. Hostname used to reach this application, as resolved by App Engine.@OutputOnly",
+          "readOnly": true,
           "type": "string"
         },
         "dispatchRules": {
@@ -1687,7 +2031,8 @@
           "description": "The feature specific settings to be used in the application."
         },
         "gcrDomain": {
-          "description": "The Google Container Registry domain used for storing managed build docker images for this application.",
+          "description": "Output only. The Google Container Registry domain used for storing managed build docker images for this application.",
+          "readOnly": true,
           "type": "string"
         },
         "iap": {
@@ -1702,7 +2047,12 @@
           "type": "string"
         },
         "name": {
-          "description": "Full path to the Application resource in the API. Example: apps/myapp.@OutputOnly",
+          "description": "Output only. Full path to the Application resource in the API. Example: apps/myapp.@OutputOnly",
+          "readOnly": true,
+          "type": "string"
+        },
+        "serviceAccount": {
+          "description": "The service account associated with the application. This is the app-level default identity. If no identity provided during create version, Admin API will fallback to this one.",
           "type": "string"
         },
         "servingStatus": {
@@ -1925,11 +2275,11 @@
       "id": "CertificateRawData",
       "properties": {
         "privateKey": {
-          "description": "Unencrypted PEM encoded RSA private key. This field is set once on certificate creation and then encrypted. The key size must be 2048 bits or fewer. Must include the header and footer. Example: \u003cpre\u003e -----BEGIN RSA PRIVATE KEY----- \u003cunencrypted_key_value\u003e -----END RSA PRIVATE KEY----- \u003c/pre\u003e @InputOnly",
+          "description": "Unencrypted PEM encoded RSA private key. This field is set once on certificate creation and then encrypted. The key size must be 2048 bits or fewer. Must include the header and footer. Example: -----BEGIN RSA PRIVATE KEY----- -----END RSA PRIVATE KEY----- @InputOnly",
           "type": "string"
         },
         "publicCertificate": {
-          "description": "PEM encoded x.509 public key certificate. This field is set once on certificate creation. Must include the header and footer. Example: \u003cpre\u003e -----BEGIN CERTIFICATE----- \u003ccertificate_value\u003e -----END CERTIFICATE----- \u003c/pre\u003e",
+          "description": "PEM encoded x.509 public key certificate. This field is set once on certificate creation. Must include the header and footer. Example: -----BEGIN CERTIFICATE----- -----END CERTIFICATE----- ",
           "type": "string"
         }
       },
@@ -2046,7 +2396,7 @@
       "id": "DebugInstanceRequest",
       "properties": {
         "sshKey": {
-          "description": "Public SSH key to add to the instance. Examples:\n[USERNAME]:ssh-rsa [KEY_VALUE] [USERNAME]\n[USERNAME]:ssh-rsa [KEY_VALUE] google-ssh {\"userName\":\"[USERNAME]\",\"expireOn\":\"[EXPIRE_TIME]\"}For more information, see Adding and Removing SSH Keys (https://cloud.google.com/compute/docs/instances/adding-removing-ssh-keys).",
+          "description": "Public SSH key to add to the instance. Examples: [USERNAME]:ssh-rsa [KEY_VALUE] [USERNAME] [USERNAME]:ssh-rsa [KEY_VALUE] google-ssh {\"userName\":\"[USERNAME]\",\"expireOn\":\"[EXPIRE_TIME]\"}For more information, see Adding and Removing SSH Keys (https://cloud.google.com/compute/docs/instances/adding-removing-ssh-keys).",
           "type": "string"
         }
       },
@@ -2136,13 +2486,13 @@
       "type": "object"
     },
     "Empty": {
-      "description": "A generic empty message that you can re-use to avoid defining duplicated empty messages in your APIs. A typical example is to use it as the request or the response type of an API method. For instance:\nservice Foo {\n  rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty);\n}\nThe JSON representation for Empty is empty JSON object {}.",
+      "description": "A generic empty message that you can re-use to avoid defining duplicated empty messages in your APIs. A typical example is to use it as the request or the response type of an API method. For instance: service Foo { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); } ",
       "id": "Empty",
       "properties": {},
       "type": "object"
     },
     "EndpointsApiService": {
-      "description": "Cloud Endpoints (https://cloud.google.com/endpoints) configuration. The Endpoints API Service provides tooling for serving Open API and gRPC endpoints via an NGINX proxy. Only valid for App Engine Flexible environment deployments.The fields here refer to the name and configuration ID of a \"service\" resource in the Service Management API (https://cloud.google.com/service-management/overview).",
+      "description": "Google Cloud Endpoints (https://cloud.google.com/endpoints) configuration. The Endpoints API Service provides tooling for serving Open API and gRPC endpoints via an NGINX proxy. Only valid for App Engine Flexible environment deployments.The fields here refer to the name and configuration ID of a \"service\" resource in the Service Management API (https://cloud.google.com/service-management/overview).",
       "id": "EndpointsApiService",
       "properties": {
         "configId": {
@@ -2246,7 +2596,7 @@
           "type": "string"
         },
         "sourceUrl": {
-          "description": "URL source to use to fetch this file. Must be a URL to a resource in Google Cloud Storage in the form 'http(s)://storage.googleapis.com/\u003cbucket\u003e/\u003cobject\u003e'.",
+          "description": "URL source to use to fetch this file. Must be a URL to a resource in Google Cloud Storage in the form 'http(s)://storage.googleapis.com//'.",
           "type": "string"
         }
       },
@@ -2271,7 +2621,7 @@
           "type": "string"
         },
         "description": {
-          "description": "An optional string description of this rule. This field has a maximum length of 100 characters.",
+          "description": "An optional string description of this rule. This field has a maximum length of 400 characters.",
           "type": "string"
         },
         "priority": {
@@ -2280,8 +2630,43 @@
           "type": "integer"
         },
         "sourceRange": {
-          "description": "IP address or range, defined using CIDR notation, of requests that this rule applies to. You can use the wildcard character \"*\" to match all IPs equivalent to \"0/0\" and \"::/0\" together. Examples: 192.168.1.1 or 192.168.0.0/16 or 2001:db8::/32  or 2001:0db8:0000:0042:0000:8a2e:0370:7334.\u003cp\u003eTruncation will be silently performed on addresses which are not properly truncated. For example, 1.2.3.4/24 is accepted as the same address as 1.2.3.0/24. Similarly, for IPv6, 2001:db8::1/32 is accepted as the same address as 2001:db8::/32.",
+          "description": "IP address or range, defined using CIDR notation, of requests that this rule applies to. You can use the wildcard character \"*\" to match all IPs equivalent to \"0/0\" and \"::/0\" together. Examples: 192.168.1.1 or 192.168.0.0/16 or 2001:db8::/32 or 2001:0db8:0000:0042:0000:8a2e:0370:7334. Truncation will be silently performed on addresses which are not properly truncated. For example, 1.2.3.4/24 is accepted as the same address as 1.2.3.0/24. Similarly, for IPv6, 2001:db8::1/32 is accepted as the same address as 2001:db8::/32.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "FlexibleRuntimeSettings": {
+      "description": "Runtime settings for the App Engine flexible environment.",
+      "id": "FlexibleRuntimeSettings",
+      "properties": {
+        "operatingSystem": {
+          "description": "The operating system of the application runtime.",
+          "type": "string"
+        },
+        "runtimeVersion": {
+          "description": "The runtime version of an App Engine flexible application.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleAppengineV1betaLocationMetadata": {
+      "description": "Metadata for the given google.cloud.location.Location.",
+      "id": "GoogleAppengineV1betaLocationMetadata",
+      "properties": {
+        "flexibleEnvironmentAvailable": {
+          "description": "App Engine flexible environment is available in the given location.@OutputOnly",
+          "type": "boolean"
+        },
+        "searchApiAvailable": {
+          "description": "Output only. Search API (https://cloud.google.com/appengine/docs/standard/python/search) is available in the given location.",
+          "readOnly": true,
+          "type": "boolean"
+        },
+        "standardEnvironmentAvailable": {
+          "description": "App Engine standard environment is available in the given location.@OutputOnly",
+          "type": "boolean"
         }
       },
       "type": "object"
@@ -2343,7 +2728,8 @@
           "type": "string"
         },
         "oauth2ClientSecretSha256": {
-          "description": "Hex-encoded SHA-256 hash of the client secret.@OutputOnly",
+          "description": "Output only. Hex-encoded SHA-256 hash of the client secret.@OutputOnly",
+          "readOnly": true,
           "type": "string"
         }
       },
@@ -2354,11 +2740,12 @@
       "id": "Instance",
       "properties": {
         "appEngineRelease": {
-          "description": "App Engine release this instance is running on.@OutputOnly",
+          "description": "Output only. App Engine release this instance is running on.",
+          "readOnly": true,
           "type": "string"
         },
         "availability": {
-          "description": "Availability of the instance.@OutputOnly",
+          "description": "Output only. Availability of the instance.",
           "enum": [
             "UNSPECIFIED",
             "RESIDENT",
@@ -2369,68 +2756,104 @@
             "",
             ""
           ],
+          "readOnly": true,
           "type": "string"
         },
         "averageLatency": {
-          "description": "Average latency (ms) over the last minute.@OutputOnly",
+          "description": "Output only. Average latency (ms) over the last minute.",
           "format": "int32",
+          "readOnly": true,
           "type": "integer"
         },
         "errors": {
-          "description": "Number of errors since this instance was started.@OutputOnly",
+          "description": "Output only. Number of errors since this instance was started.",
           "format": "int32",
+          "readOnly": true,
           "type": "integer"
         },
         "id": {
-          "description": "Relative name of the instance within the version. Example: instance-1.@OutputOnly",
+          "description": "Output only. Relative name of the instance within the version. Example: instance-1.",
+          "readOnly": true,
           "type": "string"
         },
         "memoryUsage": {
-          "description": "Total memory in use (bytes).@OutputOnly",
+          "description": "Output only. Total memory in use (bytes).",
           "format": "int64",
+          "readOnly": true,
           "type": "string"
         },
         "name": {
-          "description": "Full path to the Instance resource in the API. Example: apps/myapp/services/default/versions/v1/instances/instance-1.@OutputOnly",
+          "description": "Output only. Full path to the Instance resource in the API. Example: apps/myapp/services/default/versions/v1/instances/instance-1.",
+          "readOnly": true,
           "type": "string"
         },
         "qps": {
-          "description": "Average queries per second (QPS) over the last minute.@OutputOnly",
+          "description": "Output only. Average queries per second (QPS) over the last minute.",
           "format": "float",
+          "readOnly": true,
           "type": "number"
         },
         "requests": {
-          "description": "Number of requests since this instance was started.@OutputOnly",
+          "description": "Output only. Number of requests since this instance was started.",
           "format": "int32",
+          "readOnly": true,
           "type": "integer"
         },
         "startTime": {
-          "description": "Time that this instance was started.@OutputOnly",
+          "description": "Output only. Time that this instance was started.@OutputOnly",
           "format": "google-datetime",
+          "readOnly": true,
           "type": "string"
         },
         "vmDebugEnabled": {
-          "description": "Whether this instance is in debug mode. Only applicable for instances in App Engine flexible environment.@OutputOnly",
+          "description": "Output only. Whether this instance is in debug mode. Only applicable for instances in App Engine flexible environment.",
+          "readOnly": true,
           "type": "boolean"
         },
         "vmId": {
-          "description": "Virtual machine ID of this instance. Only applicable for instances in App Engine flexible environment.@OutputOnly",
+          "description": "Output only. Virtual machine ID of this instance. Only applicable for instances in App Engine flexible environment.",
+          "readOnly": true,
           "type": "string"
         },
         "vmIp": {
-          "description": "The IP address of this instance. Only applicable for instances in App Engine flexible environment.@OutputOnly",
+          "description": "Output only. The IP address of this instance. Only applicable for instances in App Engine flexible environment.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "vmLiveness": {
+          "description": "Output only. The liveness health check of this instance. Only applicable for instances in App Engine flexible environment.",
+          "enum": [
+            "LIVENESS_STATE_UNSPECIFIED",
+            "UNKNOWN",
+            "HEALTHY",
+            "UNHEALTHY",
+            "DRAINING",
+            "TIMEOUT"
+          ],
+          "enumDescriptions": [
+            "There is no liveness health check for the instance. Only applicable for instances in App Engine standard environment.",
+            "The health checking system is aware of the instance but its health is not known at the moment.",
+            "The instance is reachable i.e. a connection to the application health checking endpoint can be established, and conforms to the requirements defined by the health check.",
+            "The instance is reachable, but does not conform to the requirements defined by the health check.",
+            "The instance is being drained. The existing connections to the instance have time to complete, but the new ones are being refused.",
+            "The instance is unreachable i.e. a connection to the application health checking endpoint cannot be established, or the server does not respond within the specified timeout."
+          ],
+          "readOnly": true,
           "type": "string"
         },
         "vmName": {
-          "description": "Name of the virtual machine where this instance lives. Only applicable for instances in App Engine flexible environment.@OutputOnly",
+          "description": "Output only. Name of the virtual machine where this instance lives. Only applicable for instances in App Engine flexible environment.",
+          "readOnly": true,
           "type": "string"
         },
         "vmStatus": {
-          "description": "Status of the virtual machine where this instance lives. Only applicable for instances in App Engine flexible environment.@OutputOnly",
+          "description": "Output only. Status of the virtual machine where this instance lives. Only applicable for instances in App Engine flexible environment.",
+          "readOnly": true,
           "type": "string"
         },
         "vmZoneName": {
-          "description": "Zone where the virtual machine is located. Only applicable for instances in App Engine flexible environment.@OutputOnly",
+          "description": "Output only. Zone where the virtual machine is located. Only applicable for instances in App Engine flexible environment.",
+          "readOnly": true,
           "type": "string"
         }
       },
@@ -2665,7 +3088,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "Cross-service attributes for the location. For example\n{\"cloud.googleapis.com/region\": \"us-east1\"}\n",
+          "description": "Cross-service attributes for the location. For example {\"cloud.googleapis.com/region\": \"us-east1\"} ",
           "type": "object"
         },
         "locationId": {
@@ -2693,6 +3116,11 @@
       "properties": {
         "flexibleEnvironmentAvailable": {
           "description": "App Engine flexible environment is available in the given location.@OutputOnly",
+          "type": "boolean"
+        },
+        "searchApiAvailable": {
+          "description": "Output only. Search API (https://cloud.google.com/appengine/docs/standard/python/search) is available in the given location.",
+          "readOnly": true,
           "type": "boolean"
         },
         "standardEnvironmentAvailable": {
@@ -2759,6 +3187,20 @@
           },
           "type": "array"
         },
+        "instanceIpMode": {
+          "description": "The IP mode for instances. Only applicable in the App Engine flexible environment.",
+          "enum": [
+            "INSTANCE_IP_MODE_UNSPECIFIED",
+            "EXTERNAL",
+            "INTERNAL"
+          ],
+          "enumDescriptions": [
+            "Unspecified is treated as EXTERNAL.",
+            "Instances are created with both internal and external IP addresses.",
+            "Instances are created with internal IP addresses only."
+          ],
+          "type": "string"
+        },
         "instanceTag": {
           "description": "Tag to apply to the instance during creation. Only applicable in the App Engine flexible environment.",
           "type": "string"
@@ -2772,7 +3214,30 @@
           "type": "boolean"
         },
         "subnetworkName": {
-          "description": "Google Cloud Platform sub-network where the virtual machines are created. Specify the short name, not the resource path.If a subnetwork name is specified, a network name will also be required unless it is for the default network.\nIf the network that the instance is being created in is a Legacy network, then the IP address is allocated from the IPv4Range.\nIf the network that the instance is being created in is an auto Subnet Mode Network, then only network name should be specified (not the subnetwork_name) and the IP address is created from the IPCidrRange of the subnetwork that exists in that zone for that network.\nIf the network that the instance is being created in is a custom Subnet Mode Network, then the subnetwork_name must be specified and the IP address is created from the IPCidrRange of the subnetwork.If specified, the subnetwork must exist in the same region as the App Engine flexible environment application.",
+          "description": "Google Cloud Platform sub-network where the virtual machines are created. Specify the short name, not the resource path.If a subnetwork name is specified, a network name will also be required unless it is for the default network. If the network that the instance is being created in is a Legacy network, then the IP address is allocated from the IPv4Range. If the network that the instance is being created in is an auto Subnet Mode Network, then only network name should be specified (not the subnetwork_name) and the IP address is created from the IPCidrRange of the subnetwork that exists in that zone for that network. If the network that the instance is being created in is a custom Subnet Mode Network, then the subnetwork_name must be specified and the IP address is created from the IPCidrRange of the subnetwork.If specified, the subnetwork must exist in the same region as the App Engine flexible environment application.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "NetworkSettings": {
+      "description": "A NetworkSettings resource is a container for ingress settings for a version or service.",
+      "id": "NetworkSettings",
+      "properties": {
+        "ingressTrafficAllowed": {
+          "description": "The ingress settings for version or service.",
+          "enum": [
+            "INGRESS_TRAFFIC_ALLOWED_UNSPECIFIED",
+            "INGRESS_TRAFFIC_ALLOWED_ALL",
+            "INGRESS_TRAFFIC_ALLOWED_INTERNAL_ONLY",
+            "INGRESS_TRAFFIC_ALLOWED_INTERNAL_AND_LB"
+          ],
+          "enumDescriptions": [
+            "Unspecified",
+            "Allow HTTP traffic from public and private sources.",
+            "Allow HTTP traffic from only private VPC sources.",
+            "Allow HTTP traffic from private VPC sources and through load balancers."
+          ],
           "type": "string"
         }
       },
@@ -2969,6 +3434,122 @@
       },
       "type": "object"
     },
+    "ProjectEvent": {
+      "description": "The request sent to CLHs during project events.",
+      "id": "ProjectEvent",
+      "properties": {
+        "eventId": {
+          "description": "The unique ID for this project event. CLHs can use this value to dedup repeated calls. required",
+          "type": "string"
+        },
+        "phase": {
+          "enum": [
+            "UNKNOWN",
+            "BEFORE_RESOURCE_HANDLING",
+            "AFTER_RESOURCE_HANDLING"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
+        },
+        "projectMetadata": {
+          "$ref": "ProjectsMetadata",
+          "description": "The projects metadata for this project. required"
+        },
+        "state": {
+          "$ref": "ProjectState",
+          "description": "The state of the project that led to this event."
+        }
+      },
+      "type": "object"
+    },
+    "ProjectState": {
+      "description": "ProjectState contains the externally-visible project state that is used to communicate the state and reasoning for that state to the CLH. This data is not persisted by CCFE, but is instead derived from CCFE's internal representation of the project state.",
+      "id": "ProjectState",
+      "properties": {
+        "currentReasons": {
+          "$ref": "Reasons"
+        },
+        "previousReasons": {
+          "$ref": "Reasons",
+          "description": "The previous and current reasons for a project state will be sent for a project event. CLHs that need to know the signal that caused the project event to trigger (edges) as opposed to just knowing the state can act upon differences in the previous and current reasons.Reasons will be provided for every system: service management, data governance, abuse, and billing.If this is a CCFE-triggered event used for reconciliation then the current reasons will be set to their *_CONTROL_PLANE_SYNC state. The previous reasons will contain the last known set of non-unknown non-control_plane_sync reasons for the state.Reasons fields are deprecated. New tenants should only use the state field. If you must know the reason(s) behind a specific state, please consult with CCFE team first (cloud-ccfe-discuss@google.com)."
+        },
+        "state": {
+          "description": "The current state of the project. This state is the culmination of all of the opinions from external systems that CCFE knows about of the project.",
+          "enum": [
+            "UNKNOWN_STATE",
+            "ON",
+            "OFF",
+            "DELETED"
+          ],
+          "enumDescriptions": [
+            "A project should never be in an unknown state. Receipt of a project with this state is an error.",
+            "CCFE considers the project to be serving or transitioning into serving.",
+            "CCFE considers the project to be in an OFF state. This could occur due to various factors. The state could be triggered by Google-internal audits (ex. abuse suspension, billing closed) or cleanups trigged by compliance systems (ex. data governance hide). User-initiated events such as service management deactivation trigger a project to an OFF state.CLHs might choose to do nothing in this case or to turn off costly resources. CLHs need to consider the customer experience if an ON/OFF/ON sequence of state transitions occurs vs. the cost of deleting resources, keeping metadata about resources, or even keeping resources live for a period of time.CCFE will not send any new customer requests to the CLH when the project is in an OFF state. However, CCFE will allow all previous customer requests relayed to CLH to complete.",
+            "This state indicates that the project has been (or is being) completely removed. This is often due to a data governance purge request and therefore resources should be deleted when this state is reached."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ProjectsMetadata": {
+      "description": "ProjectsMetadata is the metadata CCFE stores about the all the relevant projects (tenant, consumer, producer).",
+      "id": "ProjectsMetadata",
+      "properties": {
+        "consumerProjectId": {
+          "description": "The consumer project id.",
+          "type": "string"
+        },
+        "consumerProjectNumber": {
+          "description": "The consumer project number.",
+          "format": "int64",
+          "type": "string"
+        },
+        "consumerProjectState": {
+          "description": "The CCFE state of the consumer project. It is the same state that is communicated to the CLH during project events. Notice that this field is not set in the DB, it is only set in this proto when communicated to CLH in the side channel.",
+          "enum": [
+            "UNKNOWN_STATE",
+            "ON",
+            "OFF",
+            "DELETED"
+          ],
+          "enumDescriptions": [
+            "A project should never be in an unknown state. Receipt of a project with this state is an error.",
+            "CCFE considers the project to be serving or transitioning into serving.",
+            "CCFE considers the project to be in an OFF state. This could occur due to various factors. The state could be triggered by Google-internal audits (ex. abuse suspension, billing closed) or cleanups trigged by compliance systems (ex. data governance hide). User-initiated events such as service management deactivation trigger a project to an OFF state.CLHs might choose to do nothing in this case or to turn off costly resources. CLHs need to consider the customer experience if an ON/OFF/ON sequence of state transitions occurs vs. the cost of deleting resources, keeping metadata about resources, or even keeping resources live for a period of time.CCFE will not send any new customer requests to the CLH when the project is in an OFF state. However, CCFE will allow all previous customer requests relayed to CLH to complete.",
+            "This state indicates that the project has been (or is being) completely removed. This is often due to a data governance purge request and therefore resources should be deleted when this state is reached."
+          ],
+          "type": "string"
+        },
+        "p4ServiceAccount": {
+          "description": "The service account authorized to operate on the consumer project. Note: CCFE only propagates P4SA with default tag to CLH.",
+          "type": "string"
+        },
+        "producerProjectId": {
+          "description": "The producer project id.",
+          "type": "string"
+        },
+        "producerProjectNumber": {
+          "description": "The producer project number.",
+          "format": "int64",
+          "type": "string"
+        },
+        "tenantProjectId": {
+          "description": "The tenant project id.",
+          "type": "string"
+        },
+        "tenantProjectNumber": {
+          "description": "The tenant project number.",
+          "format": "int64",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "ReadinessCheck": {
       "description": "Readiness checking configuration for VM instances. Unhealthy instances are removed from traffic rotation.",
       "id": "ReadinessCheck",
@@ -3004,6 +3585,81 @@
         "timeout": {
           "description": "Time before the check is considered failed.",
           "format": "google-duration",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Reasons": {
+      "description": "Projects transition between and within states based on reasons sent from various systems. CCFE will provide the CLH with reasons for the current state per system.The current systems that CCFE supports are: Service Management (Inception) Data Governance (Wipeout) Abuse (Ares) Billing (Internal Cloud Billing API)",
+      "id": "Reasons",
+      "properties": {
+        "abuse": {
+          "enum": [
+            "ABUSE_UNKNOWN_REASON",
+            "ABUSE_CONTROL_PLANE_SYNC",
+            "SUSPEND",
+            "REINSTATE"
+          ],
+          "enumDescriptions": [
+            "An unknown reason indicates that the abuse system has not sent a signal for this project.",
+            "Due to various reasons CCFE might proactively restate a project state to a CLH to ensure that the CLH and CCFE are both aware of the project state. This reason can be tied to any of the states.",
+            "If a project is deemed abusive we receive a suspend signal. Suspend is a reason to put the project into an INTERNAL_OFF state.",
+            "Projects that were once considered abusive can later be deemed non-abusive. When this happens we must reinstate the project. Reinstate is a reason to put the project into an ON state."
+          ],
+          "type": "string"
+        },
+        "billing": {
+          "enum": [
+            "BILLING_UNKNOWN_REASON",
+            "BILLING_CONTROL_PLANE_SYNC",
+            "PROBATION",
+            "CLOSE",
+            "OPEN"
+          ],
+          "enumDescriptions": [
+            "An unknown reason indicates that the billing system has not sent a signal for this project.",
+            "Due to various reasons CCFE might proactively restate a project state to a CLH to ensure that the CLH and CCFE are both aware of the project state. This reason can be tied to any of the states.",
+            "Minor infractions cause a probation signal to be sent. Probation is a reason to put the project into a ON state even though it is a negative signal. CCFE will block mutations for this project while it is on billing probation, but the CLH is expected to serve non-mutation requests.",
+            "When a billing account is closed, it is a stronger signal about non-payment. Close is a reason to put the project into an INTERNAL_OFF state.",
+            "Consumers can re-open billing accounts and update accounts to pull them out of probation. When this happens, we get a signal that the account is open. Open is a reason to put the project into an ON state."
+          ],
+          "type": "string"
+        },
+        "dataGovernance": {
+          "enum": [
+            "DATA_GOVERNANCE_UNKNOWN_REASON",
+            "DATA_GOVERNANCE_CONTROL_PLANE_SYNC",
+            "HIDE",
+            "UNHIDE",
+            "PURGE"
+          ],
+          "enumDescriptions": [
+            "An unknown reason indicates that data governance has not sent a signal for this project.",
+            "Due to various reasons CCFE might proactively restate a project state to a CLH to ensure that the CLH and CCFE are both aware of the project state. This reason can be tied to any of the states.",
+            "When a project is deleted we retain some data for a period of time to allow the consumer to change their mind. Data governance sends a signal to hide the data when this occurs. Hide is a reason to put the project in an INTERNAL_OFF state.",
+            "The decision to un-delete a project can be made. When this happens data governance tells us to unhide any hidden data. Unhide is a reason to put the project in an ON state.",
+            "After a period of time data must be completely removed from our systems. When data governance sends a purge signal we need to remove data. Purge is a reason to put the project in a DELETED state. Purge is the only event that triggers a delete mutation. All other events have update semantics."
+          ],
+          "type": "string"
+        },
+        "serviceManagement": {
+          "enum": [
+            "SERVICE_MANAGEMENT_UNKNOWN_REASON",
+            "SERVICE_MANAGEMENT_CONTROL_PLANE_SYNC",
+            "ACTIVATION",
+            "PREPARE_DEACTIVATION",
+            "ABORT_DEACTIVATION",
+            "COMMIT_DEACTIVATION"
+          ],
+          "enumDescriptions": [
+            "An unknown reason indicates that we have not received a signal from service management about this project. Since projects are created by request of service management, this reason should never be set.",
+            "Due to various reasons CCFE might proactively restate a project state to a CLH to ensure that the CLH and CCFE are both aware of the project state. This reason can be tied to any of the states.",
+            "When a customer activates an API CCFE notifies the CLH and sets the project to the ON state.",
+            "When a customer deactivates and API service management starts a two-step process to perform the deactivation. The first step is to prepare. Prepare is a reason to put the project in a EXTERNAL_OFF state.",
+            "If the deactivation is cancelled, service managed needs to abort the deactivation. Abort is a reason to put the project in an ON state.",
+            "If the deactivation is followed through with, service management needs to finish deactivation. Commit is a reason to put the project in a DELETED state."
+          ],
           "type": "string"
         }
       },
@@ -3075,6 +3731,10 @@
           "format": "double",
           "type": "number"
         },
+        "kmsKeyReference": {
+          "description": "The name of the encryption key that is stored in Google Cloud KMS. Only should be used by Cloud Composer to encrypt the vm disk",
+          "type": "string"
+        },
         "memoryGb": {
           "description": "Memory (GB) needed.",
           "format": "double",
@@ -3109,9 +3769,20 @@
           "description": "Relative name of the service within the application. Example: default.@OutputOnly",
           "type": "string"
         },
+        "labels": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "A set of labels to apply to this service. Labels are key/value pairs that describe the service and all resources that belong to it (e.g., versions). The labels can be used to search and group resources, and are propagated to the usage and billing reports, enabling fine-grain analysis of costs. An example of using labels is to tag resources belonging to different environments (e.g., \"env=prod\", \"env=qa\"). Label keys and values can be no longer than 63 characters and can only contain lowercase letters, numeric characters, underscores, dashes, and international characters. Label keys must start with a lowercase letter or an international character. Each service can have at most 32 labels.",
+          "type": "object"
+        },
         "name": {
           "description": "Full path to the Service resource in the API. Example: apps/myapp/services/default.@OutputOnly",
           "type": "string"
+        },
+        "networkSettings": {
+          "$ref": "NetworkSettings",
+          "description": "Ingress settings for this service. Will apply to all versions."
         },
         "split": {
           "$ref": "TrafficSplit",
@@ -3385,11 +4056,15 @@
       "properties": {
         "apiConfig": {
           "$ref": "ApiConfigHandler",
-          "description": "Serving configuration for Google Cloud Endpoints (https://cloud.google.com/appengine/docs/python/endpoints/).Only returned in GET requests if view=FULL is set."
+          "description": "Serving configuration for Google Cloud Endpoints (https://cloud.google.com/endpoints).Only returned in GET requests if view=FULL is set."
+        },
+        "appEngineApis": {
+          "description": "Allows App Engine second generation runtimes to access the legacy bundled services.",
+          "type": "boolean"
         },
         "automaticScaling": {
           "$ref": "AutomaticScaling",
-          "description": "Automatic scaling is based on request rate, response latencies, and other application metrics."
+          "description": "Automatic scaling is based on request rate, response latencies, and other application metrics. Instances are dynamically created and destroyed as needed in order to handle traffic."
         },
         "basicScaling": {
           "$ref": "BasicScaling",
@@ -3400,6 +4075,13 @@
             "type": "string"
           },
           "description": "Metadata settings that are supplied to this version to enable beta runtime features.",
+          "type": "object"
+        },
+        "buildEnvVariables": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Environment variables available to the build environment.Only returned in GET requests if view=FULL is set.",
           "type": "object"
         },
         "createTime": {
@@ -3451,6 +4133,10 @@
           },
           "type": "array"
         },
+        "flexibleRuntimeSettings": {
+          "$ref": "FlexibleRuntimeSettings",
+          "description": "Settings for App Engine flexible runtimes."
+        },
         "handlers": {
           "description": "An ordered list of URL-matching patterns that should be applied to incoming requests. The first matching URL handles the request and other request handlers are not attempted.Only returned in GET requests if view=FULL is set.",
           "items": {
@@ -3468,17 +4154,6 @@
         },
         "inboundServices": {
           "description": "Before an application can receive email or XMPP messages, the application must be configured to enable the service.",
-          "enumDescriptions": [
-            "Not specified.",
-            "Allows an application to receive mail.",
-            "Allows an application to receive email-bound notifications.",
-            "Allows an application to receive error stanzas.",
-            "Allows an application to receive instant messages.",
-            "Allows an application to receive user subscription POSTs.",
-            "Allows an application to receive a user's chat presence.",
-            "Registers an application for notifications when a client connects or disconnects from a channel.",
-            "Enables warmup requests."
-          ],
           "items": {
             "enum": [
               "INBOUND_SERVICE_UNSPECIFIED",
@@ -3491,12 +4166,23 @@
               "INBOUND_SERVICE_CHANNEL_PRESENCE",
               "INBOUND_SERVICE_WARMUP"
             ],
+            "enumDescriptions": [
+              "Not specified.",
+              "Allows an application to receive mail.",
+              "Allows an application to receive email-bound notifications.",
+              "Allows an application to receive error stanzas.",
+              "Allows an application to receive instant messages.",
+              "Allows an application to receive user subscription POSTs.",
+              "Allows an application to receive a user's chat presence.",
+              "Registers an application for notifications when a client connects or disconnects from a channel.",
+              "Enables warmup requests."
+            ],
             "type": "string"
           },
           "type": "array"
         },
         "instanceClass": {
-          "description": "Instance class that is used to run this version. Valid values are:\nAutomaticScaling: F1, F2, F4, F4_1G\nManualScaling or BasicScaling: B1, B2, B4, B8, B4_1GDefaults to F1 for AutomaticScaling and B1 for ManualScaling or BasicScaling.",
+          "description": "Instance class that is used to run this version. Valid values are: AutomaticScaling: F1, F2, F4, F4_1G ManualScaling or BasicScaling: B1, B2, B4, B8, B4_1GDefaults to F1 for AutomaticScaling and B1 for ManualScaling or BasicScaling.",
           "type": "string"
         },
         "libraries": {
@@ -3512,7 +4198,7 @@
         },
         "manualScaling": {
           "$ref": "ManualScaling",
-          "description": "A service with manual scaling runs continuously, allowing you to perform complex initialization and rely on the state of its memory over time."
+          "description": "A service with manual scaling runs continuously, allowing you to perform complex initialization and rely on the state of its memory over time. Manually scaled versions are sometimes referred to as \"backends\"."
         },
         "name": {
           "description": "Full path to the Version resource in the API. Example: apps/myapp/services/default/versions/v1.@OutputOnly",
@@ -3539,7 +4225,7 @@
           "type": "string"
         },
         "runtimeApiVersion": {
-          "description": "The version of the API in the given runtime environment. Please see the app.yaml reference for valid values at https://cloud.google.com/appengine/docs/standard/\u003clanguage\u003e/config/appref",
+          "description": "The version of the API in the given runtime environment. Please see the app.yaml reference for valid values at https://cloud.google.com/appengine/docs/standard//config/appref",
           "type": "string"
         },
         "runtimeChannel": {
@@ -3548,6 +4234,10 @@
         },
         "runtimeMainExecutablePath": {
           "description": "The path or name of the app's main executable.",
+          "type": "string"
+        },
+        "serviceAccount": {
+          "description": "The identity that the deployed version will run as. Admin API will use the App Engine Appspot service account as default if this field is neither provided in app.yaml file nor through CLI flag.",
           "type": "string"
         },
         "servingStatus": {
@@ -3614,6 +4304,20 @@
       "description": "VPC access connector specification.",
       "id": "VpcAccessConnector",
       "properties": {
+        "egressSetting": {
+          "description": "The egress setting for the connector, controlling what traffic is diverted through it.",
+          "enum": [
+            "EGRESS_SETTING_UNSPECIFIED",
+            "ALL_TRAFFIC",
+            "PRIVATE_IP_RANGES"
+          ],
+          "enumDescriptions": [
+            "",
+            "Force the use of VPC Access for all egress traffic from the function.",
+            "Use the VPC Access Connector for private IP space from RFC1918."
+          ],
+          "type": "string"
+        },
         "name": {
           "description": "Full Serverless VPC Access Connector name e.g. /projects/my-project/locations/us-central1/connectors/c1.",
           "type": "string"
@@ -3631,7 +4335,7 @@
           "type": "integer"
         },
         "sourceUrl": {
-          "description": "URL of the zip file to deploy from. Must be a URL to a resource in Google Cloud Storage in the form 'http(s)://storage.googleapis.com/\u003cbucket\u003e/\u003cobject\u003e'.",
+          "description": "URL of the zip file to deploy from. Must be a URL to a resource in Google Cloud Storage in the form 'http(s)://storage.googleapis.com//'.",
           "type": "string"
         }
       },

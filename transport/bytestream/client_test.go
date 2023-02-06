@@ -245,7 +245,7 @@ func TestClientWrite_AfterSetupClose(t *testing.T) {
 	setup.Close()
 	_, err := setup.client.NewWriter(setup.ctx, "should fail")
 	if err == nil {
-		t.Fatalf("NewWriter(%q): err=%v", "shoudl fail", err)
+		t.Fatalf("NewWriter(%q): err=%v", "should fail", err)
 	}
 }
 
@@ -424,5 +424,6 @@ func newTestSetup(input string) *TestSetup {
 }
 
 func (testSetup *TestSetup) Close() {
+	testSetup.client.Close()
 	testSetup.rpcTest.Close()
 }

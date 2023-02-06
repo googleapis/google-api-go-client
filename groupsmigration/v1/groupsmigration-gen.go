@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://developers.google.com/google-apps/groups-migration/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/groupsmigration/v1"
-//   ...
-//   ctx := context.Background()
-//   groupsmigrationService, err := groupsmigration.NewService(ctx)
+//	import "google.golang.org/api/groupsmigration/v1"
+//	...
+//	ctx := context.Background()
+//	groupsmigrationService, err := groupsmigration.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   groupsmigrationService, err := groupsmigration.NewService(ctx, option.WithAPIKey("AIza..."))
+//	groupsmigrationService, err := groupsmigration.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   groupsmigrationService, err := groupsmigration.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	groupsmigrationService, err := groupsmigration.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package groupsmigration // import "google.golang.org/api/groupsmigration/v1"
@@ -50,6 +50,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -74,22 +75,24 @@ var _ = internaloption.WithDefaultEndpoint
 const apiId = "groupsmigration:v1"
 const apiName = "groupsmigration"
 const apiVersion = "v1"
-const basePath = "https://www.googleapis.com/groups/v1/groups/"
+const basePath = "https://groupsmigration.googleapis.com/"
+const mtlsBasePath = "https://groupsmigration.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// Manage messages in groups on your domain
+	// Upload messages to any Google group in your domain
 	AppsGroupsMigrationScope = "https://www.googleapis.com/auth/apps.groups.migration"
 )
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/apps.groups.migration",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -156,10 +159,10 @@ type Groups struct {
 
 	// ForceSendFields is a list of field names (e.g. "Kind") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Kind") to include in API
@@ -189,6 +192,8 @@ type ArchiveInsertCall struct {
 }
 
 // Insert: Inserts a new mail into the archive of the Google group.
+//
+// - groupId: The group ID.
 func (r *ArchiveService) Insert(groupId string) *ArchiveInsertCall {
 	c := &ArchiveInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.groupId = groupId
@@ -261,7 +266,7 @@ func (c *ArchiveInsertCall) Header() http.Header {
 
 func (c *ArchiveInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -269,7 +274,7 @@ func (c *ArchiveInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "{groupId}/archive")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "groups/v1/groups/{groupId}/archive")
 	if c.mediaInfo_ != nil {
 		urls = googleapi.ResolveRelative(c.s.BasePath, "/upload/groups/v1/groups/{groupId}/archive")
 		c.urlParams_.Set("uploadType", c.mediaInfo_.UploadType())
@@ -307,17 +312,17 @@ func (c *ArchiveInsertCall) Do(opts ...googleapi.CallOption) (*Groups, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	rx := c.mediaInfo_.ResumableUpload(res.Header.Get("Location"))
 	if rx != nil {
@@ -333,7 +338,7 @@ func (c *ArchiveInsertCall) Do(opts ...googleapi.CallOption) (*Groups, error) {
 		}
 		defer res.Body.Close()
 		if err := googleapi.CheckResponse(res); err != nil {
-			return nil, err
+			return nil, gensupport.WrapError(err)
 		}
 	}
 	ret := &Groups{
@@ -349,18 +354,15 @@ func (c *ArchiveInsertCall) Do(opts ...googleapi.CallOption) (*Groups, error) {
 	return ret, nil
 	// {
 	//   "description": "Inserts a new mail into the archive of the Google group.",
+	//   "flatPath": "groups/v1/groups/{groupId}/archive",
 	//   "httpMethod": "POST",
 	//   "id": "groupsmigration.archive.insert",
 	//   "mediaUpload": {
 	//     "accept": [
 	//       "message/rfc822"
 	//     ],
-	//     "maxSize": "25MB",
+	//     "maxSize": "26214400",
 	//     "protocols": {
-	//       "resumable": {
-	//         "multipart": true,
-	//         "path": "/resumable/upload/groups/v1/groups/{groupId}/archive"
-	//       },
 	//       "simple": {
 	//         "multipart": true,
 	//         "path": "/upload/groups/v1/groups/{groupId}/archive"
@@ -378,7 +380,7 @@ func (c *ArchiveInsertCall) Do(opts ...googleapi.CallOption) (*Groups, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{groupId}/archive",
+	//   "path": "groups/v1/groups/{groupId}/archive",
 	//   "response": {
 	//     "$ref": "Groups"
 	//   },

@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/secret-manager/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/secretmanager/v1"
-//   ...
-//   ctx := context.Background()
-//   secretmanagerService, err := secretmanager.NewService(ctx)
+//	import "google.golang.org/api/secretmanager/v1"
+//	...
+//	ctx := context.Background()
+//	secretmanagerService, err := secretmanager.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   secretmanagerService, err := secretmanager.NewService(ctx, option.WithAPIKey("AIza..."))
+//	secretmanagerService, err := secretmanager.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   secretmanagerService, err := secretmanager.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	secretmanagerService, err := secretmanager.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package secretmanager // import "google.golang.org/api/secretmanager/v1"
@@ -50,6 +50,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -75,21 +76,24 @@ const apiId = "secretmanager:v1"
 const apiName = "secretmanager"
 const apiVersion = "v1"
 const basePath = "https://secretmanager.googleapis.com/"
+const mtlsBasePath = "https://secretmanager.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud data and see the
+	// email address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -181,8 +185,7 @@ type ProjectsSecretsVersionsService struct {
 // AccessSecretVersionResponse: Response message for
 // SecretManagerService.AccessSecretVersion.
 type AccessSecretVersionResponse struct {
-	// Name: The resource name of the SecretVersion in the
-	// format
+	// Name: The resource name of the SecretVersion in the format
 	// `projects/*/secrets/*/versions/*`.
 	Name string `json:"name,omitempty"`
 
@@ -195,10 +198,10 @@ type AccessSecretVersionResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Name") to include in API
@@ -224,10 +227,10 @@ type AddSecretVersionRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "Payload") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Payload") to include in
@@ -245,81 +248,40 @@ func (s *AddSecretVersionRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// AuditConfig: Specifies the audit configuration for a service.
-// The configuration determines which permission types are logged, and
-// what
-// identities, if any, are exempted from logging.
-// An AuditConfig must have one or more AuditLogConfigs.
-//
-// If there are AuditConfigs for both `allServices` and a specific
-// service,
-// the union of the two AuditConfigs is used for that service: the
-// log_types
-// specified in each AuditConfig are enabled, and the exempted_members
-// in each
-// AuditLogConfig are exempted.
-//
-// Example Policy with multiple AuditConfigs:
-//
-//     {
-//       "audit_configs": [
-//         {
-//           "service": "allServices"
-//           "audit_log_configs": [
-//             {
-//               "log_type": "DATA_READ",
-//               "exempted_members": [
-//                 "user:jose@example.com"
-//               ]
-//             },
-//             {
-//               "log_type": "DATA_WRITE",
-//             },
-//             {
-//               "log_type": "ADMIN_READ",
-//             }
-//           ]
-//         },
-//         {
-//           "service": "sampleservice.googleapis.com"
-//           "audit_log_configs": [
-//             {
-//               "log_type": "DATA_READ",
-//             },
-//             {
-//               "log_type": "DATA_WRITE",
-//               "exempted_members": [
-//                 "user:aliya@example.com"
-//               ]
-//             }
-//           ]
-//         }
-//       ]
-//     }
-//
-// For sampleservice, this policy enables DATA_READ, DATA_WRITE and
-// ADMIN_READ
-// logging. It also exempts jose@example.com from DATA_READ logging,
-// and
-// aliya@example.com from DATA_WRITE logging.
+// AuditConfig: Specifies the audit configuration for a service. The
+// configuration determines which permission types are logged, and what
+// identities, if any, are exempted from logging. An AuditConfig must
+// have one or more AuditLogConfigs. If there are AuditConfigs for both
+// `allServices` and a specific service, the union of the two
+// AuditConfigs is used for that service: the log_types specified in
+// each AuditConfig are enabled, and the exempted_members in each
+// AuditLogConfig are exempted. Example Policy with multiple
+// AuditConfigs: { "audit_configs": [ { "service": "allServices",
+// "audit_log_configs": [ { "log_type": "DATA_READ", "exempted_members":
+// [ "user:jose@example.com" ] }, { "log_type": "DATA_WRITE" }, {
+// "log_type": "ADMIN_READ" } ] }, { "service":
+// "sampleservice.googleapis.com", "audit_log_configs": [ { "log_type":
+// "DATA_READ" }, { "log_type": "DATA_WRITE", "exempted_members": [
+// "user:aliya@example.com" ] } ] } ] } For sampleservice, this policy
+// enables DATA_READ, DATA_WRITE and ADMIN_READ logging. It also exempts
+// `jose@example.com` from DATA_READ logging, and `aliya@example.com`
+// from DATA_WRITE logging.
 type AuditConfig struct {
 	// AuditLogConfigs: The configuration for logging of each type of
 	// permission.
 	AuditLogConfigs []*AuditLogConfig `json:"auditLogConfigs,omitempty"`
 
-	// Service: Specifies a service that will be enabled for audit
-	// logging.
-	// For example, `storage.googleapis.com`,
-	// `cloudsql.googleapis.com`.
+	// Service: Specifies a service that will be enabled for audit logging.
+	// For example, `storage.googleapis.com`, `cloudsql.googleapis.com`.
 	// `allServices` is a special value that covers all services.
 	Service string `json:"service,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AuditLogConfigs") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AuditLogConfigs") to
@@ -339,31 +301,15 @@ func (s *AuditConfig) MarshalJSON() ([]byte, error) {
 }
 
 // AuditLogConfig: Provides the configuration for logging a type of
-// permissions.
-// Example:
-//
-//     {
-//       "audit_log_configs": [
-//         {
-//           "log_type": "DATA_READ",
-//           "exempted_members": [
-//             "user:jose@example.com"
-//           ]
-//         },
-//         {
-//           "log_type": "DATA_WRITE",
-//         }
-//       ]
-//     }
-//
-// This enables 'DATA_READ' and 'DATA_WRITE' logging, while
-// exempting
-// jose@example.com from DATA_READ logging.
+// permissions. Example: { "audit_log_configs": [ { "log_type":
+// "DATA_READ", "exempted_members": [ "user:jose@example.com" ] }, {
+// "log_type": "DATA_WRITE" } ] } This enables 'DATA_READ' and
+// 'DATA_WRITE' logging, while exempting jose@example.com from DATA_READ
+// logging.
 type AuditLogConfig struct {
 	// ExemptedMembers: Specifies the identities that do not cause logging
-	// for this type of
-	// permission.
-	// Follows the same format of Binding.members.
+	// for this type of permission. Follows the same format of
+	// Binding.members.
 	ExemptedMembers []string `json:"exemptedMembers,omitempty"`
 
 	// LogType: The log type that this config enables.
@@ -377,10 +323,10 @@ type AuditLogConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "ExemptedMembers") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ExemptedMembers") to
@@ -400,110 +346,136 @@ func (s *AuditLogConfig) MarshalJSON() ([]byte, error) {
 }
 
 // Automatic: A replication policy that replicates the Secret payload
-// without any
-// restrictions.
+// without any restrictions.
 type Automatic struct {
+	// CustomerManagedEncryption: Optional. The customer-managed encryption
+	// configuration of the Secret. If no configuration is provided,
+	// Google-managed default encryption is used. Updates to the Secret
+	// encryption configuration only apply to SecretVersions added
+	// afterwards. They do not apply retroactively to existing
+	// SecretVersions.
+	CustomerManagedEncryption *CustomerManagedEncryption `json:"customerManagedEncryption,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CustomerManagedEncryption") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "CustomerManagedEncryption") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
 }
 
-// Binding: Associates `members` with a `role`.
+func (s *Automatic) MarshalJSON() ([]byte, error) {
+	type NoMethod Automatic
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AutomaticStatus: The replication status of a SecretVersion using
+// automatic replication. Only populated if the parent Secret has an
+// automatic replication policy.
+type AutomaticStatus struct {
+	// CustomerManagedEncryption: Output only. The customer-managed
+	// encryption status of the SecretVersion. Only populated if
+	// customer-managed encryption is used.
+	CustomerManagedEncryption *CustomerManagedEncryptionStatus `json:"customerManagedEncryption,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CustomerManagedEncryption") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "CustomerManagedEncryption") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AutomaticStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod AutomaticStatus
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Binding: Associates `members`, or principals, with a `role`.
 type Binding struct {
-	// Condition: The condition that is associated with this binding.
-	//
-	// If the condition evaluates to `true`, then this binding applies to
-	// the
-	// current request.
-	//
-	// If the condition evaluates to `false`, then this binding does not
-	// apply to
-	// the current request. However, a different role binding might grant
-	// the same
-	// role to one or more of the members in this binding.
-	//
-	// To learn which resources support conditions in their IAM policies,
-	// see
-	// the
-	// [IAM
-	// documentation](https://cloud.google.com/iam/help/conditions/r
-	// esource-policies).
+	// Condition: The condition that is associated with this binding. If the
+	// condition evaluates to `true`, then this binding applies to the
+	// current request. If the condition evaluates to `false`, then this
+	// binding does not apply to the current request. However, a different
+	// role binding might grant the same role to one or more of the
+	// principals in this binding. To learn which resources support
+	// conditions in their IAM policies, see the IAM documentation
+	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Condition *Expr `json:"condition,omitempty"`
 
-	// Members: Specifies the identities requesting access for a Cloud
-	// Platform resource.
-	// `members` can have the following values:
-	//
-	// * `allUsers`: A special identifier that represents anyone who is
-	//    on the internet; with or without a Google account.
-	//
-	// * `allAuthenticatedUsers`: A special identifier that represents
-	// anyone
-	//    who is authenticated with a Google account or a service
-	// account.
-	//
-	// * `user:{emailid}`: An email address that represents a specific
-	// Google
-	//    account. For example, `alice@example.com` .
-	//
-	//
-	// * `serviceAccount:{emailid}`: An email address that represents a
-	// service
-	//    account. For example,
-	// `my-other-app@appspot.gserviceaccount.com`.
-	//
-	// * `group:{emailid}`: An email address that represents a Google
-	// group.
-	//    For example, `admins@example.com`.
-	//
-	// * `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
-	// unique
-	//    identifier) representing a user that has been recently deleted.
-	// For
-	//    example, `alice@example.com?uid=123456789012345678901`. If the
-	// user is
-	//    recovered, this value reverts to `user:{emailid}` and the
-	// recovered user
-	//    retains the role in the binding.
-	//
-	// * `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
-	// (plus
-	//    unique identifier) representing a service account that has been
-	// recently
-	//    deleted. For example,
-	//
+	// Members: Specifies the principals requesting access for a Google
+	// Cloud resource. `members` can have the following values: *
+	// `allUsers`: A special identifier that represents anyone who is on the
+	// internet; with or without a Google account. *
+	// `allAuthenticatedUsers`: A special identifier that represents anyone
+	// who is authenticated with a Google account or a service account. Does
+	// not include identities that come from external identity providers
+	// (IdPs) through identity federation. * `user:{emailid}`: An email
+	// address that represents a specific Google account. For example,
+	// `alice@example.com` . * `serviceAccount:{emailid}`: An email address
+	// that represents a Google service account. For example,
+	// `my-other-app@appspot.gserviceaccount.com`. *
+	// `serviceAccount:{projectid}.svc.id.goog[{namespace}/{kubernetes-sa}]`:
+	//  An identifier for a Kubernetes service account
+	// (https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts).
+	// For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`.
+	// * `group:{emailid}`: An email address that represents a Google group.
+	// For example, `admins@example.com`. *
+	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
+	// unique identifier) representing a user that has been recently
+	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
+	// If the user is recovered, this value reverts to `user:{emailid}` and
+	// the recovered user retains the role in the binding. *
+	// `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
+	// (plus unique identifier) representing a service account that has been
+	// recently deleted. For example,
 	// `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`.
-	//
-	//    If the service account is undeleted, this value reverts to
-	//    `serviceAccount:{emailid}` and the undeleted service account
-	// retains the
-	//    role in the binding.
-	//
-	// * `deleted:group:{emailid}?uid={uniqueid}`: An email address (plus
-	// unique
-	//    identifier) representing a Google group that has been recently
-	//    deleted. For example,
-	// `admins@example.com?uid=123456789012345678901`. If
-	//    the group is recovered, this value reverts to `group:{emailid}`
-	// and the
-	//    recovered group retains the role in the binding.
-	//
-	//
-	// * `domain:{domain}`: The G Suite domain (primary) that represents all
-	// the
-	//    users of that domain. For example, `google.com` or
-	// `example.com`.
-	//
-	//
+	// If the service account is undeleted, this value reverts to
+	// `serviceAccount:{emailid}` and the undeleted service account retains
+	// the role in the binding. * `deleted:group:{emailid}?uid={uniqueid}`:
+	// An email address (plus unique identifier) representing a Google group
+	// that has been recently deleted. For example,
+	// `admins@example.com?uid=123456789012345678901`. If the group is
+	// recovered, this value reverts to `group:{emailid}` and the recovered
+	// group retains the role in the binding. * `domain:{domain}`: The G
+	// Suite domain (primary) that represents all the users of that domain.
+	// For example, `google.com` or `example.com`.
 	Members []string `json:"members,omitempty"`
 
-	// Role: Role that is assigned to `members`.
+	// Role: Role that is assigned to the list of `members`, or principals.
 	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`.
 	Role string `json:"role,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Condition") to include in
@@ -521,28 +493,140 @@ func (s *Binding) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// CustomerManagedEncryption: Configuration for encrypting secret
+// payloads using customer-managed encryption keys (CMEK).
+type CustomerManagedEncryption struct {
+	// KmsKeyName: Required. The resource name of the Cloud KMS CryptoKey
+	// used to encrypt secret payloads. For secrets using the UserManaged
+	// replication policy type, Cloud KMS CryptoKeys must reside in the same
+	// location as the replica location. For secrets using the Automatic
+	// replication policy type, Cloud KMS CryptoKeys must reside in
+	// `global`. The expected format is
+	// `projects/*/locations/*/keyRings/*/cryptoKeys/*`.
+	KmsKeyName string `json:"kmsKeyName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "KmsKeyName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "KmsKeyName") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CustomerManagedEncryption) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomerManagedEncryption
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CustomerManagedEncryptionStatus: Describes the status of
+// customer-managed encryption.
+type CustomerManagedEncryptionStatus struct {
+	// KmsKeyVersionName: Required. The resource name of the Cloud KMS
+	// CryptoKeyVersion used to encrypt the secret payload, in the following
+	// format: `projects/*/locations/*/keyRings/*/cryptoKeys/*/versions/*`.
+	KmsKeyVersionName string `json:"kmsKeyVersionName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "KmsKeyVersionName")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "KmsKeyVersionName") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CustomerManagedEncryptionStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomerManagedEncryptionStatus
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // DestroySecretVersionRequest: Request message for
 // SecretManagerService.DestroySecretVersion.
 type DestroySecretVersionRequest struct {
+	// Etag: Optional. Etag of the SecretVersion. The request succeeds if it
+	// matches the etag of the currently stored secret version object. If
+	// the etag is omitted, the request succeeds.
+	Etag string `json:"etag,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Etag") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Etag") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DestroySecretVersionRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod DestroySecretVersionRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // DisableSecretVersionRequest: Request message for
 // SecretManagerService.DisableSecretVersion.
 type DisableSecretVersionRequest struct {
+	// Etag: Optional. Etag of the SecretVersion. The request succeeds if it
+	// matches the etag of the currently stored secret version object. If
+	// the etag is omitted, the request succeeds.
+	Etag string `json:"etag,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Etag") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Etag") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DisableSecretVersionRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod DisableSecretVersionRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
-// duplicated
-// empty messages in your APIs. A typical example is to use it as the
-// request
-// or the response type of an API method. For instance:
-//
-//     service Foo {
-//       rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty);
-//     }
-//
-// The JSON representation for `Empty` is empty JSON object `{}`.
+// duplicated empty messages in your APIs. A typical example is to use
+// it as the request or the response type of an API method. For
+// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); }
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -552,76 +636,77 @@ type Empty struct {
 // EnableSecretVersionRequest: Request message for
 // SecretManagerService.EnableSecretVersion.
 type EnableSecretVersionRequest struct {
+	// Etag: Optional. Etag of the SecretVersion. The request succeeds if it
+	// matches the etag of the currently stored secret version object. If
+	// the etag is omitted, the request succeeds.
+	Etag string `json:"etag,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Etag") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Etag") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EnableSecretVersionRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod EnableSecretVersionRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // Expr: Represents a textual expression in the Common Expression
-// Language (CEL)
-// syntax. CEL is a C-like expression language. The syntax and semantics
-// of CEL
-// are documented at https://github.com/google/cel-spec.
-//
-// Example (Comparison):
-//
-//     title: "Summary size limit"
-//     description: "Determines if a summary is less than 100 chars"
-//     expression: "document.summary.size() < 100"
-//
-// Example (Equality):
-//
-//     title: "Requestor is owner"
-//     description: "Determines if requestor is the document owner"
-//     expression: "document.owner ==
-// request.auth.claims.email"
-//
-// Example (Logic):
-//
-//     title: "Public documents"
-//     description: "Determine whether the document should be publicly
-// visible"
-//     expression: "document.type != 'private' && document.type !=
-// 'internal'"
-//
-// Example (Data Manipulation):
-//
-//     title: "Notification string"
-//     description: "Create a notification string with a timestamp."
-//     expression: "'New message received at ' +
-// string(document.create_time)"
-//
-// The exact variables and functions that may be referenced within an
-// expression
-// are determined by the service that evaluates it. See the
-// service
-// documentation for additional information.
+// Language (CEL) syntax. CEL is a C-like expression language. The
+// syntax and semantics of CEL are documented at
+// https://github.com/google/cel-spec. Example (Comparison): title:
+// "Summary size limit" description: "Determines if a summary is less
+// than 100 chars" expression: "document.summary.size() < 100" Example
+// (Equality): title: "Requestor is owner" description: "Determines if
+// requestor is the document owner" expression: "document.owner ==
+// request.auth.claims.email" Example (Logic): title: "Public documents"
+// description: "Determine whether the document should be publicly
+// visible" expression: "document.type != 'private' && document.type !=
+// 'internal'" Example (Data Manipulation): title: "Notification string"
+// description: "Create a notification string with a timestamp."
+// expression: "'New message received at ' +
+// string(document.create_time)" The exact variables and functions that
+// may be referenced within an expression are determined by the service
+// that evaluates it. See the service documentation for additional
+// information.
 type Expr struct {
 	// Description: Optional. Description of the expression. This is a
-	// longer text which
-	// describes the expression, e.g. when hovered over it in a UI.
+	// longer text which describes the expression, e.g. when hovered over it
+	// in a UI.
 	Description string `json:"description,omitempty"`
 
 	// Expression: Textual representation of an expression in Common
-	// Expression Language
-	// syntax.
+	// Expression Language syntax.
 	Expression string `json:"expression,omitempty"`
 
 	// Location: Optional. String indicating the location of the expression
-	// for error
-	// reporting, e.g. a file name and a position in the file.
+	// for error reporting, e.g. a file name and a position in the file.
 	Location string `json:"location,omitempty"`
 
 	// Title: Optional. Title for the expression, i.e. a short string
-	// describing
-	// its purpose. This can be used e.g. in UIs which allow to enter
-	// the
-	// expression.
+	// describing its purpose. This can be used e.g. in UIs which allow to
+	// enter the expression.
 	Title string `json:"title,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Description") to include
@@ -655,10 +740,10 @@ type ListLocationsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Locations") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Locations") to include in
@@ -680,15 +765,16 @@ func (s *ListLocationsResponse) MarshalJSON() ([]byte, error) {
 // SecretManagerService.ListSecretVersions.
 type ListSecretVersionsResponse struct {
 	// NextPageToken: A token to retrieve the next page of results. Pass
-	// this value in
-	// ListSecretVersionsRequest.page_token to retrieve the next page.
+	// this value in ListSecretVersionsRequest.page_token to retrieve the
+	// next page.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// TotalSize: The total number of SecretVersions.
+	// TotalSize: The total number of SecretVersions but 0 when the
+	// ListSecretsRequest.filter field is set.
 	TotalSize int64 `json:"totalSize,omitempty"`
 
-	// Versions: The list of SecretVersions sorted in reverse by
-	// create_time (newest first).
+	// Versions: The list of SecretVersions sorted in reverse by create_time
+	// (newest first).
 	Versions []*SecretVersion `json:"versions,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -697,10 +783,10 @@ type ListSecretVersionsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -722,16 +808,16 @@ func (s *ListSecretVersionsResponse) MarshalJSON() ([]byte, error) {
 // SecretManagerService.ListSecrets.
 type ListSecretsResponse struct {
 	// NextPageToken: A token to retrieve the next page of results. Pass
-	// this value in
-	// ListSecretsRequest.page_token to retrieve the next page.
+	// this value in ListSecretsRequest.page_token to retrieve the next
+	// page.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// Secrets: The list of Secrets sorted in reverse by create_time
-	// (newest
+	// Secrets: The list of Secrets sorted in reverse by create_time (newest
 	// first).
 	Secrets []*Secret `json:"secrets,omitempty"`
 
-	// TotalSize: The total number of Secrets.
+	// TotalSize: The total number of Secrets but 0 when the
+	// ListSecretsRequest.filter field is set.
 	TotalSize int64 `json:"totalSize,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -740,10 +826,10 @@ type ListSecretsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -764,13 +850,11 @@ func (s *ListSecretsResponse) MarshalJSON() ([]byte, error) {
 // Location: A resource that represents Google Cloud Platform location.
 type Location struct {
 	// DisplayName: The friendly name for this location, typically a nearby
-	// city name.
-	// For example, "Tokyo".
+	// city name. For example, "Tokyo".
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Labels: Cross-service attributes for the location. For example
-	//
-	//     {"cloud.googleapis.com/region": "us-east1"}
+	// {"cloud.googleapis.com/region": "us-east1"}
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// LocationId: The canonical id for this location. For example:
@@ -778,13 +862,12 @@ type Location struct {
 	LocationId string `json:"locationId,omitempty"`
 
 	// Metadata: Service-specific metadata. For example the available
-	// capacity at the given
-	// location.
+	// capacity at the given location.
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
 
 	// Name: Resource name for the location, which may vary between
-	// implementations.
-	// For example: "projects/example-project/locations/us-east1"
+	// implementations. For example:
+	// "projects/example-project/locations/us-east1"
 	Name string `json:"name,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -793,10 +876,10 @@ type Location struct {
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DisplayName") to include
@@ -815,156 +898,86 @@ func (s *Location) MarshalJSON() ([]byte, error) {
 }
 
 // Policy: An Identity and Access Management (IAM) policy, which
-// specifies access
-// controls for Google Cloud resources.
-//
-//
-// A `Policy` is a collection of `bindings`. A `binding` binds one or
-// more
-// `members` to a single `role`. Members can be user accounts, service
-// accounts,
-// Google groups, and domains (such as G Suite). A `role` is a named
-// list of
-// permissions; each `role` can be an IAM predefined role or a
-// user-created
-// custom role.
-//
-// For some types of Google Cloud resources, a `binding` can also
-// specify a
-// `condition`, which is a logical expression that allows access to a
-// resource
-// only if the expression evaluates to `true`. A condition can add
-// constraints
-// based on attributes of the request, the resource, or both. To learn
-// which
-// resources support conditions in their IAM policies, see the
-// [IAM
-// documentation](https://cloud.google.com/iam/help/conditions/resource-p
-// olicies).
-//
-// **JSON example:**
-//
-//     {
-//       "bindings": [
-//         {
-//           "role": "roles/resourcemanager.organizationAdmin",
-//           "members": [
-//             "user:mike@example.com",
-//             "group:admins@example.com",
-//             "domain:google.com",
-//
-// "serviceAccount:my-project-id@appspot.gserviceaccount.com"
-//           ]
-//         },
-//         {
-//           "role": "roles/resourcemanager.organizationViewer",
-//           "members": [
-//             "user:eve@example.com"
-//           ],
-//           "condition": {
-//             "title": "expirable access",
-//             "description": "Does not grant access after Sep 2020",
-//             "expression": "request.time <
-// timestamp('2020-10-01T00:00:00.000Z')",
-//           }
-//         }
-//       ],
-//       "etag": "BwWWja0YfJA=",
-//       "version": 3
-//     }
-//
-// **YAML example:**
-//
-//     bindings:
-//     - members:
-//       - user:mike@example.com
-//       - group:admins@example.com
-//       - domain:google.com
-//       - serviceAccount:my-project-id@appspot.gserviceaccount.com
-//       role: roles/resourcemanager.organizationAdmin
-//     - members:
-//       - user:eve@example.com
-//       role: roles/resourcemanager.organizationViewer
-//       condition:
-//         title: expirable access
-//         description: Does not grant access after Sep 2020
-//         expression: request.time <
-// timestamp('2020-10-01T00:00:00.000Z')
-//     - etag: BwWWja0YfJA=
-//     - version: 3
-//
-// For a description of IAM and its features, see the
-// [IAM documentation](https://cloud.google.com/iam/docs/).
+// specifies access controls for Google Cloud resources. A `Policy` is a
+// collection of `bindings`. A `binding` binds one or more `members`, or
+// principals, to a single `role`. Principals can be user accounts,
+// service accounts, Google groups, and domains (such as G Suite). A
+// `role` is a named list of permissions; each `role` can be an IAM
+// predefined role or a user-created custom role. For some types of
+// Google Cloud resources, a `binding` can also specify a `condition`,
+// which is a logical expression that allows access to a resource only
+// if the expression evaluates to `true`. A condition can add
+// constraints based on attributes of the request, the resource, or
+// both. To learn which resources support conditions in their IAM
+// policies, see the IAM documentation
+// (https://cloud.google.com/iam/help/conditions/resource-policies).
+// **JSON example:** { "bindings": [ { "role":
+// "roles/resourcemanager.organizationAdmin", "members": [
+// "user:mike@example.com", "group:admins@example.com",
+// "domain:google.com",
+// "serviceAccount:my-project-id@appspot.gserviceaccount.com" ] }, {
+// "role": "roles/resourcemanager.organizationViewer", "members": [
+// "user:eve@example.com" ], "condition": { "title": "expirable access",
+// "description": "Does not grant access after Sep 2020", "expression":
+// "request.time < timestamp('2020-10-01T00:00:00.000Z')", } } ],
+// "etag": "BwWWja0YfJA=", "version": 3 } **YAML example:** bindings: -
+// members: - user:mike@example.com - group:admins@example.com -
+// domain:google.com -
+// serviceAccount:my-project-id@appspot.gserviceaccount.com role:
+// roles/resourcemanager.organizationAdmin - members: -
+// user:eve@example.com role: roles/resourcemanager.organizationViewer
+// condition: title: expirable access description: Does not grant access
+// after Sep 2020 expression: request.time <
+// timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3
+// For a description of IAM and its features, see the IAM documentation
+// (https://cloud.google.com/iam/docs/).
 type Policy struct {
 	// AuditConfigs: Specifies cloud audit logging configuration for this
 	// policy.
 	AuditConfigs []*AuditConfig `json:"auditConfigs,omitempty"`
 
-	// Bindings: Associates a list of `members` to a `role`. Optionally, may
-	// specify a
-	// `condition` that determines how and when the `bindings` are applied.
-	// Each
-	// of the `bindings` must contain at least one member.
+	// Bindings: Associates a list of `members`, or principals, with a
+	// `role`. Optionally, may specify a `condition` that determines how and
+	// when the `bindings` are applied. Each of the `bindings` must contain
+	// at least one principal. The `bindings` in a `Policy` can refer to up
+	// to 1,500 principals; up to 250 of these principals can be Google
+	// groups. Each occurrence of a principal counts towards these limits.
+	// For example, if the `bindings` grant 50 different roles to
+	// `user:alice@example.com`, and not to any other principal, then you
+	// can add another 1,450 principals to the `bindings` in the `Policy`.
 	Bindings []*Binding `json:"bindings,omitempty"`
 
 	// Etag: `etag` is used for optimistic concurrency control as a way to
-	// help
-	// prevent simultaneous updates of a policy from overwriting each
-	// other.
-	// It is strongly suggested that systems make use of the `etag` in
-	// the
-	// read-modify-write cycle to perform policy updates in order to avoid
-	// race
-	// conditions: An `etag` is returned in the response to `getIamPolicy`,
-	// and
-	// systems are expected to put that etag in the request to
-	// `setIamPolicy` to
-	// ensure that their change will be applied to the same version of the
-	// policy.
-	//
-	// **Important:** If you use IAM Conditions, you must include the `etag`
-	// field
-	// whenever you call `setIamPolicy`. If you omit this field, then IAM
-	// allows
-	// you to overwrite a version `3` policy with a version `1` policy, and
-	// all of
+	// help prevent simultaneous updates of a policy from overwriting each
+	// other. It is strongly suggested that systems make use of the `etag`
+	// in the read-modify-write cycle to perform policy updates in order to
+	// avoid race conditions: An `etag` is returned in the response to
+	// `getIamPolicy`, and systems are expected to put that etag in the
+	// request to `setIamPolicy` to ensure that their change will be applied
+	// to the same version of the policy. **Important:** If you use IAM
+	// Conditions, you must include the `etag` field whenever you call
+	// `setIamPolicy`. If you omit this field, then IAM allows you to
+	// overwrite a version `3` policy with a version `1` policy, and all of
 	// the conditions in the version `3` policy are lost.
 	Etag string `json:"etag,omitempty"`
 
-	// Version: Specifies the format of the policy.
-	//
-	// Valid values are `0`, `1`, and `3`. Requests that specify an invalid
-	// value
-	// are rejected.
-	//
+	// Version: Specifies the format of the policy. Valid values are `0`,
+	// `1`, and `3`. Requests that specify an invalid value are rejected.
 	// Any operation that affects conditional role bindings must specify
-	// version
-	// `3`. This requirement applies to the following operations:
-	//
-	// * Getting a policy that includes a conditional role binding
-	// * Adding a conditional role binding to a policy
-	// * Changing a conditional role binding in a policy
-	// * Removing any role binding, with or without a condition, from a
-	// policy
-	//   that includes conditions
-	//
-	// **Important:** If you use IAM Conditions, you must include the `etag`
-	// field
-	// whenever you call `setIamPolicy`. If you omit this field, then IAM
-	// allows
-	// you to overwrite a version `3` policy with a version `1` policy, and
-	// all of
-	// the conditions in the version `3` policy are lost.
-	//
-	// If a policy does not include any conditions, operations on that
-	// policy may
-	// specify any valid version or leave the field unset.
-	//
-	// To learn which resources support conditions in their IAM policies,
-	// see the
-	// [IAM
-	// documentation](https://cloud.google.com/iam/help/conditions/resource-p
-	// olicies).
+	// version `3`. This requirement applies to the following operations: *
+	// Getting a policy that includes a conditional role binding * Adding a
+	// conditional role binding to a policy * Changing a conditional role
+	// binding in a policy * Removing any role binding, with or without a
+	// condition, from a policy that includes conditions **Important:** If
+	// you use IAM Conditions, you must include the `etag` field whenever
+	// you call `setIamPolicy`. If you omit this field, then IAM allows you
+	// to overwrite a version `3` policy with a version `1` policy, and all
+	// of the conditions in the version `3` policy are lost. If a policy
+	// does not include any conditions, operations on that policy may
+	// specify any valid version or leave the field unset. To learn which
+	// resources support conditions in their IAM policies, see the IAM
+	// documentation
+	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Version int64 `json:"version,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -973,10 +986,10 @@ type Policy struct {
 
 	// ForceSendFields is a list of field names (e.g. "AuditConfigs") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AuditConfigs") to include
@@ -996,24 +1009,34 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 
 // Replica: Represents a Replica for this Secret.
 type Replica struct {
-	// Location: The canonical IDs of the location to replicate data.
-	// For example: "us-east1".
+	// CustomerManagedEncryption: Optional. The customer-managed encryption
+	// configuration of the User-Managed Replica. If no configuration is
+	// provided, Google-managed default encryption is used. Updates to the
+	// Secret encryption configuration only apply to SecretVersions added
+	// afterwards. They do not apply retroactively to existing
+	// SecretVersions.
+	CustomerManagedEncryption *CustomerManagedEncryption `json:"customerManagedEncryption,omitempty"`
+
+	// Location: The canonical IDs of the location to replicate data. For
+	// example: "us-east1".
 	Location string `json:"location,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Location") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "CustomerManagedEncryption") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Location") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g.
+	// "CustomerManagedEncryption") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1023,9 +1046,45 @@ func (s *Replica) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Replication: A policy that defines the replication configuration of
-// data.
-//
+// ReplicaStatus: Describes the status of a user-managed replica for the
+// SecretVersion.
+type ReplicaStatus struct {
+	// CustomerManagedEncryption: Output only. The customer-managed
+	// encryption status of the SecretVersion. Only populated if
+	// customer-managed encryption is used.
+	CustomerManagedEncryption *CustomerManagedEncryptionStatus `json:"customerManagedEncryption,omitempty"`
+
+	// Location: Output only. The canonical ID of the replica location. For
+	// example: "us-east1".
+	Location string `json:"location,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CustomerManagedEncryption") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "CustomerManagedEncryption") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ReplicaStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod ReplicaStatus
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Replication: A policy that defines the replication and encryption
+// configuration of data.
 type Replication struct {
 	// Automatic: The Secret will automatically be replicated without any
 	// restrictions.
@@ -1037,10 +1096,10 @@ type Replication struct {
 
 	// ForceSendFields is a list of field names (e.g. "Automatic") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Automatic") to include in
@@ -1058,29 +1117,116 @@ func (s *Replication) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Secret: A Secret is a logical secret whose value and versions can
-// be accessed.
-//
-// A Secret is made up of zero or more SecretVersions that
+// ReplicationStatus: The replication status of a SecretVersion.
+type ReplicationStatus struct {
+	// Automatic: Describes the replication status of a SecretVersion with
+	// automatic replication. Only populated if the parent Secret has an
+	// automatic replication policy.
+	Automatic *AutomaticStatus `json:"automatic,omitempty"`
+
+	// UserManaged: Describes the replication status of a SecretVersion with
+	// user-managed replication. Only populated if the parent Secret has a
+	// user-managed replication policy.
+	UserManaged *UserManagedStatus `json:"userManaged,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Automatic") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Automatic") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ReplicationStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod ReplicationStatus
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Rotation: The rotation time and period for a Secret. At
+// next_rotation_time, Secret Manager will send a Pub/Sub notification
+// to the topics configured on the Secret. Secret.topics must be set to
+// configure rotation.
+type Rotation struct {
+	// NextRotationTime: Optional. Timestamp in UTC at which the Secret is
+	// scheduled to rotate. Cannot be set to less than 300s (5 min) in the
+	// future and at most 3153600000s (100 years). next_rotation_time MUST
+	// be set if rotation_period is set.
+	NextRotationTime string `json:"nextRotationTime,omitempty"`
+
+	// RotationPeriod: Input only. The Duration between rotation
+	// notifications. Must be in seconds and at least 3600s (1h) and at most
+	// 3153600000s (100 years). If rotation_period is set,
+	// next_rotation_time must be set. next_rotation_time will be advanced
+	// by this period when the service automatically sends rotation
+	// notifications.
+	RotationPeriod string `json:"rotationPeriod,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "NextRotationTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextRotationTime") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Rotation) MarshalJSON() ([]byte, error) {
+	type NoMethod Rotation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Secret: A Secret is a logical secret whose value and versions can be
+// accessed. A Secret is made up of zero or more SecretVersions that
 // represent the secret data.
 type Secret struct {
+	// Annotations: Optional. Custom metadata about the secret. Annotations
+	// are distinct from various forms of labels. Annotations exist to allow
+	// client tools to store their own state information without requiring a
+	// database. Annotation keys must be between 1 and 63 characters long,
+	// have a UTF-8 encoding of maximum 128 bytes, begin and end with an
+	// alphanumeric character ([a-z0-9A-Z]), and may have dashes (-),
+	// underscores (_), dots (.), and alphanumerics in between these
+	// symbols. The total size of annotation keys and values must be less
+	// than 16KiB.
+	Annotations map[string]string `json:"annotations,omitempty"`
+
 	// CreateTime: Output only. The time at which the Secret was created.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// Labels: The labels assigned to this Secret.
-	//
-	// Label keys must be between 1 and 63 characters long, have a UTF-8
-	// encoding
-	// of maximum 128 bytes, and must conform to the following PCRE
-	// regular
-	// expression: `\p{Ll}\p{Lo}{0,62}`
-	//
-	// Label values must be between 0 and 63 characters long, have a
-	// UTF-8
-	// encoding of maximum 128 bytes, and must conform to the following
-	// PCRE
-	// regular expression: `[\p{Ll}\p{Lo}\p{N}_-]{0,63}`
-	//
+	// Etag: Optional. Etag of the currently stored Secret.
+	Etag string `json:"etag,omitempty"`
+
+	// ExpireTime: Optional. Timestamp in UTC when the Secret is scheduled
+	// to expire. This is always provided on output, regardless of what was
+	// sent on input.
+	ExpireTime string `json:"expireTime,omitempty"`
+
+	// Labels: The labels assigned to this Secret. Label keys must be
+	// between 1 and 63 characters long, have a UTF-8 encoding of maximum
+	// 128 bytes, and must conform to the following PCRE regular expression:
+	// `\p{Ll}\p{Lo}{0,62}` Label values must be between 0 and 63 characters
+	// long, have a UTF-8 encoding of maximum 128 bytes, and must conform to
+	// the following PCRE regular expression: `[\p{Ll}\p{Lo}\p{N}_-]{0,63}`
 	// No more than 64 labels can be assigned to a given resource.
 	Labels map[string]string `json:"labels,omitempty"`
 
@@ -1089,28 +1235,49 @@ type Secret struct {
 	Name string `json:"name,omitempty"`
 
 	// Replication: Required. Immutable. The replication policy of the
-	// secret data attached to the Secret.
-	//
-	// The replication policy cannot be changed after the Secret has been
-	// created.
+	// secret data attached to the Secret. The replication policy cannot be
+	// changed after the Secret has been created.
 	Replication *Replication `json:"replication,omitempty"`
+
+	// Rotation: Optional. Rotation policy attached to the Secret. May be
+	// excluded if there is no rotation policy.
+	Rotation *Rotation `json:"rotation,omitempty"`
+
+	// Topics: Optional. A list of up to 10 Pub/Sub topics to which messages
+	// are published when control plane operations are called on the secret
+	// or its versions.
+	Topics []*Topic `json:"topics,omitempty"`
+
+	// Ttl: Input only. The TTL for the Secret.
+	Ttl string `json:"ttl,omitempty"`
+
+	// VersionAliases: Optional. Mapping from version alias to version name.
+	// A version alias is a string with a maximum length of 63 characters
+	// and can contain uppercase and lowercase letters, numerals, and the
+	// hyphen (`-`) and underscore ('_') characters. An alias string must
+	// start with a letter and cannot be the string 'latest' or 'NEW'. No
+	// more than 50 aliases can be assigned to a given secret. Version-Alias
+	// pairs will be viewable via GetSecret and modifiable via UpdateSecret.
+	// At launch Access by Allias will only be supported on GetSecretVersion
+	// and AccessSecretVersion.
+	VersionAliases map[string]string `json:"versionAliases,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// ForceSendFields is a list of field names (e.g. "Annotations") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "Annotations") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -1123,18 +1290,30 @@ func (s *Secret) MarshalJSON() ([]byte, error) {
 }
 
 // SecretPayload: A secret payload resource in the Secret Manager API.
-// This contains the
-// sensitive secret payload that is associated with a SecretVersion.
+// This contains the sensitive secret payload that is associated with a
+// SecretVersion.
 type SecretPayload struct {
 	// Data: The secret data. Must be no larger than 64KiB.
 	Data string `json:"data,omitempty"`
 
+	// DataCrc32c: Optional. If specified, SecretManagerService will verify
+	// the integrity of the received data on
+	// SecretManagerService.AddSecretVersion calls using the crc32c checksum
+	// and store it to include in future
+	// SecretManagerService.AccessSecretVersion responses. If a checksum is
+	// not provided in the SecretManagerService.AddSecretVersion request,
+	// the SecretManagerService will generate and store one for you. The
+	// CRC32C value is encoded as a Int64 for compatibility, and can be
+	// safely downconverted to uint32 in languages that support this type.
+	// https://cloud.google.com/apis/design/design_patterns#integer_types
+	DataCrc32c int64 `json:"dataCrc32c,omitempty,string"`
+
 	// ForceSendFields is a list of field names (e.g. "Data") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Data") to include in API
@@ -1154,23 +1333,30 @@ func (s *SecretPayload) MarshalJSON() ([]byte, error) {
 
 // SecretVersion: A secret version resource in the Secret Manager API.
 type SecretVersion struct {
+	// ClientSpecifiedPayloadChecksum: Output only. True if payload checksum
+	// specified in SecretPayload object has been received by
+	// SecretManagerService on SecretManagerService.AddSecretVersion.
+	ClientSpecifiedPayloadChecksum bool `json:"clientSpecifiedPayloadChecksum,omitempty"`
+
 	// CreateTime: Output only. The time at which the SecretVersion was
 	// created.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// DestroyTime: Output only. The time this SecretVersion was
-	// destroyed.
-	// Only present if state is
-	// DESTROYED.
+	// DestroyTime: Output only. The time this SecretVersion was destroyed.
+	// Only present if state is DESTROYED.
 	DestroyTime string `json:"destroyTime,omitempty"`
 
-	// Name: Output only. The resource name of the SecretVersion in
-	// the
-	// format `projects/*/secrets/*/versions/*`.
-	//
-	// SecretVersion IDs in a Secret start at 1 and
-	// are incremented for each subsequent version of the secret.
+	// Etag: Output only. Etag of the currently stored SecretVersion.
+	Etag string `json:"etag,omitempty"`
+
+	// Name: Output only. The resource name of the SecretVersion in the
+	// format `projects/*/secrets/*/versions/*`. SecretVersion IDs in a
+	// Secret start at 1 and are incremented for each subsequent version of
+	// the secret.
 	Name string `json:"name,omitempty"`
+
+	// ReplicationStatus: The replication status of the SecretVersion.
+	ReplicationStatus *ReplicationStatus `json:"replicationStatus,omitempty"`
 
 	// State: Output only. The current state of the SecretVersion.
 	//
@@ -1179,32 +1365,32 @@ type SecretVersion struct {
 	// invalid.
 	//   "ENABLED" - The SecretVersion may be accessed.
 	//   "DISABLED" - The SecretVersion may not be accessed, but the secret
-	// data
-	// is still available and can be placed back into the ENABLED
+	// data is still available and can be placed back into the ENABLED
 	// state.
 	//   "DESTROYED" - The SecretVersion is destroyed and the secret data is
-	// no longer
-	// stored. A version may not leave this state once entered.
+	// no longer stored. A version may not leave this state once entered.
 	State string `json:"state,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "ClientSpecifiedPayloadChecksum") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g.
+	// "ClientSpecifiedPayloadChecksum") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1217,28 +1403,23 @@ func (s *SecretVersion) MarshalJSON() ([]byte, error) {
 // SetIamPolicyRequest: Request message for `SetIamPolicy` method.
 type SetIamPolicyRequest struct {
 	// Policy: REQUIRED: The complete policy to be applied to the
-	// `resource`. The size of
-	// the policy is limited to a few 10s of KB. An empty policy is a
-	// valid policy but certain Cloud Platform services (such as
-	// Projects)
-	// might reject them.
+	// `resource`. The size of the policy is limited to a few 10s of KB. An
+	// empty policy is a valid policy but certain Google Cloud services
+	// (such as Projects) might reject them.
 	Policy *Policy `json:"policy,omitempty"`
 
 	// UpdateMask: OPTIONAL: A FieldMask specifying which fields of the
-	// policy to modify. Only
-	// the fields in the mask will be modified. If no mask is provided,
-	// the
-	// following default mask is used:
-	//
-	// `paths: "bindings, etag"
+	// policy to modify. Only the fields in the mask will be modified. If no
+	// mask is provided, the following default mask is used: `paths:
+	// "bindings, etag"
 	UpdateMask string `json:"updateMask,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Policy") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Policy") to include in API
@@ -1260,20 +1441,17 @@ func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 // method.
 type TestIamPermissionsRequest struct {
 	// Permissions: The set of permissions to check for the `resource`.
-	// Permissions with
-	// wildcards (such as '*' or 'storage.*') are not allowed. For
-	// more
-	// information see
-	// [IAM
-	// Overview](https://cloud.google.com/iam/docs/overview#permissions).
+	// Permissions with wildcards (such as `*` or `storage.*`) are not
+	// allowed. For more information see IAM Overview
+	// (https://cloud.google.com/iam/docs/overview#permissions).
 	Permissions []string `json:"permissions,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Permissions") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Permissions") to include
@@ -1295,8 +1473,7 @@ func (s *TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
 // method.
 type TestIamPermissionsResponse struct {
 	// Permissions: A subset of `TestPermissionsRequest.permissions` that
-	// the caller is
-	// allowed.
+	// the caller is allowed.
 	Permissions []string `json:"permissions,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1305,10 +1482,10 @@ type TestIamPermissionsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Permissions") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Permissions") to include
@@ -1326,21 +1503,52 @@ func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Topic: A Pub/Sub topic which Secret Manager will publish to when
+// control plane events occur on this secret.
+type Topic struct {
+	// Name: Required. The resource name of the Pub/Sub topic that will be
+	// published to, in the following format: `projects/*/topics/*`. For
+	// publication to succeed, the Secret Manager P4SA must have
+	// `pubsub.publisher` permissions on the topic.
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Topic) MarshalJSON() ([]byte, error) {
+	type NoMethod Topic
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // UserManaged: A replication policy that replicates the Secret payload
-// into the
-// locations specified in Secret.replication.user_managed.replicas
+// into the locations specified in
+// Secret.replication.user_managed.replicas
 type UserManaged struct {
-	// Replicas: Required. The list of Replicas for this Secret.
-	//
-	// Cannot be empty.
+	// Replicas: Required. The list of Replicas for this Secret. Cannot be
+	// empty.
 	Replicas []*Replica `json:"replicas,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Replicas") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Replicas") to include in
@@ -1358,6 +1566,37 @@ func (s *UserManaged) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// UserManagedStatus: The replication status of a SecretVersion using
+// user-managed replication. Only populated if the parent Secret has a
+// user-managed replication policy.
+type UserManagedStatus struct {
+	// Replicas: Output only. The list of replica statuses for the
+	// SecretVersion.
+	Replicas []*ReplicaStatus `json:"replicas,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Replicas") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Replicas") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UserManagedStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod UserManagedStatus
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // method id "secretmanager.projects.locations.get":
 
 type ProjectsLocationsGetCall struct {
@@ -1370,6 +1609,8 @@ type ProjectsLocationsGetCall struct {
 }
 
 // Get: Gets information about a location.
+//
+// - name: Resource name for the location.
 func (r *ProjectsLocationsService) Get(name string) *ProjectsLocationsGetCall {
 	c := &ProjectsLocationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1413,7 +1654,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1451,17 +1692,17 @@ func (c *ProjectsLocationsGetCall) Do(opts ...googleapi.CallOption) (*Location, 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Location{
 		ServerResponse: googleapi.ServerResponse{
@@ -1515,28 +1756,34 @@ type ProjectsLocationsListCall struct {
 
 // List: Lists information about the supported locations for this
 // service.
+//
+//   - name: The resource that owns the locations collection, if
+//     applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
 
-// Filter sets the optional parameter "filter": The standard list
-// filter.
+// Filter sets the optional parameter "filter": A filter to narrow down
+// results to a preferred subset. The filtering language accepts strings
+// like "displayName=tokyo", and is documented in more detail in
+// AIP-160 (https://google.aip.dev/160).
 func (c *ProjectsLocationsListCall) Filter(filter string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The standard list
-// page size.
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return. If not set, the service selects a default.
 func (c *ProjectsLocationsListCall) PageSize(pageSize int64) *ProjectsLocationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The standard list
-// page token.
+// PageToken sets the optional parameter "pageToken": A page token
+// received from the `next_page_token` field in the response. Send that
+// page token to receive the subsequent page.
 func (c *ProjectsLocationsListCall) PageToken(pageToken string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -1579,7 +1826,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1617,17 +1864,17 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListLocationsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1650,7 +1897,7 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "The standard list filter.",
+	//       "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like `\"displayName=tokyo\"`, and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -1662,13 +1909,13 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The standard list page size.",
+	//       "description": "The maximum number of results to return. If not set, the service selects a default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The standard list page token.",
+	//       "description": "A page token received from the `next_page_token` field in the response. Send that page token to receive the subsequent page.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -1717,8 +1964,10 @@ type ProjectsSecretsAddVersionCall struct {
 }
 
 // AddVersion: Creates a new SecretVersion containing secret data and
-// attaches
-// it to an existing Secret.
+// attaches it to an existing Secret.
+//
+//   - parent: The resource name of the Secret to associate with the
+//     SecretVersion in the format `projects/*/secrets/*`.
 func (r *ProjectsSecretsService) AddVersion(parent string, addsecretversionrequest *AddSecretVersionRequest) *ProjectsSecretsAddVersionCall {
 	c := &ProjectsSecretsAddVersionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1753,7 +2002,7 @@ func (c *ProjectsSecretsAddVersionCall) Header() http.Header {
 
 func (c *ProjectsSecretsAddVersionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1793,17 +2042,17 @@ func (c *ProjectsSecretsAddVersionCall) Do(opts ...googleapi.CallOption) (*Secre
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &SecretVersion{
 		ServerResponse: googleapi.ServerResponse{
@@ -1817,7 +2066,7 @@ func (c *ProjectsSecretsAddVersionCall) Do(opts ...googleapi.CallOption) (*Secre
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new SecretVersion containing secret data and attaches\nit to an existing Secret.",
+	//   "description": "Creates a new SecretVersion containing secret data and attaches it to an existing Secret.",
 	//   "flatPath": "v1/projects/{projectsId}/secrets/{secretsId}:addVersion",
 	//   "httpMethod": "POST",
 	//   "id": "secretmanager.projects.secrets.addVersion",
@@ -1826,7 +2075,7 @@ func (c *ProjectsSecretsAddVersionCall) Do(opts ...googleapi.CallOption) (*Secre
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The resource name of the Secret to associate with the\nSecretVersion in the format `projects/*/secrets/*`.",
+	//       "description": "Required. The resource name of the Secret to associate with the SecretVersion in the format `projects/*/secrets/*`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/secrets/[^/]+$",
 	//       "required": true,
@@ -1859,6 +2108,9 @@ type ProjectsSecretsCreateCall struct {
 }
 
 // Create: Creates a new Secret containing no SecretVersions.
+//
+//   - parent: The resource name of the project to associate with the
+//     Secret, in the format `projects/*`.
 func (r *ProjectsSecretsService) Create(parent string, secret *Secret) *ProjectsSecretsCreateCall {
 	c := &ProjectsSecretsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1867,13 +2119,10 @@ func (r *ProjectsSecretsService) Create(parent string, secret *Secret) *Projects
 }
 
 // SecretId sets the optional parameter "secretId": Required. This must
-// be unique within the project.
-//
-// A secret ID is a string with a maximum length of 255 characters and
-// can
-// contain uppercase and lowercase letters, numerals, and the hyphen
-// (`-`) and
-// underscore (`_`) characters.
+// be unique within the project. A secret ID is a string with a maximum
+// length of 255 characters and can contain uppercase and lowercase
+// letters, numerals, and the hyphen (`-`) and underscore (`_`)
+// characters.
 func (c *ProjectsSecretsCreateCall) SecretId(secretId string) *ProjectsSecretsCreateCall {
 	c.urlParams_.Set("secretId", secretId)
 	return c
@@ -1906,7 +2155,7 @@ func (c *ProjectsSecretsCreateCall) Header() http.Header {
 
 func (c *ProjectsSecretsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1946,17 +2195,17 @@ func (c *ProjectsSecretsCreateCall) Do(opts ...googleapi.CallOption) (*Secret, e
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Secret{
 		ServerResponse: googleapi.ServerResponse{
@@ -1979,14 +2228,14 @@ func (c *ProjectsSecretsCreateCall) Do(opts ...googleapi.CallOption) (*Secret, e
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The resource name of the project to associate with the\nSecret, in the format `projects/*`.",
+	//       "description": "Required. The resource name of the project to associate with the Secret, in the format `projects/*`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "secretId": {
-	//       "description": "Required. This must be unique within the project.\n\nA secret ID is a string with a maximum length of 255 characters and can\ncontain uppercase and lowercase letters, numerals, and the hyphen (`-`) and\nunderscore (`_`) characters.",
+	//       "description": "Required. This must be unique within the project. A secret ID is a string with a maximum length of 255 characters and can contain uppercase and lowercase letters, numerals, and the hyphen (`-`) and underscore (`_`) characters.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -2016,9 +2265,20 @@ type ProjectsSecretsDeleteCall struct {
 }
 
 // Delete: Deletes a Secret.
+//
+//   - name: The resource name of the Secret to delete in the format
+//     `projects/*/secrets/*`.
 func (r *ProjectsSecretsService) Delete(name string) *ProjectsSecretsDeleteCall {
 	c := &ProjectsSecretsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// Etag sets the optional parameter "etag": Etag of the Secret. The
+// request succeeds if it matches the etag of the currently stored
+// secret object. If the etag is omitted, the request succeeds.
+func (c *ProjectsSecretsDeleteCall) Etag(etag string) *ProjectsSecretsDeleteCall {
+	c.urlParams_.Set("etag", etag)
 	return c
 }
 
@@ -2049,7 +2309,7 @@ func (c *ProjectsSecretsDeleteCall) Header() http.Header {
 
 func (c *ProjectsSecretsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2084,17 +2344,17 @@ func (c *ProjectsSecretsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, er
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -2116,8 +2376,13 @@ func (c *ProjectsSecretsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, er
 	//     "name"
 	//   ],
 	//   "parameters": {
+	//     "etag": {
+	//       "description": "Optional. Etag of the Secret. The request succeeds if it matches the etag of the currently stored secret object. If the etag is omitted, the request succeeds.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "name": {
-	//       "description": "Required. The resource name of the Secret to delete in the format\n`projects/*/secrets/*`.",
+	//       "description": "Required. The resource name of the Secret to delete in the format `projects/*/secrets/*`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/secrets/[^/]+$",
 	//       "required": true,
@@ -2147,6 +2412,9 @@ type ProjectsSecretsGetCall struct {
 }
 
 // Get: Gets metadata for a given Secret.
+//
+//   - name: The resource name of the Secret, in the format
+//     `projects/*/secrets/*`.
 func (r *ProjectsSecretsService) Get(name string) *ProjectsSecretsGetCall {
 	c := &ProjectsSecretsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2190,7 +2458,7 @@ func (c *ProjectsSecretsGetCall) Header() http.Header {
 
 func (c *ProjectsSecretsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2228,17 +2496,17 @@ func (c *ProjectsSecretsGetCall) Do(opts ...googleapi.CallOption) (*Secret, erro
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Secret{
 		ServerResponse: googleapi.ServerResponse{
@@ -2290,9 +2558,13 @@ type ProjectsSecretsGetIamPolicyCall struct {
 	header_      http.Header
 }
 
-// GetIamPolicy: Gets the access control policy for a secret.
-// Returns empty policy if the secret exists and does not have a policy
-// set.
+// GetIamPolicy: Gets the access control policy for a secret. Returns
+// empty policy if the secret exists and does not have a policy set.
+//
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsSecretsService) GetIamPolicy(resource string) *ProjectsSecretsGetIamPolicyCall {
 	c := &ProjectsSecretsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2300,25 +2572,18 @@ func (r *ProjectsSecretsService) GetIamPolicy(resource string) *ProjectsSecretsG
 }
 
 // OptionsRequestedPolicyVersion sets the optional parameter
-// "options.requestedPolicyVersion": The policy format version to be
-// returned.
-//
-// Valid values are 0, 1, and 3. Requests specifying an invalid value
-// will be
-// rejected.
-//
-// Requests for policies with any conditional bindings must specify
-// version 3.
-// Policies without any conditional bindings may specify any valid value
-// or
-// leave the field unset.
-//
-// To learn which resources support conditions in their IAM policies,
-// see
-// the
-// [IAM
-// documentation](https://cloud.google.com/iam/help/conditions/r
-// esource-policies).
+// "options.requestedPolicyVersion": The maximum policy version that
+// will be used to format the policy. Valid values are 0, 1, and 3.
+// Requests specifying an invalid value will be rejected. Requests for
+// policies with any conditional role bindings must specify version 3.
+// Policies with no conditional role bindings may specify any valid
+// value or leave the field unset. The policy in the response might use
+// the policy version that you specified, or it might use a lower policy
+// version. For example, if you specify version 3, but the policy has no
+// conditional role bindings, the response uses version 1. To learn
+// which resources support conditions in their IAM policies, see the IAM
+// documentation
+// (https://cloud.google.com/iam/help/conditions/resource-policies).
 func (c *ProjectsSecretsGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsSecretsGetIamPolicyCall {
 	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
 	return c
@@ -2361,7 +2626,7 @@ func (c *ProjectsSecretsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsSecretsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2399,17 +2664,17 @@ func (c *ProjectsSecretsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Pol
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -2423,7 +2688,7 @@ func (c *ProjectsSecretsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Pol
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the access control policy for a secret.\nReturns empty policy if the secret exists and does not have a policy set.",
+	//   "description": "Gets the access control policy for a secret. Returns empty policy if the secret exists and does not have a policy set.",
 	//   "flatPath": "v1/projects/{projectsId}/secrets/{secretsId}:getIamPolicy",
 	//   "httpMethod": "GET",
 	//   "id": "secretmanager.projects.secrets.getIamPolicy",
@@ -2432,13 +2697,13 @@ func (c *ProjectsSecretsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Pol
 	//   ],
 	//   "parameters": {
 	//     "options.requestedPolicyVersion": {
-	//       "description": "Optional. The policy format version to be returned.\n\nValid values are 0, 1, and 3. Requests specifying an invalid value will be\nrejected.\n\nRequests for policies with any conditional bindings must specify version 3.\nPolicies without any conditional bindings may specify any valid value or\nleave the field unset.\n\nTo learn which resources support conditions in their IAM policies, see the\n[IAM\ndocumentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
+	//       "description": "Optional. The maximum policy version that will be used to format the policy. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional role bindings must specify version 3. Policies with no conditional role bindings may specify any valid value or leave the field unset. The policy in the response might use the policy version that you specified, or it might use a lower policy version. For example, if you specify version 3, but the policy has no conditional role bindings, the response uses version 1. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested.\nSee the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/secrets/[^/]+$",
 	//       "required": true,
@@ -2468,25 +2733,36 @@ type ProjectsSecretsListCall struct {
 }
 
 // List: Lists Secrets.
+//
+//   - parent: The resource name of the project associated with the
+//     Secrets, in the format `projects/*`.
 func (r *ProjectsSecretsService) List(parent string) *ProjectsSecretsListCall {
 	c := &ProjectsSecretsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
+// Filter sets the optional parameter "filter": Filter string, adhering
+// to the rules in List-operation filtering
+// (https://cloud.google.com/secret-manager/docs/filtering). List only
+// secrets matching the filter. If filter is empty, all secrets are
+// listed.
+func (c *ProjectsSecretsListCall) Filter(filter string) *ProjectsSecretsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of results to be returned in a single page. If
-// set to 0, the server decides the number of results to return. If
-// the
-// number is greater than 25000, it is capped at 25000.
+// of results to be returned in a single page. If set to 0, the server
+// decides the number of results to return. If the number is greater
+// than 25000, it is capped at 25000.
 func (c *ProjectsSecretsListCall) PageSize(pageSize int64) *ProjectsSecretsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Pagination token,
-// returned earlier via
-// ListSecretsResponse.next_page_token.
+// returned earlier via ListSecretsResponse.next_page_token.
 func (c *ProjectsSecretsListCall) PageToken(pageToken string) *ProjectsSecretsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -2529,7 +2805,7 @@ func (c *ProjectsSecretsListCall) Header() http.Header {
 
 func (c *ProjectsSecretsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2567,17 +2843,17 @@ func (c *ProjectsSecretsListCall) Do(opts ...googleapi.CallOption) (*ListSecrets
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListSecretsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2599,19 +2875,24 @@ func (c *ProjectsSecretsListCall) Do(opts ...googleapi.CallOption) (*ListSecrets
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. Filter string, adhering to the rules in [List-operation filtering](https://cloud.google.com/secret-manager/docs/filtering). List only secrets matching the filter. If filter is empty, all secrets are listed.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "pageSize": {
-	//       "description": "Optional. The maximum number of results to be returned in a single page. If\nset to 0, the server decides the number of results to return. If the\nnumber is greater than 25000, it is capped at 25000.",
+	//       "description": "Optional. The maximum number of results to be returned in a single page. If set to 0, the server decides the number of results to return. If the number is greater than 25000, it is capped at 25000.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. Pagination token, returned earlier via\nListSecretsResponse.next_page_token.",
+	//       "description": "Optional. Pagination token, returned earlier via ListSecretsResponse.next_page_token.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The resource name of the project associated with the\nSecrets, in the format `projects/*`.",
+	//       "description": "Required. The resource name of the project associated with the Secrets, in the format `projects/*`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -2662,6 +2943,9 @@ type ProjectsSecretsPatchCall struct {
 }
 
 // Patch: Updates metadata of an existing Secret.
+//
+//   - name: Output only. The resource name of the Secret in the format
+//     `projects/*/secrets/*`.
 func (r *ProjectsSecretsService) Patch(name string, secret *Secret) *ProjectsSecretsPatchCall {
 	c := &ProjectsSecretsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2703,7 +2987,7 @@ func (c *ProjectsSecretsPatchCall) Header() http.Header {
 
 func (c *ProjectsSecretsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2743,17 +3027,17 @@ func (c *ProjectsSecretsPatchCall) Do(opts ...googleapi.CallOption) (*Secret, er
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Secret{
 		ServerResponse: googleapi.ServerResponse{
@@ -2815,11 +3099,13 @@ type ProjectsSecretsSetIamPolicyCall struct {
 }
 
 // SetIamPolicy: Sets the access control policy on the specified secret.
-// Replaces any
-// existing policy.
+// Replaces any existing policy. Permissions on SecretVersions are
+// enforced according to the policy set on the associated Secret.
 //
-// Permissions on SecretVersions are enforced according
-// to the policy set on the associated Secret.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsSecretsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsSecretsSetIamPolicyCall {
 	c := &ProjectsSecretsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2854,7 +3140,7 @@ func (c *ProjectsSecretsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsSecretsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2894,17 +3180,17 @@ func (c *ProjectsSecretsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Pol
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -2918,7 +3204,7 @@ func (c *ProjectsSecretsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Pol
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets the access control policy on the specified secret. Replaces any\nexisting policy.\n\nPermissions on SecretVersions are enforced according\nto the policy set on the associated Secret.",
+	//   "description": "Sets the access control policy on the specified secret. Replaces any existing policy. Permissions on SecretVersions are enforced according to the policy set on the associated Secret.",
 	//   "flatPath": "v1/projects/{projectsId}/secrets/{secretsId}:setIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "secretmanager.projects.secrets.setIamPolicy",
@@ -2927,7 +3213,7 @@ func (c *ProjectsSecretsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Pol
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified.\nSee the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/secrets/[^/]+$",
 	//       "required": true,
@@ -2960,16 +3246,16 @@ type ProjectsSecretsTestIamPermissionsCall struct {
 }
 
 // TestIamPermissions: Returns permissions that a caller has for the
-// specified secret.
-// If the secret does not exist, this call returns an empty set
-// of
-// permissions, not a NOT_FOUND error.
-//
-// Note: This operation is designed to be used for building
-// permission-aware
-// UIs and command-line tools, not for authorization checking. This
-// operation
+// specified secret. If the secret does not exist, this call returns an
+// empty set of permissions, not a NOT_FOUND error. Note: This operation
+// is designed to be used for building permission-aware UIs and
+// command-line tools, not for authorization checking. This operation
 // may "fail open" without warning.
+//
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsSecretsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsSecretsTestIamPermissionsCall {
 	c := &ProjectsSecretsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3004,7 +3290,7 @@ func (c *ProjectsSecretsTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsSecretsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3044,17 +3330,17 @@ func (c *ProjectsSecretsTestIamPermissionsCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TestIamPermissionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3068,7 +3354,7 @@ func (c *ProjectsSecretsTestIamPermissionsCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns permissions that a caller has for the specified secret.\nIf the secret does not exist, this call returns an empty set of\npermissions, not a NOT_FOUND error.\n\nNote: This operation is designed to be used for building permission-aware\nUIs and command-line tools, not for authorization checking. This operation\nmay \"fail open\" without warning.",
+	//   "description": "Returns permissions that a caller has for the specified secret. If the secret does not exist, this call returns an empty set of permissions, not a NOT_FOUND error. Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may \"fail open\" without warning.",
 	//   "flatPath": "v1/projects/{projectsId}/secrets/{secretsId}:testIamPermissions",
 	//   "httpMethod": "POST",
 	//   "id": "secretmanager.projects.secrets.testIamPermissions",
@@ -3077,7 +3363,7 @@ func (c *ProjectsSecretsTestIamPermissionsCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested.\nSee the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/secrets/[^/]+$",
 	//       "required": true,
@@ -3109,12 +3395,14 @@ type ProjectsSecretsVersionsAccessCall struct {
 	header_      http.Header
 }
 
-// Access: Accesses a SecretVersion. This call returns the secret
-// data.
+// Access: Accesses a SecretVersion. This call returns the secret data.
+// `projects/*/secrets/*/versions/latest` is an alias to the most
+// recently created SecretVersion.
 //
-// `projects/*/secrets/*/versions/latest` is an alias to the
-// `latest`
-// SecretVersion.
+//   - name: The resource name of the SecretVersion in the format
+//     `projects/*/secrets/*/versions/*`.
+//     `projects/*/secrets/*/versions/latest` is an alias to the most
+//     recently created SecretVersion.
 func (r *ProjectsSecretsVersionsService) Access(name string) *ProjectsSecretsVersionsAccessCall {
 	c := &ProjectsSecretsVersionsAccessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3158,7 +3446,7 @@ func (c *ProjectsSecretsVersionsAccessCall) Header() http.Header {
 
 func (c *ProjectsSecretsVersionsAccessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3196,17 +3484,17 @@ func (c *ProjectsSecretsVersionsAccessCall) Do(opts ...googleapi.CallOption) (*A
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AccessSecretVersionResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3220,7 +3508,7 @@ func (c *ProjectsSecretsVersionsAccessCall) Do(opts ...googleapi.CallOption) (*A
 	}
 	return ret, nil
 	// {
-	//   "description": "Accesses a SecretVersion. This call returns the secret data.\n\n`projects/*/secrets/*/versions/latest` is an alias to the `latest`\nSecretVersion.",
+	//   "description": "Accesses a SecretVersion. This call returns the secret data. `projects/*/secrets/*/versions/latest` is an alias to the most recently created SecretVersion.",
 	//   "flatPath": "v1/projects/{projectsId}/secrets/{secretsId}/versions/{versionsId}:access",
 	//   "httpMethod": "GET",
 	//   "id": "secretmanager.projects.secrets.versions.access",
@@ -3229,7 +3517,7 @@ func (c *ProjectsSecretsVersionsAccessCall) Do(opts ...googleapi.CallOption) (*A
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the SecretVersion in the format\n`projects/*/secrets/*/versions/*`.",
+	//       "description": "Required. The resource name of the SecretVersion in the format `projects/*/secrets/*/versions/*`. `projects/*/secrets/*/versions/latest` is an alias to the most recently created SecretVersion.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/secrets/[^/]+/versions/[^/]+$",
 	//       "required": true,
@@ -3258,11 +3546,11 @@ type ProjectsSecretsVersionsDestroyCall struct {
 	header_                     http.Header
 }
 
-// Destroy: Destroys a SecretVersion.
+// Destroy: Destroys a SecretVersion. Sets the state of the
+// SecretVersion to DESTROYED and irrevocably destroys the secret data.
 //
-// Sets the state of the SecretVersion to
-// DESTROYED and irrevocably destroys the
-// secret data.
+//   - name: The resource name of the SecretVersion to destroy in the
+//     format `projects/*/secrets/*/versions/*`.
 func (r *ProjectsSecretsVersionsService) Destroy(name string, destroysecretversionrequest *DestroySecretVersionRequest) *ProjectsSecretsVersionsDestroyCall {
 	c := &ProjectsSecretsVersionsDestroyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3297,7 +3585,7 @@ func (c *ProjectsSecretsVersionsDestroyCall) Header() http.Header {
 
 func (c *ProjectsSecretsVersionsDestroyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3337,17 +3625,17 @@ func (c *ProjectsSecretsVersionsDestroyCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &SecretVersion{
 		ServerResponse: googleapi.ServerResponse{
@@ -3361,7 +3649,7 @@ func (c *ProjectsSecretsVersionsDestroyCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "Destroys a SecretVersion.\n\nSets the state of the SecretVersion to\nDESTROYED and irrevocably destroys the\nsecret data.",
+	//   "description": "Destroys a SecretVersion. Sets the state of the SecretVersion to DESTROYED and irrevocably destroys the secret data.",
 	//   "flatPath": "v1/projects/{projectsId}/secrets/{secretsId}/versions/{versionsId}:destroy",
 	//   "httpMethod": "POST",
 	//   "id": "secretmanager.projects.secrets.versions.destroy",
@@ -3370,7 +3658,7 @@ func (c *ProjectsSecretsVersionsDestroyCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the SecretVersion to destroy in the format\n`projects/*/secrets/*/versions/*`.",
+	//       "description": "Required. The resource name of the SecretVersion to destroy in the format `projects/*/secrets/*/versions/*`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/secrets/[^/]+/versions/[^/]+$",
 	//       "required": true,
@@ -3402,10 +3690,11 @@ type ProjectsSecretsVersionsDisableCall struct {
 	header_                     http.Header
 }
 
-// Disable: Disables a SecretVersion.
+// Disable: Disables a SecretVersion. Sets the state of the
+// SecretVersion to DISABLED.
 //
-// Sets the state of the SecretVersion to
-// DISABLED.
+//   - name: The resource name of the SecretVersion to disable in the
+//     format `projects/*/secrets/*/versions/*`.
 func (r *ProjectsSecretsVersionsService) Disable(name string, disablesecretversionrequest *DisableSecretVersionRequest) *ProjectsSecretsVersionsDisableCall {
 	c := &ProjectsSecretsVersionsDisableCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3440,7 +3729,7 @@ func (c *ProjectsSecretsVersionsDisableCall) Header() http.Header {
 
 func (c *ProjectsSecretsVersionsDisableCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3480,17 +3769,17 @@ func (c *ProjectsSecretsVersionsDisableCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &SecretVersion{
 		ServerResponse: googleapi.ServerResponse{
@@ -3504,7 +3793,7 @@ func (c *ProjectsSecretsVersionsDisableCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "Disables a SecretVersion.\n\nSets the state of the SecretVersion to\nDISABLED.",
+	//   "description": "Disables a SecretVersion. Sets the state of the SecretVersion to DISABLED.",
 	//   "flatPath": "v1/projects/{projectsId}/secrets/{secretsId}/versions/{versionsId}:disable",
 	//   "httpMethod": "POST",
 	//   "id": "secretmanager.projects.secrets.versions.disable",
@@ -3513,7 +3802,7 @@ func (c *ProjectsSecretsVersionsDisableCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the SecretVersion to disable in the format\n`projects/*/secrets/*/versions/*`.",
+	//       "description": "Required. The resource name of the SecretVersion to disable in the format `projects/*/secrets/*/versions/*`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/secrets/[^/]+/versions/[^/]+$",
 	//       "required": true,
@@ -3545,10 +3834,11 @@ type ProjectsSecretsVersionsEnableCall struct {
 	header_                    http.Header
 }
 
-// Enable: Enables a SecretVersion.
+// Enable: Enables a SecretVersion. Sets the state of the SecretVersion
+// to ENABLED.
 //
-// Sets the state of the SecretVersion to
-// ENABLED.
+//   - name: The resource name of the SecretVersion to enable in the
+//     format `projects/*/secrets/*/versions/*`.
 func (r *ProjectsSecretsVersionsService) Enable(name string, enablesecretversionrequest *EnableSecretVersionRequest) *ProjectsSecretsVersionsEnableCall {
 	c := &ProjectsSecretsVersionsEnableCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3583,7 +3873,7 @@ func (c *ProjectsSecretsVersionsEnableCall) Header() http.Header {
 
 func (c *ProjectsSecretsVersionsEnableCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3623,17 +3913,17 @@ func (c *ProjectsSecretsVersionsEnableCall) Do(opts ...googleapi.CallOption) (*S
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &SecretVersion{
 		ServerResponse: googleapi.ServerResponse{
@@ -3647,7 +3937,7 @@ func (c *ProjectsSecretsVersionsEnableCall) Do(opts ...googleapi.CallOption) (*S
 	}
 	return ret, nil
 	// {
-	//   "description": "Enables a SecretVersion.\n\nSets the state of the SecretVersion to\nENABLED.",
+	//   "description": "Enables a SecretVersion. Sets the state of the SecretVersion to ENABLED.",
 	//   "flatPath": "v1/projects/{projectsId}/secrets/{secretsId}/versions/{versionsId}:enable",
 	//   "httpMethod": "POST",
 	//   "id": "secretmanager.projects.secrets.versions.enable",
@@ -3656,7 +3946,7 @@ func (c *ProjectsSecretsVersionsEnableCall) Do(opts ...googleapi.CallOption) (*S
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the SecretVersion to enable in the format\n`projects/*/secrets/*/versions/*`.",
+	//       "description": "Required. The resource name of the SecretVersion to enable in the format `projects/*/secrets/*/versions/*`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/secrets/[^/]+/versions/[^/]+$",
 	//       "required": true,
@@ -3688,12 +3978,14 @@ type ProjectsSecretsVersionsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets metadata for a
-// SecretVersion.
+// Get: Gets metadata for a SecretVersion.
+// `projects/*/secrets/*/versions/latest` is an alias to the most
+// recently created SecretVersion.
 //
-// `projects/*/secrets/*/versions/latest` is an alias to the
-// `latest`
-// SecretVersion.
+//   - name: The resource name of the SecretVersion in the format
+//     `projects/*/secrets/*/versions/*`.
+//     `projects/*/secrets/*/versions/latest` is an alias to the most
+//     recently created SecretVersion.
 func (r *ProjectsSecretsVersionsService) Get(name string) *ProjectsSecretsVersionsGetCall {
 	c := &ProjectsSecretsVersionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3737,7 +4029,7 @@ func (c *ProjectsSecretsVersionsGetCall) Header() http.Header {
 
 func (c *ProjectsSecretsVersionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3775,17 +4067,17 @@ func (c *ProjectsSecretsVersionsGetCall) Do(opts ...googleapi.CallOption) (*Secr
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &SecretVersion{
 		ServerResponse: googleapi.ServerResponse{
@@ -3799,7 +4091,7 @@ func (c *ProjectsSecretsVersionsGetCall) Do(opts ...googleapi.CallOption) (*Secr
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets metadata for a SecretVersion.\n\n`projects/*/secrets/*/versions/latest` is an alias to the `latest`\nSecretVersion.",
+	//   "description": "Gets metadata for a SecretVersion. `projects/*/secrets/*/versions/latest` is an alias to the most recently created SecretVersion.",
 	//   "flatPath": "v1/projects/{projectsId}/secrets/{secretsId}/versions/{versionsId}",
 	//   "httpMethod": "GET",
 	//   "id": "secretmanager.projects.secrets.versions.get",
@@ -3808,7 +4100,7 @@ func (c *ProjectsSecretsVersionsGetCall) Do(opts ...googleapi.CallOption) (*Secr
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the SecretVersion in the format\n`projects/*/secrets/*/versions/*`.\n`projects/*/secrets/*/versions/latest` is an alias to the `latest`\nSecretVersion.",
+	//       "description": "Required. The resource name of the SecretVersion in the format `projects/*/secrets/*/versions/*`. `projects/*/secrets/*/versions/latest` is an alias to the most recently created SecretVersion.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/secrets/[^/]+/versions/[^/]+$",
 	//       "required": true,
@@ -3837,27 +4129,37 @@ type ProjectsSecretsVersionsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists SecretVersions. This call does not return secret
-// data.
+// List: Lists SecretVersions. This call does not return secret data.
+//
+//   - parent: The resource name of the Secret associated with the
+//     SecretVersions to list, in the format `projects/*/secrets/*`.
 func (r *ProjectsSecretsVersionsService) List(parent string) *ProjectsSecretsVersionsListCall {
 	c := &ProjectsSecretsVersionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
+// Filter sets the optional parameter "filter": Filter string, adhering
+// to the rules in List-operation filtering
+// (https://cloud.google.com/secret-manager/docs/filtering). List only
+// secret versions matching the filter. If filter is empty, all secret
+// versions are listed.
+func (c *ProjectsSecretsVersionsListCall) Filter(filter string) *ProjectsSecretsVersionsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of results to be returned in a single page. If
-// set to 0, the server decides the number of results to return. If
-// the
-// number is greater than 25000, it is capped at 25000.
+// of results to be returned in a single page. If set to 0, the server
+// decides the number of results to return. If the number is greater
+// than 25000, it is capped at 25000.
 func (c *ProjectsSecretsVersionsListCall) PageSize(pageSize int64) *ProjectsSecretsVersionsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Pagination token,
-// returned earlier via
-// ListSecretVersionsResponse.next_page_token][].
+// returned earlier via ListSecretVersionsResponse.next_page_token][].
 func (c *ProjectsSecretsVersionsListCall) PageToken(pageToken string) *ProjectsSecretsVersionsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -3900,7 +4202,7 @@ func (c *ProjectsSecretsVersionsListCall) Header() http.Header {
 
 func (c *ProjectsSecretsVersionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3938,17 +4240,17 @@ func (c *ProjectsSecretsVersionsListCall) Do(opts ...googleapi.CallOption) (*Lis
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListSecretVersionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3962,7 +4264,7 @@ func (c *ProjectsSecretsVersionsListCall) Do(opts ...googleapi.CallOption) (*Lis
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists SecretVersions. This call does not return secret\ndata.",
+	//   "description": "Lists SecretVersions. This call does not return secret data.",
 	//   "flatPath": "v1/projects/{projectsId}/secrets/{secretsId}/versions",
 	//   "httpMethod": "GET",
 	//   "id": "secretmanager.projects.secrets.versions.list",
@@ -3970,19 +4272,24 @@ func (c *ProjectsSecretsVersionsListCall) Do(opts ...googleapi.CallOption) (*Lis
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. Filter string, adhering to the rules in [List-operation filtering](https://cloud.google.com/secret-manager/docs/filtering). List only secret versions matching the filter. If filter is empty, all secret versions are listed.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "pageSize": {
-	//       "description": "Optional. The maximum number of results to be returned in a single page. If\nset to 0, the server decides the number of results to return. If the\nnumber is greater than 25000, it is capped at 25000.",
+	//       "description": "Optional. The maximum number of results to be returned in a single page. If set to 0, the server decides the number of results to return. If the number is greater than 25000, it is capped at 25000.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. Pagination token, returned earlier via\nListSecretVersionsResponse.next_page_token][].",
+	//       "description": "Optional. Pagination token, returned earlier via ListSecretVersionsResponse.next_page_token][].",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The resource name of the Secret associated with the\nSecretVersions to list, in the format\n`projects/*/secrets/*`.",
+	//       "description": "Required. The resource name of the Secret associated with the SecretVersions to list, in the format `projects/*/secrets/*`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/secrets/[^/]+$",
 	//       "required": true,

@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -10,35 +10,35 @@
 //
 // For product documentation, see: https://cloud.google.com/natural-language/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/language/v1beta2"
-//   ...
-//   ctx := context.Background()
-//   languageService, err := language.NewService(ctx)
+//	import "google.golang.org/api/language/v1beta2"
+//	...
+//	ctx := context.Background()
+//	languageService, err := language.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//   languageService, err := language.NewService(ctx, option.WithScopes(language.CloudPlatformScope))
+//	languageService, err := language.NewService(ctx, option.WithScopes(language.CloudPlatformScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   languageService, err := language.NewService(ctx, option.WithAPIKey("AIza..."))
+//	languageService, err := language.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   languageService, err := language.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	languageService, err := language.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package language // import "google.golang.org/api/language/v1beta2"
@@ -56,6 +56,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -81,6 +82,7 @@ const apiId = "language:v1beta2"
 const apiName = "language"
 const apiVersion = "v1beta2"
 const basePath = "https://language.googleapis.com/"
+const mtlsBasePath = "https://language.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
@@ -88,19 +90,21 @@ const (
 	// text
 	CloudLanguageScope = "https://www.googleapis.com/auth/cloud-language"
 
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud data and see the
+	// email address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-language",
 		"https://www.googleapis.com/auth/cloud-platform",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -162,31 +166,24 @@ type AnalyzeEntitiesRequest struct {
 	//
 	// Possible values:
 	//   "NONE" - If `EncodingType` is not specified, encoding-dependent
-	// information (such as
-	// `begin_offset`) will be set at `-1`.
+	// information (such as `begin_offset`) will be set at `-1`.
 	//   "UTF8" - Encoding-dependent information (such as `begin_offset`) is
-	// calculated based
-	// on the UTF-8 encoding of the input. C++ and Go are examples of
-	// languages
-	// that use this encoding natively.
+	// calculated based on the UTF-8 encoding of the input. C++ and Go are
+	// examples of languages that use this encoding natively.
 	//   "UTF16" - Encoding-dependent information (such as `begin_offset`)
-	// is calculated based
-	// on the UTF-16 encoding of the input. Java and JavaScript are examples
-	// of
-	// languages that use this encoding natively.
+	// is calculated based on the UTF-16 encoding of the input. Java and
+	// JavaScript are examples of languages that use this encoding natively.
 	//   "UTF32" - Encoding-dependent information (such as `begin_offset`)
-	// is calculated based
-	// on the UTF-32 encoding of the input. Python is an example of a
-	// language
-	// that uses this encoding natively.
+	// is calculated based on the UTF-32 encoding of the input. Python is an
+	// example of a language that uses this encoding natively.
 	EncodingType string `json:"encodingType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Document") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Document") to include in
@@ -210,10 +207,9 @@ type AnalyzeEntitiesResponse struct {
 	Entities []*Entity `json:"entities,omitempty"`
 
 	// Language: The language of the text, which will be the same as the
-	// language specified
-	// in the request or, if not specified, the automatically-detected
-	// language.
-	// See Document.language field for more details.
+	// language specified in the request or, if not specified, the
+	// automatically-detected language. See Document.language field for more
+	// details.
 	Language string `json:"language,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -222,10 +218,10 @@ type AnalyzeEntitiesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Entities") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Entities") to include in
@@ -253,31 +249,24 @@ type AnalyzeEntitySentimentRequest struct {
 	//
 	// Possible values:
 	//   "NONE" - If `EncodingType` is not specified, encoding-dependent
-	// information (such as
-	// `begin_offset`) will be set at `-1`.
+	// information (such as `begin_offset`) will be set at `-1`.
 	//   "UTF8" - Encoding-dependent information (such as `begin_offset`) is
-	// calculated based
-	// on the UTF-8 encoding of the input. C++ and Go are examples of
-	// languages
-	// that use this encoding natively.
+	// calculated based on the UTF-8 encoding of the input. C++ and Go are
+	// examples of languages that use this encoding natively.
 	//   "UTF16" - Encoding-dependent information (such as `begin_offset`)
-	// is calculated based
-	// on the UTF-16 encoding of the input. Java and JavaScript are examples
-	// of
-	// languages that use this encoding natively.
+	// is calculated based on the UTF-16 encoding of the input. Java and
+	// JavaScript are examples of languages that use this encoding natively.
 	//   "UTF32" - Encoding-dependent information (such as `begin_offset`)
-	// is calculated based
-	// on the UTF-32 encoding of the input. Python is an example of a
-	// language
-	// that uses this encoding natively.
+	// is calculated based on the UTF-32 encoding of the input. Python is an
+	// example of a language that uses this encoding natively.
 	EncodingType string `json:"encodingType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Document") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Document") to include in
@@ -303,10 +292,9 @@ type AnalyzeEntitySentimentResponse struct {
 	Entities []*Entity `json:"entities,omitempty"`
 
 	// Language: The language of the text, which will be the same as the
-	// language specified
-	// in the request or, if not specified, the automatically-detected
-	// language.
-	// See Document.language field for more details.
+	// language specified in the request or, if not specified, the
+	// automatically-detected language. See Document.language field for more
+	// details.
 	Language string `json:"language,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -315,10 +303,10 @@ type AnalyzeEntitySentimentResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Entities") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Entities") to include in
@@ -342,36 +330,28 @@ type AnalyzeSentimentRequest struct {
 	Document *Document `json:"document,omitempty"`
 
 	// EncodingType: The encoding type used by the API to calculate sentence
-	// offsets for the
-	// sentence sentiment.
+	// offsets for the sentence sentiment.
 	//
 	// Possible values:
 	//   "NONE" - If `EncodingType` is not specified, encoding-dependent
-	// information (such as
-	// `begin_offset`) will be set at `-1`.
+	// information (such as `begin_offset`) will be set at `-1`.
 	//   "UTF8" - Encoding-dependent information (such as `begin_offset`) is
-	// calculated based
-	// on the UTF-8 encoding of the input. C++ and Go are examples of
-	// languages
-	// that use this encoding natively.
+	// calculated based on the UTF-8 encoding of the input. C++ and Go are
+	// examples of languages that use this encoding natively.
 	//   "UTF16" - Encoding-dependent information (such as `begin_offset`)
-	// is calculated based
-	// on the UTF-16 encoding of the input. Java and JavaScript are examples
-	// of
-	// languages that use this encoding natively.
+	// is calculated based on the UTF-16 encoding of the input. Java and
+	// JavaScript are examples of languages that use this encoding natively.
 	//   "UTF32" - Encoding-dependent information (such as `begin_offset`)
-	// is calculated based
-	// on the UTF-32 encoding of the input. Python is an example of a
-	// language
-	// that uses this encoding natively.
+	// is calculated based on the UTF-32 encoding of the input. Python is an
+	// example of a language that uses this encoding natively.
 	EncodingType string `json:"encodingType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Document") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Document") to include in
@@ -395,10 +375,9 @@ type AnalyzeSentimentResponse struct {
 	DocumentSentiment *Sentiment `json:"documentSentiment,omitempty"`
 
 	// Language: The language of the text, which will be the same as the
-	// language specified
-	// in the request or, if not specified, the automatically-detected
-	// language.
-	// See Document.language field for more details.
+	// language specified in the request or, if not specified, the
+	// automatically-detected language. See Document.language field for more
+	// details.
 	Language string `json:"language,omitempty"`
 
 	// Sentences: The sentiment for all the sentences in the document.
@@ -410,10 +389,10 @@ type AnalyzeSentimentResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "DocumentSentiment")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DocumentSentiment") to
@@ -441,31 +420,24 @@ type AnalyzeSyntaxRequest struct {
 	//
 	// Possible values:
 	//   "NONE" - If `EncodingType` is not specified, encoding-dependent
-	// information (such as
-	// `begin_offset`) will be set at `-1`.
+	// information (such as `begin_offset`) will be set at `-1`.
 	//   "UTF8" - Encoding-dependent information (such as `begin_offset`) is
-	// calculated based
-	// on the UTF-8 encoding of the input. C++ and Go are examples of
-	// languages
-	// that use this encoding natively.
+	// calculated based on the UTF-8 encoding of the input. C++ and Go are
+	// examples of languages that use this encoding natively.
 	//   "UTF16" - Encoding-dependent information (such as `begin_offset`)
-	// is calculated based
-	// on the UTF-16 encoding of the input. Java and JavaScript are examples
-	// of
-	// languages that use this encoding natively.
+	// is calculated based on the UTF-16 encoding of the input. Java and
+	// JavaScript are examples of languages that use this encoding natively.
 	//   "UTF32" - Encoding-dependent information (such as `begin_offset`)
-	// is calculated based
-	// on the UTF-32 encoding of the input. Python is an example of a
-	// language
-	// that uses this encoding natively.
+	// is calculated based on the UTF-32 encoding of the input. Python is an
+	// example of a language that uses this encoding natively.
 	EncodingType string `json:"encodingType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Document") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Document") to include in
@@ -486,10 +458,9 @@ func (s *AnalyzeSyntaxRequest) MarshalJSON() ([]byte, error) {
 // AnalyzeSyntaxResponse: The syntax analysis response message.
 type AnalyzeSyntaxResponse struct {
 	// Language: The language of the text, which will be the same as the
-	// language specified
-	// in the request or, if not specified, the automatically-detected
-	// language.
-	// See Document.language field for more details.
+	// language specified in the request or, if not specified, the
+	// automatically-detected language. See Document.language field for more
+	// details.
 	Language string `json:"language,omitempty"`
 
 	// Sentences: Sentences in the input document.
@@ -505,10 +476,10 @@ type AnalyzeSyntaxResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Language") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Language") to include in
@@ -527,8 +498,8 @@ func (s *AnalyzeSyntaxResponse) MarshalJSON() ([]byte, error) {
 }
 
 // AnnotateTextRequest: The request message for the text annotation API,
-// which can perform multiple
-// analysis types (sentiment, entities, and syntax) in one call.
+// which can perform multiple analysis types (sentiment, entities, and
+// syntax) in one call.
 type AnnotateTextRequest struct {
 	// Document: Required. Input document.
 	Document *Document `json:"document,omitempty"`
@@ -537,23 +508,16 @@ type AnnotateTextRequest struct {
 	//
 	// Possible values:
 	//   "NONE" - If `EncodingType` is not specified, encoding-dependent
-	// information (such as
-	// `begin_offset`) will be set at `-1`.
+	// information (such as `begin_offset`) will be set at `-1`.
 	//   "UTF8" - Encoding-dependent information (such as `begin_offset`) is
-	// calculated based
-	// on the UTF-8 encoding of the input. C++ and Go are examples of
-	// languages
-	// that use this encoding natively.
+	// calculated based on the UTF-8 encoding of the input. C++ and Go are
+	// examples of languages that use this encoding natively.
 	//   "UTF16" - Encoding-dependent information (such as `begin_offset`)
-	// is calculated based
-	// on the UTF-16 encoding of the input. Java and JavaScript are examples
-	// of
-	// languages that use this encoding natively.
+	// is calculated based on the UTF-16 encoding of the input. Java and
+	// JavaScript are examples of languages that use this encoding natively.
 	//   "UTF32" - Encoding-dependent information (such as `begin_offset`)
-	// is calculated based
-	// on the UTF-32 encoding of the input. Python is an example of a
-	// language
-	// that uses this encoding natively.
+	// is calculated based on the UTF-32 encoding of the input. Python is an
+	// example of a language that uses this encoding natively.
 	EncodingType string `json:"encodingType,omitempty"`
 
 	// Features: Required. The enabled features.
@@ -561,10 +525,10 @@ type AnnotateTextRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "Document") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Document") to include in
@@ -588,34 +552,27 @@ type AnnotateTextResponse struct {
 	Categories []*ClassificationCategory `json:"categories,omitempty"`
 
 	// DocumentSentiment: The overall sentiment for the document. Populated
-	// if the user
-	// enables
+	// if the user enables
 	// AnnotateTextRequest.Features.extract_document_sentiment.
 	DocumentSentiment *Sentiment `json:"documentSentiment,omitempty"`
 
 	// Entities: Entities, along with their semantic information, in the
-	// input document.
-	// Populated if the user
-	// enables
+	// input document. Populated if the user enables
 	// AnnotateTextRequest.Features.extract_entities.
 	Entities []*Entity `json:"entities,omitempty"`
 
 	// Language: The language of the text, which will be the same as the
-	// language specified
-	// in the request or, if not specified, the automatically-detected
-	// language.
-	// See Document.language field for more details.
+	// language specified in the request or, if not specified, the
+	// automatically-detected language. See Document.language field for more
+	// details.
 	Language string `json:"language,omitempty"`
 
 	// Sentences: Sentences in the input document. Populated if the user
-	// enables
-	// AnnotateTextRequest.Features.extract_syntax.
+	// enables AnnotateTextRequest.Features.extract_syntax.
 	Sentences []*Sentence `json:"sentences,omitempty"`
 
 	// Tokens: Tokens, along with their syntactic information, in the input
-	// document.
-	// Populated if the user
-	// enables
+	// document. Populated if the user enables
 	// AnnotateTextRequest.Features.extract_syntax.
 	Tokens []*Token `json:"tokens,omitempty"`
 
@@ -625,10 +582,10 @@ type AnnotateTextResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Categories") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Categories") to include in
@@ -650,22 +607,21 @@ func (s *AnnotateTextResponse) MarshalJSON() ([]byte, error) {
 // classifier.
 type ClassificationCategory struct {
 	// Confidence: The classifier's confidence of the category. Number
-	// represents how certain
-	// the classifier is that this category represents the given text.
+	// represents how certain the classifier is that this category
+	// represents the given text.
 	Confidence float64 `json:"confidence,omitempty"`
 
 	// Name: The name of the category representing the document, from the
-	// [predefined
-	// taxonomy](https://cloud.google.com/natural-language/docs/c
-	// ategories).
+	// predefined taxonomy
+	// (https://cloud.google.com/natural-language/docs/categories).
 	Name string `json:"name,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Confidence") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Confidence") to include in
@@ -697,25 +653,67 @@ func (s *ClassificationCategory) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// ClassifyTextRequest: The document classification request message.
-type ClassifyTextRequest struct {
-	// Document: Required. Input document.
-	Document *Document `json:"document,omitempty"`
+// ClassificationModelOptions: Model options available for
+// classification requests.
+type ClassificationModelOptions struct {
+	// V1Model: Setting this field will use the V1 model and V1 content
+	// categories version. The V1 model is a legacy model; support for this
+	// will be discontinued in the future.
+	V1Model *V1Model `json:"v1Model,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Document") to
+	// V2Model: Setting this field will use the V2 model with the
+	// appropriate content categories version. The V2 model is a better
+	// performing model.
+	V2Model *V2Model `json:"v2Model,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "V1Model") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Document") to include in
+	// NullFields is a list of field names (e.g. "V1Model") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ClassificationModelOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod ClassificationModelOptions
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ClassifyTextRequest: The document classification request message.
+type ClassifyTextRequest struct {
+	// ClassificationModelOptions: Model options to use for classification.
+	// Defaults to v1 options if not specified.
+	ClassificationModelOptions *ClassificationModelOptions `json:"classificationModelOptions,omitempty"`
+
+	// Document: Required. Input document.
+	Document *Document `json:"document,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ClassificationModelOptions") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "ClassificationModelOptions") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -736,10 +734,10 @@ type ClassifyTextResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Categories") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Categories") to include in
@@ -761,13 +759,9 @@ func (s *ClassifyTextResponse) MarshalJSON() ([]byte, error) {
 // token.
 type DependencyEdge struct {
 	// HeadTokenIndex: Represents the head of this token in the dependency
-	// tree.
-	// This is the index of the token which has an arc going to this
-	// token.
-	// The index is the position of the token in the array of tokens
-	// returned
-	// by the API method. If this token is a root token, then
-	// the
+	// tree. This is the index of the token which has an arc going to this
+	// token. The index is the position of the token in the array of tokens
+	// returned by the API method. If this token is a root token, then the
 	// `head_token_index` is its own index.
 	HeadTokenIndex int64 `json:"headTokenIndex,omitempty"`
 
@@ -863,10 +857,10 @@ type DependencyEdge struct {
 
 	// ForceSendFields is a list of field names (e.g. "HeadTokenIndex") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "HeadTokenIndex") to
@@ -885,62 +879,48 @@ func (s *DependencyEdge) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Document:
-// ################################################################
-// #
-//
-// Represents the input to API methods.
+// Document: Represents the input to API methods.
 type Document struct {
 	// BoilerplateHandling: Indicates how detected boilerplate(e.g.
-	// advertisements, copyright
-	// declarations, banners) should be handled for this document. If
-	// not
-	// specified, boilerplate will be treated the same as content.
+	// advertisements, copyright declarations, banners) should be handled
+	// for this document. If not specified, boilerplate will be treated the
+	// same as content.
 	//
 	// Possible values:
 	//   "BOILERPLATE_HANDLING_UNSPECIFIED" - The boilerplate handling is
 	// not specified.
 	//   "SKIP_BOILERPLATE" - Do not analyze detected boilerplate. Reference
-	// web URI is required for
-	// detecting boilerplate.
+	// web URI is required for detecting boilerplate.
 	//   "KEEP_BOILERPLATE" - Treat boilerplate the same as content.
 	BoilerplateHandling string `json:"boilerplateHandling,omitempty"`
 
-	// Content: The content of the input in string format.
-	// Cloud audit logging exempt since it is based on user data.
+	// Content: The content of the input in string format. Cloud audit
+	// logging exempt since it is based on user data.
 	Content string `json:"content,omitempty"`
 
 	// GcsContentUri: The Google Cloud Storage URI where the file content is
-	// located.
-	// This URI must be of the form: gs://bucket_name/object_name. For
-	// more
-	// details, see
-	// https://cloud.google.com/storage/docs/reference-uris.
-	// NOTE: Cloud Storage object versioning is not supported.
+	// located. This URI must be of the form: gs://bucket_name/object_name.
+	// For more details, see
+	// https://cloud.google.com/storage/docs/reference-uris. NOTE: Cloud
+	// Storage object versioning is not supported.
 	GcsContentUri string `json:"gcsContentUri,omitempty"`
 
 	// Language: The language of the document (if not specified, the
-	// language is
-	// automatically detected). Both ISO and BCP-47 language codes
-	// are
-	// accepted.<br>
-	// [Language
-	// Support](https://cloud.google.com/natural-
-	// language/docs/languages) lists
+	// language is automatically detected). Both ISO and BCP-47 language
+	// codes are accepted. Language Support
+	// (https://cloud.google.com/natural-language/docs/languages) lists
 	// currently supported languages for each API method. If the language
-	// (either
-	// specified by the caller or automatically detected) is not supported
-	// by the
-	// called API method, an `INVALID_ARGUMENT` error is returned.
+	// (either specified by the caller or automatically detected) is not
+	// supported by the called API method, an `INVALID_ARGUMENT` error is
+	// returned.
 	Language string `json:"language,omitempty"`
 
 	// ReferenceWebUri: The web URI where the document comes from. This URI
-	// is not used for
-	// fetching the content, but as a hint for analyzing the document.
+	// is not used for fetching the content, but as a hint for analyzing the
+	// document.
 	ReferenceWebUri string `json:"referenceWebUri,omitempty"`
 
-	// Type: Required. If the type is not set or is
-	// `TYPE_UNSPECIFIED`,
+	// Type: Required. If the type is not set or is `TYPE_UNSPECIFIED`,
 	// returns an `INVALID_ARGUMENT` error.
 	//
 	// Possible values:
@@ -951,10 +931,10 @@ type Document struct {
 
 	// ForceSendFields is a list of field names (e.g. "BoilerplateHandling")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BoilerplateHandling") to
@@ -974,45 +954,32 @@ func (s *Document) MarshalJSON() ([]byte, error) {
 }
 
 // Entity: Represents a phrase in the text that is a known entity, such
-// as
-// a person, an organization, or location. The API associates
-// information, such
-// as salience and mentions, with entities.
+// as a person, an organization, or location. The API associates
+// information, such as salience and mentions, with entities.
 type Entity struct {
 	// Mentions: The mentions of this entity in the input document. The API
-	// currently
-	// supports proper noun mentions.
+	// currently supports proper noun mentions.
 	Mentions []*EntityMention `json:"mentions,omitempty"`
 
-	// Metadata: Metadata associated with the entity.
-	//
-	// For most entity types, the metadata is a Wikipedia URL
-	// (`wikipedia_url`)
-	// and Knowledge Graph MID (`mid`), if they are available. For the
-	// metadata
-	// associated with other entity types, see the Type table below.
+	// Metadata: Metadata associated with the entity. For most entity types,
+	// the metadata is a Wikipedia URL (`wikipedia_url`) and Knowledge Graph
+	// MID (`mid`), if they are available. For the metadata associated with
+	// other entity types, see the Type table below.
 	Metadata map[string]string `json:"metadata,omitempty"`
 
 	// Name: The representative name for the entity.
 	Name string `json:"name,omitempty"`
 
 	// Salience: The salience score associated with the entity in the [0,
-	// 1.0] range.
-	//
-	// The salience score for an entity provides information about
-	// the
-	// importance or centrality of that entity to the entire document
-	// text.
-	// Scores closer to 0 are less salient, while scores closer to 1.0 are
-	// highly
-	// salient.
+	// 1.0] range. The salience score for an entity provides information
+	// about the importance or centrality of that entity to the entire
+	// document text. Scores closer to 0 are less salient, while scores
+	// closer to 1.0 are highly salient.
 	Salience float64 `json:"salience,omitempty"`
 
-	// Sentiment: For calls to AnalyzeEntitySentiment or
-	// if
-	// AnnotateTextRequest.Features.extract_entity_sentiment is set to
-	// true, this field will contain the aggregate sentiment expressed for
-	// this
+	// Sentiment: For calls to AnalyzeEntitySentiment or if
+	// AnnotateTextRequest.Features.extract_entity_sentiment is set to true,
+	// this field will contain the aggregate sentiment expressed for this
 	// entity in the provided document.
 	Sentiment *Sentiment `json:"sentiment,omitempty"`
 
@@ -1027,60 +994,35 @@ type Entity struct {
 	//   "WORK_OF_ART" - Artwork
 	//   "CONSUMER_GOOD" - Consumer product
 	//   "OTHER" - Other types of entities
-	//   "PHONE_NUMBER" - Phone number
-	//
-	// The metadata lists the phone number, formatted according to
-	// local
-	// convention, plus whichever additional elements appear in the text:
-	//
-	// * `number` - the actual number, broken down into sections as per
-	// local
-	// convention
-	// * `national_prefix` - country code, if detected
-	// * `area_code` - region or area code, if detected
-	// * `extension` - phone extension (to be dialed after connection),
-	// if
-	// detected
-	//   "ADDRESS" - Address
-	//
-	// The metadata identifies the street number and locality plus
-	// whichever
-	// additional elements appear in the text:
-	//
-	// * `street_number` - street number
-	// * `locality` - city or town
-	// * `street_name` - street/route name, if detected
-	// * `postal_code` - postal code, if detected
-	// * `country` - country, if detected<
-	// * `broad_region` - administrative area, such as the state, if
-	// detected
-	// * `narrow_region` - smaller administrative area, such as county,
-	// if
-	// detected
-	// * `sublocality` - used in Asian addresses to demark a district within
-	// a
-	// city, if detected
-	//   "DATE" - Date
-	//
-	// The metadata identifies the components of the date:
-	//
-	// * `year` - four digit year, if detected
-	// * `month` - two digit month number, if detected
-	// * `day` - two digit day number, if detected
-	//   "NUMBER" - Number
-	//
-	// The metadata is the number itself.
-	//   "PRICE" - Price
-	//
-	// The metadata identifies the `value` and `currency`.
+	//   "PHONE_NUMBER" - Phone number The metadata lists the phone number,
+	// formatted according to local convention, plus whichever additional
+	// elements appear in the text: * `number` - the actual number, broken
+	// down into sections as per local convention * `national_prefix` -
+	// country code, if detected * `area_code` - region or area code, if
+	// detected * `extension` - phone extension (to be dialed after
+	// connection), if detected
+	//   "ADDRESS" - Address The metadata identifies the street number and
+	// locality plus whichever additional elements appear in the text: *
+	// `street_number` - street number * `locality` - city or town *
+	// `street_name` - street/route name, if detected * `postal_code` -
+	// postal code, if detected * `country` - country, if detected< *
+	// `broad_region` - administrative area, such as the state, if detected
+	// * `narrow_region` - smaller administrative area, such as county, if
+	// detected * `sublocality` - used in Asian addresses to demark a
+	// district within a city, if detected
+	//   "DATE" - Date The metadata identifies the components of the date: *
+	// `year` - four digit year, if detected * `month` - two digit month
+	// number, if detected * `day` - two digit day number, if detected
+	//   "NUMBER" - Number The metadata is the number itself.
+	//   "PRICE" - Price The metadata identifies the `value` and `currency`.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Mentions") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Mentions") to include in
@@ -1113,14 +1055,11 @@ func (s *Entity) UnmarshalJSON(data []byte) error {
 }
 
 // EntityMention: Represents a mention for an entity in the text.
-// Currently, proper noun
-// mentions are supported.
+// Currently, proper noun mentions are supported.
 type EntityMention struct {
-	// Sentiment: For calls to AnalyzeEntitySentiment or
-	// if
-	// AnnotateTextRequest.Features.extract_entity_sentiment is set to
-	// true, this field will contain the sentiment expressed for this
-	// mention of
+	// Sentiment: For calls to AnalyzeEntitySentiment or if
+	// AnnotateTextRequest.Features.extract_entity_sentiment is set to true,
+	// this field will contain the sentiment expressed for this mention of
 	// the entity in the provided document.
 	Sentiment *Sentiment `json:"sentiment,omitempty"`
 
@@ -1137,10 +1076,10 @@ type EntityMention struct {
 
 	// ForceSendFields is a list of field names (e.g. "Sentiment") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Sentiment") to include in
@@ -1159,18 +1098,18 @@ func (s *EntityMention) MarshalJSON() ([]byte, error) {
 }
 
 // Features: All available features for sentiment, syntax, and semantic
-// analysis.
-// Setting each one to true will enable that specific analysis for the
-// input.
-// Next ID: 10
+// analysis. Setting each one to true will enable that specific analysis
+// for the input. Next ID: 11
 type Features struct {
+	// ClassificationModelOptions: The model options to use for
+	// classification. Defaults to v1 options if not specified. Only used if
+	// `classify_text` is set to true.
+	ClassificationModelOptions *ClassificationModelOptions `json:"classificationModelOptions,omitempty"`
+
 	// ClassifyText: Classify the full document into categories. If this is
-	// true,
-	// the API will use the default model which classifies into
-	// a
-	// [predefined
-	// taxonomy](https://cloud.google.com/natural-language/docs
-	// /categories).
+	// true, the API will use the default model which classifies into a
+	// predefined taxonomy
+	// (https://cloud.google.com/natural-language/docs/categories).
 	ClassifyText bool `json:"classifyText,omitempty"`
 
 	// ExtractDocumentSentiment: Extract document-level sentiment.
@@ -1186,20 +1125,22 @@ type Features struct {
 	// ExtractSyntax: Extract syntax information.
 	ExtractSyntax bool `json:"extractSyntax,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "ClassifyText") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "ClassificationModelOptions") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ClassifyText") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g.
+	// "ClassificationModelOptions") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1317,8 +1258,7 @@ type PartOfSpeech struct {
 	//
 	// Possible values:
 	//   "RECIPROCITY_UNKNOWN" - Reciprocity is not applicable in the
-	// analyzed language or is not
-	// predicted.
+	// analyzed language or is not predicted.
 	//   "RECIPROCAL" - Reciprocal
 	//   "NON_RECIPROCAL" - Non-reciprocal
 	Reciprocity string `json:"reciprocity,omitempty"`
@@ -1367,10 +1307,10 @@ type PartOfSpeech struct {
 
 	// ForceSendFields is a list of field names (e.g. "Aspect") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Aspect") to include in API
@@ -1390,10 +1330,8 @@ func (s *PartOfSpeech) MarshalJSON() ([]byte, error) {
 
 // Sentence: Represents a sentence in the input document.
 type Sentence struct {
-	// Sentiment: For calls to AnalyzeSentiment or
-	// if
-	// AnnotateTextRequest.Features.extract_document_sentiment is set
-	// to
+	// Sentiment: For calls to AnalyzeSentiment or if
+	// AnnotateTextRequest.Features.extract_document_sentiment is set to
 	// true, this field will contain the sentiment for the sentence.
 	Sentiment *Sentiment `json:"sentiment,omitempty"`
 
@@ -1402,10 +1340,10 @@ type Sentence struct {
 
 	// ForceSendFields is a list of field names (e.g. "Sentiment") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Sentiment") to include in
@@ -1424,28 +1362,23 @@ func (s *Sentence) MarshalJSON() ([]byte, error) {
 }
 
 // Sentiment: Represents the feeling associated with the entire text or
-// entities in
-// the text.
-// Next ID: 6
+// entities in the text. Next ID: 6
 type Sentiment struct {
 	// Magnitude: A non-negative number in the [0, +inf) range, which
-	// represents
-	// the absolute magnitude of sentiment regardless of score (positive
-	// or
-	// negative).
+	// represents the absolute magnitude of sentiment regardless of score
+	// (positive or negative).
 	Magnitude float64 `json:"magnitude,omitempty"`
 
-	// Score: Sentiment score between -1.0 (negative sentiment) and
-	// 1.0
+	// Score: Sentiment score between -1.0 (negative sentiment) and 1.0
 	// (positive sentiment).
 	Score float64 `json:"score,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Magnitude") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Magnitude") to include in
@@ -1480,40 +1413,32 @@ func (s *Sentiment) UnmarshalJSON(data []byte) error {
 }
 
 // Status: The `Status` type defines a logical error model that is
-// suitable for
-// different programming environments, including REST APIs and RPC APIs.
-// It is
-// used by [gRPC](https://github.com/grpc). Each `Status` message
-// contains
-// three pieces of data: error code, error message, and error
-// details.
-//
-// You can find out more about this error model and how to work with it
-// in the
-// [API Design Guide](https://cloud.google.com/apis/design/errors).
+// suitable for different programming environments, including REST APIs
+// and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
+// `Status` message contains three pieces of data: error code, error
+// message, and error details. You can find out more about this error
+// model and how to work with it in the API Design Guide
+// (https://cloud.google.com/apis/design/errors).
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
 	Code int64 `json:"code,omitempty"`
 
-	// Details: A list of messages that carry the error details.  There is a
-	// common set of
-	// message types for APIs to use.
+	// Details: A list of messages that carry the error details. There is a
+	// common set of message types for APIs to use.
 	Details []googleapi.RawMessage `json:"details,omitempty"`
 
 	// Message: A developer-facing error message, which should be in
-	// English. Any
-	// user-facing error message should be localized and sent in
-	// the
-	// google.rpc.Status.details field, or localized by the client.
+	// English. Any user-facing error message should be localized and sent
+	// in the google.rpc.Status.details field, or localized by the client.
 	Message string `json:"message,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Code") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Code") to include in API
@@ -1534,8 +1459,8 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 // TextSpan: Represents an output piece of text.
 type TextSpan struct {
 	// BeginOffset: The API calculates the beginning offset of the content
-	// in the original
-	// document according to the EncodingType specified in the API request.
+	// in the original document according to the EncodingType specified in
+	// the API request.
 	BeginOffset int64 `json:"beginOffset,omitempty"`
 
 	// Content: The content of the output text.
@@ -1543,10 +1468,10 @@ type TextSpan struct {
 
 	// ForceSendFields is a list of field names (e.g. "BeginOffset") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BeginOffset") to include
@@ -1569,7 +1494,7 @@ type Token struct {
 	// DependencyEdge: Dependency tree parse for this token.
 	DependencyEdge *DependencyEdge `json:"dependencyEdge,omitempty"`
 
-	// Lemma: [Lemma](https://en.wikipedia.org/wiki/Lemma_%28morphology%29)
+	// Lemma: Lemma (https://en.wikipedia.org/wiki/Lemma_%28morphology%29)
 	// of the token.
 	Lemma string `json:"lemma,omitempty"`
 
@@ -1581,10 +1506,10 @@ type Token struct {
 
 	// ForceSendFields is a list of field names (e.g. "DependencyEdge") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DependencyEdge") to
@@ -1603,6 +1528,48 @@ func (s *Token) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// V1Model: Options for the V1 model.
+type V1Model struct {
+}
+
+// V2Model: Options for the V2 model.
+type V2Model struct {
+	// ContentCategoriesVersion: The content categories used for
+	// classification.
+	//
+	// Possible values:
+	//   "CONTENT_CATEGORIES_VERSION_UNSPECIFIED" - If
+	// `ContentCategoriesVersion` is not specified, this option will default
+	// to `V1`.
+	//   "V1" - Legacy content categories of our initial launch in 2017.
+	//   "V2" - Updated content categories in 2022.
+	ContentCategoriesVersion string `json:"contentCategoriesVersion,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ContentCategoriesVersion") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ContentCategoriesVersion")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *V2Model) MarshalJSON() ([]byte, error) {
+	type NoMethod V2Model
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // method id "language.documents.analyzeEntities":
 
 type DocumentsAnalyzeEntitiesCall struct {
@@ -1614,10 +1581,8 @@ type DocumentsAnalyzeEntitiesCall struct {
 }
 
 // AnalyzeEntities: Finds named entities (currently proper names and
-// common nouns) in the text
-// along with entity types, salience, mentions for each entity,
-// and
-// other properties.
+// common nouns) in the text along with entity types, salience, mentions
+// for each entity, and other properties.
 func (r *DocumentsService) AnalyzeEntities(analyzeentitiesrequest *AnalyzeEntitiesRequest) *DocumentsAnalyzeEntitiesCall {
 	c := &DocumentsAnalyzeEntitiesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.analyzeentitiesrequest = analyzeentitiesrequest
@@ -1651,7 +1616,7 @@ func (c *DocumentsAnalyzeEntitiesCall) Header() http.Header {
 
 func (c *DocumentsAnalyzeEntitiesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1688,17 +1653,17 @@ func (c *DocumentsAnalyzeEntitiesCall) Do(opts ...googleapi.CallOption) (*Analyz
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AnalyzeEntitiesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1712,7 +1677,7 @@ func (c *DocumentsAnalyzeEntitiesCall) Do(opts ...googleapi.CallOption) (*Analyz
 	}
 	return ret, nil
 	// {
-	//   "description": "Finds named entities (currently proper names and common nouns) in the text\nalong with entity types, salience, mentions for each entity, and\nother properties.",
+	//   "description": "Finds named entities (currently proper names and common nouns) in the text along with entity types, salience, mentions for each entity, and other properties.",
 	//   "flatPath": "v1beta2/documents:analyzeEntities",
 	//   "httpMethod": "POST",
 	//   "id": "language.documents.analyzeEntities",
@@ -1744,8 +1709,8 @@ type DocumentsAnalyzeEntitySentimentCall struct {
 }
 
 // AnalyzeEntitySentiment: Finds entities, similar to AnalyzeEntities in
-// the text and analyzes
-// sentiment associated with each entity and its mentions.
+// the text and analyzes sentiment associated with each entity and its
+// mentions.
 func (r *DocumentsService) AnalyzeEntitySentiment(analyzeentitysentimentrequest *AnalyzeEntitySentimentRequest) *DocumentsAnalyzeEntitySentimentCall {
 	c := &DocumentsAnalyzeEntitySentimentCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.analyzeentitysentimentrequest = analyzeentitysentimentrequest
@@ -1779,7 +1744,7 @@ func (c *DocumentsAnalyzeEntitySentimentCall) Header() http.Header {
 
 func (c *DocumentsAnalyzeEntitySentimentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1816,17 +1781,17 @@ func (c *DocumentsAnalyzeEntitySentimentCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AnalyzeEntitySentimentResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1840,7 +1805,7 @@ func (c *DocumentsAnalyzeEntitySentimentCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Finds entities, similar to AnalyzeEntities in the text and analyzes\nsentiment associated with each entity and its mentions.",
+	//   "description": "Finds entities, similar to AnalyzeEntities in the text and analyzes sentiment associated with each entity and its mentions.",
 	//   "flatPath": "v1beta2/documents:analyzeEntitySentiment",
 	//   "httpMethod": "POST",
 	//   "id": "language.documents.analyzeEntitySentiment",
@@ -1905,7 +1870,7 @@ func (c *DocumentsAnalyzeSentimentCall) Header() http.Header {
 
 func (c *DocumentsAnalyzeSentimentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1942,17 +1907,17 @@ func (c *DocumentsAnalyzeSentimentCall) Do(opts ...googleapi.CallOption) (*Analy
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AnalyzeSentimentResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1998,10 +1963,8 @@ type DocumentsAnalyzeSyntaxCall struct {
 }
 
 // AnalyzeSyntax: Analyzes the syntax of the text and provides sentence
-// boundaries and
-// tokenization along with part of speech tags, dependency trees, and
-// other
-// properties.
+// boundaries and tokenization along with part of speech tags,
+// dependency trees, and other properties.
 func (r *DocumentsService) AnalyzeSyntax(analyzesyntaxrequest *AnalyzeSyntaxRequest) *DocumentsAnalyzeSyntaxCall {
 	c := &DocumentsAnalyzeSyntaxCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.analyzesyntaxrequest = analyzesyntaxrequest
@@ -2035,7 +1998,7 @@ func (c *DocumentsAnalyzeSyntaxCall) Header() http.Header {
 
 func (c *DocumentsAnalyzeSyntaxCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2072,17 +2035,17 @@ func (c *DocumentsAnalyzeSyntaxCall) Do(opts ...googleapi.CallOption) (*AnalyzeS
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AnalyzeSyntaxResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2096,7 +2059,7 @@ func (c *DocumentsAnalyzeSyntaxCall) Do(opts ...googleapi.CallOption) (*AnalyzeS
 	}
 	return ret, nil
 	// {
-	//   "description": "Analyzes the syntax of the text and provides sentence boundaries and\ntokenization along with part of speech tags, dependency trees, and other\nproperties.",
+	//   "description": "Analyzes the syntax of the text and provides sentence boundaries and tokenization along with part of speech tags, dependency trees, and other properties.",
 	//   "flatPath": "v1beta2/documents:analyzeSyntax",
 	//   "httpMethod": "POST",
 	//   "id": "language.documents.analyzeSyntax",
@@ -2128,8 +2091,7 @@ type DocumentsAnnotateTextCall struct {
 }
 
 // AnnotateText: A convenience method that provides all syntax,
-// sentiment, entity, and
-// classification features in one call.
+// sentiment, entity, and classification features in one call.
 func (r *DocumentsService) AnnotateText(annotatetextrequest *AnnotateTextRequest) *DocumentsAnnotateTextCall {
 	c := &DocumentsAnnotateTextCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.annotatetextrequest = annotatetextrequest
@@ -2163,7 +2125,7 @@ func (c *DocumentsAnnotateTextCall) Header() http.Header {
 
 func (c *DocumentsAnnotateTextCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2200,17 +2162,17 @@ func (c *DocumentsAnnotateTextCall) Do(opts ...googleapi.CallOption) (*AnnotateT
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AnnotateTextResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2224,7 +2186,7 @@ func (c *DocumentsAnnotateTextCall) Do(opts ...googleapi.CallOption) (*AnnotateT
 	}
 	return ret, nil
 	// {
-	//   "description": "A convenience method that provides all syntax, sentiment, entity, and\nclassification features in one call.",
+	//   "description": "A convenience method that provides all syntax, sentiment, entity, and classification features in one call.",
 	//   "flatPath": "v1beta2/documents:annotateText",
 	//   "httpMethod": "POST",
 	//   "id": "language.documents.annotateText",
@@ -2289,7 +2251,7 @@ func (c *DocumentsClassifyTextCall) Header() http.Header {
 
 func (c *DocumentsClassifyTextCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2326,17 +2288,17 @@ func (c *DocumentsClassifyTextCall) Do(opts ...googleapi.CallOption) (*ClassifyT
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ClassifyTextResponse{
 		ServerResponse: googleapi.ServerResponse{

@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -6,33 +6,33 @@
 
 // Package homegraph provides access to the HomeGraph API.
 //
-// For product documentation, see: https://developers.google.com/actions/smarthome/create-app#request-sync
+// For product documentation, see: https://developers.home.google.com/cloud-to-cloud/get-started
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/homegraph/v1"
-//   ...
-//   ctx := context.Background()
-//   homegraphService, err := homegraph.NewService(ctx)
+//	import "google.golang.org/api/homegraph/v1"
+//	...
+//	ctx := context.Background()
+//	homegraphService, err := homegraph.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   homegraphService, err := homegraph.NewService(ctx, option.WithAPIKey("AIza..."))
+//	homegraphService, err := homegraph.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   homegraphService, err := homegraph.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	homegraphService, err := homegraph.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package homegraph // import "google.golang.org/api/homegraph/v1"
@@ -50,6 +50,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -75,10 +76,23 @@ const apiId = "homegraph:v1"
 const apiName = "homegraph"
 const apiVersion = "v1"
 const basePath = "https://homegraph.googleapis.com/"
+const mtlsBasePath = "https://homegraph.mtls.googleapis.com/"
+
+// OAuth2 scopes used by this API.
+const (
+	// Private Service: https://www.googleapis.com/auth/homegraph
+	HomegraphScope = "https://www.googleapis.com/auth/homegraph"
+)
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
+	scopesOption := internaloption.WithDefaultScopes(
+		"https://www.googleapis.com/auth/homegraph",
+	)
+	// NOTE: prepend, so we don't override user-specified scopes.
+	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -150,10 +164,10 @@ type AgentDeviceId struct {
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Id") to include in API
@@ -181,10 +195,10 @@ type AgentOtherDeviceId struct {
 
 	// ForceSendFields is a list of field names (e.g. "AgentId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AgentId") to include in
@@ -208,15 +222,13 @@ type Device struct {
 	Attributes googleapi.RawMessage `json:"attributes,omitempty"`
 
 	// CustomData: Custom device attributes stored in Home Graph and
-	// provided to your
-	// smart home Action in
-	// each
-	// [QUERY](https://developers.google.com/assistant/smarthome/referen
-	// ce/intent/query)
-	// and
-	// [EXECUTE](https://developers.google.com/assistant
-	// /smarthome/reference/intent/execute)
-	// intent.
+	// provided to your smart home Action in each QUERY
+	// (https://developers.home.google.com/cloud-to-cloud/intents/query) and
+	// EXECUTE
+	// (https://developers.home.google.com/cloud-to-cloud/intents/execute)
+	// intent. Data in this object has a few constraints: No sensitive
+	// information, including but not limited to Personally Identifiable
+	// Information.
 	CustomData googleapi.RawMessage `json:"customData,omitempty"`
 
 	// DeviceInfo: Device manufacturer, model, hardware version, and
@@ -230,59 +242,43 @@ type Device struct {
 	Name *DeviceNames `json:"name,omitempty"`
 
 	// NotificationSupportedByAgent: Indicates whether your smart home
-	// Action will report notifications
-	// to Google for this device via
-	// ReportStateAndNotification.
-	//
-	// If your smart home Action enables users to control device
-	// notifications,
-	// you should update this field and call
-	// RequestSyncDevices.
+	// Action will report notifications to Google for this device via
+	// ReportStateAndNotification. If your smart home Action enables users
+	// to control device notifications, you should update this field and
+	// call RequestSyncDevices.
 	NotificationSupportedByAgent bool `json:"notificationSupportedByAgent,omitempty"`
 
-	// OtherDeviceIds: Alternate IDs associated with this device.
-	// This is used to identify cloud synced devices enabled for
-	// [local
-	// fulfillment](https://developers.google.com/assistant/smarthome/
-	// concepts/local).
+	// OtherDeviceIds: Alternate IDs associated with this device. This is
+	// used to identify cloud synced devices enabled for local fulfillment
+	// (https://developers.home.google.com/local-home/overview).
 	OtherDeviceIds []*AgentOtherDeviceId `json:"otherDeviceIds,omitempty"`
 
-	// RoomHint: Suggested name for the room where this device is
-	// installed.
+	// RoomHint: Suggested name for the room where this device is installed.
 	// Google attempts to use this value during user setup.
 	RoomHint string `json:"roomHint,omitempty"`
 
 	// StructureHint: Suggested name for the structure where this device is
-	// installed.
-	// Google attempts to use this value during user setup.
+	// installed. Google attempts to use this value during user setup.
 	StructureHint string `json:"structureHint,omitempty"`
 
-	// Traits: Traits supported by the device.
-	// See
-	// [device
-	// traits](https://developers.google.com/assistant/smarthome/trai
-	// ts).
+	// Traits: Traits supported by the device. See device traits
+	// (https://developers.home.google.com/cloud-to-cloud/traits).
 	Traits []string `json:"traits,omitempty"`
 
-	// Type: Hardware type of the device.
-	// See
-	// [device
-	// types](https://developers.google.com/assistant/smarthome/guide
-	// s).
+	// Type: Hardware type of the device. See device types
+	// (https://developers.home.google.com/cloud-to-cloud/guides).
 	Type string `json:"type,omitempty"`
 
 	// WillReportState: Indicates whether your smart home Action will report
-	// state of this device
-	// to Google via
-	// ReportStateAndNotification.
+	// state of this device to Google via ReportStateAndNotification.
 	WillReportState bool `json:"willReportState,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Attributes") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Attributes") to include in
@@ -316,10 +312,10 @@ type DeviceInfo struct {
 
 	// ForceSendFields is a list of field names (e.g. "HwVersion") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "HwVersion") to include in
@@ -340,8 +336,7 @@ func (s *DeviceInfo) MarshalJSON() ([]byte, error) {
 // DeviceNames: Identifiers used to describe the device.
 type DeviceNames struct {
 	// DefaultNames: List of names provided by the manufacturer rather than
-	// the user, such as
-	// serial numbers, SKUs, etc.
+	// the user, such as serial numbers, SKUs, etc.
 	DefaultNames []string `json:"defaultNames,omitempty"`
 
 	// Name: Primary name of the device, generally provided by the user.
@@ -352,10 +347,10 @@ type DeviceNames struct {
 
 	// ForceSendFields is a list of field names (e.g. "DefaultNames") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DefaultNames") to include
@@ -374,33 +369,24 @@ func (s *DeviceNames) MarshalJSON() ([]byte, error) {
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
-// duplicated
-// empty messages in your APIs. A typical example is to use it as the
-// request
-// or the response type of an API method. For instance:
-//
-//     service Foo {
-//       rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty);
-//     }
-//
-// The JSON representation for `Empty` is empty JSON object `{}`.
+// duplicated empty messages in your APIs. A typical example is to use
+// it as the request or the response type of an API method. For
+// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); }
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
 }
 
-// QueryRequest: Request type for
-// the
-// [`Query`](#google.home.graph.v1.HomeGraphApiService.Query) call.
+// QueryRequest: Request type for the `Query`
+// (#google.home.graph.v1.HomeGraphApiService.Query) call.
 type QueryRequest struct {
 	// AgentUserId: Required. Third-party user ID.
 	AgentUserId string `json:"agentUserId,omitempty"`
 
 	// Inputs: Required. Inputs containing third-party device IDs for which
-	// to
-	// get the device states.
+	// to get the device states.
 	Inputs []*QueryRequestInput `json:"inputs,omitempty"`
 
 	// RequestId: Request ID used for debugging.
@@ -408,10 +394,10 @@ type QueryRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "AgentUserId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AgentUserId") to include
@@ -436,10 +422,10 @@ type QueryRequestInput struct {
 
 	// ForceSendFields is a list of field names (e.g. "Payload") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Payload") to include in
@@ -464,10 +450,10 @@ type QueryRequestPayload struct {
 
 	// ForceSendFields is a list of field names (e.g. "Devices") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Devices") to include in
@@ -485,38 +471,16 @@ func (s *QueryRequestPayload) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// QueryResponse: Response type for
-// the
-// [`Query`](#google.home.graph.v1.HomeGraphApiService.Query) call.
-// This should follow the same format as the Google smart
-// home
-// `action.devices.QUERY`
-// [response](https://developers.google.com/a
-// ssistant/smarthome/reference/intent/query).
-// # Example
-//
-// ```json
-// {
-//   "requestId": "ff36a3cc-ec34-11e6-b1a0-64510650abcf",
-//   "payload": {
-//     "devices": {
-//       "123": {
-//         "on": true,
-//         "online": true
-//       },
-//       "456": {
-//         "on": true,
-//         "online": true,
-//         "brightness": 80,
-//         "color": {
-//           "name": "cerulean",
-//           "spectrumRGB": 31655
-//         }
-//       }
-//     }
-//   }
-// }
-// ```
+// QueryResponse: Response type for the `Query`
+// (#google.home.graph.v1.HomeGraphApiService.Query) call. This should
+// follow the same format as the Google smart home
+// `action.devices.QUERY` response
+// (https://developers.home.google.com/cloud-to-cloud/intents/query).
+// Example: ```json { "requestId":
+// "ff36a3cc-ec34-11e6-b1a0-64510650abcf", "payload": { "devices": {
+// "123": { "on": true, "online": true }, "456": { "on": true, "online":
+// true, "brightness": 80, "color": { "name": "cerulean", "spectrumRGB":
+// 31655 } } } } } ```
 type QueryResponse struct {
 	// Payload: Device states for the devices given in the request.
 	Payload *QueryResponsePayload `json:"payload,omitempty"`
@@ -530,10 +494,10 @@ type QueryResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Payload") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Payload") to include in
@@ -554,16 +518,15 @@ func (s *QueryResponse) MarshalJSON() ([]byte, error) {
 // QueryResponsePayload: Payload containing device states information.
 type QueryResponsePayload struct {
 	// Devices: States of the devices. Map of third-party device ID to
-	// struct of device
-	// states.
+	// struct of device states.
 	Devices map[string]googleapi.RawMessage `json:"devices,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Devices") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Devices") to include in
@@ -585,27 +548,21 @@ func (s *QueryResponsePayload) MarshalJSON() ([]byte, error) {
 // specific to a device.
 type ReportStateAndNotificationDevice struct {
 	// Notifications: Notifications metadata for devices. See the **Device
-	// NOTIFICATIONS**
-	// section of the individual trait
-	// [reference
-	// guides](https://developers.google.com/assistant/smarthome/t
-	// raits).
+	// NOTIFICATIONS** section of the individual trait reference guides
+	// (https://developers.home.google.com/cloud-to-cloud/traits).
 	Notifications googleapi.RawMessage `json:"notifications,omitempty"`
 
 	// States: States of devices to update. See the **Device STATES**
-	// section
-	// of the individual trait
-	// [reference
-	// guides](https://developers.google.com/assistant/smarthome/t
-	// raits).
+	// section of the individual trait reference guides
+	// (https://developers.home.google.com/cloud-to-cloud/traits).
 	States googleapi.RawMessage `json:"states,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Notifications") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Notifications") to include
@@ -623,36 +580,17 @@ func (s *ReportStateAndNotificationDevice) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ReportStateAndNotificationRequest: Request type for
-// the
-// [`ReportStateAndNotification`](#google.home.graph.v1.HomeGraphApiS
-// ervice.ReportStateAndNotification)
-// call. It may include states, notifications, or both. States and
-// notifications
-// are defined per `device_id` (for example, "123" and "456" in the
-// following
-// example).
-// # Example
+// ReportStateAndNotificationRequest: Request type for the
+// `ReportStateAndNotification`
+// (#google.home.graph.v1.HomeGraphApiService.ReportStateAndNotification)
 //
-// ```json
-// {
-//   "requestId": "ff36a3cc-ec34-11e6-b1a0-64510650abcf",
-//   "agentUserId": "1234",
-//   "payload": {
-//     "devices": {
-//       "states": {
-//         "123": {
-//           "on": true
-//         },
-//         "456": {
-//           "on": true,
-//           "brightness": 10
-//         }
-//       },
-//     }
-//   }
-// }
-// ```
+//	call. It may include states, notifications, or both. States and
+//
+// notifications are defined per `device_id` (for example, "123" and
+// "456" in the following example). Example: ```json { "requestId":
+// "ff36a3cc-ec34-11e6-b1a0-64510650abcf", "agentUserId": "1234",
+// "payload": { "devices": { "states": { "123": { "on": true }, "456": {
+// "on": true, "brightness": 10 } }, } } } ```
 type ReportStateAndNotificationRequest struct {
 	// AgentUserId: Required. Third-party user ID.
 	AgentUserId string `json:"agentUserId,omitempty"`
@@ -660,8 +598,7 @@ type ReportStateAndNotificationRequest struct {
 	// EventId: Unique identifier per event (for example, a doorbell press).
 	EventId string `json:"eventId,omitempty"`
 
-	// FollowUpToken: Token to maintain state in the follow up notification
-	// response.
+	// FollowUpToken: Deprecated.
 	FollowUpToken string `json:"followUpToken,omitempty"`
 
 	// Payload: Required. State of devices to update and notification
@@ -673,10 +610,10 @@ type ReportStateAndNotificationRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "AgentUserId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AgentUserId") to include
@@ -694,11 +631,11 @@ func (s *ReportStateAndNotificationRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ReportStateAndNotificationResponse: Response type for
-// the
-// [`ReportStateAndNotification`](#google.home.graph.v1.HomeGraphApiS
-// ervice.ReportStateAndNotification)
-// call.
+// ReportStateAndNotificationResponse: Response type for the
+// `ReportStateAndNotification`
+// (#google.home.graph.v1.HomeGraphApiService.ReportStateAndNotification)
+//
+//	call.
 type ReportStateAndNotificationResponse struct {
 	// RequestId: Request ID copied from ReportStateAndNotificationRequest.
 	RequestId string `json:"requestId,omitempty"`
@@ -709,10 +646,10 @@ type ReportStateAndNotificationResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "RequestId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "RequestId") to include in
@@ -730,28 +667,24 @@ func (s *ReportStateAndNotificationResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// RequestSyncDevicesRequest: Request type for
-// the
-// [`RequestSyncDevices`](#google.home.graph.v1.HomeGraphApiService.R
-// equestSyncDevices)
-// call.
+// RequestSyncDevicesRequest: Request type for the `RequestSyncDevices`
+// (#google.home.graph.v1.HomeGraphApiService.RequestSyncDevices) call.
 type RequestSyncDevicesRequest struct {
 	// AgentUserId: Required. Third-party user ID.
 	AgentUserId string `json:"agentUserId,omitempty"`
 
 	// Async: Optional. If set, the request will be added to a queue and a
-	// response will
-	// be returned immediately. This enables concurrent requests for the
-	// given
-	// `agent_user_id`, but the caller will not receive any error responses.
+	// response will be returned immediately. This enables concurrent
+	// requests for the given `agent_user_id`, but the caller will not
+	// receive any error responses.
 	Async bool `json:"async,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AgentUserId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AgentUserId") to include
@@ -769,14 +702,10 @@ func (s *RequestSyncDevicesRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// RequestSyncDevicesResponse: Response type for
-// the
-// [`RequestSyncDevices`](#google.home.graph.v1.HomeGraphApiService.R
-// equestSyncDevices)
-// call.
-//
-// Intentionally empty upon success. An HTTP response code is
-// returned
+// RequestSyncDevicesResponse: Response type for the
+// `RequestSyncDevices`
+// (#google.home.graph.v1.HomeGraphApiService.RequestSyncDevices) call.
+// Intentionally empty upon success. An HTTP response code is returned
 // with more details upon failure.
 type RequestSyncDevicesResponse struct {
 	// ServerResponse contains the HTTP response code and headers from the
@@ -792,10 +721,10 @@ type StateAndNotificationPayload struct {
 
 	// ForceSendFields is a list of field names (e.g. "Devices") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Devices") to include in
@@ -813,9 +742,8 @@ func (s *StateAndNotificationPayload) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SyncRequest: Request type for the
-// [`Sync`](#google.home.graph.v1.HomeGraphApiService.Sync)
-// call.
+// SyncRequest: Request type for the `Sync`
+// (#google.home.graph.v1.HomeGraphApiService.Sync) call.
 type SyncRequest struct {
 	// AgentUserId: Required. Third-party user ID.
 	AgentUserId string `json:"agentUserId,omitempty"`
@@ -825,10 +753,10 @@ type SyncRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "AgentUserId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AgentUserId") to include
@@ -846,48 +774,21 @@ func (s *SyncRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SyncResponse: Response type for
-// the
-// [`Sync`](#google.home.graph.v1.HomeGraphApiService.Sync) call.
-// This should follow the same format as the Google smart
-// home
-// `action.devices.SYNC`
-// [response](https://developers.google.com/as
-// sistant/smarthome/reference/intent/sync).
-// # Example
-//
-// ```json
-// {
-//   "requestId": "ff36a3cc-ec34-11e6-b1a0-64510650abcf",
-//   "payload": {
-//     "agentUserId": "1836.15267389",
-//     "devices": [{
-//       "id": "123",
-//       "type": "action.devices.types.OUTLET",
-//       "traits": [
-//         "action.devices.traits.OnOff"
-//       ],
-//       "name": {
-//         "defaultNames": ["My Outlet 1234"],
-//         "name": "Night light",
-//         "nicknames": ["wall plug"]
-//       },
-//       "willReportState": false,
-//       "deviceInfo": {
-//         "manufacturer": "lights-out-inc",
-//         "model": "hs1234",
-//         "hwVersion": "3.2",
-//         "swVersion": "11.4"
-//       },
-//       "customData": {
-//         "fooValue": 74,
-//         "barValue": true,
-//         "bazValue": "foo"
-//       }
-//     }]
-//   }
-// }
-// ```
+// SyncResponse: Response type for the `Sync`
+// (#google.home.graph.v1.HomeGraphApiService.Sync) call. This should
+// follow the same format as the Google smart home `action.devices.SYNC`
+// response
+// (https://developers.home.google.com/cloud-to-cloud/intents/sync).
+// Example: ```json { "requestId":
+// "ff36a3cc-ec34-11e6-b1a0-64510650abcf", "payload": { "agentUserId":
+// "1836.15267389", "devices": [{ "id": "123", "type":
+// "action.devices.types.OUTLET", "traits": [
+// "action.devices.traits.OnOff" ], "name": { "defaultNames": ["My
+// Outlet 1234"], "name": "Night light", "nicknames": ["wall plug"] },
+// "willReportState": false, "deviceInfo": { "manufacturer":
+// "lights-out-inc", "model": "hs1234", "hwVersion": "3.2", "swVersion":
+// "11.4" }, "customData": { "fooValue": 74, "barValue": true,
+// "bazValue": "foo" } }] } } ```
 type SyncResponse struct {
 	// Payload: Devices associated with the third-party user.
 	Payload *SyncResponsePayload `json:"payload,omitempty"`
@@ -901,10 +802,10 @@ type SyncResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Payload") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Payload") to include in
@@ -932,10 +833,10 @@ type SyncResponsePayload struct {
 
 	// ForceSendFields is a list of field names (e.g. "AgentUserId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AgentUserId") to include
@@ -964,21 +865,15 @@ type AgentUsersDeleteCall struct {
 }
 
 // Delete: Unlinks the given third-party user from your smart home
-// Action.
-// All data related to this user will be deleted.
+// Action. All data related to this user will be deleted. For more
+// details on how users link their accounts, see fulfillment and
+// authentication
+// (https://developers.home.google.com/cloud-to-cloud/primer/fulfillment).
+// The third-party user's identity is passed in via the `agent_user_id`
+// (see DeleteAgentUserRequest). This request must be authorized using
+// service account credentials from your Actions console project.
 //
-// For more details on how users link their accounts, see
-// [fulfillment
-// and
-// authentication](https://developers.google.com/assistant/smarthome/
-// concepts/fulfillment-authentication).
-//
-// The third-party user's identity is passed in via the
-// `agent_user_id`
-// (see DeleteAgentUserRequest).
-// This request must be authorized using service account credentials
-// from your
-// Actions console project.
+// - agentUserId: Third-party user ID.
 func (r *AgentUsersService) Delete(agentUserId string) *AgentUsersDeleteCall {
 	c := &AgentUsersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.agentUserId = agentUserId
@@ -1019,7 +914,7 @@ func (c *AgentUsersDeleteCall) Header() http.Header {
 
 func (c *AgentUsersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1054,17 +949,17 @@ func (c *AgentUsersDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -1078,7 +973,7 @@ func (c *AgentUsersDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Unlinks the given third-party user from your smart home Action.\nAll data related to this user will be deleted.\n\nFor more details on how users link their accounts, see\n[fulfillment and\nauthentication](https://developers.google.com/assistant/smarthome/concepts/fulfillment-authentication).\n\nThe third-party user's identity is passed in via the `agent_user_id`\n(see DeleteAgentUserRequest).\nThis request must be authorized using service account credentials from your\nActions console project.",
+	//   "description": "Unlinks the given third-party user from your smart home Action. All data related to this user will be deleted. For more details on how users link their accounts, see [fulfillment and authentication](https://developers.home.google.com/cloud-to-cloud/primer/fulfillment). The third-party user's identity is passed in via the `agent_user_id` (see DeleteAgentUserRequest). This request must be authorized using service account credentials from your Actions console project.",
 	//   "flatPath": "v1/agentUsers/{agentUsersId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "homegraph.agentUsers.delete",
@@ -1102,7 +997,10 @@ func (c *AgentUsersDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) 
 	//   "path": "v1/{+agentUserId}",
 	//   "response": {
 	//     "$ref": "Empty"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/homegraph"
+	//   ]
 	// }
 
 }
@@ -1118,15 +1016,10 @@ type DevicesQueryCall struct {
 }
 
 // Query: Gets the current states in Home Graph for the given set of the
-// third-party
-// user's devices.
-//
-// The third-party user's identity is passed in via the
-// `agent_user_id`
-// (see QueryRequest).
-// This request must be authorized using service account credentials
-// from your
-// Actions console project.
+// third-party user's devices. The third-party user's identity is passed
+// in via the `agent_user_id` (see QueryRequest). This request must be
+// authorized using service account credentials from your Actions
+// console project.
 func (r *DevicesService) Query(queryrequest *QueryRequest) *DevicesQueryCall {
 	c := &DevicesQueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.queryrequest = queryrequest
@@ -1160,7 +1053,7 @@ func (c *DevicesQueryCall) Header() http.Header {
 
 func (c *DevicesQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1197,17 +1090,17 @@ func (c *DevicesQueryCall) Do(opts ...googleapi.CallOption) (*QueryResponse, err
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &QueryResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1221,7 +1114,7 @@ func (c *DevicesQueryCall) Do(opts ...googleapi.CallOption) (*QueryResponse, err
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the current states in Home Graph for the given set of the third-party\nuser's devices.\n\nThe third-party user's identity is passed in via the `agent_user_id`\n(see QueryRequest).\nThis request must be authorized using service account credentials from your\nActions console project.",
+	//   "description": "Gets the current states in Home Graph for the given set of the third-party user's devices. The third-party user's identity is passed in via the `agent_user_id` (see QueryRequest). This request must be authorized using service account credentials from your Actions console project.",
 	//   "flatPath": "v1/devices:query",
 	//   "httpMethod": "POST",
 	//   "id": "homegraph.devices.query",
@@ -1233,7 +1126,10 @@ func (c *DevicesQueryCall) Do(opts ...googleapi.CallOption) (*QueryResponse, err
 	//   },
 	//   "response": {
 	//     "$ref": "QueryResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/homegraph"
+	//   ]
 	// }
 
 }
@@ -1249,30 +1145,18 @@ type DevicesReportStateAndNotificationCall struct {
 }
 
 // ReportStateAndNotification: Reports device state and optionally sends
-// device notifications.
-// Called by your smart home Action when the state of a third-party
-// device
-// changes or you need to send a notification about the device.
-// See [Implement
-// Report
-// State](https://developers.google.com/assistant/smarthome/develo
-// p/report-state)
-// for more information.
-//
-// This method updates the device state according to its
-// declared
-// [traits](https://developers.google.com/assistant/smarthome/co
-// ncepts/devices-traits).
+// device notifications. Called by your smart home Action when the state
+// of a third-party device changes or you need to send a notification
+// about the device. See Implement Report State
+// (https://developers.home.google.com/cloud-to-cloud/integration/report-state)
+// for more information. This method updates the device state according
+// to its declared traits
+// (https://developers.home.google.com/cloud-to-cloud/primer/device-types-and-traits).
 // Publishing a new state value outside of these traits will result in
-// an
-// `INVALID_ARGUMENT` error response.
-//
-// The third-party user's identity is passed in via the
-// `agent_user_id`
-// (see ReportStateAndNotificationRequest).
-// This request must be authorized using service account credentials
-// from your
-// Actions console project.
+// an `INVALID_ARGUMENT` error response. The third-party user's identity
+// is passed in via the `agent_user_id` (see
+// ReportStateAndNotificationRequest). This request must be authorized
+// using service account credentials from your Actions console project.
 func (r *DevicesService) ReportStateAndNotification(reportstateandnotificationrequest *ReportStateAndNotificationRequest) *DevicesReportStateAndNotificationCall {
 	c := &DevicesReportStateAndNotificationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.reportstateandnotificationrequest = reportstateandnotificationrequest
@@ -1306,7 +1190,7 @@ func (c *DevicesReportStateAndNotificationCall) Header() http.Header {
 
 func (c *DevicesReportStateAndNotificationCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1344,17 +1228,17 @@ func (c *DevicesReportStateAndNotificationCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ReportStateAndNotificationResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1368,7 +1252,7 @@ func (c *DevicesReportStateAndNotificationCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "Reports device state and optionally sends device notifications.\nCalled by your smart home Action when the state of a third-party device\nchanges or you need to send a notification about the device.\nSee [Implement Report\nState](https://developers.google.com/assistant/smarthome/develop/report-state)\nfor more information.\n\nThis method updates the device state according to its declared\n[traits](https://developers.google.com/assistant/smarthome/concepts/devices-traits).\nPublishing a new state value outside of these traits will result in an\n`INVALID_ARGUMENT` error response.\n\nThe third-party user's identity is passed in via the `agent_user_id`\n(see ReportStateAndNotificationRequest).\nThis request must be authorized using service account credentials from your\nActions console project.",
+	//   "description": "Reports device state and optionally sends device notifications. Called by your smart home Action when the state of a third-party device changes or you need to send a notification about the device. See [Implement Report State](https://developers.home.google.com/cloud-to-cloud/integration/report-state) for more information. This method updates the device state according to its declared [traits](https://developers.home.google.com/cloud-to-cloud/primer/device-types-and-traits). Publishing a new state value outside of these traits will result in an `INVALID_ARGUMENT` error response. The third-party user's identity is passed in via the `agent_user_id` (see ReportStateAndNotificationRequest). This request must be authorized using service account credentials from your Actions console project.",
 	//   "flatPath": "v1/devices:reportStateAndNotification",
 	//   "httpMethod": "POST",
 	//   "id": "homegraph.devices.reportStateAndNotification",
@@ -1380,7 +1264,10 @@ func (c *DevicesReportStateAndNotificationCall) Do(opts ...googleapi.CallOption)
 	//   },
 	//   "response": {
 	//     "$ref": "ReportStateAndNotificationResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/homegraph"
+	//   ]
 	// }
 
 }
@@ -1395,20 +1282,12 @@ type DevicesRequestSyncCall struct {
 	header_                   http.Header
 }
 
-// RequestSync: Requests Google to send an
-// `action.devices.SYNC`
-// [intent](https://developers.google.com/assistant
-// /smarthome/reference/intent/sync)
-// to your smart home Action to update device metadata for the given
-// user.
-//
-//
-// The third-party user's identity is passed via the
-// `agent_user_id`
-// (see RequestSyncDevicesRequest).
-// This request must be authorized using service account credentials
-// from your
-// Actions console project.
+// RequestSync: Requests Google to send an `action.devices.SYNC` intent
+// (https://developers.home.google.com/cloud-to-cloud/intents/sync) to
+// your smart home Action to update device metadata for the given user.
+// The third-party user's identity is passed via the `agent_user_id`
+// (see RequestSyncDevicesRequest). This request must be authorized
+// using service account credentials from your Actions console project.
 func (r *DevicesService) RequestSync(requestsyncdevicesrequest *RequestSyncDevicesRequest) *DevicesRequestSyncCall {
 	c := &DevicesRequestSyncCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.requestsyncdevicesrequest = requestsyncdevicesrequest
@@ -1442,7 +1321,7 @@ func (c *DevicesRequestSyncCall) Header() http.Header {
 
 func (c *DevicesRequestSyncCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1479,17 +1358,17 @@ func (c *DevicesRequestSyncCall) Do(opts ...googleapi.CallOption) (*RequestSyncD
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &RequestSyncDevicesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1503,7 +1382,7 @@ func (c *DevicesRequestSyncCall) Do(opts ...googleapi.CallOption) (*RequestSyncD
 	}
 	return ret, nil
 	// {
-	//   "description": "Requests Google to send an `action.devices.SYNC`\n[intent](https://developers.google.com/assistant/smarthome/reference/intent/sync)\nto your smart home Action to update device metadata for the given user.\n\n\nThe third-party user's identity is passed via the `agent_user_id`\n(see RequestSyncDevicesRequest).\nThis request must be authorized using service account credentials from your\nActions console project.",
+	//   "description": "Requests Google to send an `action.devices.SYNC` [intent](https://developers.home.google.com/cloud-to-cloud/intents/sync) to your smart home Action to update device metadata for the given user. The third-party user's identity is passed via the `agent_user_id` (see RequestSyncDevicesRequest). This request must be authorized using service account credentials from your Actions console project.",
 	//   "flatPath": "v1/devices:requestSync",
 	//   "httpMethod": "POST",
 	//   "id": "homegraph.devices.requestSync",
@@ -1515,7 +1394,10 @@ func (c *DevicesRequestSyncCall) Do(opts ...googleapi.CallOption) (*RequestSyncD
 	//   },
 	//   "response": {
 	//     "$ref": "RequestSyncDevicesResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/homegraph"
+	//   ]
 	// }
 
 }
@@ -1531,14 +1413,9 @@ type DevicesSyncCall struct {
 }
 
 // Sync: Gets all the devices associated with the given third-party
-// user.
-//
-// The third-party user's identity is passed in via the
-// `agent_user_id`
-// (see SyncRequest).
-// This request must be authorized using service account credentials
-// from your
-// Actions console project.
+// user. The third-party user's identity is passed in via the
+// `agent_user_id` (see SyncRequest). This request must be authorized
+// using service account credentials from your Actions console project.
 func (r *DevicesService) Sync(syncrequest *SyncRequest) *DevicesSyncCall {
 	c := &DevicesSyncCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.syncrequest = syncrequest
@@ -1572,7 +1449,7 @@ func (c *DevicesSyncCall) Header() http.Header {
 
 func (c *DevicesSyncCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1609,17 +1486,17 @@ func (c *DevicesSyncCall) Do(opts ...googleapi.CallOption) (*SyncResponse, error
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &SyncResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1633,7 +1510,7 @@ func (c *DevicesSyncCall) Do(opts ...googleapi.CallOption) (*SyncResponse, error
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets all the devices associated with the given third-party user.\n\nThe third-party user's identity is passed in via the `agent_user_id`\n(see SyncRequest).\nThis request must be authorized using service account credentials from your\nActions console project.",
+	//   "description": "Gets all the devices associated with the given third-party user. The third-party user's identity is passed in via the `agent_user_id` (see SyncRequest). This request must be authorized using service account credentials from your Actions console project.",
 	//   "flatPath": "v1/devices:sync",
 	//   "httpMethod": "POST",
 	//   "id": "homegraph.devices.sync",
@@ -1645,7 +1522,10 @@ func (c *DevicesSyncCall) Do(opts ...googleapi.CallOption) (*SyncResponse, error
 	//   },
 	//   "response": {
 	//     "$ref": "SyncResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/homegraph"
+	//   ]
 	// }
 
 }

@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://developers.google.com/amp/cache/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/acceleratedmobilepageurl/v1"
-//   ...
-//   ctx := context.Background()
-//   acceleratedmobilepageurlService, err := acceleratedmobilepageurl.NewService(ctx)
+//	import "google.golang.org/api/acceleratedmobilepageurl/v1"
+//	...
+//	ctx := context.Background()
+//	acceleratedmobilepageurlService, err := acceleratedmobilepageurl.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   acceleratedmobilepageurlService, err := acceleratedmobilepageurl.NewService(ctx, option.WithAPIKey("AIza..."))
+//	acceleratedmobilepageurlService, err := acceleratedmobilepageurl.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   acceleratedmobilepageurlService, err := acceleratedmobilepageurl.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	acceleratedmobilepageurlService, err := acceleratedmobilepageurl.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package acceleratedmobilepageurl // import "google.golang.org/api/acceleratedmobilepageurl/v1"
@@ -50,6 +50,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -75,10 +76,12 @@ const apiId = "acceleratedmobilepageurl:v1"
 const apiName = "acceleratedmobilepageurl"
 const apiVersion = "v1"
 const basePath = "https://acceleratedmobilepageurl.googleapis.com/"
+const mtlsBasePath = "https://acceleratedmobilepageurl.mtls.googleapis.com/"
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -136,9 +139,9 @@ type AmpUrl struct {
 	// AmpUrl: The AMP URL pointing to the publisher's web server.
 	AmpUrl string `json:"ampUrl,omitempty"`
 
-	// CdnAmpUrl: The [AMP Cache
-	// URL](/amp/cache/overview#amp-cache-url-format) pointing to
-	// the cached document in the Google AMP Cache.
+	// CdnAmpUrl: The AMP Cache URL
+	// (/amp/cache/overview#amp-cache-url-format) pointing to the cached
+	// document in the Google AMP Cache.
 	CdnAmpUrl string `json:"cdnAmpUrl,omitempty"`
 
 	// OriginalUrl: The original non-AMP URL.
@@ -146,10 +149,10 @@ type AmpUrl struct {
 
 	// ForceSendFields is a list of field names (e.g. "AmpUrl") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AmpUrl") to include in API
@@ -175,24 +178,18 @@ type AmpUrlError struct {
 	// Possible values:
 	//   "ERROR_CODE_UNSPECIFIED" - Not specified error.
 	//   "INPUT_URL_NOT_FOUND" - Indicates the requested URL is not found in
-	// the index, possibly because
-	// it's unable to be found, not able to be accessed by Googlebot, or
-	// some
-	// other error.
+	// the index, possibly because it's unable to be found, not able to be
+	// accessed by Googlebot, or some other error.
 	//   "NO_AMP_URL" - Indicates no AMP URL has been found that corresponds
-	// to the requested
-	// URL.
+	// to the requested URL.
 	//   "APPLICATION_ERROR" - Indicates some kind of application error
-	// occurred at the server.
-	// Client advised to retry.
+	// occurred at the server. Client advised to retry.
 	//   "URL_IS_VALID_AMP" - DEPRECATED: Indicates the requested URL is a
-	// valid AMP URL.  This is a
-	// non-error state, should not be relied upon as a sign of success
-	// or
-	// failure.  It will be removed in future versions of the API.
+	// valid AMP URL. This is a non-error state, should not be relied upon
+	// as a sign of success or failure. It will be removed in future
+	// versions of the API.
 	//   "URL_IS_INVALID_AMP" - Indicates that an AMP URL has been found
-	// that corresponds to the request
-	// URL, but it is not valid AMP HTML.
+	// that corresponds to the request URL, but it is not valid AMP HTML.
 	ErrorCode string `json:"errorCode,omitempty"`
 
 	// ErrorMessage: An optional descriptive error message.
@@ -203,10 +200,10 @@ type AmpUrlError struct {
 
 	// ForceSendFields is a list of field names (e.g. "ErrorCode") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ErrorCode") to include in
@@ -230,34 +227,28 @@ type BatchGetAmpUrlsRequest struct {
 	//
 	// Possible values:
 	//   "FETCH_LIVE_DOC" - FETCH_LIVE_DOC strategy involves live document
-	// fetch of URLs not found in
-	// the index. Any request URL not found in the index is crawled in
-	// realtime
-	// to validate if there is a corresponding AMP URL. This strategy has
-	// higher
-	// coverage but with extra latency introduced by realtime crawling. This
-	// is
-	// the default strategy. Applications using this strategy should set
-	// higher
-	// HTTP timeouts of the API calls.
+	// fetch of URLs not found in the index. Any request URL not found in
+	// the index is crawled in realtime to validate if there is a
+	// corresponding AMP URL. This strategy has higher coverage but with
+	// extra latency introduced by realtime crawling. This is the default
+	// strategy. Applications using this strategy should set higher HTTP
+	// timeouts of the API calls.
 	//   "IN_INDEX_DOC" - IN_INDEX_DOC strategy skips fetching live
-	// documents of URL(s) not found
-	// in index. For applications which need low latency use of
-	// IN_INDEX_DOC
-	// strategy is recommended.
+	// documents of URL(s) not found in index. For applications which need
+	// low latency use of IN_INDEX_DOC strategy is recommended.
 	LookupStrategy string `json:"lookupStrategy,omitempty"`
 
-	// Urls: List of URLs to look up for the paired AMP URLs.
-	// The URLs are case-sensitive. Up to 50 URLs per lookup
-	// (see [Usage Limits](/amp/cache/reference/limits)).
+	// Urls: List of URLs to look up for the paired AMP URLs. The URLs are
+	// case-sensitive. Up to 50 URLs per lookup (see Usage Limits
+	// (/amp/cache/reference/limits)).
 	Urls []string `json:"urls,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LookupStrategy") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "LookupStrategy") to
@@ -279,10 +270,8 @@ func (s *BatchGetAmpUrlsRequest) MarshalJSON() ([]byte, error) {
 // BatchGetAmpUrlsResponse: Batch AMP URL response.
 type BatchGetAmpUrlsResponse struct {
 	// AmpUrls: For each URL in BatchAmpUrlsRequest, the URL response. The
-	// response might
-	// not be in the same order as URLs in the batch request.
-	// If BatchAmpUrlsRequest contains duplicate URLs, AmpUrl is
-	// generated
+	// response might not be in the same order as URLs in the batch request.
+	// If BatchAmpUrlsRequest contains duplicate URLs, AmpUrl is generated
 	// only once.
 	AmpUrls []*AmpUrl `json:"ampUrls,omitempty"`
 
@@ -295,10 +284,10 @@ type BatchGetAmpUrlsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "AmpUrls") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AmpUrls") to include in
@@ -326,8 +315,8 @@ type AmpUrlsBatchGetCall struct {
 	header_                http.Header
 }
 
-// BatchGet: Returns AMP URL(s) and equivalent
-// [AMP Cache URL(s)](/amp/cache/overview#amp-cache-url-format).
+// BatchGet: Returns AMP URL(s) and equivalent AMP Cache URL(s)
+// (/amp/cache/overview#amp-cache-url-format).
 func (r *AmpUrlsService) BatchGet(batchgetampurlsrequest *BatchGetAmpUrlsRequest) *AmpUrlsBatchGetCall {
 	c := &AmpUrlsBatchGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.batchgetampurlsrequest = batchgetampurlsrequest
@@ -361,7 +350,7 @@ func (c *AmpUrlsBatchGetCall) Header() http.Header {
 
 func (c *AmpUrlsBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -398,17 +387,17 @@ func (c *AmpUrlsBatchGetCall) Do(opts ...googleapi.CallOption) (*BatchGetAmpUrls
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &BatchGetAmpUrlsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -422,7 +411,7 @@ func (c *AmpUrlsBatchGetCall) Do(opts ...googleapi.CallOption) (*BatchGetAmpUrls
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns AMP URL(s) and equivalent\n[AMP Cache URL(s)](/amp/cache/overview#amp-cache-url-format).",
+	//   "description": "Returns AMP URL(s) and equivalent [AMP Cache URL(s)](/amp/cache/overview#amp-cache-url-format).",
 	//   "flatPath": "v1/ampUrls:batchGet",
 	//   "httpMethod": "POST",
 	//   "id": "acceleratedmobilepageurl.ampUrls.batchGet",

@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -8,35 +8,35 @@
 //
 // For product documentation, see: https://cloud.google.com/bigtable/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/bigtableadmin/v2"
-//   ...
-//   ctx := context.Background()
-//   bigtableadminService, err := bigtableadmin.NewService(ctx)
+//	import "google.golang.org/api/bigtableadmin/v2"
+//	...
+//	ctx := context.Background()
+//	bigtableadminService, err := bigtableadmin.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//   bigtableadminService, err := bigtableadmin.NewService(ctx, option.WithScopes(bigtableadmin.CloudPlatformReadOnlyScope))
+//	bigtableadminService, err := bigtableadmin.NewService(ctx, option.WithScopes(bigtableadmin.CloudPlatformReadOnlyScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   bigtableadminService, err := bigtableadmin.NewService(ctx, option.WithAPIKey("AIza..."))
+//	bigtableadminService, err := bigtableadmin.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   bigtableadminService, err := bigtableadmin.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	bigtableadminService, err := bigtableadmin.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package bigtableadmin // import "google.golang.org/api/bigtableadmin/v2"
@@ -54,6 +54,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -79,6 +80,7 @@ const apiId = "bigtableadmin:v2"
 const apiName = "bigtableadmin"
 const apiVersion = "v2"
 const basePath = "https://bigtableadmin.googleapis.com/"
+const mtlsBasePath = "https://bigtableadmin.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
@@ -103,16 +105,18 @@ const (
 	// Administer your Cloud Bigtable tables
 	CloudBigtableAdminTableScope = "https://www.googleapis.com/auth/cloud-bigtable.admin.table"
 
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud data and see the
+	// email address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
-	// View your data across Google Cloud Platform services
+	// View your data across Google Cloud services and see the email address
+	// of your Google Account
 	CloudPlatformReadOnlyScope = "https://www.googleapis.com/auth/cloud-platform.read-only"
 )
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/bigtable.admin",
 		"https://www.googleapis.com/auth/bigtable.admin.cluster",
 		"https://www.googleapis.com/auth/bigtable.admin.instance",
@@ -126,6 +130,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -250,6 +255,7 @@ type ProjectsInstancesAppProfilesService struct {
 func NewProjectsInstancesClustersService(s *Service) *ProjectsInstancesClustersService {
 	rs := &ProjectsInstancesClustersService{s: s}
 	rs.Backups = NewProjectsInstancesClustersBackupsService(s)
+	rs.HotTablets = NewProjectsInstancesClustersHotTabletsService(s)
 	return rs
 }
 
@@ -257,6 +263,8 @@ type ProjectsInstancesClustersService struct {
 	s *Service
 
 	Backups *ProjectsInstancesClustersBackupsService
+
+	HotTablets *ProjectsInstancesClustersHotTabletsService
 }
 
 func NewProjectsInstancesClustersBackupsService(s *Service) *ProjectsInstancesClustersBackupsService {
@@ -265,6 +273,15 @@ func NewProjectsInstancesClustersBackupsService(s *Service) *ProjectsInstancesCl
 }
 
 type ProjectsInstancesClustersBackupsService struct {
+	s *Service
+}
+
+func NewProjectsInstancesClustersHotTabletsService(s *Service) *ProjectsInstancesClustersHotTabletsService {
+	rs := &ProjectsInstancesClustersHotTabletsService{s: s}
+	return rs
+}
+
+type ProjectsInstancesClustersHotTabletsService struct {
 	s *Service
 }
 
@@ -287,36 +304,26 @@ type ProjectsLocationsService struct {
 }
 
 // AppProfile: A configuration object describing how Cloud Bigtable
-// should treat traffic
-// from a particular end user application.
+// should treat traffic from a particular end user application.
 type AppProfile struct {
-	// Description: Optional long form description of the use case for this
+	// Description: Long form description of the use case for this
 	// AppProfile.
 	Description string `json:"description,omitempty"`
 
 	// Etag: Strongly validated etag for optimistic concurrency control.
-	// Preserve the
-	// value returned from `GetAppProfile` when calling `UpdateAppProfile`
-	// to
-	// fail the request if there has been a modification in the mean time.
-	// The
-	// `update_mask` of the request need not include `etag` for this
-	// protection
-	// to apply.
-	// See [Wikipedia](https://en.wikipedia.org/wiki/HTTP_ETag) and
-	// [RFC 7232](https://tools.ietf.org/html/rfc7232#section-2.3) for
-	// more
-	// details.
+	// Preserve the value returned from `GetAppProfile` when calling
+	// `UpdateAppProfile` to fail the request if there has been a
+	// modification in the mean time. The `update_mask` of the request need
+	// not include `etag` for this protection to apply. See Wikipedia
+	// (https://en.wikipedia.org/wiki/HTTP_ETag) and RFC 7232
+	// (https://tools.ietf.org/html/rfc7232#section-2.3) for more details.
 	Etag string `json:"etag,omitempty"`
 
 	// MultiClusterRoutingUseAny: Use a multi-cluster routing policy.
 	MultiClusterRoutingUseAny *MultiClusterRoutingUseAny `json:"multiClusterRoutingUseAny,omitempty"`
 
-	// Name: (`OutputOnly`)
-	// The unique name of the app profile. Values are of the
-	// form
-	// `projects/<project>/instances/<instance>/appProfiles/_a-zA-Z0-9*`
-	// .
+	// Name: The unique name of the app profile. Values are of the form
+	// `projects/{project}/instances/{instance}/appProfiles/_a-zA-Z0-9*`.
 	Name string `json:"name,omitempty"`
 
 	// SingleClusterRouting: Use a single-cluster routing policy.
@@ -328,10 +335,10 @@ type AppProfile struct {
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Description") to include
@@ -349,81 +356,40 @@ func (s *AppProfile) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// AuditConfig: Specifies the audit configuration for a service.
-// The configuration determines which permission types are logged, and
-// what
-// identities, if any, are exempted from logging.
-// An AuditConfig must have one or more AuditLogConfigs.
-//
-// If there are AuditConfigs for both `allServices` and a specific
-// service,
-// the union of the two AuditConfigs is used for that service: the
-// log_types
-// specified in each AuditConfig are enabled, and the exempted_members
-// in each
-// AuditLogConfig are exempted.
-//
-// Example Policy with multiple AuditConfigs:
-//
-//     {
-//       "audit_configs": [
-//         {
-//           "service": "allServices"
-//           "audit_log_configs": [
-//             {
-//               "log_type": "DATA_READ",
-//               "exempted_members": [
-//                 "user:jose@example.com"
-//               ]
-//             },
-//             {
-//               "log_type": "DATA_WRITE",
-//             },
-//             {
-//               "log_type": "ADMIN_READ",
-//             }
-//           ]
-//         },
-//         {
-//           "service": "sampleservice.googleapis.com"
-//           "audit_log_configs": [
-//             {
-//               "log_type": "DATA_READ",
-//             },
-//             {
-//               "log_type": "DATA_WRITE",
-//               "exempted_members": [
-//                 "user:aliya@example.com"
-//               ]
-//             }
-//           ]
-//         }
-//       ]
-//     }
-//
-// For sampleservice, this policy enables DATA_READ, DATA_WRITE and
-// ADMIN_READ
-// logging. It also exempts jose@example.com from DATA_READ logging,
-// and
-// aliya@example.com from DATA_WRITE logging.
+// AuditConfig: Specifies the audit configuration for a service. The
+// configuration determines which permission types are logged, and what
+// identities, if any, are exempted from logging. An AuditConfig must
+// have one or more AuditLogConfigs. If there are AuditConfigs for both
+// `allServices` and a specific service, the union of the two
+// AuditConfigs is used for that service: the log_types specified in
+// each AuditConfig are enabled, and the exempted_members in each
+// AuditLogConfig are exempted. Example Policy with multiple
+// AuditConfigs: { "audit_configs": [ { "service": "allServices",
+// "audit_log_configs": [ { "log_type": "DATA_READ", "exempted_members":
+// [ "user:jose@example.com" ] }, { "log_type": "DATA_WRITE" }, {
+// "log_type": "ADMIN_READ" } ] }, { "service":
+// "sampleservice.googleapis.com", "audit_log_configs": [ { "log_type":
+// "DATA_READ" }, { "log_type": "DATA_WRITE", "exempted_members": [
+// "user:aliya@example.com" ] } ] } ] } For sampleservice, this policy
+// enables DATA_READ, DATA_WRITE and ADMIN_READ logging. It also exempts
+// `jose@example.com` from DATA_READ logging, and `aliya@example.com`
+// from DATA_WRITE logging.
 type AuditConfig struct {
 	// AuditLogConfigs: The configuration for logging of each type of
 	// permission.
 	AuditLogConfigs []*AuditLogConfig `json:"auditLogConfigs,omitempty"`
 
-	// Service: Specifies a service that will be enabled for audit
-	// logging.
-	// For example, `storage.googleapis.com`,
-	// `cloudsql.googleapis.com`.
+	// Service: Specifies a service that will be enabled for audit logging.
+	// For example, `storage.googleapis.com`, `cloudsql.googleapis.com`.
 	// `allServices` is a special value that covers all services.
 	Service string `json:"service,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AuditLogConfigs") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AuditLogConfigs") to
@@ -443,31 +409,15 @@ func (s *AuditConfig) MarshalJSON() ([]byte, error) {
 }
 
 // AuditLogConfig: Provides the configuration for logging a type of
-// permissions.
-// Example:
-//
-//     {
-//       "audit_log_configs": [
-//         {
-//           "log_type": "DATA_READ",
-//           "exempted_members": [
-//             "user:jose@example.com"
-//           ]
-//         },
-//         {
-//           "log_type": "DATA_WRITE",
-//         }
-//       ]
-//     }
-//
-// This enables 'DATA_READ' and 'DATA_WRITE' logging, while
-// exempting
-// jose@example.com from DATA_READ logging.
+// permissions. Example: { "audit_log_configs": [ { "log_type":
+// "DATA_READ", "exempted_members": [ "user:jose@example.com" ] }, {
+// "log_type": "DATA_WRITE" } ] } This enables 'DATA_READ' and
+// 'DATA_WRITE' logging, while exempting jose@example.com from DATA_READ
+// logging.
 type AuditLogConfig struct {
 	// ExemptedMembers: Specifies the identities that do not cause logging
-	// for this type of
-	// permission.
-	// Follows the same format of Binding.members.
+	// for this type of permission. Follows the same format of
+	// Binding.members.
 	ExemptedMembers []string `json:"exemptedMembers,omitempty"`
 
 	// LogType: The log type that this config enables.
@@ -481,10 +431,10 @@ type AuditLogConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "ExemptedMembers") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ExemptedMembers") to
@@ -503,93 +453,273 @@ func (s *AuditLogConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Binding: Associates `members` with a `role`.
+// AutoscalingLimits: Limits for the number of nodes a Cluster can
+// autoscale up/down to.
+type AutoscalingLimits struct {
+	// MaxServeNodes: Required. Maximum number of nodes to scale up to.
+	MaxServeNodes int64 `json:"maxServeNodes,omitempty"`
+
+	// MinServeNodes: Required. Minimum number of nodes to scale down to.
+	MinServeNodes int64 `json:"minServeNodes,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MaxServeNodes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MaxServeNodes") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AutoscalingLimits) MarshalJSON() ([]byte, error) {
+	type NoMethod AutoscalingLimits
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AutoscalingTargets: The Autoscaling targets for a Cluster. These
+// determine the recommended nodes.
+type AutoscalingTargets struct {
+	// CpuUtilizationPercent: The cpu utilization that the Autoscaler should
+	// be trying to achieve. This number is on a scale from 0 (no
+	// utilization) to 100 (total utilization), and is limited between 10
+	// and 80, otherwise it will return INVALID_ARGUMENT error.
+	CpuUtilizationPercent int64 `json:"cpuUtilizationPercent,omitempty"`
+
+	// StorageUtilizationGibPerNode: The storage utilization that the
+	// Autoscaler should be trying to achieve. This number is limited
+	// between 2560 (2.5TiB) and 5120 (5TiB) for a SSD cluster and between
+	// 8192 (8TiB) and 16384 (16TiB) for an HDD cluster, otherwise it will
+	// return INVALID_ARGUMENT error. If this value is set to 0, it will be
+	// treated as if it were set to the default value: 2560 for SSD, 8192
+	// for HDD.
+	StorageUtilizationGibPerNode int64 `json:"storageUtilizationGibPerNode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CpuUtilizationPercent") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CpuUtilizationPercent") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AutoscalingTargets) MarshalJSON() ([]byte, error) {
+	type NoMethod AutoscalingTargets
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Backup: A backup of a Cloud Bigtable table.
+type Backup struct {
+	// EncryptionInfo: Output only. The encryption information for the
+	// backup.
+	EncryptionInfo *EncryptionInfo `json:"encryptionInfo,omitempty"`
+
+	// EndTime: Output only. `end_time` is the time that the backup was
+	// finished. The row data in the backup will be no newer than this
+	// timestamp.
+	EndTime string `json:"endTime,omitempty"`
+
+	// ExpireTime: Required. The expiration time of the backup, with
+	// microseconds granularity that must be at least 6 hours and at most 30
+	// days from the time the request is received. Once the `expire_time`
+	// has passed, Cloud Bigtable will delete the backup and free the
+	// resources used by the backup.
+	ExpireTime string `json:"expireTime,omitempty"`
+
+	// Name: A globally unique identifier for the backup which cannot be
+	// changed. Values are of the form
+	// `projects/{project}/instances/{instance}/clusters/{cluster}/
+	// backups/_a-zA-Z0-9*` The final segment of the name must be between 1
+	// and 50 characters in length. The backup is stored in the cluster
+	// identified by the prefix of the backup name of the form
+	// `projects/{project}/instances/{instance}/clusters/{cluster}`.
+	Name string `json:"name,omitempty"`
+
+	// SizeBytes: Output only. Size of the backup in bytes.
+	SizeBytes int64 `json:"sizeBytes,omitempty,string"`
+
+	// SourceBackup: Output only. Name of the backup from which this backup
+	// was copied. If a backup is not created by copying a backup, this
+	// field will be empty. Values are of the form:
+	// projects//instances//backups/.
+	SourceBackup string `json:"sourceBackup,omitempty"`
+
+	// SourceTable: Required. Immutable. Name of the table from which this
+	// backup was created. This needs to be in the same instance as the
+	// backup. Values are of the form
+	// `projects/{project}/instances/{instance}/tables/{source_table}`.
+	SourceTable string `json:"sourceTable,omitempty"`
+
+	// StartTime: Output only. `start_time` is the time that the backup was
+	// started (i.e. approximately the time the CreateBackup request is
+	// received). The row data in this backup will be no older than this
+	// timestamp.
+	StartTime string `json:"startTime,omitempty"`
+
+	// State: Output only. The current state of the backup.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Not specified.
+	//   "CREATING" - The pending backup is still being created. Operations
+	// on the backup may fail with `FAILED_PRECONDITION` in this state.
+	//   "READY" - The backup is complete and ready for use.
+	State string `json:"state,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "EncryptionInfo") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EncryptionInfo") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Backup) MarshalJSON() ([]byte, error) {
+	type NoMethod Backup
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BackupInfo: Information about a backup.
+type BackupInfo struct {
+	// Backup: Output only. Name of the backup.
+	Backup string `json:"backup,omitempty"`
+
+	// EndTime: Output only. This time that the backup was finished. Row
+	// data in the backup will be no newer than this timestamp.
+	EndTime string `json:"endTime,omitempty"`
+
+	// SourceBackup: Output only. Name of the backup from which this backup
+	// was copied. If a backup is not created by copying a backup, this
+	// field will be empty. Values are of the form:
+	// projects//instances//backups/.
+	SourceBackup string `json:"sourceBackup,omitempty"`
+
+	// SourceTable: Output only. Name of the table the backup was created
+	// from.
+	SourceTable string `json:"sourceTable,omitempty"`
+
+	// StartTime: Output only. The time that the backup was started. Row
+	// data in the backup will be no older than this timestamp.
+	StartTime string `json:"startTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Backup") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Backup") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BackupInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod BackupInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Binding: Associates `members`, or principals, with a `role`.
 type Binding struct {
-	// Condition: The condition that is associated with this binding.
-	// NOTE: An unsatisfied condition will not allow user access via
-	// current
-	// binding. Different bindings, including their conditions, are
-	// examined
-	// independently.
+	// Condition: The condition that is associated with this binding. If the
+	// condition evaluates to `true`, then this binding applies to the
+	// current request. If the condition evaluates to `false`, then this
+	// binding does not apply to the current request. However, a different
+	// role binding might grant the same role to one or more of the
+	// principals in this binding. To learn which resources support
+	// conditions in their IAM policies, see the IAM documentation
+	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Condition *Expr `json:"condition,omitempty"`
 
-	// Members: Specifies the identities requesting access for a Cloud
-	// Platform resource.
-	// `members` can have the following values:
-	//
-	// * `allUsers`: A special identifier that represents anyone who is
-	//    on the internet; with or without a Google account.
-	//
-	// * `allAuthenticatedUsers`: A special identifier that represents
-	// anyone
-	//    who is authenticated with a Google account or a service
-	// account.
-	//
-	// * `user:{emailid}`: An email address that represents a specific
-	// Google
-	//    account. For example, `alice@example.com` .
-	//
-	//
-	// * `serviceAccount:{emailid}`: An email address that represents a
-	// service
-	//    account. For example,
-	// `my-other-app@appspot.gserviceaccount.com`.
-	//
-	// * `group:{emailid}`: An email address that represents a Google
-	// group.
-	//    For example, `admins@example.com`.
-	//
-	// * `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
-	// unique
-	//    identifier) representing a user that has been recently deleted.
-	// For
-	//    example, `alice@example.com?uid=123456789012345678901`. If the
-	// user is
-	//    recovered, this value reverts to `user:{emailid}` and the
-	// recovered user
-	//    retains the role in the binding.
-	//
-	// * `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
-	// (plus
-	//    unique identifier) representing a service account that has been
-	// recently
-	//    deleted. For example,
-	//
+	// Members: Specifies the principals requesting access for a Google
+	// Cloud resource. `members` can have the following values: *
+	// `allUsers`: A special identifier that represents anyone who is on the
+	// internet; with or without a Google account. *
+	// `allAuthenticatedUsers`: A special identifier that represents anyone
+	// who is authenticated with a Google account or a service account. Does
+	// not include identities that come from external identity providers
+	// (IdPs) through identity federation. * `user:{emailid}`: An email
+	// address that represents a specific Google account. For example,
+	// `alice@example.com` . * `serviceAccount:{emailid}`: An email address
+	// that represents a Google service account. For example,
+	// `my-other-app@appspot.gserviceaccount.com`. *
+	// `serviceAccount:{projectid}.svc.id.goog[{namespace}/{kubernetes-sa}]`:
+	//  An identifier for a Kubernetes service account
+	// (https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts).
+	// For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`.
+	// * `group:{emailid}`: An email address that represents a Google group.
+	// For example, `admins@example.com`. *
+	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
+	// unique identifier) representing a user that has been recently
+	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
+	// If the user is recovered, this value reverts to `user:{emailid}` and
+	// the recovered user retains the role in the binding. *
+	// `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
+	// (plus unique identifier) representing a service account that has been
+	// recently deleted. For example,
 	// `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`.
-	//
-	//    If the service account is undeleted, this value reverts to
-	//    `serviceAccount:{emailid}` and the undeleted service account
-	// retains the
-	//    role in the binding.
-	//
-	// * `deleted:group:{emailid}?uid={uniqueid}`: An email address (plus
-	// unique
-	//    identifier) representing a Google group that has been recently
-	//    deleted. For example,
-	// `admins@example.com?uid=123456789012345678901`. If
-	//    the group is recovered, this value reverts to `group:{emailid}`
-	// and the
-	//    recovered group retains the role in the binding.
-	//
-	//
-	// * `domain:{domain}`: The G Suite domain (primary) that represents all
-	// the
-	//    users of that domain. For example, `google.com` or
-	// `example.com`.
-	//
-	//
+	// If the service account is undeleted, this value reverts to
+	// `serviceAccount:{emailid}` and the undeleted service account retains
+	// the role in the binding. * `deleted:group:{emailid}?uid={uniqueid}`:
+	// An email address (plus unique identifier) representing a Google group
+	// that has been recently deleted. For example,
+	// `admins@example.com?uid=123456789012345678901`. If the group is
+	// recovered, this value reverts to `group:{emailid}` and the recovered
+	// group retains the role in the binding. * `domain:{domain}`: The G
+	// Suite domain (primary) that represents all the users of that domain.
+	// For example, `google.com` or `example.com`.
 	Members []string `json:"members,omitempty"`
 
-	// Role: Role that is assigned to `members`.
+	// Role: Role that is assigned to the list of `members`, or principals.
 	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`.
 	Role string `json:"role,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Condition") to include in
@@ -607,8 +737,7 @@ func (s *Binding) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// CheckConsistencyRequest: Request message
-// for
+// CheckConsistencyRequest: Request message for
 // google.bigtable.admin.v2.BigtableTableAdmin.CheckConsistency
 type CheckConsistencyRequest struct {
 	// ConsistencyToken: Required. The token created using
@@ -617,10 +746,10 @@ type CheckConsistencyRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "ConsistencyToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ConsistencyToken") to
@@ -639,13 +768,12 @@ func (s *CheckConsistencyRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// CheckConsistencyResponse: Response message
-// for
+// CheckConsistencyResponse: Response message for
 // google.bigtable.admin.v2.BigtableTableAdmin.CheckConsistency
 type CheckConsistencyResponse struct {
 	// Consistent: True only if the token is consistent. A token is
-	// consistent if replication
-	// has caught up with the restrictions specified in the request.
+	// consistent if replication has caught up with the restrictions
+	// specified in the request.
 	Consistent bool `json:"consistent,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -654,10 +782,10 @@ type CheckConsistencyResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Consistent") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Consistent") to include in
@@ -676,13 +804,14 @@ func (s *CheckConsistencyResponse) MarshalJSON() ([]byte, error) {
 }
 
 // Cluster: A resizable group of nodes in a particular cloud location,
-// capable
-// of serving all Tables in the parent
-// Instance.
+// capable of serving all Tables in the parent Instance.
 type Cluster struct {
-	// DefaultStorageType: (`CreationOnly`)
-	// The type of storage used by this cluster to serve its
-	// parent instance's tables, unless explicitly overridden.
+	// ClusterConfig: Configuration for this cluster.
+	ClusterConfig *ClusterConfig `json:"clusterConfig,omitempty"`
+
+	// DefaultStorageType: Immutable. The type of storage used by this
+	// cluster to serve its parent instance's tables, unless explicitly
+	// overridden.
 	//
 	// Possible values:
 	//   "STORAGE_TYPE_UNSPECIFIED" - The user did not specify a storage
@@ -691,29 +820,26 @@ type Cluster struct {
 	//   "HDD" - Magnetic drive (HDD) storage should be used.
 	DefaultStorageType string `json:"defaultStorageType,omitempty"`
 
-	// Location: (`CreationOnly`)
-	// The location where this cluster's nodes and storage reside. For
-	// best
-	// performance, clients should be located as close as possible to
-	// this
-	// cluster. Currently only zones are supported, so values should be of
-	// the
-	// form `projects/{project}/locations/{zone}`.
+	// EncryptionConfig: Immutable. The encryption configuration for
+	// CMEK-protected clusters.
+	EncryptionConfig *EncryptionConfig `json:"encryptionConfig,omitempty"`
+
+	// Location: Immutable. The location where this cluster's nodes and
+	// storage reside. For best performance, clients should be located as
+	// close as possible to this cluster. Currently only zones are
+	// supported, so values should be of the form
+	// `projects/{project}/locations/{zone}`.
 	Location string `json:"location,omitempty"`
 
-	// Name: Required. (`OutputOnly`)
-	// The unique name of the cluster. Values are of the
-	// form
+	// Name: The unique name of the cluster. Values are of the form
 	// `projects/{project}/instances/{instance}/clusters/a-z*`.
 	Name string `json:"name,omitempty"`
 
-	// ServeNodes: Required. The number of nodes allocated to this cluster.
-	// More nodes enable higher
-	// throughput and more consistent performance.
+	// ServeNodes: The number of nodes allocated to this cluster. More nodes
+	// enable higher throughput and more consistent performance.
 	ServeNodes int64 `json:"serveNodes,omitempty"`
 
-	// State: (`OutputOnly`)
-	// The current state of the cluster.
+	// State: Output only. The current state of the cluster.
 	//
 	// Possible values:
 	//   "STATE_NOT_KNOWN" - The state of the cluster could not be
@@ -721,41 +847,35 @@ type Cluster struct {
 	//   "READY" - The cluster has been successfully created and is ready to
 	// serve requests.
 	//   "CREATING" - The cluster is currently being created, and may be
-	// destroyed
-	// if the creation process encounters an error.
-	// A cluster may not be able to serve requests while being created.
+	// destroyed if the creation process encounters an error. A cluster may
+	// not be able to serve requests while being created.
 	//   "RESIZING" - The cluster is currently being resized, and may revert
-	// to its previous
-	// node count if the process encounters an error.
-	// A cluster is still capable of serving requests while being
-	// resized,
-	// but may exhibit performance as if its number of allocated nodes
-	// is
+	// to its previous node count if the process encounters an error. A
+	// cluster is still capable of serving requests while being resized, but
+	// may exhibit performance as if its number of allocated nodes is
 	// between the starting and requested states.
 	//   "DISABLED" - The cluster has no backing nodes. The data (tables)
-	// still
-	// exist, but no operations can be performed on the cluster.
+	// still exist, but no operations can be performed on the cluster.
 	State string `json:"state,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "DefaultStorageType")
-	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "ClusterConfig") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DefaultStorageType") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "ClusterConfig") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -765,8 +885,78 @@ func (s *Cluster) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ClusterAutoscalingConfig: Autoscaling config for a cluster.
+type ClusterAutoscalingConfig struct {
+	// AutoscalingLimits: Required. Autoscaling limits for this cluster.
+	AutoscalingLimits *AutoscalingLimits `json:"autoscalingLimits,omitempty"`
+
+	// AutoscalingTargets: Required. Autoscaling targets for this cluster.
+	AutoscalingTargets *AutoscalingTargets `json:"autoscalingTargets,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AutoscalingLimits")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AutoscalingLimits") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ClusterAutoscalingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ClusterAutoscalingConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ClusterConfig: Configuration for a cluster.
+type ClusterConfig struct {
+	// ClusterAutoscalingConfig: Autoscaling configuration for this cluster.
+	ClusterAutoscalingConfig *ClusterAutoscalingConfig `json:"clusterAutoscalingConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ClusterAutoscalingConfig") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ClusterAutoscalingConfig")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ClusterConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ClusterConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ClusterState: The state of a table's data in a particular cluster.
 type ClusterState struct {
+	// EncryptionInfo: Output only. The encryption information for the table
+	// in this cluster. If the encryption key protecting this resource is
+	// customer managed, then its version can be rotated in Cloud Key
+	// Management Service (Cloud KMS). The primary version of the key and
+	// its status will be reflected here when changes propagate from Cloud
+	// KMS.
+	EncryptionInfo []*EncryptionInfo `json:"encryptionInfo,omitempty"`
+
 	// ReplicationState: Output only. The state of replication for the table
 	// in this cluster.
 	//
@@ -774,32 +964,33 @@ type ClusterState struct {
 	//   "STATE_NOT_KNOWN" - The replication state of the table is unknown
 	// in this cluster.
 	//   "INITIALIZING" - The cluster was recently created, and the table
-	// must finish copying
-	// over pre-existing data from other clusters before it can
-	// begin
-	// receiving live replication updates and serving Data API requests.
+	// must finish copying over pre-existing data from other clusters before
+	// it can begin receiving live replication updates and serving Data API
+	// requests.
 	//   "PLANNED_MAINTENANCE" - The table is temporarily unable to serve
-	// Data API requests from this
-	// cluster due to planned internal maintenance.
+	// Data API requests from this cluster due to planned internal
+	// maintenance.
 	//   "UNPLANNED_MAINTENANCE" - The table is temporarily unable to serve
-	// Data API requests from this
-	// cluster due to unplanned or emergency maintenance.
+	// Data API requests from this cluster due to unplanned or emergency
+	// maintenance.
 	//   "READY" - The table can serve Data API requests from this cluster.
-	// Depending on
-	// replication delay, reads may not immediately reflect the state of
-	// the
-	// table in other clusters.
+	// Depending on replication delay, reads may not immediately reflect the
+	// state of the table in other clusters.
+	//   "READY_OPTIMIZING" - The table is fully created and ready for use
+	// after a restore, and is being optimized for performance. When
+	// optimizations are complete, the table will transition to `READY`
+	// state.
 	ReplicationState string `json:"replicationState,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "ReplicationState") to
+	// ForceSendFields is a list of field names (e.g. "EncryptionInfo") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ReplicationState") to
+	// NullFields is a list of field names (e.g. "EncryptionInfo") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -818,22 +1009,24 @@ func (s *ClusterState) MarshalJSON() ([]byte, error) {
 // ColumnFamily: A set of columns within a table which share a common
 // configuration.
 type ColumnFamily struct {
-	// GcRule: Garbage collection rule specified as a protobuf.
-	// Must serialize to at most 500 bytes.
-	//
-	// NOTE: Garbage collection executes opportunistically in the
-	// background, and
-	// so it's possible for reads to return a cell even if it matches the
-	// active
-	// GC expression for its family.
+	// GcRule: Garbage collection rule specified as a protobuf. Must
+	// serialize to at most 500 bytes. NOTE: Garbage collection executes
+	// opportunistically in the background, and so it's possible for reads
+	// to return a cell even if it matches the active GC expression for its
+	// family.
 	GcRule *GcRule `json:"gcRule,omitempty"`
+
+	// Stats: Only available with STATS_VIEW, this includes summary
+	// statistics about column family contents. For statistics over an
+	// entire table, see TableStats above.
+	Stats *ColumnFamilyStats `json:"stats,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "GcRule") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "GcRule") to include in API
@@ -847,6 +1040,205 @@ type ColumnFamily struct {
 
 func (s *ColumnFamily) MarshalJSON() ([]byte, error) {
 	type NoMethod ColumnFamily
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ColumnFamilyStats: Approximate statistics related to a single column
+// family within a table. This information may change rapidly,
+// interpreting these values at a point in time may already preset
+// out-of-date information. Everything below is approximate, unless
+// otherwise specified.
+type ColumnFamilyStats struct {
+	// AverageCellsPerColumn: How many cells are present per column
+	// qualifier in this column family, averaged over all rows containing
+	// any column in the column family. e.g. For column family "family" in a
+	// table with 3 rows: * A row with 3 cells in "family:col" and 1 cell in
+	// "other:col" (3 cells / 1 column in "family") * A row with 1 cell in
+	// "family:col", 7 cells in "family:other_col", and 7 cells in
+	// "other:data" (8 cells / 2 columns in "family") * A row with 3 cells
+	// in "other:col" (0 columns in "family", "family" not present) would
+	// report (3 + 8 + 0)/(1 + 2 + 0) = 3.66 in this field.
+	AverageCellsPerColumn float64 `json:"averageCellsPerColumn,omitempty"`
+
+	// AverageColumnsPerRow: How many column qualifiers are present in this
+	// column family, averaged over all rows in the table. e.g. For column
+	// family "family" in a table with 3 rows: * A row with cells in
+	// "family:col" and "other:col" (1 column in "family") * A row with
+	// cells in "family:col", "family:other_col", and "other:data" (2
+	// columns in "family") * A row with cells in "other:col" (0 columns in
+	// "family", "family" not present) would report (1 + 2 + 0)/3 = 1.5 in
+	// this field.
+	AverageColumnsPerRow float64 `json:"averageColumnsPerRow,omitempty"`
+
+	// LogicalDataBytes: How much space the data in the column family
+	// occupies. This is roughly how many bytes would be needed to read the
+	// contents of the entire column family (e.g. by streaming all contents
+	// out).
+	LogicalDataBytes int64 `json:"logicalDataBytes,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AverageCellsPerColumn") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AverageCellsPerColumn") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ColumnFamilyStats) MarshalJSON() ([]byte, error) {
+	type NoMethod ColumnFamilyStats
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *ColumnFamilyStats) UnmarshalJSON(data []byte) error {
+	type NoMethod ColumnFamilyStats
+	var s1 struct {
+		AverageCellsPerColumn gensupport.JSONFloat64 `json:"averageCellsPerColumn"`
+		AverageColumnsPerRow  gensupport.JSONFloat64 `json:"averageColumnsPerRow"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.AverageCellsPerColumn = float64(s1.AverageCellsPerColumn)
+	s.AverageColumnsPerRow = float64(s1.AverageColumnsPerRow)
+	return nil
+}
+
+// CopyBackupMetadata: Metadata type for the
+// google.longrunning.Operation returned by CopyBackup.
+type CopyBackupMetadata struct {
+	// Name: The name of the backup being created through the copy
+	// operation. Values are of the form
+	// `projects//instances//clusters//backups/`.
+	Name string `json:"name,omitempty"`
+
+	// Progress: The progress of the CopyBackup operation.
+	Progress *OperationProgress `json:"progress,omitempty"`
+
+	// SourceBackupInfo: Information about the source backup that is being
+	// copied from.
+	SourceBackupInfo *BackupInfo `json:"sourceBackupInfo,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CopyBackupMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod CopyBackupMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CopyBackupRequest: The request for CopyBackup.
+type CopyBackupRequest struct {
+	// BackupId: Required. The id of the new backup. The `backup_id` along
+	// with `parent` are combined as {parent}/backups/{backup_id} to create
+	// the full backup name, of the form:
+	// `projects/{project}/instances/{instance}/clusters/{cluster}/backups/{b
+	// ackup_id}`. This string must be between 1 and 50 characters in length
+	// and match the regex _a-zA-Z0-9*.
+	BackupId string `json:"backupId,omitempty"`
+
+	// ExpireTime: Required. Required. The expiration time of the copied
+	// backup with microsecond granularity that must be at least 6 hours and
+	// at most 30 days from the time the request is received. Once the
+	// `expire_time` has passed, Cloud Bigtable will delete the backup and
+	// free the resources used by the backup.
+	ExpireTime string `json:"expireTime,omitempty"`
+
+	// SourceBackup: Required. The source backup to be copied from. The
+	// source backup needs to be in READY state for it to be copied. Copying
+	// a copied backup is not allowed. Once CopyBackup is in progress, the
+	// source backup cannot be deleted or cleaned up on expiration until
+	// CopyBackup is finished. Values are of the form:
+	// `projects//instances//clusters//backups/`.
+	SourceBackup string `json:"sourceBackup,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BackupId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BackupId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CopyBackupRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod CopyBackupRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CreateBackupMetadata: Metadata type for the operation returned by
+// CreateBackup.
+type CreateBackupMetadata struct {
+	// EndTime: If set, the time at which this operation finished or was
+	// cancelled.
+	EndTime string `json:"endTime,omitempty"`
+
+	// Name: The name of the backup being created.
+	Name string `json:"name,omitempty"`
+
+	// SourceTable: The name of the table the backup is created from.
+	SourceTable string `json:"sourceTable,omitempty"`
+
+	// StartTime: The time at which this operation started.
+	StartTime string `json:"startTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EndTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EndTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CreateBackupMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod CreateBackupMetadata
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -866,26 +1258,19 @@ type CreateClusterMetadata struct {
 	RequestTime string `json:"requestTime,omitempty"`
 
 	// Tables: Keys: the full `name` of each table that existed in the
-	// instance when
-	// CreateCluster was first called,
-	// i.e.
-	// `projects/<project>/instances/<instance>/tables/<table>`. Any table
-	// added
-	// to the instance by a later API call will be created in the new
-	// cluster by
-	// that API call, not this one.
-	//
-	// Values: information on how much of a table's data has been copied to
-	// the
-	// newly-created cluster so far.
+	// instance when CreateCluster was first called, i.e.
+	// `projects//instances//tables/`. Any table added to the instance by a
+	// later API call will be created in the new cluster by that API call,
+	// not this one. Values: information on how much of a table's data has
+	// been copied to the newly-created cluster so far.
 	Tables map[string]TableProgress `json:"tables,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FinishTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "FinishTime") to include in
@@ -906,29 +1291,26 @@ func (s *CreateClusterMetadata) MarshalJSON() ([]byte, error) {
 // CreateClusterRequest: Request message for
 // BigtableInstanceAdmin.CreateCluster.
 type CreateClusterRequest struct {
-	// Cluster: Required. The cluster to be created.
-	// Fields marked `OutputOnly` must be left blank.
+	// Cluster: Required. The cluster to be created. Fields marked
+	// `OutputOnly` must be left blank.
 	Cluster *Cluster `json:"cluster,omitempty"`
 
 	// ClusterId: Required. The ID to be used when referring to the new
-	// cluster within its instance,
-	// e.g., just `mycluster` rather
-	// than
+	// cluster within its instance, e.g., just `mycluster` rather than
 	// `projects/myproject/instances/myinstance/clusters/mycluster`.
 	ClusterId string `json:"clusterId,omitempty"`
 
 	// Parent: Required. The unique name of the instance in which to create
-	// the new cluster.
-	// Values are of the form
+	// the new cluster. Values are of the form
 	// `projects/{project}/instances/{instance}`.
 	Parent string `json:"parent,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Cluster") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Cluster") to include in
@@ -962,10 +1344,10 @@ type CreateInstanceMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "FinishTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "FinishTime") to include in
@@ -987,37 +1369,30 @@ func (s *CreateInstanceMetadata) MarshalJSON() ([]byte, error) {
 // BigtableInstanceAdmin.CreateInstance.
 type CreateInstanceRequest struct {
 	// Clusters: Required. The clusters to be created within the instance,
-	// mapped by desired
-	// cluster ID, e.g., just `mycluster` rather
-	// than
-	// `projects/myproject/instances/myinstance/clusters/mycluster`.
-	// Fie
-	// lds marked `OutputOnly` must be left blank.
-	// Currently, at most four clusters can be specified.
+	// mapped by desired cluster ID, e.g., just `mycluster` rather than
+	// `projects/myproject/instances/myinstance/clusters/mycluster`. Fields
+	// marked `OutputOnly` must be left blank.
 	Clusters map[string]Cluster `json:"clusters,omitempty"`
 
-	// Instance: Required. The instance to create.
-	// Fields marked `OutputOnly` must be left blank.
+	// Instance: Required. The instance to create. Fields marked
+	// `OutputOnly` must be left blank.
 	Instance *Instance `json:"instance,omitempty"`
 
 	// InstanceId: Required. The ID to be used when referring to the new
-	// instance within its project,
-	// e.g., just `myinstance` rather
-	// than
+	// instance within its project, e.g., just `myinstance` rather than
 	// `projects/myproject/instances/myinstance`.
 	InstanceId string `json:"instanceId,omitempty"`
 
 	// Parent: Required. The unique name of the project in which to create
-	// the new instance.
-	// Values are of the form `projects/{project}`.
+	// the new instance. Values are of the form `projects/{project}`.
 	Parent string `json:"parent,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Clusters") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Clusters") to include in
@@ -1035,48 +1410,36 @@ func (s *CreateInstanceRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// CreateTableRequest: Request message
-// for
+// CreateTableRequest: Request message for
 // google.bigtable.admin.v2.BigtableTableAdmin.CreateTable
 type CreateTableRequest struct {
 	// InitialSplits: The optional list of row keys that will be used to
-	// initially split the
-	// table into several tablets (tablets are similar to HBase
-	// regions).
-	// Given two split keys, `s1` and `s2`, three tablets will be
-	// created,
-	// spanning the key ranges: `[, s1), [s1, s2), [s2, )`.
-	//
-	// Example:
-	//
-	// * Row keys := `["a", "apple", "custom", "customer_1", "customer_2",`
-	//                "other", "zz"]`
-	// * initial_split_keys := `["apple", "customer_1", "customer_2",
-	// "other"]`
-	// * Key assignment:
-	//     - Tablet 1 `[, apple)                => {"a"}.`
-	//     - Tablet 2 `[apple, customer_1)      => {"apple", "custom"}.`
-	//     - Tablet 3 `[customer_1, customer_2) => {"customer_1"}.`
-	//     - Tablet 4 `[customer_2, other)      => {"customer_2"}.`
-	//     - Tablet 5 `[other, )                => {"other", "zz"}.`
+	// initially split the table into several tablets (tablets are similar
+	// to HBase regions). Given two split keys, `s1` and `s2`, three tablets
+	// will be created, spanning the key ranges: `[, s1), [s1, s2), [s2, )`.
+	// Example: * Row keys := `["a", "apple", "custom", "customer_1",
+	// "customer_2",` "other", "zz"]` * initial_split_keys := `["apple",
+	// "customer_1", "customer_2", "other"]` * Key assignment: - Tablet 1
+	// `[, apple) => {"a"}.` - Tablet 2 `[apple, customer_1) => {"apple",
+	// "custom"}.` - Tablet 3 `[customer_1, customer_2) => {"customer_1"}.`
+	// - Tablet 4 `[customer_2, other) => {"customer_2"}.` - Tablet 5
+	// `[other, ) => {"other", "zz"}.`
 	InitialSplits []*Split `json:"initialSplits,omitempty"`
 
 	// Table: Required. The Table to create.
 	Table *Table `json:"table,omitempty"`
 
 	// TableId: Required. The name by which the new table should be referred
-	// to within the parent
-	// instance, e.g., `foobar` rather than
-	// `{parent}/tables/foobar`.
-	// Maximum 50 characters.
+	// to within the parent instance, e.g., `foobar` rather than
+	// `{parent}/tables/foobar`. Maximum 50 characters.
 	TableId string `json:"tableId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "InitialSplits") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "InitialSplits") to include
@@ -1094,8 +1457,7 @@ func (s *CreateTableRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DropRowRangeRequest: Request message
-// for
+// DropRowRangeRequest: Request message for
 // google.bigtable.admin.v2.BigtableTableAdmin.DropRowRange
 type DropRowRangeRequest struct {
 	// DeleteAllDataFromTable: Delete all rows in the table. Setting this to
@@ -1103,14 +1465,13 @@ type DropRowRangeRequest struct {
 	DeleteAllDataFromTable bool `json:"deleteAllDataFromTable,omitempty"`
 
 	// RowKeyPrefix: Delete all rows that start with this row key prefix.
-	// Prefix cannot be
-	// zero length.
+	// Prefix cannot be zero length.
 	RowKeyPrefix string `json:"rowKeyPrefix,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "DeleteAllDataFromTable") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -1133,91 +1494,153 @@ func (s *DropRowRangeRequest) MarshalJSON() ([]byte, error) {
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
-// duplicated
-// empty messages in your APIs. A typical example is to use it as the
-// request
-// or the response type of an API method. For instance:
-//
-//     service Foo {
-//       rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty);
-//     }
-//
-// The JSON representation for `Empty` is empty JSON object `{}`.
+// duplicated empty messages in your APIs. A typical example is to use
+// it as the request or the response type of an API method. For
+// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); }
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
 }
 
+// EncryptionConfig: Cloud Key Management Service (Cloud KMS) settings
+// for a CMEK-protected cluster.
+type EncryptionConfig struct {
+	// KmsKeyName: Describes the Cloud KMS encryption key that will be used
+	// to protect the destination Bigtable cluster. The requirements for
+	// this key are: 1) The Cloud Bigtable service account associated with
+	// the project that contains this cluster must be granted the
+	// `cloudkms.cryptoKeyEncrypterDecrypter` role on the CMEK key. 2) Only
+	// regional keys can be used and the region of the CMEK key must match
+	// the region of the cluster. Values are of the form
+	// `projects/{project}/locations/{location}/keyRings/{keyring}/cryptoKeys
+	// /{key}`
+	KmsKeyName string `json:"kmsKeyName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "KmsKeyName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "KmsKeyName") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EncryptionConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod EncryptionConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// EncryptionInfo: Encryption information for a given resource. If this
+// resource is protected with customer managed encryption, the in-use
+// Cloud Key Management Service (Cloud KMS) key version is specified
+// along with its status.
+type EncryptionInfo struct {
+	// EncryptionStatus: Output only. The status of encrypt/decrypt calls on
+	// underlying data for this resource. Regardless of status, the existing
+	// data is always encrypted at rest.
+	EncryptionStatus *Status `json:"encryptionStatus,omitempty"`
+
+	// EncryptionType: Output only. The type of encryption used to protect
+	// this resource.
+	//
+	// Possible values:
+	//   "ENCRYPTION_TYPE_UNSPECIFIED" - Encryption type was not specified,
+	// though data at rest remains encrypted.
+	//   "GOOGLE_DEFAULT_ENCRYPTION" - The data backing this resource is
+	// encrypted at rest with a key that is fully managed by Google. No key
+	// version or status will be populated. This is the default state.
+	//   "CUSTOMER_MANAGED_ENCRYPTION" - The data backing this resource is
+	// encrypted at rest with a key that is managed by the customer. The
+	// in-use version of the key and its status are populated for
+	// CMEK-protected tables. CMEK-protected backups are pinned to the key
+	// version that was in use at the time the backup was taken. This key
+	// version is populated but its status is not tracked and is reported as
+	// `UNKNOWN`.
+	EncryptionType string `json:"encryptionType,omitempty"`
+
+	// KmsKeyVersion: Output only. The version of the Cloud KMS key
+	// specified in the parent cluster that is in use for the data
+	// underlying this table.
+	KmsKeyVersion string `json:"kmsKeyVersion,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EncryptionStatus") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EncryptionStatus") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EncryptionInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod EncryptionInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Expr: Represents a textual expression in the Common Expression
-// Language (CEL)
-// syntax. CEL is a C-like expression language. The syntax and semantics
-// of CEL
-// are documented at https://github.com/google/cel-spec.
-//
-// Example (Comparison):
-//
-//     title: "Summary size limit"
-//     description: "Determines if a summary is less than 100 chars"
-//     expression: "document.summary.size() < 100"
-//
-// Example (Equality):
-//
-//     title: "Requestor is owner"
-//     description: "Determines if requestor is the document owner"
-//     expression: "document.owner ==
-// request.auth.claims.email"
-//
-// Example (Logic):
-//
-//     title: "Public documents"
-//     description: "Determine whether the document should be publicly
-// visible"
-//     expression: "document.type != 'private' && document.type !=
-// 'internal'"
-//
-// Example (Data Manipulation):
-//
-//     title: "Notification string"
-//     description: "Create a notification string with a timestamp."
-//     expression: "'New message received at ' +
-// string(document.create_time)"
-//
-// The exact variables and functions that may be referenced within an
-// expression
-// are determined by the service that evaluates it. See the
-// service
-// documentation for additional information.
+// Language (CEL) syntax. CEL is a C-like expression language. The
+// syntax and semantics of CEL are documented at
+// https://github.com/google/cel-spec. Example (Comparison): title:
+// "Summary size limit" description: "Determines if a summary is less
+// than 100 chars" expression: "document.summary.size() < 100" Example
+// (Equality): title: "Requestor is owner" description: "Determines if
+// requestor is the document owner" expression: "document.owner ==
+// request.auth.claims.email" Example (Logic): title: "Public documents"
+// description: "Determine whether the document should be publicly
+// visible" expression: "document.type != 'private' && document.type !=
+// 'internal'" Example (Data Manipulation): title: "Notification string"
+// description: "Create a notification string with a timestamp."
+// expression: "'New message received at ' +
+// string(document.create_time)" The exact variables and functions that
+// may be referenced within an expression are determined by the service
+// that evaluates it. See the service documentation for additional
+// information.
 type Expr struct {
 	// Description: Optional. Description of the expression. This is a
-	// longer text which
-	// describes the expression, e.g. when hovered over it in a UI.
+	// longer text which describes the expression, e.g. when hovered over it
+	// in a UI.
 	Description string `json:"description,omitempty"`
 
 	// Expression: Textual representation of an expression in Common
-	// Expression Language
-	// syntax.
+	// Expression Language syntax.
 	Expression string `json:"expression,omitempty"`
 
 	// Location: Optional. String indicating the location of the expression
-	// for error
-	// reporting, e.g. a file name and a position in the file.
+	// for error reporting, e.g. a file name and a position in the file.
 	Location string `json:"location,omitempty"`
 
 	// Title: Optional. Title for the expression, i.e. a short string
-	// describing
-	// its purpose. This can be used e.g. in UIs which allow to enter
-	// the
-	// expression.
+	// describing its purpose. This can be used e.g. in UIs which allow to
+	// enter the expression.
 	Title string `json:"title,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Description") to include
@@ -1242,9 +1665,8 @@ type GcRule struct {
 	// rule.
 	Intersection *Intersection `json:"intersection,omitempty"`
 
-	// MaxAge: Delete cells in a column older than the given age.
-	// Values must be at least one millisecond, and will be truncated
-	// to
+	// MaxAge: Delete cells in a column older than the given age. Values
+	// must be at least one millisecond, and will be truncated to
 	// microsecond granularity.
 	MaxAge string `json:"maxAge,omitempty"`
 
@@ -1257,10 +1679,10 @@ type GcRule struct {
 
 	// ForceSendFields is a list of field names (e.g. "Intersection") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Intersection") to include
@@ -1278,17 +1700,13 @@ func (s *GcRule) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GenerateConsistencyTokenRequest: Request message
-// for
-// google.bigtable.admin.v2.BigtableTableAdmin.GenerateConsistencyTok
-// en
+// GenerateConsistencyTokenRequest: Request message for
+// google.bigtable.admin.v2.BigtableTableAdmin.GenerateConsistencyToken
 type GenerateConsistencyTokenRequest struct {
 }
 
-// GenerateConsistencyTokenResponse: Response message
-// for
-// google.bigtable.admin.v2.BigtableTableAdmin.GenerateConsistencyTok
-// en
+// GenerateConsistencyTokenResponse: Response message for
+// google.bigtable.admin.v2.BigtableTableAdmin.GenerateConsistencyToken
 type GenerateConsistencyTokenResponse struct {
 	// ConsistencyToken: The generated consistency token.
 	ConsistencyToken string `json:"consistencyToken,omitempty"`
@@ -1299,10 +1717,10 @@ type GenerateConsistencyTokenResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "ConsistencyToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ConsistencyToken") to
@@ -1324,16 +1742,15 @@ func (s *GenerateConsistencyTokenResponse) MarshalJSON() ([]byte, error) {
 // GetIamPolicyRequest: Request message for `GetIamPolicy` method.
 type GetIamPolicyRequest struct {
 	// Options: OPTIONAL: A `GetPolicyOptions` object for specifying options
-	// to
-	// `GetIamPolicy`. This field is only used by Cloud IAM.
+	// to `GetIamPolicy`.
 	Options *GetPolicyOptions `json:"options,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Options") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Options") to include in
@@ -1353,24 +1770,24 @@ func (s *GetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 
 // GetPolicyOptions: Encapsulates settings provided to GetIamPolicy.
 type GetPolicyOptions struct {
-	// RequestedPolicyVersion: Optional. The policy format version to be
-	// returned.
-	//
-	// Valid values are 0, 1, and 3. Requests specifying an invalid value
-	// will be
-	// rejected.
-	//
-	// Requests for policies with any conditional bindings must specify
-	// version 3.
-	// Policies without any conditional bindings may specify any valid value
-	// or
-	// leave the field unset.
+	// RequestedPolicyVersion: Optional. The maximum policy version that
+	// will be used to format the policy. Valid values are 0, 1, and 3.
+	// Requests specifying an invalid value will be rejected. Requests for
+	// policies with any conditional role bindings must specify version 3.
+	// Policies with no conditional role bindings may specify any valid
+	// value or leave the field unset. The policy in the response might use
+	// the policy version that you specified, or it might use a lower policy
+	// version. For example, if you specify version 3, but the policy has no
+	// conditional role bindings, the response uses version 1. To learn
+	// which resources support conditions in their IAM policies, see the IAM
+	// documentation
+	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	RequestedPolicyVersion int64 `json:"requestedPolicyVersion,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "RequestedPolicyVersion") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -1392,87 +1809,152 @@ func (s *GetPolicyOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Instance: A collection of Bigtable Tables and
-// the resources that serve them.
-// All tables in an instance are served from all
-// Clusters in the instance.
+// HotTablet: A tablet is a defined by a start and end key and is
+// explained in
+// https://cloud.google.com/bigtable/docs/overview#architecture and
+// https://cloud.google.com/bigtable/docs/performance#optimization. A
+// Hot tablet is a tablet that exhibits high average cpu usage during
+// the time interval from start time to end time.
+type HotTablet struct {
+	// EndKey: Tablet End Key (inclusive).
+	EndKey string `json:"endKey,omitempty"`
+
+	// EndTime: Output only. The end time of the hot tablet.
+	EndTime string `json:"endTime,omitempty"`
+
+	// Name: The unique name of the hot tablet. Values are of the form
+	// `projects/{project}/instances/{instance}/clusters/{cluster}/hotTablets
+	// /[a-zA-Z0-9_-]*`.
+	Name string `json:"name,omitempty"`
+
+	// NodeCpuUsagePercent: Output only. The average CPU usage spent by a
+	// node on this tablet over the start_time to end_time time range. The
+	// percentage is the amount of CPU used by the node to serve the tablet,
+	// from 0% (tablet was not interacted with) to 100% (the node spent all
+	// cycles serving the hot tablet).
+	NodeCpuUsagePercent float64 `json:"nodeCpuUsagePercent,omitempty"`
+
+	// StartKey: Tablet Start Key (inclusive).
+	StartKey string `json:"startKey,omitempty"`
+
+	// StartTime: Output only. The start time of the hot tablet.
+	StartTime string `json:"startTime,omitempty"`
+
+	// TableName: Name of the table that contains the tablet. Values are of
+	// the form
+	// `projects/{project}/instances/{instance}/tables/_a-zA-Z0-9*`.
+	TableName string `json:"tableName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EndKey") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EndKey") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *HotTablet) MarshalJSON() ([]byte, error) {
+	type NoMethod HotTablet
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *HotTablet) UnmarshalJSON(data []byte) error {
+	type NoMethod HotTablet
+	var s1 struct {
+		NodeCpuUsagePercent gensupport.JSONFloat64 `json:"nodeCpuUsagePercent"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.NodeCpuUsagePercent = float64(s1.NodeCpuUsagePercent)
+	return nil
+}
+
+// Instance: A collection of Bigtable Tables and the resources that
+// serve them. All tables in an instance are served from all Clusters in
+// the instance.
 type Instance struct {
+	// CreateTime: Output only. A commit timestamp representing when this
+	// Instance was created. For instances created before this field was
+	// added (August 2021), this value is `seconds: 0, nanos: 1`.
+	CreateTime string `json:"createTime,omitempty"`
+
 	// DisplayName: Required. The descriptive name for this instance as it
-	// appears in UIs.
-	// Can be changed at any time, but should be kept globally unique
-	// to avoid confusion.
+	// appears in UIs. Can be changed at any time, but should be kept
+	// globally unique to avoid confusion.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Labels: Required. Labels are a flexible and lightweight mechanism for
-	// organizing cloud
-	// resources into groups that reflect a customer's organizational needs
-	// and
-	// deployment strategies. They can be used to filter resources and
-	// aggregate
-	// metrics.
-	//
-	// * Label keys must be between 1 and 63 characters long and must
-	// conform to
-	//   the regular expression: `\p{Ll}\p{Lo}{0,62}`.
-	// * Label values must be between 0 and 63 characters long and must
-	// conform to
-	//   the regular expression: `[\p{Ll}\p{Lo}\p{N}_-]{0,63}`.
-	// * No more than 64 labels can be associated with a given resource.
-	// * Keys and values must both be under 128 bytes.
+	// Labels: Labels are a flexible and lightweight mechanism for
+	// organizing cloud resources into groups that reflect a customer's
+	// organizational needs and deployment strategies. They can be used to
+	// filter resources and aggregate metrics. * Label keys must be between
+	// 1 and 63 characters long and must conform to the regular expression:
+	// `\p{Ll}\p{Lo}{0,62}`. * Label values must be between 0 and 63
+	// characters long and must conform to the regular expression:
+	// `[\p{Ll}\p{Lo}\p{N}_-]{0,63}`. * No more than 64 labels can be
+	// associated with a given resource. * Keys and values must both be
+	// under 128 bytes.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// Name: Required. (`OutputOnly`)
-	// The unique name of the instance. Values are of the
-	// form
+	// Name: The unique name of the instance. Values are of the form
 	// `projects/{project}/instances/a-z+[a-z0-9]`.
 	Name string `json:"name,omitempty"`
 
-	// State: (`OutputOnly`)
-	// The current state of the instance.
+	// SatisfiesPzs: Output only. Reserved for future use.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
+
+	// State: Output only. The current state of the instance.
 	//
 	// Possible values:
 	//   "STATE_NOT_KNOWN" - The state of the instance could not be
 	// determined.
 	//   "READY" - The instance has been successfully created and can serve
-	// requests
-	// to its tables.
+	// requests to its tables.
 	//   "CREATING" - The instance is currently being created, and may be
-	// destroyed
-	// if the creation process encounters an error.
+	// destroyed if the creation process encounters an error.
 	State string `json:"state,omitempty"`
 
-	// Type: Required. The type of the instance. Defaults to `PRODUCTION`.
+	// Type: The type of the instance. Defaults to `PRODUCTION`.
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - The type of the instance is unspecified. If
-	// set when creating an
-	// instance, a `PRODUCTION` instance will be created. If set when
-	// updating
-	// an instance, the type will be left unchanged.
+	// set when creating an instance, a `PRODUCTION` instance will be
+	// created. If set when updating an instance, the type will be left
+	// unchanged.
 	//   "PRODUCTION" - An instance meant for production use. `serve_nodes`
-	// must be set
-	// on the cluster.
+	// must be set on the cluster.
 	//   "DEVELOPMENT" - DEPRECATED: Prefer PRODUCTION for all use cases, as
-	// it no longer enforces
-	// a higher minimum node count than DEVELOPMENT.
+	// it no longer enforces a higher minimum node count than DEVELOPMENT.
 	Type string `json:"type,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DisplayName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -1493,10 +1975,10 @@ type Intersection struct {
 
 	// ForceSendFields is a list of field names (e.g. "Rules") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Rules") to include in API
@@ -1521,18 +2003,14 @@ type ListAppProfilesResponse struct {
 	AppProfiles []*AppProfile `json:"appProfiles,omitempty"`
 
 	// FailedLocations: Locations from which AppProfile information could
-	// not be retrieved,
-	// due to an outage or some other transient condition.
-	// AppProfiles from these locations may be missing from
-	// `app_profiles`.
-	// Values are of the form `projects/<project>/locations/<zone_id>`
+	// not be retrieved, due to an outage or some other transient condition.
+	// AppProfiles from these locations may be missing from `app_profiles`.
+	// Values are of the form `projects//locations/`
 	FailedLocations []string `json:"failedLocations,omitempty"`
 
 	// NextPageToken: Set if not all app profiles could be returned in a
-	// single response.
-	// Pass this value to `page_token` in another request to get the
-	// next
-	// page of results.
+	// single response. Pass this value to `page_token` in another request
+	// to get the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1541,10 +2019,10 @@ type ListAppProfilesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "AppProfiles") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AppProfiles") to include
@@ -1562,6 +2040,42 @@ func (s *ListAppProfilesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ListBackupsResponse: The response for ListBackups.
+type ListBackupsResponse struct {
+	// Backups: The list of matching backups.
+	Backups []*Backup `json:"backups,omitempty"`
+
+	// NextPageToken: `next_page_token` can be sent in a subsequent
+	// ListBackups call to fetch more of the matching backups.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Backups") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Backups") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListBackupsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListBackupsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ListClustersResponse: Response message for
 // BigtableInstanceAdmin.ListClusters.
 type ListClustersResponse struct {
@@ -1569,11 +2083,10 @@ type ListClustersResponse struct {
 	Clusters []*Cluster `json:"clusters,omitempty"`
 
 	// FailedLocations: Locations from which Cluster information could not
-	// be retrieved,
-	// due to an outage or some other transient condition.
-	// Clusters from these locations may be missing from `clusters`,
-	// or may only have partial information returned.
-	// Values are of the form `projects/<project>/locations/<zone_id>`
+	// be retrieved, due to an outage or some other transient condition.
+	// Clusters from these locations may be missing from `clusters`, or may
+	// only have partial information returned. Values are of the form
+	// `projects//locations/`
 	FailedLocations []string `json:"failedLocations,omitempty"`
 
 	// NextPageToken: DEPRECATED: This field is unused and ignored.
@@ -1585,10 +2098,10 @@ type ListClustersResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Clusters") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Clusters") to include in
@@ -1606,18 +2119,58 @@ func (s *ListClustersResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ListHotTabletsResponse: Response message for
+// BigtableInstanceAdmin.ListHotTablets.
+type ListHotTabletsResponse struct {
+	// HotTablets: List of hot tablets in the tables of the requested
+	// cluster that fall within the requested time range. Hot tablets are
+	// ordered by node cpu usage percent. If there are multiple hot tablets
+	// that correspond to the same tablet within a 15-minute interval, only
+	// the hot tablet with the highest node cpu usage will be included in
+	// the response.
+	HotTablets []*HotTablet `json:"hotTablets,omitempty"`
+
+	// NextPageToken: Set if not all hot tablets could be returned in a
+	// single response. Pass this value to `page_token` in another request
+	// to get the next page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "HotTablets") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "HotTablets") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListHotTabletsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListHotTabletsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ListInstancesResponse: Response message for
 // BigtableInstanceAdmin.ListInstances.
 type ListInstancesResponse struct {
 	// FailedLocations: Locations from which Instance information could not
-	// be retrieved,
-	// due to an outage or some other transient condition.
-	// Instances whose Clusters are all in one of the failed locations
-	// may be missing from `instances`, and Instances with at least
-	// one
-	// Cluster in a failed location may only have partial information
-	// returned.
-	// Values are of the form `projects/<project>/locations/<zone_id>`
+	// be retrieved, due to an outage or some other transient condition.
+	// Instances whose Clusters are all in one of the failed locations may
+	// be missing from `instances`, and Instances with at least one Cluster
+	// in a failed location may only have partial information returned.
+	// Values are of the form `projects//locations/`
 	FailedLocations []string `json:"failedLocations,omitempty"`
 
 	// Instances: The list of requested instances.
@@ -1632,10 +2185,10 @@ type ListInstancesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "FailedLocations") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "FailedLocations") to
@@ -1670,10 +2223,10 @@ type ListLocationsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Locations") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Locations") to include in
@@ -1707,10 +2260,10 @@ type ListOperationsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -1728,15 +2281,12 @@ func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ListTablesResponse: Response message
-// for
+// ListTablesResponse: Response message for
 // google.bigtable.admin.v2.BigtableTableAdmin.ListTables
 type ListTablesResponse struct {
 	// NextPageToken: Set if not all tables could be returned in a single
-	// response.
-	// Pass this value to `page_token` in another request to get the
-	// next
-	// page of results.
+	// response. Pass this value to `page_token` in another request to get
+	// the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// Tables: The tables present in the requested instance.
@@ -1748,10 +2298,10 @@ type ListTablesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -1772,13 +2322,11 @@ func (s *ListTablesResponse) MarshalJSON() ([]byte, error) {
 // Location: A resource that represents Google Cloud Platform location.
 type Location struct {
 	// DisplayName: The friendly name for this location, typically a nearby
-	// city name.
-	// For example, "Tokyo".
+	// city name. For example, "Tokyo".
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Labels: Cross-service attributes for the location. For example
-	//
-	//     {"cloud.googleapis.com/region": "us-east1"}
+	// {"cloud.googleapis.com/region": "us-east1"}
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// LocationId: The canonical id for this location. For example:
@@ -1786,13 +2334,12 @@ type Location struct {
 	LocationId string `json:"locationId,omitempty"`
 
 	// Metadata: Service-specific metadata. For example the available
-	// capacity at the given
-	// location.
+	// capacity at the given location.
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
 
 	// Name: Resource name for the location, which may vary between
-	// implementations.
-	// For example: "projects/example-project/locations/us-east1"
+	// implementations. For example:
+	// "projects/example-project/locations/us-east1"
 	Name string `json:"name,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1801,10 +2348,10 @@ type Location struct {
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DisplayName") to include
@@ -1826,29 +2373,26 @@ func (s *Location) MarshalJSON() ([]byte, error) {
 // family.
 type Modification struct {
 	// Create: Create a new column family with the specified schema, or fail
-	// if
-	// one already exists with the given ID.
+	// if one already exists with the given ID.
 	Create *ColumnFamily `json:"create,omitempty"`
 
 	// Drop: Drop (delete) the column family with the given ID, or fail if
-	// no such
-	// family exists.
+	// no such family exists.
 	Drop bool `json:"drop,omitempty"`
 
 	// Id: The ID of the column family to be modified.
 	Id string `json:"id,omitempty"`
 
 	// Update: Update an existing column family to the specified schema, or
-	// fail
-	// if no column family exists with the given ID.
+	// fail if no column family exists with the given ID.
 	Update *ColumnFamily `json:"update,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Create") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Create") to include in API
@@ -1866,25 +2410,21 @@ func (s *Modification) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ModifyColumnFamiliesRequest: Request message
-// for
+// ModifyColumnFamiliesRequest: Request message for
 // google.bigtable.admin.v2.BigtableTableAdmin.ModifyColumnFamilies
 type ModifyColumnFamiliesRequest struct {
 	// Modifications: Required. Modifications to be atomically applied to
-	// the specified table's families.
-	// Entries are applied in order, meaning that earlier modifications can
-	// be
-	// masked by later ones (in the case of repeated updates to the same
-	// family,
-	// for example).
+	// the specified table's families. Entries are applied in order, meaning
+	// that earlier modifications can be masked by later ones (in the case
+	// of repeated updates to the same family, for example).
 	Modifications []*Modification `json:"modifications,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Modifications") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Modifications") to include
@@ -1903,64 +2443,72 @@ func (s *ModifyColumnFamiliesRequest) MarshalJSON() ([]byte, error) {
 }
 
 // MultiClusterRoutingUseAny: Read/write requests are routed to the
-// nearest cluster in the instance, and
-// will fail over to the nearest cluster that is available in the event
-// of
-// transient errors or delays. Clusters in a region are
-// considered
-// equidistant. Choosing this option sacrifices read-your-writes
-// consistency
-// to improve availability.
+// nearest cluster in the instance, and will fail over to the nearest
+// cluster that is available in the event of transient errors or delays.
+// Clusters in a region are considered equidistant. Choosing this option
+// sacrifices read-your-writes consistency to improve availability.
 type MultiClusterRoutingUseAny struct {
+	// ClusterIds: The set of clusters to route to. The order is ignored;
+	// clusters will be tried in order of distance. If left empty, all
+	// clusters are eligible.
+	ClusterIds []string `json:"clusterIds,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ClusterIds") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ClusterIds") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MultiClusterRoutingUseAny) MarshalJSON() ([]byte, error) {
+	type NoMethod MultiClusterRoutingUseAny
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // Operation: This resource represents a long-running operation that is
-// the result of a
-// network API call.
+// the result of a network API call.
 type Operation struct {
 	// Done: If the value is `false`, it means the operation is still in
-	// progress.
-	// If `true`, the operation is completed, and either `error` or
-	// `response` is
-	// available.
+	// progress. If `true`, the operation is completed, and either `error`
+	// or `response` is available.
 	Done bool `json:"done,omitempty"`
 
 	// Error: The error result of the operation in case of failure or
 	// cancellation.
 	Error *Status `json:"error,omitempty"`
 
-	// Metadata: Service-specific metadata associated with the operation.
-	// It typically
-	// contains progress information and common metadata such as create
-	// time.
-	// Some services might not provide such metadata.  Any method that
-	// returns a
-	// long-running operation should document the metadata type, if any.
+	// Metadata: Service-specific metadata associated with the operation. It
+	// typically contains progress information and common metadata such as
+	// create time. Some services might not provide such metadata. Any
+	// method that returns a long-running operation should document the
+	// metadata type, if any.
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
 
 	// Name: The server-assigned name, which is only unique within the same
-	// service that
-	// originally returns it. If you use the default HTTP mapping,
-	// the
-	// `name` should be a resource name ending with
+	// service that originally returns it. If you use the default HTTP
+	// mapping, the `name` should be a resource name ending with
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success.
-	// If the original
-	// method returns no data on success, such as `Delete`, the response
-	// is
-	// `google.protobuf.Empty`.  If the original method is
-	// standard
-	// `Get`/`Create`/`Update`, the response should be the resource.  For
-	// other
-	// methods, the response should have the type `XxxResponse`, where
-	// `Xxx`
-	// is the original method name.  For example, if the original method
-	// name
-	// is `TakeSnapshot()`, the inferred response type
-	// is
-	// `TakeSnapshotResponse`.
+	// Response: The normal response of the operation in case of success. If
+	// the original method returns no data on success, such as `Delete`, the
+	// response is `google.protobuf.Empty`. If the original method is
+	// standard `Get`/`Create`/`Update`, the response should be the
+	// resource. For other methods, the response should have the type
+	// `XxxResponse`, where `Xxx` is the original method name. For example,
+	// if the original method name is `TakeSnapshot()`, the inferred
+	// response type is `TakeSnapshotResponse`.
 	Response googleapi.RawMessage `json:"response,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1969,10 +2517,10 @@ type Operation struct {
 
 	// ForceSendFields is a list of field names (e.g. "Done") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Done") to include in API
@@ -1990,6 +2538,148 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// OperationProgress: Encapsulates progress related information for a
+// Cloud Bigtable long running operation.
+type OperationProgress struct {
+	// EndTime: If set, the time at which this operation failed or was
+	// completed successfully.
+	EndTime string `json:"endTime,omitempty"`
+
+	// ProgressPercent: Percent completion of the operation. Values are
+	// between 0 and 100 inclusive.
+	ProgressPercent int64 `json:"progressPercent,omitempty"`
+
+	// StartTime: Time the request was received.
+	StartTime string `json:"startTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EndTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EndTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OperationProgress) MarshalJSON() ([]byte, error) {
+	type NoMethod OperationProgress
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// OptimizeRestoredTableMetadata: Metadata type for the long-running
+// operation used to track the progress of optimizations performed on a
+// newly restored table. This long-running operation is automatically
+// created by the system after the successful completion of a table
+// restore, and cannot be cancelled.
+type OptimizeRestoredTableMetadata struct {
+	// Name: Name of the restored table being optimized.
+	Name string `json:"name,omitempty"`
+
+	// Progress: The progress of the post-restore optimizations.
+	Progress *OperationProgress `json:"progress,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OptimizeRestoredTableMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod OptimizeRestoredTableMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PartialUpdateClusterMetadata: The metadata for the Operation returned
+// by PartialUpdateCluster.
+type PartialUpdateClusterMetadata struct {
+	// FinishTime: The time at which the operation failed or was completed
+	// successfully.
+	FinishTime string `json:"finishTime,omitempty"`
+
+	// OriginalRequest: The original request for PartialUpdateCluster.
+	OriginalRequest *PartialUpdateClusterRequest `json:"originalRequest,omitempty"`
+
+	// RequestTime: The time at which the original request was received.
+	RequestTime string `json:"requestTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FinishTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FinishTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PartialUpdateClusterMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod PartialUpdateClusterMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PartialUpdateClusterRequest: Request message for
+// BigtableInstanceAdmin.PartialUpdateCluster.
+type PartialUpdateClusterRequest struct {
+	// Cluster: Required. The Cluster which contains the partial updates to
+	// be applied, subject to the update_mask.
+	Cluster *Cluster `json:"cluster,omitempty"`
+
+	// UpdateMask: Required. The subset of Cluster fields which should be
+	// replaced.
+	UpdateMask string `json:"updateMask,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Cluster") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Cluster") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PartialUpdateClusterRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod PartialUpdateClusterRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // PartialUpdateInstanceRequest: Request message for
 // BigtableInstanceAdmin.PartialUpdateInstance.
 type PartialUpdateInstanceRequest struct {
@@ -1998,16 +2688,15 @@ type PartialUpdateInstanceRequest struct {
 	Instance *Instance `json:"instance,omitempty"`
 
 	// UpdateMask: Required. The subset of Instance fields which should be
-	// replaced.
-	// Must be explicitly set.
+	// replaced. Must be explicitly set.
 	UpdateMask string `json:"updateMask,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Instance") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Instance") to include in
@@ -2026,143 +2715,86 @@ func (s *PartialUpdateInstanceRequest) MarshalJSON() ([]byte, error) {
 }
 
 // Policy: An Identity and Access Management (IAM) policy, which
-// specifies access
-// controls for Google Cloud resources.
-//
-//
-// A `Policy` is a collection of `bindings`. A `binding` binds one or
-// more
-// `members` to a single `role`. Members can be user accounts, service
-// accounts,
-// Google groups, and domains (such as G Suite). A `role` is a named
-// list of
-// permissions; each `role` can be an IAM predefined role or a
-// user-created
-// custom role.
-//
-// Optionally, a `binding` can specify a `condition`, which is a
-// logical
-// expression that allows access to a resource only if the expression
-// evaluates
-// to `true`. A condition can add constraints based on attributes of
-// the
-// request, the resource, or both.
-//
-// **JSON example:**
-//
-//     {
-//       "bindings": [
-//         {
-//           "role": "roles/resourcemanager.organizationAdmin",
-//           "members": [
-//             "user:mike@example.com",
-//             "group:admins@example.com",
-//             "domain:google.com",
-//
-// "serviceAccount:my-project-id@appspot.gserviceaccount.com"
-//           ]
-//         },
-//         {
-//           "role": "roles/resourcemanager.organizationViewer",
-//           "members": ["user:eve@example.com"],
-//           "condition": {
-//             "title": "expirable access",
-//             "description": "Does not grant access after Sep 2020",
-//             "expression": "request.time <
-// timestamp('2020-10-01T00:00:00.000Z')",
-//           }
-//         }
-//       ],
-//       "etag": "BwWWja0YfJA=",
-//       "version": 3
-//     }
-//
-// **YAML example:**
-//
-//     bindings:
-//     - members:
-//       - user:mike@example.com
-//       - group:admins@example.com
-//       - domain:google.com
-//       - serviceAccount:my-project-id@appspot.gserviceaccount.com
-//       role: roles/resourcemanager.organizationAdmin
-//     - members:
-//       - user:eve@example.com
-//       role: roles/resourcemanager.organizationViewer
-//       condition:
-//         title: expirable access
-//         description: Does not grant access after Sep 2020
-//         expression: request.time <
-// timestamp('2020-10-01T00:00:00.000Z')
-//     - etag: BwWWja0YfJA=
-//     - version: 3
-//
-// For a description of IAM and its features, see the
-// [IAM documentation](https://cloud.google.com/iam/docs/).
+// specifies access controls for Google Cloud resources. A `Policy` is a
+// collection of `bindings`. A `binding` binds one or more `members`, or
+// principals, to a single `role`. Principals can be user accounts,
+// service accounts, Google groups, and domains (such as G Suite). A
+// `role` is a named list of permissions; each `role` can be an IAM
+// predefined role or a user-created custom role. For some types of
+// Google Cloud resources, a `binding` can also specify a `condition`,
+// which is a logical expression that allows access to a resource only
+// if the expression evaluates to `true`. A condition can add
+// constraints based on attributes of the request, the resource, or
+// both. To learn which resources support conditions in their IAM
+// policies, see the IAM documentation
+// (https://cloud.google.com/iam/help/conditions/resource-policies).
+// **JSON example:** { "bindings": [ { "role":
+// "roles/resourcemanager.organizationAdmin", "members": [
+// "user:mike@example.com", "group:admins@example.com",
+// "domain:google.com",
+// "serviceAccount:my-project-id@appspot.gserviceaccount.com" ] }, {
+// "role": "roles/resourcemanager.organizationViewer", "members": [
+// "user:eve@example.com" ], "condition": { "title": "expirable access",
+// "description": "Does not grant access after Sep 2020", "expression":
+// "request.time < timestamp('2020-10-01T00:00:00.000Z')", } } ],
+// "etag": "BwWWja0YfJA=", "version": 3 } **YAML example:** bindings: -
+// members: - user:mike@example.com - group:admins@example.com -
+// domain:google.com -
+// serviceAccount:my-project-id@appspot.gserviceaccount.com role:
+// roles/resourcemanager.organizationAdmin - members: -
+// user:eve@example.com role: roles/resourcemanager.organizationViewer
+// condition: title: expirable access description: Does not grant access
+// after Sep 2020 expression: request.time <
+// timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3
+// For a description of IAM and its features, see the IAM documentation
+// (https://cloud.google.com/iam/docs/).
 type Policy struct {
 	// AuditConfigs: Specifies cloud audit logging configuration for this
 	// policy.
 	AuditConfigs []*AuditConfig `json:"auditConfigs,omitempty"`
 
-	// Bindings: Associates a list of `members` to a `role`. Optionally, may
-	// specify a
-	// `condition` that determines how and when the `bindings` are applied.
-	// Each
-	// of the `bindings` must contain at least one member.
+	// Bindings: Associates a list of `members`, or principals, with a
+	// `role`. Optionally, may specify a `condition` that determines how and
+	// when the `bindings` are applied. Each of the `bindings` must contain
+	// at least one principal. The `bindings` in a `Policy` can refer to up
+	// to 1,500 principals; up to 250 of these principals can be Google
+	// groups. Each occurrence of a principal counts towards these limits.
+	// For example, if the `bindings` grant 50 different roles to
+	// `user:alice@example.com`, and not to any other principal, then you
+	// can add another 1,450 principals to the `bindings` in the `Policy`.
 	Bindings []*Binding `json:"bindings,omitempty"`
 
 	// Etag: `etag` is used for optimistic concurrency control as a way to
-	// help
-	// prevent simultaneous updates of a policy from overwriting each
-	// other.
-	// It is strongly suggested that systems make use of the `etag` in
-	// the
-	// read-modify-write cycle to perform policy updates in order to avoid
-	// race
-	// conditions: An `etag` is returned in the response to `getIamPolicy`,
-	// and
-	// systems are expected to put that etag in the request to
-	// `setIamPolicy` to
-	// ensure that their change will be applied to the same version of the
-	// policy.
-	//
-	// **Important:** If you use IAM Conditions, you must include the `etag`
-	// field
-	// whenever you call `setIamPolicy`. If you omit this field, then IAM
-	// allows
-	// you to overwrite a version `3` policy with a version `1` policy, and
-	// all of
+	// help prevent simultaneous updates of a policy from overwriting each
+	// other. It is strongly suggested that systems make use of the `etag`
+	// in the read-modify-write cycle to perform policy updates in order to
+	// avoid race conditions: An `etag` is returned in the response to
+	// `getIamPolicy`, and systems are expected to put that etag in the
+	// request to `setIamPolicy` to ensure that their change will be applied
+	// to the same version of the policy. **Important:** If you use IAM
+	// Conditions, you must include the `etag` field whenever you call
+	// `setIamPolicy`. If you omit this field, then IAM allows you to
+	// overwrite a version `3` policy with a version `1` policy, and all of
 	// the conditions in the version `3` policy are lost.
 	Etag string `json:"etag,omitempty"`
 
-	// Version: Specifies the format of the policy.
-	//
-	// Valid values are `0`, `1`, and `3`. Requests that specify an invalid
-	// value
-	// are rejected.
-	//
+	// Version: Specifies the format of the policy. Valid values are `0`,
+	// `1`, and `3`. Requests that specify an invalid value are rejected.
 	// Any operation that affects conditional role bindings must specify
-	// version
-	// `3`. This requirement applies to the following operations:
-	//
-	// * Getting a policy that includes a conditional role binding
-	// * Adding a conditional role binding to a policy
-	// * Changing a conditional role binding in a policy
-	// * Removing any role binding, with or without a condition, from a
-	// policy
-	//   that includes conditions
-	//
-	// **Important:** If you use IAM Conditions, you must include the `etag`
-	// field
-	// whenever you call `setIamPolicy`. If you omit this field, then IAM
-	// allows
-	// you to overwrite a version `3` policy with a version `1` policy, and
-	// all of
-	// the conditions in the version `3` policy are lost.
-	//
-	// If a policy does not include any conditions, operations on that
-	// policy may
-	// specify any valid version or leave the field unset.
+	// version `3`. This requirement applies to the following operations: *
+	// Getting a policy that includes a conditional role binding * Adding a
+	// conditional role binding to a policy * Changing a conditional role
+	// binding in a policy * Removing any role binding, with or without a
+	// condition, from a policy that includes conditions **Important:** If
+	// you use IAM Conditions, you must include the `etag` field whenever
+	// you call `setIamPolicy`. If you omit this field, then IAM allows you
+	// to overwrite a version `3` policy with a version `1` policy, and all
+	// of the conditions in the version `3` policy are lost. If a policy
+	// does not include any conditions, operations on that policy may
+	// specify any valid version or leave the field unset. To learn which
+	// resources support conditions in their IAM policies, see the IAM
+	// documentation
+	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Version int64 `json:"version,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2171,10 +2803,10 @@ type Policy struct {
 
 	// ForceSendFields is a list of field names (e.g. "AuditConfigs") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AuditConfigs") to include
@@ -2192,31 +2824,148 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// RestoreInfo: Information about a table restore.
+type RestoreInfo struct {
+	// BackupInfo: Information about the backup used to restore the table.
+	// The backup may no longer exist.
+	BackupInfo *BackupInfo `json:"backupInfo,omitempty"`
+
+	// SourceType: The type of the restore source.
+	//
+	// Possible values:
+	//   "RESTORE_SOURCE_TYPE_UNSPECIFIED" - No restore associated.
+	//   "BACKUP" - A backup was used as the source of the restore.
+	SourceType string `json:"sourceType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BackupInfo") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BackupInfo") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RestoreInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod RestoreInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RestoreTableMetadata: Metadata type for the long-running operation
+// returned by RestoreTable.
+type RestoreTableMetadata struct {
+	BackupInfo *BackupInfo `json:"backupInfo,omitempty"`
+
+	// Name: Name of the table being created and restored to.
+	Name string `json:"name,omitempty"`
+
+	// OptimizeTableOperationName: If exists, the name of the long-running
+	// operation that will be used to track the post-restore optimization
+	// process to optimize the performance of the restored table. The
+	// metadata type of the long-running operation is
+	// OptimizeRestoreTableMetadata. The response type is Empty. This
+	// long-running operation may be automatically created by the system if
+	// applicable after the RestoreTable long-running operation completes
+	// successfully. This operation may not be created if the table is
+	// already optimized or the restore was not successful.
+	OptimizeTableOperationName string `json:"optimizeTableOperationName,omitempty"`
+
+	// Progress: The progress of the RestoreTable operation.
+	Progress *OperationProgress `json:"progress,omitempty"`
+
+	// SourceType: The type of the restore source.
+	//
+	// Possible values:
+	//   "RESTORE_SOURCE_TYPE_UNSPECIFIED" - No restore associated.
+	//   "BACKUP" - A backup was used as the source of the restore.
+	SourceType string `json:"sourceType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BackupInfo") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BackupInfo") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RestoreTableMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod RestoreTableMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RestoreTableRequest: The request for RestoreTable.
+type RestoreTableRequest struct {
+	// Backup: Name of the backup from which to restore. Values are of the
+	// form `projects//instances//clusters//backups/`.
+	Backup string `json:"backup,omitempty"`
+
+	// TableId: Required. The id of the table to create and restore to. This
+	// table must not already exist. The `table_id` appended to `parent`
+	// forms the full table name of the form `projects//instances//tables/`.
+	TableId string `json:"tableId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Backup") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Backup") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RestoreTableRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod RestoreTableRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // SetIamPolicyRequest: Request message for `SetIamPolicy` method.
 type SetIamPolicyRequest struct {
 	// Policy: REQUIRED: The complete policy to be applied to the
-	// `resource`. The size of
-	// the policy is limited to a few 10s of KB. An empty policy is a
-	// valid policy but certain Cloud Platform services (such as
-	// Projects)
-	// might reject them.
+	// `resource`. The size of the policy is limited to a few 10s of KB. An
+	// empty policy is a valid policy but certain Google Cloud services
+	// (such as Projects) might reject them.
 	Policy *Policy `json:"policy,omitempty"`
 
 	// UpdateMask: OPTIONAL: A FieldMask specifying which fields of the
-	// policy to modify. Only
-	// the fields in the mask will be modified. If no mask is provided,
-	// the
-	// following default mask is used:
-	// paths: "bindings, etag"
-	// This field is only used by Cloud IAM.
+	// policy to modify. Only the fields in the mask will be modified. If no
+	// mask is provided, the following default mask is used: `paths:
+	// "bindings, etag"
 	UpdateMask string `json:"updateMask,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Policy") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Policy") to include in API
@@ -2235,16 +2984,13 @@ func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 }
 
 // SingleClusterRouting: Unconditionally routes all read/write requests
-// to a specific cluster.
-// This option preserves read-your-writes consistency but does not
-// improve
-// availability.
+// to a specific cluster. This option preserves read-your-writes
+// consistency but does not improve availability.
 type SingleClusterRouting struct {
 	// AllowTransactionalWrites: Whether or not `CheckAndMutateRow` and
-	// `ReadModifyWriteRow` requests are
-	// allowed by this app profile. It is unsafe to send these requests
-	// to
-	// the same table/row/column in multiple clusters.
+	// `ReadModifyWriteRow` requests are allowed by this app profile. It is
+	// unsafe to send these requests to the same table/row/column in
+	// multiple clusters.
 	AllowTransactionalWrites bool `json:"allowTransactionalWrites,omitempty"`
 
 	// ClusterId: The cluster to which read/write requests should be routed.
@@ -2252,11 +2998,11 @@ type SingleClusterRouting struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "AllowTransactionalWrites") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AllowTransactionalWrites")
@@ -2282,10 +3028,10 @@ type Split struct {
 
 	// ForceSendFields is a list of field names (e.g. "Key") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Key") to include in API
@@ -2304,40 +3050,32 @@ func (s *Split) MarshalJSON() ([]byte, error) {
 }
 
 // Status: The `Status` type defines a logical error model that is
-// suitable for
-// different programming environments, including REST APIs and RPC APIs.
-// It is
-// used by [gRPC](https://github.com/grpc). Each `Status` message
-// contains
-// three pieces of data: error code, error message, and error
-// details.
-//
-// You can find out more about this error model and how to work with it
-// in the
-// [API Design Guide](https://cloud.google.com/apis/design/errors).
+// suitable for different programming environments, including REST APIs
+// and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
+// `Status` message contains three pieces of data: error code, error
+// message, and error details. You can find out more about this error
+// model and how to work with it in the API Design Guide
+// (https://cloud.google.com/apis/design/errors).
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
 	Code int64 `json:"code,omitempty"`
 
-	// Details: A list of messages that carry the error details.  There is a
-	// common set of
-	// message types for APIs to use.
+	// Details: A list of messages that carry the error details. There is a
+	// common set of message types for APIs to use.
 	Details []googleapi.RawMessage `json:"details,omitempty"`
 
 	// Message: A developer-facing error message, which should be in
-	// English. Any
-	// user-facing error message should be localized and sent in
-	// the
-	// google.rpc.Status.details field, or localized by the client.
+	// English. Any user-facing error message should be localized and sent
+	// in the google.rpc.Status.details field, or localized by the client.
 	Message string `json:"message,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Code") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Code") to include in API
@@ -2356,48 +3094,55 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 }
 
 // Table: A collection of user data indexed by row, column, and
-// timestamp.
-// Each table is served using the resources of its parent cluster.
+// timestamp. Each table is served using the resources of its parent
+// cluster.
 type Table struct {
 	// ClusterStates: Output only. Map from cluster ID to per-cluster table
-	// state.
-	// If it could not be determined whether or not the table has data in
-	// a
-	// particular cluster (for example, if its zone is unavailable),
-	// then
-	// there will be an entry for the cluster with UNKNOWN
-	// `replication_status`.
-	// Views: `REPLICATION_VIEW`, `FULL`
+	// state. If it could not be determined whether or not the table has
+	// data in a particular cluster (for example, if its zone is
+	// unavailable), then there will be an entry for the cluster with
+	// UNKNOWN `replication_status`. Views: `REPLICATION_VIEW`,
+	// `ENCRYPTION_VIEW`, `FULL`
 	ClusterStates map[string]ClusterState `json:"clusterStates,omitempty"`
 
-	// ColumnFamilies: (`CreationOnly`)
-	// The column families configured for this table, mapped by column
-	// family ID.
-	// Views: `SCHEMA_VIEW`, `FULL`
+	// ColumnFamilies: The column families configured for this table, mapped
+	// by column family ID. Views: `SCHEMA_VIEW`, `STATS_VIEW`, `FULL`
 	ColumnFamilies map[string]ColumnFamily `json:"columnFamilies,omitempty"`
 
-	// Granularity: (`CreationOnly`)
-	// The granularity (i.e. `MILLIS`) at which timestamps are stored
-	// in
-	// this table. Timestamps not matching the granularity will be
-	// rejected.
-	// If unspecified at creation time, the value will be set to
-	// `MILLIS`.
-	// Views: `SCHEMA_VIEW`, `FULL`.
+	// DeletionProtection: Set to true to make the table protected against
+	// data loss. i.e. deleting the following resources through Admin APIs
+	// are prohibited: * The table. * The column families in the table. *
+	// The instance containing the table. Note one can still delete the data
+	// stored in the table through Data APIs.
+	DeletionProtection bool `json:"deletionProtection,omitempty"`
+
+	// Granularity: Immutable. The granularity (i.e. `MILLIS`) at which
+	// timestamps are stored in this table. Timestamps not matching the
+	// granularity will be rejected. If unspecified at creation time, the
+	// value will be set to `MILLIS`. Views: `SCHEMA_VIEW`, `FULL`.
 	//
 	// Possible values:
 	//   "TIMESTAMP_GRANULARITY_UNSPECIFIED" - The user did not specify a
-	// granularity. Should not be returned.
-	// When specified during table creation, MILLIS will be used.
+	// granularity. Should not be returned. When specified during table
+	// creation, MILLIS will be used.
 	//   "MILLIS" - The table keeps data versioned at a granularity of 1ms.
 	Granularity string `json:"granularity,omitempty"`
 
-	// Name: Output only. The unique name of the table. Values are of the
-	// form
-	// `projects/<project>/instances/<instance>/tables/_a-zA-Z0-9*`.
-	// Vie
-	// ws: `NAME_ONLY`, `SCHEMA_VIEW`, `REPLICATION_VIEW`, `FULL`
+	// Name: The unique name of the table. Values are of the form
+	// `projects/{project}/instances/{instance}/tables/_a-zA-Z0-9*`. Views:
+	// `NAME_ONLY`, `SCHEMA_VIEW`, `REPLICATION_VIEW`, `STATS_VIEW`, `FULL`
 	Name string `json:"name,omitempty"`
+
+	// RestoreInfo: Output only. If this table was restored from another
+	// data source (e.g. a backup), this field will be populated with
+	// information about the restore.
+	RestoreInfo *RestoreInfo `json:"restoreInfo,omitempty"`
+
+	// Stats: Only available with STATS_VIEW, this includes summary
+	// statistics about the entire table contents. For statistics about a
+	// specific column family, see ColumnFamilyStats in the mapped
+	// ColumnFamily collection above.
+	Stats *TableStats `json:"stats,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -2405,10 +3150,10 @@ type Table struct {
 
 	// ForceSendFields is a list of field names (e.g. "ClusterStates") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ClusterStates") to include
@@ -2430,10 +3175,8 @@ func (s *Table) MarshalJSON() ([]byte, error) {
 // cluster.
 type TableProgress struct {
 	// EstimatedCopiedBytes: Estimate of the number of bytes copied so far
-	// for this table.
-	// This will eventually reach 'estimated_size_bytes' unless the table
-	// copy
-	// is CANCELLED.
+	// for this table. This will eventually reach 'estimated_size_bytes'
+	// unless the table copy is CANCELLED.
 	EstimatedCopiedBytes int64 `json:"estimatedCopiedBytes,omitempty,string"`
 
 	// EstimatedSizeBytes: Estimate of the size of the table to be copied.
@@ -2445,16 +3188,14 @@ type TableProgress struct {
 	//   "COPYING" - The table is actively being copied to the new cluster.
 	//   "COMPLETED" - The table has been fully copied to the new cluster.
 	//   "CANCELLED" - The table was deleted before it finished copying to
-	// the new cluster.
-	// Note that tables deleted after completion will stay marked
-	// as
-	// COMPLETED, not CANCELLED.
+	// the new cluster. Note that tables deleted after completion will stay
+	// marked as COMPLETED, not CANCELLED.
 	State string `json:"state,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "EstimatedCopiedBytes") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -2476,24 +3217,94 @@ func (s *TableProgress) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// TableStats: Approximate statistics related to a table. These
+// statistics are calculated infrequently, while simultaneously, data in
+// the table can change rapidly. Thus the values reported here (e.g. row
+// count) are very likely out-of date, even the instant they are
+// received in this API. Thus, only treat these values as approximate.
+// IMPORTANT: Everything below is approximate, unless otherwise
+// specified.
+type TableStats struct {
+	// AverageCellsPerColumn: How many cells are present per column (column
+	// family, column qualifier) combinations, averaged over all columns in
+	// all rows in the table. e.g. A table with 2 rows: * A row with 3 cells
+	// in "family:col" and 1 cell in "other:col" (4 cells / 2 columns) * A
+	// row with 1 cell in "family:col", 7 cells in "family:other_col", and 7
+	// cells in "other:data" (15 cells / 3 columns) would report (4 + 15)/(2
+	// + 3) = 3.8 in this field.
+	AverageCellsPerColumn float64 `json:"averageCellsPerColumn,omitempty"`
+
+	// AverageColumnsPerRow: How many (column family, column qualifier)
+	// combinations are present per row in the table, averaged over all rows
+	// in the table. e.g. A table with 2 rows: * A row with cells in
+	// "family:col" and "other:col" (2 distinct columns) * A row with cells
+	// in "family:col", "family:other_col", and "other:data" (3 distinct
+	// columns) would report (2 + 3)/2 = 2.5 in this field.
+	AverageColumnsPerRow float64 `json:"averageColumnsPerRow,omitempty"`
+
+	// LogicalDataBytes: This is roughly how many bytes would be needed to
+	// read the entire table (e.g. by streaming all contents out).
+	LogicalDataBytes int64 `json:"logicalDataBytes,omitempty,string"`
+
+	// RowCount: How many rows are in the table.
+	RowCount int64 `json:"rowCount,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AverageCellsPerColumn") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AverageCellsPerColumn") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TableStats) MarshalJSON() ([]byte, error) {
+	type NoMethod TableStats
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *TableStats) UnmarshalJSON(data []byte) error {
+	type NoMethod TableStats
+	var s1 struct {
+		AverageCellsPerColumn gensupport.JSONFloat64 `json:"averageCellsPerColumn"`
+		AverageColumnsPerRow  gensupport.JSONFloat64 `json:"averageColumnsPerRow"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.AverageCellsPerColumn = float64(s1.AverageCellsPerColumn)
+	s.AverageColumnsPerRow = float64(s1.AverageColumnsPerRow)
+	return nil
+}
+
 // TestIamPermissionsRequest: Request message for `TestIamPermissions`
 // method.
 type TestIamPermissionsRequest struct {
 	// Permissions: The set of permissions to check for the `resource`.
-	// Permissions with
-	// wildcards (such as '*' or 'storage.*') are not allowed. For
-	// more
-	// information see
-	// [IAM
-	// Overview](https://cloud.google.com/iam/docs/overview#permissions).
+	// Permissions with wildcards (such as `*` or `storage.*`) are not
+	// allowed. For more information see IAM Overview
+	// (https://cloud.google.com/iam/docs/overview#permissions).
 	Permissions []string `json:"permissions,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Permissions") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Permissions") to include
@@ -2515,8 +3326,7 @@ func (s *TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
 // method.
 type TestIamPermissionsResponse struct {
 	// Permissions: A subset of `TestPermissionsRequest.permissions` that
-	// the caller is
-	// allowed.
+	// the caller is allowed.
 	Permissions []string `json:"permissions,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2525,10 +3335,10 @@ type TestIamPermissionsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Permissions") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Permissions") to include
@@ -2546,6 +3356,47 @@ func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// UndeleteTableMetadata: Metadata type for the operation returned by
+// google.bigtable.admin.v2.BigtableTableAdmin.UndeleteTable.
+type UndeleteTableMetadata struct {
+	// EndTime: If set, the time at which this operation finished or was
+	// cancelled.
+	EndTime string `json:"endTime,omitempty"`
+
+	// Name: The name of the table being restored.
+	Name string `json:"name,omitempty"`
+
+	// StartTime: The time at which this operation started.
+	StartTime string `json:"startTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EndTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EndTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UndeleteTableMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod UndeleteTableMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// UndeleteTableRequest: Request message for
+// google.bigtable.admin.v2.BigtableTableAdmin.UndeleteTable
+type UndeleteTableRequest struct {
+}
+
 // Union: A GcRule which deletes cells matching any of the given rules.
 type Union struct {
 	// Rules: Delete cells which would be deleted by any element of `rules`.
@@ -2553,10 +3404,10 @@ type Union struct {
 
 	// ForceSendFields is a list of field names (e.g. "Rules") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Rules") to include in API
@@ -2595,10 +3446,10 @@ type UpdateClusterMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "FinishTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "FinishTime") to include in
@@ -2632,10 +3483,10 @@ type UpdateInstanceMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "FinishTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "FinishTime") to include in
@@ -2653,6 +3504,42 @@ func (s *UpdateInstanceMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// UpdateTableMetadata: Metadata type for the operation returned by
+// UpdateTable.
+type UpdateTableMetadata struct {
+	// EndTime: If set, the time at which this operation finished or was
+	// canceled.
+	EndTime string `json:"endTime,omitempty"`
+
+	// Name: The name of the table being updated.
+	Name string `json:"name,omitempty"`
+
+	// StartTime: The time at which this operation started.
+	StartTime string `json:"startTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EndTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EndTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UpdateTableMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod UpdateTableMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // method id "bigtableadmin.operations.cancel":
 
 type OperationsCancelCall struct {
@@ -2664,23 +3551,17 @@ type OperationsCancelCall struct {
 }
 
 // Cancel: Starts asynchronous cancellation on a long-running operation.
-//  The server
-// makes a best effort to cancel the operation, but success is
-// not
-// guaranteed.  If the server doesn't support this method, it
-// returns
-// `google.rpc.Code.UNIMPLEMENTED`.  Clients can
-// use
-// Operations.GetOperation or
-// other methods to check whether the cancellation succeeded or whether
-// the
-// operation completed despite cancellation. On successful
-// cancellation,
-// the operation is not deleted; instead, it becomes an operation
-// with
-// an Operation.error value with a google.rpc.Status.code of
-// 1,
-// corresponding to `Code.CANCELLED`.
+// The server makes a best effort to cancel the operation, but success
+// is not guaranteed. If the server doesn't support this method, it
+// returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use
+// Operations.GetOperation or other methods to check whether the
+// cancellation succeeded or whether the operation completed despite
+// cancellation. On successful cancellation, the operation is not
+// deleted; instead, it becomes an operation with an Operation.error
+// value with a google.rpc.Status.code of 1, corresponding to
+// `Code.CANCELLED`.
+//
+// - name: The name of the operation resource to be cancelled.
 func (r *OperationsService) Cancel(name string) *OperationsCancelCall {
 	c := &OperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2714,7 +3595,7 @@ func (c *OperationsCancelCall) Header() http.Header {
 
 func (c *OperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2749,17 +3630,17 @@ func (c *OperationsCancelCall) Do(opts ...googleapi.CallOption) (*Empty, error) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -2773,7 +3654,7 @@ func (c *OperationsCancelCall) Do(opts ...googleapi.CallOption) (*Empty, error) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Starts asynchronous cancellation on a long-running operation.  The server\nmakes a best effort to cancel the operation, but success is not\nguaranteed.  If the server doesn't support this method, it returns\n`google.rpc.Code.UNIMPLEMENTED`.  Clients can use\nOperations.GetOperation or\nother methods to check whether the cancellation succeeded or whether the\noperation completed despite cancellation. On successful cancellation,\nthe operation is not deleted; instead, it becomes an operation with\nan Operation.error value with a google.rpc.Status.code of 1,\ncorresponding to `Code.CANCELLED`.",
+	//   "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
 	//   "flatPath": "v2/operations/{operationsId}:cancel",
 	//   "httpMethod": "POST",
 	//   "id": "bigtableadmin.operations.cancel",
@@ -2816,12 +3697,11 @@ type OperationsDeleteCall struct {
 }
 
 // Delete: Deletes a long-running operation. This method indicates that
-// the client is
-// no longer interested in the operation result. It does not cancel
-// the
-// operation. If the server doesn't support this method, it
-// returns
-// `google.rpc.Code.UNIMPLEMENTED`.
+// the client is no longer interested in the operation result. It does
+// not cancel the operation. If the server doesn't support this method,
+// it returns `google.rpc.Code.UNIMPLEMENTED`.
+//
+// - name: The name of the operation resource to be deleted.
 func (r *OperationsService) Delete(name string) *OperationsDeleteCall {
 	c := &OperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2855,7 +3735,7 @@ func (c *OperationsDeleteCall) Header() http.Header {
 
 func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2890,17 +3770,17 @@ func (c *OperationsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -2914,7 +3794,7 @@ func (c *OperationsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a long-running operation. This method indicates that the client is\nno longer interested in the operation result. It does not cancel the\noperation. If the server doesn't support this method, it returns\n`google.rpc.Code.UNIMPLEMENTED`.",
+	//   "description": "Deletes a long-running operation. This method indicates that the client is no longer interested in the operation result. It does not cancel the operation. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`.",
 	//   "flatPath": "v2/operations/{operationsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "bigtableadmin.operations.delete",
@@ -2957,11 +3837,11 @@ type OperationsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets the latest state of a long-running operation.  Clients can
-// use this
-// method to poll the operation result at intervals as recommended by
-// the API
-// service.
+// Get: Gets the latest state of a long-running operation. Clients can
+// use this method to poll the operation result at intervals as
+// recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *OperationsService) Get(name string) *OperationsGetCall {
 	c := &OperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3005,7 +3885,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3043,17 +3923,17 @@ func (c *OperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation, error)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -3067,7 +3947,7 @@ func (c *OperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation, error)
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the latest state of a long-running operation.  Clients can use this\nmethod to poll the operation result at intervals as recommended by the API\nservice.",
+	//   "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
 	//   "flatPath": "v2/operations/{operationsId}",
 	//   "httpMethod": "GET",
 	//   "id": "bigtableadmin.operations.get",
@@ -3112,22 +3992,17 @@ type OperationsProjectsOperationsListCall struct {
 }
 
 // List: Lists operations that match the specified filter in the
-// request. If the
-// server doesn't support this method, it returns
-// `UNIMPLEMENTED`.
+// request. If the server doesn't support this method, it returns
+// `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to
+// override the binding to use different resource name schemes, such as
+// `users/*/operations`. To override the binding, API services can add a
+// binding such as "/v1/{name=users/*}/operations" to their service
+// configuration. For backwards compatibility, the default name includes
+// the operations collection id, however overriding users must ensure
+// the name binding is the parent resource, without the operations
+// collection id.
 //
-// NOTE: the `name` binding allows API services to override the
-// binding
-// to use different resource name schemes, such as `users/*/operations`.
-// To
-// override the binding, API services can add a binding such
-// as
-// "/v1/{name=users/*}/operations" to their service configuration.
-// For backwards compatibility, the default name includes the
-// operations
-// collection id, however overriding users must ensure the name
-// binding
-// is the parent resource, without the operations collection id.
+// - name: The name of the operation's parent resource.
 func (r *OperationsProjectsOperationsService) List(name string) *OperationsProjectsOperationsListCall {
 	c := &OperationsProjectsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3192,7 +4067,7 @@ func (c *OperationsProjectsOperationsListCall) Header() http.Header {
 
 func (c *OperationsProjectsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3230,17 +4105,17 @@ func (c *OperationsProjectsOperationsListCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListOperationsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3254,7 +4129,7 @@ func (c *OperationsProjectsOperationsListCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the\nserver doesn't support this method, it returns `UNIMPLEMENTED`.\n\nNOTE: the `name` binding allows API services to override the binding\nto use different resource name schemes, such as `users/*/operations`. To\noverride the binding, API services can add a binding such as\n`\"/v1/{name=users/*}/operations\"` to their service configuration.\nFor backwards compatibility, the default name includes the operations\ncollection id, however overriding users must ensure the name binding\nis the parent resource, without the operations collection id.",
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
 	//   "flatPath": "v2/operations/projects/{projectsId}/operations",
 	//   "httpMethod": "GET",
 	//   "id": "bigtableadmin.operations.projects.operations.list",
@@ -3335,7 +4210,15 @@ type ProjectsInstancesCreateCall struct {
 	header_               http.Header
 }
 
-// Create: Create an instance within a project.
+// Create: Create an instance within a project. Note that exactly one of
+// Cluster.serve_nodes and
+// Cluster.cluster_config.cluster_autoscaling_config can be set. If
+// serve_nodes is set to non-zero, then the cluster is manually scaled.
+// If cluster_config.cluster_autoscaling_config is non-empty, then
+// autoscaling is enabled.
+//
+//   - parent: The unique name of the project in which to create the new
+//     instance. Values are of the form `projects/{project}`.
 func (r *ProjectsInstancesService) Create(parent string, createinstancerequest *CreateInstanceRequest) *ProjectsInstancesCreateCall {
 	c := &ProjectsInstancesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3370,7 +4253,7 @@ func (c *ProjectsInstancesCreateCall) Header() http.Header {
 
 func (c *ProjectsInstancesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3410,17 +4293,17 @@ func (c *ProjectsInstancesCreateCall) Do(opts ...googleapi.CallOption) (*Operati
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -3434,7 +4317,7 @@ func (c *ProjectsInstancesCreateCall) Do(opts ...googleapi.CallOption) (*Operati
 	}
 	return ret, nil
 	// {
-	//   "description": "Create an instance within a project.",
+	//   "description": "Create an instance within a project. Note that exactly one of Cluster.serve_nodes and Cluster.cluster_config.cluster_autoscaling_config can be set. If serve_nodes is set to non-zero, then the cluster is manually scaled. If cluster_config.cluster_autoscaling_config is non-empty, then autoscaling is enabled.",
 	//   "flatPath": "v2/projects/{projectsId}/instances",
 	//   "httpMethod": "POST",
 	//   "id": "bigtableadmin.projects.instances.create",
@@ -3443,7 +4326,7 @@ func (c *ProjectsInstancesCreateCall) Do(opts ...googleapi.CallOption) (*Operati
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The unique name of the project in which to create the new instance.\nValues are of the form `projects/{project}`.",
+	//       "description": "Required. The unique name of the project in which to create the new instance. Values are of the form `projects/{project}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -3480,6 +4363,9 @@ type ProjectsInstancesDeleteCall struct {
 }
 
 // Delete: Delete an instance from a project.
+//
+//   - name: The unique name of the instance to be deleted. Values are of
+//     the form `projects/{project}/instances/{instance}`.
 func (r *ProjectsInstancesService) Delete(name string) *ProjectsInstancesDeleteCall {
 	c := &ProjectsInstancesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3513,7 +4399,7 @@ func (c *ProjectsInstancesDeleteCall) Header() http.Header {
 
 func (c *ProjectsInstancesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3548,17 +4434,17 @@ func (c *ProjectsInstancesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -3581,7 +4467,7 @@ func (c *ProjectsInstancesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The unique name of the instance to be deleted.\nValues are of the form `projects/{project}/instances/{instance}`.",
+	//       "description": "Required. The unique name of the instance to be deleted. Values are of the form `projects/{project}/instances/{instance}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/instances/[^/]+$",
 	//       "required": true,
@@ -3616,6 +4502,9 @@ type ProjectsInstancesGetCall struct {
 }
 
 // Get: Gets information about an instance.
+//
+//   - name: The unique name of the requested instance. Values are of the
+//     form `projects/{project}/instances/{instance}`.
 func (r *ProjectsInstancesService) Get(name string) *ProjectsInstancesGetCall {
 	c := &ProjectsInstancesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3659,7 +4548,7 @@ func (c *ProjectsInstancesGetCall) Header() http.Header {
 
 func (c *ProjectsInstancesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3697,17 +4586,17 @@ func (c *ProjectsInstancesGetCall) Do(opts ...googleapi.CallOption) (*Instance, 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Instance{
 		ServerResponse: googleapi.ServerResponse{
@@ -3730,7 +4619,7 @@ func (c *ProjectsInstancesGetCall) Do(opts ...googleapi.CallOption) (*Instance, 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The unique name of the requested instance. Values are of the form\n`projects/{project}/instances/{instance}`.",
+	//       "description": "Required. The unique name of the requested instance. Values are of the form `projects/{project}/instances/{instance}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/instances/[^/]+$",
 	//       "required": true,
@@ -3766,8 +4655,13 @@ type ProjectsInstancesGetIamPolicyCall struct {
 }
 
 // GetIamPolicy: Gets the access control policy for an instance
-// resource. Returns an empty
-// policy if an instance exists but does not have a policy set.
+// resource. Returns an empty policy if an instance exists but does not
+// have a policy set.
+//
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsInstancesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsInstancesGetIamPolicyCall {
 	c := &ProjectsInstancesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3802,7 +4696,7 @@ func (c *ProjectsInstancesGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsInstancesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3842,17 +4736,17 @@ func (c *ProjectsInstancesGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*P
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -3866,7 +4760,7 @@ func (c *ProjectsInstancesGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*P
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the access control policy for an instance resource. Returns an empty\npolicy if an instance exists but does not have a policy set.",
+	//   "description": "Gets the access control policy for an instance resource. Returns an empty policy if an instance exists but does not have a policy set.",
 	//   "flatPath": "v2/projects/{projectsId}/instances/{instancesId}:getIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "bigtableadmin.projects.instances.getIamPolicy",
@@ -3875,7 +4769,7 @@ func (c *ProjectsInstancesGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*P
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested.\nSee the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/instances/[^/]+$",
 	//       "required": true,
@@ -3913,6 +4807,10 @@ type ProjectsInstancesListCall struct {
 }
 
 // List: Lists information about instances in a project.
+//
+//   - parent: The unique name of the project for which a list of
+//     instances is requested. Values are of the form
+//     `projects/{project}`.
 func (r *ProjectsInstancesService) List(parent string) *ProjectsInstancesListCall {
 	c := &ProjectsInstancesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3963,7 +4861,7 @@ func (c *ProjectsInstancesListCall) Header() http.Header {
 
 func (c *ProjectsInstancesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4001,17 +4899,17 @@ func (c *ProjectsInstancesListCall) Do(opts ...googleapi.CallOption) (*ListInsta
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListInstancesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4039,7 +4937,7 @@ func (c *ProjectsInstancesListCall) Do(opts ...googleapi.CallOption) (*ListInsta
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The unique name of the project for which a list of instances is requested.\nValues are of the form `projects/{project}`.",
+	//       "description": "Required. The unique name of the project for which a list of instances is requested. Values are of the form `projects/{project}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -4096,8 +4994,11 @@ type ProjectsInstancesPartialUpdateInstanceCall struct {
 }
 
 // PartialUpdateInstance: Partially updates an instance within a
-// project. This method can modify all
-// fields of an Instance and is the preferred way to update an Instance.
+// project. This method can modify all fields of an Instance and is the
+// preferred way to update an Instance.
+//
+//   - name: The unique name of the instance. Values are of the form
+//     `projects/{project}/instances/a-z+[a-z0-9]`.
 func (r *ProjectsInstancesService) PartialUpdateInstance(name string, instance *Instance) *ProjectsInstancesPartialUpdateInstanceCall {
 	c := &ProjectsInstancesPartialUpdateInstanceCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4106,8 +5007,8 @@ func (r *ProjectsInstancesService) PartialUpdateInstance(name string, instance *
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. The
-// subset of Instance fields which should be replaced.
-// Must be explicitly set.
+// subset of Instance fields which should be replaced. Must be
+// explicitly set.
 func (c *ProjectsInstancesPartialUpdateInstanceCall) UpdateMask(updateMask string) *ProjectsInstancesPartialUpdateInstanceCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -4140,7 +5041,7 @@ func (c *ProjectsInstancesPartialUpdateInstanceCall) Header() http.Header {
 
 func (c *ProjectsInstancesPartialUpdateInstanceCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4180,17 +5081,17 @@ func (c *ProjectsInstancesPartialUpdateInstanceCall) Do(opts ...googleapi.CallOp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -4204,7 +5105,7 @@ func (c *ProjectsInstancesPartialUpdateInstanceCall) Do(opts ...googleapi.CallOp
 	}
 	return ret, nil
 	// {
-	//   "description": "Partially updates an instance within a project. This method can modify all\nfields of an Instance and is the preferred way to update an Instance.",
+	//   "description": "Partially updates an instance within a project. This method can modify all fields of an Instance and is the preferred way to update an Instance.",
 	//   "flatPath": "v2/projects/{projectsId}/instances/{instancesId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "bigtableadmin.projects.instances.partialUpdateInstance",
@@ -4213,14 +5114,14 @@ func (c *ProjectsInstancesPartialUpdateInstanceCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. (`OutputOnly`)\nThe unique name of the instance. Values are of the form\n`projects/{project}/instances/a-z+[a-z0-9]`.",
+	//       "description": "The unique name of the instance. Values are of the form `projects/{project}/instances/a-z+[a-z0-9]`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/instances/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. The subset of Instance fields which should be replaced.\nMust be explicitly set.",
+	//       "description": "Required. The subset of Instance fields which should be replaced. Must be explicitly set.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -4257,8 +5158,12 @@ type ProjectsInstancesSetIamPolicyCall struct {
 }
 
 // SetIamPolicy: Sets the access control policy on an instance resource.
-// Replaces any
-// existing policy.
+// Replaces any existing policy.
+//
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsInstancesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsInstancesSetIamPolicyCall {
 	c := &ProjectsInstancesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4293,7 +5198,7 @@ func (c *ProjectsInstancesSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsInstancesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4333,17 +5238,17 @@ func (c *ProjectsInstancesSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*P
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -4357,7 +5262,7 @@ func (c *ProjectsInstancesSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*P
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets the access control policy on an instance resource. Replaces any\nexisting policy.",
+	//   "description": "Sets the access control policy on an instance resource. Replaces any existing policy.",
 	//   "flatPath": "v2/projects/{projectsId}/instances/{instancesId}:setIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "bigtableadmin.projects.instances.setIamPolicy",
@@ -4366,7 +5271,7 @@ func (c *ProjectsInstancesSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*P
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified.\nSee the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/instances/[^/]+$",
 	//       "required": true,
@@ -4405,6 +5310,11 @@ type ProjectsInstancesTestIamPermissionsCall struct {
 
 // TestIamPermissions: Returns permissions that the caller has on the
 // specified instance resource.
+//
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsInstancesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsInstancesTestIamPermissionsCall {
 	c := &ProjectsInstancesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4439,7 +5349,7 @@ func (c *ProjectsInstancesTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsInstancesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4479,17 +5389,17 @@ func (c *ProjectsInstancesTestIamPermissionsCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TestIamPermissionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4512,7 +5422,7 @@ func (c *ProjectsInstancesTestIamPermissionsCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested.\nSee the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/instances/[^/]+$",
 	//       "required": true,
@@ -4550,10 +5460,11 @@ type ProjectsInstancesUpdateCall struct {
 }
 
 // Update: Updates an instance within a project. This method updates
-// only the display
-// name and type for an Instance. To update other Instance properties,
-// such as
-// labels, use PartialUpdateInstance.
+// only the display name and type for an Instance. To update other
+// Instance properties, such as labels, use PartialUpdateInstance.
+//
+//   - name: The unique name of the instance. Values are of the form
+//     `projects/{project}/instances/a-z+[a-z0-9]`.
 func (r *ProjectsInstancesService) Update(name string, instance *Instance) *ProjectsInstancesUpdateCall {
 	c := &ProjectsInstancesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4588,7 +5499,7 @@ func (c *ProjectsInstancesUpdateCall) Header() http.Header {
 
 func (c *ProjectsInstancesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4628,17 +5539,17 @@ func (c *ProjectsInstancesUpdateCall) Do(opts ...googleapi.CallOption) (*Instanc
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Instance{
 		ServerResponse: googleapi.ServerResponse{
@@ -4652,7 +5563,7 @@ func (c *ProjectsInstancesUpdateCall) Do(opts ...googleapi.CallOption) (*Instanc
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates an instance within a project. This method updates only the display\nname and type for an Instance. To update other Instance properties, such as\nlabels, use PartialUpdateInstance.",
+	//   "description": "Updates an instance within a project. This method updates only the display name and type for an Instance. To update other Instance properties, such as labels, use PartialUpdateInstance.",
 	//   "flatPath": "v2/projects/{projectsId}/instances/{instancesId}",
 	//   "httpMethod": "PUT",
 	//   "id": "bigtableadmin.projects.instances.update",
@@ -4661,7 +5572,7 @@ func (c *ProjectsInstancesUpdateCall) Do(opts ...googleapi.CallOption) (*Instanc
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. (`OutputOnly`)\nThe unique name of the instance. Values are of the form\n`projects/{project}/instances/a-z+[a-z0-9]`.",
+	//       "description": "The unique name of the instance. Values are of the form `projects/{project}/instances/a-z+[a-z0-9]`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/instances/[^/]+$",
 	//       "required": true,
@@ -4699,6 +5610,10 @@ type ProjectsInstancesAppProfilesCreateCall struct {
 }
 
 // Create: Creates an app profile within an instance.
+//
+//   - parent: The unique name of the instance in which to create the new
+//     app profile. Values are of the form
+//     `projects/{project}/instances/{instance}`.
 func (r *ProjectsInstancesAppProfilesService) Create(parent string, appprofile *AppProfile) *ProjectsInstancesAppProfilesCreateCall {
 	c := &ProjectsInstancesAppProfilesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4707,10 +5622,8 @@ func (r *ProjectsInstancesAppProfilesService) Create(parent string, appprofile *
 }
 
 // AppProfileId sets the optional parameter "appProfileId": Required.
-// The ID to be used when referring to the new app profile within
-// its
-// instance, e.g., just `myprofile` rather
-// than
+// The ID to be used when referring to the new app profile within its
+// instance, e.g., just `myprofile` rather than
 // `projects/myproject/instances/myinstance/appProfiles/myprofile`.
 func (c *ProjectsInstancesAppProfilesCreateCall) AppProfileId(appProfileId string) *ProjectsInstancesAppProfilesCreateCall {
 	c.urlParams_.Set("appProfileId", appProfileId)
@@ -4751,7 +5664,7 @@ func (c *ProjectsInstancesAppProfilesCreateCall) Header() http.Header {
 
 func (c *ProjectsInstancesAppProfilesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4791,17 +5704,17 @@ func (c *ProjectsInstancesAppProfilesCreateCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AppProfile{
 		ServerResponse: googleapi.ServerResponse{
@@ -4824,7 +5737,7 @@ func (c *ProjectsInstancesAppProfilesCreateCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "appProfileId": {
-	//       "description": "Required. The ID to be used when referring to the new app profile within its\ninstance, e.g., just `myprofile` rather than\n`projects/myproject/instances/myinstance/appProfiles/myprofile`.",
+	//       "description": "Required. The ID to be used when referring to the new app profile within its instance, e.g., just `myprofile` rather than `projects/myproject/instances/myinstance/appProfiles/myprofile`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4834,7 +5747,7 @@ func (c *ProjectsInstancesAppProfilesCreateCall) Do(opts ...googleapi.CallOption
 	//       "type": "boolean"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The unique name of the instance in which to create the new app profile.\nValues are of the form\n`projects/{project}/instances/{instance}`.",
+	//       "description": "Required. The unique name of the instance in which to create the new app profile. Values are of the form `projects/{project}/instances/{instance}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/instances/[^/]+$",
 	//       "required": true,
@@ -4871,6 +5784,10 @@ type ProjectsInstancesAppProfilesDeleteCall struct {
 }
 
 // Delete: Deletes an app profile from an instance.
+//
+//   - name: The unique name of the app profile to be deleted. Values are
+//     of the form
+//     `projects/{project}/instances/{instance}/appProfiles/{app_profile}`.
 func (r *ProjectsInstancesAppProfilesService) Delete(name string) *ProjectsInstancesAppProfilesDeleteCall {
 	c := &ProjectsInstancesAppProfilesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4912,7 +5829,7 @@ func (c *ProjectsInstancesAppProfilesDeleteCall) Header() http.Header {
 
 func (c *ProjectsInstancesAppProfilesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4947,17 +5864,17 @@ func (c *ProjectsInstancesAppProfilesDeleteCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -4985,7 +5902,7 @@ func (c *ProjectsInstancesAppProfilesDeleteCall) Do(opts ...googleapi.CallOption
 	//       "type": "boolean"
 	//     },
 	//     "name": {
-	//       "description": "Required. The unique name of the app profile to be deleted. Values are of the form\n`projects/{project}/instances/{instance}/appProfiles/{app_profile}`.",
+	//       "description": "Required. The unique name of the app profile to be deleted. Values are of the form `projects/{project}/instances/{instance}/appProfiles/{app_profile}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/instances/[^/]+/appProfiles/[^/]+$",
 	//       "required": true,
@@ -5020,6 +5937,10 @@ type ProjectsInstancesAppProfilesGetCall struct {
 }
 
 // Get: Gets information about an app profile.
+//
+//   - name: The unique name of the requested app profile. Values are of
+//     the form
+//     `projects/{project}/instances/{instance}/appProfiles/{app_profile}`.
 func (r *ProjectsInstancesAppProfilesService) Get(name string) *ProjectsInstancesAppProfilesGetCall {
 	c := &ProjectsInstancesAppProfilesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5063,7 +5984,7 @@ func (c *ProjectsInstancesAppProfilesGetCall) Header() http.Header {
 
 func (c *ProjectsInstancesAppProfilesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5101,17 +6022,17 @@ func (c *ProjectsInstancesAppProfilesGetCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AppProfile{
 		ServerResponse: googleapi.ServerResponse{
@@ -5134,7 +6055,7 @@ func (c *ProjectsInstancesAppProfilesGetCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The unique name of the requested app profile. Values are of the form\n`projects/{project}/instances/{instance}/appProfiles/{app_profile}`.",
+	//       "description": "Required. The unique name of the requested app profile. Values are of the form `projects/{project}/instances/{instance}/appProfiles/{app_profile}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/instances/[^/]+/appProfiles/[^/]+$",
 	//       "required": true,
@@ -5170,6 +6091,12 @@ type ProjectsInstancesAppProfilesListCall struct {
 }
 
 // List: Lists information about app profiles in an instance.
+//
+//   - parent: The unique name of the instance for which a list of app
+//     profiles is requested. Values are of the form
+//     `projects/{project}/instances/{instance}`. Use `{instance} = '-'`
+//     to list AppProfiles for all Instances in a project, e.g.,
+//     `projects/myproject/instances/-`.
 func (r *ProjectsInstancesAppProfilesService) List(parent string) *ProjectsInstancesAppProfilesListCall {
 	c := &ProjectsInstancesAppProfilesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5177,19 +6104,12 @@ func (r *ProjectsInstancesAppProfilesService) List(parent string) *ProjectsInsta
 }
 
 // PageSize sets the optional parameter "pageSize": Maximum number of
-// results per page.
-//
-// A page_size of zero lets the server choose the number of items to
-// return.
-// A page_size which is strictly positive will return at most that many
-// items.
-// A negative page_size will cause an error.
-//
-// Following the first request, subsequent paginated calls are not
-// required
-// to pass a page_size. If a page_size is set in subsequent calls, it
-// must
-// match the page_size given in the first request.
+// results per page. A page_size of zero lets the server choose the
+// number of items to return. A page_size which is strictly positive
+// will return at most that many items. A negative page_size will cause
+// an error. Following the first request, subsequent paginated calls are
+// not required to pass a page_size. If a page_size is set in subsequent
+// calls, it must match the page_size given in the first request.
 func (c *ProjectsInstancesAppProfilesListCall) PageSize(pageSize int64) *ProjectsInstancesAppProfilesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -5239,7 +6159,7 @@ func (c *ProjectsInstancesAppProfilesListCall) Header() http.Header {
 
 func (c *ProjectsInstancesAppProfilesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5277,17 +6197,17 @@ func (c *ProjectsInstancesAppProfilesListCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListAppProfilesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -5310,7 +6230,7 @@ func (c *ProjectsInstancesAppProfilesListCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "Maximum number of results per page.\n\nA page_size of zero lets the server choose the number of items to return.\nA page_size which is strictly positive will return at most that many items.\nA negative page_size will cause an error.\n\nFollowing the first request, subsequent paginated calls are not required\nto pass a page_size. If a page_size is set in subsequent calls, it must\nmatch the page_size given in the first request.",
+	//       "description": "Maximum number of results per page. A page_size of zero lets the server choose the number of items to return. A page_size which is strictly positive will return at most that many items. A negative page_size will cause an error. Following the first request, subsequent paginated calls are not required to pass a page_size. If a page_size is set in subsequent calls, it must match the page_size given in the first request.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -5321,7 +6241,7 @@ func (c *ProjectsInstancesAppProfilesListCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The unique name of the instance for which a list of app profiles is\nrequested. Values are of the form\n`projects/{project}/instances/{instance}`.\nUse `{instance} = '-'` to list AppProfiles for all Instances in a project,\ne.g., `projects/myproject/instances/-`.",
+	//       "description": "Required. The unique name of the instance for which a list of app profiles is requested. Values are of the form `projects/{project}/instances/{instance}`. Use `{instance} = '-'` to list AppProfiles for all Instances in a project, e.g., `projects/myproject/instances/-`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/instances/[^/]+$",
 	//       "required": true,
@@ -5377,6 +6297,9 @@ type ProjectsInstancesAppProfilesPatchCall struct {
 }
 
 // Patch: Updates an app profile within an instance.
+//
+//   - name: The unique name of the app profile. Values are of the form
+//     `projects/{project}/instances/{instance}/appProfiles/_a-zA-Z0-9*`.
 func (r *ProjectsInstancesAppProfilesService) Patch(name string, appprofile *AppProfile) *ProjectsInstancesAppProfilesPatchCall {
 	c := &ProjectsInstancesAppProfilesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5392,8 +6315,8 @@ func (c *ProjectsInstancesAppProfilesPatchCall) IgnoreWarnings(ignoreWarnings bo
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. The
-// subset of app profile fields which should be replaced.
-// If unset, all fields will be replaced.
+// subset of app profile fields which should be replaced. If unset, all
+// fields will be replaced.
 func (c *ProjectsInstancesAppProfilesPatchCall) UpdateMask(updateMask string) *ProjectsInstancesAppProfilesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -5426,7 +6349,7 @@ func (c *ProjectsInstancesAppProfilesPatchCall) Header() http.Header {
 
 func (c *ProjectsInstancesAppProfilesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5466,17 +6389,17 @@ func (c *ProjectsInstancesAppProfilesPatchCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -5504,14 +6427,14 @@ func (c *ProjectsInstancesAppProfilesPatchCall) Do(opts ...googleapi.CallOption)
 	//       "type": "boolean"
 	//     },
 	//     "name": {
-	//       "description": "(`OutputOnly`)\nThe unique name of the app profile. Values are of the form\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e/appProfiles/_a-zA-Z0-9*`.",
+	//       "description": "The unique name of the app profile. Values are of the form `projects/{project}/instances/{instance}/appProfiles/_a-zA-Z0-9*`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/instances/[^/]+/appProfiles/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. The subset of app profile fields which should be replaced.\nIf unset, all fields will be replaced.",
+	//       "description": "Required. The subset of app profile fields which should be replaced. If unset, all fields will be replaced.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -5547,7 +6470,16 @@ type ProjectsInstancesClustersCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates a cluster within an instance.
+// Create: Creates a cluster within an instance. Note that exactly one
+// of Cluster.serve_nodes and
+// Cluster.cluster_config.cluster_autoscaling_config can be set. If
+// serve_nodes is set to non-zero, then the cluster is manually scaled.
+// If cluster_config.cluster_autoscaling_config is non-empty, then
+// autoscaling is enabled.
+//
+//   - parent: The unique name of the instance in which to create the new
+//     cluster. Values are of the form
+//     `projects/{project}/instances/{instance}`.
 func (r *ProjectsInstancesClustersService) Create(parent string, cluster *Cluster) *ProjectsInstancesClustersCreateCall {
 	c := &ProjectsInstancesClustersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5556,10 +6488,8 @@ func (r *ProjectsInstancesClustersService) Create(parent string, cluster *Cluste
 }
 
 // ClusterId sets the optional parameter "clusterId": Required. The ID
-// to be used when referring to the new cluster within its
-// instance,
-// e.g., just `mycluster` rather
-// than
+// to be used when referring to the new cluster within its instance,
+// e.g., just `mycluster` rather than
 // `projects/myproject/instances/myinstance/clusters/mycluster`.
 func (c *ProjectsInstancesClustersCreateCall) ClusterId(clusterId string) *ProjectsInstancesClustersCreateCall {
 	c.urlParams_.Set("clusterId", clusterId)
@@ -5593,7 +6523,7 @@ func (c *ProjectsInstancesClustersCreateCall) Header() http.Header {
 
 func (c *ProjectsInstancesClustersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5633,17 +6563,17 @@ func (c *ProjectsInstancesClustersCreateCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -5657,7 +6587,7 @@ func (c *ProjectsInstancesClustersCreateCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a cluster within an instance.",
+	//   "description": "Creates a cluster within an instance. Note that exactly one of Cluster.serve_nodes and Cluster.cluster_config.cluster_autoscaling_config can be set. If serve_nodes is set to non-zero, then the cluster is manually scaled. If cluster_config.cluster_autoscaling_config is non-empty, then autoscaling is enabled.",
 	//   "flatPath": "v2/projects/{projectsId}/instances/{instancesId}/clusters",
 	//   "httpMethod": "POST",
 	//   "id": "bigtableadmin.projects.instances.clusters.create",
@@ -5666,12 +6596,12 @@ func (c *ProjectsInstancesClustersCreateCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "clusterId": {
-	//       "description": "Required. The ID to be used when referring to the new cluster within its instance,\ne.g., just `mycluster` rather than\n`projects/myproject/instances/myinstance/clusters/mycluster`.",
+	//       "description": "Required. The ID to be used when referring to the new cluster within its instance, e.g., just `mycluster` rather than `projects/myproject/instances/myinstance/clusters/mycluster`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The unique name of the instance in which to create the new cluster.\nValues are of the form\n`projects/{project}/instances/{instance}`.",
+	//       "description": "Required. The unique name of the instance in which to create the new cluster. Values are of the form `projects/{project}/instances/{instance}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/instances/[^/]+$",
 	//       "required": true,
@@ -5708,6 +6638,10 @@ type ProjectsInstancesClustersDeleteCall struct {
 }
 
 // Delete: Deletes a cluster from an instance.
+//
+//   - name: The unique name of the cluster to be deleted. Values are of
+//     the form
+//     `projects/{project}/instances/{instance}/clusters/{cluster}`.
 func (r *ProjectsInstancesClustersService) Delete(name string) *ProjectsInstancesClustersDeleteCall {
 	c := &ProjectsInstancesClustersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5741,7 +6675,7 @@ func (c *ProjectsInstancesClustersDeleteCall) Header() http.Header {
 
 func (c *ProjectsInstancesClustersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5776,17 +6710,17 @@ func (c *ProjectsInstancesClustersDeleteCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -5809,7 +6743,7 @@ func (c *ProjectsInstancesClustersDeleteCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The unique name of the cluster to be deleted. Values are of the form\n`projects/{project}/instances/{instance}/clusters/{cluster}`.",
+	//       "description": "Required. The unique name of the cluster to be deleted. Values are of the form `projects/{project}/instances/{instance}/clusters/{cluster}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/instances/[^/]+/clusters/[^/]+$",
 	//       "required": true,
@@ -5844,6 +6778,9 @@ type ProjectsInstancesClustersGetCall struct {
 }
 
 // Get: Gets information about a cluster.
+//
+//   - name: The unique name of the requested cluster. Values are of the
+//     form `projects/{project}/instances/{instance}/clusters/{cluster}`.
 func (r *ProjectsInstancesClustersService) Get(name string) *ProjectsInstancesClustersGetCall {
 	c := &ProjectsInstancesClustersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5887,7 +6824,7 @@ func (c *ProjectsInstancesClustersGetCall) Header() http.Header {
 
 func (c *ProjectsInstancesClustersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5925,17 +6862,17 @@ func (c *ProjectsInstancesClustersGetCall) Do(opts ...googleapi.CallOption) (*Cl
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Cluster{
 		ServerResponse: googleapi.ServerResponse{
@@ -5958,7 +6895,7 @@ func (c *ProjectsInstancesClustersGetCall) Do(opts ...googleapi.CallOption) (*Cl
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The unique name of the requested cluster. Values are of the form\n`projects/{project}/instances/{instance}/clusters/{cluster}`.",
+	//       "description": "Required. The unique name of the requested cluster. Values are of the form `projects/{project}/instances/{instance}/clusters/{cluster}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/instances/[^/]+/clusters/[^/]+$",
 	//       "required": true,
@@ -5994,6 +6931,12 @@ type ProjectsInstancesClustersListCall struct {
 }
 
 // List: Lists information about clusters in an instance.
+//
+//   - parent: The unique name of the instance for which a list of
+//     clusters is requested. Values are of the form
+//     `projects/{project}/instances/{instance}`. Use `{instance} = '-'`
+//     to list Clusters for all Instances in a project, e.g.,
+//     `projects/myproject/instances/-`.
 func (r *ProjectsInstancesClustersService) List(parent string) *ProjectsInstancesClustersListCall {
 	c := &ProjectsInstancesClustersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6044,7 +6987,7 @@ func (c *ProjectsInstancesClustersListCall) Header() http.Header {
 
 func (c *ProjectsInstancesClustersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6082,17 +7025,17 @@ func (c *ProjectsInstancesClustersListCall) Do(opts ...googleapi.CallOption) (*L
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListClustersResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -6120,7 +7063,7 @@ func (c *ProjectsInstancesClustersListCall) Do(opts ...googleapi.CallOption) (*L
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The unique name of the instance for which a list of clusters is requested.\nValues are of the form `projects/{project}/instances/{instance}`.\nUse `{instance} = '-'` to list Clusters for all Instances in a project,\ne.g., `projects/myproject/instances/-`.",
+	//       "description": "Required. The unique name of the instance for which a list of clusters is requested. Values are of the form `projects/{project}/instances/{instance}`. Use `{instance} = '-'` to list Clusters for all Instances in a project, e.g., `projects/myproject/instances/-`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/instances/[^/]+$",
 	//       "required": true,
@@ -6165,6 +7108,176 @@ func (c *ProjectsInstancesClustersListCall) Pages(ctx context.Context, f func(*L
 	}
 }
 
+// method id "bigtableadmin.projects.instances.clusters.partialUpdateCluster":
+
+type ProjectsInstancesClustersPartialUpdateClusterCall struct {
+	s          *Service
+	name       string
+	cluster    *Cluster
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// PartialUpdateCluster: Partially updates a cluster within a project.
+// This method is the preferred way to update a Cluster. To enable and
+// update autoscaling, set cluster_config.cluster_autoscaling_config.
+// When autoscaling is enabled, serve_nodes is treated as an OUTPUT_ONLY
+// field, meaning that updates to it are ignored. Note that an update
+// cannot simultaneously set serve_nodes to non-zero and
+// cluster_config.cluster_autoscaling_config to non-empty, and also
+// specify both in the update_mask. To disable autoscaling, clear
+// cluster_config.cluster_autoscaling_config, and explicitly set a
+// serve_node count via the update_mask.
+//
+//   - name: The unique name of the cluster. Values are of the form
+//     `projects/{project}/instances/{instance}/clusters/a-z*`.
+func (r *ProjectsInstancesClustersService) PartialUpdateCluster(name string, cluster *Cluster) *ProjectsInstancesClustersPartialUpdateClusterCall {
+	c := &ProjectsInstancesClustersPartialUpdateClusterCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.cluster = cluster
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. The
+// subset of Cluster fields which should be replaced.
+func (c *ProjectsInstancesClustersPartialUpdateClusterCall) UpdateMask(updateMask string) *ProjectsInstancesClustersPartialUpdateClusterCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsInstancesClustersPartialUpdateClusterCall) Fields(s ...googleapi.Field) *ProjectsInstancesClustersPartialUpdateClusterCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsInstancesClustersPartialUpdateClusterCall) Context(ctx context.Context) *ProjectsInstancesClustersPartialUpdateClusterCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsInstancesClustersPartialUpdateClusterCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstancesClustersPartialUpdateClusterCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.cluster)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "bigtableadmin.projects.instances.clusters.partialUpdateCluster" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsInstancesClustersPartialUpdateClusterCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Partially updates a cluster within a project. This method is the preferred way to update a Cluster. To enable and update autoscaling, set cluster_config.cluster_autoscaling_config. When autoscaling is enabled, serve_nodes is treated as an OUTPUT_ONLY field, meaning that updates to it are ignored. Note that an update cannot simultaneously set serve_nodes to non-zero and cluster_config.cluster_autoscaling_config to non-empty, and also specify both in the update_mask. To disable autoscaling, clear cluster_config.cluster_autoscaling_config, and explicitly set a serve_node count via the update_mask.",
+	//   "flatPath": "v2/projects/{projectsId}/instances/{instancesId}/clusters/{clustersId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "bigtableadmin.projects.instances.clusters.partialUpdateCluster",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The unique name of the cluster. Values are of the form `projects/{project}/instances/{instance}/clusters/a-z*`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/instances/[^/]+/clusters/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Required. The subset of Cluster fields which should be replaced.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "request": {
+	//     "$ref": "Cluster"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/bigtable.admin",
+	//     "https://www.googleapis.com/auth/bigtable.admin.cluster",
+	//     "https://www.googleapis.com/auth/bigtable.admin.instance",
+	//     "https://www.googleapis.com/auth/cloud-bigtable.admin",
+	//     "https://www.googleapis.com/auth/cloud-bigtable.admin.cluster",
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "bigtableadmin.projects.instances.clusters.update":
 
 type ProjectsInstancesClustersUpdateCall struct {
@@ -6176,7 +7289,12 @@ type ProjectsInstancesClustersUpdateCall struct {
 	header_    http.Header
 }
 
-// Update: Updates a cluster within an instance.
+// Update: Updates a cluster within an instance. Note that UpdateCluster
+// does not support updating cluster_config.cluster_autoscaling_config.
+// In order to update it, you must use PartialUpdateCluster.
+//
+//   - name: The unique name of the cluster. Values are of the form
+//     `projects/{project}/instances/{instance}/clusters/a-z*`.
 func (r *ProjectsInstancesClustersService) Update(name string, cluster *Cluster) *ProjectsInstancesClustersUpdateCall {
 	c := &ProjectsInstancesClustersUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6211,7 +7329,7 @@ func (c *ProjectsInstancesClustersUpdateCall) Header() http.Header {
 
 func (c *ProjectsInstancesClustersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6251,17 +7369,17 @@ func (c *ProjectsInstancesClustersUpdateCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -6275,7 +7393,7 @@ func (c *ProjectsInstancesClustersUpdateCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a cluster within an instance.",
+	//   "description": "Updates a cluster within an instance. Note that UpdateCluster does not support updating cluster_config.cluster_autoscaling_config. In order to update it, you must use PartialUpdateCluster.",
 	//   "flatPath": "v2/projects/{projectsId}/instances/{instancesId}/clusters/{clustersId}",
 	//   "httpMethod": "PUT",
 	//   "id": "bigtableadmin.projects.instances.clusters.update",
@@ -6284,7 +7402,7 @@ func (c *ProjectsInstancesClustersUpdateCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. (`OutputOnly`)\nThe unique name of the cluster. Values are of the form\n`projects/{project}/instances/{instance}/clusters/a-z*`.",
+	//       "description": "The unique name of the cluster. Values are of the form `projects/{project}/instances/{instance}/clusters/a-z*`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/instances/[^/]+/clusters/[^/]+$",
 	//       "required": true,
@@ -6310,6 +7428,615 @@ func (c *ProjectsInstancesClustersUpdateCall) Do(opts ...googleapi.CallOption) (
 
 }
 
+// method id "bigtableadmin.projects.instances.clusters.backups.copy":
+
+type ProjectsInstancesClustersBackupsCopyCall struct {
+	s                 *Service
+	parent            string
+	copybackuprequest *CopyBackupRequest
+	urlParams_        gensupport.URLParams
+	ctx_              context.Context
+	header_           http.Header
+}
+
+// Copy: Copy a Cloud Bigtable backup to a new backup in the destination
+// cluster located in the destination instance and project.
+//
+//   - parent: The name of the destination cluster that will contain the
+//     backup copy. The cluster must already exists. Values are of the
+//     form: `projects/{project}/instances/{instance}/clusters/{cluster}`.
+func (r *ProjectsInstancesClustersBackupsService) Copy(parent string, copybackuprequest *CopyBackupRequest) *ProjectsInstancesClustersBackupsCopyCall {
+	c := &ProjectsInstancesClustersBackupsCopyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.copybackuprequest = copybackuprequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsInstancesClustersBackupsCopyCall) Fields(s ...googleapi.Field) *ProjectsInstancesClustersBackupsCopyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsInstancesClustersBackupsCopyCall) Context(ctx context.Context) *ProjectsInstancesClustersBackupsCopyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsInstancesClustersBackupsCopyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstancesClustersBackupsCopyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.copybackuprequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/backups:copy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "bigtableadmin.projects.instances.clusters.backups.copy" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsInstancesClustersBackupsCopyCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Copy a Cloud Bigtable backup to a new backup in the destination cluster located in the destination instance and project.",
+	//   "flatPath": "v2/projects/{projectsId}/instances/{instancesId}/clusters/{clustersId}/backups:copy",
+	//   "httpMethod": "POST",
+	//   "id": "bigtableadmin.projects.instances.clusters.backups.copy",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The name of the destination cluster that will contain the backup copy. The cluster must already exists. Values are of the form: `projects/{project}/instances/{instance}/clusters/{cluster}`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/instances/[^/]+/clusters/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/backups:copy",
+	//   "request": {
+	//     "$ref": "CopyBackupRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/bigtable.admin",
+	//     "https://www.googleapis.com/auth/bigtable.admin.table",
+	//     "https://www.googleapis.com/auth/cloud-bigtable.admin",
+	//     "https://www.googleapis.com/auth/cloud-bigtable.admin.table",
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "bigtableadmin.projects.instances.clusters.backups.create":
+
+type ProjectsInstancesClustersBackupsCreateCall struct {
+	s          *Service
+	parent     string
+	backup     *Backup
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Create: Starts creating a new Cloud Bigtable Backup. The returned
+// backup long-running operation can be used to track creation of the
+// backup. The metadata field type is CreateBackupMetadata. The response
+// field type is Backup, if successful. Cancelling the returned
+// operation will stop the creation and delete the backup.
+//
+//   - parent: This must be one of the clusters in the instance in which
+//     this table is located. The backup will be stored in this cluster.
+//     Values are of the form
+//     `projects/{project}/instances/{instance}/clusters/{cluster}`.
+func (r *ProjectsInstancesClustersBackupsService) Create(parent string, backup *Backup) *ProjectsInstancesClustersBackupsCreateCall {
+	c := &ProjectsInstancesClustersBackupsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.backup = backup
+	return c
+}
+
+// BackupId sets the optional parameter "backupId": Required. The id of
+// the backup to be created. The `backup_id` along with the parent
+// `parent` are combined as {parent}/backups/{backup_id} to create the
+// full backup name, of the form:
+// `projects/{project}/instances/{instance}/clusters/{cluster}/backups/{b
+// ackup_id}`. This string must be between 1 and 50 characters in length
+// and match the regex _a-zA-Z0-9*.
+func (c *ProjectsInstancesClustersBackupsCreateCall) BackupId(backupId string) *ProjectsInstancesClustersBackupsCreateCall {
+	c.urlParams_.Set("backupId", backupId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsInstancesClustersBackupsCreateCall) Fields(s ...googleapi.Field) *ProjectsInstancesClustersBackupsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsInstancesClustersBackupsCreateCall) Context(ctx context.Context) *ProjectsInstancesClustersBackupsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsInstancesClustersBackupsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstancesClustersBackupsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.backup)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/backups")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "bigtableadmin.projects.instances.clusters.backups.create" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsInstancesClustersBackupsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Starts creating a new Cloud Bigtable Backup. The returned backup long-running operation can be used to track creation of the backup. The metadata field type is CreateBackupMetadata. The response field type is Backup, if successful. Cancelling the returned operation will stop the creation and delete the backup.",
+	//   "flatPath": "v2/projects/{projectsId}/instances/{instancesId}/clusters/{clustersId}/backups",
+	//   "httpMethod": "POST",
+	//   "id": "bigtableadmin.projects.instances.clusters.backups.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "backupId": {
+	//       "description": "Required. The id of the backup to be created. The `backup_id` along with the parent `parent` are combined as {parent}/backups/{backup_id} to create the full backup name, of the form: `projects/{project}/instances/{instance}/clusters/{cluster}/backups/{backup_id}`. This string must be between 1 and 50 characters in length and match the regex _a-zA-Z0-9*.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. This must be one of the clusters in the instance in which this table is located. The backup will be stored in this cluster. Values are of the form `projects/{project}/instances/{instance}/clusters/{cluster}`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/instances/[^/]+/clusters/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/backups",
+	//   "request": {
+	//     "$ref": "Backup"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/bigtable.admin",
+	//     "https://www.googleapis.com/auth/bigtable.admin.table",
+	//     "https://www.googleapis.com/auth/cloud-bigtable.admin",
+	//     "https://www.googleapis.com/auth/cloud-bigtable.admin.table",
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "bigtableadmin.projects.instances.clusters.backups.delete":
+
+type ProjectsInstancesClustersBackupsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a pending or completed Cloud Bigtable backup.
+//
+//   - name: Name of the backup to delete. Values are of the form
+//     `projects/{project}/instances/{instance}/clusters/{cluster}/backups/
+//     {backup}`.
+func (r *ProjectsInstancesClustersBackupsService) Delete(name string) *ProjectsInstancesClustersBackupsDeleteCall {
+	c := &ProjectsInstancesClustersBackupsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsInstancesClustersBackupsDeleteCall) Fields(s ...googleapi.Field) *ProjectsInstancesClustersBackupsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsInstancesClustersBackupsDeleteCall) Context(ctx context.Context) *ProjectsInstancesClustersBackupsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsInstancesClustersBackupsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstancesClustersBackupsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "bigtableadmin.projects.instances.clusters.backups.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsInstancesClustersBackupsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a pending or completed Cloud Bigtable backup.",
+	//   "flatPath": "v2/projects/{projectsId}/instances/{instancesId}/clusters/{clustersId}/backups/{backupsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "bigtableadmin.projects.instances.clusters.backups.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the backup to delete. Values are of the form `projects/{project}/instances/{instance}/clusters/{cluster}/backups/{backup}`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/instances/[^/]+/clusters/[^/]+/backups/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/bigtable.admin",
+	//     "https://www.googleapis.com/auth/bigtable.admin.table",
+	//     "https://www.googleapis.com/auth/cloud-bigtable.admin",
+	//     "https://www.googleapis.com/auth/cloud-bigtable.admin.table",
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "bigtableadmin.projects.instances.clusters.backups.get":
+
+type ProjectsInstancesClustersBackupsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets metadata on a pending or completed Cloud Bigtable Backup.
+//
+//   - name: Name of the backup. Values are of the form
+//     `projects/{project}/instances/{instance}/clusters/{cluster}/backups/
+//     {backup}`.
+func (r *ProjectsInstancesClustersBackupsService) Get(name string) *ProjectsInstancesClustersBackupsGetCall {
+	c := &ProjectsInstancesClustersBackupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsInstancesClustersBackupsGetCall) Fields(s ...googleapi.Field) *ProjectsInstancesClustersBackupsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsInstancesClustersBackupsGetCall) IfNoneMatch(entityTag string) *ProjectsInstancesClustersBackupsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsInstancesClustersBackupsGetCall) Context(ctx context.Context) *ProjectsInstancesClustersBackupsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsInstancesClustersBackupsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstancesClustersBackupsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "bigtableadmin.projects.instances.clusters.backups.get" call.
+// Exactly one of *Backup or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Backup.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsInstancesClustersBackupsGetCall) Do(opts ...googleapi.CallOption) (*Backup, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Backup{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets metadata on a pending or completed Cloud Bigtable Backup.",
+	//   "flatPath": "v2/projects/{projectsId}/instances/{instancesId}/clusters/{clustersId}/backups/{backupsId}",
+	//   "httpMethod": "GET",
+	//   "id": "bigtableadmin.projects.instances.clusters.backups.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the backup. Values are of the form `projects/{project}/instances/{instance}/clusters/{cluster}/backups/{backup}`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/instances/[^/]+/clusters/[^/]+/backups/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "response": {
+	//     "$ref": "Backup"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/bigtable.admin",
+	//     "https://www.googleapis.com/auth/bigtable.admin.table",
+	//     "https://www.googleapis.com/auth/cloud-bigtable.admin",
+	//     "https://www.googleapis.com/auth/cloud-bigtable.admin.table",
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "bigtableadmin.projects.instances.clusters.backups.getIamPolicy":
 
 type ProjectsInstancesClustersBackupsGetIamPolicyCall struct {
@@ -6321,11 +8048,14 @@ type ProjectsInstancesClustersBackupsGetIamPolicyCall struct {
 	header_             http.Header
 }
 
-// GetIamPolicy: Gets the access control policy for a Table
-// resource.
+// GetIamPolicy: Gets the access control policy for a Table resource.
 // Returns an empty policy if the resource exists but does not have a
-// policy
-// set.
+// policy set.
+//
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsInstancesClustersBackupsService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsInstancesClustersBackupsGetIamPolicyCall {
 	c := &ProjectsInstancesClustersBackupsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6360,7 +8090,7 @@ func (c *ProjectsInstancesClustersBackupsGetIamPolicyCall) Header() http.Header 
 
 func (c *ProjectsInstancesClustersBackupsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6400,17 +8130,17 @@ func (c *ProjectsInstancesClustersBackupsGetIamPolicyCall) Do(opts ...googleapi.
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -6424,7 +8154,7 @@ func (c *ProjectsInstancesClustersBackupsGetIamPolicyCall) Do(opts ...googleapi.
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the access control policy for a Table resource.\nReturns an empty policy if the resource exists but does not have a policy\nset.",
+	//   "description": "Gets the access control policy for a Table resource. Returns an empty policy if the resource exists but does not have a policy set.",
 	//   "flatPath": "v2/projects/{projectsId}/instances/{instancesId}/clusters/{clustersId}/backups/{backupsId}:getIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "bigtableadmin.projects.instances.clusters.backups.getIamPolicy",
@@ -6433,7 +8163,7 @@ func (c *ProjectsInstancesClustersBackupsGetIamPolicyCall) Do(opts ...googleapi.
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested.\nSee the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/instances/[^/]+/clusters/[^/]+/backups/[^/]+$",
 	//       "required": true,
@@ -6458,6 +8188,432 @@ func (c *ProjectsInstancesClustersBackupsGetIamPolicyCall) Do(opts ...googleapi.
 
 }
 
+// method id "bigtableadmin.projects.instances.clusters.backups.list":
+
+type ProjectsInstancesClustersBackupsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists Cloud Bigtable backups. Returns both completed and
+// pending backups.
+//
+//   - parent: The cluster to list backups from. Values are of the form
+//     `projects/{project}/instances/{instance}/clusters/{cluster}`. Use
+//     `{cluster} = '-'` to list backups for all clusters in an instance,
+//     e.g., `projects/{project}/instances/{instance}/clusters/-`.
+func (r *ProjectsInstancesClustersBackupsService) List(parent string) *ProjectsInstancesClustersBackupsListCall {
+	c := &ProjectsInstancesClustersBackupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": A filter expression that
+// filters backups listed in the response. The expression must specify
+// the field name, a comparison operator, and the value that you want to
+// use for filtering. The value must be a string, a number, or a
+// boolean. The comparison operator must be <, >, <=, >=, !=, =, or :.
+// Colon ':' represents a HAS operator which is roughly synonymous with
+// equality. Filter rules are case insensitive. The fields eligible for
+// filtering are: * `name` * `source_table` * `state` * `start_time`
+// (and values are of the format YYYY-MM-DDTHH:MM:SSZ) * `end_time` (and
+// values are of the format YYYY-MM-DDTHH:MM:SSZ) * `expire_time` (and
+// values are of the format YYYY-MM-DDTHH:MM:SSZ) * `size_bytes` To
+// filter on multiple expressions, provide each separate expression
+// within parentheses. By default, each expression is an AND expression.
+// However, you can include AND, OR, and NOT expressions explicitly.
+// Some examples of using filters are: * `name:"exact" --> The backup's
+// name is the string "exact". * `name:howl` --> The backup's name
+// contains the string "howl". * `source_table:prod` --> The
+// source_table's name contains the string "prod". * `state:CREATING`
+// --> The backup is pending creation. * `state:READY` --> The backup is
+// fully created and ready for use. * `(name:howl) AND (start_time <
+// \"2018-03-28T14:50:00Z\")` --> The backup name contains the string
+// "howl" and start_time of the backup is before 2018-03-28T14:50:00Z. *
+// `size_bytes > 10000000000` --> The backup's size is greater than 10GB
+func (c *ProjectsInstancesClustersBackupsListCall) Filter(filter string) *ProjectsInstancesClustersBackupsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": An expression for
+// specifying the sort order of the results of the request. The string
+// value should specify one or more fields in Backup. The full syntax is
+// described at https://aip.dev/132#ordering. Fields supported are: *
+// name * source_table * expire_time * start_time * end_time *
+// size_bytes * state For example, "start_time". The default sorting
+// order is ascending. To specify descending order for the field, a
+// suffix " desc" should be appended to the field name. For example,
+// "start_time desc". Redundant space characters in the syntax are
+// insigificant. If order_by is empty, results will be sorted by
+// `start_time` in descending order starting from the most recently
+// created backup.
+func (c *ProjectsInstancesClustersBackupsListCall) OrderBy(orderBy string) *ProjectsInstancesClustersBackupsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Number of backups to
+// be returned in the response. If 0 or less, defaults to the server's
+// maximum allowed page size.
+func (c *ProjectsInstancesClustersBackupsListCall) PageSize(pageSize int64) *ProjectsInstancesClustersBackupsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": If non-empty,
+// `page_token` should contain a next_page_token from a previous
+// ListBackupsResponse to the same `parent` and with the same `filter`.
+func (c *ProjectsInstancesClustersBackupsListCall) PageToken(pageToken string) *ProjectsInstancesClustersBackupsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsInstancesClustersBackupsListCall) Fields(s ...googleapi.Field) *ProjectsInstancesClustersBackupsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsInstancesClustersBackupsListCall) IfNoneMatch(entityTag string) *ProjectsInstancesClustersBackupsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsInstancesClustersBackupsListCall) Context(ctx context.Context) *ProjectsInstancesClustersBackupsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsInstancesClustersBackupsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstancesClustersBackupsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/backups")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "bigtableadmin.projects.instances.clusters.backups.list" call.
+// Exactly one of *ListBackupsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListBackupsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsInstancesClustersBackupsListCall) Do(opts ...googleapi.CallOption) (*ListBackupsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListBackupsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists Cloud Bigtable backups. Returns both completed and pending backups.",
+	//   "flatPath": "v2/projects/{projectsId}/instances/{instancesId}/clusters/{clustersId}/backups",
+	//   "httpMethod": "GET",
+	//   "id": "bigtableadmin.projects.instances.clusters.backups.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "A filter expression that filters backups listed in the response. The expression must specify the field name, a comparison operator, and the value that you want to use for filtering. The value must be a string, a number, or a boolean. The comparison operator must be \u003c, \u003e, \u003c=, \u003e=, !=, =, or :. Colon ':' represents a HAS operator which is roughly synonymous with equality. Filter rules are case insensitive. The fields eligible for filtering are: * `name` * `source_table` * `state` * `start_time` (and values are of the format YYYY-MM-DDTHH:MM:SSZ) * `end_time` (and values are of the format YYYY-MM-DDTHH:MM:SSZ) * `expire_time` (and values are of the format YYYY-MM-DDTHH:MM:SSZ) * `size_bytes` To filter on multiple expressions, provide each separate expression within parentheses. By default, each expression is an AND expression. However, you can include AND, OR, and NOT expressions explicitly. Some examples of using filters are: * `name:\"exact\"` --\u003e The backup's name is the string \"exact\". * `name:howl` --\u003e The backup's name contains the string \"howl\". * `source_table:prod` --\u003e The source_table's name contains the string \"prod\". * `state:CREATING` --\u003e The backup is pending creation. * `state:READY` --\u003e The backup is fully created and ready for use. * `(name:howl) AND (start_time \u003c \\\"2018-03-28T14:50:00Z\\\")` --\u003e The backup name contains the string \"howl\" and start_time of the backup is before 2018-03-28T14:50:00Z. * `size_bytes \u003e 10000000000` --\u003e The backup's size is greater than 10GB",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "An expression for specifying the sort order of the results of the request. The string value should specify one or more fields in Backup. The full syntax is described at https://aip.dev/132#ordering. Fields supported are: * name * source_table * expire_time * start_time * end_time * size_bytes * state For example, \"start_time\". The default sorting order is ascending. To specify descending order for the field, a suffix \" desc\" should be appended to the field name. For example, \"start_time desc\". Redundant space characters in the syntax are insigificant. If order_by is empty, results will be sorted by `start_time` in descending order starting from the most recently created backup.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Number of backups to be returned in the response. If 0 or less, defaults to the server's maximum allowed page size.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "If non-empty, `page_token` should contain a next_page_token from a previous ListBackupsResponse to the same `parent` and with the same `filter`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The cluster to list backups from. Values are of the form `projects/{project}/instances/{instance}/clusters/{cluster}`. Use `{cluster} = '-'` to list backups for all clusters in an instance, e.g., `projects/{project}/instances/{instance}/clusters/-`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/instances/[^/]+/clusters/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/backups",
+	//   "response": {
+	//     "$ref": "ListBackupsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/bigtable.admin",
+	//     "https://www.googleapis.com/auth/bigtable.admin.table",
+	//     "https://www.googleapis.com/auth/cloud-bigtable.admin",
+	//     "https://www.googleapis.com/auth/cloud-bigtable.admin.table",
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsInstancesClustersBackupsListCall) Pages(ctx context.Context, f func(*ListBackupsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "bigtableadmin.projects.instances.clusters.backups.patch":
+
+type ProjectsInstancesClustersBackupsPatchCall struct {
+	s          *Service
+	nameid     string
+	backup     *Backup
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Updates a pending or completed Cloud Bigtable Backup.
+//
+//   - name: A globally unique identifier for the backup which cannot be
+//     changed. Values are of the form
+//     `projects/{project}/instances/{instance}/clusters/{cluster}/
+//     backups/_a-zA-Z0-9*` The final segment of the name must be between
+//     1 and 50 characters in length. The backup is stored in the cluster
+//     identified by the prefix of the backup name of the form
+//     `projects/{project}/instances/{instance}/clusters/{cluster}`.
+func (r *ProjectsInstancesClustersBackupsService) Patch(nameid string, backup *Backup) *ProjectsInstancesClustersBackupsPatchCall {
+	c := &ProjectsInstancesClustersBackupsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.nameid = nameid
+	c.backup = backup
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. A mask
+// specifying which fields (e.g. `expire_time`) in the Backup resource
+// should be updated. This mask is relative to the Backup resource, not
+// to the request message. The field mask must always be specified; this
+// prevents any future fields from being erased accidentally by clients
+// that do not know about them.
+func (c *ProjectsInstancesClustersBackupsPatchCall) UpdateMask(updateMask string) *ProjectsInstancesClustersBackupsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsInstancesClustersBackupsPatchCall) Fields(s ...googleapi.Field) *ProjectsInstancesClustersBackupsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsInstancesClustersBackupsPatchCall) Context(ctx context.Context) *ProjectsInstancesClustersBackupsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsInstancesClustersBackupsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstancesClustersBackupsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.backup)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.nameid,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "bigtableadmin.projects.instances.clusters.backups.patch" call.
+// Exactly one of *Backup or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Backup.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsInstancesClustersBackupsPatchCall) Do(opts ...googleapi.CallOption) (*Backup, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Backup{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a pending or completed Cloud Bigtable Backup.",
+	//   "flatPath": "v2/projects/{projectsId}/instances/{instancesId}/clusters/{clustersId}/backups/{backupsId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "bigtableadmin.projects.instances.clusters.backups.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "A globally unique identifier for the backup which cannot be changed. Values are of the form `projects/{project}/instances/{instance}/clusters/{cluster}/ backups/_a-zA-Z0-9*` The final segment of the name must be between 1 and 50 characters in length. The backup is stored in the cluster identified by the prefix of the backup name of the form `projects/{project}/instances/{instance}/clusters/{cluster}`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/instances/[^/]+/clusters/[^/]+/backups/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Required. A mask specifying which fields (e.g. `expire_time`) in the Backup resource should be updated. This mask is relative to the Backup resource, not to the request message. The field mask must always be specified; this prevents any future fields from being erased accidentally by clients that do not know about them.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "request": {
+	//     "$ref": "Backup"
+	//   },
+	//   "response": {
+	//     "$ref": "Backup"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/bigtable.admin",
+	//     "https://www.googleapis.com/auth/bigtable.admin.table",
+	//     "https://www.googleapis.com/auth/cloud-bigtable.admin",
+	//     "https://www.googleapis.com/auth/cloud-bigtable.admin.table",
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "bigtableadmin.projects.instances.clusters.backups.setIamPolicy":
 
 type ProjectsInstancesClustersBackupsSetIamPolicyCall struct {
@@ -6469,9 +8625,13 @@ type ProjectsInstancesClustersBackupsSetIamPolicyCall struct {
 	header_             http.Header
 }
 
-// SetIamPolicy: Sets the access control policy on a Table
-// resource.
+// SetIamPolicy: Sets the access control policy on a Table resource.
 // Replaces any existing policy.
+//
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsInstancesClustersBackupsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsInstancesClustersBackupsSetIamPolicyCall {
 	c := &ProjectsInstancesClustersBackupsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6506,7 +8666,7 @@ func (c *ProjectsInstancesClustersBackupsSetIamPolicyCall) Header() http.Header 
 
 func (c *ProjectsInstancesClustersBackupsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6546,17 +8706,17 @@ func (c *ProjectsInstancesClustersBackupsSetIamPolicyCall) Do(opts ...googleapi.
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -6570,7 +8730,7 @@ func (c *ProjectsInstancesClustersBackupsSetIamPolicyCall) Do(opts ...googleapi.
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets the access control policy on a Table resource.\nReplaces any existing policy.",
+	//   "description": "Sets the access control policy on a Table resource. Replaces any existing policy.",
 	//   "flatPath": "v2/projects/{projectsId}/instances/{instancesId}/clusters/{clustersId}/backups/{backupsId}:setIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "bigtableadmin.projects.instances.clusters.backups.setIamPolicy",
@@ -6579,7 +8739,7 @@ func (c *ProjectsInstancesClustersBackupsSetIamPolicyCall) Do(opts ...googleapi.
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified.\nSee the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/instances/[^/]+/clusters/[^/]+/backups/[^/]+$",
 	//       "required": true,
@@ -6617,6 +8777,11 @@ type ProjectsInstancesClustersBackupsTestIamPermissionsCall struct {
 
 // TestIamPermissions: Returns permissions that the caller has on the
 // specified table resource.
+//
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsInstancesClustersBackupsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsInstancesClustersBackupsTestIamPermissionsCall {
 	c := &ProjectsInstancesClustersBackupsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6651,7 +8816,7 @@ func (c *ProjectsInstancesClustersBackupsTestIamPermissionsCall) Header() http.H
 
 func (c *ProjectsInstancesClustersBackupsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6691,17 +8856,17 @@ func (c *ProjectsInstancesClustersBackupsTestIamPermissionsCall) Do(opts ...goog
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TestIamPermissionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -6724,7 +8889,7 @@ func (c *ProjectsInstancesClustersBackupsTestIamPermissionsCall) Do(opts ...goog
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested.\nSee the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/instances/[^/]+/clusters/[^/]+/backups/[^/]+$",
 	//       "required": true,
@@ -6749,6 +8914,244 @@ func (c *ProjectsInstancesClustersBackupsTestIamPermissionsCall) Do(opts ...goog
 
 }
 
+// method id "bigtableadmin.projects.instances.clusters.hotTablets.list":
+
+type ProjectsInstancesClustersHotTabletsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists hot tablets in a cluster, within the time range provided.
+// Hot tablets are ordered based on CPU usage.
+//
+//   - parent: The cluster name to list hot tablets. Value is in the
+//     following form:
+//     `projects/{project}/instances/{instance}/clusters/{cluster}`.
+func (r *ProjectsInstancesClustersHotTabletsService) List(parent string) *ProjectsInstancesClustersHotTabletsListCall {
+	c := &ProjectsInstancesClustersHotTabletsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// EndTime sets the optional parameter "endTime": The end time to list
+// hot tablets.
+func (c *ProjectsInstancesClustersHotTabletsListCall) EndTime(endTime string) *ProjectsInstancesClustersHotTabletsListCall {
+	c.urlParams_.Set("endTime", endTime)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of
+// results per page. A page_size that is empty or zero lets the server
+// choose the number of items to return. A page_size which is strictly
+// positive will return at most that many items. A negative page_size
+// will cause an error. Following the first request, subsequent
+// paginated calls do not need a page_size field. If a page_size is set
+// in subsequent calls, it must match the page_size given in the first
+// request.
+func (c *ProjectsInstancesClustersHotTabletsListCall) PageSize(pageSize int64) *ProjectsInstancesClustersHotTabletsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The value of
+// `next_page_token` returned by a previous call.
+func (c *ProjectsInstancesClustersHotTabletsListCall) PageToken(pageToken string) *ProjectsInstancesClustersHotTabletsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// StartTime sets the optional parameter "startTime": The start time to
+// list hot tablets. The hot tablets in the response will have start
+// times between the requested start time and end time. Start time
+// defaults to Now if it is unset, and end time defaults to Now - 24
+// hours if it is unset. The start time should be less than the end
+// time, and the maximum allowed time range between start time and end
+// time is 48 hours. Start time and end time should have values between
+// Now and Now - 14 days.
+func (c *ProjectsInstancesClustersHotTabletsListCall) StartTime(startTime string) *ProjectsInstancesClustersHotTabletsListCall {
+	c.urlParams_.Set("startTime", startTime)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsInstancesClustersHotTabletsListCall) Fields(s ...googleapi.Field) *ProjectsInstancesClustersHotTabletsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsInstancesClustersHotTabletsListCall) IfNoneMatch(entityTag string) *ProjectsInstancesClustersHotTabletsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsInstancesClustersHotTabletsListCall) Context(ctx context.Context) *ProjectsInstancesClustersHotTabletsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsInstancesClustersHotTabletsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstancesClustersHotTabletsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/hotTablets")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "bigtableadmin.projects.instances.clusters.hotTablets.list" call.
+// Exactly one of *ListHotTabletsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListHotTabletsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsInstancesClustersHotTabletsListCall) Do(opts ...googleapi.CallOption) (*ListHotTabletsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListHotTabletsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists hot tablets in a cluster, within the time range provided. Hot tablets are ordered based on CPU usage.",
+	//   "flatPath": "v2/projects/{projectsId}/instances/{instancesId}/clusters/{clustersId}/hotTablets",
+	//   "httpMethod": "GET",
+	//   "id": "bigtableadmin.projects.instances.clusters.hotTablets.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "endTime": {
+	//       "description": "The end time to list hot tablets.",
+	//       "format": "google-datetime",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Maximum number of results per page. A page_size that is empty or zero lets the server choose the number of items to return. A page_size which is strictly positive will return at most that many items. A negative page_size will cause an error. Following the first request, subsequent paginated calls do not need a page_size field. If a page_size is set in subsequent calls, it must match the page_size given in the first request.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The value of `next_page_token` returned by a previous call.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The cluster name to list hot tablets. Value is in the following form: `projects/{project}/instances/{instance}/clusters/{cluster}`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/instances/[^/]+/clusters/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "startTime": {
+	//       "description": "The start time to list hot tablets. The hot tablets in the response will have start times between the requested start time and end time. Start time defaults to Now if it is unset, and end time defaults to Now - 24 hours if it is unset. The start time should be less than the end time, and the maximum allowed time range between start time and end time is 48 hours. Start time and end time should have values between Now and Now - 14 days.",
+	//       "format": "google-datetime",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/hotTablets",
+	//   "response": {
+	//     "$ref": "ListHotTabletsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/bigtable.admin",
+	//     "https://www.googleapis.com/auth/bigtable.admin.cluster",
+	//     "https://www.googleapis.com/auth/bigtable.admin.instance",
+	//     "https://www.googleapis.com/auth/cloud-bigtable.admin",
+	//     "https://www.googleapis.com/auth/cloud-bigtable.admin.cluster",
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsInstancesClustersHotTabletsListCall) Pages(ctx context.Context, f func(*ListHotTabletsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "bigtableadmin.projects.instances.tables.checkConsistency":
 
 type ProjectsInstancesTablesCheckConsistencyCall struct {
@@ -6761,10 +9164,12 @@ type ProjectsInstancesTablesCheckConsistencyCall struct {
 }
 
 // CheckConsistency: Checks replication consistency based on a
-// consistency token, that is, if
-// replication has caught up based on the conditions specified in the
-// token
-// and the check request.
+// consistency token, that is, if replication has caught up based on the
+// conditions specified in the token and the check request.
+//
+//   - name: The unique name of the Table for which to check replication
+//     consistency. Values are of the form
+//     `projects/{project}/instances/{instance}/tables/{table}`.
 func (r *ProjectsInstancesTablesService) CheckConsistency(name string, checkconsistencyrequest *CheckConsistencyRequest) *ProjectsInstancesTablesCheckConsistencyCall {
 	c := &ProjectsInstancesTablesCheckConsistencyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6799,7 +9204,7 @@ func (c *ProjectsInstancesTablesCheckConsistencyCall) Header() http.Header {
 
 func (c *ProjectsInstancesTablesCheckConsistencyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6839,17 +9244,17 @@ func (c *ProjectsInstancesTablesCheckConsistencyCall) Do(opts ...googleapi.CallO
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &CheckConsistencyResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -6863,7 +9268,7 @@ func (c *ProjectsInstancesTablesCheckConsistencyCall) Do(opts ...googleapi.CallO
 	}
 	return ret, nil
 	// {
-	//   "description": "Checks replication consistency based on a consistency token, that is, if\nreplication has caught up based on the conditions specified in the token\nand the check request.",
+	//   "description": "Checks replication consistency based on a consistency token, that is, if replication has caught up based on the conditions specified in the token and the check request.",
 	//   "flatPath": "v2/projects/{projectsId}/instances/{instancesId}/tables/{tablesId}:checkConsistency",
 	//   "httpMethod": "POST",
 	//   "id": "bigtableadmin.projects.instances.tables.checkConsistency",
@@ -6872,7 +9277,7 @@ func (c *ProjectsInstancesTablesCheckConsistencyCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The unique name of the Table for which to check replication consistency.\nValues are of the form\n`projects/{project}/instances/{instance}/tables/{table}`.",
+	//       "description": "Required. The unique name of the Table for which to check replication consistency. Values are of the form `projects/{project}/instances/{instance}/tables/{table}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/instances/[^/]+/tables/[^/]+$",
 	//       "required": true,
@@ -6908,10 +9313,13 @@ type ProjectsInstancesTablesCreateCall struct {
 	header_            http.Header
 }
 
-// Create: Creates a new table in the specified instance.
-// The table can be created with a full set of initial column
-// families,
-// specified in the request.
+// Create: Creates a new table in the specified instance. The table can
+// be created with a full set of initial column families, specified in
+// the request.
+//
+//   - parent: The unique name of the instance in which to create the
+//     table. Values are of the form
+//     `projects/{project}/instances/{instance}`.
 func (r *ProjectsInstancesTablesService) Create(parent string, createtablerequest *CreateTableRequest) *ProjectsInstancesTablesCreateCall {
 	c := &ProjectsInstancesTablesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6946,7 +9354,7 @@ func (c *ProjectsInstancesTablesCreateCall) Header() http.Header {
 
 func (c *ProjectsInstancesTablesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6986,17 +9394,17 @@ func (c *ProjectsInstancesTablesCreateCall) Do(opts ...googleapi.CallOption) (*T
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Table{
 		ServerResponse: googleapi.ServerResponse{
@@ -7010,7 +9418,7 @@ func (c *ProjectsInstancesTablesCreateCall) Do(opts ...googleapi.CallOption) (*T
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new table in the specified instance.\nThe table can be created with a full set of initial column families,\nspecified in the request.",
+	//   "description": "Creates a new table in the specified instance. The table can be created with a full set of initial column families, specified in the request.",
 	//   "flatPath": "v2/projects/{projectsId}/instances/{instancesId}/tables",
 	//   "httpMethod": "POST",
 	//   "id": "bigtableadmin.projects.instances.tables.create",
@@ -7019,7 +9427,7 @@ func (c *ProjectsInstancesTablesCreateCall) Do(opts ...googleapi.CallOption) (*T
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The unique name of the instance in which to create the table.\nValues are of the form `projects/{project}/instances/{instance}`.",
+	//       "description": "Required. The unique name of the instance in which to create the table. Values are of the form `projects/{project}/instances/{instance}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/instances/[^/]+$",
 	//       "required": true,
@@ -7055,6 +9463,9 @@ type ProjectsInstancesTablesDeleteCall struct {
 }
 
 // Delete: Permanently deletes a specified table and all of its data.
+//
+//   - name: The unique name of the table to be deleted. Values are of the
+//     form `projects/{project}/instances/{instance}/tables/{table}`.
 func (r *ProjectsInstancesTablesService) Delete(name string) *ProjectsInstancesTablesDeleteCall {
 	c := &ProjectsInstancesTablesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7088,7 +9499,7 @@ func (c *ProjectsInstancesTablesDeleteCall) Header() http.Header {
 
 func (c *ProjectsInstancesTablesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7123,17 +9534,17 @@ func (c *ProjectsInstancesTablesDeleteCall) Do(opts ...googleapi.CallOption) (*E
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -7156,7 +9567,7 @@ func (c *ProjectsInstancesTablesDeleteCall) Do(opts ...googleapi.CallOption) (*E
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The unique name of the table to be deleted.\nValues are of the form\n`projects/{project}/instances/{instance}/tables/{table}`.",
+	//       "description": "Required. The unique name of the table to be deleted. Values are of the form `projects/{project}/instances/{instance}/tables/{table}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/instances/[^/]+/tables/[^/]+$",
 	//       "required": true,
@@ -7190,10 +9601,12 @@ type ProjectsInstancesTablesDropRowRangeCall struct {
 }
 
 // DropRowRange: Permanently drop/delete a row range from a specified
-// table. The request can
-// specify whether to delete all rows in a table, or only those that
-// match a
-// particular prefix.
+// table. The request can specify whether to delete all rows in a table,
+// or only those that match a particular prefix.
+//
+//   - name: The unique name of the table on which to drop a range of
+//     rows. Values are of the form
+//     `projects/{project}/instances/{instance}/tables/{table}`.
 func (r *ProjectsInstancesTablesService) DropRowRange(name string, droprowrangerequest *DropRowRangeRequest) *ProjectsInstancesTablesDropRowRangeCall {
 	c := &ProjectsInstancesTablesDropRowRangeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7228,7 +9641,7 @@ func (c *ProjectsInstancesTablesDropRowRangeCall) Header() http.Header {
 
 func (c *ProjectsInstancesTablesDropRowRangeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7268,17 +9681,17 @@ func (c *ProjectsInstancesTablesDropRowRangeCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -7292,7 +9705,7 @@ func (c *ProjectsInstancesTablesDropRowRangeCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
-	//   "description": "Permanently drop/delete a row range from a specified table. The request can\nspecify whether to delete all rows in a table, or only those that match a\nparticular prefix.",
+	//   "description": "Permanently drop/delete a row range from a specified table. The request can specify whether to delete all rows in a table, or only those that match a particular prefix.",
 	//   "flatPath": "v2/projects/{projectsId}/instances/{instancesId}/tables/{tablesId}:dropRowRange",
 	//   "httpMethod": "POST",
 	//   "id": "bigtableadmin.projects.instances.tables.dropRowRange",
@@ -7301,7 +9714,7 @@ func (c *ProjectsInstancesTablesDropRowRangeCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The unique name of the table on which to drop a range of rows.\nValues are of the form\n`projects/{project}/instances/{instance}/tables/{table}`.",
+	//       "description": "Required. The unique name of the table on which to drop a range of rows. Values are of the form `projects/{project}/instances/{instance}/tables/{table}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/instances/[^/]+/tables/[^/]+$",
 	//       "required": true,
@@ -7338,12 +9751,13 @@ type ProjectsInstancesTablesGenerateConsistencyTokenCall struct {
 }
 
 // GenerateConsistencyToken: Generates a consistency token for a Table,
-// which can be used in
-// CheckConsistency to check whether mutations to the table that
-// finished
-// before this call started have been replicated. The tokens will be
-// available
-// for 90 days.
+// which can be used in CheckConsistency to check whether mutations to
+// the table that finished before this call started have been
+// replicated. The tokens will be available for 90 days.
+//
+//   - name: The unique name of the Table for which to create a
+//     consistency token. Values are of the form
+//     `projects/{project}/instances/{instance}/tables/{table}`.
 func (r *ProjectsInstancesTablesService) GenerateConsistencyToken(name string, generateconsistencytokenrequest *GenerateConsistencyTokenRequest) *ProjectsInstancesTablesGenerateConsistencyTokenCall {
 	c := &ProjectsInstancesTablesGenerateConsistencyTokenCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7378,7 +9792,7 @@ func (c *ProjectsInstancesTablesGenerateConsistencyTokenCall) Header() http.Head
 
 func (c *ProjectsInstancesTablesGenerateConsistencyTokenCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7418,17 +9832,17 @@ func (c *ProjectsInstancesTablesGenerateConsistencyTokenCall) Do(opts ...googlea
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GenerateConsistencyTokenResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -7442,7 +9856,7 @@ func (c *ProjectsInstancesTablesGenerateConsistencyTokenCall) Do(opts ...googlea
 	}
 	return ret, nil
 	// {
-	//   "description": "Generates a consistency token for a Table, which can be used in\nCheckConsistency to check whether mutations to the table that finished\nbefore this call started have been replicated. The tokens will be available\nfor 90 days.",
+	//   "description": "Generates a consistency token for a Table, which can be used in CheckConsistency to check whether mutations to the table that finished before this call started have been replicated. The tokens will be available for 90 days.",
 	//   "flatPath": "v2/projects/{projectsId}/instances/{instancesId}/tables/{tablesId}:generateConsistencyToken",
 	//   "httpMethod": "POST",
 	//   "id": "bigtableadmin.projects.instances.tables.generateConsistencyToken",
@@ -7451,7 +9865,7 @@ func (c *ProjectsInstancesTablesGenerateConsistencyTokenCall) Do(opts ...googlea
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The unique name of the Table for which to create a consistency token.\nValues are of the form\n`projects/{project}/instances/{instance}/tables/{table}`.",
+	//       "description": "Required. The unique name of the Table for which to create a consistency token. Values are of the form `projects/{project}/instances/{instance}/tables/{table}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/instances/[^/]+/tables/[^/]+$",
 	//       "required": true,
@@ -7488,6 +9902,9 @@ type ProjectsInstancesTablesGetCall struct {
 }
 
 // Get: Gets metadata information about the specified table.
+//
+//   - name: The unique name of the requested table. Values are of the
+//     form `projects/{project}/instances/{instance}/tables/{table}`.
 func (r *ProjectsInstancesTablesService) Get(name string) *ProjectsInstancesTablesGetCall {
 	c := &ProjectsInstancesTablesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7495,15 +9912,35 @@ func (r *ProjectsInstancesTablesService) Get(name string) *ProjectsInstancesTabl
 }
 
 // View sets the optional parameter "view": The view to be applied to
-// the returned table's fields.
-// Defaults to `SCHEMA_VIEW` if unspecified.
+// the returned table's fields. Defaults to `SCHEMA_VIEW` if
+// unspecified.
 //
 // Possible values:
-//   "VIEW_UNSPECIFIED"
-//   "NAME_ONLY"
-//   "SCHEMA_VIEW"
-//   "REPLICATION_VIEW"
-//   "FULL"
+//
+//	"VIEW_UNSPECIFIED" - Uses the default view for each method as
+//
+// documented in its request.
+//
+//	"NAME_ONLY" - Only populates `name`.
+//	"SCHEMA_VIEW" - Only populates `name` and fields related to the
+//
+// table's schema.
+//
+//	"REPLICATION_VIEW" - Only populates `name` and fields related to
+//
+// the table's replication state.
+//
+//	"ENCRYPTION_VIEW" - Only populates `name` and fields related to the
+//
+// table's encryption state.
+//
+//	"STATS_VIEW" - Only populates `name` and fields related to the
+//
+// table's stats (e.g. TableStats and ColumnFamilyStats).
+//
+//	"FULL" - Populates all fields except for stats. See STATS_VIEW to
+//
+// request stats.
 func (c *ProjectsInstancesTablesGetCall) View(view string) *ProjectsInstancesTablesGetCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -7546,7 +9983,7 @@ func (c *ProjectsInstancesTablesGetCall) Header() http.Header {
 
 func (c *ProjectsInstancesTablesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7584,17 +10021,17 @@ func (c *ProjectsInstancesTablesGetCall) Do(opts ...googleapi.CallOption) (*Tabl
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Table{
 		ServerResponse: googleapi.ServerResponse{
@@ -7617,20 +10054,31 @@ func (c *ProjectsInstancesTablesGetCall) Do(opts ...googleapi.CallOption) (*Tabl
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The unique name of the requested table.\nValues are of the form\n`projects/{project}/instances/{instance}/tables/{table}`.",
+	//       "description": "Required. The unique name of the requested table. Values are of the form `projects/{project}/instances/{instance}/tables/{table}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/instances/[^/]+/tables/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "view": {
-	//       "description": "The view to be applied to the returned table's fields.\nDefaults to `SCHEMA_VIEW` if unspecified.",
+	//       "description": "The view to be applied to the returned table's fields. Defaults to `SCHEMA_VIEW` if unspecified.",
 	//       "enum": [
 	//         "VIEW_UNSPECIFIED",
 	//         "NAME_ONLY",
 	//         "SCHEMA_VIEW",
 	//         "REPLICATION_VIEW",
+	//         "ENCRYPTION_VIEW",
+	//         "STATS_VIEW",
 	//         "FULL"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Uses the default view for each method as documented in its request.",
+	//         "Only populates `name`.",
+	//         "Only populates `name` and fields related to the table's schema.",
+	//         "Only populates `name` and fields related to the table's replication state.",
+	//         "Only populates `name` and fields related to the table's encryption state.",
+	//         "Only populates `name` and fields related to the table's stats (e.g. TableStats and ColumnFamilyStats).",
+	//         "Populates all fields except for stats. See STATS_VIEW to request stats."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -7663,11 +10111,14 @@ type ProjectsInstancesTablesGetIamPolicyCall struct {
 	header_             http.Header
 }
 
-// GetIamPolicy: Gets the access control policy for a Table
-// resource.
+// GetIamPolicy: Gets the access control policy for a Table resource.
 // Returns an empty policy if the resource exists but does not have a
-// policy
-// set.
+// policy set.
+//
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsInstancesTablesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsInstancesTablesGetIamPolicyCall {
 	c := &ProjectsInstancesTablesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7702,7 +10153,7 @@ func (c *ProjectsInstancesTablesGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsInstancesTablesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7742,17 +10193,17 @@ func (c *ProjectsInstancesTablesGetIamPolicyCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -7766,7 +10217,7 @@ func (c *ProjectsInstancesTablesGetIamPolicyCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the access control policy for a Table resource.\nReturns an empty policy if the resource exists but does not have a policy\nset.",
+	//   "description": "Gets the access control policy for a Table resource. Returns an empty policy if the resource exists but does not have a policy set.",
 	//   "flatPath": "v2/projects/{projectsId}/instances/{instancesId}/tables/{tablesId}:getIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "bigtableadmin.projects.instances.tables.getIamPolicy",
@@ -7775,7 +10226,7 @@ func (c *ProjectsInstancesTablesGetIamPolicyCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested.\nSee the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/instances/[^/]+/tables/[^/]+$",
 	//       "required": true,
@@ -7812,6 +10263,10 @@ type ProjectsInstancesTablesListCall struct {
 }
 
 // List: Lists all tables served from a specified instance.
+//
+//   - parent: The unique name of the instance for which tables should be
+//     listed. Values are of the form
+//     `projects/{project}/instances/{instance}`.
 func (r *ProjectsInstancesTablesService) List(parent string) *ProjectsInstancesTablesListCall {
 	c := &ProjectsInstancesTablesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7819,19 +10274,12 @@ func (r *ProjectsInstancesTablesService) List(parent string) *ProjectsInstancesT
 }
 
 // PageSize sets the optional parameter "pageSize": Maximum number of
-// results per page.
-//
-// A page_size of zero lets the server choose the number of items to
-// return.
-// A page_size which is strictly positive will return at most that many
-// items.
-// A negative page_size will cause an error.
-//
-// Following the first request, subsequent paginated calls are not
-// required
-// to pass a page_size. If a page_size is set in subsequent calls, it
-// must
-// match the page_size given in the first request.
+// results per page. A page_size of zero lets the server choose the
+// number of items to return. A page_size which is strictly positive
+// will return at most that many items. A negative page_size will cause
+// an error. Following the first request, subsequent paginated calls are
+// not required to pass a page_size. If a page_size is set in subsequent
+// calls, it must match the page_size given in the first request.
 func (c *ProjectsInstancesTablesListCall) PageSize(pageSize int64) *ProjectsInstancesTablesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -7845,15 +10293,35 @@ func (c *ProjectsInstancesTablesListCall) PageToken(pageToken string) *ProjectsI
 }
 
 // View sets the optional parameter "view": The view to be applied to
-// the returned tables' fields.
-// Only NAME_ONLY view (default) and REPLICATION_VIEW are supported.
+// the returned tables' fields. Only NAME_ONLY view (default),
+// REPLICATION_VIEW and ENCRYPTION_VIEW are supported.
 //
 // Possible values:
-//   "VIEW_UNSPECIFIED"
-//   "NAME_ONLY"
-//   "SCHEMA_VIEW"
-//   "REPLICATION_VIEW"
-//   "FULL"
+//
+//	"VIEW_UNSPECIFIED" - Uses the default view for each method as
+//
+// documented in its request.
+//
+//	"NAME_ONLY" - Only populates `name`.
+//	"SCHEMA_VIEW" - Only populates `name` and fields related to the
+//
+// table's schema.
+//
+//	"REPLICATION_VIEW" - Only populates `name` and fields related to
+//
+// the table's replication state.
+//
+//	"ENCRYPTION_VIEW" - Only populates `name` and fields related to the
+//
+// table's encryption state.
+//
+//	"STATS_VIEW" - Only populates `name` and fields related to the
+//
+// table's stats (e.g. TableStats and ColumnFamilyStats).
+//
+//	"FULL" - Populates all fields except for stats. See STATS_VIEW to
+//
+// request stats.
 func (c *ProjectsInstancesTablesListCall) View(view string) *ProjectsInstancesTablesListCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -7896,7 +10364,7 @@ func (c *ProjectsInstancesTablesListCall) Header() http.Header {
 
 func (c *ProjectsInstancesTablesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7934,17 +10402,17 @@ func (c *ProjectsInstancesTablesListCall) Do(opts ...googleapi.CallOption) (*Lis
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListTablesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -7967,7 +10435,7 @@ func (c *ProjectsInstancesTablesListCall) Do(opts ...googleapi.CallOption) (*Lis
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "Maximum number of results per page.\n\nA page_size of zero lets the server choose the number of items to return.\nA page_size which is strictly positive will return at most that many items.\nA negative page_size will cause an error.\n\nFollowing the first request, subsequent paginated calls are not required\nto pass a page_size. If a page_size is set in subsequent calls, it must\nmatch the page_size given in the first request.",
+	//       "description": "Maximum number of results per page. A page_size of zero lets the server choose the number of items to return. A page_size which is strictly positive will return at most that many items. A negative page_size will cause an error. Following the first request, subsequent paginated calls are not required to pass a page_size. If a page_size is set in subsequent calls, it must match the page_size given in the first request.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -7978,20 +10446,31 @@ func (c *ProjectsInstancesTablesListCall) Do(opts ...googleapi.CallOption) (*Lis
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The unique name of the instance for which tables should be listed.\nValues are of the form `projects/{project}/instances/{instance}`.",
+	//       "description": "Required. The unique name of the instance for which tables should be listed. Values are of the form `projects/{project}/instances/{instance}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/instances/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "view": {
-	//       "description": "The view to be applied to the returned tables' fields.\nOnly NAME_ONLY view (default) and REPLICATION_VIEW are supported.",
+	//       "description": "The view to be applied to the returned tables' fields. Only NAME_ONLY view (default), REPLICATION_VIEW and ENCRYPTION_VIEW are supported.",
 	//       "enum": [
 	//         "VIEW_UNSPECIFIED",
 	//         "NAME_ONLY",
 	//         "SCHEMA_VIEW",
 	//         "REPLICATION_VIEW",
+	//         "ENCRYPTION_VIEW",
+	//         "STATS_VIEW",
 	//         "FULL"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Uses the default view for each method as documented in its request.",
+	//         "Only populates `name`.",
+	//         "Only populates `name` and fields related to the table's schema.",
+	//         "Only populates `name` and fields related to the table's replication state.",
+	//         "Only populates `name` and fields related to the table's encryption state.",
+	//         "Only populates `name` and fields related to the table's stats (e.g. TableStats and ColumnFamilyStats).",
+	//         "Populates all fields except for stats. See STATS_VIEW to request stats."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -8046,12 +10525,14 @@ type ProjectsInstancesTablesModifyColumnFamiliesCall struct {
 }
 
 // ModifyColumnFamilies: Performs a series of column family
-// modifications on the specified table.
-// Either all or none of the modifications will occur before this
-// method
-// returns, but data requests received prior to that point may see a
-// table
-// where only some modifications have taken effect.
+// modifications on the specified table. Either all or none of the
+// modifications will occur before this method returns, but data
+// requests received prior to that point may see a table where only some
+// modifications have taken effect.
+//
+//   - name: The unique name of the table whose families should be
+//     modified. Values are of the form
+//     `projects/{project}/instances/{instance}/tables/{table}`.
 func (r *ProjectsInstancesTablesService) ModifyColumnFamilies(name string, modifycolumnfamiliesrequest *ModifyColumnFamiliesRequest) *ProjectsInstancesTablesModifyColumnFamiliesCall {
 	c := &ProjectsInstancesTablesModifyColumnFamiliesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8086,7 +10567,7 @@ func (c *ProjectsInstancesTablesModifyColumnFamiliesCall) Header() http.Header {
 
 func (c *ProjectsInstancesTablesModifyColumnFamiliesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8126,17 +10607,17 @@ func (c *ProjectsInstancesTablesModifyColumnFamiliesCall) Do(opts ...googleapi.C
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Table{
 		ServerResponse: googleapi.ServerResponse{
@@ -8150,7 +10631,7 @@ func (c *ProjectsInstancesTablesModifyColumnFamiliesCall) Do(opts ...googleapi.C
 	}
 	return ret, nil
 	// {
-	//   "description": "Performs a series of column family modifications on the specified table.\nEither all or none of the modifications will occur before this method\nreturns, but data requests received prior to that point may see a table\nwhere only some modifications have taken effect.",
+	//   "description": "Performs a series of column family modifications on the specified table. Either all or none of the modifications will occur before this method returns, but data requests received prior to that point may see a table where only some modifications have taken effect.",
 	//   "flatPath": "v2/projects/{projectsId}/instances/{instancesId}/tables/{tablesId}:modifyColumnFamilies",
 	//   "httpMethod": "POST",
 	//   "id": "bigtableadmin.projects.instances.tables.modifyColumnFamilies",
@@ -8159,7 +10640,7 @@ func (c *ProjectsInstancesTablesModifyColumnFamiliesCall) Do(opts ...googleapi.C
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The unique name of the table whose families should be modified.\nValues are of the form\n`projects/{project}/instances/{instance}/tables/{table}`.",
+	//       "description": "Required. The unique name of the table whose families should be modified. Values are of the form `projects/{project}/instances/{instance}/tables/{table}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/instances/[^/]+/tables/[^/]+$",
 	//       "required": true,
@@ -8184,6 +10665,325 @@ func (c *ProjectsInstancesTablesModifyColumnFamiliesCall) Do(opts ...googleapi.C
 
 }
 
+// method id "bigtableadmin.projects.instances.tables.patch":
+
+type ProjectsInstancesTablesPatchCall struct {
+	s          *Service
+	name       string
+	table      *Table
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Updates a specified table.
+//
+//   - name: The unique name of the table. Values are of the form
+//     `projects/{project}/instances/{instance}/tables/_a-zA-Z0-9*`.
+//     Views: `NAME_ONLY`, `SCHEMA_VIEW`, `REPLICATION_VIEW`,
+//     `STATS_VIEW`, `FULL`.
+func (r *ProjectsInstancesTablesService) Patch(name string, table *Table) *ProjectsInstancesTablesPatchCall {
+	c := &ProjectsInstancesTablesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.table = table
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. The
+// list of fields to update. A mask specifying which fields (e.g.
+// `change_stream_config`) in the `table` field should be updated. This
+// mask is relative to the `table` field, not to the request message.
+// The wildcard (*) path is currently not supported. Currently
+// UpdateTable is only supported for the following fields: *
+// `change_stream_config` * `change_stream_config.retention_period` *
+// `deletion_protection` If `column_families` is set in `update_mask`,
+// it will return an UNIMPLEMENTED error.
+func (c *ProjectsInstancesTablesPatchCall) UpdateMask(updateMask string) *ProjectsInstancesTablesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsInstancesTablesPatchCall) Fields(s ...googleapi.Field) *ProjectsInstancesTablesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsInstancesTablesPatchCall) Context(ctx context.Context) *ProjectsInstancesTablesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsInstancesTablesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstancesTablesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.table)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "bigtableadmin.projects.instances.tables.patch" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsInstancesTablesPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a specified table.",
+	//   "flatPath": "v2/projects/{projectsId}/instances/{instancesId}/tables/{tablesId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "bigtableadmin.projects.instances.tables.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The unique name of the table. Values are of the form `projects/{project}/instances/{instance}/tables/_a-zA-Z0-9*`. Views: `NAME_ONLY`, `SCHEMA_VIEW`, `REPLICATION_VIEW`, `STATS_VIEW`, `FULL`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/instances/[^/]+/tables/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Required. The list of fields to update. A mask specifying which fields (e.g. `change_stream_config`) in the `table` field should be updated. This mask is relative to the `table` field, not to the request message. The wildcard (*) path is currently not supported. Currently UpdateTable is only supported for the following fields: * `change_stream_config` * `change_stream_config.retention_period` * `deletion_protection` If `column_families` is set in `update_mask`, it will return an UNIMPLEMENTED error.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "request": {
+	//     "$ref": "Table"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/bigtable.admin",
+	//     "https://www.googleapis.com/auth/bigtable.admin.table",
+	//     "https://www.googleapis.com/auth/cloud-bigtable.admin",
+	//     "https://www.googleapis.com/auth/cloud-bigtable.admin.table",
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "bigtableadmin.projects.instances.tables.restore":
+
+type ProjectsInstancesTablesRestoreCall struct {
+	s                   *Service
+	parent              string
+	restoretablerequest *RestoreTableRequest
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// Restore: Create a new table by restoring from a completed backup. The
+// returned table long-running operation can be used to track the
+// progress of the operation, and to cancel it. The metadata field type
+// is RestoreTableMetadata. The response type is Table, if successful.
+//
+//   - parent: The name of the instance in which to create the restored
+//     table. Values are of the form `projects//instances/`.
+func (r *ProjectsInstancesTablesService) Restore(parent string, restoretablerequest *RestoreTableRequest) *ProjectsInstancesTablesRestoreCall {
+	c := &ProjectsInstancesTablesRestoreCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.restoretablerequest = restoretablerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsInstancesTablesRestoreCall) Fields(s ...googleapi.Field) *ProjectsInstancesTablesRestoreCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsInstancesTablesRestoreCall) Context(ctx context.Context) *ProjectsInstancesTablesRestoreCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsInstancesTablesRestoreCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstancesTablesRestoreCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.restoretablerequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/tables:restore")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "bigtableadmin.projects.instances.tables.restore" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsInstancesTablesRestoreCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Create a new table by restoring from a completed backup. The returned table long-running operation can be used to track the progress of the operation, and to cancel it. The metadata field type is RestoreTableMetadata. The response type is Table, if successful.",
+	//   "flatPath": "v2/projects/{projectsId}/instances/{instancesId}/tables:restore",
+	//   "httpMethod": "POST",
+	//   "id": "bigtableadmin.projects.instances.tables.restore",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The name of the instance in which to create the restored table. Values are of the form `projects//instances/`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/instances/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/tables:restore",
+	//   "request": {
+	//     "$ref": "RestoreTableRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/bigtable.admin",
+	//     "https://www.googleapis.com/auth/bigtable.admin.table",
+	//     "https://www.googleapis.com/auth/cloud-bigtable.admin",
+	//     "https://www.googleapis.com/auth/cloud-bigtable.admin.table",
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "bigtableadmin.projects.instances.tables.setIamPolicy":
 
 type ProjectsInstancesTablesSetIamPolicyCall struct {
@@ -8195,9 +10995,13 @@ type ProjectsInstancesTablesSetIamPolicyCall struct {
 	header_             http.Header
 }
 
-// SetIamPolicy: Sets the access control policy on a Table
-// resource.
+// SetIamPolicy: Sets the access control policy on a Table resource.
 // Replaces any existing policy.
+//
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsInstancesTablesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsInstancesTablesSetIamPolicyCall {
 	c := &ProjectsInstancesTablesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -8232,7 +11036,7 @@ func (c *ProjectsInstancesTablesSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsInstancesTablesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8272,17 +11076,17 @@ func (c *ProjectsInstancesTablesSetIamPolicyCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -8296,7 +11100,7 @@ func (c *ProjectsInstancesTablesSetIamPolicyCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets the access control policy on a Table resource.\nReplaces any existing policy.",
+	//   "description": "Sets the access control policy on a Table resource. Replaces any existing policy.",
 	//   "flatPath": "v2/projects/{projectsId}/instances/{instancesId}/tables/{tablesId}:setIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "bigtableadmin.projects.instances.tables.setIamPolicy",
@@ -8305,7 +11109,7 @@ func (c *ProjectsInstancesTablesSetIamPolicyCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified.\nSee the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/instances/[^/]+/tables/[^/]+$",
 	//       "required": true,
@@ -8343,6 +11147,11 @@ type ProjectsInstancesTablesTestIamPermissionsCall struct {
 
 // TestIamPermissions: Returns permissions that the caller has on the
 // specified table resource.
+//
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsInstancesTablesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsInstancesTablesTestIamPermissionsCall {
 	c := &ProjectsInstancesTablesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -8377,7 +11186,7 @@ func (c *ProjectsInstancesTablesTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsInstancesTablesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8417,17 +11226,17 @@ func (c *ProjectsInstancesTablesTestIamPermissionsCall) Do(opts ...googleapi.Cal
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TestIamPermissionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -8450,7 +11259,7 @@ func (c *ProjectsInstancesTablesTestIamPermissionsCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested.\nSee the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/instances/[^/]+/tables/[^/]+$",
 	//       "required": true,
@@ -8475,6 +11284,153 @@ func (c *ProjectsInstancesTablesTestIamPermissionsCall) Do(opts ...googleapi.Cal
 
 }
 
+// method id "bigtableadmin.projects.instances.tables.undelete":
+
+type ProjectsInstancesTablesUndeleteCall struct {
+	s                    *Service
+	name                 string
+	undeletetablerequest *UndeleteTableRequest
+	urlParams_           gensupport.URLParams
+	ctx_                 context.Context
+	header_              http.Header
+}
+
+// Undelete: Restores a specified table which was accidentally deleted.
+//
+//   - name: The unique name of the table to be restored. Values are of
+//     the form `projects/{project}/instances/{instance}/tables/{table}`.
+func (r *ProjectsInstancesTablesService) Undelete(name string, undeletetablerequest *UndeleteTableRequest) *ProjectsInstancesTablesUndeleteCall {
+	c := &ProjectsInstancesTablesUndeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.undeletetablerequest = undeletetablerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsInstancesTablesUndeleteCall) Fields(s ...googleapi.Field) *ProjectsInstancesTablesUndeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsInstancesTablesUndeleteCall) Context(ctx context.Context) *ProjectsInstancesTablesUndeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsInstancesTablesUndeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstancesTablesUndeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.undeletetablerequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}:undelete")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "bigtableadmin.projects.instances.tables.undelete" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsInstancesTablesUndeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Restores a specified table which was accidentally deleted.",
+	//   "flatPath": "v2/projects/{projectsId}/instances/{instancesId}/tables/{tablesId}:undelete",
+	//   "httpMethod": "POST",
+	//   "id": "bigtableadmin.projects.instances.tables.undelete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The unique name of the table to be restored. Values are of the form `projects/{project}/instances/{instance}/tables/{table}`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/instances/[^/]+/tables/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}:undelete",
+	//   "request": {
+	//     "$ref": "UndeleteTableRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/bigtable.admin",
+	//     "https://www.googleapis.com/auth/bigtable.admin.table",
+	//     "https://www.googleapis.com/auth/cloud-bigtable.admin",
+	//     "https://www.googleapis.com/auth/cloud-bigtable.admin.table",
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "bigtableadmin.projects.locations.get":
 
 type ProjectsLocationsGetCall struct {
@@ -8487,6 +11443,8 @@ type ProjectsLocationsGetCall struct {
 }
 
 // Get: Gets information about a location.
+//
+// - name: Resource name for the location.
 func (r *ProjectsLocationsService) Get(name string) *ProjectsLocationsGetCall {
 	c := &ProjectsLocationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8530,7 +11488,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8568,17 +11526,17 @@ func (c *ProjectsLocationsGetCall) Do(opts ...googleapi.CallOption) (*Location, 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Location{
 		ServerResponse: googleapi.ServerResponse{
@@ -8638,28 +11596,34 @@ type ProjectsLocationsListCall struct {
 
 // List: Lists information about the supported locations for this
 // service.
+//
+//   - name: The resource that owns the locations collection, if
+//     applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
 
-// Filter sets the optional parameter "filter": The standard list
-// filter.
+// Filter sets the optional parameter "filter": A filter to narrow down
+// results to a preferred subset. The filtering language accepts strings
+// like "displayName=tokyo", and is documented in more detail in
+// AIP-160 (https://google.aip.dev/160).
 func (c *ProjectsLocationsListCall) Filter(filter string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The standard list
-// page size.
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return. If not set, the service selects a default.
 func (c *ProjectsLocationsListCall) PageSize(pageSize int64) *ProjectsLocationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The standard list
-// page token.
+// PageToken sets the optional parameter "pageToken": A page token
+// received from the `next_page_token` field in the response. Send that
+// page token to receive the subsequent page.
 func (c *ProjectsLocationsListCall) PageToken(pageToken string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -8702,7 +11666,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8740,17 +11704,17 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListLocationsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -8773,7 +11737,7 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "The standard list filter.",
+	//       "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like `\"displayName=tokyo\"`, and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -8785,13 +11749,13 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The standard list page size.",
+	//       "description": "The maximum number of results to return. If not set, the service selects a default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The standard list page token.",
+	//       "description": "A page token received from the `next_page_token` field in the response. Send that page token to receive the subsequent page.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }

@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -6,33 +6,33 @@
 
 // Package books provides access to the Books API.
 //
-// For product documentation, see: https://developers.google.com/books/docs/v1/getting_started
+// For product documentation, see: https://code.google.com/apis/books/docs/v1/getting_started.html
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/books/v1"
-//   ...
-//   ctx := context.Background()
-//   booksService, err := books.NewService(ctx)
+//	import "google.golang.org/api/books/v1"
+//	...
+//	ctx := context.Background()
+//	booksService, err := books.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   booksService, err := books.NewService(ctx, option.WithAPIKey("AIza..."))
+//	booksService, err := books.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   booksService, err := books.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	booksService, err := books.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package books // import "google.golang.org/api/books/v1"
@@ -50,6 +50,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -74,7 +75,8 @@ var _ = internaloption.WithDefaultEndpoint
 const apiId = "books:v1"
 const apiName = "books"
 const apiVersion = "v1"
-const basePath = "https://www.googleapis.com/books/v1/"
+const basePath = "https://books.googleapis.com/"
+const mtlsBasePath = "https://books.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
@@ -84,12 +86,13 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/books",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -492,10 +495,10 @@ type Annotation struct {
 
 	// ForceSendFields is a list of field names (e.g. "AfterSelectedText")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AfterSelectedText") to
@@ -536,10 +539,10 @@ type AnnotationClientVersionRanges struct {
 
 	// ForceSendFields is a list of field names (e.g. "CfiRange") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CfiRange") to include in
@@ -580,10 +583,10 @@ type AnnotationCurrentVersionRanges struct {
 
 	// ForceSendFields is a list of field names (e.g. "CfiRange") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CfiRange") to include in
@@ -616,8 +619,8 @@ type AnnotationLayerSummary struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "AllowedCharacterCount") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -635,62 +638,6 @@ type AnnotationLayerSummary struct {
 
 func (s *AnnotationLayerSummary) MarshalJSON() ([]byte, error) {
 	type NoMethod AnnotationLayerSummary
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type Annotationdata struct {
-	// AnnotationType: The type of annotation this data is for.
-	AnnotationType string `json:"annotationType,omitempty"`
-
-	Data interface{} `json:"data,omitempty"`
-
-	// EncodedData: Base64 encoded data for this annotation data.
-	EncodedData string `json:"encoded_data,omitempty"`
-
-	// Id: Unique id for this annotation data.
-	Id string `json:"id,omitempty"`
-
-	// Kind: Resource Type
-	Kind string `json:"kind,omitempty"`
-
-	// LayerId: The Layer id for this data. *
-	LayerId string `json:"layerId,omitempty"`
-
-	// SelfLink: URL for this resource. *
-	SelfLink string `json:"selfLink,omitempty"`
-
-	// Updated: Timestamp for the last time this data was updated. (RFC 3339
-	// UTC date-time format).
-	Updated string `json:"updated,omitempty"`
-
-	// VolumeId: The volume id for this data. *
-	VolumeId string `json:"volumeId,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "AnnotationType") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AnnotationType") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *Annotationdata) MarshalJSON() ([]byte, error) {
-	type NoMethod Annotationdata
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -717,10 +664,10 @@ type Annotations struct {
 
 	// ForceSendFields is a list of field names (e.g. "Items") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Items") to include in API
@@ -749,10 +696,10 @@ type AnnotationsSummary struct {
 
 	// ForceSendFields is a list of field names (e.g. "Kind") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Kind") to include in API
@@ -783,8 +730,8 @@ type AnnotationsSummaryLayers struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "AllowedCharacterCount") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -808,7 +755,7 @@ func (s *AnnotationsSummaryLayers) MarshalJSON() ([]byte, error) {
 
 type Annotationsdata struct {
 	// Items: A list of Annotation Data.
-	Items []*Annotationdata `json:"items,omitempty"`
+	Items []*GeoAnnotationdata `json:"items,omitempty"`
 
 	// Kind: Resource type
 	Kind string `json:"kind,omitempty"`
@@ -826,10 +773,10 @@ type Annotationsdata struct {
 
 	// ForceSendFields is a list of field names (e.g. "Items") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Items") to include in API
@@ -862,10 +809,10 @@ type BooksAnnotationsRange struct {
 
 	// ForceSendFields is a list of field names (e.g. "EndOffset") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "EndOffset") to include in
@@ -898,10 +845,10 @@ type BooksCloudloadingResource struct {
 
 	// ForceSendFields is a list of field names (e.g. "Author") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Author") to include in API
@@ -919,43 +866,6 @@ func (s *BooksCloudloadingResource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-type BooksSubscriptionReleaseInfo struct {
-	// AmountInMicros: Amount in micros of the specified currency code.
-	AmountInMicros int64 `json:"amountInMicros,omitempty,string"`
-
-	// CurrencyCode: Currency code of the amount.
-	CurrencyCode string `json:"currencyCode,omitempty"`
-
-	// ReleaseNumber: The release number of this issue/volume/book.
-	ReleaseNumber string `json:"releaseNumber,omitempty"`
-
-	// ReleaseTimestampUs: The release date.
-	ReleaseTimestampUs int64 `json:"releaseTimestampUs,omitempty,string"`
-
-	// ForceSendFields is a list of field names (e.g. "AmountInMicros") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AmountInMicros") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *BooksSubscriptionReleaseInfo) MarshalJSON() ([]byte, error) {
-	type NoMethod BooksSubscriptionReleaseInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 type BooksVolumesRecommendedRateResponse struct {
 	ConsistencyToken string `json:"consistency_token,omitempty"`
 
@@ -965,10 +875,10 @@ type BooksVolumesRecommendedRateResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "ConsistencyToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ConsistencyToken") to
@@ -1027,10 +937,10 @@ type Bookshelf struct {
 
 	// ForceSendFields is a list of field names (e.g. "Access") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Access") to include in API
@@ -1061,10 +971,10 @@ type Bookshelves struct {
 
 	// ForceSendFields is a list of field names (e.g. "Items") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Items") to include in API
@@ -1095,10 +1005,10 @@ type Category struct {
 
 	// ForceSendFields is a list of field names (e.g. "Items") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Items") to include in API
@@ -1125,10 +1035,10 @@ type CategoryItems struct {
 
 	// ForceSendFields is a list of field names (e.g. "BadgeUrl") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BadgeUrl") to include in
@@ -1187,10 +1097,10 @@ type ConcurrentAccessRestriction struct {
 
 	// ForceSendFields is a list of field names (e.g. "DeviceAllowed") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DeviceAllowed") to include
@@ -1208,6 +1118,65 @@ func (s *ConcurrentAccessRestriction) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type DictionaryAnnotationdata struct {
+	// AnnotationType: The type of annotation this data is for.
+	AnnotationType string `json:"annotationType,omitempty"`
+
+	// Data: JSON encoded data for this dictionary annotation data. Emitted
+	// with name 'data' in JSON output. Either this or geo_data will be
+	// populated.
+	Data *Dictlayerdata `json:"data,omitempty"`
+
+	// EncodedData: Base64 encoded data for this annotation data.
+	EncodedData string `json:"encodedData,omitempty"`
+
+	// Id: Unique id for this annotation data.
+	Id string `json:"id,omitempty"`
+
+	// Kind: Resource Type
+	Kind string `json:"kind,omitempty"`
+
+	// LayerId: The Layer id for this data. *
+	LayerId string `json:"layerId,omitempty"`
+
+	// SelfLink: URL for this resource. *
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// Updated: Timestamp for the last time this data was updated. (RFC 3339
+	// UTC date-time format).
+	Updated string `json:"updated,omitempty"`
+
+	// VolumeId: The volume id for this data. *
+	VolumeId string `json:"volumeId,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AnnotationType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AnnotationType") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DictionaryAnnotationdata) MarshalJSON() ([]byte, error) {
+	type NoMethod DictionaryAnnotationdata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type Dictlayerdata struct {
 	Common *DictlayerdataCommon `json:"common,omitempty"`
 
@@ -1217,10 +1186,10 @@ type Dictlayerdata struct {
 
 	// ForceSendFields is a list of field names (e.g. "Common") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Common") to include in API
@@ -1245,10 +1214,10 @@ type DictlayerdataCommon struct {
 
 	// ForceSendFields is a list of field names (e.g. "Title") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Title") to include in API
@@ -1274,10 +1243,10 @@ type DictlayerdataDict struct {
 
 	// ForceSendFields is a list of field names (e.g. "Source") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Source") to include in API
@@ -1304,10 +1273,10 @@ type DictlayerdataDictSource struct {
 
 	// ForceSendFields is a list of field names (e.g. "Attribution") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Attribution") to include
@@ -1338,10 +1307,10 @@ type DictlayerdataDictWords struct {
 
 	// ForceSendFields is a list of field names (e.g. "Derivatives") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Derivatives") to include
@@ -1366,10 +1335,10 @@ type DictlayerdataDictWordsDerivatives struct {
 
 	// ForceSendFields is a list of field names (e.g. "Source") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Source") to include in API
@@ -1394,10 +1363,10 @@ type DictlayerdataDictWordsDerivativesSource struct {
 
 	// ForceSendFields is a list of field names (e.g. "Attribution") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Attribution") to include
@@ -1422,10 +1391,10 @@ type DictlayerdataDictWordsExamples struct {
 
 	// ForceSendFields is a list of field names (e.g. "Source") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Source") to include in API
@@ -1450,10 +1419,10 @@ type DictlayerdataDictWordsExamplesSource struct {
 
 	// ForceSendFields is a list of field names (e.g. "Attribution") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Attribution") to include
@@ -1490,10 +1459,10 @@ type DictlayerdataDictWordsSenses struct {
 
 	// ForceSendFields is a list of field names (e.g. "Conjugations") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Conjugations") to include
@@ -1518,10 +1487,10 @@ type DictlayerdataDictWordsSensesConjugations struct {
 
 	// ForceSendFields is a list of field names (e.g. "Type") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Type") to include in API
@@ -1546,10 +1515,10 @@ type DictlayerdataDictWordsSensesDefinitions struct {
 
 	// ForceSendFields is a list of field names (e.g. "Definition") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Definition") to include in
@@ -1574,10 +1543,10 @@ type DictlayerdataDictWordsSensesDefinitionsExamples struct {
 
 	// ForceSendFields is a list of field names (e.g. "Source") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Source") to include in API
@@ -1602,10 +1571,10 @@ type DictlayerdataDictWordsSensesDefinitionsExamplesSource struct {
 
 	// ForceSendFields is a list of field names (e.g. "Attribution") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Attribution") to include
@@ -1630,10 +1599,10 @@ type DictlayerdataDictWordsSensesSource struct {
 
 	// ForceSendFields is a list of field names (e.g. "Attribution") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Attribution") to include
@@ -1658,10 +1627,10 @@ type DictlayerdataDictWordsSensesSynonyms struct {
 
 	// ForceSendFields is a list of field names (e.g. "Source") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Source") to include in API
@@ -1686,10 +1655,10 @@ type DictlayerdataDictWordsSensesSynonymsSource struct {
 
 	// ForceSendFields is a list of field names (e.g. "Attribution") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Attribution") to include
@@ -1716,10 +1685,10 @@ type DictlayerdataDictWordsSource struct {
 
 	// ForceSendFields is a list of field names (e.g. "Attribution") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Attribution") to include
@@ -1751,10 +1720,10 @@ type Discoveryclusters struct {
 
 	// ForceSendFields is a list of field names (e.g. "Clusters") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Clusters") to include in
@@ -1787,11 +1756,11 @@ type DiscoveryclustersClusters struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "BannerWithContentContainer") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g.
@@ -1825,10 +1794,10 @@ type DiscoveryclustersClustersBannerWithContentContainer struct {
 
 	// ForceSendFields is a list of field names (e.g. "FillColorArgb") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "FillColorArgb") to include
@@ -1894,10 +1863,10 @@ type DownloadAccessRestriction struct {
 
 	// ForceSendFields is a list of field names (e.g. "DeviceAllowed") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DeviceAllowed") to include
@@ -1928,10 +1897,10 @@ type DownloadAccesses struct {
 
 	// ForceSendFields is a list of field names (e.g. "DownloadAccessList")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DownloadAccessList") to
@@ -1950,6 +1919,17 @@ func (s *DownloadAccesses) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Empty: A generic empty message that you can re-use to avoid defining
+// duplicated empty messages in your APIs. A typical example is to use
+// it as the request or the response type of an API method. For
+// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); }
+type Empty struct {
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+}
+
 type FamilyInfo struct {
 	// Kind: Resource type.
 	Kind string `json:"kind,omitempty"`
@@ -1963,10 +1943,10 @@ type FamilyInfo struct {
 
 	// ForceSendFields is a list of field names (e.g. "Kind") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Kind") to include in API
@@ -2004,10 +1984,10 @@ type FamilyInfoMembership struct {
 
 	// ForceSendFields is a list of field names (e.g. "AcquirePermission")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AcquirePermission") to
@@ -2026,6 +2006,61 @@ func (s *FamilyInfoMembership) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type GeoAnnotationdata struct {
+	// AnnotationType: The type of annotation this data is for.
+	AnnotationType string `json:"annotationType,omitempty"`
+
+	// Data: JSON encoded data for this geo annotation data. Emitted with
+	// name 'data' in JSON output. Either this or dict_data will be
+	// populated.
+	Data *Geolayerdata `json:"data,omitempty"`
+
+	// EncodedData: Base64 encoded data for this annotation data.
+	EncodedData string `json:"encodedData,omitempty"`
+
+	// Id: Unique id for this annotation data.
+	Id string `json:"id,omitempty"`
+
+	// Kind: Resource Type
+	Kind string `json:"kind,omitempty"`
+
+	// LayerId: The Layer id for this data. *
+	LayerId string `json:"layerId,omitempty"`
+
+	// SelfLink: URL for this resource. *
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// Updated: Timestamp for the last time this data was updated. (RFC 3339
+	// UTC date-time format).
+	Updated string `json:"updated,omitempty"`
+
+	// VolumeId: The volume id for this data. *
+	VolumeId string `json:"volumeId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AnnotationType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AnnotationType") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GeoAnnotationdata) MarshalJSON() ([]byte, error) {
+	type NoMethod GeoAnnotationdata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type Geolayerdata struct {
 	Common *GeolayerdataCommon `json:"common,omitempty"`
 
@@ -2035,10 +2070,10 @@ type Geolayerdata struct {
 
 	// ForceSendFields is a list of field names (e.g. "Common") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Common") to include in API
@@ -2076,10 +2111,10 @@ type GeolayerdataCommon struct {
 
 	// ForceSendFields is a list of field names (e.g. "Lang") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Lang") to include in API
@@ -2100,7 +2135,7 @@ func (s *GeolayerdataCommon) MarshalJSON() ([]byte, error) {
 type GeolayerdataGeo struct {
 	// Boundary: The boundary of the location as a set of loops containing
 	// pairs of latitude, longitude coordinates.
-	Boundary [][]*GeolayerdataGeoBoundaryItem `json:"boundary,omitempty"`
+	Boundary []string `json:"boundary,omitempty"`
 
 	// CachePolicy: The cache policy active for this data. EX: UNRESTRICTED,
 	// RESTRICTED, NEVER
@@ -2125,16 +2160,16 @@ type GeolayerdataGeo struct {
 
 	// Zoom: The Zoom level to use for the map. Zoom levels between 0 (the
 	// lowest zoom level, in which the entire world can be seen on one map)
-	// to 21+ (down to individual buildings). See:
-	// https://developers.google.com/maps/documentation/staticmaps/#Zoomlevels
+	// to 21+ (down to individual buildings). See: https:
+	// //developers.google.com/maps/documentation/staticmaps/#Zoomlevels
 	Zoom int64 `json:"zoom,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Boundary") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Boundary") to include in
@@ -2168,34 +2203,6 @@ func (s *GeolayerdataGeo) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-type GeolayerdataGeoBoundaryItem struct {
-	Latitude int64 `json:"latitude,omitempty"`
-
-	Longitude int64 `json:"longitude,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Latitude") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Latitude") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GeolayerdataGeoBoundaryItem) MarshalJSON() ([]byte, error) {
-	type NoMethod GeolayerdataGeoBoundaryItem
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // GeolayerdataGeoViewport: The viewport for showing this location. This
 // is a latitude, longitude rectangle.
 type GeolayerdataGeoViewport struct {
@@ -2205,10 +2212,10 @@ type GeolayerdataGeoViewport struct {
 
 	// ForceSendFields is a list of field names (e.g. "Hi") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Hi") to include in API
@@ -2233,10 +2240,10 @@ type GeolayerdataGeoViewportHi struct {
 
 	// ForceSendFields is a list of field names (e.g. "Latitude") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Latitude") to include in
@@ -2277,10 +2284,10 @@ type GeolayerdataGeoViewportLo struct {
 
 	// ForceSendFields is a list of field names (e.g. "Latitude") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Latitude") to include in
@@ -2330,10 +2337,10 @@ type Layersummaries struct {
 
 	// ForceSendFields is a list of field names (e.g. "Items") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Items") to include in API
@@ -2402,10 +2409,10 @@ type Layersummary struct {
 
 	// ForceSendFields is a list of field names (e.g. "AnnotationCount") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AnnotationCount") to
@@ -2437,10 +2444,10 @@ type Metadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "Items") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Items") to include in API
@@ -2471,10 +2478,10 @@ type MetadataItems struct {
 
 	// ForceSendFields is a list of field names (e.g. "DownloadUrl") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DownloadUrl") to include
@@ -2533,10 +2540,10 @@ type Notification struct {
 
 	// ForceSendFields is a list of field names (e.g. "Body") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Body") to include in API
@@ -2567,10 +2574,10 @@ type Offers struct {
 
 	// ForceSendFields is a list of field names (e.g. "Items") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Items") to include in API
@@ -2599,10 +2606,10 @@ type OffersItems struct {
 
 	// ForceSendFields is a list of field names (e.g. "ArtUrl") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ArtUrl") to include in API
@@ -2635,10 +2642,10 @@ type OffersItemsItems struct {
 
 	// ForceSendFields is a list of field names (e.g. "Author") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Author") to include in API
@@ -2685,10 +2692,10 @@ type ReadingPosition struct {
 
 	// ForceSendFields is a list of field names (e.g. "EpubCfiPosition") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "EpubCfiPosition") to
@@ -2707,7 +2714,7 @@ func (s *ReadingPosition) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-type RequestAccess struct {
+type RequestAccessData struct {
 	// ConcurrentAccess: A concurrent access response.
 	ConcurrentAccess *ConcurrentAccessRestriction `json:"concurrentAccess,omitempty"`
 
@@ -2723,10 +2730,10 @@ type RequestAccess struct {
 
 	// ForceSendFields is a list of field names (e.g. "ConcurrentAccess") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ConcurrentAccess") to
@@ -2739,8 +2746,8 @@ type RequestAccess struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RequestAccess) MarshalJSON() ([]byte, error) {
-	type NoMethod RequestAccess
+func (s *RequestAccessData) MarshalJSON() ([]byte, error) {
+	type NoMethod RequestAccessData
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2782,10 +2789,10 @@ type Review struct {
 
 	// ForceSendFields is a list of field names (e.g. "Author") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Author") to include in API
@@ -2810,10 +2817,10 @@ type ReviewAuthor struct {
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DisplayName") to include
@@ -2845,10 +2852,10 @@ type ReviewSource struct {
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Description") to include
@@ -2878,10 +2885,10 @@ type Series struct {
 
 	// ForceSendFields is a list of field names (e.g. "Kind") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Kind") to include in API
@@ -2922,10 +2929,10 @@ type SeriesSeries struct {
 
 	// ForceSendFields is a list of field names (e.g. "BannerImageUrl") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BannerImageUrl") to
@@ -2945,35 +2952,28 @@ func (s *SeriesSeries) MarshalJSON() ([]byte, error) {
 }
 
 type SeriesSeriesSeriesSubscriptionReleaseInfo struct {
-	// CancellationTimestampUs: Cancellation date of the series subscription
-	// (or when it ends).
-	CancellationTimestampUs int64 `json:"cancellationTimestampUs,omitempty,string"`
+	CancelTime string `json:"cancelTime,omitempty"`
 
-	// CurrentReleaseInfo: Release information for the last release.
-	CurrentReleaseInfo *BooksSubscriptionReleaseInfo `json:"currentReleaseInfo,omitempty"`
+	CurrentReleaseInfo *SeriesSeriesSeriesSubscriptionReleaseInfoCurrentReleaseInfo `json:"currentReleaseInfo,omitempty"`
 
-	// NextReleaseInfo: Release information for the next release.
-	NextReleaseInfo *BooksSubscriptionReleaseInfo `json:"nextReleaseInfo,omitempty"`
+	NextReleaseInfo *SeriesSeriesSeriesSubscriptionReleaseInfoNextReleaseInfo `json:"nextReleaseInfo,omitempty"`
 
-	// SeriesSubscriptionType: series subscription type.
 	SeriesSubscriptionType string `json:"seriesSubscriptionType,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g.
-	// "CancellationTimestampUs") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "CancelTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CancellationTimestampUs")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "CancelTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -2981,6 +2981,100 @@ func (s *SeriesSeriesSeriesSubscriptionReleaseInfo) MarshalJSON() ([]byte, error
 	type NoMethod SeriesSeriesSeriesSubscriptionReleaseInfo
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type SeriesSeriesSeriesSubscriptionReleaseInfoCurrentReleaseInfo struct {
+	AmountInMicros float64 `json:"amountInMicros,omitempty"`
+
+	CurrencyCode string `json:"currencyCode,omitempty"`
+
+	ReleaseNumber string `json:"releaseNumber,omitempty"`
+
+	ReleaseTime string `json:"releaseTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AmountInMicros") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AmountInMicros") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SeriesSeriesSeriesSubscriptionReleaseInfoCurrentReleaseInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod SeriesSeriesSeriesSubscriptionReleaseInfoCurrentReleaseInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *SeriesSeriesSeriesSubscriptionReleaseInfoCurrentReleaseInfo) UnmarshalJSON(data []byte) error {
+	type NoMethod SeriesSeriesSeriesSubscriptionReleaseInfoCurrentReleaseInfo
+	var s1 struct {
+		AmountInMicros gensupport.JSONFloat64 `json:"amountInMicros"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.AmountInMicros = float64(s1.AmountInMicros)
+	return nil
+}
+
+type SeriesSeriesSeriesSubscriptionReleaseInfoNextReleaseInfo struct {
+	AmountInMicros float64 `json:"amountInMicros,omitempty"`
+
+	CurrencyCode string `json:"currencyCode,omitempty"`
+
+	ReleaseNumber string `json:"releaseNumber,omitempty"`
+
+	ReleaseTime string `json:"releaseTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AmountInMicros") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AmountInMicros") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SeriesSeriesSeriesSubscriptionReleaseInfoNextReleaseInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod SeriesSeriesSeriesSubscriptionReleaseInfoNextReleaseInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *SeriesSeriesSeriesSubscriptionReleaseInfoNextReleaseInfo) UnmarshalJSON(data []byte) error {
+	type NoMethod SeriesSeriesSeriesSubscriptionReleaseInfoNextReleaseInfo
+	var s1 struct {
+		AmountInMicros gensupport.JSONFloat64 `json:"amountInMicros"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.AmountInMicros = float64(s1.AmountInMicros)
+	return nil
 }
 
 type Seriesmembership struct {
@@ -2997,10 +3091,10 @@ type Seriesmembership struct {
 
 	// ForceSendFields is a list of field names (e.g. "Kind") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Kind") to include in API
@@ -3034,10 +3128,10 @@ type Usersettings struct {
 
 	// ForceSendFields is a list of field names (e.g. "Kind") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Kind") to include in API
@@ -3064,10 +3158,10 @@ type UsersettingsNotesExport struct {
 
 	// ForceSendFields is a list of field names (e.g. "FolderName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "FolderName") to include in
@@ -3098,10 +3192,10 @@ type UsersettingsNotification struct {
 
 	// ForceSendFields is a list of field names (e.g. "MatchMyInterests") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "MatchMyInterests") to
@@ -3125,10 +3219,10 @@ type UsersettingsNotificationMatchMyInterests struct {
 
 	// ForceSendFields is a list of field names (e.g. "OptedState") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "OptedState") to include in
@@ -3151,10 +3245,10 @@ type UsersettingsNotificationMoreFromAuthors struct {
 
 	// ForceSendFields is a list of field names (e.g. "OptedState") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "OptedState") to include in
@@ -3177,10 +3271,10 @@ type UsersettingsNotificationMoreFromSeries struct {
 
 	// ForceSendFields is a list of field names (e.g. "OptedState") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "OptedState") to include in
@@ -3203,10 +3297,10 @@ type UsersettingsNotificationPriceDrop struct {
 
 	// ForceSendFields is a list of field names (e.g. "OptedState") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "OptedState") to include in
@@ -3229,10 +3323,10 @@ type UsersettingsNotificationRewardExpirations struct {
 
 	// ForceSendFields is a list of field names (e.g. "OptedState") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "OptedState") to include in
@@ -3298,10 +3392,10 @@ type Volume struct {
 
 	// ForceSendFields is a list of field names (e.g. "AccessInfo") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AccessInfo") to include in
@@ -3389,10 +3483,10 @@ type VolumeAccessInfo struct {
 
 	// ForceSendFields is a list of field names (e.g. "AccessViewStatus") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AccessViewStatus") to
@@ -3427,10 +3521,10 @@ type VolumeAccessInfoEpub struct {
 
 	// ForceSendFields is a list of field names (e.g. "AcsTokenLink") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AcsTokenLink") to include
@@ -3464,10 +3558,10 @@ type VolumeAccessInfoPdf struct {
 
 	// ForceSendFields is a list of field names (e.g. "AcsTokenLink") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AcsTokenLink") to include
@@ -3494,10 +3588,10 @@ type VolumeLayerInfo struct {
 
 	// ForceSendFields is a list of field names (e.g. "Layers") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Layers") to include in API
@@ -3527,10 +3621,10 @@ type VolumeLayerInfoLayers struct {
 
 	// ForceSendFields is a list of field names (e.g. "LayerId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "LayerId") to include in
@@ -3556,10 +3650,10 @@ type VolumeRecommendedInfo struct {
 
 	// ForceSendFields is a list of field names (e.g. "Explanation") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Explanation") to include
@@ -3616,10 +3710,10 @@ type VolumeSaleInfo struct {
 
 	// ForceSendFields is a list of field names (e.g. "BuyLink") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BuyLink") to include in
@@ -3649,10 +3743,10 @@ type VolumeSaleInfoListPrice struct {
 
 	// ForceSendFields is a list of field names (e.g. "Amount") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Amount") to include in API
@@ -3702,10 +3796,10 @@ type VolumeSaleInfoOffers struct {
 
 	// ForceSendFields is a list of field names (e.g. "FinskyOfferType") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "FinskyOfferType") to
@@ -3733,10 +3827,10 @@ type VolumeSaleInfoOffersListPrice struct {
 
 	// ForceSendFields is a list of field names (e.g. "AmountInMicros") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AmountInMicros") to
@@ -3778,10 +3872,10 @@ type VolumeSaleInfoOffersRentalDuration struct {
 
 	// ForceSendFields is a list of field names (e.g. "Count") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Count") to include in API
@@ -3822,10 +3916,10 @@ type VolumeSaleInfoOffersRetailPrice struct {
 
 	// ForceSendFields is a list of field names (e.g. "AmountInMicros") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AmountInMicros") to
@@ -3871,10 +3965,10 @@ type VolumeSaleInfoRetailPrice struct {
 
 	// ForceSendFields is a list of field names (e.g. "Amount") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Amount") to include in API
@@ -3913,10 +4007,10 @@ type VolumeSearchInfo struct {
 
 	// ForceSendFields is a list of field names (e.g. "TextSnippet") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "TextSnippet") to include
@@ -4005,10 +4099,10 @@ type VolumeUserInfo struct {
 
 	// ForceSendFields is a list of field names (e.g. "AcquiredTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AcquiredTime") to include
@@ -4038,8 +4132,8 @@ type VolumeUserInfoCopy struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "AllowedCharacterCount") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -4079,10 +4173,10 @@ type VolumeUserInfoFamilySharing struct {
 
 	// ForceSendFields is a list of field names (e.g. "FamilyRole") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "FamilyRole") to include in
@@ -4109,10 +4203,10 @@ type VolumeUserInfoRentalPeriod struct {
 
 	// ForceSendFields is a list of field names (e.g. "EndUtcSec") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "EndUtcSec") to include in
@@ -4135,10 +4229,10 @@ type VolumeUserInfoUserUploadedVolumeInfo struct {
 
 	// ForceSendFields is a list of field names (e.g. "ProcessingState") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ProcessingState") to
@@ -4243,7 +4337,7 @@ type VolumeVolumeInfo struct {
 	RatingsCount int64 `json:"ratingsCount,omitempty"`
 
 	// ReadingModes: The reading modes available for this volume.
-	ReadingModes interface{} `json:"readingModes,omitempty"`
+	ReadingModes *VolumeVolumeInfoReadingModes `json:"readingModes,omitempty"`
 
 	// SamplePageCount: Total number of sample pages as per publisher
 	// metadata.
@@ -4259,10 +4353,10 @@ type VolumeVolumeInfo struct {
 
 	// ForceSendFields is a list of field names (e.g. "AllowAnonLogging") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AllowAnonLogging") to
@@ -4308,10 +4402,10 @@ type VolumeVolumeInfoDimensions struct {
 
 	// ForceSendFields is a list of field names (e.g. "Height") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Height") to include in API
@@ -4358,10 +4452,10 @@ type VolumeVolumeInfoImageLinks struct {
 
 	// ForceSendFields is a list of field names (e.g. "ExtraLarge") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ExtraLarge") to include in
@@ -4389,10 +4483,10 @@ type VolumeVolumeInfoIndustryIdentifiers struct {
 
 	// ForceSendFields is a list of field names (e.g. "Identifier") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Identifier") to include in
@@ -4423,10 +4517,10 @@ type VolumeVolumeInfoPanelizationSummary struct {
 
 	// ForceSendFields is a list of field names (e.g. "ContainsEpubBubbles")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ContainsEpubBubbles") to
@@ -4441,6 +4535,36 @@ type VolumeVolumeInfoPanelizationSummary struct {
 
 func (s *VolumeVolumeInfoPanelizationSummary) MarshalJSON() ([]byte, error) {
 	type NoMethod VolumeVolumeInfoPanelizationSummary
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// VolumeVolumeInfoReadingModes: The reading modes available for this
+// volume.
+type VolumeVolumeInfoReadingModes struct {
+	Image bool `json:"image,omitempty"`
+
+	Text bool `json:"text,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Image") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Image") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *VolumeVolumeInfoReadingModes) MarshalJSON() ([]byte, error) {
+	type NoMethod VolumeVolumeInfoReadingModes
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4460,10 +4584,10 @@ type Volume2 struct {
 
 	// ForceSendFields is a list of field names (e.g. "Items") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Items") to include in API
@@ -4531,10 +4655,10 @@ type Volumeannotation struct {
 
 	// ForceSendFields is a list of field names (e.g. "AnnotationDataId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AnnotationDataId") to
@@ -4572,10 +4696,10 @@ type VolumeannotationContentRanges struct {
 
 	// ForceSendFields is a list of field names (e.g. "CfiRange") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CfiRange") to include in
@@ -4619,10 +4743,10 @@ type Volumeannotations struct {
 
 	// ForceSendFields is a list of field names (e.g. "Items") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Items") to include in API
@@ -4658,10 +4782,10 @@ type Volumes struct {
 
 	// ForceSendFields is a list of field names (e.g. "Items") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Items") to include in API
@@ -4695,10 +4819,10 @@ type Volumeseriesinfo struct {
 
 	// ForceSendFields is a list of field names (e.g. "BookDisplayNumber")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BookDisplayNumber") to
@@ -4734,10 +4858,10 @@ type VolumeseriesinfoVolumeSeries struct {
 
 	// ForceSendFields is a list of field names (e.g. "Issue") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Issue") to include in API
@@ -4762,10 +4886,10 @@ type VolumeseriesinfoVolumeSeriesIssue struct {
 
 	// ForceSendFields is a list of field names (e.g. "IssueDisplayNumber")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "IssueDisplayNumber") to
@@ -4798,6 +4922,9 @@ type BookshelvesGetCall struct {
 
 // Get: Retrieves metadata for a specific bookshelf for the specified
 // user.
+//
+// - shelf: ID of bookshelf to retrieve.
+// - userId: ID of user for whom to retrieve bookshelves.
 func (r *BookshelvesService) Get(userId string, shelf string) *BookshelvesGetCall {
 	c := &BookshelvesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -4849,7 +4976,7 @@ func (c *BookshelvesGetCall) Header() http.Header {
 
 func (c *BookshelvesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4860,7 +4987,7 @@ func (c *BookshelvesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "users/{userId}/bookshelves/{shelf}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/users/{userId}/bookshelves/{shelf}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -4888,17 +5015,17 @@ func (c *BookshelvesGetCall) Do(opts ...googleapi.CallOption) (*Bookshelf, error
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Bookshelf{
 		ServerResponse: googleapi.ServerResponse{
@@ -4913,6 +5040,7 @@ func (c *BookshelvesGetCall) Do(opts ...googleapi.CallOption) (*Bookshelf, error
 	return ret, nil
 	// {
 	//   "description": "Retrieves metadata for a specific bookshelf for the specified user.",
+	//   "flatPath": "books/v1/users/{userId}/bookshelves/{shelf}",
 	//   "httpMethod": "GET",
 	//   "id": "books.bookshelves.get",
 	//   "parameterOrder": [
@@ -4938,7 +5066,7 @@ func (c *BookshelvesGetCall) Do(opts ...googleapi.CallOption) (*Bookshelf, error
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "users/{userId}/bookshelves/{shelf}",
+	//   "path": "books/v1/users/{userId}/bookshelves/{shelf}",
 	//   "response": {
 	//     "$ref": "Bookshelf"
 	//   },
@@ -4961,6 +5089,8 @@ type BookshelvesListCall struct {
 }
 
 // List: Retrieves a list of public bookshelves for the specified user.
+//
+// - userId: ID of user for whom to retrieve bookshelves.
 func (r *BookshelvesService) List(userId string) *BookshelvesListCall {
 	c := &BookshelvesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -5011,7 +5141,7 @@ func (c *BookshelvesListCall) Header() http.Header {
 
 func (c *BookshelvesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5022,7 +5152,7 @@ func (c *BookshelvesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "users/{userId}/bookshelves")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/users/{userId}/bookshelves")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -5049,17 +5179,17 @@ func (c *BookshelvesListCall) Do(opts ...googleapi.CallOption) (*Bookshelves, er
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Bookshelves{
 		ServerResponse: googleapi.ServerResponse{
@@ -5074,6 +5204,7 @@ func (c *BookshelvesListCall) Do(opts ...googleapi.CallOption) (*Bookshelves, er
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of public bookshelves for the specified user.",
+	//   "flatPath": "books/v1/users/{userId}/bookshelves",
 	//   "httpMethod": "GET",
 	//   "id": "books.bookshelves.list",
 	//   "parameterOrder": [
@@ -5092,7 +5223,7 @@ func (c *BookshelvesListCall) Do(opts ...googleapi.CallOption) (*Bookshelves, er
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "users/{userId}/bookshelves",
+	//   "path": "books/v1/users/{userId}/bookshelves",
 	//   "response": {
 	//     "$ref": "Bookshelves"
 	//   },
@@ -5117,6 +5248,9 @@ type BookshelvesVolumesListCall struct {
 
 // List: Retrieves volumes in a specific bookshelf for the specified
 // user.
+//
+// - shelf: ID of bookshelf to retrieve volumes.
+// - userId: ID of user for whom to retrieve bookshelf volumes.
 func (r *BookshelvesVolumesService) List(userId string, shelf string) *BookshelvesVolumesListCall {
 	c := &BookshelvesVolumesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -5189,7 +5323,7 @@ func (c *BookshelvesVolumesListCall) Header() http.Header {
 
 func (c *BookshelvesVolumesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5200,7 +5334,7 @@ func (c *BookshelvesVolumesListCall) doRequest(alt string) (*http.Response, erro
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "users/{userId}/bookshelves/{shelf}/volumes")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/users/{userId}/bookshelves/{shelf}/volumes")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -5228,17 +5362,17 @@ func (c *BookshelvesVolumesListCall) Do(opts ...googleapi.CallOption) (*Volumes,
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Volumes{
 		ServerResponse: googleapi.ServerResponse{
@@ -5253,6 +5387,7 @@ func (c *BookshelvesVolumesListCall) Do(opts ...googleapi.CallOption) (*Volumes,
 	return ret, nil
 	// {
 	//   "description": "Retrieves volumes in a specific bookshelf for the specified user.",
+	//   "flatPath": "books/v1/users/{userId}/bookshelves/{shelf}/volumes",
 	//   "httpMethod": "GET",
 	//   "id": "books.bookshelves.volumes.list",
 	//   "parameterOrder": [
@@ -5297,7 +5432,7 @@ func (c *BookshelvesVolumesListCall) Do(opts ...googleapi.CallOption) (*Volumes,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "users/{userId}/bookshelves/{shelf}/volumes",
+	//   "path": "books/v1/users/{userId}/bookshelves/{shelf}/volumes",
 	//   "response": {
 	//     "$ref": "Volumes"
 	//   },
@@ -5317,7 +5452,7 @@ type CloudloadingAddBookCall struct {
 	header_    http.Header
 }
 
-// AddBook:
+// AddBook: Add a user-upload volume and triggers processing.
 func (r *CloudloadingService) AddBook() *CloudloadingAddBookCall {
 	c := &CloudloadingAddBookCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -5345,6 +5480,7 @@ func (c *CloudloadingAddBookCall) Name(name string) *CloudloadingAddBookCall {
 }
 
 // UploadClientToken sets the optional parameter "upload_client_token":
+// Scotty upload token.
 func (c *CloudloadingAddBookCall) UploadClientToken(uploadClientToken string) *CloudloadingAddBookCall {
 	c.urlParams_.Set("upload_client_token", uploadClientToken)
 	return c
@@ -5377,7 +5513,7 @@ func (c *CloudloadingAddBookCall) Header() http.Header {
 
 func (c *CloudloadingAddBookCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5385,7 +5521,7 @@ func (c *CloudloadingAddBookCall) doRequest(alt string) (*http.Response, error) 
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "cloudloading/addBook")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/cloudloading/addBook")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -5409,17 +5545,17 @@ func (c *CloudloadingAddBookCall) Do(opts ...googleapi.CallOption) (*BooksCloudl
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &BooksCloudloadingResource{
 		ServerResponse: googleapi.ServerResponse{
@@ -5433,9 +5569,11 @@ func (c *CloudloadingAddBookCall) Do(opts ...googleapi.CallOption) (*BooksCloudl
 	}
 	return ret, nil
 	// {
-	//   "description": "",
+	//   "description": "Add a user-upload volume and triggers processing.",
+	//   "flatPath": "books/v1/cloudloading/addBook",
 	//   "httpMethod": "POST",
 	//   "id": "books.cloudloading.addBook",
+	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "drive_document_id": {
 	//       "description": "A drive document id. The upload_client_token must not be set.",
@@ -5453,11 +5591,12 @@ func (c *CloudloadingAddBookCall) Do(opts ...googleapi.CallOption) (*BooksCloudl
 	//       "type": "string"
 	//     },
 	//     "upload_client_token": {
+	//       "description": "Scotty upload token.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "cloudloading/addBook",
+	//   "path": "books/v1/cloudloading/addBook",
 	//   "response": {
 	//     "$ref": "BooksCloudloadingResource"
 	//   },
@@ -5478,6 +5617,8 @@ type CloudloadingDeleteBookCall struct {
 }
 
 // DeleteBook: Remove the book and its contents
+//
+// - volumeId: The id of the book to be removed.
 func (r *CloudloadingService) DeleteBook(volumeId string) *CloudloadingDeleteBookCall {
 	c := &CloudloadingDeleteBookCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("volumeId", volumeId)
@@ -5511,7 +5652,7 @@ func (c *CloudloadingDeleteBookCall) Header() http.Header {
 
 func (c *CloudloadingDeleteBookCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5519,7 +5660,7 @@ func (c *CloudloadingDeleteBookCall) doRequest(alt string) (*http.Response, erro
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "cloudloading/deleteBook")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/cloudloading/deleteBook")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -5530,19 +5671,45 @@ func (c *CloudloadingDeleteBookCall) doRequest(alt string) (*http.Response, erro
 }
 
 // Do executes the "books.cloudloading.deleteBook" call.
-func (c *CloudloadingDeleteBookCall) Do(opts ...googleapi.CallOption) error {
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *CloudloadingDeleteBookCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return nil, gensupport.WrapError(err)
 	}
-	return nil
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
 	// {
 	//   "description": "Remove the book and its contents",
+	//   "flatPath": "books/v1/cloudloading/deleteBook",
 	//   "httpMethod": "POST",
 	//   "id": "books.cloudloading.deleteBook",
 	//   "parameterOrder": [
@@ -5556,7 +5723,10 @@ func (c *CloudloadingDeleteBookCall) Do(opts ...googleapi.CallOption) error {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "cloudloading/deleteBook",
+	//   "path": "books/v1/cloudloading/deleteBook",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/books"
 	//   ]
@@ -5574,7 +5744,7 @@ type CloudloadingUpdateBookCall struct {
 	header_                   http.Header
 }
 
-// UpdateBook:
+// UpdateBook: Updates a user-upload volume.
 func (r *CloudloadingService) UpdateBook(bookscloudloadingresource *BooksCloudloadingResource) *CloudloadingUpdateBookCall {
 	c := &CloudloadingUpdateBookCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bookscloudloadingresource = bookscloudloadingresource
@@ -5608,7 +5778,7 @@ func (c *CloudloadingUpdateBookCall) Header() http.Header {
 
 func (c *CloudloadingUpdateBookCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5621,7 +5791,7 @@ func (c *CloudloadingUpdateBookCall) doRequest(alt string) (*http.Response, erro
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "cloudloading/updateBook")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/cloudloading/updateBook")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -5645,17 +5815,17 @@ func (c *CloudloadingUpdateBookCall) Do(opts ...googleapi.CallOption) (*BooksClo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &BooksCloudloadingResource{
 		ServerResponse: googleapi.ServerResponse{
@@ -5669,10 +5839,13 @@ func (c *CloudloadingUpdateBookCall) Do(opts ...googleapi.CallOption) (*BooksClo
 	}
 	return ret, nil
 	// {
-	//   "description": "",
+	//   "description": "Updates a user-upload volume.",
+	//   "flatPath": "books/v1/cloudloading/updateBook",
 	//   "httpMethod": "POST",
 	//   "id": "books.cloudloading.updateBook",
-	//   "path": "cloudloading/updateBook",
+	//   "parameterOrder": [],
+	//   "parameters": {},
+	//   "path": "books/v1/cloudloading/updateBook",
 	//   "request": {
 	//     "$ref": "BooksCloudloadingResource"
 	//   },
@@ -5698,6 +5871,8 @@ type DictionaryListOfflineMetadataCall struct {
 
 // ListOfflineMetadata: Returns a list of offline dictionary metadata
 // available
+//
+// - cpksver: The device/version ID from which to request the data.
 func (r *DictionaryService) ListOfflineMetadata(cpksver string) *DictionaryListOfflineMetadataCall {
 	c := &DictionaryListOfflineMetadataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("cpksver", cpksver)
@@ -5741,7 +5916,7 @@ func (c *DictionaryListOfflineMetadataCall) Header() http.Header {
 
 func (c *DictionaryListOfflineMetadataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5752,7 +5927,7 @@ func (c *DictionaryListOfflineMetadataCall) doRequest(alt string) (*http.Respons
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dictionary/listOfflineMetadata")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/dictionary/listOfflineMetadata")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -5776,17 +5951,17 @@ func (c *DictionaryListOfflineMetadataCall) Do(opts ...googleapi.CallOption) (*M
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Metadata{
 		ServerResponse: googleapi.ServerResponse{
@@ -5801,6 +5976,7 @@ func (c *DictionaryListOfflineMetadataCall) Do(opts ...googleapi.CallOption) (*M
 	return ret, nil
 	// {
 	//   "description": "Returns a list of offline dictionary metadata available",
+	//   "flatPath": "books/v1/dictionary/listOfflineMetadata",
 	//   "httpMethod": "GET",
 	//   "id": "books.dictionary.listOfflineMetadata",
 	//   "parameterOrder": [
@@ -5814,7 +5990,7 @@ func (c *DictionaryListOfflineMetadataCall) Do(opts ...googleapi.CallOption) (*M
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dictionary/listOfflineMetadata",
+	//   "path": "books/v1/dictionary/listOfflineMetadata",
 	//   "response": {
 	//     "$ref": "Metadata"
 	//   },
@@ -5886,7 +6062,7 @@ func (c *FamilysharingGetFamilyInfoCall) Header() http.Header {
 
 func (c *FamilysharingGetFamilyInfoCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5897,7 +6073,7 @@ func (c *FamilysharingGetFamilyInfoCall) doRequest(alt string) (*http.Response, 
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "familysharing/getFamilyInfo")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/familysharing/getFamilyInfo")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -5921,17 +6097,17 @@ func (c *FamilysharingGetFamilyInfoCall) Do(opts ...googleapi.CallOption) (*Fami
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &FamilyInfo{
 		ServerResponse: googleapi.ServerResponse{
@@ -5946,8 +6122,10 @@ func (c *FamilysharingGetFamilyInfoCall) Do(opts ...googleapi.CallOption) (*Fami
 	return ret, nil
 	// {
 	//   "description": "Gets information regarding the family that the user is part of.",
+	//   "flatPath": "books/v1/familysharing/getFamilyInfo",
 	//   "httpMethod": "GET",
 	//   "id": "books.familysharing.getFamilyInfo",
+	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "source": {
 	//       "description": "String to identify the originator of this request.",
@@ -5955,7 +6133,7 @@ func (c *FamilysharingGetFamilyInfoCall) Do(opts ...googleapi.CallOption) (*Fami
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "familysharing/getFamilyInfo",
+	//   "path": "books/v1/familysharing/getFamilyInfo",
 	//   "response": {
 	//     "$ref": "FamilyInfo"
 	//   },
@@ -6028,7 +6206,7 @@ func (c *FamilysharingShareCall) Header() http.Header {
 
 func (c *FamilysharingShareCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6036,7 +6214,7 @@ func (c *FamilysharingShareCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "familysharing/share")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/familysharing/share")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -6047,21 +6225,48 @@ func (c *FamilysharingShareCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "books.familysharing.share" call.
-func (c *FamilysharingShareCall) Do(opts ...googleapi.CallOption) error {
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *FamilysharingShareCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return nil, gensupport.WrapError(err)
 	}
-	return nil
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
 	// {
 	//   "description": "Initiates sharing of the content with the user's family. Empty response indicates success.",
+	//   "flatPath": "books/v1/familysharing/share",
 	//   "httpMethod": "POST",
 	//   "id": "books.familysharing.share",
+	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "docId": {
 	//       "description": "The docid to share.",
@@ -6079,7 +6284,10 @@ func (c *FamilysharingShareCall) Do(opts ...googleapi.CallOption) error {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "familysharing/share",
+	//   "path": "books/v1/familysharing/share",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/books"
 	//   ]
@@ -6150,7 +6358,7 @@ func (c *FamilysharingUnshareCall) Header() http.Header {
 
 func (c *FamilysharingUnshareCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6158,7 +6366,7 @@ func (c *FamilysharingUnshareCall) doRequest(alt string) (*http.Response, error)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "familysharing/unshare")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/familysharing/unshare")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -6169,21 +6377,48 @@ func (c *FamilysharingUnshareCall) doRequest(alt string) (*http.Response, error)
 }
 
 // Do executes the "books.familysharing.unshare" call.
-func (c *FamilysharingUnshareCall) Do(opts ...googleapi.CallOption) error {
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *FamilysharingUnshareCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return nil, gensupport.WrapError(err)
 	}
-	return nil
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
 	// {
 	//   "description": "Initiates revoking content that has already been shared with the user's family. Empty response indicates success.",
+	//   "flatPath": "books/v1/familysharing/unshare",
 	//   "httpMethod": "POST",
 	//   "id": "books.familysharing.unshare",
+	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "docId": {
 	//       "description": "The docid to unshare.",
@@ -6201,7 +6436,10 @@ func (c *FamilysharingUnshareCall) Do(opts ...googleapi.CallOption) error {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "familysharing/unshare",
+	//   "path": "books/v1/familysharing/unshare",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/books"
 	//   ]
@@ -6222,6 +6460,9 @@ type LayersGetCall struct {
 }
 
 // Get: Gets the layer summary for a volume.
+//
+// - summaryId: The ID for the layer to get the summary for.
+// - volumeId: The volume to retrieve layers for.
 func (r *LayersService) Get(volumeId string, summaryId string) *LayersGetCall {
 	c := &LayersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.volumeId = volumeId
@@ -6280,7 +6521,7 @@ func (c *LayersGetCall) Header() http.Header {
 
 func (c *LayersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6291,7 +6532,7 @@ func (c *LayersGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "volumes/{volumeId}/layersummary/{summaryId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/volumes/{volumeId}/layersummary/{summaryId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -6319,17 +6560,17 @@ func (c *LayersGetCall) Do(opts ...googleapi.CallOption) (*Layersummary, error) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Layersummary{
 		ServerResponse: googleapi.ServerResponse{
@@ -6344,6 +6585,7 @@ func (c *LayersGetCall) Do(opts ...googleapi.CallOption) (*Layersummary, error) 
 	return ret, nil
 	// {
 	//   "description": "Gets the layer summary for a volume.",
+	//   "flatPath": "books/v1/volumes/{volumeId}/layersummary/{summaryId}",
 	//   "httpMethod": "GET",
 	//   "id": "books.layers.get",
 	//   "parameterOrder": [
@@ -6374,7 +6616,7 @@ func (c *LayersGetCall) Do(opts ...googleapi.CallOption) (*Layersummary, error) 
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "volumes/{volumeId}/layersummary/{summaryId}",
+	//   "path": "books/v1/volumes/{volumeId}/layersummary/{summaryId}",
 	//   "response": {
 	//     "$ref": "Layersummary"
 	//   },
@@ -6397,6 +6639,8 @@ type LayersListCall struct {
 }
 
 // List: List the layer summaries for a volume.
+//
+// - volumeId: The volume to retrieve layers for.
 func (r *LayersService) List(volumeId string) *LayersListCall {
 	c := &LayersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.volumeId = volumeId
@@ -6468,7 +6712,7 @@ func (c *LayersListCall) Header() http.Header {
 
 func (c *LayersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6479,7 +6723,7 @@ func (c *LayersListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "volumes/{volumeId}/layersummary")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/volumes/{volumeId}/layersummary")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -6506,17 +6750,17 @@ func (c *LayersListCall) Do(opts ...googleapi.CallOption) (*Layersummaries, erro
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Layersummaries{
 		ServerResponse: googleapi.ServerResponse{
@@ -6531,6 +6775,7 @@ func (c *LayersListCall) Do(opts ...googleapi.CallOption) (*Layersummaries, erro
 	return ret, nil
 	// {
 	//   "description": "List the layer summaries for a volume.",
+	//   "flatPath": "books/v1/volumes/{volumeId}/layersummary",
 	//   "httpMethod": "GET",
 	//   "id": "books.layers.list",
 	//   "parameterOrder": [
@@ -6567,7 +6812,7 @@ func (c *LayersListCall) Do(opts ...googleapi.CallOption) (*Layersummaries, erro
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "volumes/{volumeId}/layersummary",
+	//   "path": "books/v1/volumes/{volumeId}/layersummary",
 	//   "response": {
 	//     "$ref": "Layersummaries"
 	//   },
@@ -6592,6 +6837,12 @@ type LayersAnnotationDataGetCall struct {
 }
 
 // Get: Gets the annotation data.
+//
+//   - annotationDataId: The ID of the annotation data to retrieve.
+//   - contentVersion: The content version for the volume you are trying
+//     to retrieve.
+//   - layerId: The ID for the layer to get the annotations.
+//   - volumeId: The volume to retrieve annotations for.
 func (r *LayersAnnotationDataService) Get(volumeId string, layerId string, annotationDataId string, contentVersion string) *LayersAnnotationDataGetCall {
 	c := &LayersAnnotationDataGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.volumeId = volumeId
@@ -6682,7 +6933,7 @@ func (c *LayersAnnotationDataGetCall) Header() http.Header {
 
 func (c *LayersAnnotationDataGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6693,7 +6944,7 @@ func (c *LayersAnnotationDataGetCall) doRequest(alt string) (*http.Response, err
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "volumes/{volumeId}/layers/{layerId}/data/{annotationDataId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/volumes/{volumeId}/layers/{layerId}/data/{annotationDataId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -6709,32 +6960,32 @@ func (c *LayersAnnotationDataGetCall) doRequest(alt string) (*http.Response, err
 }
 
 // Do executes the "books.layers.annotationData.get" call.
-// Exactly one of *Annotationdata or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Annotationdata.ServerResponse.Header or (if a response was returned
-// at all) in error.(*googleapi.Error).Header. Use
+// Exactly one of *DictionaryAnnotationdata or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *DictionaryAnnotationdata.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *LayersAnnotationDataGetCall) Do(opts ...googleapi.CallOption) (*Annotationdata, error) {
+func (c *LayersAnnotationDataGetCall) Do(opts ...googleapi.CallOption) (*DictionaryAnnotationdata, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
-	ret := &Annotationdata{
+	ret := &DictionaryAnnotationdata{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -6747,6 +6998,7 @@ func (c *LayersAnnotationDataGetCall) Do(opts ...googleapi.CallOption) (*Annotat
 	return ret, nil
 	// {
 	//   "description": "Gets the annotation data.",
+	//   "flatPath": "books/v1/volumes/{volumeId}/layers/{layerId}/data/{annotationDataId}",
 	//   "httpMethod": "GET",
 	//   "id": "books.layers.annotationData.get",
 	//   "parameterOrder": [
@@ -6815,9 +7067,9 @@ func (c *LayersAnnotationDataGetCall) Do(opts ...googleapi.CallOption) (*Annotat
 	//       "type": "integer"
 	//     }
 	//   },
-	//   "path": "volumes/{volumeId}/layers/{layerId}/data/{annotationDataId}",
+	//   "path": "books/v1/volumes/{volumeId}/layers/{layerId}/data/{annotationDataId}",
 	//   "response": {
-	//     "$ref": "Annotationdata"
+	//     "$ref": "DictionaryAnnotationdata"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/books"
@@ -6839,6 +7091,10 @@ type LayersAnnotationDataListCall struct {
 }
 
 // List: Gets the annotation data for a volume and layer.
+//
+// - contentVersion: The content version for the requested volume.
+// - layerId: The ID for the layer to get the annotation data.
+// - volumeId: The volume to retrieve annotation data for.
 func (r *LayersAnnotationDataService) List(volumeId string, layerId string, contentVersion string) *LayersAnnotationDataListCall {
 	c := &LayersAnnotationDataListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.volumeId = volumeId
@@ -6958,7 +7214,7 @@ func (c *LayersAnnotationDataListCall) Header() http.Header {
 
 func (c *LayersAnnotationDataListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6969,7 +7225,7 @@ func (c *LayersAnnotationDataListCall) doRequest(alt string) (*http.Response, er
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "volumes/{volumeId}/layers/{layerId}/data")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/volumes/{volumeId}/layers/{layerId}/data")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -6997,17 +7253,17 @@ func (c *LayersAnnotationDataListCall) Do(opts ...googleapi.CallOption) (*Annota
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Annotationsdata{
 		ServerResponse: googleapi.ServerResponse{
@@ -7022,6 +7278,7 @@ func (c *LayersAnnotationDataListCall) Do(opts ...googleapi.CallOption) (*Annota
 	return ret, nil
 	// {
 	//   "description": "Gets the annotation data for a volume and layer.",
+	//   "flatPath": "books/v1/volumes/{volumeId}/layers/{layerId}/data",
 	//   "httpMethod": "GET",
 	//   "id": "books.layers.annotationData.list",
 	//   "parameterOrder": [
@@ -7107,7 +7364,7 @@ func (c *LayersAnnotationDataListCall) Do(opts ...googleapi.CallOption) (*Annota
 	//       "type": "integer"
 	//     }
 	//   },
-	//   "path": "volumes/{volumeId}/layers/{layerId}/data",
+	//   "path": "books/v1/volumes/{volumeId}/layers/{layerId}/data",
 	//   "response": {
 	//     "$ref": "Annotationsdata"
 	//   },
@@ -7153,6 +7410,10 @@ type LayersVolumeAnnotationsGetCall struct {
 }
 
 // Get: Gets the volume annotation.
+//
+// - annotationId: The ID of the volume annotation to retrieve.
+// - layerId: The ID for the layer to get the annotations.
+// - volumeId: The volume to retrieve annotations for.
 func (r *LayersVolumeAnnotationsService) Get(volumeId string, layerId string, annotationId string) *LayersVolumeAnnotationsGetCall {
 	c := &LayersVolumeAnnotationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.volumeId = volumeId
@@ -7213,7 +7474,7 @@ func (c *LayersVolumeAnnotationsGetCall) Header() http.Header {
 
 func (c *LayersVolumeAnnotationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7224,7 +7485,7 @@ func (c *LayersVolumeAnnotationsGetCall) doRequest(alt string) (*http.Response, 
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "volumes/{volumeId}/layers/{layerId}/annotations/{annotationId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/volumes/{volumeId}/layers/{layerId}/annotations/{annotationId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -7253,17 +7514,17 @@ func (c *LayersVolumeAnnotationsGetCall) Do(opts ...googleapi.CallOption) (*Volu
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Volumeannotation{
 		ServerResponse: googleapi.ServerResponse{
@@ -7278,6 +7539,7 @@ func (c *LayersVolumeAnnotationsGetCall) Do(opts ...googleapi.CallOption) (*Volu
 	return ret, nil
 	// {
 	//   "description": "Gets the volume annotation.",
+	//   "flatPath": "books/v1/volumes/{volumeId}/layers/{layerId}/annotations/{annotationId}",
 	//   "httpMethod": "GET",
 	//   "id": "books.layers.volumeAnnotations.get",
 	//   "parameterOrder": [
@@ -7315,7 +7577,7 @@ func (c *LayersVolumeAnnotationsGetCall) Do(opts ...googleapi.CallOption) (*Volu
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "volumes/{volumeId}/layers/{layerId}/annotations/{annotationId}",
+	//   "path": "books/v1/volumes/{volumeId}/layers/{layerId}/annotations/{annotationId}",
 	//   "response": {
 	//     "$ref": "Volumeannotation"
 	//   },
@@ -7339,6 +7601,10 @@ type LayersVolumeAnnotationsListCall struct {
 }
 
 // List: Gets the volume annotations for a volume and layer.
+//
+// - contentVersion: The content version for the requested volume.
+// - layerId: The ID for the layer to get the annotations.
+// - volumeId: The volume to retrieve annotations for.
 func (r *LayersVolumeAnnotationsService) List(volumeId string, layerId string, contentVersion string) *LayersVolumeAnnotationsListCall {
 	c := &LayersVolumeAnnotationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.volumeId = volumeId
@@ -7473,7 +7739,7 @@ func (c *LayersVolumeAnnotationsListCall) Header() http.Header {
 
 func (c *LayersVolumeAnnotationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7484,7 +7750,7 @@ func (c *LayersVolumeAnnotationsListCall) doRequest(alt string) (*http.Response,
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "volumes/{volumeId}/layers/{layerId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/volumes/{volumeId}/layers/{layerId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -7512,17 +7778,17 @@ func (c *LayersVolumeAnnotationsListCall) Do(opts ...googleapi.CallOption) (*Vol
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Volumeannotations{
 		ServerResponse: googleapi.ServerResponse{
@@ -7537,6 +7803,7 @@ func (c *LayersVolumeAnnotationsListCall) Do(opts ...googleapi.CallOption) (*Vol
 	return ret, nil
 	// {
 	//   "description": "Gets the volume annotations for a volume and layer.",
+	//   "flatPath": "books/v1/volumes/{volumeId}/layers/{layerId}",
 	//   "httpMethod": "GET",
 	//   "id": "books.layers.volumeAnnotations.list",
 	//   "parameterOrder": [
@@ -7627,7 +7894,7 @@ func (c *LayersVolumeAnnotationsListCall) Do(opts ...googleapi.CallOption) (*Vol
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "volumes/{volumeId}/layers/{layerId}",
+	//   "path": "books/v1/volumes/{volumeId}/layers/{layerId}",
 	//   "response": {
 	//     "$ref": "Volumeannotations"
 	//   },
@@ -7675,6 +7942,13 @@ func (r *MyconfigService) GetUserSettings() *MyconfigGetUserSettingsCall {
 	return c
 }
 
+// Country sets the optional parameter "country": Unused. Added only to
+// workaround TEX mandatory request template requirement
+func (c *MyconfigGetUserSettingsCall) Country(country string) *MyconfigGetUserSettingsCall {
+	c.urlParams_.Set("country", country)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -7712,7 +7986,7 @@ func (c *MyconfigGetUserSettingsCall) Header() http.Header {
 
 func (c *MyconfigGetUserSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7723,7 +7997,7 @@ func (c *MyconfigGetUserSettingsCall) doRequest(alt string) (*http.Response, err
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "myconfig/getUserSettings")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/myconfig/getUserSettings")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -7747,17 +8021,17 @@ func (c *MyconfigGetUserSettingsCall) Do(opts ...googleapi.CallOption) (*Userset
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Usersettings{
 		ServerResponse: googleapi.ServerResponse{
@@ -7772,9 +8046,18 @@ func (c *MyconfigGetUserSettingsCall) Do(opts ...googleapi.CallOption) (*Userset
 	return ret, nil
 	// {
 	//   "description": "Gets the current settings for the user.",
+	//   "flatPath": "books/v1/myconfig/getUserSettings",
 	//   "httpMethod": "GET",
 	//   "id": "books.myconfig.getUserSettings",
-	//   "path": "myconfig/getUserSettings",
+	//   "parameterOrder": [],
+	//   "parameters": {
+	//     "country": {
+	//       "description": "Unused. Added only to workaround TEX mandatory request template requirement",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "books/v1/myconfig/getUserSettings",
 	//   "response": {
 	//     "$ref": "Usersettings"
 	//   },
@@ -7795,10 +8078,14 @@ type MyconfigReleaseDownloadAccessCall struct {
 }
 
 // ReleaseDownloadAccess: Release downloaded content access restriction.
-func (r *MyconfigService) ReleaseDownloadAccess(volumeIds []string, cpksver string) *MyconfigReleaseDownloadAccessCall {
+//
+//   - cpksver: The device/version ID from which to release the
+//     restriction.
+//   - volumeIds: The volume(s) to release restrictions for.
+func (r *MyconfigService) ReleaseDownloadAccess(cpksver string, volumeIds []string) *MyconfigReleaseDownloadAccessCall {
 	c := &MyconfigReleaseDownloadAccessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.urlParams_.SetMulti("volumeIds", append([]string{}, volumeIds...))
 	c.urlParams_.Set("cpksver", cpksver)
+	c.urlParams_.SetMulti("volumeIds", append([]string{}, volumeIds...))
 	return c
 }
 
@@ -7843,7 +8130,7 @@ func (c *MyconfigReleaseDownloadAccessCall) Header() http.Header {
 
 func (c *MyconfigReleaseDownloadAccessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7851,7 +8138,7 @@ func (c *MyconfigReleaseDownloadAccessCall) doRequest(alt string) (*http.Respons
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "myconfig/releaseDownloadAccess")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/myconfig/releaseDownloadAccess")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -7875,17 +8162,17 @@ func (c *MyconfigReleaseDownloadAccessCall) Do(opts ...googleapi.CallOption) (*D
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &DownloadAccesses{
 		ServerResponse: googleapi.ServerResponse{
@@ -7900,11 +8187,12 @@ func (c *MyconfigReleaseDownloadAccessCall) Do(opts ...googleapi.CallOption) (*D
 	return ret, nil
 	// {
 	//   "description": "Release downloaded content access restriction.",
+	//   "flatPath": "books/v1/myconfig/releaseDownloadAccess",
 	//   "httpMethod": "POST",
 	//   "id": "books.myconfig.releaseDownloadAccess",
 	//   "parameterOrder": [
-	//     "volumeIds",
-	//     "cpksver"
+	//     "cpksver",
+	//     "volumeIds"
 	//   ],
 	//   "parameters": {
 	//     "cpksver": {
@@ -7931,7 +8219,7 @@ func (c *MyconfigReleaseDownloadAccessCall) Do(opts ...googleapi.CallOption) (*D
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "myconfig/releaseDownloadAccess",
+	//   "path": "books/v1/myconfig/releaseDownloadAccess",
 	//   "response": {
 	//     "$ref": "DownloadAccesses"
 	//   },
@@ -7952,12 +8240,19 @@ type MyconfigRequestAccessCall struct {
 }
 
 // RequestAccess: Request concurrent and download access restrictions.
-func (r *MyconfigService) RequestAccess(source string, volumeId string, nonce string, cpksver string) *MyconfigRequestAccessCall {
+//
+//   - cpksver: The device/version ID from which to request the
+//     restrictions.
+//   - nonce: The client nonce value.
+//   - source: String to identify the originator of this request.
+//   - volumeId: The volume to request concurrent/download restrictions
+//     for.
+func (r *MyconfigService) RequestAccess(cpksver string, nonce string, source string, volumeId string) *MyconfigRequestAccessCall {
 	c := &MyconfigRequestAccessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.urlParams_.Set("cpksver", cpksver)
+	c.urlParams_.Set("nonce", nonce)
 	c.urlParams_.Set("source", source)
 	c.urlParams_.Set("volumeId", volumeId)
-	c.urlParams_.Set("nonce", nonce)
-	c.urlParams_.Set("cpksver", cpksver)
 	return c
 }
 
@@ -7965,9 +8260,11 @@ func (r *MyconfigService) RequestAccess(source string, volumeId string, nonce st
 // access license to request. If not specified, the default is BOTH.
 //
 // Possible values:
-//   "BOTH" - Both concurrent and download licenses.
-//   "CONCURRENT" - Concurrent access license.
-//   "DOWNLOAD" - Offline download access license.
+//
+//	"LICENSE_TYPES_UNDEFINED"
+//	"BOTH" - Both concurrent and download licenses.
+//	"CONCURRENT" - Concurrent access license.
+//	"DOWNLOAD" - Offline download access license.
 func (c *MyconfigRequestAccessCall) LicenseTypes(licenseTypes string) *MyconfigRequestAccessCall {
 	c.urlParams_.Set("licenseTypes", licenseTypes)
 	return c
@@ -8007,7 +8304,7 @@ func (c *MyconfigRequestAccessCall) Header() http.Header {
 
 func (c *MyconfigRequestAccessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8015,7 +8312,7 @@ func (c *MyconfigRequestAccessCall) doRequest(alt string) (*http.Response, error
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "myconfig/requestAccess")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/myconfig/requestAccess")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -8026,32 +8323,32 @@ func (c *MyconfigRequestAccessCall) doRequest(alt string) (*http.Response, error
 }
 
 // Do executes the "books.myconfig.requestAccess" call.
-// Exactly one of *RequestAccess or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *RequestAccess.ServerResponse.Header or (if a response was returned
-// at all) in error.(*googleapi.Error).Header. Use
+// Exactly one of *RequestAccessData or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *RequestAccessData.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *MyconfigRequestAccessCall) Do(opts ...googleapi.CallOption) (*RequestAccess, error) {
+func (c *MyconfigRequestAccessCall) Do(opts ...googleapi.CallOption) (*RequestAccessData, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
-	ret := &RequestAccess{
+	ret := &RequestAccessData{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -8064,13 +8361,14 @@ func (c *MyconfigRequestAccessCall) Do(opts ...googleapi.CallOption) (*RequestAc
 	return ret, nil
 	// {
 	//   "description": "Request concurrent and download access restrictions.",
+	//   "flatPath": "books/v1/myconfig/requestAccess",
 	//   "httpMethod": "POST",
 	//   "id": "books.myconfig.requestAccess",
 	//   "parameterOrder": [
-	//     "source",
-	//     "volumeId",
+	//     "cpksver",
 	//     "nonce",
-	//     "cpksver"
+	//     "source",
+	//     "volumeId"
 	//   ],
 	//   "parameters": {
 	//     "cpksver": {
@@ -8082,11 +8380,13 @@ func (c *MyconfigRequestAccessCall) Do(opts ...googleapi.CallOption) (*RequestAc
 	//     "licenseTypes": {
 	//       "description": "The type of access license to request. If not specified, the default is BOTH.",
 	//       "enum": [
+	//         "LICENSE_TYPES_UNDEFINED",
 	//         "BOTH",
 	//         "CONCURRENT",
 	//         "DOWNLOAD"
 	//       ],
 	//       "enumDescriptions": [
+	//         "",
 	//         "Both concurrent and download licenses.",
 	//         "Concurrent access license.",
 	//         "Offline download access license."
@@ -8118,9 +8418,9 @@ func (c *MyconfigRequestAccessCall) Do(opts ...googleapi.CallOption) (*RequestAc
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "myconfig/requestAccess",
+	//   "path": "books/v1/myconfig/requestAccess",
 	//   "response": {
-	//     "$ref": "RequestAccess"
+	//     "$ref": "RequestAccessData"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/books"
@@ -8140,11 +8440,16 @@ type MyconfigSyncVolumeLicensesCall struct {
 
 // SyncVolumeLicenses: Request downloaded content access for specified
 // volumes on the My eBooks shelf.
-func (r *MyconfigService) SyncVolumeLicenses(source string, nonce string, cpksver string) *MyconfigSyncVolumeLicensesCall {
+//
+//   - cpksver: The device/version ID from which to release the
+//     restriction.
+//   - nonce: The client nonce value.
+//   - source: String to identify the originator of this request.
+func (r *MyconfigService) SyncVolumeLicenses(cpksver string, nonce string, source string) *MyconfigSyncVolumeLicensesCall {
 	c := &MyconfigSyncVolumeLicensesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.urlParams_.Set("source", source)
-	c.urlParams_.Set("nonce", nonce)
 	c.urlParams_.Set("cpksver", cpksver)
+	c.urlParams_.Set("nonce", nonce)
+	c.urlParams_.Set("source", source)
 	return c
 }
 
@@ -8152,7 +8457,9 @@ func (r *MyconfigService) SyncVolumeLicenses(source string, nonce string, cpksve
 // supported by the client, i.e., 'RENTALS'
 //
 // Possible values:
-//   "RENTALS" - Client supports rentals.
+//
+//	"FEATURES_UNDEFINED"
+//	"RENTALS" - Client supports rentals.
 func (c *MyconfigSyncVolumeLicensesCall) Features(features ...string) *MyconfigSyncVolumeLicensesCall {
 	c.urlParams_.SetMulti("features", append([]string{}, features...))
 	return c
@@ -8214,7 +8521,7 @@ func (c *MyconfigSyncVolumeLicensesCall) Header() http.Header {
 
 func (c *MyconfigSyncVolumeLicensesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8222,7 +8529,7 @@ func (c *MyconfigSyncVolumeLicensesCall) doRequest(alt string) (*http.Response, 
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "myconfig/syncVolumeLicenses")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/myconfig/syncVolumeLicenses")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -8246,17 +8553,17 @@ func (c *MyconfigSyncVolumeLicensesCall) Do(opts ...googleapi.CallOption) (*Volu
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Volumes{
 		ServerResponse: googleapi.ServerResponse{
@@ -8271,12 +8578,13 @@ func (c *MyconfigSyncVolumeLicensesCall) Do(opts ...googleapi.CallOption) (*Volu
 	return ret, nil
 	// {
 	//   "description": "Request downloaded content access for specified volumes on the My eBooks shelf.",
+	//   "flatPath": "books/v1/myconfig/syncVolumeLicenses",
 	//   "httpMethod": "POST",
 	//   "id": "books.myconfig.syncVolumeLicenses",
 	//   "parameterOrder": [
-	//     "source",
+	//     "cpksver",
 	//     "nonce",
-	//     "cpksver"
+	//     "source"
 	//   ],
 	//   "parameters": {
 	//     "cpksver": {
@@ -8288,9 +8596,11 @@ func (c *MyconfigSyncVolumeLicensesCall) Do(opts ...googleapi.CallOption) (*Volu
 	//     "features": {
 	//       "description": "List of features supported by the client, i.e., 'RENTALS'",
 	//       "enum": [
+	//         "FEATURES_UNDEFINED",
 	//         "RENTALS"
 	//       ],
 	//       "enumDescriptions": [
+	//         "",
 	//         "Client supports rentals."
 	//       ],
 	//       "location": "query",
@@ -8331,7 +8641,7 @@ func (c *MyconfigSyncVolumeLicensesCall) Do(opts ...googleapi.CallOption) (*Volu
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "myconfig/syncVolumeLicenses",
+	//   "path": "books/v1/myconfig/syncVolumeLicenses",
 	//   "response": {
 	//     "$ref": "Volumes"
 	//   },
@@ -8388,7 +8698,7 @@ func (c *MyconfigUpdateUserSettingsCall) Header() http.Header {
 
 func (c *MyconfigUpdateUserSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8401,7 +8711,7 @@ func (c *MyconfigUpdateUserSettingsCall) doRequest(alt string) (*http.Response, 
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "myconfig/updateUserSettings")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/myconfig/updateUserSettings")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -8425,17 +8735,17 @@ func (c *MyconfigUpdateUserSettingsCall) Do(opts ...googleapi.CallOption) (*User
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Usersettings{
 		ServerResponse: googleapi.ServerResponse{
@@ -8450,9 +8760,12 @@ func (c *MyconfigUpdateUserSettingsCall) Do(opts ...googleapi.CallOption) (*User
 	return ret, nil
 	// {
 	//   "description": "Sets the settings for the user. If a sub-object is specified, it will overwrite the existing sub-object stored in the server. Unspecified sub-objects will retain the existing value.",
+	//   "flatPath": "books/v1/myconfig/updateUserSettings",
 	//   "httpMethod": "POST",
 	//   "id": "books.myconfig.updateUserSettings",
-	//   "path": "myconfig/updateUserSettings",
+	//   "parameterOrder": [],
+	//   "parameters": {},
+	//   "path": "books/v1/myconfig/updateUserSettings",
 	//   "request": {
 	//     "$ref": "Usersettings"
 	//   },
@@ -8477,6 +8790,8 @@ type MylibraryAnnotationsDeleteCall struct {
 }
 
 // Delete: Deletes an annotation.
+//
+// - annotationId: The ID for the annotation to delete.
 func (r *MylibraryAnnotationsService) Delete(annotationId string) *MylibraryAnnotationsDeleteCall {
 	c := &MylibraryAnnotationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.annotationId = annotationId
@@ -8517,7 +8832,7 @@ func (c *MylibraryAnnotationsDeleteCall) Header() http.Header {
 
 func (c *MylibraryAnnotationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8525,7 +8840,7 @@ func (c *MylibraryAnnotationsDeleteCall) doRequest(alt string) (*http.Response, 
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/annotations/{annotationId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/mylibrary/annotations/{annotationId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("DELETE", urls, body)
 	if err != nil {
@@ -8539,19 +8854,45 @@ func (c *MylibraryAnnotationsDeleteCall) doRequest(alt string) (*http.Response, 
 }
 
 // Do executes the "books.mylibrary.annotations.delete" call.
-func (c *MylibraryAnnotationsDeleteCall) Do(opts ...googleapi.CallOption) error {
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *MylibraryAnnotationsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return nil, gensupport.WrapError(err)
 	}
-	return nil
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
 	// {
 	//   "description": "Deletes an annotation.",
+	//   "flatPath": "books/v1/mylibrary/annotations/{annotationId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "books.mylibrary.annotations.delete",
 	//   "parameterOrder": [
@@ -8570,7 +8911,10 @@ func (c *MylibraryAnnotationsDeleteCall) Do(opts ...googleapi.CallOption) error 
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "mylibrary/annotations/{annotationId}",
+	//   "path": "books/v1/mylibrary/annotations/{annotationId}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/books"
 	//   ]
@@ -8651,7 +8995,7 @@ func (c *MylibraryAnnotationsInsertCall) Header() http.Header {
 
 func (c *MylibraryAnnotationsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8664,7 +9008,7 @@ func (c *MylibraryAnnotationsInsertCall) doRequest(alt string) (*http.Response, 
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/annotations")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/mylibrary/annotations")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -8688,17 +9032,17 @@ func (c *MylibraryAnnotationsInsertCall) Do(opts ...googleapi.CallOption) (*Anno
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Annotation{
 		ServerResponse: googleapi.ServerResponse{
@@ -8713,8 +9057,10 @@ func (c *MylibraryAnnotationsInsertCall) Do(opts ...googleapi.CallOption) (*Anno
 	return ret, nil
 	// {
 	//   "description": "Inserts a new annotation.",
+	//   "flatPath": "books/v1/mylibrary/annotations",
 	//   "httpMethod": "POST",
 	//   "id": "books.mylibrary.annotations.insert",
+	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "annotationId": {
 	//       "description": "The ID for the annotation to insert.",
@@ -8737,7 +9083,7 @@ func (c *MylibraryAnnotationsInsertCall) Do(opts ...googleapi.CallOption) (*Anno
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "mylibrary/annotations",
+	//   "path": "books/v1/mylibrary/annotations",
 	//   "request": {
 	//     "$ref": "Annotation"
 	//   },
@@ -8877,7 +9223,7 @@ func (c *MylibraryAnnotationsListCall) Header() http.Header {
 
 func (c *MylibraryAnnotationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8888,7 +9234,7 @@ func (c *MylibraryAnnotationsListCall) doRequest(alt string) (*http.Response, er
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/annotations")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/mylibrary/annotations")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -8912,17 +9258,17 @@ func (c *MylibraryAnnotationsListCall) Do(opts ...googleapi.CallOption) (*Annota
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Annotations{
 		ServerResponse: googleapi.ServerResponse{
@@ -8937,8 +9283,10 @@ func (c *MylibraryAnnotationsListCall) Do(opts ...googleapi.CallOption) (*Annota
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of annotations, possibly filtered.",
+	//   "flatPath": "books/v1/mylibrary/annotations",
 	//   "httpMethod": "GET",
 	//   "id": "books.mylibrary.annotations.list",
+	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "contentVersion": {
 	//       "description": "The content version for the requested volume.",
@@ -8995,7 +9343,7 @@ func (c *MylibraryAnnotationsListCall) Do(opts ...googleapi.CallOption) (*Annota
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "mylibrary/annotations",
+	//   "path": "books/v1/mylibrary/annotations",
 	//   "response": {
 	//     "$ref": "Annotations"
 	//   },
@@ -9037,6 +9385,9 @@ type MylibraryAnnotationsSummaryCall struct {
 }
 
 // Summary: Gets the summary of specified layers.
+//
+// - layerIds: Array of layer IDs to get the summary for.
+// - volumeId: Volume id to get the summary for.
 func (r *MylibraryAnnotationsService) Summary(layerIds []string, volumeId string) *MylibraryAnnotationsSummaryCall {
 	c := &MylibraryAnnotationsSummaryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("layerIds", append([]string{}, layerIds...))
@@ -9071,7 +9422,7 @@ func (c *MylibraryAnnotationsSummaryCall) Header() http.Header {
 
 func (c *MylibraryAnnotationsSummaryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9079,7 +9430,7 @@ func (c *MylibraryAnnotationsSummaryCall) doRequest(alt string) (*http.Response,
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/annotations/summary")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/mylibrary/annotations/summary")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -9103,17 +9454,17 @@ func (c *MylibraryAnnotationsSummaryCall) Do(opts ...googleapi.CallOption) (*Ann
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AnnotationsSummary{
 		ServerResponse: googleapi.ServerResponse{
@@ -9128,6 +9479,7 @@ func (c *MylibraryAnnotationsSummaryCall) Do(opts ...googleapi.CallOption) (*Ann
 	return ret, nil
 	// {
 	//   "description": "Gets the summary of specified layers.",
+	//   "flatPath": "books/v1/mylibrary/annotations/summary",
 	//   "httpMethod": "POST",
 	//   "id": "books.mylibrary.annotations.summary",
 	//   "parameterOrder": [
@@ -9149,7 +9501,7 @@ func (c *MylibraryAnnotationsSummaryCall) Do(opts ...googleapi.CallOption) (*Ann
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "mylibrary/annotations/summary",
+	//   "path": "books/v1/mylibrary/annotations/summary",
 	//   "response": {
 	//     "$ref": "AnnotationsSummary"
 	//   },
@@ -9172,6 +9524,8 @@ type MylibraryAnnotationsUpdateCall struct {
 }
 
 // Update: Updates an existing annotation.
+//
+// - annotationId: The ID for the annotation to update.
 func (r *MylibraryAnnotationsService) Update(annotationId string, annotation *Annotation) *MylibraryAnnotationsUpdateCall {
 	c := &MylibraryAnnotationsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.annotationId = annotationId
@@ -9213,7 +9567,7 @@ func (c *MylibraryAnnotationsUpdateCall) Header() http.Header {
 
 func (c *MylibraryAnnotationsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9226,7 +9580,7 @@ func (c *MylibraryAnnotationsUpdateCall) doRequest(alt string) (*http.Response, 
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/annotations/{annotationId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/mylibrary/annotations/{annotationId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PUT", urls, body)
 	if err != nil {
@@ -9253,17 +9607,17 @@ func (c *MylibraryAnnotationsUpdateCall) Do(opts ...googleapi.CallOption) (*Anno
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Annotation{
 		ServerResponse: googleapi.ServerResponse{
@@ -9278,6 +9632,7 @@ func (c *MylibraryAnnotationsUpdateCall) Do(opts ...googleapi.CallOption) (*Anno
 	return ret, nil
 	// {
 	//   "description": "Updates an existing annotation.",
+	//   "flatPath": "books/v1/mylibrary/annotations/{annotationId}",
 	//   "httpMethod": "PUT",
 	//   "id": "books.mylibrary.annotations.update",
 	//   "parameterOrder": [
@@ -9296,7 +9651,7 @@ func (c *MylibraryAnnotationsUpdateCall) Do(opts ...googleapi.CallOption) (*Anno
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "mylibrary/annotations/{annotationId}",
+	//   "path": "books/v1/mylibrary/annotations/{annotationId}",
 	//   "request": {
 	//     "$ref": "Annotation"
 	//   },
@@ -9321,6 +9676,9 @@ type MylibraryBookshelvesAddVolumeCall struct {
 }
 
 // AddVolume: Adds a volume to a bookshelf.
+//
+// - shelf: ID of bookshelf to which to add a volume.
+// - volumeId: ID of volume to add.
 func (r *MylibraryBookshelvesService) AddVolume(shelf string, volumeId string) *MylibraryBookshelvesAddVolumeCall {
 	c := &MylibraryBookshelvesAddVolumeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.shelf = shelf
@@ -9332,9 +9690,11 @@ func (r *MylibraryBookshelvesService) AddVolume(shelf string, volumeId string) *
 // book is added to the library.
 //
 // Possible values:
-//   "IOS_PREX" - Volumes added from the PREX flow on iOS.
-//   "IOS_SEARCH" - Volumes added from the Search flow on iOS.
-//   "ONBOARDING" - Volumes added from the Onboarding flow.
+//
+//	"REASON_UNDEFINED"
+//	"IOS_PREX" - Volumes added from the PREX flow on iOS.
+//	"IOS_SEARCH" - Volumes added from the Search flow on iOS.
+//	"ONBOARDING" - Volumes added from the Onboarding flow.
 func (c *MylibraryBookshelvesAddVolumeCall) Reason(reason string) *MylibraryBookshelvesAddVolumeCall {
 	c.urlParams_.Set("reason", reason)
 	return c
@@ -9374,7 +9734,7 @@ func (c *MylibraryBookshelvesAddVolumeCall) Header() http.Header {
 
 func (c *MylibraryBookshelvesAddVolumeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9382,7 +9742,7 @@ func (c *MylibraryBookshelvesAddVolumeCall) doRequest(alt string) (*http.Respons
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/bookshelves/{shelf}/addVolume")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/mylibrary/bookshelves/{shelf}/addVolume")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -9396,19 +9756,45 @@ func (c *MylibraryBookshelvesAddVolumeCall) doRequest(alt string) (*http.Respons
 }
 
 // Do executes the "books.mylibrary.bookshelves.addVolume" call.
-func (c *MylibraryBookshelvesAddVolumeCall) Do(opts ...googleapi.CallOption) error {
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *MylibraryBookshelvesAddVolumeCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return nil, gensupport.WrapError(err)
 	}
-	return nil
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
 	// {
 	//   "description": "Adds a volume to a bookshelf.",
+	//   "flatPath": "books/v1/mylibrary/bookshelves/{shelf}/addVolume",
 	//   "httpMethod": "POST",
 	//   "id": "books.mylibrary.bookshelves.addVolume",
 	//   "parameterOrder": [
@@ -9419,11 +9805,13 @@ func (c *MylibraryBookshelvesAddVolumeCall) Do(opts ...googleapi.CallOption) err
 	//     "reason": {
 	//       "description": "The reason for which the book is added to the library.",
 	//       "enum": [
+	//         "REASON_UNDEFINED",
 	//         "IOS_PREX",
 	//         "IOS_SEARCH",
 	//         "ONBOARDING"
 	//       ],
 	//       "enumDescriptions": [
+	//         "",
 	//         "Volumes added from the PREX flow on iOS.",
 	//         "Volumes added from the Search flow on iOS.",
 	//         "Volumes added from the Onboarding flow."
@@ -9449,7 +9837,10 @@ func (c *MylibraryBookshelvesAddVolumeCall) Do(opts ...googleapi.CallOption) err
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "mylibrary/bookshelves/{shelf}/addVolume",
+	//   "path": "books/v1/mylibrary/bookshelves/{shelf}/addVolume",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/books"
 	//   ]
@@ -9468,6 +9859,8 @@ type MylibraryBookshelvesClearVolumesCall struct {
 }
 
 // ClearVolumes: Clears all volumes from a bookshelf.
+//
+// - shelf: ID of bookshelf from which to remove a volume.
 func (r *MylibraryBookshelvesService) ClearVolumes(shelf string) *MylibraryBookshelvesClearVolumesCall {
 	c := &MylibraryBookshelvesClearVolumesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.shelf = shelf
@@ -9508,7 +9901,7 @@ func (c *MylibraryBookshelvesClearVolumesCall) Header() http.Header {
 
 func (c *MylibraryBookshelvesClearVolumesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9516,7 +9909,7 @@ func (c *MylibraryBookshelvesClearVolumesCall) doRequest(alt string) (*http.Resp
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/bookshelves/{shelf}/clearVolumes")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/mylibrary/bookshelves/{shelf}/clearVolumes")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -9530,19 +9923,45 @@ func (c *MylibraryBookshelvesClearVolumesCall) doRequest(alt string) (*http.Resp
 }
 
 // Do executes the "books.mylibrary.bookshelves.clearVolumes" call.
-func (c *MylibraryBookshelvesClearVolumesCall) Do(opts ...googleapi.CallOption) error {
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *MylibraryBookshelvesClearVolumesCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return nil, gensupport.WrapError(err)
 	}
-	return nil
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
 	// {
 	//   "description": "Clears all volumes from a bookshelf.",
+	//   "flatPath": "books/v1/mylibrary/bookshelves/{shelf}/clearVolumes",
 	//   "httpMethod": "POST",
 	//   "id": "books.mylibrary.bookshelves.clearVolumes",
 	//   "parameterOrder": [
@@ -9561,7 +9980,10 @@ func (c *MylibraryBookshelvesClearVolumesCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "mylibrary/bookshelves/{shelf}/clearVolumes",
+	//   "path": "books/v1/mylibrary/bookshelves/{shelf}/clearVolumes",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/books"
 	//   ]
@@ -9582,6 +10004,8 @@ type MylibraryBookshelvesGetCall struct {
 
 // Get: Retrieves metadata for a specific bookshelf belonging to the
 // authenticated user.
+//
+// - shelf: ID of bookshelf to retrieve.
 func (r *MylibraryBookshelvesService) Get(shelf string) *MylibraryBookshelvesGetCall {
 	c := &MylibraryBookshelvesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.shelf = shelf
@@ -9632,7 +10056,7 @@ func (c *MylibraryBookshelvesGetCall) Header() http.Header {
 
 func (c *MylibraryBookshelvesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9643,7 +10067,7 @@ func (c *MylibraryBookshelvesGetCall) doRequest(alt string) (*http.Response, err
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/bookshelves/{shelf}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/mylibrary/bookshelves/{shelf}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -9670,17 +10094,17 @@ func (c *MylibraryBookshelvesGetCall) Do(opts ...googleapi.CallOption) (*Bookshe
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Bookshelf{
 		ServerResponse: googleapi.ServerResponse{
@@ -9695,6 +10119,7 @@ func (c *MylibraryBookshelvesGetCall) Do(opts ...googleapi.CallOption) (*Bookshe
 	return ret, nil
 	// {
 	//   "description": "Retrieves metadata for a specific bookshelf belonging to the authenticated user.",
+	//   "flatPath": "books/v1/mylibrary/bookshelves/{shelf}",
 	//   "httpMethod": "GET",
 	//   "id": "books.mylibrary.bookshelves.get",
 	//   "parameterOrder": [
@@ -9713,7 +10138,7 @@ func (c *MylibraryBookshelvesGetCall) Do(opts ...googleapi.CallOption) (*Bookshe
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "mylibrary/bookshelves/{shelf}",
+	//   "path": "books/v1/mylibrary/bookshelves/{shelf}",
 	//   "response": {
 	//     "$ref": "Bookshelf"
 	//   },
@@ -9785,7 +10210,7 @@ func (c *MylibraryBookshelvesListCall) Header() http.Header {
 
 func (c *MylibraryBookshelvesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9796,7 +10221,7 @@ func (c *MylibraryBookshelvesListCall) doRequest(alt string) (*http.Response, er
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/bookshelves")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/mylibrary/bookshelves")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -9820,17 +10245,17 @@ func (c *MylibraryBookshelvesListCall) Do(opts ...googleapi.CallOption) (*Booksh
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Bookshelves{
 		ServerResponse: googleapi.ServerResponse{
@@ -9845,8 +10270,10 @@ func (c *MylibraryBookshelvesListCall) Do(opts ...googleapi.CallOption) (*Booksh
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of bookshelves belonging to the authenticated user.",
+	//   "flatPath": "books/v1/mylibrary/bookshelves",
 	//   "httpMethod": "GET",
 	//   "id": "books.mylibrary.bookshelves.list",
+	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "source": {
 	//       "description": "String to identify the originator of this request.",
@@ -9854,7 +10281,7 @@ func (c *MylibraryBookshelvesListCall) Do(opts ...googleapi.CallOption) (*Booksh
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "mylibrary/bookshelves",
+	//   "path": "books/v1/mylibrary/bookshelves",
 	//   "response": {
 	//     "$ref": "Bookshelves"
 	//   },
@@ -9876,6 +10303,12 @@ type MylibraryBookshelvesMoveVolumeCall struct {
 }
 
 // MoveVolume: Moves a volume within a bookshelf.
+//
+//   - shelf: ID of bookshelf with the volume.
+//   - volumeId: ID of volume to move.
+//   - volumePosition: Position on shelf to move the item (0 puts the item
+//     before the current first item, 1 puts it between the first and the
+//     second and so on.).
 func (r *MylibraryBookshelvesService) MoveVolume(shelf string, volumeId string, volumePosition int64) *MylibraryBookshelvesMoveVolumeCall {
 	c := &MylibraryBookshelvesMoveVolumeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.shelf = shelf
@@ -9918,7 +10351,7 @@ func (c *MylibraryBookshelvesMoveVolumeCall) Header() http.Header {
 
 func (c *MylibraryBookshelvesMoveVolumeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9926,7 +10359,7 @@ func (c *MylibraryBookshelvesMoveVolumeCall) doRequest(alt string) (*http.Respon
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/bookshelves/{shelf}/moveVolume")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/mylibrary/bookshelves/{shelf}/moveVolume")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -9940,19 +10373,45 @@ func (c *MylibraryBookshelvesMoveVolumeCall) doRequest(alt string) (*http.Respon
 }
 
 // Do executes the "books.mylibrary.bookshelves.moveVolume" call.
-func (c *MylibraryBookshelvesMoveVolumeCall) Do(opts ...googleapi.CallOption) error {
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *MylibraryBookshelvesMoveVolumeCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return nil, gensupport.WrapError(err)
 	}
-	return nil
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
 	// {
 	//   "description": "Moves a volume within a bookshelf.",
+	//   "flatPath": "books/v1/mylibrary/bookshelves/{shelf}/moveVolume",
 	//   "httpMethod": "POST",
 	//   "id": "books.mylibrary.bookshelves.moveVolume",
 	//   "parameterOrder": [
@@ -9986,7 +10445,10 @@ func (c *MylibraryBookshelvesMoveVolumeCall) Do(opts ...googleapi.CallOption) er
 	//       "type": "integer"
 	//     }
 	//   },
-	//   "path": "mylibrary/bookshelves/{shelf}/moveVolume",
+	//   "path": "books/v1/mylibrary/bookshelves/{shelf}/moveVolume",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/books"
 	//   ]
@@ -10005,6 +10467,9 @@ type MylibraryBookshelvesRemoveVolumeCall struct {
 }
 
 // RemoveVolume: Removes a volume from a bookshelf.
+//
+// - shelf: ID of bookshelf from which to remove a volume.
+// - volumeId: ID of volume to remove.
 func (r *MylibraryBookshelvesService) RemoveVolume(shelf string, volumeId string) *MylibraryBookshelvesRemoveVolumeCall {
 	c := &MylibraryBookshelvesRemoveVolumeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.shelf = shelf
@@ -10016,7 +10481,9 @@ func (r *MylibraryBookshelvesService) RemoveVolume(shelf string, volumeId string
 // book is removed from the library.
 //
 // Possible values:
-//   "ONBOARDING" - Samples removed from the Onboarding flow.
+//
+//	"REASON_UNDEFINED"
+//	"ONBOARDING" - Samples removed from the Onboarding flow.
 func (c *MylibraryBookshelvesRemoveVolumeCall) Reason(reason string) *MylibraryBookshelvesRemoveVolumeCall {
 	c.urlParams_.Set("reason", reason)
 	return c
@@ -10056,7 +10523,7 @@ func (c *MylibraryBookshelvesRemoveVolumeCall) Header() http.Header {
 
 func (c *MylibraryBookshelvesRemoveVolumeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10064,7 +10531,7 @@ func (c *MylibraryBookshelvesRemoveVolumeCall) doRequest(alt string) (*http.Resp
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/bookshelves/{shelf}/removeVolume")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/mylibrary/bookshelves/{shelf}/removeVolume")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -10078,19 +10545,45 @@ func (c *MylibraryBookshelvesRemoveVolumeCall) doRequest(alt string) (*http.Resp
 }
 
 // Do executes the "books.mylibrary.bookshelves.removeVolume" call.
-func (c *MylibraryBookshelvesRemoveVolumeCall) Do(opts ...googleapi.CallOption) error {
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *MylibraryBookshelvesRemoveVolumeCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return nil, gensupport.WrapError(err)
 	}
-	return nil
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
 	// {
 	//   "description": "Removes a volume from a bookshelf.",
+	//   "flatPath": "books/v1/mylibrary/bookshelves/{shelf}/removeVolume",
 	//   "httpMethod": "POST",
 	//   "id": "books.mylibrary.bookshelves.removeVolume",
 	//   "parameterOrder": [
@@ -10101,9 +10594,11 @@ func (c *MylibraryBookshelvesRemoveVolumeCall) Do(opts ...googleapi.CallOption) 
 	//     "reason": {
 	//       "description": "The reason for which the book is removed from the library.",
 	//       "enum": [
+	//         "REASON_UNDEFINED",
 	//         "ONBOARDING"
 	//       ],
 	//       "enumDescriptions": [
+	//         "",
 	//         "Samples removed from the Onboarding flow."
 	//       ],
 	//       "location": "query",
@@ -10127,7 +10622,10 @@ func (c *MylibraryBookshelvesRemoveVolumeCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "mylibrary/bookshelves/{shelf}/removeVolume",
+	//   "path": "books/v1/mylibrary/bookshelves/{shelf}/removeVolume",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/books"
 	//   ]
@@ -10147,6 +10645,8 @@ type MylibraryBookshelvesVolumesListCall struct {
 }
 
 // List: Gets volume information for volumes on a bookshelf.
+//
+// - shelf: The bookshelf ID or name retrieve volumes for.
 func (r *MylibraryBookshelvesVolumesService) List(shelf string) *MylibraryBookshelvesVolumesListCall {
 	c := &MylibraryBookshelvesVolumesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.shelf = shelf
@@ -10171,8 +10671,10 @@ func (c *MylibraryBookshelvesVolumesListCall) MaxResults(maxResults int64) *Myli
 // information returned to a set of selected fields.
 //
 // Possible values:
-//   "full" - Includes all volume data.
-//   "lite" - Includes a subset of fields in volumeInfo and accessInfo.
+//
+//	"PROJECTION_UNDEFINED"
+//	"FULL" - Includes all volume data.
+//	"LITE" - Includes a subset of fields in volumeInfo and accessInfo.
 func (c *MylibraryBookshelvesVolumesListCall) Projection(projection string) *MylibraryBookshelvesVolumesListCall {
 	c.urlParams_.Set("projection", projection)
 	return c
@@ -10243,7 +10745,7 @@ func (c *MylibraryBookshelvesVolumesListCall) Header() http.Header {
 
 func (c *MylibraryBookshelvesVolumesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10254,7 +10756,7 @@ func (c *MylibraryBookshelvesVolumesListCall) doRequest(alt string) (*http.Respo
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/bookshelves/{shelf}/volumes")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/mylibrary/bookshelves/{shelf}/volumes")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -10281,17 +10783,17 @@ func (c *MylibraryBookshelvesVolumesListCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Volumes{
 		ServerResponse: googleapi.ServerResponse{
@@ -10306,6 +10808,7 @@ func (c *MylibraryBookshelvesVolumesListCall) Do(opts ...googleapi.CallOption) (
 	return ret, nil
 	// {
 	//   "description": "Gets volume information for volumes on a bookshelf.",
+	//   "flatPath": "books/v1/mylibrary/bookshelves/{shelf}/volumes",
 	//   "httpMethod": "GET",
 	//   "id": "books.mylibrary.bookshelves.volumes.list",
 	//   "parameterOrder": [
@@ -10327,10 +10830,12 @@ func (c *MylibraryBookshelvesVolumesListCall) Do(opts ...googleapi.CallOption) (
 	//     "projection": {
 	//       "description": "Restrict information returned to a set of selected fields.",
 	//       "enum": [
-	//         "full",
-	//         "lite"
+	//         "PROJECTION_UNDEFINED",
+	//         "FULL",
+	//         "LITE"
 	//       ],
 	//       "enumDescriptions": [
+	//         "",
 	//         "Includes all volume data.",
 	//         "Includes a subset of fields in volumeInfo and accessInfo."
 	//       ],
@@ -10366,7 +10871,7 @@ func (c *MylibraryBookshelvesVolumesListCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "integer"
 	//     }
 	//   },
-	//   "path": "mylibrary/bookshelves/{shelf}/volumes",
+	//   "path": "books/v1/mylibrary/bookshelves/{shelf}/volumes",
 	//   "response": {
 	//     "$ref": "Volumes"
 	//   },
@@ -10389,6 +10894,8 @@ type MylibraryReadingpositionsGetCall struct {
 }
 
 // Get: Retrieves my reading position information for a volume.
+//
+// - volumeId: ID of volume for which to retrieve a reading position.
 func (r *MylibraryReadingpositionsService) Get(volumeId string) *MylibraryReadingpositionsGetCall {
 	c := &MylibraryReadingpositionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.volumeId = volumeId
@@ -10446,7 +10953,7 @@ func (c *MylibraryReadingpositionsGetCall) Header() http.Header {
 
 func (c *MylibraryReadingpositionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10457,7 +10964,7 @@ func (c *MylibraryReadingpositionsGetCall) doRequest(alt string) (*http.Response
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/readingpositions/{volumeId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/mylibrary/readingpositions/{volumeId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -10484,17 +10991,17 @@ func (c *MylibraryReadingpositionsGetCall) Do(opts ...googleapi.CallOption) (*Re
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ReadingPosition{
 		ServerResponse: googleapi.ServerResponse{
@@ -10509,6 +11016,7 @@ func (c *MylibraryReadingpositionsGetCall) Do(opts ...googleapi.CallOption) (*Re
 	return ret, nil
 	// {
 	//   "description": "Retrieves my reading position information for a volume.",
+	//   "flatPath": "books/v1/mylibrary/readingpositions/{volumeId}",
 	//   "httpMethod": "GET",
 	//   "id": "books.mylibrary.readingpositions.get",
 	//   "parameterOrder": [
@@ -10532,7 +11040,7 @@ func (c *MylibraryReadingpositionsGetCall) Do(opts ...googleapi.CallOption) (*Re
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "mylibrary/readingpositions/{volumeId}",
+	//   "path": "books/v1/mylibrary/readingpositions/{volumeId}",
 	//   "response": {
 	//     "$ref": "ReadingPosition"
 	//   },
@@ -10554,11 +11062,16 @@ type MylibraryReadingpositionsSetPositionCall struct {
 }
 
 // SetPosition: Sets my reading position information for a volume.
-func (r *MylibraryReadingpositionsService) SetPosition(volumeId string, timestamp string, position string) *MylibraryReadingpositionsSetPositionCall {
+//
+//   - position: Position string for the new volume reading position.
+//   - timestamp: RFC 3339 UTC format timestamp associated with this
+//     reading position.
+//   - volumeId: ID of volume for which to update the reading position.
+func (r *MylibraryReadingpositionsService) SetPosition(volumeId string, position string, timestamp string) *MylibraryReadingpositionsSetPositionCall {
 	c := &MylibraryReadingpositionsSetPositionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.volumeId = volumeId
-	c.urlParams_.Set("timestamp", timestamp)
 	c.urlParams_.Set("position", position)
+	c.urlParams_.Set("timestamp", timestamp)
 	return c
 }
 
@@ -10566,12 +11079,14 @@ func (r *MylibraryReadingpositionsService) SetPosition(volumeId string, timestam
 // reading position to be set.
 //
 // Possible values:
-//   "bookmark" - User chose bookmark within volume.
-//   "chapter" - User selected chapter from list.
-//   "next-page" - Next page event.
-//   "prev-page" - Previous page event.
-//   "scroll" - User navigated to page.
-//   "search" - User chose search results within volume.
+//
+//	"ACTION_UNDEFINED"
+//	"bookmark" - User chose bookmark within volume.
+//	"chapter" - User selected chapter from list.
+//	"next-page" - Next page event.
+//	"prev-page" - Previous page event.
+//	"scroll" - User navigated to page.
+//	"search" - User chose search results within volume.
 func (c *MylibraryReadingpositionsSetPositionCall) Action(action string) *MylibraryReadingpositionsSetPositionCall {
 	c.urlParams_.Set("action", action)
 	return c
@@ -10625,7 +11140,7 @@ func (c *MylibraryReadingpositionsSetPositionCall) Header() http.Header {
 
 func (c *MylibraryReadingpositionsSetPositionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10633,7 +11148,7 @@ func (c *MylibraryReadingpositionsSetPositionCall) doRequest(alt string) (*http.
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/readingpositions/{volumeId}/setPosition")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/mylibrary/readingpositions/{volumeId}/setPosition")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -10647,30 +11162,57 @@ func (c *MylibraryReadingpositionsSetPositionCall) doRequest(alt string) (*http.
 }
 
 // Do executes the "books.mylibrary.readingpositions.setPosition" call.
-func (c *MylibraryReadingpositionsSetPositionCall) Do(opts ...googleapi.CallOption) error {
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *MylibraryReadingpositionsSetPositionCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return nil, gensupport.WrapError(err)
 	}
-	return nil
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
 	// {
 	//   "description": "Sets my reading position information for a volume.",
+	//   "flatPath": "books/v1/mylibrary/readingpositions/{volumeId}/setPosition",
 	//   "httpMethod": "POST",
 	//   "id": "books.mylibrary.readingpositions.setPosition",
 	//   "parameterOrder": [
 	//     "volumeId",
-	//     "timestamp",
-	//     "position"
+	//     "position",
+	//     "timestamp"
 	//   ],
 	//   "parameters": {
 	//     "action": {
 	//       "description": "Action that caused this reading position to be set.",
 	//       "enum": [
+	//         "ACTION_UNDEFINED",
 	//         "bookmark",
 	//         "chapter",
 	//         "next-page",
@@ -10679,6 +11221,7 @@ func (c *MylibraryReadingpositionsSetPositionCall) Do(opts ...googleapi.CallOpti
 	//         "search"
 	//       ],
 	//       "enumDescriptions": [
+	//         "",
 	//         "User chose bookmark within volume.",
 	//         "User selected chapter from list.",
 	//         "Next page event.",
@@ -10723,7 +11266,10 @@ func (c *MylibraryReadingpositionsSetPositionCall) Do(opts ...googleapi.CallOpti
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "mylibrary/readingpositions/{volumeId}/setPosition",
+	//   "path": "books/v1/mylibrary/readingpositions/{volumeId}/setPosition",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/books"
 	//   ]
@@ -10742,6 +11288,8 @@ type NotificationGetCall struct {
 }
 
 // Get: Returns notification details for a given notification id.
+//
+// - notificationId: String to identify the notification.
 func (r *NotificationService) Get(notificationId string) *NotificationGetCall {
 	c := &NotificationGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("notification_id", notificationId)
@@ -10800,7 +11348,7 @@ func (c *NotificationGetCall) Header() http.Header {
 
 func (c *NotificationGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10811,7 +11359,7 @@ func (c *NotificationGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "notification/get")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/notification/get")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -10835,17 +11383,17 @@ func (c *NotificationGetCall) Do(opts ...googleapi.CallOption) (*Notification, e
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Notification{
 		ServerResponse: googleapi.ServerResponse{
@@ -10860,6 +11408,7 @@ func (c *NotificationGetCall) Do(opts ...googleapi.CallOption) (*Notification, e
 	return ret, nil
 	// {
 	//   "description": "Returns notification details for a given notification id.",
+	//   "flatPath": "books/v1/notification/get",
 	//   "httpMethod": "GET",
 	//   "id": "books.notification.get",
 	//   "parameterOrder": [
@@ -10883,7 +11432,7 @@ func (c *NotificationGetCall) Do(opts ...googleapi.CallOption) (*Notification, e
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "notification/get",
+	//   "path": "books/v1/notification/get",
 	//   "response": {
 	//     "$ref": "Notification"
 	//   },
@@ -10954,7 +11503,7 @@ func (c *OnboardingListCategoriesCall) Header() http.Header {
 
 func (c *OnboardingListCategoriesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10965,7 +11514,7 @@ func (c *OnboardingListCategoriesCall) doRequest(alt string) (*http.Response, er
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "onboarding/listCategories")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/onboarding/listCategories")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -10989,17 +11538,17 @@ func (c *OnboardingListCategoriesCall) Do(opts ...googleapi.CallOption) (*Catego
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Category{
 		ServerResponse: googleapi.ServerResponse{
@@ -11014,8 +11563,10 @@ func (c *OnboardingListCategoriesCall) Do(opts ...googleapi.CallOption) (*Catego
 	return ret, nil
 	// {
 	//   "description": "List categories for onboarding experience.",
+	//   "flatPath": "books/v1/onboarding/listCategories",
 	//   "httpMethod": "GET",
 	//   "id": "books.onboarding.listCategories",
+	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "locale": {
 	//       "description": "ISO-639-1 language and ISO-3166-1 country code. Default is en-US if unset.",
@@ -11023,7 +11574,7 @@ func (c *OnboardingListCategoriesCall) Do(opts ...googleapi.CallOption) (*Catego
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "onboarding/listCategories",
+	//   "path": "books/v1/onboarding/listCategories",
 	//   "response": {
 	//     "$ref": "Category"
 	//   },
@@ -11071,8 +11622,10 @@ func (c *OnboardingListCategoryVolumesCall) Locale(locale string) *OnboardingLis
 // out.
 //
 // Possible values:
-//   "mature" - Show books which are rated mature or lower.
-//   "not-mature" - Show books which are rated not mature.
+//
+//	"MAX_ALLOWED_MATURITY_RATING_UNDEFINED"
+//	"MATURE" - Show books which are rated mature or lower.
+//	"not-mature" - Show books which are rated not mature.
 func (c *OnboardingListCategoryVolumesCall) MaxAllowedMaturityRating(maxAllowedMaturityRating string) *OnboardingListCategoryVolumesCall {
 	c.urlParams_.Set("maxAllowedMaturityRating", maxAllowedMaturityRating)
 	return c
@@ -11129,7 +11682,7 @@ func (c *OnboardingListCategoryVolumesCall) Header() http.Header {
 
 func (c *OnboardingListCategoryVolumesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11140,7 +11693,7 @@ func (c *OnboardingListCategoryVolumesCall) doRequest(alt string) (*http.Respons
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "onboarding/listCategoryVolumes")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/onboarding/listCategoryVolumes")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -11164,17 +11717,17 @@ func (c *OnboardingListCategoryVolumesCall) Do(opts ...googleapi.CallOption) (*V
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Volume2{
 		ServerResponse: googleapi.ServerResponse{
@@ -11189,8 +11742,10 @@ func (c *OnboardingListCategoryVolumesCall) Do(opts ...googleapi.CallOption) (*V
 	return ret, nil
 	// {
 	//   "description": "List available volumes under categories for onboarding experience.",
+	//   "flatPath": "books/v1/onboarding/listCategoryVolumes",
 	//   "httpMethod": "GET",
 	//   "id": "books.onboarding.listCategoryVolumes",
+	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "categoryId": {
 	//       "description": "List of category ids requested.",
@@ -11206,10 +11761,12 @@ func (c *OnboardingListCategoryVolumesCall) Do(opts ...googleapi.CallOption) (*V
 	//     "maxAllowedMaturityRating": {
 	//       "description": "The maximum allowed maturity rating of returned volumes. Books with a higher maturity rating are filtered out.",
 	//       "enum": [
-	//         "mature",
+	//         "MAX_ALLOWED_MATURITY_RATING_UNDEFINED",
+	//         "MATURE",
 	//         "not-mature"
 	//       ],
 	//       "enumDescriptions": [
+	//         "",
 	//         "Show books which are rated mature or lower.",
 	//         "Show books which are rated not mature."
 	//       ],
@@ -11228,7 +11785,7 @@ func (c *OnboardingListCategoryVolumesCall) Do(opts ...googleapi.CallOption) (*V
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "onboarding/listCategoryVolumes",
+	//   "path": "books/v1/onboarding/listCategoryVolumes",
 	//   "response": {
 	//     "$ref": "Volume2"
 	//   },
@@ -11290,8 +11847,10 @@ func (c *PersonalizedstreamGetCall) Locale(locale string) *PersonalizedstreamGet
 // filtered out.
 //
 // Possible values:
-//   "mature" - Show books which are rated mature or lower.
-//   "not-mature" - Show books which are rated not mature.
+//
+//	"MAX_ALLOWED_MATURITY_RATING_UNDEFINED"
+//	"MATURE" - Show books which are rated mature or lower.
+//	"not-mature" - Show books which are rated not mature.
 func (c *PersonalizedstreamGetCall) MaxAllowedMaturityRating(maxAllowedMaturityRating string) *PersonalizedstreamGetCall {
 	c.urlParams_.Set("maxAllowedMaturityRating", maxAllowedMaturityRating)
 	return c
@@ -11341,7 +11900,7 @@ func (c *PersonalizedstreamGetCall) Header() http.Header {
 
 func (c *PersonalizedstreamGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11352,7 +11911,7 @@ func (c *PersonalizedstreamGetCall) doRequest(alt string) (*http.Response, error
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "personalizedstream/get")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/personalizedstream/get")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -11376,17 +11935,17 @@ func (c *PersonalizedstreamGetCall) Do(opts ...googleapi.CallOption) (*Discovery
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Discoveryclusters{
 		ServerResponse: googleapi.ServerResponse{
@@ -11401,8 +11960,10 @@ func (c *PersonalizedstreamGetCall) Do(opts ...googleapi.CallOption) (*Discovery
 	return ret, nil
 	// {
 	//   "description": "Returns a stream of personalized book clusters",
+	//   "flatPath": "books/v1/personalizedstream/get",
 	//   "httpMethod": "GET",
 	//   "id": "books.personalizedstream.get",
+	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "locale": {
 	//       "description": "ISO-639-1 language and ISO-3166-1 country code. Ex: 'en_US'. Used for generating recommendations.",
@@ -11412,10 +11973,12 @@ func (c *PersonalizedstreamGetCall) Do(opts ...googleapi.CallOption) (*Discovery
 	//     "maxAllowedMaturityRating": {
 	//       "description": "The maximum allowed maturity rating of returned recommendations. Books with a higher maturity rating are filtered out.",
 	//       "enum": [
-	//         "mature",
+	//         "MAX_ALLOWED_MATURITY_RATING_UNDEFINED",
+	//         "MATURE",
 	//         "not-mature"
 	//       ],
 	//       "enumDescriptions": [
+	//         "",
 	//         "Show books which are rated mature or lower.",
 	//         "Show books which are rated not mature."
 	//       ],
@@ -11428,7 +11991,7 @@ func (c *PersonalizedstreamGetCall) Do(opts ...googleapi.CallOption) (*Discovery
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "personalizedstream/get",
+	//   "path": "books/v1/personalizedstream/get",
 	//   "response": {
 	//     "$ref": "Discoveryclusters"
 	//   },
@@ -11448,7 +12011,7 @@ type PromoofferAcceptCall struct {
 	header_    http.Header
 }
 
-// Accept:
+// Accept: Accepts the promo offer.
 func (r *PromoofferService) Accept() *PromoofferAcceptCall {
 	c := &PromoofferAcceptCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -11531,7 +12094,7 @@ func (c *PromoofferAcceptCall) Header() http.Header {
 
 func (c *PromoofferAcceptCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11539,7 +12102,7 @@ func (c *PromoofferAcceptCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "promooffer/accept")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/promooffer/accept")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -11550,21 +12113,48 @@ func (c *PromoofferAcceptCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "books.promooffer.accept" call.
-func (c *PromoofferAcceptCall) Do(opts ...googleapi.CallOption) error {
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *PromoofferAcceptCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return nil, gensupport.WrapError(err)
 	}
-	return nil
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
 	// {
-	//   "description": "",
+	//   "description": "Accepts the promo offer.",
+	//   "flatPath": "books/v1/promooffer/accept",
 	//   "httpMethod": "POST",
 	//   "id": "books.promooffer.accept",
+	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "androidId": {
 	//       "description": "device android_id",
@@ -11606,7 +12196,10 @@ func (c *PromoofferAcceptCall) Do(opts ...googleapi.CallOption) error {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "promooffer/accept",
+	//   "path": "books/v1/promooffer/accept",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/books"
 	//   ]
@@ -11623,7 +12216,7 @@ type PromoofferDismissCall struct {
 	header_    http.Header
 }
 
-// Dismiss:
+// Dismiss: Marks the promo offer as dismissed.
 func (r *PromoofferService) Dismiss() *PromoofferDismissCall {
 	c := &PromoofferDismissCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -11699,7 +12292,7 @@ func (c *PromoofferDismissCall) Header() http.Header {
 
 func (c *PromoofferDismissCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11707,7 +12300,7 @@ func (c *PromoofferDismissCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "promooffer/dismiss")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/promooffer/dismiss")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -11718,21 +12311,48 @@ func (c *PromoofferDismissCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "books.promooffer.dismiss" call.
-func (c *PromoofferDismissCall) Do(opts ...googleapi.CallOption) error {
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *PromoofferDismissCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return nil, gensupport.WrapError(err)
 	}
-	return nil
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
 	// {
-	//   "description": "",
+	//   "description": "Marks the promo offer as dismissed.",
+	//   "flatPath": "books/v1/promooffer/dismiss",
 	//   "httpMethod": "POST",
 	//   "id": "books.promooffer.dismiss",
+	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "androidId": {
 	//       "description": "device android_id",
@@ -11770,7 +12390,10 @@ func (c *PromoofferDismissCall) Do(opts ...googleapi.CallOption) error {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "promooffer/dismiss",
+	//   "path": "books/v1/promooffer/dismiss",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/books"
 	//   ]
@@ -11868,7 +12491,7 @@ func (c *PromoofferGetCall) Header() http.Header {
 
 func (c *PromoofferGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11879,7 +12502,7 @@ func (c *PromoofferGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "promooffer/get")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/promooffer/get")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -11903,17 +12526,17 @@ func (c *PromoofferGetCall) Do(opts ...googleapi.CallOption) (*Offers, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Offers{
 		ServerResponse: googleapi.ServerResponse{
@@ -11928,8 +12551,10 @@ func (c *PromoofferGetCall) Do(opts ...googleapi.CallOption) (*Offers, error) {
 	return ret, nil
 	// {
 	//   "description": "Returns a list of promo offers available to the user",
+	//   "flatPath": "books/v1/promooffer/get",
 	//   "httpMethod": "GET",
 	//   "id": "books.promooffer.get",
+	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "androidId": {
 	//       "description": "device android_id",
@@ -11962,7 +12587,7 @@ func (c *PromoofferGetCall) Do(opts ...googleapi.CallOption) (*Offers, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "promooffer/get",
+	//   "path": "books/v1/promooffer/get",
 	//   "response": {
 	//     "$ref": "Offers"
 	//   },
@@ -11984,6 +12609,8 @@ type SeriesGetCall struct {
 }
 
 // Get: Returns Series metadata for the given series ids.
+//
+// - seriesId: String that identifies the series.
 func (r *SeriesService) Get(seriesId []string) *SeriesGetCall {
 	c := &SeriesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("series_id", append([]string{}, seriesId...))
@@ -12027,7 +12654,7 @@ func (c *SeriesGetCall) Header() http.Header {
 
 func (c *SeriesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12038,7 +12665,7 @@ func (c *SeriesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "series/get")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/series/get")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -12062,17 +12689,17 @@ func (c *SeriesGetCall) Do(opts ...googleapi.CallOption) (*Series, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Series{
 		ServerResponse: googleapi.ServerResponse{
@@ -12087,6 +12714,7 @@ func (c *SeriesGetCall) Do(opts ...googleapi.CallOption) (*Series, error) {
 	return ret, nil
 	// {
 	//   "description": "Returns Series metadata for the given series ids.",
+	//   "flatPath": "books/v1/series/get",
 	//   "httpMethod": "GET",
 	//   "id": "books.series.get",
 	//   "parameterOrder": [
@@ -12101,7 +12729,7 @@ func (c *SeriesGetCall) Do(opts ...googleapi.CallOption) (*Series, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "series/get",
+	//   "path": "books/v1/series/get",
 	//   "response": {
 	//     "$ref": "Series"
 	//   },
@@ -12123,6 +12751,8 @@ type SeriesMembershipGetCall struct {
 }
 
 // Get: Returns Series membership data given the series id.
+//
+// - seriesId: String that identifies the series.
 func (r *SeriesMembershipService) Get(seriesId string) *SeriesMembershipGetCall {
 	c := &SeriesMembershipGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("series_id", seriesId)
@@ -12180,7 +12810,7 @@ func (c *SeriesMembershipGetCall) Header() http.Header {
 
 func (c *SeriesMembershipGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12191,7 +12821,7 @@ func (c *SeriesMembershipGetCall) doRequest(alt string) (*http.Response, error) 
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "series/membership/get")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/series/membership/get")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -12215,17 +12845,17 @@ func (c *SeriesMembershipGetCall) Do(opts ...googleapi.CallOption) (*Seriesmembe
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Seriesmembership{
 		ServerResponse: googleapi.ServerResponse{
@@ -12240,6 +12870,7 @@ func (c *SeriesMembershipGetCall) Do(opts ...googleapi.CallOption) (*Seriesmembe
 	return ret, nil
 	// {
 	//   "description": "Returns Series membership data given the series id.",
+	//   "flatPath": "books/v1/series/membership/get",
 	//   "httpMethod": "GET",
 	//   "id": "books.series.membership.get",
 	//   "parameterOrder": [
@@ -12264,7 +12895,7 @@ func (c *SeriesMembershipGetCall) Do(opts ...googleapi.CallOption) (*Seriesmembe
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "series/membership/get",
+	//   "path": "books/v1/series/membership/get",
 	//   "response": {
 	//     "$ref": "Seriesmembership"
 	//   },
@@ -12287,6 +12918,8 @@ type VolumesGetCall struct {
 }
 
 // Get: Gets volume information for a single volume.
+//
+// - volumeId: ID of volume to retrieve.
 func (r *VolumesService) Get(volumeId string) *VolumesGetCall {
 	c := &VolumesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.volumeId = volumeId
@@ -12319,14 +12952,16 @@ func (c *VolumesGetCall) Partner(partner string) *VolumesGetCall {
 // information returned to a set of selected fields.
 //
 // Possible values:
-//   "full" - Includes all volume data.
-//   "lite" - Includes a subset of fields in volumeInfo and accessInfo.
+//
+//	"PROJECTION_UNDEFINED"
+//	"FULL" - Includes all volume data.
+//	"LITE" - Includes a subset of fields in volumeInfo and accessInfo.
 func (c *VolumesGetCall) Projection(projection string) *VolumesGetCall {
 	c.urlParams_.Set("projection", projection)
 	return c
 }
 
-// Source sets the optional parameter "source": String to identify the
+// Source sets the optional parameter "source": string to identify the
 // originator of this request.
 func (c *VolumesGetCall) Source(source string) *VolumesGetCall {
 	c.urlParams_.Set("source", source)
@@ -12377,7 +13012,7 @@ func (c *VolumesGetCall) Header() http.Header {
 
 func (c *VolumesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12388,7 +13023,7 @@ func (c *VolumesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "volumes/{volumeId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/volumes/{volumeId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -12415,17 +13050,17 @@ func (c *VolumesGetCall) Do(opts ...googleapi.CallOption) (*Volume, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Volume{
 		ServerResponse: googleapi.ServerResponse{
@@ -12440,6 +13075,7 @@ func (c *VolumesGetCall) Do(opts ...googleapi.CallOption) (*Volume, error) {
 	return ret, nil
 	// {
 	//   "description": "Gets volume information for a single volume.",
+	//   "flatPath": "books/v1/volumes/{volumeId}",
 	//   "httpMethod": "GET",
 	//   "id": "books.volumes.get",
 	//   "parameterOrder": [
@@ -12464,10 +13100,12 @@ func (c *VolumesGetCall) Do(opts ...googleapi.CallOption) (*Volume, error) {
 	//     "projection": {
 	//       "description": "Restrict information returned to a set of selected fields.",
 	//       "enum": [
-	//         "full",
-	//         "lite"
+	//         "PROJECTION_UNDEFINED",
+	//         "FULL",
+	//         "LITE"
 	//       ],
 	//       "enumDescriptions": [
+	//         "",
 	//         "Includes all volume data.",
 	//         "Includes a subset of fields in volumeInfo and accessInfo."
 	//       ],
@@ -12475,7 +13113,7 @@ func (c *VolumesGetCall) Do(opts ...googleapi.CallOption) (*Volume, error) {
 	//       "type": "string"
 	//     },
 	//     "source": {
-	//       "description": "String to identify the originator of this request.",
+	//       "description": "string to identify the originator of this request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -12490,7 +13128,7 @@ func (c *VolumesGetCall) Do(opts ...googleapi.CallOption) (*Volume, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "volumes/{volumeId}",
+	//   "path": "books/v1/volumes/{volumeId}",
 	//   "response": {
 	//     "$ref": "Volume"
 	//   },
@@ -12512,6 +13150,8 @@ type VolumesListCall struct {
 }
 
 // List: Performs a book search.
+//
+// - q: Full-text search query string.
 func (r *VolumesService) List(q string) *VolumesListCall {
 	c := &VolumesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("q", q)
@@ -12522,7 +13162,9 @@ func (r *VolumesService) List(q string) *VolumesListCall {
 // by download availability.
 //
 // Possible values:
-//   "epub" - All volumes with epub.
+//
+//	"DOWNLOAD_UNDEFINED"
+//	"EPUB" - All volumes with epub.
 func (c *VolumesListCall) Download(download string) *VolumesListCall {
 	c.urlParams_.Set("download", download)
 	return c
@@ -12531,11 +13173,13 @@ func (c *VolumesListCall) Download(download string) *VolumesListCall {
 // Filter sets the optional parameter "filter": Filter search results.
 //
 // Possible values:
-//   "ebooks" - All Google eBooks.
-//   "free-ebooks" - Google eBook with full volume text viewability.
-//   "full" - Public can view entire volume text.
-//   "paid-ebooks" - Google eBook with a price.
-//   "partial" - Public able to see parts of text.
+//
+//	"FILTER_UNDEFINED"
+//	"ebooks" - All Google eBooks.
+//	"free-ebooks" - Google eBook with full volume text viewability.
+//	"full" - Public can view entire volume text.
+//	"paid-ebooks" - Google eBook with a price.
+//	"partial" - Public able to see parts of text.
 func (c *VolumesListCall) Filter(filter string) *VolumesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -12552,8 +13196,10 @@ func (c *VolumesListCall) LangRestrict(langRestrict string) *VolumesListCall {
 // Restrict search to this user's library.
 //
 // Possible values:
-//   "my-library" - Restrict to the user's library, any shelf.
-//   "no-restrict" - Do not restrict based on user's library.
+//
+//	"LIBRARY_RESTRICT_UNDEFINED"
+//	"my-library" - Restrict to the user's library, any shelf.
+//	"no-restrict" - Do not restrict based on user's library.
 func (c *VolumesListCall) LibraryRestrict(libraryRestrict string) *VolumesListCall {
 	c.urlParams_.Set("libraryRestrict", libraryRestrict)
 	return c
@@ -12565,8 +13211,10 @@ func (c *VolumesListCall) LibraryRestrict(libraryRestrict string) *VolumesListCa
 // filtered out.
 //
 // Possible values:
-//   "mature" - Show books which are rated mature or lower.
-//   "not-mature" - Show books which are rated not mature.
+//
+//	"MAX_ALLOWED_MATURITY_RATING_UNDEFINED"
+//	"MATURE" - Show books which are rated mature or lower.
+//	"not-mature" - Show books which are rated not mature.
 func (c *VolumesListCall) MaxAllowedMaturityRating(maxAllowedMaturityRating string) *VolumesListCall {
 	c.urlParams_.Set("maxAllowedMaturityRating", maxAllowedMaturityRating)
 	return c
@@ -12582,8 +13230,10 @@ func (c *VolumesListCall) MaxResults(maxResults int64) *VolumesListCall {
 // OrderBy sets the optional parameter "orderBy": Sort search results.
 //
 // Possible values:
-//   "newest" - Most recently published.
-//   "relevance" - Relevance to search terms.
+//
+//	"ORDER_BY_UNDEFINED"
+//	"newest" - Most recently published.
+//	"relevance" - Relevance to search terms.
 func (c *VolumesListCall) OrderBy(orderBy string) *VolumesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -12600,9 +13250,11 @@ func (c *VolumesListCall) Partner(partner string) *VolumesListCall {
 // or magazines.
 //
 // Possible values:
-//   "all" - All volume content types.
-//   "books" - Just books.
-//   "magazines" - Just magazines.
+//
+//	"PRINT_TYPE_UNDEFINED"
+//	"ALL" - All volume content types.
+//	"BOOKS" - Just books.
+//	"MAGAZINES" - Just magazines.
 func (c *VolumesListCall) PrintType(printType string) *VolumesListCall {
 	c.urlParams_.Set("printType", printType)
 	return c
@@ -12612,8 +13264,10 @@ func (c *VolumesListCall) PrintType(printType string) *VolumesListCall {
 // information returned to a set of selected fields.
 //
 // Possible values:
-//   "full" - Includes all volume data.
-//   "lite" - Includes a subset of fields in volumeInfo and accessInfo.
+//
+//	"PROJECTION_UNDEFINED"
+//	"FULL" - Includes all volume data.
+//	"LITE" - Includes a subset of fields in volumeInfo and accessInfo.
 func (c *VolumesListCall) Projection(projection string) *VolumesListCall {
 	c.urlParams_.Set("projection", projection)
 	return c
@@ -12677,7 +13331,7 @@ func (c *VolumesListCall) Header() http.Header {
 
 func (c *VolumesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12688,7 +13342,7 @@ func (c *VolumesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "volumes")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/volumes")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -12712,17 +13366,17 @@ func (c *VolumesListCall) Do(opts ...googleapi.CallOption) (*Volumes, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Volumes{
 		ServerResponse: googleapi.ServerResponse{
@@ -12737,6 +13391,7 @@ func (c *VolumesListCall) Do(opts ...googleapi.CallOption) (*Volumes, error) {
 	return ret, nil
 	// {
 	//   "description": "Performs a book search.",
+	//   "flatPath": "books/v1/volumes",
 	//   "httpMethod": "GET",
 	//   "id": "books.volumes.list",
 	//   "parameterOrder": [
@@ -12746,9 +13401,11 @@ func (c *VolumesListCall) Do(opts ...googleapi.CallOption) (*Volumes, error) {
 	//     "download": {
 	//       "description": "Restrict to volumes by download availability.",
 	//       "enum": [
-	//         "epub"
+	//         "DOWNLOAD_UNDEFINED",
+	//         "EPUB"
 	//       ],
 	//       "enumDescriptions": [
+	//         "",
 	//         "All volumes with epub."
 	//       ],
 	//       "location": "query",
@@ -12757,6 +13414,7 @@ func (c *VolumesListCall) Do(opts ...googleapi.CallOption) (*Volumes, error) {
 	//     "filter": {
 	//       "description": "Filter search results.",
 	//       "enum": [
+	//         "FILTER_UNDEFINED",
 	//         "ebooks",
 	//         "free-ebooks",
 	//         "full",
@@ -12764,6 +13422,7 @@ func (c *VolumesListCall) Do(opts ...googleapi.CallOption) (*Volumes, error) {
 	//         "partial"
 	//       ],
 	//       "enumDescriptions": [
+	//         "",
 	//         "All Google eBooks.",
 	//         "Google eBook with full volume text viewability.",
 	//         "Public can view entire volume text.",
@@ -12781,10 +13440,12 @@ func (c *VolumesListCall) Do(opts ...googleapi.CallOption) (*Volumes, error) {
 	//     "libraryRestrict": {
 	//       "description": "Restrict search to this user's library.",
 	//       "enum": [
+	//         "LIBRARY_RESTRICT_UNDEFINED",
 	//         "my-library",
 	//         "no-restrict"
 	//       ],
 	//       "enumDescriptions": [
+	//         "",
 	//         "Restrict to the user's library, any shelf.",
 	//         "Do not restrict based on user's library."
 	//       ],
@@ -12794,10 +13455,12 @@ func (c *VolumesListCall) Do(opts ...googleapi.CallOption) (*Volumes, error) {
 	//     "maxAllowedMaturityRating": {
 	//       "description": "The maximum allowed maturity rating of returned recommendations. Books with a higher maturity rating are filtered out.",
 	//       "enum": [
-	//         "mature",
+	//         "MAX_ALLOWED_MATURITY_RATING_UNDEFINED",
+	//         "MATURE",
 	//         "not-mature"
 	//       ],
 	//       "enumDescriptions": [
+	//         "",
 	//         "Show books which are rated mature or lower.",
 	//         "Show books which are rated not mature."
 	//       ],
@@ -12815,10 +13478,12 @@ func (c *VolumesListCall) Do(opts ...googleapi.CallOption) (*Volumes, error) {
 	//     "orderBy": {
 	//       "description": "Sort search results.",
 	//       "enum": [
+	//         "ORDER_BY_UNDEFINED",
 	//         "newest",
 	//         "relevance"
 	//       ],
 	//       "enumDescriptions": [
+	//         "",
 	//         "Most recently published.",
 	//         "Relevance to search terms."
 	//       ],
@@ -12833,11 +13498,13 @@ func (c *VolumesListCall) Do(opts ...googleapi.CallOption) (*Volumes, error) {
 	//     "printType": {
 	//       "description": "Restrict to books or magazines.",
 	//       "enum": [
-	//         "all",
-	//         "books",
-	//         "magazines"
+	//         "PRINT_TYPE_UNDEFINED",
+	//         "ALL",
+	//         "BOOKS",
+	//         "MAGAZINES"
 	//       ],
 	//       "enumDescriptions": [
+	//         "",
 	//         "All volume content types.",
 	//         "Just books.",
 	//         "Just magazines."
@@ -12848,10 +13515,12 @@ func (c *VolumesListCall) Do(opts ...googleapi.CallOption) (*Volumes, error) {
 	//     "projection": {
 	//       "description": "Restrict information returned to a set of selected fields.",
 	//       "enum": [
-	//         "full",
-	//         "lite"
+	//         "PROJECTION_UNDEFINED",
+	//         "FULL",
+	//         "LITE"
 	//       ],
 	//       "enumDescriptions": [
+	//         "",
 	//         "Includes all volume data.",
 	//         "Includes a subset of fields in volumeInfo and accessInfo."
 	//       ],
@@ -12882,7 +13551,7 @@ func (c *VolumesListCall) Do(opts ...googleapi.CallOption) (*Volumes, error) {
 	//       "type": "integer"
 	//     }
 	//   },
-	//   "path": "volumes",
+	//   "path": "books/v1/volumes",
 	//   "response": {
 	//     "$ref": "Volumes"
 	//   },
@@ -12905,6 +13574,8 @@ type VolumesAssociatedListCall struct {
 }
 
 // List: Return a list of associated books.
+//
+// - volumeId: ID of the source volume.
 func (r *VolumesAssociatedService) List(volumeId string) *VolumesAssociatedListCall {
 	c := &VolumesAssociatedListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.volumeId = volumeId
@@ -12915,9 +13586,11 @@ func (r *VolumesAssociatedService) List(volumeId string) *VolumesAssociatedListC
 // type.
 //
 // Possible values:
-//   "end-of-sample" - Recommendations for display end-of-sample.
-//   "end-of-volume" - Recommendations for display end-of-volume.
-//   "related-for-play" - Related volumes for Play Store.
+//
+//	"ASSOCIATION_UNDEFINED"
+//	"end-of-sample" - Recommendations for display end-of-sample.
+//	"end-of-volume" - Recommendations for display end-of-volume.
+//	"related-for-play" - Related volumes for Play Store.
 func (c *VolumesAssociatedListCall) Association(association string) *VolumesAssociatedListCall {
 	c.urlParams_.Set("association", association)
 	return c
@@ -12937,8 +13610,10 @@ func (c *VolumesAssociatedListCall) Locale(locale string) *VolumesAssociatedList
 // filtered out.
 //
 // Possible values:
-//   "mature" - Show books which are rated mature or lower.
-//   "not-mature" - Show books which are rated not mature.
+//
+//	"MAX_ALLOWED_MATURITY_RATING_UNDEFINED"
+//	"MATURE" - Show books which are rated mature or lower.
+//	"not-mature" - Show books which are rated not mature.
 func (c *VolumesAssociatedListCall) MaxAllowedMaturityRating(maxAllowedMaturityRating string) *VolumesAssociatedListCall {
 	c.urlParams_.Set("maxAllowedMaturityRating", maxAllowedMaturityRating)
 	return c
@@ -12988,7 +13663,7 @@ func (c *VolumesAssociatedListCall) Header() http.Header {
 
 func (c *VolumesAssociatedListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12999,7 +13674,7 @@ func (c *VolumesAssociatedListCall) doRequest(alt string) (*http.Response, error
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "volumes/{volumeId}/associated")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/volumes/{volumeId}/associated")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -13026,17 +13701,17 @@ func (c *VolumesAssociatedListCall) Do(opts ...googleapi.CallOption) (*Volumes, 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Volumes{
 		ServerResponse: googleapi.ServerResponse{
@@ -13051,6 +13726,7 @@ func (c *VolumesAssociatedListCall) Do(opts ...googleapi.CallOption) (*Volumes, 
 	return ret, nil
 	// {
 	//   "description": "Return a list of associated books.",
+	//   "flatPath": "books/v1/volumes/{volumeId}/associated",
 	//   "httpMethod": "GET",
 	//   "id": "books.volumes.associated.list",
 	//   "parameterOrder": [
@@ -13060,11 +13736,13 @@ func (c *VolumesAssociatedListCall) Do(opts ...googleapi.CallOption) (*Volumes, 
 	//     "association": {
 	//       "description": "Association type.",
 	//       "enum": [
+	//         "ASSOCIATION_UNDEFINED",
 	//         "end-of-sample",
 	//         "end-of-volume",
 	//         "related-for-play"
 	//       ],
 	//       "enumDescriptions": [
+	//         "",
 	//         "Recommendations for display end-of-sample.",
 	//         "Recommendations for display end-of-volume.",
 	//         "Related volumes for Play Store."
@@ -13080,10 +13758,12 @@ func (c *VolumesAssociatedListCall) Do(opts ...googleapi.CallOption) (*Volumes, 
 	//     "maxAllowedMaturityRating": {
 	//       "description": "The maximum allowed maturity rating of returned recommendations. Books with a higher maturity rating are filtered out.",
 	//       "enum": [
-	//         "mature",
+	//         "MAX_ALLOWED_MATURITY_RATING_UNDEFINED",
+	//         "MATURE",
 	//         "not-mature"
 	//       ],
 	//       "enumDescriptions": [
+	//         "",
 	//         "Show books which are rated mature or lower.",
 	//         "Show books which are rated not mature."
 	//       ],
@@ -13102,7 +13782,7 @@ func (c *VolumesAssociatedListCall) Do(opts ...googleapi.CallOption) (*Volumes, 
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "volumes/{volumeId}/associated",
+	//   "path": "books/v1/volumes/{volumeId}/associated",
 	//   "response": {
 	//     "$ref": "Volumes"
 	//   },
@@ -13133,14 +13813,16 @@ func (r *VolumesMybooksService) List() *VolumesMybooksListCall {
 // book was acquired
 //
 // Possible values:
-//   "FAMILY_SHARED" - Books acquired via Family Sharing
-//   "PREORDERED" - Preordered books (not yet available)
-//   "PREVIOUSLY_RENTED" - User-rented books past their expiration time
-//   "PUBLIC_DOMAIN" - Public domain books
-//   "PURCHASED" - Purchased books
-//   "RENTED" - User-rented books
-//   "SAMPLE" - Sample books
-//   "UPLOADED" - User uploaded books
+//
+//	"ACQUIRE_METHOD_UNDEFINED"
+//	"FAMILY_SHARED" - Books acquired via Family Sharing
+//	"PREORDERED" - Preordered books (not yet available)
+//	"PREVIOUSLY_RENTED" - User-rented books past their expiration time
+//	"PUBLIC_DOMAIN" - Public domain books
+//	"PURCHASED" - Purchased books
+//	"RENTED" - User-rented books
+//	"SAMPLE" - Sample books
+//	"UPLOADED" - User uploaded books
 func (c *VolumesMybooksListCall) AcquireMethod(acquireMethod ...string) *VolumesMybooksListCall {
 	c.urlParams_.SetMulti("acquireMethod", append([]string{}, acquireMethod...))
 	return c
@@ -13173,9 +13855,11 @@ func (c *VolumesMybooksListCall) MaxResults(maxResults int64) *VolumesMybooksLis
 // Applicable only if the UPLOADED is specified in the acquireMethod.
 //
 // Possible values:
-//   "COMPLETED_FAILED" - The volume processing hase failed.
-//   "COMPLETED_SUCCESS" - The volume processing was completed.
-//   "RUNNING" - The volume processing is not completed.
+//
+//	"PROCESSING_STATE_UNDEFINED"
+//	"COMPLETED_FAILED" - The volume processing hase failed.
+//	"COMPLETED_SUCCESS" - The volume processing was completed.
+//	"RUNNING" - The volume processing is not completed.
 func (c *VolumesMybooksListCall) ProcessingState(processingState ...string) *VolumesMybooksListCall {
 	c.urlParams_.SetMulti("processingState", append([]string{}, processingState...))
 	return c
@@ -13232,7 +13916,7 @@ func (c *VolumesMybooksListCall) Header() http.Header {
 
 func (c *VolumesMybooksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13243,7 +13927,7 @@ func (c *VolumesMybooksListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "volumes/mybooks")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/volumes/mybooks")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -13267,17 +13951,17 @@ func (c *VolumesMybooksListCall) Do(opts ...googleapi.CallOption) (*Volumes, err
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Volumes{
 		ServerResponse: googleapi.ServerResponse{
@@ -13292,12 +13976,15 @@ func (c *VolumesMybooksListCall) Do(opts ...googleapi.CallOption) (*Volumes, err
 	return ret, nil
 	// {
 	//   "description": "Return a list of books in My Library.",
+	//   "flatPath": "books/v1/volumes/mybooks",
 	//   "httpMethod": "GET",
 	//   "id": "books.volumes.mybooks.list",
+	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "acquireMethod": {
 	//       "description": "How the book was acquired",
 	//       "enum": [
+	//         "ACQUIRE_METHOD_UNDEFINED",
 	//         "FAMILY_SHARED",
 	//         "PREORDERED",
 	//         "PREVIOUSLY_RENTED",
@@ -13308,6 +13995,7 @@ func (c *VolumesMybooksListCall) Do(opts ...googleapi.CallOption) (*Volumes, err
 	//         "UPLOADED"
 	//       ],
 	//       "enumDescriptions": [
+	//         "",
 	//         "Books acquired via Family Sharing",
 	//         "Preordered books (not yet available)",
 	//         "User-rented books past their expiration time",
@@ -13342,11 +14030,13 @@ func (c *VolumesMybooksListCall) Do(opts ...googleapi.CallOption) (*Volumes, err
 	//     "processingState": {
 	//       "description": "The processing state of the user uploaded volumes to be returned. Applicable only if the UPLOADED is specified in the acquireMethod.",
 	//       "enum": [
+	//         "PROCESSING_STATE_UNDEFINED",
 	//         "COMPLETED_FAILED",
 	//         "COMPLETED_SUCCESS",
 	//         "RUNNING"
 	//       ],
 	//       "enumDescriptions": [
+	//         "",
 	//         "The volume processing hase failed.",
 	//         "The volume processing was completed.",
 	//         "The volume processing is not completed."
@@ -13368,7 +14058,7 @@ func (c *VolumesMybooksListCall) Do(opts ...googleapi.CallOption) (*Volumes, err
 	//       "type": "integer"
 	//     }
 	//   },
-	//   "path": "volumes/mybooks",
+	//   "path": "books/v1/volumes/mybooks",
 	//   "response": {
 	//     "$ref": "Volumes"
 	//   },
@@ -13409,8 +14099,10 @@ func (c *VolumesRecommendedListCall) Locale(locale string) *VolumesRecommendedLi
 // filtered out.
 //
 // Possible values:
-//   "mature" - Show books which are rated mature or lower.
-//   "not-mature" - Show books which are rated not mature.
+//
+//	"MAX_ALLOWED_MATURITY_RATING_UNDEFINED"
+//	"MATURE" - Show books which are rated mature or lower.
+//	"not-mature" - Show books which are rated not mature.
 func (c *VolumesRecommendedListCall) MaxAllowedMaturityRating(maxAllowedMaturityRating string) *VolumesRecommendedListCall {
 	c.urlParams_.Set("maxAllowedMaturityRating", maxAllowedMaturityRating)
 	return c
@@ -13460,7 +14152,7 @@ func (c *VolumesRecommendedListCall) Header() http.Header {
 
 func (c *VolumesRecommendedListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13471,7 +14163,7 @@ func (c *VolumesRecommendedListCall) doRequest(alt string) (*http.Response, erro
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "volumes/recommended")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/volumes/recommended")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -13495,17 +14187,17 @@ func (c *VolumesRecommendedListCall) Do(opts ...googleapi.CallOption) (*Volumes,
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Volumes{
 		ServerResponse: googleapi.ServerResponse{
@@ -13520,8 +14212,10 @@ func (c *VolumesRecommendedListCall) Do(opts ...googleapi.CallOption) (*Volumes,
 	return ret, nil
 	// {
 	//   "description": "Return a list of recommended books for the current user.",
+	//   "flatPath": "books/v1/volumes/recommended",
 	//   "httpMethod": "GET",
 	//   "id": "books.volumes.recommended.list",
+	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "locale": {
 	//       "description": "ISO-639-1 language and ISO-3166-1 country code. Ex: 'en_US'. Used for generating recommendations.",
@@ -13531,10 +14225,12 @@ func (c *VolumesRecommendedListCall) Do(opts ...googleapi.CallOption) (*Volumes,
 	//     "maxAllowedMaturityRating": {
 	//       "description": "The maximum allowed maturity rating of returned recommendations. Books with a higher maturity rating are filtered out.",
 	//       "enum": [
-	//         "mature",
+	//         "MAX_ALLOWED_MATURITY_RATING_UNDEFINED",
+	//         "MATURE",
 	//         "not-mature"
 	//       ],
 	//       "enumDescriptions": [
+	//         "",
 	//         "Show books which are rated mature or lower.",
 	//         "Show books which are rated not mature."
 	//       ],
@@ -13547,7 +14243,7 @@ func (c *VolumesRecommendedListCall) Do(opts ...googleapi.CallOption) (*Volumes,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "volumes/recommended",
+	//   "path": "books/v1/volumes/recommended",
 	//   "response": {
 	//     "$ref": "Volumes"
 	//   },
@@ -13568,6 +14264,9 @@ type VolumesRecommendedRateCall struct {
 }
 
 // Rate: Rate a recommended book for the current user.
+//
+// - rating: Rating to be given to the volume.
+// - volumeId: ID of the source volume.
 func (r *VolumesRecommendedService) Rate(rating string, volumeId string) *VolumesRecommendedRateCall {
 	c := &VolumesRecommendedRateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("rating", rating)
@@ -13617,7 +14316,7 @@ func (c *VolumesRecommendedRateCall) Header() http.Header {
 
 func (c *VolumesRecommendedRateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13625,7 +14324,7 @@ func (c *VolumesRecommendedRateCall) doRequest(alt string) (*http.Response, erro
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "volumes/recommended/rate")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/volumes/recommended/rate")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -13650,17 +14349,17 @@ func (c *VolumesRecommendedRateCall) Do(opts ...googleapi.CallOption) (*BooksVol
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &BooksVolumesRecommendedRateResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -13675,6 +14374,7 @@ func (c *VolumesRecommendedRateCall) Do(opts ...googleapi.CallOption) (*BooksVol
 	return ret, nil
 	// {
 	//   "description": "Rate a recommended book for the current user.",
+	//   "flatPath": "books/v1/volumes/recommended/rate",
 	//   "httpMethod": "POST",
 	//   "id": "books.volumes.recommended.rate",
 	//   "parameterOrder": [
@@ -13690,10 +14390,12 @@ func (c *VolumesRecommendedRateCall) Do(opts ...googleapi.CallOption) (*BooksVol
 	//     "rating": {
 	//       "description": "Rating to be given to the volume.",
 	//       "enum": [
+	//         "RATING_UNDEFINED",
 	//         "HAVE_IT",
 	//         "NOT_INTERESTED"
 	//       ],
 	//       "enumDescriptions": [
+	//         "",
 	//         "Rating indicating a dismissal due to ownership.",
 	//         "Rating indicating a negative dismissal of a volume."
 	//       ],
@@ -13713,7 +14415,7 @@ func (c *VolumesRecommendedRateCall) Do(opts ...googleapi.CallOption) (*BooksVol
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "volumes/recommended/rate",
+	//   "path": "books/v1/volumes/recommended/rate",
 	//   "response": {
 	//     "$ref": "BooksVolumesRecommendedRateResponse"
 	//   },
@@ -13759,9 +14461,11 @@ func (c *VolumesUseruploadedListCall) MaxResults(maxResults int64) *VolumesUseru
 // processing state of the user uploaded volumes to be returned.
 //
 // Possible values:
-//   "COMPLETED_FAILED" - The volume processing hase failed.
-//   "COMPLETED_SUCCESS" - The volume processing was completed.
-//   "RUNNING" - The volume processing is not completed.
+//
+//	"PROCESSING_STATE_UNDEFINED"
+//	"COMPLETED_FAILED" - The volume processing hase failed.
+//	"COMPLETED_SUCCESS" - The volume processing was completed.
+//	"RUNNING" - The volume processing is not completed.
 func (c *VolumesUseruploadedListCall) ProcessingState(processingState ...string) *VolumesUseruploadedListCall {
 	c.urlParams_.SetMulti("processingState", append([]string{}, processingState...))
 	return c
@@ -13826,7 +14530,7 @@ func (c *VolumesUseruploadedListCall) Header() http.Header {
 
 func (c *VolumesUseruploadedListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13837,7 +14541,7 @@ func (c *VolumesUseruploadedListCall) doRequest(alt string) (*http.Response, err
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "volumes/useruploaded")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/volumes/useruploaded")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -13861,17 +14565,17 @@ func (c *VolumesUseruploadedListCall) Do(opts ...googleapi.CallOption) (*Volumes
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Volumes{
 		ServerResponse: googleapi.ServerResponse{
@@ -13886,8 +14590,10 @@ func (c *VolumesUseruploadedListCall) Do(opts ...googleapi.CallOption) (*Volumes
 	return ret, nil
 	// {
 	//   "description": "Return a list of books uploaded by the current user.",
+	//   "flatPath": "books/v1/volumes/useruploaded",
 	//   "httpMethod": "GET",
 	//   "id": "books.volumes.useruploaded.list",
+	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "locale": {
 	//       "description": "ISO-639-1 language and ISO-3166-1 country code. Ex: 'en_US'. Used for generating recommendations.",
@@ -13905,11 +14611,13 @@ func (c *VolumesUseruploadedListCall) Do(opts ...googleapi.CallOption) (*Volumes
 	//     "processingState": {
 	//       "description": "The processing state of the user uploaded volumes to be returned.",
 	//       "enum": [
+	//         "PROCESSING_STATE_UNDEFINED",
 	//         "COMPLETED_FAILED",
 	//         "COMPLETED_SUCCESS",
 	//         "RUNNING"
 	//       ],
 	//       "enumDescriptions": [
+	//         "",
 	//         "The volume processing hase failed.",
 	//         "The volume processing was completed.",
 	//         "The volume processing is not completed."
@@ -13937,7 +14645,7 @@ func (c *VolumesUseruploadedListCall) Do(opts ...googleapi.CallOption) (*Volumes
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "volumes/useruploaded",
+	//   "path": "books/v1/volumes/useruploaded",
 	//   "response": {
 	//     "$ref": "Volumes"
 	//   },

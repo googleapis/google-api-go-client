@@ -15,7 +15,7 @@
   "description": "Accesses your bidding-account information, submits creatives for validation, finds available direct deals, and retrieves performance reports.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/ad-exchange/buyer-rest",
-  "etag": "\"F5McR9eEaw0XRpaO3M9gbIugkbs/kylXz47Q3_sc3JaxX2Y-ulfwPrA\"",
+  "etag": "\"uWj2hSb4GVjzdDlAnRd2gbM1ZQ8/IVduoBfiyFTIbwq6UMkXBVfkd9k\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/doubleclick-16.gif",
     "x32": "https://www.google.com/images/icons/product/doubleclick-32.gif"
@@ -1255,7 +1255,7 @@
       }
     }
   },
-  "revision": "20191108",
+  "revision": "20210516",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Account": {
@@ -1601,7 +1601,7 @@
               "adexchangebuyer.creatives.insert"
             ]
           },
-          "description": "The name of the company being advertised in the creative. The value provided must exist in the advertisers.txt file.",
+          "description": "The name of the company being advertised in the creative. A list of advertisers is provided in the advertisers.txt file.",
           "type": "string"
         },
         "agencyId": {
@@ -2534,6 +2534,9 @@
           "format": "int64",
           "type": "string"
         },
+        "makegoodRequestedReason": {
+          "type": "string"
+        },
         "name": {
           "description": "The name of the deal. (updatable)",
           "type": "string"
@@ -2656,6 +2659,18 @@
         "timestampMs": {
           "description": "The timestamp (ms since epoch) that this note was created. (readonly)",
           "format": "int64",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "MobileApplication": {
+      "id": "MobileApplication",
+      "properties": {
+        "appStore": {
+          "type": "string"
+        },
+        "externalAppId": {
           "type": "string"
         }
       },
@@ -3384,6 +3399,9 @@
           "description": "Exchange where this publisher profile is from. E.g. AdX, Rubicon etc...",
           "type": "string"
         },
+        "forecastInventory": {
+          "type": "string"
+        },
         "googlePlusLink": {
           "description": "Link to publisher's Google+ page.",
           "type": "string"
@@ -3424,6 +3442,21 @@
         "programmaticContact": {
           "description": "Programmatic contact for the publisher profile.",
           "type": "string"
+        },
+        "publisherAppIds": {
+          "description": "The list of app IDs represented in this publisher profile. Empty if this is a parent profile. Deprecated in favor of publisher_app.",
+          "items": {
+            "format": "int64",
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "publisherApps": {
+          "description": "The list of apps represented in this publisher profile. Empty if this is a parent profile.",
+          "items": {
+            "$ref": "MobileApplication"
+          },
+          "type": "array"
         },
         "publisherDomains": {
           "description": "The list of domains represented in this publisher profile. Empty if this is a parent profile.",
@@ -3550,6 +3583,9 @@
           "format": "int64",
           "type": "string"
         },
+        "requestPlatformTargetingValue": {
+          "$ref": "TargetingValueRequestPlatformTargeting"
+        },
         "stringValue": {
           "description": "The string value to exclude/include.",
           "type": "string"
@@ -3650,6 +3686,18 @@
       "id": "TargetingValueDemogGenderCriteria",
       "properties": {
         "demogGenderCriteriaIds": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "TargetingValueRequestPlatformTargeting": {
+      "id": "TargetingValueRequestPlatformTargeting",
+      "properties": {
+        "requestPlatforms": {
           "items": {
             "type": "string"
           },

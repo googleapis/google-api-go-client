@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -6,33 +6,33 @@
 
 // Package accessapproval provides access to the Access Approval API.
 //
-// For product documentation, see: https://cloud.google.com/access-approval/docs
+// For product documentation, see: https://cloud.google.com/cloud-provider-access-management/access-approval/docs
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/accessapproval/v1"
-//   ...
-//   ctx := context.Background()
-//   accessapprovalService, err := accessapproval.NewService(ctx)
+//	import "google.golang.org/api/accessapproval/v1"
+//	...
+//	ctx := context.Background()
+//	accessapprovalService, err := accessapproval.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   accessapprovalService, err := accessapproval.NewService(ctx, option.WithAPIKey("AIza..."))
+//	accessapprovalService, err := accessapproval.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   accessapprovalService, err := accessapproval.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	accessapprovalService, err := accessapproval.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package accessapproval // import "google.golang.org/api/accessapproval/v1"
@@ -50,6 +50,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -75,21 +76,24 @@ const apiId = "accessapproval:v1"
 const apiName = "accessapproval"
 const apiVersion = "v1"
 const basePath = "https://accessapproval.googleapis.com/"
+const mtlsBasePath = "https://accessapproval.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud data and see the
+	// email address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -202,73 +206,118 @@ type ProjectsApprovalRequestsService struct {
 	s *Service
 }
 
+// AccessApprovalServiceAccount: Access Approval service account related
+// to a project/folder/organization.
+type AccessApprovalServiceAccount struct {
+	// AccountEmail: Email address of the service account.
+	AccountEmail string `json:"accountEmail,omitempty"`
+
+	// Name: The resource name of the Access Approval service account.
+	// Format is one of: * "projects/{project}/serviceAccount" *
+	// "folders/{folder}/serviceAccount" *
+	// "organizations/{organization}/serviceAccount"
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AccountEmail") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AccountEmail") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AccessApprovalServiceAccount) MarshalJSON() ([]byte, error) {
+	type NoMethod AccessApprovalServiceAccount
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // AccessApprovalSettings: Settings on a Project/Folder/Organization
 // related to Access Approval.
 type AccessApprovalSettings struct {
+	// ActiveKeyVersion: The asymmetric crypto key version to use for
+	// signing approval requests. Empty active_key_version indicates that a
+	// Google-managed key should be used for signing. This property will be
+	// ignored if set by an ancestor of this resource, and new non-empty
+	// values may not be set.
+	ActiveKeyVersion string `json:"activeKeyVersion,omitempty"`
+
+	// AncestorHasActiveKeyVersion: Output only. This field is read only
+	// (not settable via UpdateAccessApprovalSettings method). If the field
+	// is true, that indicates that an ancestor of this Project or Folder
+	// has set active_key_version (this field will always be unset for the
+	// organization since organizations do not have ancestors).
+	AncestorHasActiveKeyVersion bool `json:"ancestorHasActiveKeyVersion,omitempty"`
+
 	// EnrolledAncestor: Output only. This field is read only (not settable
-	// via
-	// UpdateAccessAccessApprovalSettings method). If the field is true,
-	// that
+	// via UpdateAccessApprovalSettings method). If the field is true, that
 	// indicates that at least one service is enrolled for Access Approval
-	// in one
-	// or more ancestors of the Project or Folder (this field will always
-	// be
-	// unset for the organization since organizations do not have
+	// in one or more ancestors of the Project or Folder (this field will
+	// always be unset for the organization since organizations do not have
 	// ancestors).
 	EnrolledAncestor bool `json:"enrolledAncestor,omitempty"`
 
 	// EnrolledServices: A list of Google Cloud Services for which the given
-	// resource has Access
-	// Approval enrolled. Access requests for the resource given by name
-	// against
-	// any of these services contained here will be required to have
-	// explicit
-	// approval. If name refers to an organization, enrollment can be done
-	// for
-	// individual services. If name refers to a folder or project,
-	// enrollment can
-	// only be done on an all or nothing basis.
-	//
-	// If a cloud_product is repeated in this list, the first entry will
-	// be
-	// honored and all following entries will be discarded. A maximum of
-	// 10
-	// enrolled services will be enforced, to be expanded as the set of
-	// supported
-	// services is expanded.
+	// resource has Access Approval enrolled. Access requests for the
+	// resource given by name against any of these services contained here
+	// will be required to have explicit approval. If name refers to an
+	// organization, enrollment can be done for individual services. If name
+	// refers to a folder or project, enrollment can only be done on an all
+	// or nothing basis. If a cloud_product is repeated in this list, the
+	// first entry will be honored and all following entries will be
+	// discarded. A maximum of 10 enrolled services will be enforced, to be
+	// expanded as the set of supported services is expanded.
 	EnrolledServices []*EnrolledService `json:"enrolledServices,omitempty"`
 
-	// Name: The resource name of the settings. Format is one of:
-	// <ol>
-	//   <li>"projects/{project_id}/accessApprovalSettings"</li>
-	//   <li>"folders/{folder_id}/accessApprovalSettings"</li>
-	//
-	// <li>"organizations/{organization_id}/accessApprovalSettings"</li>
-	// <ol>
+	// InvalidKeyVersion: Output only. This field is read only (not settable
+	// via UpdateAccessApprovalSettings method). If the field is true, that
+	// indicates that there is some configuration issue with the
+	// active_key_version configured at this level in the resource hierarchy
+	// (e.g. it doesn't exist or the Access Approval service account doesn't
+	// have the correct permissions on it, etc.) This key version is not
+	// necessarily the effective key version at this level, as key versions
+	// are inherited top-down.
+	InvalidKeyVersion bool `json:"invalidKeyVersion,omitempty"`
+
+	// Name: The resource name of the settings. Format is one of: *
+	// "projects/{project}/accessApprovalSettings" *
+	// "folders/{folder}/accessApprovalSettings" *
+	// "organizations/{organization}/accessApprovalSettings"
 	Name string `json:"name,omitempty"`
 
 	// NotificationEmails: A list of email addresses to which notifications
-	// relating to approval
-	// requests should be sent. Notifications relating to a resource will be
-	// sent
-	// to all emails in the settings of ancestor resources of that resource.
-	// A
-	// maximum of 50 email addresses are allowed.
+	// relating to approval requests should be sent. Notifications relating
+	// to a resource will be sent to all emails in the settings of ancestor
+	// resources of that resource. A maximum of 50 email addresses are
+	// allowed.
 	NotificationEmails []string `json:"notificationEmails,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "EnrolledAncestor") to
+	// ForceSendFields is a list of field names (e.g. "ActiveKeyVersion") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "EnrolledAncestor") to
+	// NullFields is a list of field names (e.g. "ActiveKeyVersion") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -287,49 +336,27 @@ func (s *AccessApprovalSettings) MarshalJSON() ([]byte, error) {
 // AccessLocations: Home office and physical location of the principal.
 type AccessLocations struct {
 	// PrincipalOfficeCountry: The "home office" location of the principal.
-	// A two-letter country code
-	// (ISO 3166-1 alpha-2), such as "US", "DE" or "GB" or a region code. In
-	// some
-	// limited situations Google systems may refer refer to a region code
-	// instead
-	// of a country code.
-	// Possible Region Codes:
-	// <ol>
-	//   <li>ASI: Asia</li>
-	//   <li>EUR: Europe</li>
-	//   <li>OCE: Oceania</li>
-	//   <li>AFR: Africa</li>
-	//   <li>NAM: North America</li>
-	//   <li>SAM: South America</li>
-	//   <li>ANT: Antarctica</li>
-	//   <li>ANY: Any location</li>
-	// </ol>
+	// A two-letter country code (ISO 3166-1 alpha-2), such as "US", "DE" or
+	// "GB" or a region code. In some limited situations Google systems may
+	// refer refer to a region code instead of a country code. Possible
+	// Region Codes: * ASI: Asia * EUR: Europe * OCE: Oceania * AFR: Africa
+	// * NAM: North America * SAM: South America * ANT: Antarctica * ANY:
+	// Any location
 	PrincipalOfficeCountry string `json:"principalOfficeCountry,omitempty"`
 
 	// PrincipalPhysicalLocationCountry: Physical location of the principal
-	// at the time of the access. A
-	// two-letter country code (ISO 3166-1 alpha-2), such as "US", "DE" or
-	// "GB" or
-	// a region code. In some limited situations Google systems may refer
-	// refer to
-	// a region code instead of a country code.
-	// Possible Region Codes:
-	// <ol>
-	//   <li>ASI: Asia</li>
-	//   <li>EUR: Europe</li>
-	//   <li>OCE: Oceania</li>
-	//   <li>AFR: Africa</li>
-	//   <li>NAM: North America</li>
-	//   <li>SAM: South America</li>
-	//   <li>ANT: Antarctica</li>
-	//   <li>ANY: Any location</li>
-	// </ol>
+	// at the time of the access. A two-letter country code (ISO 3166-1
+	// alpha-2), such as "US", "DE" or "GB" or a region code. In some
+	// limited situations Google systems may refer refer to a region code
+	// instead of a country code. Possible Region Codes: * ASI: Asia * EUR:
+	// Europe * OCE: Oceania * AFR: Africa * NAM: North America * SAM: South
+	// America * ANT: Antarctica * ANY: Any location
 	PrincipalPhysicalLocationCountry string `json:"principalPhysicalLocationCountry,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "PrincipalOfficeCountry") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -361,35 +388,30 @@ type AccessReason struct {
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Default value for proto, shouldn't be used.
 	//   "CUSTOMER_INITIATED_SUPPORT" - Customer made a request or raised an
-	// issue that required the principal to
-	// access customer data. `detail` is of the form ("#####" is the issue
-	// ID):
-	// <ol>
-	//   <li>"Feedback Report: #####"</li>
-	//   <li>"Case Number: #####"</li>
-	//   <li>"Case ID: #####"</li>
-	//   <li>"E-PIN Reference: #####"</li>
-	//   <li>"Google-#####"</li>
-	//   <li>"T-#####"</li>
-	// </ol>
+	// issue that required the principal to access customer data. `detail`
+	// is of the form ("#####" is the issue ID): * "Feedback Report: #####"
+	// * "Case Number: #####" * "Case ID: #####" * "E-PIN Reference: #####"
+	// * "Google-#####" * "T-#####"
 	//   "GOOGLE_INITIATED_SERVICE" - The principal accessed customer data
-	// in order to diagnose or resolve a
-	// suspected issue in services or a known outage. Often this access is
-	// used
-	// to confirm that customers are not affected by a suspected service
-	// issue
-	// or to remediate a reversible system issue.
+	// in order to diagnose or resolve a suspected issue in services. Often
+	// this access is used to confirm that customers are not affected by a
+	// suspected service issue or to remediate a reversible system issue.
 	//   "GOOGLE_INITIATED_REVIEW" - Google initiated service for security,
-	// fraud, abuse, or compliance
-	// purposes.
+	// fraud, abuse, or compliance purposes.
+	//   "THIRD_PARTY_DATA_REQUEST" - The principal was compelled to access
+	// customer data in order to respond to a legal third party data request
+	// or process, including legal processes from customers themselves.
+	//   "GOOGLE_RESPONSE_TO_PRODUCTION_ALERT" - The principal accessed
+	// customer data in order to diagnose or resolve a suspected issue in
+	// services or a known outage.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Detail") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Detail") to include in API
@@ -416,19 +438,17 @@ type ApprovalRequest struct {
 	// Dismiss: The request was dismissed.
 	Dismiss *DismissDecision `json:"dismiss,omitempty"`
 
-	// Name: The resource name of the request. Format
-	// is
-	// "{projects|folders|organizations}/{id}/approvalRequests/{approval_r
-	// equest_id}".
+	// Name: The resource name of the request. Format is
+	// "{projects|folders|organizations}/{id}/approvalRequests/{approval_requ
+	// est}".
 	Name string `json:"name,omitempty"`
 
 	// RequestTime: The time at which approval was requested.
 	RequestTime string `json:"requestTime,omitempty"`
 
 	// RequestedExpiration: The requested expiration for the approval. If
-	// the request is approved,
-	// access will be granted from the time of approval until the expiration
-	// time.
+	// the request is approved, access will be granted from the time of
+	// approval until the expiration time.
 	RequestedExpiration string `json:"requestedExpiration,omitempty"`
 
 	// RequestedLocations: The locations for which approval is being
@@ -440,18 +460,12 @@ type ApprovalRequest struct {
 	RequestedReason *AccessReason `json:"requestedReason,omitempty"`
 
 	// RequestedResourceName: The resource for which approval is being
-	// requested. The format of the
-	// resource name is defined
-	// at
+	// requested. The format of the resource name is defined at
 	// https://cloud.google.com/apis/design/resource_names. The resource
-	// name here
-	// may either be a "full" resource name
-	// (e.g.
+	// name here may either be a "full" resource name (e.g.
 	// "//library.googleapis.com/shelves/shelf1/books/book2") or a
-	// "relative"
-	// resource name (e.g. "shelves/shelf1/books/book2") as described in
-	// the
-	// resource name specification.
+	// "relative" resource name (e.g. "shelves/shelf1/books/book2") as
+	// described in the resource name specification.
 	RequestedResourceName string `json:"requestedResourceName,omitempty"`
 
 	// RequestedResourceProperties: Properties related to the resource
@@ -464,10 +478,10 @@ type ApprovalRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "Approve") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Approve") to include in
@@ -492,10 +506,10 @@ type ApproveApprovalRequestMessage struct {
 
 	// ForceSendFields is a list of field names (e.g. "ExpireTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ExpireTime") to include in
@@ -519,15 +533,26 @@ type ApproveDecision struct {
 	// ApproveTime: The time at which approval was granted.
 	ApproveTime string `json:"approveTime,omitempty"`
 
+	// AutoApproved: True when the request has been auto-approved.
+	AutoApproved bool `json:"autoApproved,omitempty"`
+
 	// ExpireTime: The time at which the approval expires.
 	ExpireTime string `json:"expireTime,omitempty"`
 
+	// InvalidateTime: If set, denotes the timestamp at which the approval
+	// is invalidated.
+	InvalidateTime string `json:"invalidateTime,omitempty"`
+
+	// SignatureInfo: The signature for the ApprovalRequest and details on
+	// how it was signed.
+	SignatureInfo *SignatureInfo `json:"signatureInfo,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "ApproveTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ApproveTime") to include
@@ -556,12 +581,18 @@ type DismissDecision struct {
 	// DismissTime: The time at which the approval request was dismissed.
 	DismissTime string `json:"dismissTime,omitempty"`
 
+	// Implicit: This field will be true if the ApprovalRequest was
+	// implicitly dismissed due to inaction by the access approval approvers
+	// (the request is not acted on by the approvers before the exiration
+	// time).
+	Implicit bool `json:"implicit,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "DismissTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DismissTime") to include
@@ -580,17 +611,10 @@ func (s *DismissDecision) MarshalJSON() ([]byte, error) {
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
-// duplicated
-// empty messages in your APIs. A typical example is to use it as the
-// request
-// or the response type of an API method. For instance:
-//
-//     service Foo {
-//       rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty);
-//     }
-//
-// The JSON representation for `Empty` is empty JSON object `{}`.
+// duplicated empty messages in your APIs. A typical example is to use
+// it as the request or the response type of an API method. For
+// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); }
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -601,20 +625,31 @@ type Empty struct {
 // specific service.
 type EnrolledService struct {
 	// CloudProduct: The product for which Access Approval will be enrolled.
-	// Allowed values are
-	// listed below (case-sensitive):
-	// <ol>
-	//   <li>all</li>
-	//   <li>appengine.googleapis.com</li>
-	//   <li>bigquery.googleapis.com</li>
-	//   <li>bigtable.googleapis.com</li>
-	//   <li>cloudkms.googleapis.com</li>
-	//   <li>compute.googleapis.com</li>
-	//   <li>dataflow.googleapis.com</li>
-	//   <li>iam.googleapis.com</li>
-	//   <li>pubsub.googleapis.com</li>
-	//   <li>storage.googleapis.com</li>
-	// <ol>
+	// Allowed values are listed below (case-sensitive): * all * GA * App
+	// Engine . * Artifact Registry * BigQuery * Cloud Bigtable * Cloud Key
+	// Management Service * Compute Engine * Cloud Dataflow * Cloud Dataproc
+	// * Cloud DLP * Cloud EKM * Cloud HSM * Cloud Identity and Access
+	// Management * Cloud Logging * Cloud Pub/Sub * Cloud Spanner * Cloud
+	// SQL * Cloud Storage * Google Kubernetes Engine * Organization Policy
+	// Serivice * Persistent Disk * Resource Manager * Secret Manager *
+	// Speaker ID Note: These values are supported as input for legacy
+	// purposes, but will not be returned from the API. * all * ga-only *
+	// appengine.googleapis.com * artifactregistry.googleapis.com *
+	// bigquery.googleapis.com * bigtable.googleapis.com *
+	// container.googleapis.com * cloudkms.googleapis.com *
+	// cloudresourcemanager.googleapis.com * cloudsql.googleapis.com *
+	// compute.googleapis.com * dataflow.googleapis.com *
+	// dataproc.googleapis.com * dlp.googleapis.com * iam.googleapis.com *
+	// logging.googleapis.com * orgpolicy.googleapis.com *
+	// pubsub.googleapis.com * spanner.googleapis.com *
+	// secretmanager.googleapis.com * speakerid.googleapis.com *
+	// storage.googleapis.com Calls to UpdateAccessApprovalSettings using
+	// 'all' or any of the XXX.googleapis.com will be translated to the
+	// associated product name ('all', 'App Engine', etc.). Note: 'all' will
+	// enroll the resource in all products supported at both 'GA' and
+	// 'Preview' levels. More information about levels of support is
+	// available at
+	// https://cloud.google.com/access-approval/docs/supported-services
 	CloudProduct string `json:"cloudProduct,omitempty"`
 
 	// EnrollmentLevel: The enrollment level of the service.
@@ -628,10 +663,10 @@ type EnrolledService struct {
 
 	// ForceSendFields is a list of field names (e.g. "CloudProduct") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CloudProduct") to include
@@ -647,6 +682,11 @@ func (s *EnrolledService) MarshalJSON() ([]byte, error) {
 	type NoMethod EnrolledService
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// InvalidateApprovalRequestMessage: Request to invalidate an existing
+// approval.
+type InvalidateApprovalRequestMessage struct {
 }
 
 // ListApprovalRequestsResponse: Response to listing of ApprovalRequest
@@ -665,10 +705,10 @@ type ListApprovalRequestsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "ApprovalRequests") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ApprovalRequests") to
@@ -691,16 +731,15 @@ func (s *ListApprovalRequestsResponse) MarshalJSON() ([]byte, error) {
 // the request.
 type ResourceProperties struct {
 	// ExcludesDescendants: Whether an approval will exclude the descendants
-	// of the resource being
-	// requested.
+	// of the resource being requested.
 	ExcludesDescendants bool `json:"excludesDescendants,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ExcludesDescendants")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ExcludesDescendants") to
@@ -719,6 +758,46 @@ func (s *ResourceProperties) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// SignatureInfo: Information about the digital signature of the
+// resource.
+type SignatureInfo struct {
+	// CustomerKmsKeyVersion: The resource name of the customer
+	// CryptoKeyVersion used for signing.
+	CustomerKmsKeyVersion string `json:"customerKmsKeyVersion,omitempty"`
+
+	// GooglePublicKeyPem: The public key for the Google default signing,
+	// encoded in PEM format. The signature was created using a private key
+	// which may be verified using this public key.
+	GooglePublicKeyPem string `json:"googlePublicKeyPem,omitempty"`
+
+	// Signature: The digital signature.
+	Signature string `json:"signature,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CustomerKmsKeyVersion") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CustomerKmsKeyVersion") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SignatureInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod SignatureInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // method id "accessapproval.folders.deleteAccessApprovalSettings":
 
 type FoldersDeleteAccessApprovalSettingsCall struct {
@@ -730,16 +809,14 @@ type FoldersDeleteAccessApprovalSettingsCall struct {
 }
 
 // DeleteAccessApprovalSettings: Deletes the settings associated with a
-// project, folder, or organization.
-// This will have the effect of disabling Access Approval for the
-// project,
-// folder, or organization, but only if all ancestors also have
-// Access
-// Approval disabled. If Access Approval is enabled at a higher level of
-// the
-// hierarchy, then Access Approval will still be enabled at this level
-// as
-// the settings are inherited.
+// project, folder, or organization. This will have the effect of
+// disabling Access Approval for the project, folder, or organization,
+// but only if all ancestors also have Access Approval disabled. If
+// Access Approval is enabled at a higher level of the hierarchy, then
+// Access Approval will still be enabled at this level as the settings
+// are inherited.
+//
+// - name: Name of the AccessApprovalSettings to delete.
 func (r *FoldersService) DeleteAccessApprovalSettings(name string) *FoldersDeleteAccessApprovalSettingsCall {
 	c := &FoldersDeleteAccessApprovalSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -773,7 +850,7 @@ func (c *FoldersDeleteAccessApprovalSettingsCall) Header() http.Header {
 
 func (c *FoldersDeleteAccessApprovalSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -808,17 +885,17 @@ func (c *FoldersDeleteAccessApprovalSettingsCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -832,7 +909,7 @@ func (c *FoldersDeleteAccessApprovalSettingsCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes the settings associated with a project, folder, or organization.\nThis will have the effect of disabling Access Approval for the project,\nfolder, or organization, but only if all ancestors also have Access\nApproval disabled. If Access Approval is enabled at a higher level of the\nhierarchy, then Access Approval will still be enabled at this level as\nthe settings are inherited.",
+	//   "description": "Deletes the settings associated with a project, folder, or organization. This will have the effect of disabling Access Approval for the project, folder, or organization, but only if all ancestors also have Access Approval disabled. If Access Approval is enabled at a higher level of the hierarchy, then Access Approval will still be enabled at this level as the settings are inherited.",
 	//   "flatPath": "v1/folders/{foldersId}/accessApprovalSettings",
 	//   "httpMethod": "DELETE",
 	//   "id": "accessapproval.folders.deleteAccessApprovalSettings",
@@ -872,6 +949,9 @@ type FoldersGetAccessApprovalSettingsCall struct {
 
 // GetAccessApprovalSettings: Gets the settings associated with a
 // project, folder, or organization.
+//
+//   - name: The name of the AccessApprovalSettings to retrieve. Format:
+//     "{projects|folders|organizations}/{id}/accessApprovalSettings".
 func (r *FoldersService) GetAccessApprovalSettings(name string) *FoldersGetAccessApprovalSettingsCall {
 	c := &FoldersGetAccessApprovalSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -915,7 +995,7 @@ func (c *FoldersGetAccessApprovalSettingsCall) Header() http.Header {
 
 func (c *FoldersGetAccessApprovalSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -953,17 +1033,17 @@ func (c *FoldersGetAccessApprovalSettingsCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AccessApprovalSettings{
 		ServerResponse: googleapi.ServerResponse{
@@ -986,7 +1066,7 @@ func (c *FoldersGetAccessApprovalSettingsCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Name of the AccessApprovalSettings to retrieve.",
+	//       "description": "The name of the AccessApprovalSettings to retrieve. Format: \"{projects|folders|organizations}/{id}/accessApprovalSettings\"",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+/accessApprovalSettings$",
 	//       "required": true,
@@ -996,6 +1076,154 @@ func (c *FoldersGetAccessApprovalSettingsCall) Do(opts ...googleapi.CallOption) 
 	//   "path": "v1/{+name}",
 	//   "response": {
 	//     "$ref": "AccessApprovalSettings"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "accessapproval.folders.getServiceAccount":
+
+type FoldersGetServiceAccountCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetServiceAccount: Retrieves the service account that is used by
+// Access Approval to access KMS keys for signing approved approval
+// requests.
+//
+// - name: Name of the AccessApprovalServiceAccount to retrieve.
+func (r *FoldersService) GetServiceAccount(name string) *FoldersGetServiceAccountCall {
+	c := &FoldersGetServiceAccountCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersGetServiceAccountCall) Fields(s ...googleapi.Field) *FoldersGetServiceAccountCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *FoldersGetServiceAccountCall) IfNoneMatch(entityTag string) *FoldersGetServiceAccountCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersGetServiceAccountCall) Context(ctx context.Context) *FoldersGetServiceAccountCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersGetServiceAccountCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersGetServiceAccountCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "accessapproval.folders.getServiceAccount" call.
+// Exactly one of *AccessApprovalServiceAccount or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *AccessApprovalServiceAccount.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *FoldersGetServiceAccountCall) Do(opts ...googleapi.CallOption) (*AccessApprovalServiceAccount, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AccessApprovalServiceAccount{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the service account that is used by Access Approval to access KMS keys for signing approved approval requests.",
+	//   "flatPath": "v1/folders/{foldersId}/serviceAccount",
+	//   "httpMethod": "GET",
+	//   "id": "accessapproval.folders.getServiceAccount",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Name of the AccessApprovalServiceAccount to retrieve.",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+/serviceAccount$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "AccessApprovalServiceAccount"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -1016,8 +1244,13 @@ type FoldersUpdateAccessApprovalSettingsCall struct {
 }
 
 // UpdateAccessApprovalSettings: Updates the settings associated with a
-// project, folder, or organization.
-// Settings to update are determined by the value of field_mask.
+// project, folder, or organization. Settings to update are determined
+// by the value of field_mask.
+//
+//   - name: The resource name of the settings. Format is one of: *
+//     "projects/{project}/accessApprovalSettings" *
+//     "folders/{folder}/accessApprovalSettings" *
+//     "organizations/{organization}/accessApprovalSettings".
 func (r *FoldersService) UpdateAccessApprovalSettings(name string, accessapprovalsettings *AccessApprovalSettings) *FoldersUpdateAccessApprovalSettingsCall {
 	c := &FoldersUpdateAccessApprovalSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1026,23 +1259,14 @@ func (r *FoldersService) UpdateAccessApprovalSettings(name string, accessapprova
 }
 
 // UpdateMask sets the optional parameter "updateMask": The update mask
-// applies to the settings. Only the top level fields
-// of
-// AccessApprovalSettings (notification_emails & enrolled_services)
-// are
+// applies to the settings. Only the top level fields of
+// AccessApprovalSettings (notification_emails & enrolled_services) are
 // supported. For each field, if it is included, the currently stored
-// value
-// will be entirely overwritten with the value of the field passed in
-// this
-// request.
-//
-// For the `FieldMask` definition,
-// see
-// https://developers.google.com/protocol-buffers/docs/reference/goog
-// le.protobuf#fieldmask
+// value will be entirely overwritten with the value of the field passed
+// in this request. For the `FieldMask` definition, see
+// https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
 // If this field is left unset, only the notification_emails field will
-// be
-// updated.
+// be updated.
 func (c *FoldersUpdateAccessApprovalSettingsCall) UpdateMask(updateMask string) *FoldersUpdateAccessApprovalSettingsCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -1075,7 +1299,7 @@ func (c *FoldersUpdateAccessApprovalSettingsCall) Header() http.Header {
 
 func (c *FoldersUpdateAccessApprovalSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1115,17 +1339,17 @@ func (c *FoldersUpdateAccessApprovalSettingsCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AccessApprovalSettings{
 		ServerResponse: googleapi.ServerResponse{
@@ -1139,7 +1363,7 @@ func (c *FoldersUpdateAccessApprovalSettingsCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the settings associated with a project, folder, or organization.\nSettings to update are determined by the value of field_mask.",
+	//   "description": "Updates the settings associated with a project, folder, or organization. Settings to update are determined by the value of field_mask.",
 	//   "flatPath": "v1/folders/{foldersId}/accessApprovalSettings",
 	//   "httpMethod": "PATCH",
 	//   "id": "accessapproval.folders.updateAccessApprovalSettings",
@@ -1148,14 +1372,14 @@ func (c *FoldersUpdateAccessApprovalSettingsCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the settings. Format is one of:\n\u003col\u003e\n  \u003cli\u003e\"projects/{project_id}/accessApprovalSettings\"\u003c/li\u003e\n  \u003cli\u003e\"folders/{folder_id}/accessApprovalSettings\"\u003c/li\u003e\n  \u003cli\u003e\"organizations/{organization_id}/accessApprovalSettings\"\u003c/li\u003e\n\u003col\u003e",
+	//       "description": "The resource name of the settings. Format is one of: * \"projects/{project}/accessApprovalSettings\" * \"folders/{folder}/accessApprovalSettings\" * \"organizations/{organization}/accessApprovalSettings\"",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+/accessApprovalSettings$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "The update mask applies to the settings. Only the top level fields of\nAccessApprovalSettings (notification_emails \u0026 enrolled_services) are\nsupported. For each field, if it is included, the currently stored value\nwill be entirely overwritten with the value of the field passed in this\nrequest.\n\nFor the `FieldMask` definition, see\nhttps://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask\nIf this field is left unset, only the notification_emails field will be\nupdated.",
+	//       "description": "The update mask applies to the settings. Only the top level fields of AccessApprovalSettings (notification_emails \u0026 enrolled_services) are supported. For each field, if it is included, the currently stored value will be entirely overwritten with the value of the field passed in this request. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask If this field is left unset, only the notification_emails field will be updated.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -1186,13 +1410,12 @@ type FoldersApprovalRequestsApproveCall struct {
 	header_                       http.Header
 }
 
-// Approve: Approves a request and returns the updated
-// ApprovalRequest.
-//
-// Returns NOT_FOUND if the request does not exist.
-// Returns
+// Approve: Approves a request and returns the updated ApprovalRequest.
+// Returns NOT_FOUND if the request does not exist. Returns
 // FAILED_PRECONDITION if the request exists but is not in a pending
 // state.
+//
+// - name: Name of the approval request to approve.
 func (r *FoldersApprovalRequestsService) Approve(name string, approveapprovalrequestmessage *ApproveApprovalRequestMessage) *FoldersApprovalRequestsApproveCall {
 	c := &FoldersApprovalRequestsApproveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1227,7 +1450,7 @@ func (c *FoldersApprovalRequestsApproveCall) Header() http.Header {
 
 func (c *FoldersApprovalRequestsApproveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1267,17 +1490,17 @@ func (c *FoldersApprovalRequestsApproveCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ApprovalRequest{
 		ServerResponse: googleapi.ServerResponse{
@@ -1291,7 +1514,7 @@ func (c *FoldersApprovalRequestsApproveCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "Approves a request and returns the updated ApprovalRequest.\n\nReturns NOT_FOUND if the request does not exist. Returns\nFAILED_PRECONDITION if the request exists but is not in a pending state.",
+	//   "description": "Approves a request and returns the updated ApprovalRequest. Returns NOT_FOUND if the request does not exist. Returns FAILED_PRECONDITION if the request exists but is not in a pending state.",
 	//   "flatPath": "v1/folders/{foldersId}/approvalRequests/{approvalRequestsId}:approve",
 	//   "httpMethod": "POST",
 	//   "id": "accessapproval.folders.approvalRequests.approve",
@@ -1332,20 +1555,14 @@ type FoldersApprovalRequestsDismissCall struct {
 	header_                       http.Header
 }
 
-// Dismiss: Dismisses a request. Returns the updated
-// ApprovalRequest.
-//
+// Dismiss: Dismisses a request. Returns the updated ApprovalRequest.
 // NOTE: This does not deny access to the resource if another request
-// has been
-// made and approved. It is equivalent in effect to ignoring the
-// request
-// altogether.
+// has been made and approved. It is equivalent in effect to ignoring
+// the request altogether. Returns NOT_FOUND if the request does not
+// exist. Returns FAILED_PRECONDITION if the request exists but is not
+// in a pending state.
 //
-// Returns NOT_FOUND if the request does not exist.
-//
-// Returns FAILED_PRECONDITION if the request exists but is not in a
-// pending
-// state.
+// - name: Name of the ApprovalRequest to dismiss.
 func (r *FoldersApprovalRequestsService) Dismiss(name string, dismissapprovalrequestmessage *DismissApprovalRequestMessage) *FoldersApprovalRequestsDismissCall {
 	c := &FoldersApprovalRequestsDismissCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1380,7 +1597,7 @@ func (c *FoldersApprovalRequestsDismissCall) Header() http.Header {
 
 func (c *FoldersApprovalRequestsDismissCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1420,17 +1637,17 @@ func (c *FoldersApprovalRequestsDismissCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ApprovalRequest{
 		ServerResponse: googleapi.ServerResponse{
@@ -1444,7 +1661,7 @@ func (c *FoldersApprovalRequestsDismissCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "Dismisses a request. Returns the updated ApprovalRequest.\n\nNOTE: This does not deny access to the resource if another request has been\nmade and approved. It is equivalent in effect to ignoring the request\naltogether.\n\nReturns NOT_FOUND if the request does not exist.\n\nReturns FAILED_PRECONDITION if the request exists but is not in a pending\nstate.",
+	//   "description": "Dismisses a request. Returns the updated ApprovalRequest. NOTE: This does not deny access to the resource if another request has been made and approved. It is equivalent in effect to ignoring the request altogether. Returns NOT_FOUND if the request does not exist. Returns FAILED_PRECONDITION if the request exists but is not in a pending state.",
 	//   "flatPath": "v1/folders/{foldersId}/approvalRequests/{approvalRequestsId}:dismiss",
 	//   "httpMethod": "POST",
 	//   "id": "accessapproval.folders.approvalRequests.dismiss",
@@ -1487,6 +1704,10 @@ type FoldersApprovalRequestsGetCall struct {
 
 // Get: Gets an approval request. Returns NOT_FOUND if the request does
 // not exist.
+//
+//   - name: The name of the approval request to retrieve. Format:
+//     "{projects|folders|organizations}/{id}/approvalRequests/{approval_re
+//     quest}".
 func (r *FoldersApprovalRequestsService) Get(name string) *FoldersApprovalRequestsGetCall {
 	c := &FoldersApprovalRequestsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1530,7 +1751,7 @@ func (c *FoldersApprovalRequestsGetCall) Header() http.Header {
 
 func (c *FoldersApprovalRequestsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1568,17 +1789,17 @@ func (c *FoldersApprovalRequestsGetCall) Do(opts ...googleapi.CallOption) (*Appr
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ApprovalRequest{
 		ServerResponse: googleapi.ServerResponse{
@@ -1601,7 +1822,7 @@ func (c *FoldersApprovalRequestsGetCall) Do(opts ...googleapi.CallOption) (*Appr
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Name of the approval request to retrieve.",
+	//       "description": "The name of the approval request to retrieve. Format: \"{projects|folders|organizations}/{id}/approvalRequests/{approval_request}\"",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+/approvalRequests/[^/]+$",
 	//       "required": true,
@@ -1609,6 +1830,152 @@ func (c *FoldersApprovalRequestsGetCall) Do(opts ...googleapi.CallOption) (*Appr
 	//     }
 	//   },
 	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "ApprovalRequest"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "accessapproval.folders.approvalRequests.invalidate":
+
+type FoldersApprovalRequestsInvalidateCall struct {
+	s                                *Service
+	name                             string
+	invalidateapprovalrequestmessage *InvalidateApprovalRequestMessage
+	urlParams_                       gensupport.URLParams
+	ctx_                             context.Context
+	header_                          http.Header
+}
+
+// Invalidate: Invalidates an existing ApprovalRequest. Returns the
+// updated ApprovalRequest. NOTE: This does not deny access to the
+// resource if another request has been made and approved. It only
+// invalidates a single approval. Returns FAILED_PRECONDITION if the
+// request exists but is not in an approved state.
+//
+// - name: Name of the ApprovalRequest to invalidate.
+func (r *FoldersApprovalRequestsService) Invalidate(name string, invalidateapprovalrequestmessage *InvalidateApprovalRequestMessage) *FoldersApprovalRequestsInvalidateCall {
+	c := &FoldersApprovalRequestsInvalidateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.invalidateapprovalrequestmessage = invalidateapprovalrequestmessage
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersApprovalRequestsInvalidateCall) Fields(s ...googleapi.Field) *FoldersApprovalRequestsInvalidateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersApprovalRequestsInvalidateCall) Context(ctx context.Context) *FoldersApprovalRequestsInvalidateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersApprovalRequestsInvalidateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersApprovalRequestsInvalidateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.invalidateapprovalrequestmessage)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:invalidate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "accessapproval.folders.approvalRequests.invalidate" call.
+// Exactly one of *ApprovalRequest or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *ApprovalRequest.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *FoldersApprovalRequestsInvalidateCall) Do(opts ...googleapi.CallOption) (*ApprovalRequest, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ApprovalRequest{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Invalidates an existing ApprovalRequest. Returns the updated ApprovalRequest. NOTE: This does not deny access to the resource if another request has been made and approved. It only invalidates a single approval. Returns FAILED_PRECONDITION if the request exists but is not in an approved state.",
+	//   "flatPath": "v1/folders/{foldersId}/approvalRequests/{approvalRequestsId}:invalidate",
+	//   "httpMethod": "POST",
+	//   "id": "accessapproval.folders.approvalRequests.invalidate",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Name of the ApprovalRequest to invalidate.",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+/approvalRequests/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:invalidate",
+	//   "request": {
+	//     "$ref": "InvalidateApprovalRequestMessage"
+	//   },
 	//   "response": {
 	//     "$ref": "ApprovalRequest"
 	//   },
@@ -1631,10 +1998,11 @@ type FoldersApprovalRequestsListCall struct {
 }
 
 // List: Lists approval requests associated with a project, folder, or
-// organization.
-// Approval requests can be filtered by state (pending, active,
-// dismissed).
-// The order is reverse chronological.
+// organization. Approval requests can be filtered by state (pending,
+// active, dismissed). The order is reverse chronological.
+//
+//   - parent: The parent resource. This may be "projects/{project}",
+//     "folders/{folder}", or "organizations/{organization}".
 func (r *FoldersApprovalRequestsService) List(parent string) *FoldersApprovalRequestsListCall {
 	c := &FoldersApprovalRequestsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1642,17 +2010,14 @@ func (r *FoldersApprovalRequestsService) List(parent string) *FoldersApprovalReq
 }
 
 // Filter sets the optional parameter "filter": A filter on the type of
-// approval requests to retrieve. Must be one of the
-// following values:
-// <ol>
-//   <li>[not set]: Requests that are pending or have active
-// approvals.</li>
-//   <li>ALL: All requests.</li>
-//   <li>PENDING: Only pending requests.</li>
-//   <li>ACTIVE: Only active (i.e. currently approved) requests.</li>
-//   <li>DISMISSED: Only dismissed (including expired)
-// requests.</li>
-// </ol>
+// approval requests to retrieve. Must be one of the following values: *
+// [not set]: Requests that are pending or have active approvals. * ALL:
+// All requests. * PENDING: Only pending requests. * ACTIVE: Only active
+// (i.e. currently approved) requests. * DISMISSED: Only requests that
+// have been dismissed, or requests that are not approved and past
+// expiration. * EXPIRED: Only requests that have been approved, and the
+// approval has expired. * HISTORY: Active, dismissed and expired
+// requests.
 func (c *FoldersApprovalRequestsListCall) Filter(filter string) *FoldersApprovalRequestsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -1708,7 +2073,7 @@ func (c *FoldersApprovalRequestsListCall) Header() http.Header {
 
 func (c *FoldersApprovalRequestsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1746,17 +2111,17 @@ func (c *FoldersApprovalRequestsListCall) Do(opts ...googleapi.CallOption) (*Lis
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListApprovalRequestsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1770,7 +2135,7 @@ func (c *FoldersApprovalRequestsListCall) Do(opts ...googleapi.CallOption) (*Lis
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists approval requests associated with a project, folder, or organization.\nApproval requests can be filtered by state (pending, active, dismissed).\nThe order is reverse chronological.",
+	//   "description": "Lists approval requests associated with a project, folder, or organization. Approval requests can be filtered by state (pending, active, dismissed). The order is reverse chronological.",
 	//   "flatPath": "v1/folders/{foldersId}/approvalRequests",
 	//   "httpMethod": "GET",
 	//   "id": "accessapproval.folders.approvalRequests.list",
@@ -1779,7 +2144,7 @@ func (c *FoldersApprovalRequestsListCall) Do(opts ...googleapi.CallOption) (*Lis
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "A filter on the type of approval requests to retrieve. Must be one of the\nfollowing values:\n\u003col\u003e\n  \u003cli\u003e[not set]: Requests that are pending or have active approvals.\u003c/li\u003e\n  \u003cli\u003eALL: All requests.\u003c/li\u003e\n  \u003cli\u003ePENDING: Only pending requests.\u003c/li\u003e\n  \u003cli\u003eACTIVE: Only active (i.e. currently approved) requests.\u003c/li\u003e\n  \u003cli\u003eDISMISSED: Only dismissed (including expired) requests.\u003c/li\u003e\n\u003c/ol\u003e",
+	//       "description": "A filter on the type of approval requests to retrieve. Must be one of the following values: * [not set]: Requests that are pending or have active approvals. * ALL: All requests. * PENDING: Only pending requests. * ACTIVE: Only active (i.e. currently approved) requests. * DISMISSED: Only requests that have been dismissed, or requests that are not approved and past expiration. * EXPIRED: Only requests that have been approved, and the approval has expired. * HISTORY: Active, dismissed and expired requests.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -1795,7 +2160,7 @@ func (c *FoldersApprovalRequestsListCall) Do(opts ...googleapi.CallOption) (*Lis
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The parent resource. This may be \"projects/{project_id}\",\n\"folders/{folder_id}\", or \"organizations/{organization_id}\".",
+	//       "description": "The parent resource. This may be \"projects/{project}\", \"folders/{folder}\", or \"organizations/{organization}\".",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+$",
 	//       "required": true,
@@ -1845,16 +2210,14 @@ type OrganizationsDeleteAccessApprovalSettingsCall struct {
 }
 
 // DeleteAccessApprovalSettings: Deletes the settings associated with a
-// project, folder, or organization.
-// This will have the effect of disabling Access Approval for the
-// project,
-// folder, or organization, but only if all ancestors also have
-// Access
-// Approval disabled. If Access Approval is enabled at a higher level of
-// the
-// hierarchy, then Access Approval will still be enabled at this level
-// as
-// the settings are inherited.
+// project, folder, or organization. This will have the effect of
+// disabling Access Approval for the project, folder, or organization,
+// but only if all ancestors also have Access Approval disabled. If
+// Access Approval is enabled at a higher level of the hierarchy, then
+// Access Approval will still be enabled at this level as the settings
+// are inherited.
+//
+// - name: Name of the AccessApprovalSettings to delete.
 func (r *OrganizationsService) DeleteAccessApprovalSettings(name string) *OrganizationsDeleteAccessApprovalSettingsCall {
 	c := &OrganizationsDeleteAccessApprovalSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1888,7 +2251,7 @@ func (c *OrganizationsDeleteAccessApprovalSettingsCall) Header() http.Header {
 
 func (c *OrganizationsDeleteAccessApprovalSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1923,17 +2286,17 @@ func (c *OrganizationsDeleteAccessApprovalSettingsCall) Do(opts ...googleapi.Cal
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -1947,7 +2310,7 @@ func (c *OrganizationsDeleteAccessApprovalSettingsCall) Do(opts ...googleapi.Cal
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes the settings associated with a project, folder, or organization.\nThis will have the effect of disabling Access Approval for the project,\nfolder, or organization, but only if all ancestors also have Access\nApproval disabled. If Access Approval is enabled at a higher level of the\nhierarchy, then Access Approval will still be enabled at this level as\nthe settings are inherited.",
+	//   "description": "Deletes the settings associated with a project, folder, or organization. This will have the effect of disabling Access Approval for the project, folder, or organization, but only if all ancestors also have Access Approval disabled. If Access Approval is enabled at a higher level of the hierarchy, then Access Approval will still be enabled at this level as the settings are inherited.",
 	//   "flatPath": "v1/organizations/{organizationsId}/accessApprovalSettings",
 	//   "httpMethod": "DELETE",
 	//   "id": "accessapproval.organizations.deleteAccessApprovalSettings",
@@ -1987,6 +2350,9 @@ type OrganizationsGetAccessApprovalSettingsCall struct {
 
 // GetAccessApprovalSettings: Gets the settings associated with a
 // project, folder, or organization.
+//
+//   - name: The name of the AccessApprovalSettings to retrieve. Format:
+//     "{projects|folders|organizations}/{id}/accessApprovalSettings".
 func (r *OrganizationsService) GetAccessApprovalSettings(name string) *OrganizationsGetAccessApprovalSettingsCall {
 	c := &OrganizationsGetAccessApprovalSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2030,7 +2396,7 @@ func (c *OrganizationsGetAccessApprovalSettingsCall) Header() http.Header {
 
 func (c *OrganizationsGetAccessApprovalSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2068,17 +2434,17 @@ func (c *OrganizationsGetAccessApprovalSettingsCall) Do(opts ...googleapi.CallOp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AccessApprovalSettings{
 		ServerResponse: googleapi.ServerResponse{
@@ -2101,7 +2467,7 @@ func (c *OrganizationsGetAccessApprovalSettingsCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Name of the AccessApprovalSettings to retrieve.",
+	//       "description": "The name of the AccessApprovalSettings to retrieve. Format: \"{projects|folders|organizations}/{id}/accessApprovalSettings\"",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/accessApprovalSettings$",
 	//       "required": true,
@@ -2111,6 +2477,154 @@ func (c *OrganizationsGetAccessApprovalSettingsCall) Do(opts ...googleapi.CallOp
 	//   "path": "v1/{+name}",
 	//   "response": {
 	//     "$ref": "AccessApprovalSettings"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "accessapproval.organizations.getServiceAccount":
+
+type OrganizationsGetServiceAccountCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetServiceAccount: Retrieves the service account that is used by
+// Access Approval to access KMS keys for signing approved approval
+// requests.
+//
+// - name: Name of the AccessApprovalServiceAccount to retrieve.
+func (r *OrganizationsService) GetServiceAccount(name string) *OrganizationsGetServiceAccountCall {
+	c := &OrganizationsGetServiceAccountCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsGetServiceAccountCall) Fields(s ...googleapi.Field) *OrganizationsGetServiceAccountCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsGetServiceAccountCall) IfNoneMatch(entityTag string) *OrganizationsGetServiceAccountCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsGetServiceAccountCall) Context(ctx context.Context) *OrganizationsGetServiceAccountCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsGetServiceAccountCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsGetServiceAccountCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "accessapproval.organizations.getServiceAccount" call.
+// Exactly one of *AccessApprovalServiceAccount or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *AccessApprovalServiceAccount.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsGetServiceAccountCall) Do(opts ...googleapi.CallOption) (*AccessApprovalServiceAccount, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AccessApprovalServiceAccount{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the service account that is used by Access Approval to access KMS keys for signing approved approval requests.",
+	//   "flatPath": "v1/organizations/{organizationsId}/serviceAccount",
+	//   "httpMethod": "GET",
+	//   "id": "accessapproval.organizations.getServiceAccount",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Name of the AccessApprovalServiceAccount to retrieve.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/serviceAccount$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "AccessApprovalServiceAccount"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -2131,8 +2645,13 @@ type OrganizationsUpdateAccessApprovalSettingsCall struct {
 }
 
 // UpdateAccessApprovalSettings: Updates the settings associated with a
-// project, folder, or organization.
-// Settings to update are determined by the value of field_mask.
+// project, folder, or organization. Settings to update are determined
+// by the value of field_mask.
+//
+//   - name: The resource name of the settings. Format is one of: *
+//     "projects/{project}/accessApprovalSettings" *
+//     "folders/{folder}/accessApprovalSettings" *
+//     "organizations/{organization}/accessApprovalSettings".
 func (r *OrganizationsService) UpdateAccessApprovalSettings(name string, accessapprovalsettings *AccessApprovalSettings) *OrganizationsUpdateAccessApprovalSettingsCall {
 	c := &OrganizationsUpdateAccessApprovalSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2141,23 +2660,14 @@ func (r *OrganizationsService) UpdateAccessApprovalSettings(name string, accessa
 }
 
 // UpdateMask sets the optional parameter "updateMask": The update mask
-// applies to the settings. Only the top level fields
-// of
-// AccessApprovalSettings (notification_emails & enrolled_services)
-// are
+// applies to the settings. Only the top level fields of
+// AccessApprovalSettings (notification_emails & enrolled_services) are
 // supported. For each field, if it is included, the currently stored
-// value
-// will be entirely overwritten with the value of the field passed in
-// this
-// request.
-//
-// For the `FieldMask` definition,
-// see
-// https://developers.google.com/protocol-buffers/docs/reference/goog
-// le.protobuf#fieldmask
+// value will be entirely overwritten with the value of the field passed
+// in this request. For the `FieldMask` definition, see
+// https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
 // If this field is left unset, only the notification_emails field will
-// be
-// updated.
+// be updated.
 func (c *OrganizationsUpdateAccessApprovalSettingsCall) UpdateMask(updateMask string) *OrganizationsUpdateAccessApprovalSettingsCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -2190,7 +2700,7 @@ func (c *OrganizationsUpdateAccessApprovalSettingsCall) Header() http.Header {
 
 func (c *OrganizationsUpdateAccessApprovalSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2230,17 +2740,17 @@ func (c *OrganizationsUpdateAccessApprovalSettingsCall) Do(opts ...googleapi.Cal
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AccessApprovalSettings{
 		ServerResponse: googleapi.ServerResponse{
@@ -2254,7 +2764,7 @@ func (c *OrganizationsUpdateAccessApprovalSettingsCall) Do(opts ...googleapi.Cal
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the settings associated with a project, folder, or organization.\nSettings to update are determined by the value of field_mask.",
+	//   "description": "Updates the settings associated with a project, folder, or organization. Settings to update are determined by the value of field_mask.",
 	//   "flatPath": "v1/organizations/{organizationsId}/accessApprovalSettings",
 	//   "httpMethod": "PATCH",
 	//   "id": "accessapproval.organizations.updateAccessApprovalSettings",
@@ -2263,14 +2773,14 @@ func (c *OrganizationsUpdateAccessApprovalSettingsCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the settings. Format is one of:\n\u003col\u003e\n  \u003cli\u003e\"projects/{project_id}/accessApprovalSettings\"\u003c/li\u003e\n  \u003cli\u003e\"folders/{folder_id}/accessApprovalSettings\"\u003c/li\u003e\n  \u003cli\u003e\"organizations/{organization_id}/accessApprovalSettings\"\u003c/li\u003e\n\u003col\u003e",
+	//       "description": "The resource name of the settings. Format is one of: * \"projects/{project}/accessApprovalSettings\" * \"folders/{folder}/accessApprovalSettings\" * \"organizations/{organization}/accessApprovalSettings\"",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/accessApprovalSettings$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "The update mask applies to the settings. Only the top level fields of\nAccessApprovalSettings (notification_emails \u0026 enrolled_services) are\nsupported. For each field, if it is included, the currently stored value\nwill be entirely overwritten with the value of the field passed in this\nrequest.\n\nFor the `FieldMask` definition, see\nhttps://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask\nIf this field is left unset, only the notification_emails field will be\nupdated.",
+	//       "description": "The update mask applies to the settings. Only the top level fields of AccessApprovalSettings (notification_emails \u0026 enrolled_services) are supported. For each field, if it is included, the currently stored value will be entirely overwritten with the value of the field passed in this request. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask If this field is left unset, only the notification_emails field will be updated.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -2301,13 +2811,12 @@ type OrganizationsApprovalRequestsApproveCall struct {
 	header_                       http.Header
 }
 
-// Approve: Approves a request and returns the updated
-// ApprovalRequest.
-//
-// Returns NOT_FOUND if the request does not exist.
-// Returns
+// Approve: Approves a request and returns the updated ApprovalRequest.
+// Returns NOT_FOUND if the request does not exist. Returns
 // FAILED_PRECONDITION if the request exists but is not in a pending
 // state.
+//
+// - name: Name of the approval request to approve.
 func (r *OrganizationsApprovalRequestsService) Approve(name string, approveapprovalrequestmessage *ApproveApprovalRequestMessage) *OrganizationsApprovalRequestsApproveCall {
 	c := &OrganizationsApprovalRequestsApproveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2342,7 +2851,7 @@ func (c *OrganizationsApprovalRequestsApproveCall) Header() http.Header {
 
 func (c *OrganizationsApprovalRequestsApproveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2382,17 +2891,17 @@ func (c *OrganizationsApprovalRequestsApproveCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ApprovalRequest{
 		ServerResponse: googleapi.ServerResponse{
@@ -2406,7 +2915,7 @@ func (c *OrganizationsApprovalRequestsApproveCall) Do(opts ...googleapi.CallOpti
 	}
 	return ret, nil
 	// {
-	//   "description": "Approves a request and returns the updated ApprovalRequest.\n\nReturns NOT_FOUND if the request does not exist. Returns\nFAILED_PRECONDITION if the request exists but is not in a pending state.",
+	//   "description": "Approves a request and returns the updated ApprovalRequest. Returns NOT_FOUND if the request does not exist. Returns FAILED_PRECONDITION if the request exists but is not in a pending state.",
 	//   "flatPath": "v1/organizations/{organizationsId}/approvalRequests/{approvalRequestsId}:approve",
 	//   "httpMethod": "POST",
 	//   "id": "accessapproval.organizations.approvalRequests.approve",
@@ -2447,20 +2956,14 @@ type OrganizationsApprovalRequestsDismissCall struct {
 	header_                       http.Header
 }
 
-// Dismiss: Dismisses a request. Returns the updated
-// ApprovalRequest.
-//
+// Dismiss: Dismisses a request. Returns the updated ApprovalRequest.
 // NOTE: This does not deny access to the resource if another request
-// has been
-// made and approved. It is equivalent in effect to ignoring the
-// request
-// altogether.
+// has been made and approved. It is equivalent in effect to ignoring
+// the request altogether. Returns NOT_FOUND if the request does not
+// exist. Returns FAILED_PRECONDITION if the request exists but is not
+// in a pending state.
 //
-// Returns NOT_FOUND if the request does not exist.
-//
-// Returns FAILED_PRECONDITION if the request exists but is not in a
-// pending
-// state.
+// - name: Name of the ApprovalRequest to dismiss.
 func (r *OrganizationsApprovalRequestsService) Dismiss(name string, dismissapprovalrequestmessage *DismissApprovalRequestMessage) *OrganizationsApprovalRequestsDismissCall {
 	c := &OrganizationsApprovalRequestsDismissCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2495,7 +2998,7 @@ func (c *OrganizationsApprovalRequestsDismissCall) Header() http.Header {
 
 func (c *OrganizationsApprovalRequestsDismissCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2535,17 +3038,17 @@ func (c *OrganizationsApprovalRequestsDismissCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ApprovalRequest{
 		ServerResponse: googleapi.ServerResponse{
@@ -2559,7 +3062,7 @@ func (c *OrganizationsApprovalRequestsDismissCall) Do(opts ...googleapi.CallOpti
 	}
 	return ret, nil
 	// {
-	//   "description": "Dismisses a request. Returns the updated ApprovalRequest.\n\nNOTE: This does not deny access to the resource if another request has been\nmade and approved. It is equivalent in effect to ignoring the request\naltogether.\n\nReturns NOT_FOUND if the request does not exist.\n\nReturns FAILED_PRECONDITION if the request exists but is not in a pending\nstate.",
+	//   "description": "Dismisses a request. Returns the updated ApprovalRequest. NOTE: This does not deny access to the resource if another request has been made and approved. It is equivalent in effect to ignoring the request altogether. Returns NOT_FOUND if the request does not exist. Returns FAILED_PRECONDITION if the request exists but is not in a pending state.",
 	//   "flatPath": "v1/organizations/{organizationsId}/approvalRequests/{approvalRequestsId}:dismiss",
 	//   "httpMethod": "POST",
 	//   "id": "accessapproval.organizations.approvalRequests.dismiss",
@@ -2602,6 +3105,10 @@ type OrganizationsApprovalRequestsGetCall struct {
 
 // Get: Gets an approval request. Returns NOT_FOUND if the request does
 // not exist.
+//
+//   - name: The name of the approval request to retrieve. Format:
+//     "{projects|folders|organizations}/{id}/approvalRequests/{approval_re
+//     quest}".
 func (r *OrganizationsApprovalRequestsService) Get(name string) *OrganizationsApprovalRequestsGetCall {
 	c := &OrganizationsApprovalRequestsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2645,7 +3152,7 @@ func (c *OrganizationsApprovalRequestsGetCall) Header() http.Header {
 
 func (c *OrganizationsApprovalRequestsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2683,17 +3190,17 @@ func (c *OrganizationsApprovalRequestsGetCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ApprovalRequest{
 		ServerResponse: googleapi.ServerResponse{
@@ -2716,7 +3223,7 @@ func (c *OrganizationsApprovalRequestsGetCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Name of the approval request to retrieve.",
+	//       "description": "The name of the approval request to retrieve. Format: \"{projects|folders|organizations}/{id}/approvalRequests/{approval_request}\"",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/approvalRequests/[^/]+$",
 	//       "required": true,
@@ -2724,6 +3231,152 @@ func (c *OrganizationsApprovalRequestsGetCall) Do(opts ...googleapi.CallOption) 
 	//     }
 	//   },
 	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "ApprovalRequest"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "accessapproval.organizations.approvalRequests.invalidate":
+
+type OrganizationsApprovalRequestsInvalidateCall struct {
+	s                                *Service
+	name                             string
+	invalidateapprovalrequestmessage *InvalidateApprovalRequestMessage
+	urlParams_                       gensupport.URLParams
+	ctx_                             context.Context
+	header_                          http.Header
+}
+
+// Invalidate: Invalidates an existing ApprovalRequest. Returns the
+// updated ApprovalRequest. NOTE: This does not deny access to the
+// resource if another request has been made and approved. It only
+// invalidates a single approval. Returns FAILED_PRECONDITION if the
+// request exists but is not in an approved state.
+//
+// - name: Name of the ApprovalRequest to invalidate.
+func (r *OrganizationsApprovalRequestsService) Invalidate(name string, invalidateapprovalrequestmessage *InvalidateApprovalRequestMessage) *OrganizationsApprovalRequestsInvalidateCall {
+	c := &OrganizationsApprovalRequestsInvalidateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.invalidateapprovalrequestmessage = invalidateapprovalrequestmessage
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsApprovalRequestsInvalidateCall) Fields(s ...googleapi.Field) *OrganizationsApprovalRequestsInvalidateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsApprovalRequestsInvalidateCall) Context(ctx context.Context) *OrganizationsApprovalRequestsInvalidateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsApprovalRequestsInvalidateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsApprovalRequestsInvalidateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.invalidateapprovalrequestmessage)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:invalidate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "accessapproval.organizations.approvalRequests.invalidate" call.
+// Exactly one of *ApprovalRequest or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *ApprovalRequest.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsApprovalRequestsInvalidateCall) Do(opts ...googleapi.CallOption) (*ApprovalRequest, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ApprovalRequest{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Invalidates an existing ApprovalRequest. Returns the updated ApprovalRequest. NOTE: This does not deny access to the resource if another request has been made and approved. It only invalidates a single approval. Returns FAILED_PRECONDITION if the request exists but is not in an approved state.",
+	//   "flatPath": "v1/organizations/{organizationsId}/approvalRequests/{approvalRequestsId}:invalidate",
+	//   "httpMethod": "POST",
+	//   "id": "accessapproval.organizations.approvalRequests.invalidate",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Name of the ApprovalRequest to invalidate.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/approvalRequests/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:invalidate",
+	//   "request": {
+	//     "$ref": "InvalidateApprovalRequestMessage"
+	//   },
 	//   "response": {
 	//     "$ref": "ApprovalRequest"
 	//   },
@@ -2746,10 +3399,11 @@ type OrganizationsApprovalRequestsListCall struct {
 }
 
 // List: Lists approval requests associated with a project, folder, or
-// organization.
-// Approval requests can be filtered by state (pending, active,
-// dismissed).
-// The order is reverse chronological.
+// organization. Approval requests can be filtered by state (pending,
+// active, dismissed). The order is reverse chronological.
+//
+//   - parent: The parent resource. This may be "projects/{project}",
+//     "folders/{folder}", or "organizations/{organization}".
 func (r *OrganizationsApprovalRequestsService) List(parent string) *OrganizationsApprovalRequestsListCall {
 	c := &OrganizationsApprovalRequestsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2757,17 +3411,14 @@ func (r *OrganizationsApprovalRequestsService) List(parent string) *Organization
 }
 
 // Filter sets the optional parameter "filter": A filter on the type of
-// approval requests to retrieve. Must be one of the
-// following values:
-// <ol>
-//   <li>[not set]: Requests that are pending or have active
-// approvals.</li>
-//   <li>ALL: All requests.</li>
-//   <li>PENDING: Only pending requests.</li>
-//   <li>ACTIVE: Only active (i.e. currently approved) requests.</li>
-//   <li>DISMISSED: Only dismissed (including expired)
-// requests.</li>
-// </ol>
+// approval requests to retrieve. Must be one of the following values: *
+// [not set]: Requests that are pending or have active approvals. * ALL:
+// All requests. * PENDING: Only pending requests. * ACTIVE: Only active
+// (i.e. currently approved) requests. * DISMISSED: Only requests that
+// have been dismissed, or requests that are not approved and past
+// expiration. * EXPIRED: Only requests that have been approved, and the
+// approval has expired. * HISTORY: Active, dismissed and expired
+// requests.
 func (c *OrganizationsApprovalRequestsListCall) Filter(filter string) *OrganizationsApprovalRequestsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -2823,7 +3474,7 @@ func (c *OrganizationsApprovalRequestsListCall) Header() http.Header {
 
 func (c *OrganizationsApprovalRequestsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2861,17 +3512,17 @@ func (c *OrganizationsApprovalRequestsListCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListApprovalRequestsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2885,7 +3536,7 @@ func (c *OrganizationsApprovalRequestsListCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists approval requests associated with a project, folder, or organization.\nApproval requests can be filtered by state (pending, active, dismissed).\nThe order is reverse chronological.",
+	//   "description": "Lists approval requests associated with a project, folder, or organization. Approval requests can be filtered by state (pending, active, dismissed). The order is reverse chronological.",
 	//   "flatPath": "v1/organizations/{organizationsId}/approvalRequests",
 	//   "httpMethod": "GET",
 	//   "id": "accessapproval.organizations.approvalRequests.list",
@@ -2894,7 +3545,7 @@ func (c *OrganizationsApprovalRequestsListCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "A filter on the type of approval requests to retrieve. Must be one of the\nfollowing values:\n\u003col\u003e\n  \u003cli\u003e[not set]: Requests that are pending or have active approvals.\u003c/li\u003e\n  \u003cli\u003eALL: All requests.\u003c/li\u003e\n  \u003cli\u003ePENDING: Only pending requests.\u003c/li\u003e\n  \u003cli\u003eACTIVE: Only active (i.e. currently approved) requests.\u003c/li\u003e\n  \u003cli\u003eDISMISSED: Only dismissed (including expired) requests.\u003c/li\u003e\n\u003c/ol\u003e",
+	//       "description": "A filter on the type of approval requests to retrieve. Must be one of the following values: * [not set]: Requests that are pending or have active approvals. * ALL: All requests. * PENDING: Only pending requests. * ACTIVE: Only active (i.e. currently approved) requests. * DISMISSED: Only requests that have been dismissed, or requests that are not approved and past expiration. * EXPIRED: Only requests that have been approved, and the approval has expired. * HISTORY: Active, dismissed and expired requests.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2910,7 +3561,7 @@ func (c *OrganizationsApprovalRequestsListCall) Do(opts ...googleapi.CallOption)
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The parent resource. This may be \"projects/{project_id}\",\n\"folders/{folder_id}\", or \"organizations/{organization_id}\".",
+	//       "description": "The parent resource. This may be \"projects/{project}\", \"folders/{folder}\", or \"organizations/{organization}\".",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+$",
 	//       "required": true,
@@ -2960,16 +3611,14 @@ type ProjectsDeleteAccessApprovalSettingsCall struct {
 }
 
 // DeleteAccessApprovalSettings: Deletes the settings associated with a
-// project, folder, or organization.
-// This will have the effect of disabling Access Approval for the
-// project,
-// folder, or organization, but only if all ancestors also have
-// Access
-// Approval disabled. If Access Approval is enabled at a higher level of
-// the
-// hierarchy, then Access Approval will still be enabled at this level
-// as
-// the settings are inherited.
+// project, folder, or organization. This will have the effect of
+// disabling Access Approval for the project, folder, or organization,
+// but only if all ancestors also have Access Approval disabled. If
+// Access Approval is enabled at a higher level of the hierarchy, then
+// Access Approval will still be enabled at this level as the settings
+// are inherited.
+//
+// - name: Name of the AccessApprovalSettings to delete.
 func (r *ProjectsService) DeleteAccessApprovalSettings(name string) *ProjectsDeleteAccessApprovalSettingsCall {
 	c := &ProjectsDeleteAccessApprovalSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3003,7 +3652,7 @@ func (c *ProjectsDeleteAccessApprovalSettingsCall) Header() http.Header {
 
 func (c *ProjectsDeleteAccessApprovalSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3038,17 +3687,17 @@ func (c *ProjectsDeleteAccessApprovalSettingsCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -3062,7 +3711,7 @@ func (c *ProjectsDeleteAccessApprovalSettingsCall) Do(opts ...googleapi.CallOpti
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes the settings associated with a project, folder, or organization.\nThis will have the effect of disabling Access Approval for the project,\nfolder, or organization, but only if all ancestors also have Access\nApproval disabled. If Access Approval is enabled at a higher level of the\nhierarchy, then Access Approval will still be enabled at this level as\nthe settings are inherited.",
+	//   "description": "Deletes the settings associated with a project, folder, or organization. This will have the effect of disabling Access Approval for the project, folder, or organization, but only if all ancestors also have Access Approval disabled. If Access Approval is enabled at a higher level of the hierarchy, then Access Approval will still be enabled at this level as the settings are inherited.",
 	//   "flatPath": "v1/projects/{projectsId}/accessApprovalSettings",
 	//   "httpMethod": "DELETE",
 	//   "id": "accessapproval.projects.deleteAccessApprovalSettings",
@@ -3102,6 +3751,9 @@ type ProjectsGetAccessApprovalSettingsCall struct {
 
 // GetAccessApprovalSettings: Gets the settings associated with a
 // project, folder, or organization.
+//
+//   - name: The name of the AccessApprovalSettings to retrieve. Format:
+//     "{projects|folders|organizations}/{id}/accessApprovalSettings".
 func (r *ProjectsService) GetAccessApprovalSettings(name string) *ProjectsGetAccessApprovalSettingsCall {
 	c := &ProjectsGetAccessApprovalSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3145,7 +3797,7 @@ func (c *ProjectsGetAccessApprovalSettingsCall) Header() http.Header {
 
 func (c *ProjectsGetAccessApprovalSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3183,17 +3835,17 @@ func (c *ProjectsGetAccessApprovalSettingsCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AccessApprovalSettings{
 		ServerResponse: googleapi.ServerResponse{
@@ -3216,7 +3868,7 @@ func (c *ProjectsGetAccessApprovalSettingsCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Name of the AccessApprovalSettings to retrieve.",
+	//       "description": "The name of the AccessApprovalSettings to retrieve. Format: \"{projects|folders|organizations}/{id}/accessApprovalSettings\"",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/accessApprovalSettings$",
 	//       "required": true,
@@ -3226,6 +3878,154 @@ func (c *ProjectsGetAccessApprovalSettingsCall) Do(opts ...googleapi.CallOption)
 	//   "path": "v1/{+name}",
 	//   "response": {
 	//     "$ref": "AccessApprovalSettings"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "accessapproval.projects.getServiceAccount":
+
+type ProjectsGetServiceAccountCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetServiceAccount: Retrieves the service account that is used by
+// Access Approval to access KMS keys for signing approved approval
+// requests.
+//
+// - name: Name of the AccessApprovalServiceAccount to retrieve.
+func (r *ProjectsService) GetServiceAccount(name string) *ProjectsGetServiceAccountCall {
+	c := &ProjectsGetServiceAccountCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsGetServiceAccountCall) Fields(s ...googleapi.Field) *ProjectsGetServiceAccountCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsGetServiceAccountCall) IfNoneMatch(entityTag string) *ProjectsGetServiceAccountCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsGetServiceAccountCall) Context(ctx context.Context) *ProjectsGetServiceAccountCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsGetServiceAccountCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsGetServiceAccountCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "accessapproval.projects.getServiceAccount" call.
+// Exactly one of *AccessApprovalServiceAccount or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *AccessApprovalServiceAccount.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsGetServiceAccountCall) Do(opts ...googleapi.CallOption) (*AccessApprovalServiceAccount, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AccessApprovalServiceAccount{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the service account that is used by Access Approval to access KMS keys for signing approved approval requests.",
+	//   "flatPath": "v1/projects/{projectsId}/serviceAccount",
+	//   "httpMethod": "GET",
+	//   "id": "accessapproval.projects.getServiceAccount",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Name of the AccessApprovalServiceAccount to retrieve.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/serviceAccount$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "AccessApprovalServiceAccount"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -3246,8 +4046,13 @@ type ProjectsUpdateAccessApprovalSettingsCall struct {
 }
 
 // UpdateAccessApprovalSettings: Updates the settings associated with a
-// project, folder, or organization.
-// Settings to update are determined by the value of field_mask.
+// project, folder, or organization. Settings to update are determined
+// by the value of field_mask.
+//
+//   - name: The resource name of the settings. Format is one of: *
+//     "projects/{project}/accessApprovalSettings" *
+//     "folders/{folder}/accessApprovalSettings" *
+//     "organizations/{organization}/accessApprovalSettings".
 func (r *ProjectsService) UpdateAccessApprovalSettings(name string, accessapprovalsettings *AccessApprovalSettings) *ProjectsUpdateAccessApprovalSettingsCall {
 	c := &ProjectsUpdateAccessApprovalSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3256,23 +4061,14 @@ func (r *ProjectsService) UpdateAccessApprovalSettings(name string, accessapprov
 }
 
 // UpdateMask sets the optional parameter "updateMask": The update mask
-// applies to the settings. Only the top level fields
-// of
-// AccessApprovalSettings (notification_emails & enrolled_services)
-// are
+// applies to the settings. Only the top level fields of
+// AccessApprovalSettings (notification_emails & enrolled_services) are
 // supported. For each field, if it is included, the currently stored
-// value
-// will be entirely overwritten with the value of the field passed in
-// this
-// request.
-//
-// For the `FieldMask` definition,
-// see
-// https://developers.google.com/protocol-buffers/docs/reference/goog
-// le.protobuf#fieldmask
+// value will be entirely overwritten with the value of the field passed
+// in this request. For the `FieldMask` definition, see
+// https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
 // If this field is left unset, only the notification_emails field will
-// be
-// updated.
+// be updated.
 func (c *ProjectsUpdateAccessApprovalSettingsCall) UpdateMask(updateMask string) *ProjectsUpdateAccessApprovalSettingsCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -3305,7 +4101,7 @@ func (c *ProjectsUpdateAccessApprovalSettingsCall) Header() http.Header {
 
 func (c *ProjectsUpdateAccessApprovalSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3345,17 +4141,17 @@ func (c *ProjectsUpdateAccessApprovalSettingsCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AccessApprovalSettings{
 		ServerResponse: googleapi.ServerResponse{
@@ -3369,7 +4165,7 @@ func (c *ProjectsUpdateAccessApprovalSettingsCall) Do(opts ...googleapi.CallOpti
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the settings associated with a project, folder, or organization.\nSettings to update are determined by the value of field_mask.",
+	//   "description": "Updates the settings associated with a project, folder, or organization. Settings to update are determined by the value of field_mask.",
 	//   "flatPath": "v1/projects/{projectsId}/accessApprovalSettings",
 	//   "httpMethod": "PATCH",
 	//   "id": "accessapproval.projects.updateAccessApprovalSettings",
@@ -3378,14 +4174,14 @@ func (c *ProjectsUpdateAccessApprovalSettingsCall) Do(opts ...googleapi.CallOpti
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the settings. Format is one of:\n\u003col\u003e\n  \u003cli\u003e\"projects/{project_id}/accessApprovalSettings\"\u003c/li\u003e\n  \u003cli\u003e\"folders/{folder_id}/accessApprovalSettings\"\u003c/li\u003e\n  \u003cli\u003e\"organizations/{organization_id}/accessApprovalSettings\"\u003c/li\u003e\n\u003col\u003e",
+	//       "description": "The resource name of the settings. Format is one of: * \"projects/{project}/accessApprovalSettings\" * \"folders/{folder}/accessApprovalSettings\" * \"organizations/{organization}/accessApprovalSettings\"",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/accessApprovalSettings$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "The update mask applies to the settings. Only the top level fields of\nAccessApprovalSettings (notification_emails \u0026 enrolled_services) are\nsupported. For each field, if it is included, the currently stored value\nwill be entirely overwritten with the value of the field passed in this\nrequest.\n\nFor the `FieldMask` definition, see\nhttps://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask\nIf this field is left unset, only the notification_emails field will be\nupdated.",
+	//       "description": "The update mask applies to the settings. Only the top level fields of AccessApprovalSettings (notification_emails \u0026 enrolled_services) are supported. For each field, if it is included, the currently stored value will be entirely overwritten with the value of the field passed in this request. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask If this field is left unset, only the notification_emails field will be updated.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -3416,13 +4212,12 @@ type ProjectsApprovalRequestsApproveCall struct {
 	header_                       http.Header
 }
 
-// Approve: Approves a request and returns the updated
-// ApprovalRequest.
-//
-// Returns NOT_FOUND if the request does not exist.
-// Returns
+// Approve: Approves a request and returns the updated ApprovalRequest.
+// Returns NOT_FOUND if the request does not exist. Returns
 // FAILED_PRECONDITION if the request exists but is not in a pending
 // state.
+//
+// - name: Name of the approval request to approve.
 func (r *ProjectsApprovalRequestsService) Approve(name string, approveapprovalrequestmessage *ApproveApprovalRequestMessage) *ProjectsApprovalRequestsApproveCall {
 	c := &ProjectsApprovalRequestsApproveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3457,7 +4252,7 @@ func (c *ProjectsApprovalRequestsApproveCall) Header() http.Header {
 
 func (c *ProjectsApprovalRequestsApproveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3497,17 +4292,17 @@ func (c *ProjectsApprovalRequestsApproveCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ApprovalRequest{
 		ServerResponse: googleapi.ServerResponse{
@@ -3521,7 +4316,7 @@ func (c *ProjectsApprovalRequestsApproveCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Approves a request and returns the updated ApprovalRequest.\n\nReturns NOT_FOUND if the request does not exist. Returns\nFAILED_PRECONDITION if the request exists but is not in a pending state.",
+	//   "description": "Approves a request and returns the updated ApprovalRequest. Returns NOT_FOUND if the request does not exist. Returns FAILED_PRECONDITION if the request exists but is not in a pending state.",
 	//   "flatPath": "v1/projects/{projectsId}/approvalRequests/{approvalRequestsId}:approve",
 	//   "httpMethod": "POST",
 	//   "id": "accessapproval.projects.approvalRequests.approve",
@@ -3562,20 +4357,14 @@ type ProjectsApprovalRequestsDismissCall struct {
 	header_                       http.Header
 }
 
-// Dismiss: Dismisses a request. Returns the updated
-// ApprovalRequest.
-//
+// Dismiss: Dismisses a request. Returns the updated ApprovalRequest.
 // NOTE: This does not deny access to the resource if another request
-// has been
-// made and approved. It is equivalent in effect to ignoring the
-// request
-// altogether.
+// has been made and approved. It is equivalent in effect to ignoring
+// the request altogether. Returns NOT_FOUND if the request does not
+// exist. Returns FAILED_PRECONDITION if the request exists but is not
+// in a pending state.
 //
-// Returns NOT_FOUND if the request does not exist.
-//
-// Returns FAILED_PRECONDITION if the request exists but is not in a
-// pending
-// state.
+// - name: Name of the ApprovalRequest to dismiss.
 func (r *ProjectsApprovalRequestsService) Dismiss(name string, dismissapprovalrequestmessage *DismissApprovalRequestMessage) *ProjectsApprovalRequestsDismissCall {
 	c := &ProjectsApprovalRequestsDismissCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3610,7 +4399,7 @@ func (c *ProjectsApprovalRequestsDismissCall) Header() http.Header {
 
 func (c *ProjectsApprovalRequestsDismissCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3650,17 +4439,17 @@ func (c *ProjectsApprovalRequestsDismissCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ApprovalRequest{
 		ServerResponse: googleapi.ServerResponse{
@@ -3674,7 +4463,7 @@ func (c *ProjectsApprovalRequestsDismissCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Dismisses a request. Returns the updated ApprovalRequest.\n\nNOTE: This does not deny access to the resource if another request has been\nmade and approved. It is equivalent in effect to ignoring the request\naltogether.\n\nReturns NOT_FOUND if the request does not exist.\n\nReturns FAILED_PRECONDITION if the request exists but is not in a pending\nstate.",
+	//   "description": "Dismisses a request. Returns the updated ApprovalRequest. NOTE: This does not deny access to the resource if another request has been made and approved. It is equivalent in effect to ignoring the request altogether. Returns NOT_FOUND if the request does not exist. Returns FAILED_PRECONDITION if the request exists but is not in a pending state.",
 	//   "flatPath": "v1/projects/{projectsId}/approvalRequests/{approvalRequestsId}:dismiss",
 	//   "httpMethod": "POST",
 	//   "id": "accessapproval.projects.approvalRequests.dismiss",
@@ -3717,6 +4506,10 @@ type ProjectsApprovalRequestsGetCall struct {
 
 // Get: Gets an approval request. Returns NOT_FOUND if the request does
 // not exist.
+//
+//   - name: The name of the approval request to retrieve. Format:
+//     "{projects|folders|organizations}/{id}/approvalRequests/{approval_re
+//     quest}".
 func (r *ProjectsApprovalRequestsService) Get(name string) *ProjectsApprovalRequestsGetCall {
 	c := &ProjectsApprovalRequestsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3760,7 +4553,7 @@ func (c *ProjectsApprovalRequestsGetCall) Header() http.Header {
 
 func (c *ProjectsApprovalRequestsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3798,17 +4591,17 @@ func (c *ProjectsApprovalRequestsGetCall) Do(opts ...googleapi.CallOption) (*App
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ApprovalRequest{
 		ServerResponse: googleapi.ServerResponse{
@@ -3831,7 +4624,7 @@ func (c *ProjectsApprovalRequestsGetCall) Do(opts ...googleapi.CallOption) (*App
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Name of the approval request to retrieve.",
+	//       "description": "The name of the approval request to retrieve. Format: \"{projects|folders|organizations}/{id}/approvalRequests/{approval_request}\"",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/approvalRequests/[^/]+$",
 	//       "required": true,
@@ -3839,6 +4632,152 @@ func (c *ProjectsApprovalRequestsGetCall) Do(opts ...googleapi.CallOption) (*App
 	//     }
 	//   },
 	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "ApprovalRequest"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "accessapproval.projects.approvalRequests.invalidate":
+
+type ProjectsApprovalRequestsInvalidateCall struct {
+	s                                *Service
+	name                             string
+	invalidateapprovalrequestmessage *InvalidateApprovalRequestMessage
+	urlParams_                       gensupport.URLParams
+	ctx_                             context.Context
+	header_                          http.Header
+}
+
+// Invalidate: Invalidates an existing ApprovalRequest. Returns the
+// updated ApprovalRequest. NOTE: This does not deny access to the
+// resource if another request has been made and approved. It only
+// invalidates a single approval. Returns FAILED_PRECONDITION if the
+// request exists but is not in an approved state.
+//
+// - name: Name of the ApprovalRequest to invalidate.
+func (r *ProjectsApprovalRequestsService) Invalidate(name string, invalidateapprovalrequestmessage *InvalidateApprovalRequestMessage) *ProjectsApprovalRequestsInvalidateCall {
+	c := &ProjectsApprovalRequestsInvalidateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.invalidateapprovalrequestmessage = invalidateapprovalrequestmessage
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsApprovalRequestsInvalidateCall) Fields(s ...googleapi.Field) *ProjectsApprovalRequestsInvalidateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsApprovalRequestsInvalidateCall) Context(ctx context.Context) *ProjectsApprovalRequestsInvalidateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsApprovalRequestsInvalidateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsApprovalRequestsInvalidateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.invalidateapprovalrequestmessage)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:invalidate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "accessapproval.projects.approvalRequests.invalidate" call.
+// Exactly one of *ApprovalRequest or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *ApprovalRequest.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsApprovalRequestsInvalidateCall) Do(opts ...googleapi.CallOption) (*ApprovalRequest, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ApprovalRequest{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Invalidates an existing ApprovalRequest. Returns the updated ApprovalRequest. NOTE: This does not deny access to the resource if another request has been made and approved. It only invalidates a single approval. Returns FAILED_PRECONDITION if the request exists but is not in an approved state.",
+	//   "flatPath": "v1/projects/{projectsId}/approvalRequests/{approvalRequestsId}:invalidate",
+	//   "httpMethod": "POST",
+	//   "id": "accessapproval.projects.approvalRequests.invalidate",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Name of the ApprovalRequest to invalidate.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/approvalRequests/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:invalidate",
+	//   "request": {
+	//     "$ref": "InvalidateApprovalRequestMessage"
+	//   },
 	//   "response": {
 	//     "$ref": "ApprovalRequest"
 	//   },
@@ -3861,10 +4800,11 @@ type ProjectsApprovalRequestsListCall struct {
 }
 
 // List: Lists approval requests associated with a project, folder, or
-// organization.
-// Approval requests can be filtered by state (pending, active,
-// dismissed).
-// The order is reverse chronological.
+// organization. Approval requests can be filtered by state (pending,
+// active, dismissed). The order is reverse chronological.
+//
+//   - parent: The parent resource. This may be "projects/{project}",
+//     "folders/{folder}", or "organizations/{organization}".
 func (r *ProjectsApprovalRequestsService) List(parent string) *ProjectsApprovalRequestsListCall {
 	c := &ProjectsApprovalRequestsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3872,17 +4812,14 @@ func (r *ProjectsApprovalRequestsService) List(parent string) *ProjectsApprovalR
 }
 
 // Filter sets the optional parameter "filter": A filter on the type of
-// approval requests to retrieve. Must be one of the
-// following values:
-// <ol>
-//   <li>[not set]: Requests that are pending or have active
-// approvals.</li>
-//   <li>ALL: All requests.</li>
-//   <li>PENDING: Only pending requests.</li>
-//   <li>ACTIVE: Only active (i.e. currently approved) requests.</li>
-//   <li>DISMISSED: Only dismissed (including expired)
-// requests.</li>
-// </ol>
+// approval requests to retrieve. Must be one of the following values: *
+// [not set]: Requests that are pending or have active approvals. * ALL:
+// All requests. * PENDING: Only pending requests. * ACTIVE: Only active
+// (i.e. currently approved) requests. * DISMISSED: Only requests that
+// have been dismissed, or requests that are not approved and past
+// expiration. * EXPIRED: Only requests that have been approved, and the
+// approval has expired. * HISTORY: Active, dismissed and expired
+// requests.
 func (c *ProjectsApprovalRequestsListCall) Filter(filter string) *ProjectsApprovalRequestsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -3938,7 +4875,7 @@ func (c *ProjectsApprovalRequestsListCall) Header() http.Header {
 
 func (c *ProjectsApprovalRequestsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3976,17 +4913,17 @@ func (c *ProjectsApprovalRequestsListCall) Do(opts ...googleapi.CallOption) (*Li
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListApprovalRequestsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4000,7 +4937,7 @@ func (c *ProjectsApprovalRequestsListCall) Do(opts ...googleapi.CallOption) (*Li
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists approval requests associated with a project, folder, or organization.\nApproval requests can be filtered by state (pending, active, dismissed).\nThe order is reverse chronological.",
+	//   "description": "Lists approval requests associated with a project, folder, or organization. Approval requests can be filtered by state (pending, active, dismissed). The order is reverse chronological.",
 	//   "flatPath": "v1/projects/{projectsId}/approvalRequests",
 	//   "httpMethod": "GET",
 	//   "id": "accessapproval.projects.approvalRequests.list",
@@ -4009,7 +4946,7 @@ func (c *ProjectsApprovalRequestsListCall) Do(opts ...googleapi.CallOption) (*Li
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "A filter on the type of approval requests to retrieve. Must be one of the\nfollowing values:\n\u003col\u003e\n  \u003cli\u003e[not set]: Requests that are pending or have active approvals.\u003c/li\u003e\n  \u003cli\u003eALL: All requests.\u003c/li\u003e\n  \u003cli\u003ePENDING: Only pending requests.\u003c/li\u003e\n  \u003cli\u003eACTIVE: Only active (i.e. currently approved) requests.\u003c/li\u003e\n  \u003cli\u003eDISMISSED: Only dismissed (including expired) requests.\u003c/li\u003e\n\u003c/ol\u003e",
+	//       "description": "A filter on the type of approval requests to retrieve. Must be one of the following values: * [not set]: Requests that are pending or have active approvals. * ALL: All requests. * PENDING: Only pending requests. * ACTIVE: Only active (i.e. currently approved) requests. * DISMISSED: Only requests that have been dismissed, or requests that are not approved and past expiration. * EXPIRED: Only requests that have been approved, and the approval has expired. * HISTORY: Active, dismissed and expired requests.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4025,7 +4962,7 @@ func (c *ProjectsApprovalRequestsListCall) Do(opts ...googleapi.CallOption) (*Li
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The parent resource. This may be \"projects/{project_id}\",\n\"folders/{folder_id}\", or \"organizations/{organization_id}\".",
+	//       "description": "The parent resource. This may be \"projects/{project}\", \"folders/{folder}\", or \"organizations/{organization}\".",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,

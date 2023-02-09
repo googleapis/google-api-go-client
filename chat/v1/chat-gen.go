@@ -259,7 +259,7 @@ func (s *ActionParameter) MarshalJSON() ([]byte, error) {
 }
 
 // ActionResponse: Parameters that a Chat app can use to configure how
-// it's response is posted.
+// its response is posted.
 type ActionResponse struct {
 	// DialogAction: Input only. A response to an event related to a dialog
 	// (https://developers.google.com/chat/how-tos/dialogs). Must be
@@ -438,7 +438,7 @@ func (s *ActionStatus) MarshalJSON() ([]byte, error) {
 // message. Example plain-text message body: ``` Hello @FooBot how are
 // you!" ``` The corresponding annotations metadata: ```
 // "annotations":[{ "type":"USER_MENTION", "startIndex":6, "length":7,
-// "userMention": { "user": { "name":"users/107946847022116401880",
+// "userMention": { "user": { "name":"users/{user}",
 // "displayName":"FooBot", "avatarUrl":"https://goo.gl/aeDtrS",
 // "type":"BOT" }, "type":"MENTION" } }] ```
 type Annotation struct {
@@ -732,8 +732,10 @@ func (s *CardHeader) MarshalJSON() ([]byte, error) {
 
 // CardWithId: Widgets for Chat apps to specify.
 type CardWithId struct {
-	// Card: Card proto that allows Chat apps to specify UI elements and
-	// editable widgets.
+	// Card: Cards support a defined layout, interactive UI elements like
+	// buttons, and rich media like images. Use this card to present
+	// detailed information, gather information from users, and guide users
+	// to take a next step.
 	Card *GoogleAppsCardV1Card `json:"card,omitempty"`
 
 	// CardId: Required for `cardsV2` messages. Chat app-specified
@@ -3344,7 +3346,7 @@ type Membership struct {
 	// group conversations, everyone has this role.
 	//   "ROLE_MANAGER" - A space manager. The user has all basic
 	// permissions plus administrative permissions that allow them to manage
-	// the space, like adding or removing members. Only supports
+	// the space, like adding or removing members. Only supported in
 	// SpaceType.SPACE.
 	Role string `json:"role,omitempty"`
 
@@ -3400,7 +3402,7 @@ type Message struct {
 	// mentions stripped out.
 	ArgumentText string `json:"argumentText,omitempty"`
 
-	// Attachment: User uploaded attachment.
+	// Attachment: User-uploaded attachment.
 	Attachment []*Attachment `json:"attachment,omitempty"`
 
 	// Cards: Deprecated: Use `cards_v2` instead. Rich, formatted and
@@ -3412,7 +3414,7 @@ type Message struct {
 	// CardsV2: Richly formatted and interactive cards that display UI
 	// elements and editable widgets, such as: - Formatted text - Buttons -
 	// Clickable images - Checkboxes - Radio buttons - Input widgets. Cards
-	// are usually displayed below the text-body of a Chat message, but can
+	// are usually displayed below the text body of a Chat message, but can
 	// situationally appear other places, such as dialogs
 	// (https://developers.google.com/chat/how-tos/dialogs). The `cardId` is
 	// a unique identifier among cards in the same message and for
@@ -3470,7 +3472,7 @@ type Message struct {
 
 	// Thread: The thread the message belongs to. For example usage, see
 	// Start or reply to a message thread
-	// (/chat/api/guides/crudl/messages#start_or_reply_to_a_message_thread).
+	// (https://developers.google.com/chat/api/guides/crudl/messages#start_or_reply_to_a_message_thread).
 	Thread *Thread `json:"thread,omitempty"`
 
 	// ThreadReply: Output only. When `true`, the message is a response in a
@@ -3926,7 +3928,7 @@ type Thread struct {
 	// thread, create a message and specify a `threadKey` or the
 	// thread.name. For example usage, see Start or reply to a message
 	// thread
-	// (/chat/api/guides/crudl/messages#start_or_reply_to_a_message_thread).
+	// (https://developers.google.com/chat/api/guides/crudl/messages#start_or_reply_to_a_message_thread).
 	// For other requests, this is an output only field.
 	ThreadKey string `json:"threadKey,omitempty"`
 
@@ -5116,7 +5118,7 @@ func (c *SpacesMessagesCreateCall) RequestId(requestId string) *SpacesMessagesCr
 // to a thread, create a message and specify a `threadKey` or the
 // thread.name. For example usage, see Start or reply to a message
 // thread
-// (/chat/api/guides/crudl/messages#start_or_reply_to_a_message_thread).
+// (https://developers.google.com/chat/api/guides/crudl/messages#start_or_reply_to_a_message_thread).
 func (c *SpacesMessagesCreateCall) ThreadKey(threadKey string) *SpacesMessagesCreateCall {
 	c.urlParams_.Set("threadKey", threadKey)
 	return c
@@ -5254,7 +5256,7 @@ func (c *SpacesMessagesCreateCall) Do(opts ...googleapi.CallOption) (*Message, e
 	//       "type": "string"
 	//     },
 	//     "threadKey": {
-	//       "description": "Optional. Deprecated: Use thread.thread_key instead. Opaque thread identifier. To start or add to a thread, create a message and specify a `threadKey` or the thread.name. For example usage, see [Start or reply to a message thread](/chat/api/guides/crudl/messages#start_or_reply_to_a_message_thread).",
+	//       "description": "Optional. Deprecated: Use thread.thread_key instead. Opaque thread identifier. To start or add to a thread, create a message and specify a `threadKey` or the thread.name. For example usage, see [Start or reply to a message thread](https://developers.google.com/chat/api/guides/crudl/messages#start_or_reply_to_a_message_thread).",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -5972,8 +5974,9 @@ type SpacesMessagesAttachmentsGetCall struct {
 }
 
 // Get: Gets the metadata of a message attachment. The attachment data
-// is fetched using the media API. Requires service account
-// authentication
+// is fetched using the media API
+// (https://developers.google.com/chat/api/reference/rest/v1/media/download).
+// Requires service account authentication
 // (https://developers.google.com/chat/api/guides/auth/service-accounts).
 //
 //   - name: Resource name of the attachment, in the form
@@ -6083,7 +6086,7 @@ func (c *SpacesMessagesAttachmentsGetCall) Do(opts ...googleapi.CallOption) (*At
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the metadata of a message attachment. The attachment data is fetched using the media API. Requires [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts).",
+	//   "description": "Gets the metadata of a message attachment. The attachment data is fetched using the [media API](https://developers.google.com/chat/api/reference/rest/v1/media/download). Requires [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts).",
 	//   "flatPath": "v1/spaces/{spacesId}/messages/{messagesId}/attachments/{attachmentsId}",
 	//   "httpMethod": "GET",
 	//   "id": "chat.spaces.messages.attachments.get",

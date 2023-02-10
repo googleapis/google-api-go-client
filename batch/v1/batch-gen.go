@@ -753,7 +753,9 @@ type Binding struct {
 	// (https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts).
 	// For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`.
 	// * `group:{emailid}`: An email address that represents a Google group.
-	// For example, `admins@example.com`. *
+	// For example, `admins@example.com`. * `domain:{domain}`: The G Suite
+	// domain (primary) that represents all the users of that domain. For
+	// example, `google.com` or `example.com`. *
 	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
 	// unique identifier) representing a user that has been recently
 	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
@@ -770,9 +772,7 @@ type Binding struct {
 	// that has been recently deleted. For example,
 	// `admins@example.com?uid=123456789012345678901`. If the group is
 	// recovered, this value reverts to `group:{emailid}` and the recovered
-	// group retains the role in the binding. * `domain:{domain}`: The G
-	// Suite domain (primary) that represents all the users of that domain.
-	// For example, `google.com` or `example.com`.
+	// group retains the role in the binding.
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of `members`, or principals.
@@ -2303,10 +2303,21 @@ func (s *Runnable) MarshalJSON() ([]byte, error) {
 
 // Script: Script runnable.
 type Script struct {
-	// Path: Script file path on the host VM.
+	// Path: Script file path on the host VM. To specify an interpreter,
+	// please add a `#!`(also known as shebang line
+	// (https://en.wikipedia.org/wiki/Shebang_(Unix))) as the first line of
+	// the file.(For example, to execute the script using bash,
+	// `#!/bin/bash` should be the first line of the file. To execute the
+	// script using`Python3`, `#!/usr/bin/env python3` should be the first
+	// line of the file.) Otherwise, the file will by default be excuted by
+	// `/bin/sh`.
 	Path string `json:"path,omitempty"`
 
-	// Text: Shell script text.
+	// Text: Shell script text. To specify an interpreter, please add a
+	// `#!\n` at the beginning of the text.(For example, to execute the
+	// script using bash, `#!/bin/bash\n` should be added. To execute the
+	// script using`Python3`, `#!/usr/bin/env python3\n` should be added.)
+	// Otherwise, the script will by default be excuted by `/bin/sh`.
 	Text string `json:"text,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Path") to
@@ -2461,6 +2472,17 @@ type StatusEvent struct {
 
 	// TaskExecution: Task Execution
 	TaskExecution *TaskExecution `json:"taskExecution,omitempty"`
+
+	// TaskState: Task State
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - unknown state
+	//   "PENDING" - The Task is created and waiting for resources.
+	//   "ASSIGNED" - The Task is assigned to at least one VM.
+	//   "RUNNING" - The Task is running.
+	//   "FAILED" - The Task has failed.
+	//   "SUCCEEDED" - The Task has succeeded.
+	TaskState string `json:"taskState,omitempty"`
 
 	// Type: Type of the event.
 	Type string `json:"type,omitempty"`

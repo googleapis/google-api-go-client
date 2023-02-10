@@ -10732,7 +10732,9 @@ type GoogleCloudApigeeV1TargetServer struct {
 	//   "PROTOCOL_UNSPECIFIED" - UNSPECIFIED defaults to HTTP for backwards
 	// compatibility.
 	//   "HTTP" - The TargetServer uses HTTP.
-	//   "GRPC" - The TargetServer uses GRPC.
+	//   "GRPC" - GRPC TargetServer to be used in ExternalCallout Policy.
+	// Prefer to use EXTERNAL_CALLOUT instead. TODO(b/266125112) deprecate
+	// once EXTERNAL _CALLOUT generally available.
 	Protocol string `json:"protocol,omitempty"`
 
 	// SSLInfo: Optional. Specifies TLS configuration info for this
@@ -10790,7 +10792,9 @@ type GoogleCloudApigeeV1TargetServerConfig struct {
 	//   "PROTOCOL_UNSPECIFIED" - UNSPECIFIED defaults to HTTP for backwards
 	// compatibility.
 	//   "HTTP" - The TargetServer uses HTTP.
-	//   "GRPC" - The TargetServer uses GRPC.
+	//   "GRPC" - GRPC TargetServer to be used in ExternalCallout Policy.
+	// Prefer to use EXTERNAL_CALLOUT instead. TODO(b/266125112) deprecate
+	// once EXTERNAL _CALLOUT generally available.
 	Protocol string `json:"protocol,omitempty"`
 
 	// TlsInfo: TLS settings for the target server.
@@ -11423,7 +11427,9 @@ type GoogleIamV1Binding struct {
 	// (https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts).
 	// For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`.
 	// * `group:{emailid}`: An email address that represents a Google group.
-	// For example, `admins@example.com`. *
+	// For example, `admins@example.com`. * `domain:{domain}`: The G Suite
+	// domain (primary) that represents all the users of that domain. For
+	// example, `google.com` or `example.com`. *
 	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
 	// unique identifier) representing a user that has been recently
 	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
@@ -11440,9 +11446,7 @@ type GoogleIamV1Binding struct {
 	// that has been recently deleted. For example,
 	// `admins@example.com?uid=123456789012345678901`. If the group is
 	// recovered, this value reverts to `group:{emailid}` and the recovered
-	// group retains the role in the binding. * `domain:{domain}`: The G
-	// Suite domain (primary) that represents all the users of that domain.
-	// For example, `google.com` or `example.com`.
+	// group retains the role in the binding.
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of `members`, or principals.
@@ -29333,8 +29337,6 @@ func (r *OrganizationsEnvironmentsService) Create(parent string, googlecloudapig
 }
 
 // Name sets the optional parameter "name": Name of the environment.
-// Alternatively, the name may be specified in the request body in the
-// name field.
 func (c *OrganizationsEnvironmentsCreateCall) Name(name string) *OrganizationsEnvironmentsCreateCall {
 	c.urlParams_.Set("name", name)
 	return c
@@ -29440,7 +29442,7 @@ func (c *OrganizationsEnvironmentsCreateCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Optional. Name of the environment. Alternatively, the name may be specified in the request body in the name field.",
+	//       "description": "Optional. Name of the environment.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

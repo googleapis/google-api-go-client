@@ -835,7 +835,7 @@ func (s *ActiveViewVideoViewabilityMetricConfig) MarshalJSON() ([]byte, error) {
 
 // AdUrl: Additional URLs related to the ad, including beacons.
 type AdUrl struct {
-	// Type: The type of the AD url.
+	// Type: The type of the Ad URL.
 	//
 	// Possible values:
 	//   "AD_URL_TYPE_UNSPECIFIED" - Unknown or unspecified.
@@ -844,13 +844,13 @@ type AdUrl struct {
 	//   "AD_URL_TYPE_BEACON_EXPANDABLE_DCM_IMPRESSION" - Expandable DCM
 	// impression beacon. At serving time, it is expanded to several
 	// beacons.
-	//   "AD_URL_TYPE_BEACON_CLICK" - Tracking url to ping when the click
+	//   "AD_URL_TYPE_BEACON_CLICK" - Tracking URL to ping when the click
 	// event is triggered.
-	//   "AD_URL_TYPE_BEACON_SKIP" - Tracking url to ping when the skip
+	//   "AD_URL_TYPE_BEACON_SKIP" - Tracking URL to ping when the skip
 	// event is triggered.
 	Type string `json:"type,omitempty"`
 
-	// Url: The url value of the ad url.
+	// Url: The URL string value.
 	Url string `json:"url,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Type") to
@@ -2194,12 +2194,17 @@ type AssignedTargetingOption struct {
 	//   "TARGETING_TYPE_CONTENT_GENRE" - Target ads to a specific content
 	// genre.
 	//   "TARGETING_TYPE_YOUTUBE_VIDEO" - Target ads to a specific YouTube
-	// video.
+	// video. Targeting of this type cannot be created or updated using the
+	// API. Although this targeting is inherited by child resources,
+	// **inherited targeting of this type will not be retrieveable**.
 	//   "TARGETING_TYPE_YOUTUBE_CHANNEL" - Target ads to a specific YouTube
-	// channel.
+	// channel. Targeting of this type cannot be created or updated using
+	// the API. Although this targeting is inherited by child resources,
+	// **inherited targeting of this type will not be retrieveable**.
 	//   "TARGETING_TYPE_SESSION_POSITION" - Target ads to a serve it in a
-	// certain position of a session. Only supported for the AdGroup of
-	// YouTube Programmatic Reservation line item.
+	// certain position of a session. Only supported for Ad Group resources
+	// under YouTube Programmatic Reservation line items. Targeting of this
+	// type cannot be created or updated using the API.
 	TargetingType string `json:"targetingType,omitempty"`
 
 	// ThirdPartyVerifierDetails: Third party verification details. This
@@ -2420,7 +2425,7 @@ func (s *AudienceGroupAssignedTargetingOptionDetails) MarshalJSON() ([]byte, err
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// AudioAd: The details for audio ad.
+// AudioAd: Details for an audio ad.
 type AudioAd struct {
 	// DisplayUrl: The webpage address that appears with the ad.
 	DisplayUrl string `json:"displayUrl,omitempty"`
@@ -2429,8 +2434,8 @@ type AudioAd struct {
 	// click the ad.
 	FinalUrl string `json:"finalUrl,omitempty"`
 
-	// TrackingUrl: The URL address which is loaded in background for
-	// tracking purpose.
+	// TrackingUrl: The URL address loaded in the background for tracking
+	// purposes.
 	TrackingUrl string `json:"trackingUrl,omitempty"`
 
 	// Video: The YouTube video of the ad.
@@ -3166,10 +3171,66 @@ func (s *BulkEditAssignedLocationsResponse) MarshalJSON() ([]byte, error) {
 type BulkEditAssignedTargetingOptionsRequest struct {
 	// CreateRequests: The assigned targeting options to create in batch,
 	// specified as a list of CreateAssignedTargetingOptionsRequest.
+	// Supported targeting types include: * `TARGETING_TYPE_AGE_RANGE` *
+	// `TARGETING_TYPE_APP` * `TARGETING_TYPE_APP_CATEGORY` *
+	// `TARGETING_TYPE_AUDIENCE_GROUP` * `TARGETING_TYPE_AUDIO_CONTENT_TYPE`
+	// * `TARGETING_TYPE_AUTHORIZED_SELLER_STATUS` *
+	// `TARGETING_TYPE_BROWSER` * `TARGETING_TYPE_BUSINESS_CHAIN` *
+	// `TARGETING_TYPE_CARRIER_AND_ISP` * `TARGETING_TYPE_CATEGORY` *
+	// `TARGETING_TYPE_CHANNEL` * `TARGETING_TYPE_CONTENT_DURATION` *
+	// `TARGETING_TYPE_CONTENT_GENRE` *
+	// `TARGETING_TYPE_CONTENT_INSTREAM_POSITION` *
+	// `TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION` *
+	// `TARGETING_TYPE_CONTENT_STREAM_TYPE` * `TARGETING_TYPE_DAY_AND_TIME`
+	// * `TARGETING_TYPE_DEVICE_MAKE_MODEL` * `TARGETING_TYPE_DEVICE_TYPE` *
+	// `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` *
+	// `TARGETING_TYPE_ENVIRONMENT` * `TARGETING_TYPE_EXCHANGE` *
+	// `TARGETING_TYPE_GENDER` * `TARGETING_TYPE_GEO_REGION` *
+	// `TARGETING_TYPE_HOUSEHOLD_INCOME` * `TARGETING_TYPE_INVENTORY_SOURCE`
+	// * `TARGETING_TYPE_INVENTORY_SOURCE_GROUP` * `TARGETING_TYPE_KEYWORD`
+	// * `TARGETING_TYPE_LANGUAGE` *
+	// `TARGETING_TYPE_NATIVE_CONTENT_POSITION` *
+	// `TARGETING_TYPE_NEGATIVE_KEYWORD_LIST` * `TARGETING_TYPE_OMID` *
+	// `TARGETING_TYPE_ON_SCREEN_POSITION` *
+	// `TARGETING_TYPE_OPERATING_SYSTEM` * `TARGETING_TYPE_PARENTAL_STATUS`
+	// * `TARGETING_TYPE_POI` * `TARGETING_TYPE_PROXIMITY_LOCATION_LIST` *
+	// `TARGETING_TYPE_REGIONAL_LOCATION_LIST` *
+	// `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` *
+	// `TARGETING_TYPE_SUB_EXCHANGE` * `TARGETING_TYPE_THIRD_PARTY_VERIFIER`
+	// * `TARGETING_TYPE_URL` * `TARGETING_TYPE_USER_REWARDED_CONTENT` *
+	// `TARGETING_TYPE_VIDEO_PLAYER_SIZE` * `TARGETING_TYPE_VIEWABILITY`
 	CreateRequests []*CreateAssignedTargetingOptionsRequest `json:"createRequests,omitempty"`
 
 	// DeleteRequests: The assigned targeting options to delete in batch,
 	// specified as a list of DeleteAssignedTargetingOptionsRequest.
+	// Supported targeting types include: * `TARGETING_TYPE_AGE_RANGE` *
+	// `TARGETING_TYPE_APP` * `TARGETING_TYPE_APP_CATEGORY` *
+	// `TARGETING_TYPE_AUDIENCE_GROUP` * `TARGETING_TYPE_AUDIO_CONTENT_TYPE`
+	// * `TARGETING_TYPE_AUTHORIZED_SELLER_STATUS` *
+	// `TARGETING_TYPE_BROWSER` * `TARGETING_TYPE_BUSINESS_CHAIN` *
+	// `TARGETING_TYPE_CARRIER_AND_ISP` * `TARGETING_TYPE_CATEGORY` *
+	// `TARGETING_TYPE_CHANNEL` * `TARGETING_TYPE_CONTENT_DURATION` *
+	// `TARGETING_TYPE_CONTENT_GENRE` *
+	// `TARGETING_TYPE_CONTENT_INSTREAM_POSITION` *
+	// `TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION` *
+	// `TARGETING_TYPE_CONTENT_STREAM_TYPE` * `TARGETING_TYPE_DAY_AND_TIME`
+	// * `TARGETING_TYPE_DEVICE_MAKE_MODEL` * `TARGETING_TYPE_DEVICE_TYPE` *
+	// `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` *
+	// `TARGETING_TYPE_ENVIRONMENT` * `TARGETING_TYPE_EXCHANGE` *
+	// `TARGETING_TYPE_GENDER` * `TARGETING_TYPE_GEO_REGION` *
+	// `TARGETING_TYPE_HOUSEHOLD_INCOME` * `TARGETING_TYPE_INVENTORY_SOURCE`
+	// * `TARGETING_TYPE_INVENTORY_SOURCE_GROUP` * `TARGETING_TYPE_KEYWORD`
+	// * `TARGETING_TYPE_LANGUAGE` *
+	// `TARGETING_TYPE_NATIVE_CONTENT_POSITION` *
+	// `TARGETING_TYPE_NEGATIVE_KEYWORD_LIST` * `TARGETING_TYPE_OMID` *
+	// `TARGETING_TYPE_ON_SCREEN_POSITION` *
+	// `TARGETING_TYPE_OPERATING_SYSTEM` * `TARGETING_TYPE_PARENTAL_STATUS`
+	// * `TARGETING_TYPE_POI` * `TARGETING_TYPE_PROXIMITY_LOCATION_LIST` *
+	// `TARGETING_TYPE_REGIONAL_LOCATION_LIST` *
+	// `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` *
+	// `TARGETING_TYPE_SUB_EXCHANGE` * `TARGETING_TYPE_THIRD_PARTY_VERIFIER`
+	// * `TARGETING_TYPE_URL` * `TARGETING_TYPE_USER_REWARDED_CONTENT` *
+	// `TARGETING_TYPE_VIDEO_PLAYER_SIZE` * `TARGETING_TYPE_VIEWABILITY`
 	DeleteRequests []*DeleteAssignedTargetingOptionsRequest `json:"deleteRequests,omitempty"`
 
 	// LineItemIds: Required. The ID of the line items whose targeting is
@@ -3821,9 +3882,9 @@ func (s *BulkUpdateLineItemsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// BumperAd: Ad details for BumperAd.
+// BumperAd: Details for a bumper ad.
 type BumperAd struct {
-	// CommonInStreamAttribute: Common attributes data model.
+	// CommonInStreamAttribute: Common ad attributes.
 	CommonInStreamAttribute *CommonInStreamAttribute `json:"commonInStreamAttribute,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -4742,8 +4803,8 @@ func (s *CombinedAudienceTargetingSetting) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// CommonInStreamAttribute: The common attributes for InStreamAd,
-// NonSkippableAd and BumperAd.
+// CommonInStreamAttribute: Common attributes for in-stream,
+// non-skippable and bumper ads.
 type CommonInStreamAttribute struct {
 	// ActionButtonLabel: The text on the call-to-action button.
 	ActionButtonLabel string `json:"actionButtonLabel,omitempty"`
@@ -4751,7 +4812,7 @@ type CommonInStreamAttribute struct {
 	// ActionHeadline: The headline of the call-to-action banner.
 	ActionHeadline string `json:"actionHeadline,omitempty"`
 
-	// CompanionBanner: The image which shows next to the video Ad.
+	// CompanionBanner: The image which shows next to the video ad.
 	CompanionBanner *ImageAsset `json:"companionBanner,omitempty"`
 
 	// DisplayUrl: The webpage address that appears with the ad.
@@ -4761,8 +4822,8 @@ type CommonInStreamAttribute struct {
 	// click the ad.
 	FinalUrl string `json:"finalUrl,omitempty"`
 
-	// TrackingUrl: The URL address which is loaded in background for
-	// tracking purpose.
+	// TrackingUrl: The URL address loaded in the background for tracking
+	// purposes.
 	TrackingUrl string `json:"trackingUrl,omitempty"`
 
 	// Video: The YouTube video of the ad.
@@ -5605,12 +5666,17 @@ type CreateAssignedTargetingOptionsRequest struct {
 	//   "TARGETING_TYPE_CONTENT_GENRE" - Target ads to a specific content
 	// genre.
 	//   "TARGETING_TYPE_YOUTUBE_VIDEO" - Target ads to a specific YouTube
-	// video.
+	// video. Targeting of this type cannot be created or updated using the
+	// API. Although this targeting is inherited by child resources,
+	// **inherited targeting of this type will not be retrieveable**.
 	//   "TARGETING_TYPE_YOUTUBE_CHANNEL" - Target ads to a specific YouTube
-	// channel.
+	// channel. Targeting of this type cannot be created or updated using
+	// the API. Although this targeting is inherited by child resources,
+	// **inherited targeting of this type will not be retrieveable**.
 	//   "TARGETING_TYPE_SESSION_POSITION" - Target ads to a serve it in a
-	// certain position of a session. Only supported for the AdGroup of
-	// YouTube Programmatic Reservation line item.
+	// certain position of a session. Only supported for Ad Group resources
+	// under YouTube Programmatic Reservation line items. Targeting of this
+	// type cannot be created or updated using the API.
 	TargetingType string `json:"targetingType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -6527,11 +6593,11 @@ type CustomLabel struct {
 	//
 	// Possible values:
 	//   "CUSTOM_LABEL_KEY_UNSPECIFIED" - Not specified or unknown.
-	//   "CUSTOM_LABEL_KEY_0" - index 0.
-	//   "CUSTOM_LABEL_KEY_1" - index 1.
-	//   "CUSTOM_LABEL_KEY_2" - index 2.
-	//   "CUSTOM_LABEL_KEY_3" - index 3.
-	//   "CUSTOM_LABEL_KEY_4" - index 4.
+	//   "CUSTOM_LABEL_KEY_0" - Key index 0.
+	//   "CUSTOM_LABEL_KEY_1" - Key index 1.
+	//   "CUSTOM_LABEL_KEY_2" - Key index 2.
+	//   "CUSTOM_LABEL_KEY_3" - Key index 3.
+	//   "CUSTOM_LABEL_KEY_4" - Key index 4.
 	Key string `json:"key,omitempty"`
 
 	// Value: The value of the label.
@@ -6916,12 +6982,17 @@ type DeleteAssignedTargetingOptionsRequest struct {
 	//   "TARGETING_TYPE_CONTENT_GENRE" - Target ads to a specific content
 	// genre.
 	//   "TARGETING_TYPE_YOUTUBE_VIDEO" - Target ads to a specific YouTube
-	// video.
+	// video. Targeting of this type cannot be created or updated using the
+	// API. Although this targeting is inherited by child resources,
+	// **inherited targeting of this type will not be retrieveable**.
 	//   "TARGETING_TYPE_YOUTUBE_CHANNEL" - Target ads to a specific YouTube
-	// channel.
+	// channel. Targeting of this type cannot be created or updated using
+	// the API. Although this targeting is inherited by child resources,
+	// **inherited targeting of this type will not be retrieveable**.
 	//   "TARGETING_TYPE_SESSION_POSITION" - Target ads to a serve it in a
-	// certain position of a session. Only supported for the AdGroup of
-	// YouTube Programmatic Reservation line item.
+	// certain position of a session. Only supported for Ad Group resources
+	// under YouTube Programmatic Reservation line items. Targeting of this
+	// type cannot be created or updated using the API.
 	TargetingType string `json:"targetingType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -7256,7 +7327,7 @@ func (s *Dimensions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DisplayVideoSourceAd: The ad of which source is DV360 creative.
+// DisplayVideoSourceAd: The ad sourced from a DV360 creative.
 type DisplayVideoSourceAd struct {
 	// CreativeId: The ID of the source creative.
 	CreativeId int64 `json:"creativeId,omitempty,string"`
@@ -9992,7 +10063,7 @@ func (s *IdFilter) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ImageAsset: The meta data of an image asset.
+// ImageAsset: Meta data of an image asset.
 type ImageAsset struct {
 	// FileSize: File size of the image asset in bytes.
 	FileSize int64 `json:"fileSize,omitempty,string"`
@@ -10026,13 +10097,13 @@ func (s *ImageAsset) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// InStreamAd: Ad details for InStreamAd
+// InStreamAd: Details for an in-stream ad.
 type InStreamAd struct {
-	// CommonInStreamAttribute: Common attributes data model.
+	// CommonInStreamAttribute: Common ad attributes.
 	CommonInStreamAttribute *CommonInStreamAttribute `json:"commonInStreamAttribute,omitempty"`
 
 	// CustomParameters: The custom parameters to pass custom values to
-	// tracking url template.
+	// tracking URL template.
 	CustomParameters map[string]string `json:"customParameters,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -12996,8 +13067,6 @@ func (s *ListUsersResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ListYoutubeAdGroupAdsResponse: Response message for
-// YoutubeAdGroupAdService.ListYoutubeAdGroupAds.
 type ListYoutubeAdGroupAdsResponse struct {
 	// NextPageToken: A token to retrieve the next page of results. Pass
 	// this value in the page_token field in the subsequent call to
@@ -13301,14 +13370,13 @@ func (s *ManualTrigger) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// MastheadAd: The details for masthead ad.
+// MastheadAd: Details for a Masthead Ad.
 type MastheadAd struct {
-	// AutoplayVideoDuration: Video will autoplay for certain period of
-	// time.
+	// AutoplayVideoDuration: The duration of time the video will autoplay.
 	AutoplayVideoDuration string `json:"autoplayVideoDuration,omitempty"`
 
-	// AutoplayVideoStartMillisecond: Video will start to play after certain
-	// period of time in millisecond.
+	// AutoplayVideoStartMillisecond: The amount of time in milliseconds
+	// after which the video will start to play.
 	AutoplayVideoStartMillisecond int64 `json:"autoplayVideoStartMillisecond,omitempty,string"`
 
 	// CallToActionButtonLabel: The text on the call-to-action button.
@@ -13322,8 +13390,8 @@ type MastheadAd struct {
 	// button.
 	CallToActionTrackingUrl string `json:"callToActionTrackingUrl,omitempty"`
 
-	// CompanionYoutubeVideos: The videos (up to 2) that appear next to the
-	// Masthead ad on desktop.
+	// CompanionYoutubeVideos: The videos that appear next to the Masthead
+	// Ad on desktop. Can be no more than two.
 	CompanionYoutubeVideos []*YoutubeVideoDetails `json:"companionYoutubeVideos,omitempty"`
 
 	// Description: The description of the ad.
@@ -13336,11 +13404,11 @@ type MastheadAd struct {
 	// at the top of a YouTube page.
 	ShowChannelArt bool `json:"showChannelArt,omitempty"`
 
-	// Video: The YouTube video of the ad.
+	// Video: The YouTube video used by the ad.
 	Video *YoutubeVideoDetails `json:"video,omitempty"`
 
-	// VideoAspectRatio: Aspect ratio of the autoplaying YouTube video on
-	// the Masthead.
+	// VideoAspectRatio: The aspect ratio of the autoplaying YouTube video
+	// on the Masthead.
 	//
 	// Possible values:
 	//   "VIDEO_ASPECT_RATIO_UNSPECIFIED" - Not specified or unknown.
@@ -13822,13 +13890,13 @@ func (s *NegativeKeywordListAssignedTargetingOptionDetails) MarshalJSON() ([]byt
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// NonSkippableAd: Ad details for NonSkippableAd
+// NonSkippableAd: Details for a non-skippable ad.
 type NonSkippableAd struct {
-	// CommonInStreamAttribute: Common attributes data model.
+	// CommonInStreamAttribute: Common ad attributes.
 	CommonInStreamAttribute *CommonInStreamAttribute `json:"commonInStreamAttribute,omitempty"`
 
 	// CustomParameters: The custom parameters to pass custom values to
-	// tracking url template.
+	// tracking URL template.
 	CustomParameters map[string]string `json:"customParameters,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -15259,14 +15327,14 @@ func (s *PrismaCpeCode) MarshalJSON() ([]byte, error) {
 
 // ProductFeedData: The details of product feed.
 type ProductFeedData struct {
-	// IsFeedDisabled: True if opt out of showing products.
+	// IsFeedDisabled: Whether the product feed has opted-out of showing
+	// products.
 	IsFeedDisabled bool `json:"isFeedDisabled,omitempty"`
 
-	// ProductMatchDimensions: A list of dimensions which are used to match
-	// products.
+	// ProductMatchDimensions: A list of dimensions used to match products.
 	ProductMatchDimensions []*ProductMatchDimension `json:"productMatchDimensions,omitempty"`
 
-	// ProductMatchType: The type of the way to select the products.
+	// ProductMatchType: How products are selected by the product feed.
 	//
 	// Possible values:
 	//   "PRODUCT_MATCH_TYPE_UNSPECIFIED" - Not specified or unknown.
@@ -15301,15 +15369,14 @@ func (s *ProductFeedData) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ProductMatchDimension: The dimension which are used to match
-// products.
+// ProductMatchDimension: A dimension used to match products.
 type ProductMatchDimension struct {
 	// CustomLabel: The custom label to match all the products with the
 	// label.
 	CustomLabel *CustomLabel `json:"customLabel,omitempty"`
 
-	// ProductOfferId: The ID of the product offer to match the product with
-	// the same offer ID.
+	// ProductOfferId: The ID of the product offer to match with a product
+	// with the same offer ID.
 	ProductOfferId string `json:"productOfferId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CustomLabel") to
@@ -16698,12 +16765,17 @@ type TargetingOption struct {
 	//   "TARGETING_TYPE_CONTENT_GENRE" - Target ads to a specific content
 	// genre.
 	//   "TARGETING_TYPE_YOUTUBE_VIDEO" - Target ads to a specific YouTube
-	// video.
+	// video. Targeting of this type cannot be created or updated using the
+	// API. Although this targeting is inherited by child resources,
+	// **inherited targeting of this type will not be retrieveable**.
 	//   "TARGETING_TYPE_YOUTUBE_CHANNEL" - Target ads to a specific YouTube
-	// channel.
+	// channel. Targeting of this type cannot be created or updated using
+	// the API. Although this targeting is inherited by child resources,
+	// **inherited targeting of this type will not be retrieveable**.
 	//   "TARGETING_TYPE_SESSION_POSITION" - Target ads to a serve it in a
-	// certain position of a session. Only supported for the AdGroup of
-	// YouTube Programmatic Reservation line item.
+	// certain position of a session. Only supported for Ad Group resources
+	// under YouTube Programmatic Reservation line items. Targeting of this
+	// type cannot be created or updated using the API.
 	TargetingType string `json:"targetingType,omitempty"`
 
 	// UserRewardedContentDetails: User rewarded content details.
@@ -17414,7 +17486,7 @@ func (s *VideoAdSequenceStep) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// VideoDiscoveryAd: The details for video discovery ad.
+// VideoDiscoveryAd: Details for a video discovery ad.
 type VideoDiscoveryAd struct {
 	// Description1: First text line for the ad.
 	Description1 string `json:"description1,omitempty"`
@@ -17422,10 +17494,10 @@ type VideoDiscoveryAd struct {
 	// Description2: Second text line for the ad.
 	Description2 string `json:"description2,omitempty"`
 
-	// Headline: The headline of the video discovery ad.
+	// Headline: The headline of ad.
 	Headline string `json:"headline,omitempty"`
 
-	// Thumbnail: Thumbnail image to use in the ad.
+	// Thumbnail: Thumbnail image used in the ad.
 	//
 	// Possible values:
 	//   "THUMBNAIL_UNSPECIFIED" - Unknown or unspecified.
@@ -17436,7 +17508,7 @@ type VideoDiscoveryAd struct {
 	//   "THUMBNAIL_3" - Thumbnail 3, generated from the video.
 	Thumbnail string `json:"thumbnail,omitempty"`
 
-	// Video: The YouTube video which the ad wants to promote.
+	// Video: The YouTube video the ad promotes.
 	Video *YoutubeVideoDetails `json:"video,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Description1") to
@@ -17462,51 +17534,50 @@ func (s *VideoDiscoveryAd) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// VideoPerformanceAd: The details for video performance ad.
+// VideoPerformanceAd: Details for a video performance ad.
 type VideoPerformanceAd struct {
-	// ActionButtonLabels: The list of text assets which show on the
+	// ActionButtonLabels: The list of text assets shown on the
 	// call-to-action button.
 	ActionButtonLabels []string `json:"actionButtonLabels,omitempty"`
 
-	// CompanionBanners: The list of companion banners of this ad.
+	// CompanionBanners: The list of companion banners used by this ad.
 	CompanionBanners []*ImageAsset `json:"companionBanners,omitempty"`
 
 	// CustomParameters: The custom parameters to pass custom values to
-	// tracking url template.
+	// tracking URL template.
 	CustomParameters map[string]string `json:"customParameters,omitempty"`
 
-	// Descriptions: The list of descriptions which show on the
-	// call-to-action banner.
+	// Descriptions: The list of descriptions shown on the call-to-action
+	// banner.
 	Descriptions []string `json:"descriptions,omitempty"`
 
 	// DisplayUrlBreadcrumb1: The first piece after the domain in the
-	// display url.
+	// display URL.
 	DisplayUrlBreadcrumb1 string `json:"displayUrlBreadcrumb1,omitempty"`
 
 	// DisplayUrlBreadcrumb2: The second piece after the domain in the
-	// display url.
+	// display URL.
 	DisplayUrlBreadcrumb2 string `json:"displayUrlBreadcrumb2,omitempty"`
 
-	// Domain: The domain of the display url
+	// Domain: The domain of the display URL.
 	Domain string `json:"domain,omitempty"`
 
 	// FinalUrl: The URL address of the webpage that people reach after they
 	// click the ad.
 	FinalUrl string `json:"finalUrl,omitempty"`
 
-	// Headlines: The list of headlines which show on the call-to-action
-	// banner.
+	// Headlines: The list of headlines shown on the call-to-action banner.
 	Headlines []string `json:"headlines,omitempty"`
 
-	// LongHeadlines: The list of lone headlines which show on the
-	// call-to-action banner.
+	// LongHeadlines: The list of lone headlines shown on the call-to-action
+	// banner.
 	LongHeadlines []string `json:"longHeadlines,omitempty"`
 
-	// TrackingUrl: The URL address which is loaded in background for
-	// tracking purpose.
+	// TrackingUrl: The URL address loaded in the background for tracking
+	// purposes.
 	TrackingUrl string `json:"trackingUrl,omitempty"`
 
-	// Videos: The list of YouTube video assets in this ad.
+	// Videos: The list of YouTube video assets used by this ad.
 	Videos []*YoutubeVideoDetails `json:"videos,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ActionButtonLabels")
@@ -17743,7 +17814,7 @@ func (s *ViewabilityTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 // YoutubeAdGroup: A single YouTube ad group associated with a YouTube
 // and Partners line item.
 type YoutubeAdGroup struct {
-	// AdGroupFormat: The format of the ad group.
+	// AdGroupFormat: The format of the ads in the ad group.
 	//
 	// Possible values:
 	//   "YOUTUBE_AND_PARTNERS_AD_GROUP_FORMAT_UNSPECIFIED" - Format value
@@ -17762,8 +17833,8 @@ type YoutubeAdGroup struct {
 	//   "YOUTUBE_AND_PARTNERS_AD_GROUP_FORMAT_REACH" - [Effective reach ad
 	// groups] (https://support.google.com/displayvideo/answer/9173684),
 	// including in-stream and bumper ads.
-	//   "YOUTUBE_AND_PARTNERS_AD_GROUP_FORMAT_MASTHEAD" - Video Masthead
-	// that is surfaced on the top slot on the YouTube homepage.
+	//   "YOUTUBE_AND_PARTNERS_AD_GROUP_FORMAT_MASTHEAD" - Masthead Ad that
+	// is surfaced on the top slot on the YouTube homepage.
 	AdGroupFormat string `json:"adGroupFormat,omitempty"`
 
 	// AdGroupId: The unique ID of the ad group. Assigned by the system.
@@ -17773,7 +17844,7 @@ type YoutubeAdGroup struct {
 	// to.
 	AdvertiserId int64 `json:"advertiserId,omitempty,string"`
 
-	// BiddingStrategy: The bidding strategy of the ad group.
+	// BiddingStrategy: The bidding strategy used by the ad group.
 	BiddingStrategy *YoutubeAndPartnersBiddingStrategy `json:"biddingStrategy,omitempty"`
 
 	// DisplayName: The display name of the ad group. Must be UTF-8 encoded
@@ -17808,8 +17879,7 @@ type YoutubeAdGroup struct {
 	// Name: The resource name of the ad group.
 	Name string `json:"name,omitempty"`
 
-	// ProductFeedData: The data to represent the product feed in this ad
-	// group.
+	// ProductFeedData: The settings of the product feed in this ad group.
 	ProductFeedData *ProductFeedData `json:"productFeedData,omitempty"`
 
 	// TargetingExpansion: The targeting expansion
@@ -17818,7 +17888,8 @@ type YoutubeAdGroup struct {
 	// list targeting is assigned to the ad group.
 	TargetingExpansion *TargetingExpansionConfig `json:"targetingExpansion,omitempty"`
 
-	// YoutubeAdIds: The IDs of the YouTubeAds associated with the ad group.
+	// YoutubeAdIds: The IDs of the youtube_ad_group_ad resources associated
+	// with the ad group.
 	YoutubeAdIds googleapi.Int64s `json:"youtubeAdIds,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -17848,41 +17919,39 @@ func (s *YoutubeAdGroup) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// YoutubeAdGroupAd: A single YouTube ad group ad associated with a
-// YouTube ad group.
+// YoutubeAdGroupAd: A single ad associated with a YouTube ad group.
 type YoutubeAdGroupAd struct {
-	// AdGroupAdId: The unique ID of the ad group ad. Assigned by the
-	// system.
+	// AdGroupAdId: The unique ID of the ad. Assigned by the system.
 	AdGroupAdId int64 `json:"adGroupAdId,omitempty,string"`
 
-	// AdGroupId: The unique ID of the ad group that the ad group ad belongs
-	// to.
+	// AdGroupId: The unique ID of the ad group that the ad belongs to.
 	AdGroupId int64 `json:"adGroupId,omitempty,string"`
 
-	// AdUrls: The list of ad urls.
+	// AdUrls: List of URLs used by the ad.
 	AdUrls []*AdUrl `json:"adUrls,omitempty"`
 
-	// AdvertiserId: The unique ID of the advertiser the ad group ad belongs
-	// to.
+	// AdvertiserId: The unique ID of the advertiser the ad belongs to.
 	AdvertiserId int64 `json:"advertiserId,omitempty,string"`
 
-	// AudioAd: Audio ad for reach purpose. details
-	// (https://support.google.com/displayvideo/answer/6274216)
+	// AudioAd: Details of an audio ad
+	// (//support.google.com/displayvideo/answer/6274216) used for reach
+	// marketing objectives.
 	AudioAd *AudioAd `json:"audioAd,omitempty"`
 
-	// BumperAd: Non-skippable short video ad for reach purpose and video
-	// length equal to or less than 6 seconds. details
-	// (https://support.google.com/displayvideo/answer/6274216)
+	// BumperAd: Details of a non-skippable short video ad
+	// (//support.google.com/displayvideo/answer/6274216), equal to or less
+	// than 6 seconds, used for reach.
 	BumperAd *BumperAd `json:"bumperAd,omitempty"`
 
-	// DisplayName: The display name of the ad group ad. Must be UTF-8
-	// encoded with a maximum size of 255 bytes.
+	// DisplayName: The display name of the ad. Must be UTF-8 encoded with a
+	// maximum size of 255 bytes.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// DisplayVideoSourceAd: The ad sourcing DV360 creative.
+	// DisplayVideoSourceAd: Details of an ad sourced from a Display & Video
+	// 360 creative.
 	DisplayVideoSourceAd *DisplayVideoSourceAd `json:"displayVideoSourceAd,omitempty"`
 
-	// EntityStatus: The entity status of the ad group ad.
+	// EntityStatus: The entity status of the ad.
 	//
 	// Possible values:
 	//   "ENTITY_STATUS_UNSPECIFIED" - Default value when status is not
@@ -17900,31 +17969,31 @@ type YoutubeAdGroupAd struct {
 	// for deletion.
 	EntityStatus string `json:"entityStatus,omitempty"`
 
-	// InStreamAd: Skippable in-stream ad after 5 seconds for brand
-	// awareness or reach marketing objectives. details
-	// (https://support.google.com/displayvideo/answer/6274216)
+	// InStreamAd: Details of an in-stream ad skippable after 5 seconds
+	// (//support.google.com/displayvideo/answer/6274216), used for brand
+	// awareness or reach marketing objectives.
 	InStreamAd *InStreamAd `json:"inStreamAd,omitempty"`
 
-	// MastheadAd: The ad which shows on YouTube homepage. details
-	// (https://support.google.com/google-ads/answer/9709826)
+	// MastheadAd: Details of an ad served on the YouTube Home feed
+	// (//support.google.com/google-ads/answer/9709826).
 	MastheadAd *MastheadAd `json:"mastheadAd,omitempty"`
 
-	// Name: The resource name of the ad group ad.
+	// Name: The resource name of the ad.
 	Name string `json:"name,omitempty"`
 
-	// NonSkippableAd: Non-skippable short in-stream ad for reach marketing
-	// objectives, and video length is between 6 and 15 seconds. details
-	// (https://support.google.com/displayvideo/answer/6274216)
+	// NonSkippableAd: Details of a non-skippable short in-stream video ad
+	// (//support.google.com/displayvideo/answer/6274216), between 6 and 15
+	// seconds, used for reach marketing objectives.
 	NonSkippableAd *NonSkippableAd `json:"nonSkippableAd,omitempty"`
 
-	// VideoDiscoverAd: An ad which shows in places of discovery to promote
-	// a video. details
-	// (https://support.google.com/displayvideo/answer/6274216)
+	// VideoDiscoverAd: Details of an ad promoting a video
+	// (//support.google.com/displayvideo/answer/6274216) that shows in
+	// places of discovery.
 	VideoDiscoverAd *VideoDiscoveryAd `json:"videoDiscoverAd,omitempty"`
 
-	// VideoPerformanceAd: The ad to drive actions to the business, service
-	// or product. details
-	// (https://support.google.com/google-ads/answer/10147229)
+	// VideoPerformanceAd: Details of an ad used in a video action campaign
+	// (//support.google.com/google-ads/answer/10147229) to drive actions to
+	// the business, service or product.
 	VideoPerformanceAd *VideoPerformanceAd `json:"videoPerformanceAd,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -18313,9 +18382,9 @@ func (s *YoutubeVideoAssignedTargetingOptionDetails) MarshalJSON() ([]byte, erro
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// YoutubeVideoDetails: Details of the YouTube video.
+// YoutubeVideoDetails: Details of a YouTube video.
 type YoutubeVideoDetails struct {
-	// Id: The ID which can be searched on YouTube webpage.
+	// Id: The YouTube video ID which can be searched on YouTube webpage.
 	Id string `json:"id,omitempty"`
 
 	// UnavailableReason: The reason why the video data is not available.
@@ -21345,9 +21414,9 @@ func (c *AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsGetCall) Do(o
 	//         "Target ads in an Open Measurement enabled inventory.",
 	//         "Target ads to a specific audio content type.",
 	//         "Target ads to a specific content genre.",
-	//         "Target ads to a specific YouTube video.",
-	//         "Target ads to a specific YouTube channel.",
-	//         "Target ads to a serve it in a certain position of a session. Only supported for the AdGroup of YouTube Programmatic Reservation line item."
+	//         "Target ads to a specific YouTube video. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
+	//         "Target ads to a specific YouTube channel. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
+	//         "Target ads to a serve it in a certain position of a session. Only supported for Ad Group resources under YouTube Programmatic Reservation line items. Targeting of this type cannot be created or updated using the API."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -21706,9 +21775,9 @@ func (c *AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsListCall) Do(
 	//         "Target ads in an Open Measurement enabled inventory.",
 	//         "Target ads to a specific audio content type.",
 	//         "Target ads to a specific content genre.",
-	//         "Target ads to a specific YouTube video.",
-	//         "Target ads to a specific YouTube channel.",
-	//         "Target ads to a serve it in a certain position of a session. Only supported for the AdGroup of YouTube Programmatic Reservation line item."
+	//         "Target ads to a specific YouTube video. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
+	//         "Target ads to a specific YouTube channel. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
+	//         "Target ads to a serve it in a certain position of a session. Only supported for Ad Group resources under YouTube Programmatic Reservation line items. Targeting of this type cannot be created or updated using the API."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -25725,9 +25794,9 @@ func (c *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsCreateC
 	//         "Target ads in an Open Measurement enabled inventory.",
 	//         "Target ads to a specific audio content type.",
 	//         "Target ads to a specific content genre.",
-	//         "Target ads to a specific YouTube video.",
-	//         "Target ads to a specific YouTube channel.",
-	//         "Target ads to a serve it in a certain position of a session. Only supported for the AdGroup of YouTube Programmatic Reservation line item."
+	//         "Target ads to a specific YouTube video. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
+	//         "Target ads to a specific YouTube channel. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
+	//         "Target ads to a serve it in a certain position of a session. Only supported for Ad Group resources under YouTube Programmatic Reservation line items. Targeting of this type cannot be created or updated using the API."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -26024,9 +26093,9 @@ func (c *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsDeleteC
 	//         "Target ads in an Open Measurement enabled inventory.",
 	//         "Target ads to a specific audio content type.",
 	//         "Target ads to a specific content genre.",
-	//         "Target ads to a specific YouTube video.",
-	//         "Target ads to a specific YouTube channel.",
-	//         "Target ads to a serve it in a certain position of a session. Only supported for the AdGroup of YouTube Programmatic Reservation line item."
+	//         "Target ads to a specific YouTube video. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
+	//         "Target ads to a specific YouTube channel. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
+	//         "Target ads to a serve it in a certain position of a session. Only supported for Ad Group resources under YouTube Programmatic Reservation line items. Targeting of this type cannot be created or updated using the API."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -26069,7 +26138,39 @@ type AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsGetCall str
 //   - insertionOrderId: The ID of the insertion order the assigned
 //     targeting option belongs to.
 //   - targetingType: Identifies the type of this assigned targeting
-//     option.
+//     option. Supported targeting types include: *
+//     `TARGETING_TYPE_AGE_RANGE` * `TARGETING_TYPE_APP` *
+//     `TARGETING_TYPE_APP_CATEGORY` * `TARGETING_TYPE_AUDIENCE_GROUP` *
+//     `TARGETING_TYPE_AUDIO_CONTENT_TYPE` *
+//     `TARGETING_TYPE_AUTHORIZED_SELLER_STATUS` *
+//     `TARGETING_TYPE_BROWSER` * `TARGETING_TYPE_BUSINESS_CHAIN` *
+//     `TARGETING_TYPE_CARRIER_AND_ISP` * `TARGETING_TYPE_CATEGORY` *
+//     `TARGETING_TYPE_CHANNEL` * `TARGETING_TYPE_CONTENT_DURATION` *
+//     `TARGETING_TYPE_CONTENT_GENRE` *
+//     `TARGETING_TYPE_CONTENT_INSTREAM_POSITION` *
+//     `TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION` *
+//     `TARGETING_TYPE_CONTENT_STREAM_TYPE` *
+//     `TARGETING_TYPE_DAY_AND_TIME` * `TARGETING_TYPE_DEVICE_MAKE_MODEL`
+//   - `TARGETING_TYPE_DEVICE_TYPE` *
+//     `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` *
+//     `TARGETING_TYPE_ENVIRONMENT` * `TARGETING_TYPE_EXCHANGE` *
+//     `TARGETING_TYPE_GENDER` * `TARGETING_TYPE_GEO_REGION` *
+//     `TARGETING_TYPE_HOUSEHOLD_INCOME` *
+//     `TARGETING_TYPE_INVENTORY_SOURCE` *
+//     `TARGETING_TYPE_INVENTORY_SOURCE_GROUP` * `TARGETING_TYPE_KEYWORD`
+//   - `TARGETING_TYPE_LANGUAGE` *
+//     `TARGETING_TYPE_NATIVE_CONTENT_POSITION` *
+//     `TARGETING_TYPE_NEGATIVE_KEYWORD_LIST` * `TARGETING_TYPE_OMID` *
+//     `TARGETING_TYPE_ON_SCREEN_POSITION` *
+//     `TARGETING_TYPE_OPERATING_SYSTEM` *
+//     `TARGETING_TYPE_PARENTAL_STATUS` * `TARGETING_TYPE_POI` *
+//     `TARGETING_TYPE_PROXIMITY_LOCATION_LIST` *
+//     `TARGETING_TYPE_REGIONAL_LOCATION_LIST` *
+//     `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` *
+//     `TARGETING_TYPE_SUB_EXCHANGE` *
+//     `TARGETING_TYPE_THIRD_PARTY_VERIFIER` * `TARGETING_TYPE_URL` *
+//     `TARGETING_TYPE_USER_REWARDED_CONTENT` *
+//     `TARGETING_TYPE_VIDEO_PLAYER_SIZE` * `TARGETING_TYPE_VIEWABILITY`.
 func (r *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsService) Get(advertiserId int64, insertionOrderId int64, targetingType string, assignedTargetingOptionId string) *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsGetCall {
 	c := &AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -26216,7 +26317,7 @@ func (c *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsGetCall
 	//       "type": "string"
 	//     },
 	//     "targetingType": {
-	//       "description": "Required. Identifies the type of this assigned targeting option.",
+	//       "description": "Required. Identifies the type of this assigned targeting option. Supported targeting types include: * `TARGETING_TYPE_AGE_RANGE` * `TARGETING_TYPE_APP` * `TARGETING_TYPE_APP_CATEGORY` * `TARGETING_TYPE_AUDIENCE_GROUP` * `TARGETING_TYPE_AUDIO_CONTENT_TYPE` * `TARGETING_TYPE_AUTHORIZED_SELLER_STATUS` * `TARGETING_TYPE_BROWSER` * `TARGETING_TYPE_BUSINESS_CHAIN` * `TARGETING_TYPE_CARRIER_AND_ISP` * `TARGETING_TYPE_CATEGORY` * `TARGETING_TYPE_CHANNEL` * `TARGETING_TYPE_CONTENT_DURATION` * `TARGETING_TYPE_CONTENT_GENRE` * `TARGETING_TYPE_CONTENT_INSTREAM_POSITION` * `TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION` * `TARGETING_TYPE_CONTENT_STREAM_TYPE` * `TARGETING_TYPE_DAY_AND_TIME` * `TARGETING_TYPE_DEVICE_MAKE_MODEL` * `TARGETING_TYPE_DEVICE_TYPE` * `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_ENVIRONMENT` * `TARGETING_TYPE_EXCHANGE` * `TARGETING_TYPE_GENDER` * `TARGETING_TYPE_GEO_REGION` * `TARGETING_TYPE_HOUSEHOLD_INCOME` * `TARGETING_TYPE_INVENTORY_SOURCE` * `TARGETING_TYPE_INVENTORY_SOURCE_GROUP` * `TARGETING_TYPE_KEYWORD` * `TARGETING_TYPE_LANGUAGE` * `TARGETING_TYPE_NATIVE_CONTENT_POSITION` * `TARGETING_TYPE_NEGATIVE_KEYWORD_LIST` * `TARGETING_TYPE_OMID` * `TARGETING_TYPE_ON_SCREEN_POSITION` * `TARGETING_TYPE_OPERATING_SYSTEM` * `TARGETING_TYPE_PARENTAL_STATUS` * `TARGETING_TYPE_POI` * `TARGETING_TYPE_PROXIMITY_LOCATION_LIST` * `TARGETING_TYPE_REGIONAL_LOCATION_LIST` * `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` * `TARGETING_TYPE_SUB_EXCHANGE` * `TARGETING_TYPE_THIRD_PARTY_VERIFIER` * `TARGETING_TYPE_URL` * `TARGETING_TYPE_USER_REWARDED_CONTENT` * `TARGETING_TYPE_VIDEO_PLAYER_SIZE` * `TARGETING_TYPE_VIEWABILITY`",
 	//       "enum": [
 	//         "TARGETING_TYPE_UNSPECIFIED",
 	//         "TARGETING_TYPE_CHANNEL",
@@ -26315,9 +26416,9 @@ func (c *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsGetCall
 	//         "Target ads in an Open Measurement enabled inventory.",
 	//         "Target ads to a specific audio content type.",
 	//         "Target ads to a specific content genre.",
-	//         "Target ads to a specific YouTube video.",
-	//         "Target ads to a specific YouTube channel.",
-	//         "Target ads to a serve it in a certain position of a session. Only supported for the AdGroup of YouTube Programmatic Reservation line item."
+	//         "Target ads to a specific YouTube video. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
+	//         "Target ads to a specific YouTube channel. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
+	//         "Target ads to a serve it in a certain position of a session. Only supported for Ad Group resources under YouTube Programmatic Reservation line items. Targeting of this type cannot be created or updated using the API."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -26356,7 +26457,39 @@ type AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsListCall st
 //   - insertionOrderId: The ID of the insertion order to list assigned
 //     targeting options for.
 //   - targetingType: Identifies the type of assigned targeting options to
-//     list.
+//     list. Supported targeting types include: *
+//     `TARGETING_TYPE_AGE_RANGE` * `TARGETING_TYPE_APP` *
+//     `TARGETING_TYPE_APP_CATEGORY` * `TARGETING_TYPE_AUDIENCE_GROUP` *
+//     `TARGETING_TYPE_AUDIO_CONTENT_TYPE` *
+//     `TARGETING_TYPE_AUTHORIZED_SELLER_STATUS` *
+//     `TARGETING_TYPE_BROWSER` * `TARGETING_TYPE_BUSINESS_CHAIN` *
+//     `TARGETING_TYPE_CARRIER_AND_ISP` * `TARGETING_TYPE_CATEGORY` *
+//     `TARGETING_TYPE_CHANNEL` * `TARGETING_TYPE_CONTENT_DURATION` *
+//     `TARGETING_TYPE_CONTENT_GENRE` *
+//     `TARGETING_TYPE_CONTENT_INSTREAM_POSITION` *
+//     `TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION` *
+//     `TARGETING_TYPE_CONTENT_STREAM_TYPE` *
+//     `TARGETING_TYPE_DAY_AND_TIME` * `TARGETING_TYPE_DEVICE_MAKE_MODEL`
+//   - `TARGETING_TYPE_DEVICE_TYPE` *
+//     `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` *
+//     `TARGETING_TYPE_ENVIRONMENT` * `TARGETING_TYPE_EXCHANGE` *
+//     `TARGETING_TYPE_GENDER` * `TARGETING_TYPE_GEO_REGION` *
+//     `TARGETING_TYPE_HOUSEHOLD_INCOME` *
+//     `TARGETING_TYPE_INVENTORY_SOURCE` *
+//     `TARGETING_TYPE_INVENTORY_SOURCE_GROUP` * `TARGETING_TYPE_KEYWORD`
+//   - `TARGETING_TYPE_LANGUAGE` *
+//     `TARGETING_TYPE_NATIVE_CONTENT_POSITION` *
+//     `TARGETING_TYPE_NEGATIVE_KEYWORD_LIST` * `TARGETING_TYPE_OMID` *
+//     `TARGETING_TYPE_ON_SCREEN_POSITION` *
+//     `TARGETING_TYPE_OPERATING_SYSTEM` *
+//     `TARGETING_TYPE_PARENTAL_STATUS` * `TARGETING_TYPE_POI` *
+//     `TARGETING_TYPE_PROXIMITY_LOCATION_LIST` *
+//     `TARGETING_TYPE_REGIONAL_LOCATION_LIST` *
+//     `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` *
+//     `TARGETING_TYPE_SUB_EXCHANGE` *
+//     `TARGETING_TYPE_THIRD_PARTY_VERIFIER` * `TARGETING_TYPE_URL` *
+//     `TARGETING_TYPE_USER_REWARDED_CONTENT` *
+//     `TARGETING_TYPE_VIDEO_PLAYER_SIZE` * `TARGETING_TYPE_VIEWABILITY`.
 func (r *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsService) List(advertiserId int64, insertionOrderId int64, targetingType string) *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsListCall {
 	c := &AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -26562,7 +26695,7 @@ func (c *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsListCal
 	//       "type": "string"
 	//     },
 	//     "targetingType": {
-	//       "description": "Required. Identifies the type of assigned targeting options to list.",
+	//       "description": "Required. Identifies the type of assigned targeting options to list. Supported targeting types include: * `TARGETING_TYPE_AGE_RANGE` * `TARGETING_TYPE_APP` * `TARGETING_TYPE_APP_CATEGORY` * `TARGETING_TYPE_AUDIENCE_GROUP` * `TARGETING_TYPE_AUDIO_CONTENT_TYPE` * `TARGETING_TYPE_AUTHORIZED_SELLER_STATUS` * `TARGETING_TYPE_BROWSER` * `TARGETING_TYPE_BUSINESS_CHAIN` * `TARGETING_TYPE_CARRIER_AND_ISP` * `TARGETING_TYPE_CATEGORY` * `TARGETING_TYPE_CHANNEL` * `TARGETING_TYPE_CONTENT_DURATION` * `TARGETING_TYPE_CONTENT_GENRE` * `TARGETING_TYPE_CONTENT_INSTREAM_POSITION` * `TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION` * `TARGETING_TYPE_CONTENT_STREAM_TYPE` * `TARGETING_TYPE_DAY_AND_TIME` * `TARGETING_TYPE_DEVICE_MAKE_MODEL` * `TARGETING_TYPE_DEVICE_TYPE` * `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_ENVIRONMENT` * `TARGETING_TYPE_EXCHANGE` * `TARGETING_TYPE_GENDER` * `TARGETING_TYPE_GEO_REGION` * `TARGETING_TYPE_HOUSEHOLD_INCOME` * `TARGETING_TYPE_INVENTORY_SOURCE` * `TARGETING_TYPE_INVENTORY_SOURCE_GROUP` * `TARGETING_TYPE_KEYWORD` * `TARGETING_TYPE_LANGUAGE` * `TARGETING_TYPE_NATIVE_CONTENT_POSITION` * `TARGETING_TYPE_NEGATIVE_KEYWORD_LIST` * `TARGETING_TYPE_OMID` * `TARGETING_TYPE_ON_SCREEN_POSITION` * `TARGETING_TYPE_OPERATING_SYSTEM` * `TARGETING_TYPE_PARENTAL_STATUS` * `TARGETING_TYPE_POI` * `TARGETING_TYPE_PROXIMITY_LOCATION_LIST` * `TARGETING_TYPE_REGIONAL_LOCATION_LIST` * `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` * `TARGETING_TYPE_SUB_EXCHANGE` * `TARGETING_TYPE_THIRD_PARTY_VERIFIER` * `TARGETING_TYPE_URL` * `TARGETING_TYPE_USER_REWARDED_CONTENT` * `TARGETING_TYPE_VIDEO_PLAYER_SIZE` * `TARGETING_TYPE_VIEWABILITY`",
 	//       "enum": [
 	//         "TARGETING_TYPE_UNSPECIFIED",
 	//         "TARGETING_TYPE_CHANNEL",
@@ -26661,9 +26794,9 @@ func (c *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsListCal
 	//         "Target ads in an Open Measurement enabled inventory.",
 	//         "Target ads to a specific audio content type.",
 	//         "Target ads to a specific content genre.",
-	//         "Target ads to a specific YouTube video.",
-	//         "Target ads to a specific YouTube channel.",
-	//         "Target ads to a serve it in a certain position of a session. Only supported for the AdGroup of YouTube Programmatic Reservation line item."
+	//         "Target ads to a specific YouTube video. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
+	//         "Target ads to a specific YouTube channel. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
+	//         "Target ads to a serve it in a certain position of a session. Only supported for Ad Group resources under YouTube Programmatic Reservation line items. Targeting of this type cannot be created or updated using the API."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -27326,7 +27459,7 @@ func (c *AdvertisersLineItemsBulkListAssignedTargetingOptionsCall) OrderBy(order
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
 // The size must be an integer between `1` and `5000`. If unspecified,
-// the default is '5000'. Returns error code `INVALID_ARGUMENT` if an
+// the default is `5000`. Returns error code `INVALID_ARGUMENT` if an
 // invalid value is specified.
 func (c *AdvertisersLineItemsBulkListAssignedTargetingOptionsCall) PageSize(pageSize int64) *AdvertisersLineItemsBulkListAssignedTargetingOptionsCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
@@ -27478,7 +27611,7 @@ func (c *AdvertisersLineItemsBulkListAssignedTargetingOptionsCall) Do(opts ...go
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. The size must be an integer between `1` and `5000`. If unspecified, the default is '5000'. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
+	//       "description": "Requested page size. The size must be an integer between `1` and `5000`. If unspecified, the default is `5000`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -28886,7 +29019,39 @@ type AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsCreateCall struct
 //   - lineItemId: The ID of the line item the assigned targeting option
 //     will belong to.
 //   - targetingType: Identifies the type of this assigned targeting
-//     option.
+//     option. Supported targeting types include: *
+//     `TARGETING_TYPE_AGE_RANGE` * `TARGETING_TYPE_APP` *
+//     `TARGETING_TYPE_APP_CATEGORY` * `TARGETING_TYPE_AUDIENCE_GROUP` *
+//     `TARGETING_TYPE_AUDIO_CONTENT_TYPE` *
+//     `TARGETING_TYPE_AUTHORIZED_SELLER_STATUS` *
+//     `TARGETING_TYPE_BROWSER` * `TARGETING_TYPE_BUSINESS_CHAIN` *
+//     `TARGETING_TYPE_CARRIER_AND_ISP` * `TARGETING_TYPE_CATEGORY` *
+//     `TARGETING_TYPE_CHANNEL` * `TARGETING_TYPE_CONTENT_DURATION` *
+//     `TARGETING_TYPE_CONTENT_GENRE` *
+//     `TARGETING_TYPE_CONTENT_INSTREAM_POSITION` *
+//     `TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION` *
+//     `TARGETING_TYPE_CONTENT_STREAM_TYPE` *
+//     `TARGETING_TYPE_DAY_AND_TIME` * `TARGETING_TYPE_DEVICE_MAKE_MODEL`
+//   - `TARGETING_TYPE_DEVICE_TYPE` *
+//     `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` *
+//     `TARGETING_TYPE_ENVIRONMENT` * `TARGETING_TYPE_EXCHANGE` *
+//     `TARGETING_TYPE_GENDER` * `TARGETING_TYPE_GEO_REGION` *
+//     `TARGETING_TYPE_HOUSEHOLD_INCOME` *
+//     `TARGETING_TYPE_INVENTORY_SOURCE` *
+//     `TARGETING_TYPE_INVENTORY_SOURCE_GROUP` * `TARGETING_TYPE_KEYWORD`
+//   - `TARGETING_TYPE_LANGUAGE` *
+//     `TARGETING_TYPE_NATIVE_CONTENT_POSITION` *
+//     `TARGETING_TYPE_NEGATIVE_KEYWORD_LIST` * `TARGETING_TYPE_OMID` *
+//     `TARGETING_TYPE_ON_SCREEN_POSITION` *
+//     `TARGETING_TYPE_OPERATING_SYSTEM` *
+//     `TARGETING_TYPE_PARENTAL_STATUS` * `TARGETING_TYPE_POI` *
+//     `TARGETING_TYPE_PROXIMITY_LOCATION_LIST` *
+//     `TARGETING_TYPE_REGIONAL_LOCATION_LIST` *
+//     `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` *
+//     `TARGETING_TYPE_SUB_EXCHANGE` *
+//     `TARGETING_TYPE_THIRD_PARTY_VERIFIER` * `TARGETING_TYPE_URL` *
+//     `TARGETING_TYPE_USER_REWARDED_CONTENT` *
+//     `TARGETING_TYPE_VIDEO_PLAYER_SIZE` * `TARGETING_TYPE_VIEWABILITY`.
 func (r *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsService) Create(advertiserId int64, lineItemId int64, targetingType string, assignedtargetingoption *AssignedTargetingOption) *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsCreateCall {
 	c := &AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -29016,7 +29181,7 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsCreateCall) D
 	//       "type": "string"
 	//     },
 	//     "targetingType": {
-	//       "description": "Required. Identifies the type of this assigned targeting option.",
+	//       "description": "Required. Identifies the type of this assigned targeting option. Supported targeting types include: * `TARGETING_TYPE_AGE_RANGE` * `TARGETING_TYPE_APP` * `TARGETING_TYPE_APP_CATEGORY` * `TARGETING_TYPE_AUDIENCE_GROUP` * `TARGETING_TYPE_AUDIO_CONTENT_TYPE` * `TARGETING_TYPE_AUTHORIZED_SELLER_STATUS` * `TARGETING_TYPE_BROWSER` * `TARGETING_TYPE_BUSINESS_CHAIN` * `TARGETING_TYPE_CARRIER_AND_ISP` * `TARGETING_TYPE_CATEGORY` * `TARGETING_TYPE_CHANNEL` * `TARGETING_TYPE_CONTENT_DURATION` * `TARGETING_TYPE_CONTENT_GENRE` * `TARGETING_TYPE_CONTENT_INSTREAM_POSITION` * `TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION` * `TARGETING_TYPE_CONTENT_STREAM_TYPE` * `TARGETING_TYPE_DAY_AND_TIME` * `TARGETING_TYPE_DEVICE_MAKE_MODEL` * `TARGETING_TYPE_DEVICE_TYPE` * `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_ENVIRONMENT` * `TARGETING_TYPE_EXCHANGE` * `TARGETING_TYPE_GENDER` * `TARGETING_TYPE_GEO_REGION` * `TARGETING_TYPE_HOUSEHOLD_INCOME` * `TARGETING_TYPE_INVENTORY_SOURCE` * `TARGETING_TYPE_INVENTORY_SOURCE_GROUP` * `TARGETING_TYPE_KEYWORD` * `TARGETING_TYPE_LANGUAGE` * `TARGETING_TYPE_NATIVE_CONTENT_POSITION` * `TARGETING_TYPE_NEGATIVE_KEYWORD_LIST` * `TARGETING_TYPE_OMID` * `TARGETING_TYPE_ON_SCREEN_POSITION` * `TARGETING_TYPE_OPERATING_SYSTEM` * `TARGETING_TYPE_PARENTAL_STATUS` * `TARGETING_TYPE_POI` * `TARGETING_TYPE_PROXIMITY_LOCATION_LIST` * `TARGETING_TYPE_REGIONAL_LOCATION_LIST` * `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` * `TARGETING_TYPE_SUB_EXCHANGE` * `TARGETING_TYPE_THIRD_PARTY_VERIFIER` * `TARGETING_TYPE_URL` * `TARGETING_TYPE_USER_REWARDED_CONTENT` * `TARGETING_TYPE_VIDEO_PLAYER_SIZE` * `TARGETING_TYPE_VIEWABILITY`",
 	//       "enum": [
 	//         "TARGETING_TYPE_UNSPECIFIED",
 	//         "TARGETING_TYPE_CHANNEL",
@@ -29115,9 +29280,9 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsCreateCall) D
 	//         "Target ads in an Open Measurement enabled inventory.",
 	//         "Target ads to a specific audio content type.",
 	//         "Target ads to a specific content genre.",
-	//         "Target ads to a specific YouTube video.",
-	//         "Target ads to a specific YouTube channel.",
-	//         "Target ads to a serve it in a certain position of a session. Only supported for the AdGroup of YouTube Programmatic Reservation line item."
+	//         "Target ads to a specific YouTube video. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
+	//         "Target ads to a specific YouTube channel. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
+	//         "Target ads to a serve it in a certain position of a session. Only supported for Ad Group resources under YouTube Programmatic Reservation line items. Targeting of this type cannot be created or updated using the API."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -29164,7 +29329,39 @@ type AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsDeleteCall struct
 //   - lineItemId: The ID of the line item the assigned targeting option
 //     belongs to.
 //   - targetingType: Identifies the type of this assigned targeting
-//     option.
+//     option. Supported targeting types include: *
+//     `TARGETING_TYPE_AGE_RANGE` * `TARGETING_TYPE_APP` *
+//     `TARGETING_TYPE_APP_CATEGORY` * `TARGETING_TYPE_AUDIENCE_GROUP` *
+//     `TARGETING_TYPE_AUDIO_CONTENT_TYPE` *
+//     `TARGETING_TYPE_AUTHORIZED_SELLER_STATUS` *
+//     `TARGETING_TYPE_BROWSER` * `TARGETING_TYPE_BUSINESS_CHAIN` *
+//     `TARGETING_TYPE_CARRIER_AND_ISP` * `TARGETING_TYPE_CATEGORY` *
+//     `TARGETING_TYPE_CHANNEL` * `TARGETING_TYPE_CONTENT_DURATION` *
+//     `TARGETING_TYPE_CONTENT_GENRE` *
+//     `TARGETING_TYPE_CONTENT_INSTREAM_POSITION` *
+//     `TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION` *
+//     `TARGETING_TYPE_CONTENT_STREAM_TYPE` *
+//     `TARGETING_TYPE_DAY_AND_TIME` * `TARGETING_TYPE_DEVICE_MAKE_MODEL`
+//   - `TARGETING_TYPE_DEVICE_TYPE` *
+//     `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` *
+//     `TARGETING_TYPE_ENVIRONMENT` * `TARGETING_TYPE_EXCHANGE` *
+//     `TARGETING_TYPE_GENDER` * `TARGETING_TYPE_GEO_REGION` *
+//     `TARGETING_TYPE_HOUSEHOLD_INCOME` *
+//     `TARGETING_TYPE_INVENTORY_SOURCE` *
+//     `TARGETING_TYPE_INVENTORY_SOURCE_GROUP` * `TARGETING_TYPE_KEYWORD`
+//   - `TARGETING_TYPE_LANGUAGE` *
+//     `TARGETING_TYPE_NATIVE_CONTENT_POSITION` *
+//     `TARGETING_TYPE_NEGATIVE_KEYWORD_LIST` * `TARGETING_TYPE_OMID` *
+//     `TARGETING_TYPE_ON_SCREEN_POSITION` *
+//     `TARGETING_TYPE_OPERATING_SYSTEM` *
+//     `TARGETING_TYPE_PARENTAL_STATUS` * `TARGETING_TYPE_POI` *
+//     `TARGETING_TYPE_PROXIMITY_LOCATION_LIST` *
+//     `TARGETING_TYPE_REGIONAL_LOCATION_LIST` *
+//     `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` *
+//     `TARGETING_TYPE_SUB_EXCHANGE` *
+//     `TARGETING_TYPE_THIRD_PARTY_VERIFIER` * `TARGETING_TYPE_URL` *
+//     `TARGETING_TYPE_USER_REWARDED_CONTENT` *
+//     `TARGETING_TYPE_VIDEO_PLAYER_SIZE` * `TARGETING_TYPE_VIEWABILITY`.
 func (r *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsService) Delete(advertiserId int64, lineItemId int64, targetingType string, assignedTargetingOptionId string) *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsDeleteCall {
 	c := &AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -29298,7 +29495,7 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsDeleteCall) D
 	//       "type": "string"
 	//     },
 	//     "targetingType": {
-	//       "description": "Required. Identifies the type of this assigned targeting option.",
+	//       "description": "Required. Identifies the type of this assigned targeting option. Supported targeting types include: * `TARGETING_TYPE_AGE_RANGE` * `TARGETING_TYPE_APP` * `TARGETING_TYPE_APP_CATEGORY` * `TARGETING_TYPE_AUDIENCE_GROUP` * `TARGETING_TYPE_AUDIO_CONTENT_TYPE` * `TARGETING_TYPE_AUTHORIZED_SELLER_STATUS` * `TARGETING_TYPE_BROWSER` * `TARGETING_TYPE_BUSINESS_CHAIN` * `TARGETING_TYPE_CARRIER_AND_ISP` * `TARGETING_TYPE_CATEGORY` * `TARGETING_TYPE_CHANNEL` * `TARGETING_TYPE_CONTENT_DURATION` * `TARGETING_TYPE_CONTENT_GENRE` * `TARGETING_TYPE_CONTENT_INSTREAM_POSITION` * `TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION` * `TARGETING_TYPE_CONTENT_STREAM_TYPE` * `TARGETING_TYPE_DAY_AND_TIME` * `TARGETING_TYPE_DEVICE_MAKE_MODEL` * `TARGETING_TYPE_DEVICE_TYPE` * `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_ENVIRONMENT` * `TARGETING_TYPE_EXCHANGE` * `TARGETING_TYPE_GENDER` * `TARGETING_TYPE_GEO_REGION` * `TARGETING_TYPE_HOUSEHOLD_INCOME` * `TARGETING_TYPE_INVENTORY_SOURCE` * `TARGETING_TYPE_INVENTORY_SOURCE_GROUP` * `TARGETING_TYPE_KEYWORD` * `TARGETING_TYPE_LANGUAGE` * `TARGETING_TYPE_NATIVE_CONTENT_POSITION` * `TARGETING_TYPE_NEGATIVE_KEYWORD_LIST` * `TARGETING_TYPE_OMID` * `TARGETING_TYPE_ON_SCREEN_POSITION` * `TARGETING_TYPE_OPERATING_SYSTEM` * `TARGETING_TYPE_PARENTAL_STATUS` * `TARGETING_TYPE_POI` * `TARGETING_TYPE_PROXIMITY_LOCATION_LIST` * `TARGETING_TYPE_REGIONAL_LOCATION_LIST` * `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` * `TARGETING_TYPE_SUB_EXCHANGE` * `TARGETING_TYPE_THIRD_PARTY_VERIFIER` * `TARGETING_TYPE_URL` * `TARGETING_TYPE_USER_REWARDED_CONTENT` * `TARGETING_TYPE_VIDEO_PLAYER_SIZE` * `TARGETING_TYPE_VIEWABILITY`",
 	//       "enum": [
 	//         "TARGETING_TYPE_UNSPECIFIED",
 	//         "TARGETING_TYPE_CHANNEL",
@@ -29397,9 +29594,9 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsDeleteCall) D
 	//         "Target ads in an Open Measurement enabled inventory.",
 	//         "Target ads to a specific audio content type.",
 	//         "Target ads to a specific content genre.",
-	//         "Target ads to a specific YouTube video.",
-	//         "Target ads to a specific YouTube channel.",
-	//         "Target ads to a serve it in a certain position of a session. Only supported for the AdGroup of YouTube Programmatic Reservation line item."
+	//         "Target ads to a specific YouTube video. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
+	//         "Target ads to a specific YouTube channel. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
+	//         "Target ads to a serve it in a certain position of a session. Only supported for Ad Group resources under YouTube Programmatic Reservation line items. Targeting of this type cannot be created or updated using the API."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -29441,7 +29638,43 @@ type AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsGetCall struct {
 //   - lineItemId: The ID of the line item the assigned targeting option
 //     belongs to.
 //   - targetingType: Identifies the type of this assigned targeting
-//     option.
+//     option. Supported targeting types include: *
+//     `TARGETING_TYPE_AGE_RANGE` * `TARGETING_TYPE_APP` *
+//     `TARGETING_TYPE_APP_CATEGORY` * `TARGETING_TYPE_AUDIENCE_GROUP` *
+//     `TARGETING_TYPE_AUDIO_CONTENT_TYPE` *
+//     `TARGETING_TYPE_AUTHORIZED_SELLER_STATUS` *
+//     `TARGETING_TYPE_BROWSER` * `TARGETING_TYPE_BUSINESS_CHAIN` *
+//     `TARGETING_TYPE_CARRIER_AND_ISP` * `TARGETING_TYPE_CATEGORY` *
+//     `TARGETING_TYPE_CHANNEL` * `TARGETING_TYPE_CONTENT_DURATION` *
+//     `TARGETING_TYPE_CONTENT_GENRE` *
+//     `TARGETING_TYPE_CONTENT_INSTREAM_POSITION` *
+//     `TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION` *
+//     `TARGETING_TYPE_CONTENT_STREAM_TYPE` *
+//     `TARGETING_TYPE_DAY_AND_TIME` * `TARGETING_TYPE_DEVICE_MAKE_MODEL`
+//   - `TARGETING_TYPE_DEVICE_TYPE` *
+//     `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` *
+//     `TARGETING_TYPE_ENVIRONMENT` * `TARGETING_TYPE_EXCHANGE` *
+//     `TARGETING_TYPE_GENDER` * `TARGETING_TYPE_GEO_REGION` *
+//     `TARGETING_TYPE_HOUSEHOLD_INCOME` *
+//     `TARGETING_TYPE_INVENTORY_SOURCE` *
+//     `TARGETING_TYPE_INVENTORY_SOURCE_GROUP` * `TARGETING_TYPE_KEYWORD`
+//   - `TARGETING_TYPE_LANGUAGE` *
+//     `TARGETING_TYPE_NATIVE_CONTENT_POSITION` *
+//     `TARGETING_TYPE_NEGATIVE_KEYWORD_LIST` * `TARGETING_TYPE_OMID` *
+//     `TARGETING_TYPE_ON_SCREEN_POSITION` *
+//     `TARGETING_TYPE_OPERATING_SYSTEM` *
+//     `TARGETING_TYPE_PARENTAL_STATUS` * `TARGETING_TYPE_POI` *
+//     `TARGETING_TYPE_PROXIMITY_LOCATION_LIST` *
+//     `TARGETING_TYPE_REGIONAL_LOCATION_LIST` *
+//     `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` *
+//     `TARGETING_TYPE_SUB_EXCHANGE` *
+//     `TARGETING_TYPE_THIRD_PARTY_VERIFIER` * `TARGETING_TYPE_URL` *
+//     `TARGETING_TYPE_USER_REWARDED_CONTENT` *
+//     `TARGETING_TYPE_VIDEO_PLAYER_SIZE` * `TARGETING_TYPE_VIEWABILITY` *
+//     `TARGETING_TYPE_YOUTUBE_CHANNEL` (only for
+//     `LINE_ITEM_TYPE_YOUTUBE_AND_PARTNERS_VIDEO_SEQUENCE` line items) *
+//     `TARGETING_TYPE_YOUTUBE_VIDEO` (only for
+//     `LINE_ITEM_TYPE_YOUTUBE_AND_PARTNERS_VIDEO_SEQUENCE` line items).
 func (r *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsService) Get(advertiserId int64, lineItemId int64, targetingType string, assignedTargetingOptionId string) *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsGetCall {
 	c := &AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -29588,7 +29821,7 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsGetCall) Do(o
 	//       "type": "string"
 	//     },
 	//     "targetingType": {
-	//       "description": "Required. Identifies the type of this assigned targeting option.",
+	//       "description": "Required. Identifies the type of this assigned targeting option. Supported targeting types include: * `TARGETING_TYPE_AGE_RANGE` * `TARGETING_TYPE_APP` * `TARGETING_TYPE_APP_CATEGORY` * `TARGETING_TYPE_AUDIENCE_GROUP` * `TARGETING_TYPE_AUDIO_CONTENT_TYPE` * `TARGETING_TYPE_AUTHORIZED_SELLER_STATUS` * `TARGETING_TYPE_BROWSER` * `TARGETING_TYPE_BUSINESS_CHAIN` * `TARGETING_TYPE_CARRIER_AND_ISP` * `TARGETING_TYPE_CATEGORY` * `TARGETING_TYPE_CHANNEL` * `TARGETING_TYPE_CONTENT_DURATION` * `TARGETING_TYPE_CONTENT_GENRE` * `TARGETING_TYPE_CONTENT_INSTREAM_POSITION` * `TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION` * `TARGETING_TYPE_CONTENT_STREAM_TYPE` * `TARGETING_TYPE_DAY_AND_TIME` * `TARGETING_TYPE_DEVICE_MAKE_MODEL` * `TARGETING_TYPE_DEVICE_TYPE` * `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_ENVIRONMENT` * `TARGETING_TYPE_EXCHANGE` * `TARGETING_TYPE_GENDER` * `TARGETING_TYPE_GEO_REGION` * `TARGETING_TYPE_HOUSEHOLD_INCOME` * `TARGETING_TYPE_INVENTORY_SOURCE` * `TARGETING_TYPE_INVENTORY_SOURCE_GROUP` * `TARGETING_TYPE_KEYWORD` * `TARGETING_TYPE_LANGUAGE` * `TARGETING_TYPE_NATIVE_CONTENT_POSITION` * `TARGETING_TYPE_NEGATIVE_KEYWORD_LIST` * `TARGETING_TYPE_OMID` * `TARGETING_TYPE_ON_SCREEN_POSITION` * `TARGETING_TYPE_OPERATING_SYSTEM` * `TARGETING_TYPE_PARENTAL_STATUS` * `TARGETING_TYPE_POI` * `TARGETING_TYPE_PROXIMITY_LOCATION_LIST` * `TARGETING_TYPE_REGIONAL_LOCATION_LIST` * `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` * `TARGETING_TYPE_SUB_EXCHANGE` * `TARGETING_TYPE_THIRD_PARTY_VERIFIER` * `TARGETING_TYPE_URL` * `TARGETING_TYPE_USER_REWARDED_CONTENT` * `TARGETING_TYPE_VIDEO_PLAYER_SIZE` * `TARGETING_TYPE_VIEWABILITY` * `TARGETING_TYPE_YOUTUBE_CHANNEL` (only for `LINE_ITEM_TYPE_YOUTUBE_AND_PARTNERS_VIDEO_SEQUENCE` line items) * `TARGETING_TYPE_YOUTUBE_VIDEO` (only for `LINE_ITEM_TYPE_YOUTUBE_AND_PARTNERS_VIDEO_SEQUENCE` line items)",
 	//       "enum": [
 	//         "TARGETING_TYPE_UNSPECIFIED",
 	//         "TARGETING_TYPE_CHANNEL",
@@ -29687,9 +29920,9 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsGetCall) Do(o
 	//         "Target ads in an Open Measurement enabled inventory.",
 	//         "Target ads to a specific audio content type.",
 	//         "Target ads to a specific content genre.",
-	//         "Target ads to a specific YouTube video.",
-	//         "Target ads to a specific YouTube channel.",
-	//         "Target ads to a serve it in a certain position of a session. Only supported for the AdGroup of YouTube Programmatic Reservation line item."
+	//         "Target ads to a specific YouTube video. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
+	//         "Target ads to a specific YouTube channel. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
+	//         "Target ads to a serve it in a certain position of a session. Only supported for Ad Group resources under YouTube Programmatic Reservation line items. Targeting of this type cannot be created or updated using the API."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -29727,7 +29960,43 @@ type AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall struct {
 //   - lineItemId: The ID of the line item to list assigned targeting
 //     options for.
 //   - targetingType: Identifies the type of assigned targeting options to
-//     list.
+//     list. Supported targeting types include: *
+//     `TARGETING_TYPE_AGE_RANGE` * `TARGETING_TYPE_APP` *
+//     `TARGETING_TYPE_APP_CATEGORY` * `TARGETING_TYPE_AUDIENCE_GROUP` *
+//     `TARGETING_TYPE_AUDIO_CONTENT_TYPE` *
+//     `TARGETING_TYPE_AUTHORIZED_SELLER_STATUS` *
+//     `TARGETING_TYPE_BROWSER` * `TARGETING_TYPE_BUSINESS_CHAIN` *
+//     `TARGETING_TYPE_CARRIER_AND_ISP` * `TARGETING_TYPE_CATEGORY` *
+//     `TARGETING_TYPE_CHANNEL` * `TARGETING_TYPE_CONTENT_DURATION` *
+//     `TARGETING_TYPE_CONTENT_GENRE` *
+//     `TARGETING_TYPE_CONTENT_INSTREAM_POSITION` *
+//     `TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION` *
+//     `TARGETING_TYPE_CONTENT_STREAM_TYPE` *
+//     `TARGETING_TYPE_DAY_AND_TIME` * `TARGETING_TYPE_DEVICE_MAKE_MODEL`
+//   - `TARGETING_TYPE_DEVICE_TYPE` *
+//     `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` *
+//     `TARGETING_TYPE_ENVIRONMENT` * `TARGETING_TYPE_EXCHANGE` *
+//     `TARGETING_TYPE_GENDER` * `TARGETING_TYPE_GEO_REGION` *
+//     `TARGETING_TYPE_HOUSEHOLD_INCOME` *
+//     `TARGETING_TYPE_INVENTORY_SOURCE` *
+//     `TARGETING_TYPE_INVENTORY_SOURCE_GROUP` * `TARGETING_TYPE_KEYWORD`
+//   - `TARGETING_TYPE_LANGUAGE` *
+//     `TARGETING_TYPE_NATIVE_CONTENT_POSITION` *
+//     `TARGETING_TYPE_NEGATIVE_KEYWORD_LIST` * `TARGETING_TYPE_OMID` *
+//     `TARGETING_TYPE_ON_SCREEN_POSITION` *
+//     `TARGETING_TYPE_OPERATING_SYSTEM` *
+//     `TARGETING_TYPE_PARENTAL_STATUS` * `TARGETING_TYPE_POI` *
+//     `TARGETING_TYPE_PROXIMITY_LOCATION_LIST` *
+//     `TARGETING_TYPE_REGIONAL_LOCATION_LIST` *
+//     `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` *
+//     `TARGETING_TYPE_SUB_EXCHANGE` *
+//     `TARGETING_TYPE_THIRD_PARTY_VERIFIER` * `TARGETING_TYPE_URL` *
+//     `TARGETING_TYPE_USER_REWARDED_CONTENT` *
+//     `TARGETING_TYPE_VIDEO_PLAYER_SIZE` * `TARGETING_TYPE_VIEWABILITY` *
+//     `TARGETING_TYPE_YOUTUBE_CHANNEL` (only for
+//     `LINE_ITEM_TYPE_YOUTUBE_AND_PARTNERS_VIDEO_SEQUENCE` line items) *
+//     `TARGETING_TYPE_YOUTUBE_VIDEO` (only for
+//     `LINE_ITEM_TYPE_YOUTUBE_AND_PARTNERS_VIDEO_SEQUENCE` line items).
 func (r *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsService) List(advertiserId int64, lineItemId int64, targetingType string) *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall {
 	c := &AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -29933,7 +30202,7 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall) Do(
 	//       "type": "string"
 	//     },
 	//     "targetingType": {
-	//       "description": "Required. Identifies the type of assigned targeting options to list.",
+	//       "description": "Required. Identifies the type of assigned targeting options to list. Supported targeting types include: * `TARGETING_TYPE_AGE_RANGE` * `TARGETING_TYPE_APP` * `TARGETING_TYPE_APP_CATEGORY` * `TARGETING_TYPE_AUDIENCE_GROUP` * `TARGETING_TYPE_AUDIO_CONTENT_TYPE` * `TARGETING_TYPE_AUTHORIZED_SELLER_STATUS` * `TARGETING_TYPE_BROWSER` * `TARGETING_TYPE_BUSINESS_CHAIN` * `TARGETING_TYPE_CARRIER_AND_ISP` * `TARGETING_TYPE_CATEGORY` * `TARGETING_TYPE_CHANNEL` * `TARGETING_TYPE_CONTENT_DURATION` * `TARGETING_TYPE_CONTENT_GENRE` * `TARGETING_TYPE_CONTENT_INSTREAM_POSITION` * `TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION` * `TARGETING_TYPE_CONTENT_STREAM_TYPE` * `TARGETING_TYPE_DAY_AND_TIME` * `TARGETING_TYPE_DEVICE_MAKE_MODEL` * `TARGETING_TYPE_DEVICE_TYPE` * `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_ENVIRONMENT` * `TARGETING_TYPE_EXCHANGE` * `TARGETING_TYPE_GENDER` * `TARGETING_TYPE_GEO_REGION` * `TARGETING_TYPE_HOUSEHOLD_INCOME` * `TARGETING_TYPE_INVENTORY_SOURCE` * `TARGETING_TYPE_INVENTORY_SOURCE_GROUP` * `TARGETING_TYPE_KEYWORD` * `TARGETING_TYPE_LANGUAGE` * `TARGETING_TYPE_NATIVE_CONTENT_POSITION` * `TARGETING_TYPE_NEGATIVE_KEYWORD_LIST` * `TARGETING_TYPE_OMID` * `TARGETING_TYPE_ON_SCREEN_POSITION` * `TARGETING_TYPE_OPERATING_SYSTEM` * `TARGETING_TYPE_PARENTAL_STATUS` * `TARGETING_TYPE_POI` * `TARGETING_TYPE_PROXIMITY_LOCATION_LIST` * `TARGETING_TYPE_REGIONAL_LOCATION_LIST` * `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` * `TARGETING_TYPE_SUB_EXCHANGE` * `TARGETING_TYPE_THIRD_PARTY_VERIFIER` * `TARGETING_TYPE_URL` * `TARGETING_TYPE_USER_REWARDED_CONTENT` * `TARGETING_TYPE_VIDEO_PLAYER_SIZE` * `TARGETING_TYPE_VIEWABILITY` * `TARGETING_TYPE_YOUTUBE_CHANNEL` (only for `LINE_ITEM_TYPE_YOUTUBE_AND_PARTNERS_VIDEO_SEQUENCE` line items) * `TARGETING_TYPE_YOUTUBE_VIDEO` (only for `LINE_ITEM_TYPE_YOUTUBE_AND_PARTNERS_VIDEO_SEQUENCE` line items)",
 	//       "enum": [
 	//         "TARGETING_TYPE_UNSPECIFIED",
 	//         "TARGETING_TYPE_CHANNEL",
@@ -30032,9 +30301,9 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall) Do(
 	//         "Target ads in an Open Measurement enabled inventory.",
 	//         "Target ads to a specific audio content type.",
 	//         "Target ads to a specific content genre.",
-	//         "Target ads to a specific YouTube video.",
-	//         "Target ads to a specific YouTube channel.",
-	//         "Target ads to a serve it in a certain position of a session. Only supported for the AdGroup of YouTube Programmatic Reservation line item."
+	//         "Target ads to a specific YouTube video. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
+	//         "Target ads to a specific YouTube channel. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
+	//         "Target ads to a serve it in a certain position of a session. Only supported for Ad Group resources under YouTube Programmatic Reservation line items. Targeting of this type cannot be created or updated using the API."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -34479,9 +34748,9 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsCreateCall) Do(opts ..
 	//         "Target ads in an Open Measurement enabled inventory.",
 	//         "Target ads to a specific audio content type.",
 	//         "Target ads to a specific content genre.",
-	//         "Target ads to a specific YouTube video.",
-	//         "Target ads to a specific YouTube channel.",
-	//         "Target ads to a serve it in a certain position of a session. Only supported for the AdGroup of YouTube Programmatic Reservation line item."
+	//         "Target ads to a specific YouTube video. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
+	//         "Target ads to a specific YouTube channel. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
+	//         "Target ads to a serve it in a certain position of a session. Only supported for Ad Group resources under YouTube Programmatic Reservation line items. Targeting of this type cannot be created or updated using the API."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -34746,9 +35015,9 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsDeleteCall) Do(opts ..
 	//         "Target ads in an Open Measurement enabled inventory.",
 	//         "Target ads to a specific audio content type.",
 	//         "Target ads to a specific content genre.",
-	//         "Target ads to a specific YouTube video.",
-	//         "Target ads to a specific YouTube channel.",
-	//         "Target ads to a serve it in a certain position of a session. Only supported for the AdGroup of YouTube Programmatic Reservation line item."
+	//         "Target ads to a specific YouTube video. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
+	//         "Target ads to a specific YouTube channel. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
+	//         "Target ads to a serve it in a certain position of a session. Only supported for Ad Group resources under YouTube Programmatic Reservation line items. Targeting of this type cannot be created or updated using the API."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -34790,7 +35059,8 @@ type AdvertisersTargetingTypesAssignedTargetingOptionsGetCall struct {
 //     option. Supported targeting types: * `TARGETING_TYPE_CHANNEL` *
 //     `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` *
 //     `TARGETING_TYPE_OMID` *
-//     `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION`.
+//     `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` *
+//     `TARGETING_TYPE_YOUTUBE_VIDEO` * `TARGETING_TYPE_YOUTUBE_CHANNEL`.
 func (r *AdvertisersTargetingTypesAssignedTargetingOptionsService) Get(advertiserId int64, targetingType string, assignedTargetingOptionId string) *AdvertisersTargetingTypesAssignedTargetingOptionsGetCall {
 	c := &AdvertisersTargetingTypesAssignedTargetingOptionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -34926,7 +35196,7 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsGetCall) Do(opts ...go
 	//       "type": "string"
 	//     },
 	//     "targetingType": {
-	//       "description": "Required. Identifies the type of this assigned targeting option. Supported targeting types: * `TARGETING_TYPE_CHANNEL` * `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_OMID` * `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION`",
+	//       "description": "Required. Identifies the type of this assigned targeting option. Supported targeting types: * `TARGETING_TYPE_CHANNEL` * `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_OMID` * `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` * `TARGETING_TYPE_YOUTUBE_VIDEO` * `TARGETING_TYPE_YOUTUBE_CHANNEL`",
 	//       "enum": [
 	//         "TARGETING_TYPE_UNSPECIFIED",
 	//         "TARGETING_TYPE_CHANNEL",
@@ -35025,9 +35295,9 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsGetCall) Do(opts ...go
 	//         "Target ads in an Open Measurement enabled inventory.",
 	//         "Target ads to a specific audio content type.",
 	//         "Target ads to a specific content genre.",
-	//         "Target ads to a specific YouTube video.",
-	//         "Target ads to a specific YouTube channel.",
-	//         "Target ads to a serve it in a certain position of a session. Only supported for the AdGroup of YouTube Programmatic Reservation line item."
+	//         "Target ads to a specific YouTube video. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
+	//         "Target ads to a specific YouTube channel. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
+	//         "Target ads to a serve it in a certain position of a session. Only supported for Ad Group resources under YouTube Programmatic Reservation line items. Targeting of this type cannot be created or updated using the API."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -35065,7 +35335,8 @@ type AdvertisersTargetingTypesAssignedTargetingOptionsListCall struct {
 //     list. Supported targeting types: * `TARGETING_TYPE_CHANNEL` *
 //     `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` *
 //     `TARGETING_TYPE_OMID` *
-//     `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION`.
+//     `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` *
+//     `TARGETING_TYPE_YOUTUBE_VIDEO` * `TARGETING_TYPE_YOUTUBE_CHANNEL`.
 func (r *AdvertisersTargetingTypesAssignedTargetingOptionsService) List(advertiserId int64, targetingType string) *AdvertisersTargetingTypesAssignedTargetingOptionsListCall {
 	c := &AdvertisersTargetingTypesAssignedTargetingOptionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -35257,7 +35528,7 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsListCall) Do(opts ...g
 	//       "type": "string"
 	//     },
 	//     "targetingType": {
-	//       "description": "Required. Identifies the type of assigned targeting options to list. Supported targeting types: * `TARGETING_TYPE_CHANNEL` * `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_OMID` * `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION`",
+	//       "description": "Required. Identifies the type of assigned targeting options to list. Supported targeting types: * `TARGETING_TYPE_CHANNEL` * `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_OMID` * `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` * `TARGETING_TYPE_YOUTUBE_VIDEO` * `TARGETING_TYPE_YOUTUBE_CHANNEL`",
 	//       "enum": [
 	//         "TARGETING_TYPE_UNSPECIFIED",
 	//         "TARGETING_TYPE_CHANNEL",
@@ -35356,9 +35627,9 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsListCall) Do(opts ...g
 	//         "Target ads in an Open Measurement enabled inventory.",
 	//         "Target ads to a specific audio content type.",
 	//         "Target ads to a specific content genre.",
-	//         "Target ads to a specific YouTube video.",
-	//         "Target ads to a specific YouTube channel.",
-	//         "Target ads to a serve it in a certain position of a session. Only supported for the AdGroup of YouTube Programmatic Reservation line item."
+	//         "Target ads to a specific YouTube video. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
+	//         "Target ads to a specific YouTube channel. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
+	//         "Target ads to a serve it in a certain position of a session. Only supported for Ad Group resources under YouTube Programmatic Reservation line items. Targeting of this type cannot be created or updated using the API."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -35807,6 +36078,7 @@ type AdvertisersYoutubeAdGroupsBulkListAdGroupAssignedTargetingOptionsCall struc
 
 // BulkListAdGroupAssignedTargetingOptions: Lists assigned targeting
 // options for multiple YouTube ad groups across targeting types.
+// Inherieted assigned targeting options are not included.
 //
 // - advertiserId: The ID of the advertiser the line items belongs to.
 func (r *AdvertisersYoutubeAdGroupsService) BulkListAdGroupAssignedTargetingOptions(advertiserId int64) *AdvertisersYoutubeAdGroupsBulkListAdGroupAssignedTargetingOptionsCall {
@@ -35843,7 +36115,7 @@ func (c *AdvertisersYoutubeAdGroupsBulkListAdGroupAssignedTargetingOptionsCall) 
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
 // The size must be an integer between `1` and `5000`. If unspecified,
-// the default is '5000'. Returns error code `INVALID_ARGUMENT` if an
+// the default is `5000`. Returns error code `INVALID_ARGUMENT` if an
 // invalid value is specified.
 func (c *AdvertisersYoutubeAdGroupsBulkListAdGroupAssignedTargetingOptionsCall) PageSize(pageSize int64) *AdvertisersYoutubeAdGroupsBulkListAdGroupAssignedTargetingOptionsCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
@@ -35975,7 +36247,7 @@ func (c *AdvertisersYoutubeAdGroupsBulkListAdGroupAssignedTargetingOptionsCall) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists assigned targeting options for multiple YouTube ad groups across targeting types.",
+	//   "description": "Lists assigned targeting options for multiple YouTube ad groups across targeting types. Inherieted assigned targeting options are not included.",
 	//   "flatPath": "v2/advertisers/{advertisersId}/youtubeAdGroups:bulkListAdGroupAssignedTargetingOptions",
 	//   "httpMethod": "GET",
 	//   "id": "displayvideo.advertisers.youtubeAdGroups.bulkListAdGroupAssignedTargetingOptions",
@@ -36002,7 +36274,7 @@ func (c *AdvertisersYoutubeAdGroupsBulkListAdGroupAssignedTargetingOptionsCall) 
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. The size must be an integer between `1` and `5000`. If unspecified, the default is '5000'. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
+	//       "description": "Requested page size. The size must be an integer between `1` and `5000`. If unspecified, the default is `5000`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -36466,7 +36738,7 @@ type AdvertisersYoutubeAdGroupsTargetingTypesAssignedTargetingOptionsGetCall str
 }
 
 // Get: Gets a single targeting option assigned to a YouTube ad group.
-// Inherited targeting is not included.
+// Inherited assigned targeting options are not included.
 //
 //   - advertiserId: The ID of the advertiser the ad group belongs to.
 //   - assignedTargetingOptionId: An identifier unique to the targeting
@@ -36474,12 +36746,12 @@ type AdvertisersYoutubeAdGroupsTargetingTypesAssignedTargetingOptionsGetCall str
 //     option being requested.
 //   - targetingType: Identifies the type of this assigned targeting
 //     option. Supported targeting types include: *
-//     `TARGETING_TYPE_GENDER` * `TARGETING_TYPE_AGE_RANGE` *
+//     `TARGETING_TYPE_AGE_RANGE` * `TARGETING_TYPE_APP` *
+//     `TARGETING_TYPE_APP_CATEGORY` * `TARGETING_TYPE_AUDIENCE_GROUP` *
+//     `TARGETING_TYPE_CATEGORY` * `TARGETING_TYPE_GENDER` *
+//     `TARGETING_TYPE_HOUSEHOLD_INCOME` * `TARGETING_TYPE_KEYWORD` *
 //     `TARGETING_TYPE_PARENTAL_STATUS` *
-//     `TARGETING_TYPE_HOUSEHOLD_INCOME` * `TARGETING_TYPE_AUDIENCE_GROUP`
-//   - `TARGETING_TYPE_URL` * `TARGETING_TYPE_APP` *
-//     `TARGETING_TYPE_APP_CATEGORY` * `TARGETING_TYPE_KEYWORD` *
-//     `TARGETING_TYPE_CATEGORY` * `TARGETING_TYPE_SESSION_POSITION` *
+//     `TARGETING_TYPE_SESSION_POSITION` * `TARGETING_TYPE_URL` *
 //     `TARGETING_TYPE_YOUTUBE_CHANNEL` * `TARGETING_TYPE_YOUTUBE_VIDEO`.
 //   - youtubeAdGroupId: The ID of the ad group the assigned targeting
 //     option belongs to.
@@ -36594,7 +36866,7 @@ func (c *AdvertisersYoutubeAdGroupsTargetingTypesAssignedTargetingOptionsGetCall
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets a single targeting option assigned to a YouTube ad group. Inherited targeting is not included.",
+	//   "description": "Gets a single targeting option assigned to a YouTube ad group. Inherited assigned targeting options are not included.",
 	//   "flatPath": "v2/advertisers/{advertisersId}/youtubeAdGroups/{youtubeAdGroupsId}/targetingTypes/{targetingTypesId}/assignedTargetingOptions/{assignedTargetingOptionsId}",
 	//   "httpMethod": "GET",
 	//   "id": "displayvideo.advertisers.youtubeAdGroups.targetingTypes.assignedTargetingOptions.get",
@@ -36621,7 +36893,7 @@ func (c *AdvertisersYoutubeAdGroupsTargetingTypesAssignedTargetingOptionsGetCall
 	//       "type": "string"
 	//     },
 	//     "targetingType": {
-	//       "description": "Required. Identifies the type of this assigned targeting option. Supported targeting types include: * `TARGETING_TYPE_GENDER` * `TARGETING_TYPE_AGE_RANGE` * `TARGETING_TYPE_PARENTAL_STATUS` * `TARGETING_TYPE_HOUSEHOLD_INCOME` * `TARGETING_TYPE_AUDIENCE_GROUP` * `TARGETING_TYPE_URL` * `TARGETING_TYPE_APP` * `TARGETING_TYPE_APP_CATEGORY` * `TARGETING_TYPE_KEYWORD` * `TARGETING_TYPE_CATEGORY` * `TARGETING_TYPE_SESSION_POSITION` * `TARGETING_TYPE_YOUTUBE_CHANNEL` * `TARGETING_TYPE_YOUTUBE_VIDEO`",
+	//       "description": "Required. Identifies the type of this assigned targeting option. Supported targeting types include: * `TARGETING_TYPE_AGE_RANGE` * `TARGETING_TYPE_APP` * `TARGETING_TYPE_APP_CATEGORY` * `TARGETING_TYPE_AUDIENCE_GROUP` * `TARGETING_TYPE_CATEGORY` * `TARGETING_TYPE_GENDER` * `TARGETING_TYPE_HOUSEHOLD_INCOME` * `TARGETING_TYPE_KEYWORD` * `TARGETING_TYPE_PARENTAL_STATUS` * `TARGETING_TYPE_SESSION_POSITION` * `TARGETING_TYPE_URL` * `TARGETING_TYPE_YOUTUBE_CHANNEL` * `TARGETING_TYPE_YOUTUBE_VIDEO`",
 	//       "enum": [
 	//         "TARGETING_TYPE_UNSPECIFIED",
 	//         "TARGETING_TYPE_CHANNEL",
@@ -36720,9 +36992,9 @@ func (c *AdvertisersYoutubeAdGroupsTargetingTypesAssignedTargetingOptionsGetCall
 	//         "Target ads in an Open Measurement enabled inventory.",
 	//         "Target ads to a specific audio content type.",
 	//         "Target ads to a specific content genre.",
-	//         "Target ads to a specific YouTube video.",
-	//         "Target ads to a specific YouTube channel.",
-	//         "Target ads to a serve it in a certain position of a session. Only supported for the AdGroup of YouTube Programmatic Reservation line item."
+	//         "Target ads to a specific YouTube video. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
+	//         "Target ads to a specific YouTube channel. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
+	//         "Target ads to a serve it in a certain position of a session. Only supported for Ad Group resources under YouTube Programmatic Reservation line items. Targeting of this type cannot be created or updated using the API."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -36763,16 +37035,17 @@ type AdvertisersYoutubeAdGroupsTargetingTypesAssignedTargetingOptionsListCall st
 }
 
 // List: Lists the targeting options assigned to a YouTube ad group.
-// Inherited targeting is not included.
+// Inherited assigned targeting options are not included.
 //
 //   - advertiserId: The ID of the advertiser the ad group belongs to.
 //   - targetingType: Identifies the type of assigned targeting options to
-//     list. Supported targeting types include: * `TARGETING_TYPE_GENDER`
-//   - `TARGETING_TYPE_AGE_RANGE` * `TARGETING_TYPE_PARENTAL_STATUS` *
-//     `TARGETING_TYPE_HOUSEHOLD_INCOME` * `TARGETING_TYPE_AUDIENCE_GROUP`
-//   - `TARGETING_TYPE_URL` * `TARGETING_TYPE_APP` *
-//     `TARGETING_TYPE_APP_CATEGORY` * `TARGETING_TYPE_KEYWORD` *
-//     `TARGETING_TYPE_CATEGORY` * `TARGETING_TYPE_SESSION_POSITION` *
+//     list. Supported targeting types include: *
+//     `TARGETING_TYPE_AGE_RANGE` * `TARGETING_TYPE_APP` *
+//     `TARGETING_TYPE_APP_CATEGORY` * `TARGETING_TYPE_AUDIENCE_GROUP` *
+//     `TARGETING_TYPE_CATEGORY` * `TARGETING_TYPE_GENDER` *
+//     `TARGETING_TYPE_HOUSEHOLD_INCOME` * `TARGETING_TYPE_KEYWORD` *
+//     `TARGETING_TYPE_PARENTAL_STATUS` *
+//     `TARGETING_TYPE_SESSION_POSITION` * `TARGETING_TYPE_URL` *
 //     `TARGETING_TYPE_YOUTUBE_CHANNEL` * `TARGETING_TYPE_YOUTUBE_VIDEO`.
 //   - youtubeAdGroupId: The ID of the ad group to list assigned targeting
 //     options for.
@@ -36930,7 +37203,7 @@ func (c *AdvertisersYoutubeAdGroupsTargetingTypesAssignedTargetingOptionsListCal
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the targeting options assigned to a YouTube ad group. Inherited targeting is not included.",
+	//   "description": "Lists the targeting options assigned to a YouTube ad group. Inherited assigned targeting options are not included.",
 	//   "flatPath": "v2/advertisers/{advertisersId}/youtubeAdGroups/{youtubeAdGroupsId}/targetingTypes/{targetingTypesId}/assignedTargetingOptions",
 	//   "httpMethod": "GET",
 	//   "id": "displayvideo.advertisers.youtubeAdGroups.targetingTypes.assignedTargetingOptions.list",
@@ -36970,7 +37243,7 @@ func (c *AdvertisersYoutubeAdGroupsTargetingTypesAssignedTargetingOptionsListCal
 	//       "type": "string"
 	//     },
 	//     "targetingType": {
-	//       "description": "Required. Identifies the type of assigned targeting options to list. Supported targeting types include: * `TARGETING_TYPE_GENDER` * `TARGETING_TYPE_AGE_RANGE` * `TARGETING_TYPE_PARENTAL_STATUS` * `TARGETING_TYPE_HOUSEHOLD_INCOME` * `TARGETING_TYPE_AUDIENCE_GROUP` * `TARGETING_TYPE_URL` * `TARGETING_TYPE_APP` * `TARGETING_TYPE_APP_CATEGORY` * `TARGETING_TYPE_KEYWORD` * `TARGETING_TYPE_CATEGORY` * `TARGETING_TYPE_SESSION_POSITION` * `TARGETING_TYPE_YOUTUBE_CHANNEL` * `TARGETING_TYPE_YOUTUBE_VIDEO`",
+	//       "description": "Required. Identifies the type of assigned targeting options to list. Supported targeting types include: * `TARGETING_TYPE_AGE_RANGE` * `TARGETING_TYPE_APP` * `TARGETING_TYPE_APP_CATEGORY` * `TARGETING_TYPE_AUDIENCE_GROUP` * `TARGETING_TYPE_CATEGORY` * `TARGETING_TYPE_GENDER` * `TARGETING_TYPE_HOUSEHOLD_INCOME` * `TARGETING_TYPE_KEYWORD` * `TARGETING_TYPE_PARENTAL_STATUS` * `TARGETING_TYPE_SESSION_POSITION` * `TARGETING_TYPE_URL` * `TARGETING_TYPE_YOUTUBE_CHANNEL` * `TARGETING_TYPE_YOUTUBE_VIDEO`",
 	//       "enum": [
 	//         "TARGETING_TYPE_UNSPECIFIED",
 	//         "TARGETING_TYPE_CHANNEL",
@@ -37069,9 +37342,9 @@ func (c *AdvertisersYoutubeAdGroupsTargetingTypesAssignedTargetingOptionsListCal
 	//         "Target ads in an Open Measurement enabled inventory.",
 	//         "Target ads to a specific audio content type.",
 	//         "Target ads to a specific content genre.",
-	//         "Target ads to a specific YouTube video.",
-	//         "Target ads to a specific YouTube channel.",
-	//         "Target ads to a serve it in a certain position of a session. Only supported for the AdGroup of YouTube Programmatic Reservation line item."
+	//         "Target ads to a specific YouTube video. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
+	//         "Target ads to a specific YouTube channel. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
+	//         "Target ads to a serve it in a certain position of a session. Only supported for Ad Group resources under YouTube Programmatic Reservation line items. Targeting of this type cannot be created or updated using the API."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -47330,9 +47603,9 @@ func (c *PartnersTargetingTypesAssignedTargetingOptionsCreateCall) Do(opts ...go
 	//         "Target ads in an Open Measurement enabled inventory.",
 	//         "Target ads to a specific audio content type.",
 	//         "Target ads to a specific content genre.",
-	//         "Target ads to a specific YouTube video.",
-	//         "Target ads to a specific YouTube channel.",
-	//         "Target ads to a serve it in a certain position of a session. Only supported for the AdGroup of YouTube Programmatic Reservation line item."
+	//         "Target ads to a specific YouTube video. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
+	//         "Target ads to a specific YouTube channel. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
+	//         "Target ads to a serve it in a certain position of a session. Only supported for Ad Group resources under YouTube Programmatic Reservation line items. Targeting of this type cannot be created or updated using the API."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -47594,9 +47867,9 @@ func (c *PartnersTargetingTypesAssignedTargetingOptionsDeleteCall) Do(opts ...go
 	//         "Target ads in an Open Measurement enabled inventory.",
 	//         "Target ads to a specific audio content type.",
 	//         "Target ads to a specific content genre.",
-	//         "Target ads to a specific YouTube video.",
-	//         "Target ads to a specific YouTube channel.",
-	//         "Target ads to a serve it in a certain position of a session. Only supported for the AdGroup of YouTube Programmatic Reservation line item."
+	//         "Target ads to a specific YouTube video. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
+	//         "Target ads to a specific YouTube channel. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
+	//         "Target ads to a serve it in a certain position of a session. Only supported for Ad Group resources under YouTube Programmatic Reservation line items. Targeting of this type cannot be created or updated using the API."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -47870,9 +48143,9 @@ func (c *PartnersTargetingTypesAssignedTargetingOptionsGetCall) Do(opts ...googl
 	//         "Target ads in an Open Measurement enabled inventory.",
 	//         "Target ads to a specific audio content type.",
 	//         "Target ads to a specific content genre.",
-	//         "Target ads to a specific YouTube video.",
-	//         "Target ads to a specific YouTube channel.",
-	//         "Target ads to a serve it in a certain position of a session. Only supported for the AdGroup of YouTube Programmatic Reservation line item."
+	//         "Target ads to a specific YouTube video. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
+	//         "Target ads to a specific YouTube channel. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
+	//         "Target ads to a serve it in a certain position of a session. Only supported for Ad Group resources under YouTube Programmatic Reservation line items. Targeting of this type cannot be created or updated using the API."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -48198,9 +48471,9 @@ func (c *PartnersTargetingTypesAssignedTargetingOptionsListCall) Do(opts ...goog
 	//         "Target ads in an Open Measurement enabled inventory.",
 	//         "Target ads to a specific audio content type.",
 	//         "Target ads to a specific content genre.",
-	//         "Target ads to a specific YouTube video.",
-	//         "Target ads to a specific YouTube channel.",
-	//         "Target ads to a serve it in a certain position of a session. Only supported for the AdGroup of YouTube Programmatic Reservation line item."
+	//         "Target ads to a specific YouTube video. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
+	//         "Target ads to a specific YouTube channel. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
+	//         "Target ads to a serve it in a certain position of a session. Only supported for Ad Group resources under YouTube Programmatic Reservation line items. Targeting of this type cannot be created or updated using the API."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -48794,9 +49067,9 @@ func (c *TargetingTypesTargetingOptionsGetCall) Do(opts ...googleapi.CallOption)
 	//         "Target ads in an Open Measurement enabled inventory.",
 	//         "Target ads to a specific audio content type.",
 	//         "Target ads to a specific content genre.",
-	//         "Target ads to a specific YouTube video.",
-	//         "Target ads to a specific YouTube channel.",
-	//         "Target ads to a serve it in a certain position of a session. Only supported for the AdGroup of YouTube Programmatic Reservation line item."
+	//         "Target ads to a specific YouTube video. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
+	//         "Target ads to a specific YouTube channel. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
+	//         "Target ads to a serve it in a certain position of a session. Only supported for Ad Group resources under YouTube Programmatic Reservation line items. Targeting of this type cannot be created or updated using the API."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -49145,9 +49418,9 @@ func (c *TargetingTypesTargetingOptionsListCall) Do(opts ...googleapi.CallOption
 	//         "Target ads in an Open Measurement enabled inventory.",
 	//         "Target ads to a specific audio content type.",
 	//         "Target ads to a specific content genre.",
-	//         "Target ads to a specific YouTube video.",
-	//         "Target ads to a specific YouTube channel.",
-	//         "Target ads to a serve it in a certain position of a session. Only supported for the AdGroup of YouTube Programmatic Reservation line item."
+	//         "Target ads to a specific YouTube video. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
+	//         "Target ads to a specific YouTube channel. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
+	//         "Target ads to a serve it in a certain position of a session. Only supported for Ad Group resources under YouTube Programmatic Reservation line items. Targeting of this type cannot be created or updated using the API."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -49410,9 +49683,9 @@ func (c *TargetingTypesTargetingOptionsSearchCall) Do(opts ...googleapi.CallOpti
 	//         "Target ads in an Open Measurement enabled inventory.",
 	//         "Target ads to a specific audio content type.",
 	//         "Target ads to a specific content genre.",
-	//         "Target ads to a specific YouTube video.",
-	//         "Target ads to a specific YouTube channel.",
-	//         "Target ads to a serve it in a certain position of a session. Only supported for the AdGroup of YouTube Programmatic Reservation line item."
+	//         "Target ads to a specific YouTube video. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
+	//         "Target ads to a specific YouTube channel. Targeting of this type cannot be created or updated using the API. Although this targeting is inherited by child resources, **inherited targeting of this type will not be retrieveable**.",
+	//         "Target ads to a serve it in a certain position of a session. Only supported for Ad Group resources under YouTube Programmatic Reservation line items. Targeting of this type cannot be created or updated using the API."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",

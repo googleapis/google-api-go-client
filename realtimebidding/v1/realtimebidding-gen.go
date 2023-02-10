@@ -1548,13 +1548,6 @@ type Endpoint struct {
 	//   "OPENRTB_JSON" - OpenRTB / JSON encoding (unversioned/latest).
 	//   "OPENRTB_PROTOBUF" - OpenRTB / Protobuf encoding
 	// (unversioned/latest).
-	//   "OPENRTB_2_2" - Deprecated: Use OPENRTB_JSON.
-	//   "OPENRTB_2_3" - Deprecated: Use OPENRTB_JSON.
-	//   "OPENRTB_PROTOBUF_2_3" - Deprecated: Use OPENRTB_PROTOBUF.
-	//   "OPENRTB_2_4" - Deprecated: Use OPENRTB_JSON.
-	//   "OPENRTB_PROTOBUF_2_4" - Deprecated: Use OPENRTB_PROTOBUF.
-	//   "OPENRTB_2_5" - Deprecated: Use OPENRTB_JSON.
-	//   "OPENRTB_PROTOBUF_2_5" - Deprecated: Use OPENRTB_PROTOBUF.
 	BidProtocol string `json:"bidProtocol,omitempty"`
 
 	// MaximumQps: The maximum number of queries per second allowed to be

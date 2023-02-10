@@ -929,9 +929,11 @@ type Annotation struct {
 	// the Annotation corresponds to.
 	Length int64 `json:"length,omitempty"`
 
-	// LocalId: A unique client-assigned ID for this annotation. This is
-	// helpful in matching the back-filled annotations to the original
-	// annotations on client side, without having to re-parse the message.
+	// LocalId: * A client-assigned ID for this annotation. This is helpful
+	// in matching the back-filled annotations to the original annotations
+	// on client side, without having to re-parse the message. There is no
+	// guarantee an annotation has a local_id, it's a purely client used and
+	// controlled field with no guarantee of uniqueness.
 	LocalId string `json:"localId,omitempty"`
 
 	// MembershipChanged: Metadata for system messages. Clients should never
@@ -1006,8 +1008,14 @@ type Annotation struct {
 	// invite. Should not be set by clients.
 	Type string `json:"type,omitempty"`
 
-	// UniqueId: A unique server-assigned ID for this annotation. This is
-	// helpful in matching annotation objects when fetched from service.
+	// UniqueId: * A unique server-assigned ID for this annotation. This is
+	// helpful in matching annotation objects when fetched from service. All
+	// uploads should have a unique_id after the message they are attached
+	// to is successfully sent. Url annotations that originally were uploads
+	// (i.e. policy violations) will have a unique_id after the message they
+	// are attached to is successfully sent. No other url annotations should
+	// have a unique_id. All drive annotations should have a unique_id after
+	// the message they are attached to is successfully sent.
 	UniqueId string `json:"uniqueId,omitempty"`
 
 	UploadMetadata *UploadMetadata `json:"uploadMetadata,omitempty"`
@@ -7157,6 +7165,7 @@ type CoActivity struct {
 	//   "CO_ACTIVITY_APP_GQUEUES" - GQueues task manager.
 	//   "CO_ACTIVITY_APP_YOU_TUBE_MUSIC" - YouTube Music
 	//   "CO_ACTIVITY_APP_SAMSUNG_NOTES" - Samsung Notes
+	//   "CO_ACTIVITY_APP_HAPPY_AARDVARK" - .
 	CoActivityApp string `json:"coActivityApp,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ActivityTitle") to
@@ -9233,6 +9242,8 @@ type DynamiteMessagesScoringInfo struct {
 
 	JoinedSpaceAffinityScore float64 `json:"joinedSpaceAffinityScore,omitempty"`
 
+	LastReadTimestampAgeInDays float64 `json:"lastReadTimestampAgeInDays,omitempty"`
+
 	MessageAgeInDays float64 `json:"messageAgeInDays,omitempty"`
 
 	MessageSenderAffinityScore float64 `json:"messageSenderAffinityScore,omitempty"`
@@ -9277,6 +9288,7 @@ func (s *DynamiteMessagesScoringInfo) UnmarshalJSON(data []byte) error {
 		FinalScore                         gensupport.JSONFloat64 `json:"finalScore"`
 		FreshnessScore                     gensupport.JSONFloat64 `json:"freshnessScore"`
 		JoinedSpaceAffinityScore           gensupport.JSONFloat64 `json:"joinedSpaceAffinityScore"`
+		LastReadTimestampAgeInDays         gensupport.JSONFloat64 `json:"lastReadTimestampAgeInDays"`
 		MessageAgeInDays                   gensupport.JSONFloat64 `json:"messageAgeInDays"`
 		MessageSenderAffinityScore         gensupport.JSONFloat64 `json:"messageSenderAffinityScore"`
 		TopicalityScore                    gensupport.JSONFloat64 `json:"topicalityScore"`
@@ -9292,6 +9304,7 @@ func (s *DynamiteMessagesScoringInfo) UnmarshalJSON(data []byte) error {
 	s.FinalScore = float64(s1.FinalScore)
 	s.FreshnessScore = float64(s1.FreshnessScore)
 	s.JoinedSpaceAffinityScore = float64(s1.JoinedSpaceAffinityScore)
+	s.LastReadTimestampAgeInDays = float64(s1.LastReadTimestampAgeInDays)
 	s.MessageAgeInDays = float64(s1.MessageAgeInDays)
 	s.MessageSenderAffinityScore = float64(s1.MessageSenderAffinityScore)
 	s.TopicalityScore = float64(s1.TopicalityScore)
@@ -24211,7 +24224,9 @@ func (s *UploadItemRef) MarshalJSON() ([]byte, error) {
 // UploadMetadata: Annotation metadata for user Upload artifacts.
 type UploadMetadata struct {
 	// AttachmentToken: Opaque token. Clients shall simply pass it back to
-	// the Backend. This field will NOT be saved into storage.
+	// the Backend. There is no guarantee the attachment_token returned on
+	// subsequent reads is the same even if nothing has changed. This field
+	// will NOT be saved into storage.
 	AttachmentToken string `json:"attachmentToken,omitempty"`
 
 	// BackendUploadMetadata: Information about the uploaded attachment that

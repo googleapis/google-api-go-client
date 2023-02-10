@@ -435,7 +435,9 @@ type Binding struct {
 	// (https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts).
 	// For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`.
 	// * `group:{emailid}`: An email address that represents a Google group.
-	// For example, `admins@example.com`. *
+	// For example, `admins@example.com`. * `domain:{domain}`: The G Suite
+	// domain (primary) that represents all the users of that domain. For
+	// example, `google.com` or `example.com`. *
 	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
 	// unique identifier) representing a user that has been recently
 	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
@@ -452,9 +454,7 @@ type Binding struct {
 	// that has been recently deleted. For example,
 	// `admins@example.com?uid=123456789012345678901`. If the group is
 	// recovered, this value reverts to `group:{emailid}` and the recovered
-	// group retains the role in the binding. * `domain:{domain}`: The G
-	// Suite domain (primary) that represents all the users of that domain.
-	// For example, `google.com` or `example.com`.
+	// group retains the role in the binding.
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of `members`, or principals.
@@ -558,6 +558,40 @@ func (s *DockerImage) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// DockerRepository: Configuration for a Docker remote repository.
+type DockerRepository struct {
+	// PublicRepository: One of the publicly available Docker repositories
+	// supported by Artifact Registry.
+	//
+	// Possible values:
+	//   "PUBLIC_REPOSITORY_UNSPECIFIED" - Unspecified repository.
+	//   "DOCKER_HUB" - Docker Hub.
+	PublicRepository string `json:"publicRepository,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PublicRepository") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PublicRepository") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DockerRepository) MarshalJSON() ([]byte, error) {
+	type NoMethod DockerRepository
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
@@ -634,6 +668,10 @@ func (s *Expr) MarshalJSON() ([]byte, error) {
 type GoogleDevtoolsArtifactregistryV1File struct {
 	// CreateTime: The time when the File was created.
 	CreateTime string `json:"createTime,omitempty"`
+
+	// FetchTime: Output only. The time when the last attempt to refresh the
+	// file's data was made. Only set when the repository is remote.
+	FetchTime string `json:"fetchTime,omitempty"`
 
 	// Hashes: The hashes of the file content.
 	Hashes []*Hash `json:"hashes,omitempty"`
@@ -1487,6 +1525,40 @@ func (s *MavenArtifact) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// MavenRepository: Configuration for a Maven remote repository.
+type MavenRepository struct {
+	// PublicRepository: One of the publicly available Maven repositories
+	// supported by Artifact Registry.
+	//
+	// Possible values:
+	//   "PUBLIC_REPOSITORY_UNSPECIFIED" - Unspecified repository.
+	//   "MAVEN_CENTRAL" - Maven Central.
+	PublicRepository string `json:"publicRepository,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PublicRepository") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PublicRepository") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MavenRepository) MarshalJSON() ([]byte, error) {
+	type NoMethod MavenRepository
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // MavenRepositoryConfig: MavenRepositoryConfig is maven related
 // repository details. Provides additional configuration details for
 // repositories of the maven format type.
@@ -1580,6 +1652,40 @@ type NpmPackage struct {
 
 func (s *NpmPackage) MarshalJSON() ([]byte, error) {
 	type NoMethod NpmPackage
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// NpmRepository: Configuration for a Npm remote repository.
+type NpmRepository struct {
+	// PublicRepository: One of the publicly available Npm repositories
+	// supported by Artifact Registry.
+	//
+	// Possible values:
+	//   "PUBLIC_REPOSITORY_UNSPECIFIED" - Unspecified repository.
+	//   "NPMJS" - npmjs.
+	PublicRepository string `json:"publicRepository,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PublicRepository") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PublicRepository") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *NpmRepository) MarshalJSON() ([]byte, error) {
+	type NoMethod NpmRepository
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1905,6 +2011,80 @@ func (s *PythonPackage) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// PythonRepository: Configuration for a Python remote repository.
+type PythonRepository struct {
+	// PublicRepository: One of the publicly available Python repositories
+	// supported by Artifact Registry.
+	//
+	// Possible values:
+	//   "PUBLIC_REPOSITORY_UNSPECIFIED" - Unspecified repository.
+	//   "PYPI" - PyPI.
+	PublicRepository string `json:"publicRepository,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PublicRepository") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PublicRepository") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PythonRepository) MarshalJSON() ([]byte, error) {
+	type NoMethod PythonRepository
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RemoteRepositoryConfig: Remote repository configuration.
+type RemoteRepositoryConfig struct {
+	// Description: The description of the remote source.
+	Description string `json:"description,omitempty"`
+
+	// DockerRepository: Specific settings for a Docker remote repository.
+	DockerRepository *DockerRepository `json:"dockerRepository,omitempty"`
+
+	// MavenRepository: Specific settings for a Maven remote repository.
+	MavenRepository *MavenRepository `json:"mavenRepository,omitempty"`
+
+	// NpmRepository: Specific settings for an Npm remote repository.
+	NpmRepository *NpmRepository `json:"npmRepository,omitempty"`
+
+	// PythonRepository: Specific settings for a Python remote repository.
+	PythonRepository *PythonRepository `json:"pythonRepository,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Description") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RemoteRepositoryConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod RemoteRepositoryConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Repository: A Repository for storing artifacts with a specific
 // format.
 type Repository struct {
@@ -1946,9 +2126,24 @@ type Repository struct {
 	// configuration for the repositories of maven type.
 	MavenConfig *MavenRepositoryConfig `json:"mavenConfig,omitempty"`
 
+	// Mode: The mode of the repository.
+	//
+	// Possible values:
+	//   "MODE_UNSPECIFIED" - Unspecified mode.
+	//   "STANDARD_REPOSITORY" - A standard repository storing artifacts.
+	//   "VIRTUAL_REPOSITORY" - A virtual repository to serve artifacts from
+	// one or more sources.
+	//   "REMOTE_REPOSITORY" - A remote repository to serve artifacts from a
+	// remote source.
+	Mode string `json:"mode,omitempty"`
+
 	// Name: The name of the repository, for example:
 	// "projects/p1/locations/us-central1/repositories/repo1".
 	Name string `json:"name,omitempty"`
+
+	// RemoteRepositoryConfig: Configuration specific for a Remote
+	// Repository.
+	RemoteRepositoryConfig *RemoteRepositoryConfig `json:"remoteRepositoryConfig,omitempty"`
 
 	// SatisfiesPzs: Output only. If set, the repository satisfies physical
 	// zone separation.
@@ -1961,6 +2156,10 @@ type Repository struct {
 
 	// UpdateTime: The time when the repository was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
+
+	// VirtualRepositoryConfig: Configuration specific for a Virtual
+	// Repository.
+	VirtualRepositoryConfig *VirtualRepositoryConfig `json:"virtualRepositoryConfig,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -2383,6 +2582,93 @@ func (s *UploadYumArtifactResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// UpstreamPolicy: Artifact policy configuration for the repository
+// contents.
+type UpstreamPolicy struct {
+	// Id: The user-provided ID of the upstream policy.
+	Id string `json:"id,omitempty"`
+
+	// Priority: Entries with a greater priority value take precedence in
+	// the pull order.
+	Priority int64 `json:"priority,omitempty"`
+
+	// Repository: A reference to the repository resource, for example:
+	// "projects/p1/locations/us-central1/repository/repo1".
+	Repository string `json:"repository,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Id") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UpstreamPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod UpstreamPolicy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// VPCSCConfig: The Artifact Registry VPC SC config that apply to a
+// Project.
+type VPCSCConfig struct {
+	// Name: The name of the project's VPC SC Config. Always of the form:
+	// projects/{projectID}/locations/{location}/vpcscConfig In update
+	// request: never set In response: always set
+	Name string `json:"name,omitempty"`
+
+	// VpcscPolicy: The project per location VPC SC policy that defines the
+	// VPC SC behavior for the Remote Repository (Allow/Deny).
+	//
+	// Possible values:
+	//   "VPCSC_POLICY_UNSPECIFIED" - VPCSC_POLICY_UNSPECIFIED - the VPS SC
+	// policy is not defined. When VPS SC policy is not defined - the
+	// Service will use the default behavior (VPCSC_DENY).
+	//   "DENY" - VPCSC_DENY - repository will block the requests to the
+	// Upstreams for the Remote Repositories if the resource is in the
+	// perimeter.
+	//   "ALLOW" - VPCSC_ALLOW - repository will allow the requests to the
+	// Upstreams for the Remote Repositories if the resource is in the
+	// perimeter.
+	VpcscPolicy string `json:"vpcscPolicy,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *VPCSCConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod VPCSCConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Version: The body of a version resource. A version resource
 // represents a collection of components, such as files and other data.
 // This may correspond to a version in many package management schemes.
@@ -2436,6 +2722,37 @@ type Version struct {
 
 func (s *Version) MarshalJSON() ([]byte, error) {
 	type NoMethod Version
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// VirtualRepositoryConfig: Virtual repository configuration.
+type VirtualRepositoryConfig struct {
+	// UpstreamPolicies: Policies that configure the upstream artifacts
+	// distributed by the Virtual Repository. Upstream policies cannot be
+	// set on a standard repository.
+	UpstreamPolicies []*UpstreamPolicy `json:"upstreamPolicies,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "UpstreamPolicies") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "UpstreamPolicies") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *VirtualRepositoryConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod VirtualRepositoryConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2935,6 +3252,153 @@ func (c *ProjectsLocationsGetCall) Do(opts ...googleapi.CallOption) (*Location, 
 
 }
 
+// method id "artifactregistry.projects.locations.getVpcscConfig":
+
+type ProjectsLocationsGetVpcscConfigCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetVpcscConfig: Retrieves the VPCSC Config for the Project.
+//
+// - name: The name of the VPCSCConfig resource.
+func (r *ProjectsLocationsService) GetVpcscConfig(name string) *ProjectsLocationsGetVpcscConfigCall {
+	c := &ProjectsLocationsGetVpcscConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsGetVpcscConfigCall) Fields(s ...googleapi.Field) *ProjectsLocationsGetVpcscConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsGetVpcscConfigCall) IfNoneMatch(entityTag string) *ProjectsLocationsGetVpcscConfigCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsGetVpcscConfigCall) Context(ctx context.Context) *ProjectsLocationsGetVpcscConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsGetVpcscConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGetVpcscConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "artifactregistry.projects.locations.getVpcscConfig" call.
+// Exactly one of *VPCSCConfig or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *VPCSCConfig.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsGetVpcscConfigCall) Do(opts ...googleapi.CallOption) (*VPCSCConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &VPCSCConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the VPCSC Config for the Project.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/vpcscConfig",
+	//   "httpMethod": "GET",
+	//   "id": "artifactregistry.projects.locations.getVpcscConfig",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the VPCSCConfig resource.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/vpcscConfig$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "VPCSCConfig"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
+	//   ]
+	// }
+
+}
+
 // method id "artifactregistry.projects.locations.list":
 
 type ProjectsLocationsListCall struct {
@@ -3143,6 +3607,163 @@ func (c *ProjectsLocationsListCall) Pages(ctx context.Context, f func(*ListLocat
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "artifactregistry.projects.locations.updateVpcscConfig":
+
+type ProjectsLocationsUpdateVpcscConfigCall struct {
+	s           *Service
+	name        string
+	vpcscconfig *VPCSCConfig
+	urlParams_  gensupport.URLParams
+	ctx_        context.Context
+	header_     http.Header
+}
+
+// UpdateVpcscConfig: Updates the VPCSC Config for the Project.
+//
+//   - name: The name of the project's VPC SC Config. Always of the form:
+//     projects/{projectID}/locations/{location}/vpcscConfig In update
+//     request: never set In response: always set.
+func (r *ProjectsLocationsService) UpdateVpcscConfig(name string, vpcscconfig *VPCSCConfig) *ProjectsLocationsUpdateVpcscConfigCall {
+	c := &ProjectsLocationsUpdateVpcscConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.vpcscconfig = vpcscconfig
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Field mask to
+// support partial updates.
+func (c *ProjectsLocationsUpdateVpcscConfigCall) UpdateMask(updateMask string) *ProjectsLocationsUpdateVpcscConfigCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsUpdateVpcscConfigCall) Fields(s ...googleapi.Field) *ProjectsLocationsUpdateVpcscConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsUpdateVpcscConfigCall) Context(ctx context.Context) *ProjectsLocationsUpdateVpcscConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsUpdateVpcscConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsUpdateVpcscConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.vpcscconfig)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "artifactregistry.projects.locations.updateVpcscConfig" call.
+// Exactly one of *VPCSCConfig or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *VPCSCConfig.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsUpdateVpcscConfigCall) Do(opts ...googleapi.CallOption) (*VPCSCConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &VPCSCConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates the VPCSC Config for the Project.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/vpcscConfig",
+	//   "httpMethod": "PATCH",
+	//   "id": "artifactregistry.projects.locations.updateVpcscConfig",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The name of the project's VPC SC Config. Always of the form: projects/{projectID}/locations/{location}/vpcscConfig In update request: never set In response: always set",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/vpcscConfig$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Field mask to support partial updates.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "VPCSCConfig"
+	//   },
+	//   "response": {
+	//     "$ref": "VPCSCConfig"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
 }
 
 // method id "artifactregistry.projects.locations.operations.get":

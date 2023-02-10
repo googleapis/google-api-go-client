@@ -970,6 +970,10 @@ type GoogleCloudRunV2HTTPGetAction struct {
 	// Path: Path to access on the HTTP server. Defaults to '/'.
 	Path string `json:"path,omitempty"`
 
+	// Port: Port number to access on the container. Must be in the range 1
+	// to 65535.
+	Port int64 `json:"port,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "HttpHeaders") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any

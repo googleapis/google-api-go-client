@@ -2015,9 +2015,9 @@ type File struct {
 	// Drive; it isn't populated for Docs Editors or shortcut files.
 	FileExtension string `json:"fileExtension,omitempty"`
 
-	// FileSize: The size of the file in bytes. This field is populated for
-	// files with content stored in Google Drive and for files in Docs
-	// Editors; it isn't populated for shortcut files.
+	// FileSize: The size of the file's content in bytes. This field is
+	// populated for files with binary content stored in Google Drive and
+	// for Docs Editors files; it is not populated for shortcuts or folders.
 	FileSize int64 `json:"fileSize,omitempty,string"`
 
 	// FolderColorRgb: Folder color as an RGB hex string if the file is a

@@ -270,6 +270,106 @@ func (s *Date) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// HistoryKey: Key defines all the dimensions that identify this record
+// as unique.
+type HistoryKey struct {
+	// FormFactor: The form factor is the device class that all users used
+	// to access the site for this record. If the form factor is
+	// unspecified, then aggregated data over all form factors will be
+	// returned.
+	//
+	// Possible values:
+	//   "ALL_FORM_FACTORS" - The default value, representing all device
+	// classes.
+	//   "PHONE" - The device class representing a "mobile"/"phone" sized
+	// client.
+	//   "DESKTOP" - The device class representing a "desktop"/"laptop" type
+	// full size client.
+	//   "TABLET" - The device class representing a "tablet" type client.
+	FormFactor string `json:"formFactor,omitempty"`
+
+	// Origin: Origin specifies the origin that this record is for. Note:
+	// When specifying an origin, data for loads under this origin over all
+	// pages are aggregated into origin level user experience data.
+	Origin string `json:"origin,omitempty"`
+
+	// Url: Url specifies a specific url that this record is for. This url
+	// should be normalized, following the normalization actions taken in
+	// the request to increase the chances of successful lookup. Note: When
+	// specifying a "url" only data for that specific url will be
+	// aggregated.
+	Url string `json:"url,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FormFactor") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FormFactor") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *HistoryKey) MarshalJSON() ([]byte, error) {
+	type NoMethod HistoryKey
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// HistoryRecord: HistoryRecord is a timeseries of Chrome UX Report
+// data. It contains user experience statistics for a single url pattern
+// and a set of dimensions.
+type HistoryRecord struct {
+	// CollectionPeriods: The collection periods indicate when each of the
+	// data points reflected in the time series data in metrics was
+	// collected. Note that all the time series share the same collection
+	// periods, and it is enforced in the CrUX pipeline that every time
+	// series has the same number of data points.
+	CollectionPeriods []*CollectionPeriod `json:"collectionPeriods,omitempty"`
+
+	// Key: Key defines all of the unique querying parameters needed to look
+	// up a user experience history record.
+	Key *HistoryKey `json:"key,omitempty"`
+
+	// Metrics: Metrics is the map of user experience time series data
+	// available for the record defined in the key field. Metrics are keyed
+	// on the metric name. Allowed key values: ["first_contentful_paint",
+	// "first_input_delay", "largest_contentful_paint",
+	// "cumulative_layout_shift", "experimental_time_to_first_byte",
+	// "experimental_interaction_to_next_paint"]
+	Metrics map[string]MetricTimeseries `json:"metrics,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CollectionPeriods")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CollectionPeriods") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *HistoryRecord) MarshalJSON() ([]byte, error) {
+	type NoMethod HistoryRecord
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Key: Key defines all the dimensions that identify this record as
 // unique.
 type Key struct {
@@ -369,6 +469,46 @@ func (s *Metric) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// MetricTimeseries: A `metric timeseries` is a set of user experience
+// data for a single web performance metric, like "first contentful
+// paint". It contains a summary histogram of real world Chrome usage as
+// a series of `bins`, where each bin has density values for a
+// particular time period.
+type MetricTimeseries struct {
+	// HistogramTimeseries: The histogram of user experiences for a metric.
+	// The histogram will have at least one bin and the densities of all
+	// bins will add up to ~1, for each timeseries entry.
+	HistogramTimeseries []*TimeseriesBin `json:"histogramTimeseries,omitempty"`
+
+	// PercentilesTimeseries: Commonly useful percentiles of the Metric. The
+	// value type for the percentiles will be the same as the value types
+	// given for the Histogram bins.
+	PercentilesTimeseries *TimeseriesPercentiles `json:"percentilesTimeseries,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "HistogramTimeseries")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "HistogramTimeseries") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MetricTimeseries) MarshalJSON() ([]byte, error) {
+	type NoMethod MetricTimeseries
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Percentiles: Percentiles contains synthetic values of a metric at a
 // given statistical percentile. These are used for estimating a
 // metric's value as experienced by a percentage of users out of the
@@ -397,6 +537,108 @@ type Percentiles struct {
 
 func (s *Percentiles) MarshalJSON() ([]byte, error) {
 	type NoMethod Percentiles
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// QueryHistoryRequest: Request payload sent by a physical web client.
+// This request includes all necessary context to load a particular user
+// experience history record.
+type QueryHistoryRequest struct {
+	// FormFactor: The form factor is a query dimension that specifies the
+	// device class that the record's data should belong to. Note: If no
+	// form factor is specified, then a special record with aggregated data
+	// over all form factors will be returned.
+	//
+	// Possible values:
+	//   "ALL_FORM_FACTORS" - The default value, representing all device
+	// classes.
+	//   "PHONE" - The device class representing a "mobile"/"phone" sized
+	// client.
+	//   "DESKTOP" - The device class representing a "desktop"/"laptop" type
+	// full size client.
+	//   "TABLET" - The device class representing a "tablet" type client.
+	FormFactor string `json:"formFactor,omitempty"`
+
+	// Metrics: The metrics that should be included in the response. If none
+	// are specified then any metrics found will be returned. Allowed
+	// values: ["first_contentful_paint", "first_input_delay",
+	// "largest_contentful_paint", "cumulative_layout_shift",
+	// "experimental_time_to_first_byte",
+	// "experimental_interaction_to_next_paint"]
+	Metrics []string `json:"metrics,omitempty"`
+
+	// Origin: The url pattern "origin" refers to a url pattern that is the
+	// origin of a website. Examples: "https://example.com",
+	// "https://cloud.google.com"
+	Origin string `json:"origin,omitempty"`
+
+	// Url: The url pattern "url" refers to a url pattern that is any
+	// arbitrary url. Examples: "https://example.com/",
+	// "https://cloud.google.com/why-google-cloud/"
+	Url string `json:"url,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FormFactor") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FormFactor") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *QueryHistoryRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod QueryHistoryRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// QueryHistoryResponse: Response payload sent back to a physical web
+// client. This response contains the record found based on the
+// identiers present in a `QueryHistoryRequest`. The returned response
+// will have a history record, and sometimes details on normalization
+// actions taken on the request that were necessary to make the request
+// successful.
+type QueryHistoryResponse struct {
+	// Record: The record that was found.
+	Record *HistoryRecord `json:"record,omitempty"`
+
+	// UrlNormalizationDetails: These are details about automated
+	// normalization actions that were taken in order to make the requested
+	// `url_pattern` valid.
+	UrlNormalizationDetails *UrlNormalization `json:"urlNormalizationDetails,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Record") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Record") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *QueryHistoryResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod QueryHistoryResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -557,6 +799,89 @@ func (s *Record) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// TimeseriesBin: A bin is a discrete portion of data spanning from
+// start to end, or if no end is given, then from start to +inf. A bin's
+// start and end values are given in the value type of the metric it
+// represents. For example, "first contentful paint" is measured in
+// milliseconds and exposed as ints, therefore its metric bins will use
+// int32s for its start and end types. However, "cumulative layout
+// shift" is measured in unitless decimals and is exposed as a decimal
+// encoded as a string, therefore its metric bins will use strings for
+// its value type.
+type TimeseriesBin struct {
+	// Densities: The proportion of users that experienced this bin's value
+	// for the given metric in a given collection period; the index for each
+	// of these entries corresponds to an entry in the CollectionPeriods
+	// field in the HistoryRecord message, which describes when the density
+	// was observed in the field. Thus, the length of this list of densities
+	// is equal to the length of the CollectionPeriods field in the
+	// HistoryRecord message.
+	Densities []float64 `json:"densities,omitempty"`
+
+	// End: End is the end of the data bin. If end is not populated, then
+	// the bin has no end and is valid from start to +inf.
+	End interface{} `json:"end,omitempty"`
+
+	// Start: Start is the beginning of the data bin.
+	Start interface{} `json:"start,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Densities") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Densities") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TimeseriesBin) MarshalJSON() ([]byte, error) {
+	type NoMethod TimeseriesBin
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// TimeseriesPercentiles: Percentiles contains synthetic values of a
+// metric at a given statistical percentile. These are used for
+// estimating a metric's value as experienced by a percentage of users
+// out of the total number of users.
+type TimeseriesPercentiles struct {
+	// P75s: 75% of users experienced the given metric at or below this
+	// value. The length of this list of densities is equal to the length of
+	// the CollectionPeriods field in the HistoryRecord message, which
+	// describes when the density was observed in the field.
+	P75s []interface{} `json:"p75s,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "P75s") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "P75s") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TimeseriesPercentiles) MarshalJSON() ([]byte, error) {
+	type NoMethod TimeseriesPercentiles
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // UrlNormalization: Object representing the normalization actions taken
 // to normalize a url to achieve a higher chance of successful lookup.
 // These are simple automated changes that are taken when looking up the
@@ -592,6 +917,131 @@ func (s *UrlNormalization) MarshalJSON() ([]byte, error) {
 	type NoMethod UrlNormalization
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// method id "chromeuxreport.records.queryHistoryRecord":
+
+type RecordsQueryHistoryRecordCall struct {
+	s                   *Service
+	queryhistoryrequest *QueryHistoryRequest
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// QueryHistoryRecord: Queries the Chrome User Experience Report for a
+// timeseries `history record` for a given site. Returns a `history
+// record` that contains one or more `metric timeseries` corresponding
+// to performance data about the requested site.
+func (r *RecordsService) QueryHistoryRecord(queryhistoryrequest *QueryHistoryRequest) *RecordsQueryHistoryRecordCall {
+	c := &RecordsQueryHistoryRecordCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.queryhistoryrequest = queryhistoryrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RecordsQueryHistoryRecordCall) Fields(s ...googleapi.Field) *RecordsQueryHistoryRecordCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *RecordsQueryHistoryRecordCall) Context(ctx context.Context) *RecordsQueryHistoryRecordCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *RecordsQueryHistoryRecordCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *RecordsQueryHistoryRecordCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.queryhistoryrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/records:queryHistoryRecord")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chromeuxreport.records.queryHistoryRecord" call.
+// Exactly one of *QueryHistoryResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *QueryHistoryResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *RecordsQueryHistoryRecordCall) Do(opts ...googleapi.CallOption) (*QueryHistoryResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &QueryHistoryResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Queries the Chrome User Experience Report for a timeseries `history record` for a given site. Returns a `history record` that contains one or more `metric timeseries` corresponding to performance data about the requested site.",
+	//   "flatPath": "v1/records:queryHistoryRecord",
+	//   "httpMethod": "POST",
+	//   "id": "chromeuxreport.records.queryHistoryRecord",
+	//   "parameterOrder": [],
+	//   "parameters": {},
+	//   "path": "v1/records:queryHistoryRecord",
+	//   "request": {
+	//     "$ref": "QueryHistoryRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "QueryHistoryResponse"
+	//   }
+	// }
+
 }
 
 // method id "chromeuxreport.records.queryRecord":

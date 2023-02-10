@@ -502,6 +502,11 @@ type AndroidApp struct {
 	// etag is strongly validated.
 	Etag string `json:"etag,omitempty"`
 
+	// ExpireTime: Output only. Timestamp of when the App will be considered
+	// expired and cannot be undeleted. This value is only provided if the
+	// App is in the `DELETED` state.
+	ExpireTime string `json:"expireTime,omitempty"`
+
 	// Name: The resource name of the AndroidApp, in the format: projects/
 	// PROJECT_IDENTIFIER/androidApps/APP_ID * PROJECT_IDENTIFIER: the
 	// parent Project's `ProjectNumber`
@@ -737,6 +742,11 @@ type FirebaseAppInfo struct {
 	// DisplayName: The user-assigned display name of the Firebase App.
 	DisplayName string `json:"displayName,omitempty"`
 
+	// ExpireTime: Output only. Timestamp of when the App will be considered
+	// expired and cannot be undeleted. This value is only provided if the
+	// App is in the `DELETED` state.
+	ExpireTime string `json:"expireTime,omitempty"`
+
 	// Name: The resource name of the Firebase App, in the format:
 	// projects/PROJECT_ID /iosApps/APP_ID or
 	// projects/PROJECT_ID/androidApps/APP_ID or projects/
@@ -935,6 +945,11 @@ type IosApp struct {
 	// (https://google.aip.dev/154#declarative-friendly-resources). This
 	// etag is strongly validated.
 	Etag string `json:"etag,omitempty"`
+
+	// ExpireTime: Output only. Timestamp of when the App will be considered
+	// expired and cannot be undeleted. This value is only provided if the
+	// App is in the `DELETED` state.
+	ExpireTime string `json:"expireTime,omitempty"`
 
 	// Name: The resource name of the IosApp, in the format:
 	// projects/PROJECT_IDENTIFIER /iosApps/APP_ID * PROJECT_IDENTIFIER: the
@@ -2049,6 +2064,11 @@ type WebApp struct {
 	// (https://google.aip.dev/154#declarative-friendly-resources). This
 	// etag is strongly validated.
 	Etag string `json:"etag,omitempty"`
+
+	// ExpireTime: Output only. Timestamp of when the App will be considered
+	// expired and cannot be undeleted. This value is only provided if the
+	// App is in the `DELETED` state.
+	ExpireTime string `json:"expireTime,omitempty"`
 
 	// Name: The resource name of the WebApp, in the format:
 	// projects/PROJECT_IDENTIFIER /webApps/APP_ID * PROJECT_IDENTIFIER: the

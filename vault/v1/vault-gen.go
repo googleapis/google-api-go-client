@@ -1104,7 +1104,8 @@ func (s *HangoutsChatExportOptions) MarshalJSON() ([]byte, error) {
 // HangoutsChatInfo: The Chat spaces to search
 type HangoutsChatInfo struct {
 	// RoomId: A list of Chat spaces IDs, as provided by the Chat API
-	// (https://developers.google.com/hangouts/chat).
+	// (https://developers.google.com/chat). There is a limit of exporting
+	// from 500 Chat spaces per request.
 	RoomId []string `json:"roomId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "RoomId") to

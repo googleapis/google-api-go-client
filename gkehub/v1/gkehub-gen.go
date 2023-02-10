@@ -445,7 +445,9 @@ type Binding struct {
 	// (https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts).
 	// For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`.
 	// * `group:{emailid}`: An email address that represents a Google group.
-	// For example, `admins@example.com`. *
+	// For example, `admins@example.com`. * `domain:{domain}`: The G Suite
+	// domain (primary) that represents all the users of that domain. For
+	// example, `google.com` or `example.com`. *
 	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
 	// unique identifier) representing a user that has been recently
 	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
@@ -462,9 +464,7 @@ type Binding struct {
 	// that has been recently deleted. For example,
 	// `admins@example.com?uid=123456789012345678901`. If the group is
 	// recovered, this value reverts to `group:{emailid}` and the recovered
-	// group retains the role in the binding. * `domain:{domain}`: The G
-	// Suite domain (primary) that represents all the users of that domain.
-	// For example, `google.com` or `example.com`.
+	// group retains the role in the binding.
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of `members`, or principals.
@@ -1427,6 +1427,42 @@ func (s *ConfigManagementPolicyController) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ConfigManagementPolicyControllerMigration: State for the migration of
+// PolicyController from ACM -> PoCo Hub.
+type ConfigManagementPolicyControllerMigration struct {
+	// Stage: Stage of the migration.
+	//
+	// Possible values:
+	//   "STAGE_UNSPECIFIED" - Unknown state of migration.
+	//   "ACM_MANAGED" - ACM Hub/Operator manages policycontroller. No
+	// migration yet completed.
+	//   "POCO_MANAGED" - All migrations steps complete; Poco Hub now
+	// manages policycontroller.
+	Stage string `json:"stage,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Stage") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Stage") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ConfigManagementPolicyControllerMigration) MarshalJSON() ([]byte, error) {
+	type NoMethod ConfigManagementPolicyControllerMigration
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ConfigManagementPolicyControllerMonitoring:
 // PolicyControllerMonitoring specifies the backends Policy Controller
 // should export metrics to. For example, to specify metrics should be
@@ -1471,6 +1507,10 @@ func (s *ConfigManagementPolicyControllerMonitoring) MarshalJSON() ([]byte, erro
 type ConfigManagementPolicyControllerState struct {
 	// DeploymentState: The state about the policy controller installation.
 	DeploymentState *ConfigManagementGatekeeperDeploymentState `json:"deploymentState,omitempty"`
+
+	// Migration: Record state of ACM -> PoCo Hub migration for this
+	// feature.
+	Migration *ConfigManagementPolicyControllerMigration `json:"migration,omitempty"`
 
 	// Version: The version of Gatekeeper Policy Controller deployed.
 	Version *ConfigManagementPolicyControllerVersion `json:"version,omitempty"`
@@ -6442,6 +6482,7 @@ type ProjectsLocationsMembershipsListCall struct {
 //
 //   - parent: The parent (project and location) where the Memberships
 //     will be listed. Specified in the format `projects/*/locations/*`.
+//     `projects/*/locations/-` list memberships in all the regions.
 func (r *ProjectsLocationsMembershipsService) List(parent string) *ProjectsLocationsMembershipsListCall {
 	c := &ProjectsLocationsMembershipsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6614,7 +6655,7 @@ func (c *ProjectsLocationsMembershipsListCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent (project and location) where the Memberships will be listed. Specified in the format `projects/*/locations/*`.",
+	//       "description": "Required. The parent (project and location) where the Memberships will be listed. Specified in the format `projects/*/locations/*`. `projects/*/locations/-` list memberships in all the regions.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,

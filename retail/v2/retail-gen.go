@@ -2890,8 +2890,9 @@ type GoogleCloudRetailV2PredictRequest struct {
 	// true under the `params` field, then attribute-based expressions are
 	// expected instead of the above described tag-based syntax. Examples: *
 	// (colors: ANY("Red", "Blue")) AND NOT (categories: ANY("Phones")) *
-	// (availability: ANY("IN_STOCK")) AND (colors: ANY("Red") OR
-	// categories: ANY("Phones"))
+	// (brands: ANY("Pixel")) AND (colors: ANY("Red") OR categories:
+	// ANY("Phones")) For more information, see Filter recommendations
+	// (https://cloud.google.com/retail/docs/filter-recs).
 	Filter string `json:"filter,omitempty"`
 
 	// Labels: The labels applied to a resource must meet the following

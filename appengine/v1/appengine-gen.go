@@ -1539,6 +1539,40 @@ func (s *FirewallRule) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// FlexibleRuntimeSettings: Runtime settings for the App Engine flexible
+// environment.
+type FlexibleRuntimeSettings struct {
+	// OperatingSystem: The operating system of the application runtime.
+	OperatingSystem string `json:"operatingSystem,omitempty"`
+
+	// RuntimeVersion: The runtime version of an App Engine flexible
+	// application.
+	RuntimeVersion string `json:"runtimeVersion,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "OperatingSystem") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "OperatingSystem") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FlexibleRuntimeSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod FlexibleRuntimeSettings
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAppengineV1betaLocationMetadata: Metadata for the given
 // google.cloud.location.Location.
 type GoogleAppengineV1betaLocationMetadata struct {
@@ -3882,6 +3916,9 @@ type Version struct {
 	// ErrorHandlers: Custom static error pages. Limited to 10KB per
 	// page.Only returned in GET requests if view=FULL is set.
 	ErrorHandlers []*ErrorHandler `json:"errorHandlers,omitempty"`
+
+	// FlexibleRuntimeSettings: Settings for App Engine flexible runtimes.
+	FlexibleRuntimeSettings *FlexibleRuntimeSettings `json:"flexibleRuntimeSettings,omitempty"`
 
 	// Handlers: An ordered list of URL-matching patterns that should be
 	// applied to incoming requests. The first matching URL handles the

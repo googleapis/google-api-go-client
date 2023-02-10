@@ -1097,6 +1097,77 @@ func (s *GuestAccelerator) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// InterRegionEgress: Egress traffic between two regions.
+type InterRegionEgress struct {
+	// DestinationRegion: Which region
+	// (https://cloud.google.com/compute/docs/regions-zones) the egress data
+	// goes to.
+	DestinationRegion string `json:"destinationRegion,omitempty"`
+
+	// EgressRate: VM to VM egress usage. Expected units such as "GiBy/s,
+	// By/s, etc."
+	EgressRate *Usage `json:"egressRate,omitempty"`
+
+	// SourceRegion: Which region
+	// (https://cloud.google.com/compute/docs/regions-zones) the egress data
+	// comes from.
+	SourceRegion string `json:"sourceRegion,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DestinationRegion")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DestinationRegion") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InterRegionEgress) MarshalJSON() ([]byte, error) {
+	type NoMethod InterRegionEgress
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// IntraRegionEgress: Egress traffic within the same region. When source
+// region and destination region are in the same zone, using the
+// internal IP addresses, there isn't any egress charge.
+type IntraRegionEgress struct {
+	// EgressRate: VM to VM egress usage. Expected units such as "GiBy/s,
+	// By/s, etc."
+	EgressRate *Usage `json:"egressRate,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EgressRate") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EgressRate") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IntraRegionEgress) MarshalJSON() ([]byte, error) {
+	type NoMethod IntraRegionEgress
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // MachineType: Specification of machine series, memory, and number of
 // vCPUs.
 type MachineType struct {
@@ -1967,6 +2038,36 @@ func (s *VmResourceBasedCud) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// VmToVmEgressWorkload: Specify VM to VM egress.
+type VmToVmEgressWorkload struct {
+	InterRegionEgress *InterRegionEgress `json:"interRegionEgress,omitempty"`
+
+	IntraRegionEgress *IntraRegionEgress `json:"intraRegionEgress,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "InterRegionEgress")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "InterRegionEgress") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *VmToVmEgressWorkload) MarshalJSON() ([]byte, error) {
+	type NoMethod VmToVmEgressWorkload
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Workload: Specifies usage on a single Google Cloud product over a
 // time frame. Each Google Cloud product has its own message, containing
 // specific product configuration parameters of the product usage
@@ -2004,6 +2105,9 @@ type Workload struct {
 
 	// StandardTierEgressWorkload: Usage on Standard Tier Internet Egress.
 	StandardTierEgressWorkload *StandardTierEgressWorkload `json:"standardTierEgressWorkload,omitempty"`
+
+	// VmToVmEgressWorkload: Usage on Vm to Vm Egress.
+	VmToVmEgressWorkload *VmToVmEgressWorkload `json:"vmToVmEgressWorkload,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "CloudCdnEgressWorkload") to unconditionally include in API requests.

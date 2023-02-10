@@ -1712,6 +1712,8 @@ type RestrictionChange struct {
 	// duplicates of items.
 	//   "DRIVE_FILE_STREAM" - When restricted, this prevents use of Drive
 	// File Stream.
+	//   "FILE_ORGANIZER_CAN_SHARE_FOLDERS" - When restricted, this limits
+	// sharing of folders to managers only.
 	Feature string `json:"feature,omitempty"`
 
 	// NewRestriction: The restriction in place after the change.

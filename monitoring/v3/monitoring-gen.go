@@ -6190,6 +6190,12 @@ type UptimeCheckConfig struct {
 	// continent of South America.
 	//   "ASIA_PACIFIC" - Allows checks to run from locations within the
 	// Asia Pacific area (ex: Singapore).
+	//   "USA_OREGON" - Allows checks to run from locations within the
+	// western United States of America
+	//   "USA_IOWA" - Allows checks to run from locations within the central
+	// United States of America
+	//   "USA_VIRGINIA" - Allows checks to run from locations within the
+	// eastern United States of America
 	SelectedRegions []string `json:"selectedRegions,omitempty"`
 
 	// TcpCheck: Contains information needed to make a TCP check.
@@ -6264,6 +6270,12 @@ type UptimeCheckIp struct {
 	// continent of South America.
 	//   "ASIA_PACIFIC" - Allows checks to run from locations within the
 	// Asia Pacific area (ex: Singapore).
+	//   "USA_OREGON" - Allows checks to run from locations within the
+	// western United States of America
+	//   "USA_IOWA" - Allows checks to run from locations within the central
+	// United States of America
+	//   "USA_VIRGINIA" - Allows checks to run from locations within the
+	// eastern United States of America
 	Region string `json:"region,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "IpAddress") to

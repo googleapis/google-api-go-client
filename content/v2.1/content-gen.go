@@ -14376,8 +14376,12 @@ type Promotion struct {
 	// ContentLanguage: Required. The content language used as part of the
 	// unique identifier. `en` content language is available for all target
 	// countries. `fr` content language is available for `CA` and `FR`
-	// target countries, and `de` content language is available for `DE`
-	// target country.
+	// target countries. `de` content language is available for `DE` target
+	// country. `nl` content language is available for `NL` target country.
+	// `it` content language is available for `IT` target country. `pt`
+	// content language is available for `BR` target country. `ja` content
+	// language is available for `JP` target country. `ko` content language
+	// is available for `KR` target country.
 	ContentLanguage string `json:"contentLanguage,omitempty"`
 
 	// CouponValueType: Required. Coupon value type for the promotion.
@@ -14567,7 +14571,8 @@ type Promotion struct {
 	StoreCodeExclusion []string `json:"storeCodeExclusion,omitempty"`
 
 	// TargetCountry: Required. The target country used as part of the
-	// unique identifier. Can be `AU`, `CA`, `DE`, `FR`, `GB`, `IN` or `US`.
+	// unique identifier. Can be `AU`, `CA`, `DE`, `FR`, `GB`, `IN`, `US`,
+	// `BR`, `ES`, `NL`, `JP`, `IT` or `KR`.
 	TargetCountry string `json:"targetCountry,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

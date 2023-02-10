@@ -327,6 +327,9 @@ type InstanceConfig struct {
 	//   "STANDARD_SMALL" - Instance Size STANDARD_SMALL.
 	//   "STANDARD_MEDIUM" - Instance Size STANDARD_MEDIUM.
 	//   "STANDARD_LARGE" - Instance Size STANDARD_LARGE.
+	//   "STANDARD_XLARGE" - Instance Size STANDARD_XLARGE.
+	//   "STANDARD_2XLARGE" - Instance Size STANDARD_2XLARGE.
+	//   "STANDARD_3XLARGE" - Instance Size STANDARD_3XLARGE.
 	InstanceSize string `json:"instanceSize,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "InstanceSize") to

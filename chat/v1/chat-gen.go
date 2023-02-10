@@ -1090,8 +1090,9 @@ type DeprecatedEvent struct {
 
 	// ConfigCompleteRedirectUrl: The URL the Chat app should redirect the
 	// user to after they have completed an authorization or configuration
-	// flow outside of Google Chat. See the Authorizing access to 3p
-	// services guide (/chat/how-tos/auth-3p) for more information.
+	// flow outside of Google Chat. For more information, see Connect a Chat
+	// app with other services & tools
+	// (https://developers.google.com/chat/how-tos/connect-web-services-tools).
 	ConfigCompleteRedirectUrl string `json:"configCompleteRedirectUrl,omitempty"`
 
 	// DialogEventType: The type of dialog
@@ -3322,17 +3323,11 @@ type Membership struct {
 	// when a member joined or was invited to join a space.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// Member: A Google Chat user or app. Format: `users/{user}` or
-	// `users/app` When `users/{user}`, represents a person
-	// (https://developers.google.com/people/api/rest/v1/people) in the
-	// People API or a user
-	// (https://developers.google.com/admin-sdk/directory/reference/rest/v1/users)
-	// in the Admin SDK Directory API. When `users/app`, represents a Chat
-	// app creating membership for itself.
+	// Member: The Google Chat user or app the membership corresponds to.
 	Member *User `json:"member,omitempty"`
 
-	// Name: Resource name of the membership. Format:
-	// spaces/{space}/members/{member}
+	// Name: Resource name of the membership, assigned by the server.
+	// Format: spaces/{space}/members/{member}
 	Name string `json:"name,omitempty"`
 
 	// Role: Output only. User's role within a Chat space, which determines
@@ -3683,7 +3678,8 @@ func (s *SlashCommandMetadata) MarshalJSON() ([]byte, error) {
 type Space struct {
 	// DisplayName: The space's display name. Required when creating a space
 	// (https://developers.google.com/chat/api/reference/rest/v1/spaces/create).
-	// For direct messages, this field may be empty.
+	// For direct messages, this field may be empty. Supports up to 128
+	// characters.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Name: Resource name of the space. Format: spaces/{space}
@@ -3758,9 +3754,11 @@ func (s *Space) MarshalJSON() ([]byte, error) {
 type SpaceDetails struct {
 	// Description: Optional. A description of the space. It could describe
 	// the space's discussion topic, functional purpose, or participants.
+	// Supports up to 150 characters.
 	Description string `json:"description,omitempty"`
 
 	// Guidelines: Optional. The space's rules, expectations, and etiquette.
+	// Supports up to 5,000 characters.
 	Guidelines string `json:"guidelines,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
@@ -4033,9 +4031,16 @@ type User struct {
 	// profile is not visible.
 	IsAnonymous bool `json:"isAnonymous,omitempty"`
 
-	// Name: Resource name for a Google Chat user. For human users,
-	// represents a person in the People API or a user in the Admin SDK
-	// Directory API. Format: `users/{user}`
+	// Name: Resource name for a Google Chat user. Format: `users/{user}`.
+	// `users/app` can be used as an alias for the calling app bot user. For
+	// human users, `{user}` is the same user identifier as: - the
+	// `{person_id`} for the Person
+	// (https://developers.google.com/people/api/rest/v1/people) in the
+	// People API, where the Person `resource_name` is `people/{person_id}`.
+	// For example, `users/123456789` in Chat API represents the same person
+	// as `people/123456789` in People API. - the `id` for a user
+	// (https://developers.google.com/admin-sdk/directory/reference/rest/v1/users)
+	// in the Admin SDK Directory API.
 	Name string `json:"name,omitempty"`
 
 	// Type: User type.

@@ -3532,7 +3532,10 @@ func (c *ProjectsLocationsFunctionsListCall) OrderBy(orderBy string) *ProjectsLo
 }
 
 // PageSize sets the optional parameter "pageSize": Maximum number of
-// functions to return per call.
+// functions to return per call. The largest allowed page_size is 1,000,
+// if the page_size is omitted or specified as greater than 1,000 then
+// it will be replaced as 1,000. The size of the list response can be
+// less than specified when used with filters.
 func (c *ProjectsLocationsFunctionsListCall) PageSize(pageSize int64) *ProjectsLocationsFunctionsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -3665,7 +3668,7 @@ func (c *ProjectsLocationsFunctionsListCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Maximum number of functions to return per call.",
+	//       "description": "Maximum number of functions to return per call. The largest allowed page_size is 1,000, if the page_size is omitted or specified as greater than 1,000 then it will be replaced as 1,000. The size of the list response can be less than specified when used with filters.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"

@@ -502,7 +502,7 @@
       }
     }
   },
-  "revision": "20230131",
+  "revision": "20230207",
   "rootUrl": "https://chat.googleapis.com/",
   "schemas": {
     "ActionParameter": {
@@ -984,7 +984,7 @@
           "description": "Represents information about the user's client, such as locale, host app, and platform. For Chat apps, `CommonEventObject` includes information submitted by users interacting with [dialogs](https://developers.google.com/chat/how-tos/dialogs), like data entered on a card."
         },
         "configCompleteRedirectUrl": {
-          "description": "The URL the Chat app should redirect the user to after they have completed an authorization or configuration flow outside of Google Chat. See the [Authorizing access to 3p services guide](/chat/how-tos/auth-3p) for more information.",
+          "description": "The URL the Chat app should redirect the user to after they have completed an authorization or configuration flow outside of Google Chat. For more information, see [Connect a Chat app with other services \u0026 tools](https://developers.google.com/chat/how-tos/connect-web-services-tools).",
           "type": "string"
         },
         "dialogEventType": {
@@ -2248,10 +2248,10 @@
         },
         "member": {
           "$ref": "User",
-          "description": "A Google Chat user or app. Format: `users/{user}` or `users/app` When `users/{user}`, represents a [person](https://developers.google.com/people/api/rest/v1/people) in the People API or a [user](https://developers.google.com/admin-sdk/directory/reference/rest/v1/users) in the Admin SDK Directory API. When `users/app`, represents a Chat app creating membership for itself."
+          "description": "The Google Chat user or app the membership corresponds to."
         },
         "name": {
-          "description": "Resource name of the membership. Format: spaces/{space}/members/{member}",
+          "description": "Resource name of the membership, assigned by the server. Format: spaces/{space}/members/{member}",
           "type": "string"
         },
         "role": {
@@ -2488,7 +2488,7 @@
       "id": "Space",
       "properties": {
         "displayName": {
-          "description": "The space's display name. Required when [creating a space](https://developers.google.com/chat/api/reference/rest/v1/spaces/create). For direct messages, this field may be empty.",
+          "description": "The space's display name. Required when [creating a space](https://developers.google.com/chat/api/reference/rest/v1/spaces/create). For direct messages, this field may be empty. Supports up to 128 characters.",
           "type": "string"
         },
         "name": {
@@ -2548,11 +2548,11 @@
       "id": "SpaceDetails",
       "properties": {
         "description": {
-          "description": "Optional. A description of the space. It could describe the space's discussion topic, functional purpose, or participants.",
+          "description": "Optional. A description of the space. It could describe the space's discussion topic, functional purpose, or participants. Supports up to 150 characters.",
           "type": "string"
         },
         "guidelines": {
-          "description": "Optional. The space's rules, expectations, and etiquette.",
+          "description": "Optional. The space's rules, expectations, and etiquette. Supports up to 5,000 characters.",
           "type": "string"
         }
       },
@@ -2691,7 +2691,7 @@
           "type": "boolean"
         },
         "name": {
-          "description": "Resource name for a Google Chat user. For human users, represents a person in the People API or a user in the Admin SDK Directory API. Format: `users/{user}`",
+          "description": "Resource name for a Google Chat user. Format: `users/{user}`. `users/app` can be used as an alias for the calling app bot user. For human users, `{user}` is the same user identifier as: - the `{person_id`} for the [Person](https://developers.google.com/people/api/rest/v1/people) in the People API, where the Person `resource_name` is `people/{person_id}`. For example, `users/123456789` in Chat API represents the same person as `people/123456789` in People API. - the `id` for a [user](https://developers.google.com/admin-sdk/directory/reference/rest/v1/users) in the Admin SDK Directory API.",
           "type": "string"
         },
         "type": {

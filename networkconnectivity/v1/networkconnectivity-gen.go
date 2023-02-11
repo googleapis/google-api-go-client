@@ -392,7 +392,9 @@ type Binding struct {
 	// (https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts).
 	// For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`.
 	// * `group:{emailid}`: An email address that represents a Google group.
-	// For example, `admins@example.com`. *
+	// For example, `admins@example.com`. * `domain:{domain}`: The G Suite
+	// domain (primary) that represents all the users of that domain. For
+	// example, `google.com` or `example.com`. *
 	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
 	// unique identifier) representing a user that has been recently
 	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
@@ -409,9 +411,7 @@ type Binding struct {
 	// that has been recently deleted. For example,
 	// `admins@example.com?uid=123456789012345678901`. If the group is
 	// recovered, this value reverts to `group:{emailid}` and the recovered
-	// group retains the role in the binding. * `domain:{domain}`: The G
-	// Suite domain (primary) that represents all the users of that domain.
-	// For example, `google.com` or `example.com`.
+	// group retains the role in the binding.
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of `members`, or principals.
@@ -693,10 +693,10 @@ type Hub struct {
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - No state information available
-	//   "CREATING" - The resource's create operation is in progress
+	//   "CREATING" - The resource's create operation is in progress.
 	//   "ACTIVE" - The resource is active
-	//   "DELETING" - The resource's Delete operation is in progress
-	//   "UPDATING" - The resource's Update operation is in progress
+	//   "DELETING" - The resource's delete operation is in progress.
+	//   "UPDATING" - The resource's update operation is in progress.
 	State string `json:"state,omitempty"`
 
 	// UniqueId: Output only. The Google-generated UUID for the hub. This
@@ -1557,10 +1557,10 @@ type Spoke struct {
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - No state information available
-	//   "CREATING" - The resource's create operation is in progress
+	//   "CREATING" - The resource's create operation is in progress.
 	//   "ACTIVE" - The resource is active
-	//   "DELETING" - The resource's Delete operation is in progress
-	//   "UPDATING" - The resource's Update operation is in progress
+	//   "DELETING" - The resource's delete operation is in progress.
+	//   "UPDATING" - The resource's update operation is in progress.
 	State string `json:"state,omitempty"`
 
 	// UniqueId: Output only. The Google-generated UUID for the spoke. This

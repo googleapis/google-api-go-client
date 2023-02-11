@@ -1188,9 +1188,7 @@ func (s *Product) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ProductCertification: The data matches with the vertical
-// specification for product in
-// http://google3/googlebase/verticals/devel/product_certification
+// ProductCertification: Product certification data.
 type ProductCertification struct {
 	// Brand: Required. This is the product's brand name. The brand is used
 	// to help identify your product.

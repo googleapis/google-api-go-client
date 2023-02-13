@@ -666,7 +666,7 @@ func (s *Expr) MarshalJSON() ([]byte, error) {
 // GoogleDevtoolsArtifactregistryV1File: Files store content that is
 // potentially associated with Packages or Versions.
 type GoogleDevtoolsArtifactregistryV1File struct {
-	// CreateTime: The time when the File was created.
+	// CreateTime: Output only. The time when the File was created.
 	CreateTime string `json:"createTime,omitempty"`
 
 	// FetchTime: Output only. The time when the last attempt to refresh the
@@ -688,7 +688,7 @@ type GoogleDevtoolsArtifactregistryV1File struct {
 	// SizeBytes: The size of the File in bytes.
 	SizeBytes int64 `json:"sizeBytes,omitempty,string"`
 
-	// UpdateTime: The time when the File was last updated.
+	// UpdateTime: Output only. The time when the File was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2593,7 +2593,7 @@ type UpstreamPolicy struct {
 	Priority int64 `json:"priority,omitempty"`
 
 	// Repository: A reference to the repository resource, for example:
-	// "projects/p1/locations/us-central1/repository/repo1".
+	// "projects/p1/locations/us-central1/repositories/repo1".
 	Repository string `json:"repository,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
@@ -6025,7 +6025,7 @@ func (c *ProjectsLocationsRepositoriesFilesGetCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the file to retrieve.",
+	//       "description": "Required. The name of the file to retrieve.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/repositories/[^/]+/files/.*$",
 	//       "required": true,
@@ -6229,7 +6229,7 @@ func (c *ProjectsLocationsRepositoriesFilesListCall) Do(opts ...googleapi.CallOp
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The name of the repository whose files will be listed. For example: \"projects/p1/locations/us-central1/repositories/repo1",
+	//       "description": "Required. The name of the repository whose files will be listed. For example: \"projects/p1/locations/us-central1/repositories/repo1",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/repositories/[^/]+$",
 	//       "required": true,

@@ -1422,6 +1422,11 @@ type MysqlSourceConfig struct {
 	// IncludeObjects: MySQL objects to retrieve from the source.
 	IncludeObjects *MysqlRdbms `json:"includeObjects,omitempty"`
 
+	// MaxConcurrentBackfillTasks: Maximum number of concurrent backfill
+	// tasks. The number should be non negative. If not set (or set to 0),
+	// the system's default value will be used.
+	MaxConcurrentBackfillTasks int64 `json:"maxConcurrentBackfillTasks,omitempty"`
+
 	// MaxConcurrentCdcTasks: Maximum number of concurrent CDC tasks. The
 	// number should be non negative. If not set (or set to 0), the system's
 	// default value will be used.
@@ -1851,6 +1856,11 @@ type OracleSourceConfig struct {
 	// IncludeObjects: Oracle objects to include in the stream.
 	IncludeObjects *OracleRdbms `json:"includeObjects,omitempty"`
 
+	// MaxConcurrentBackfillTasks: Maximum number of concurrent backfill
+	// tasks. The number should be non negative. If not set (or set to 0),
+	// the system's default value will be used.
+	MaxConcurrentBackfillTasks int64 `json:"maxConcurrentBackfillTasks,omitempty"`
+
 	// MaxConcurrentCdcTasks: Maximum number of concurrent CDC tasks. The
 	// number should be non negative. If not set (or set to 0), the system's
 	// default value will be used.
@@ -2104,6 +2114,11 @@ type PostgresqlSourceConfig struct {
 
 	// IncludeObjects: PostgreSQL objects to include in the stream.
 	IncludeObjects *PostgresqlRdbms `json:"includeObjects,omitempty"`
+
+	// MaxConcurrentBackfillTasks: Maximum number of concurrent backfill
+	// tasks. The number should be non negative. If not set (or set to 0),
+	// the system's default value will be used.
+	MaxConcurrentBackfillTasks int64 `json:"maxConcurrentBackfillTasks,omitempty"`
 
 	// Publication: Required. The name of the publication that includes the
 	// set of all tables that are defined in the stream's include_objects.

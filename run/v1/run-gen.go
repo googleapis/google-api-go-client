@@ -1802,6 +1802,10 @@ type HTTPGetAction struct {
 	// Path: Path to access on the HTTP server.
 	Path string `json:"path,omitempty"`
 
+	// Port: Port number to access on the container. Number must be in the
+	// range 1 to 65535.
+	Port int64 `json:"port,omitempty"`
+
 	// Scheme: Not supported by Cloud Run.
 	Scheme string `json:"scheme,omitempty"`
 

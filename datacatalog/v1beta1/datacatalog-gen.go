@@ -587,11 +587,11 @@ func (s *GoogleCloudDatacatalogV1ImportEntriesResponse) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatacatalogV1ReconcileTagsMetadata: Metadata message for
-// long-running operation returned by the ReconcileTags.
+// GoogleCloudDatacatalogV1ReconcileTagsMetadata: Long-running operation
+// metadata message returned by the ReconcileTags.
 type GoogleCloudDatacatalogV1ReconcileTagsMetadata struct {
-	// Errors: Map that maps name of each tagged column (or empty string in
-	// case of sole entry) to tagging operation status.
+	// Errors: Maps the name of each tagged column (or empty string for a
+	// sole entry) to tagging operation status.
 	Errors map[string]Status `json:"errors,omitempty"`
 
 	// State: State of the reconciliation operation.
@@ -628,8 +628,8 @@ func (s *GoogleCloudDatacatalogV1ReconcileTagsMetadata) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatacatalogV1ReconcileTagsResponse: Request message for
-// long-running operation returned by the ReconcileTags.
+// GoogleCloudDatacatalogV1ReconcileTagsResponse: Long-running operation
+// response message returned by ReconcileTags.
 type GoogleCloudDatacatalogV1ReconcileTagsResponse struct {
 	// CreatedTagsCount: Number of tags created in the request.
 	CreatedTagsCount int64 `json:"createdTagsCount,omitempty,string"`
@@ -1698,10 +1698,10 @@ func (s *GoogleCloudDatacatalogV1beta1SearchCatalogRequest) MarshalJSON() ([]byt
 // GoogleCloudDatacatalogV1beta1SearchCatalogRequestScope: The criteria
 // that select the subspace used for query matching.
 type GoogleCloudDatacatalogV1beta1SearchCatalogRequestScope struct {
-	// IncludeGcpPublicDatasets: If `true`, include Google Cloud Platform
-	// (GCP) public datasets in the search results. Info on GCP public
-	// datasets is available at https://cloud.google.com/public-datasets/.
-	// By default, GCP public datasets are excluded.
+	// IncludeGcpPublicDatasets: If `true`, include Google Cloud public
+	// datasets in the search results. Info on Google Cloud public datasets
+	// is available at https://cloud.google.com/public-datasets/. By
+	// default, Google Cloud public datasets are excluded.
 	IncludeGcpPublicDatasets bool `json:"includeGcpPublicDatasets,omitempty"`
 
 	// IncludeOrgIds: The list of organization IDs to search within. To find
@@ -2184,7 +2184,8 @@ func (s *GoogleCloudDatacatalogV1beta1TagFieldEnumValue) MarshalJSON() ([]byte, 
 
 // GoogleCloudDatacatalogV1beta1TagTemplate: A tag template defines a
 // tag, which can have one or more typed fields. The template is used to
-// create and attach the tag to GCP resources. Tag template roles
+// create and attach the tag to Google Cloud resources. Tag template
+// roles
 // (https://cloud.google.com/iam/docs/understanding-roles#data-catalog-roles)
 // provide permissions to create, edit, and use the template. See, for
 // example, the TagTemplate User
@@ -2334,7 +2335,7 @@ type GoogleCloudDatacatalogV1beta1Taxonomy struct {
 
 	// Service: Output only. Identity of the service which owns the
 	// Taxonomy. This field is only populated when the taxonomy is created
-	// by a GCP service. Currently only 'DATAPLEX' is supported.
+	// by a Google Cloud service. Currently only 'DATAPLEX' is supported.
 	Service *GoogleCloudDatacatalogV1beta1TaxonomyService `json:"service,omitempty"`
 
 	// TaxonomyTimestamps: Output only. Timestamps about this taxonomy. Only
@@ -2376,7 +2377,7 @@ type GoogleCloudDatacatalogV1beta1TaxonomyService struct {
 	// Identity: P4SA Identity of the service.
 	Identity string `json:"identity,omitempty"`
 
-	// Name: The GCP service name.
+	// Name: The Google Cloud service name.
 	//
 	// Possible values:
 	//   "MANAGING_SYSTEM_UNSPECIFIED" - Default value

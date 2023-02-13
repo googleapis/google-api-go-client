@@ -443,26 +443,32 @@ type ProjectsOperationsService struct {
 // DTMF detections running in parallel. Hierarchy:
 // Agent->Flow->Page->Fulfillment/Parameter.
 type GoogleCloudDialogflowCxV3AdvancedSettings struct {
+	// AudioExportGcsDestination: If present, incoming audio is exported by
+	// Dialogflow to the configured Google Cloud Storage destination.
+	// Exposed at the following levels: - Agent level - Flow level
+	AudioExportGcsDestination *GoogleCloudDialogflowCxV3GcsDestination `json:"audioExportGcsDestination,omitempty"`
+
 	// LoggingSettings: Settings for logging. Settings for Dialogflow
 	// History, Contact Center messages, StackDriver logs, and speech
 	// logging. Exposed at the following levels: - Agent level.
 	LoggingSettings *GoogleCloudDialogflowCxV3AdvancedSettingsLoggingSettings `json:"loggingSettings,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "LoggingSettings") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "AudioExportGcsDestination") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "LoggingSettings") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g.
+	// "AudioExportGcsDestination") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -576,6 +582,10 @@ type GoogleCloudDialogflowCxV3Agent struct {
 	// SupportedLanguageCodes: The list of all languages supported by the
 	// agent (except for the `default_language_code`).
 	SupportedLanguageCodes []string `json:"supportedLanguageCodes,omitempty"`
+
+	// TextToSpeechSettings: Settings on instructing the speech synthesizer
+	// on how to generate the output audio content.
+	TextToSpeechSettings *GoogleCloudDialogflowCxV3TextToSpeechSettings `json:"textToSpeechSettings,omitempty"`
 
 	// TimeZone: Required. The time zone of the agent from the time zone
 	// database (https://www.iana.org/time-zones), e.g., America/New_York,
@@ -3195,6 +3205,39 @@ type GoogleCloudDialogflowCxV3FulfillmentSetParameterAction struct {
 
 func (s *GoogleCloudDialogflowCxV3FulfillmentSetParameterAction) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3FulfillmentSetParameterAction
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3GcsDestination: Google Cloud Storage
+// location for a Dialogflow operation that writes or exports objects
+// (e.g. exported agent or transcripts) outside of Dialogflow.
+type GoogleCloudDialogflowCxV3GcsDestination struct {
+	// Uri: Required. The Google Cloud Storage URI for the exported objects.
+	// A URI is of the form: gs://bucket/object-name-or-prefix Whether a
+	// full object name, or just a prefix, its usage depends on the
+	// Dialogflow operation.
+	Uri string `json:"uri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Uri") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Uri") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3GcsDestination) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3GcsDestination
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -6996,6 +7039,40 @@ type GoogleCloudDialogflowCxV3TextInput struct {
 
 func (s *GoogleCloudDialogflowCxV3TextInput) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3TextInput
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3TextToSpeechSettings: Settings related to
+// speech generating.
+type GoogleCloudDialogflowCxV3TextToSpeechSettings struct {
+	// SynthesizeSpeechConfigs: Configuration of how speech should be
+	// synthesized, mapping from language
+	// (https://dialogflow.com/docs/reference/language) to
+	// SynthesizeSpeechConfig.
+	SynthesizeSpeechConfigs map[string]GoogleCloudDialogflowCxV3SynthesizeSpeechConfig `json:"synthesizeSpeechConfigs,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "SynthesizeSpeechConfigs") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SynthesizeSpeechConfigs")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3TextToSpeechSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3TextToSpeechSettings
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

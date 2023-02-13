@@ -821,9 +821,11 @@ type Binding struct {
 	// (https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts).
 	// For example, my-project.svc.id.goog[my-namespace/my-kubernetes-sa].
 	// group:{emailid}: An email address that represents a Google group. For
-	// example, admins@example.com. deleted:user:{emailid}?uid={uniqueid}:
-	// An email address (plus unique identifier) representing a user that
-	// has been recently deleted. For example,
+	// example, admins@example.com. domain:{domain}: The G Suite domain
+	// (primary) that represents all the users of that domain. For example,
+	// google.com or example.com. deleted:user:{emailid}?uid={uniqueid}: An
+	// email address (plus unique identifier) representing a user that has
+	// been recently deleted. For example,
 	// alice@example.com?uid=123456789012345678901. If the user is
 	// recovered, this value reverts to user:{emailid} and the recovered
 	// user retains the role in the binding.
@@ -838,9 +840,7 @@ type Binding struct {
 	// that has been recently deleted. For example,
 	// admins@example.com?uid=123456789012345678901. If the group is
 	// recovered, this value reverts to group:{emailid} and the recovered
-	// group retains the role in the binding. domain:{domain}: The G Suite
-	// domain (primary) that represents all the users of that domain. For
-	// example, google.com or example.com.
+	// group retains the role in the binding.
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of members, or principals.
@@ -1695,8 +1695,30 @@ type ExecutionConfig struct {
 	// workload.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
 
+	// StagingBucket: Optional. A Cloud Storage bucket used to stage
+	// workload dependencies, config files, and store workload output and
+	// other ephemeral data, such as Spark history files. If you do not
+	// specify a staging bucket, Cloud Dataproc will determine a Cloud
+	// Storage location according to the region where your workload is
+	// running, and then create and manage project-level, per-location
+	// staging and temporary buckets. This field requires a Cloud Storage
+	// bucket name, not a gs://... URI to a Cloud Storage bucket.
+	StagingBucket string `json:"stagingBucket,omitempty"`
+
 	// SubnetworkUri: Optional. Subnetwork URI to connect workload to.
 	SubnetworkUri string `json:"subnetworkUri,omitempty"`
+
+	// Ttl: Optional. The duration after which the workload will be
+	// terminated. When the workload passes this ttl, it will be
+	// unconditionally killed without waiting for ongoing work to finish.
+	// Minimum value is 10 minutes; maximum value is 14 days (see JSON
+	// representation of Duration
+	// (https://developers.google.com/protocol-buffers/docs/proto3#json)).
+	// If both ttl and idle_ttl are specified, the conditions are treated as
+	// and OR: the workload will be terminated when it has been idle for
+	// idle_ttl or when the ttl has passed, whichever comes first. If ttl is
+	// not specified for a session, it defaults to 24h.
+	Ttl string `json:"ttl,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "IdleTtl") to
 	// unconditionally include in API requests. By default, fields with
@@ -5064,6 +5086,7 @@ type SoftwareConfig struct {
 	//   "HBASE" - HBase. (beta)
 	//   "HIVE_WEBHCAT" - The Hive Web HCatalog (the REST service for
 	// accessing HCatalog).
+	//   "HUDI" - Hudi.
 	//   "JUPYTER" - The Jupyter Notebook.
 	//   "PRESTO" - The Presto query engine.
 	//   "TRINO" - The Trino query engine.
@@ -8167,6 +8190,31 @@ func (r *ProjectsLocationsBatchesService) List(parent string) *ProjectsLocations
 	return c
 }
 
+// Filter sets the optional parameter "filter": A filter for the batches
+// to return in the response.A filter is a logical expression
+// constraining the values of various fields in each batch resource.
+// Filters are case sensitive, and may contain multiple clauses combined
+// with logical operators (AND/OR). Supported fields are batch_id,
+// batch_uuid, state, and create_time.e.g. state = RUNNING and
+// create_time < "2023-01-01T00:00:00Z" filters for batches in state
+// RUNNING that were created before 2023-01-01See
+// https://google.aip.dev/assets/misc/ebnf-filtering.txt for a detailed
+// description of the filter syntax and a list of supported comparisons.
+func (c *ProjectsLocationsBatchesListCall) Filter(filter string) *ProjectsLocationsBatchesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Field(s) on which to
+// sort the list of batches.Currently the only supported sort orders are
+// unspecified (empty) and create_time desc to sort by most recently
+// created batches first.See https://google.aip.dev/132#ordering for
+// more details.
+func (c *ProjectsLocationsBatchesListCall) OrderBy(orderBy string) *ProjectsLocationsBatchesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": The maximum number
 // of batches to return in each response. The service may return fewer
 // than this value. The default page size is 20; the maximum page size
@@ -8291,6 +8339,16 @@ func (c *ProjectsLocationsBatchesListCall) Do(opts ...googleapi.CallOption) (*Li
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. A filter for the batches to return in the response.A filter is a logical expression constraining the values of various fields in each batch resource. Filters are case sensitive, and may contain multiple clauses combined with logical operators (AND/OR). Supported fields are batch_id, batch_uuid, state, and create_time.e.g. state = RUNNING and create_time \u003c \"2023-01-01T00:00:00Z\" filters for batches in state RUNNING that were created before 2023-01-01See https://google.aip.dev/assets/misc/ebnf-filtering.txt for a detailed description of the filter syntax and a list of supported comparisons.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Optional. Field(s) on which to sort the list of batches.Currently the only supported sort orders are unspecified (empty) and create_time desc to sort by most recently created batches first.See https://google.aip.dev/132#ordering for more details.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "pageSize": {
 	//       "description": "Optional. The maximum number of batches to return in each response. The service may return fewer than this value. The default page size is 20; the maximum page size is 1000.",
 	//       "format": "int32",

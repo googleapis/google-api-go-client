@@ -15838,6 +15838,9 @@ func (s *GoogleCloudDialogflowV2SuggestArticlesResponse) MarshalJSON() ([]byte, 
 // GoogleCloudDialogflowV2SuggestConversationSummaryRequest: The request
 // message for Conversations.SuggestConversationSummary.
 type GoogleCloudDialogflowV2SuggestConversationSummaryRequest struct {
+	// AssistQueryParams: Parameters for a human assist query.
+	AssistQueryParams *GoogleCloudDialogflowV2AssistQueryParameters `json:"assistQueryParams,omitempty"`
+
 	// ContextSize: Max number of messages prior to and including
 	// [latest_message] to use as context when compiling the suggestion. By
 	// default 500 and at most 1000.
@@ -15849,20 +15852,21 @@ type GoogleCloudDialogflowV2SuggestConversationSummaryRequest struct {
 	// `projects//locations//conversations//messages/`.
 	LatestMessage string `json:"latestMessage,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "ContextSize") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "AssistQueryParams")
+	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ContextSize") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AssistQueryParams") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 

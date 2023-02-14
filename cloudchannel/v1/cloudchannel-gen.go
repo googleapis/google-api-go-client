@@ -1483,9 +1483,9 @@ type GoogleCloudChannelV1Entitlement struct {
 	// assignable units for a flexible offer OR - num_units: The total
 	// commitment for commitment-based offers The response may additionally
 	// include the following output-only Parameters: - assigned_units: The
-	// number of licenses assigned to users. For GCP billing accounts, the
-	// following Parameter may be accepted as input: - display_name: The
-	// display name of the billing account.
+	// number of licenses assigned to users. For GCP billing subaccounts,
+	// the following Parameter may be accepted as input: - display_name: The
+	// display name of the billing subaccount.
 	Parameters []*GoogleCloudChannelV1Parameter `json:"parameters,omitempty"`
 
 	// ProvisionedService: Output only. Service provisioning details for the
@@ -4665,9 +4665,9 @@ type GoogleCloudChannelV1alpha1Entitlement struct {
 	// assignable units for a flexible offer OR - num_units: The total
 	// commitment for commitment-based offers The response may additionally
 	// include the following output-only Parameters: - assigned_units: The
-	// number of licenses assigned to users. For GCP billing accounts, the
-	// following Parameter may be accepted as input: - display_name: The
-	// display name of the billing account.
+	// number of licenses assigned to users. For GCP billing subaccounts,
+	// the following Parameter may be accepted as input: - display_name: The
+	// display name of the billing subaccount.
 	Parameters []*GoogleCloudChannelV1alpha1Parameter `json:"parameters,omitempty"`
 
 	// ProvisionedService: Output only. Service provisioning details for the

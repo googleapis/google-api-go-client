@@ -2491,6 +2491,7 @@ type Enterprise struct {
 	EnabledNotificationTypes []string `json:"enabledNotificationTypes,omitempty"`
 
 	// EnterpriseDisplayName: The name of the enterprise displayed to users.
+	// This field has a maximum length of 100 characters.
 	EnterpriseDisplayName string `json:"enterpriseDisplayName,omitempty"`
 
 	// Logo: An image displayed as a logo during device provisioning.
@@ -6662,7 +6663,7 @@ type EnterprisesCreateCall struct {
 }
 
 // Create: Creates an enterprise. This is the last step in the
-// enterprise signup flow.
+// enterprise signup flow. See also: SigninDetail
 func (r *EnterprisesService) Create(enterprise *Enterprise) *EnterprisesCreateCall {
 	c := &EnterprisesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterprise = enterprise
@@ -6798,7 +6799,7 @@ func (c *EnterprisesCreateCall) Do(opts ...googleapi.CallOption) (*Enterprise, e
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates an enterprise. This is the last step in the enterprise signup flow.",
+	//   "description": "Creates an enterprise. This is the last step in the enterprise signup flow. See also: SigninDetail",
 	//   "flatPath": "v1/enterprises",
 	//   "httpMethod": "POST",
 	//   "id": "androidmanagement.enterprises.create",
@@ -7347,7 +7348,7 @@ type EnterprisesPatchCall struct {
 	header_    http.Header
 }
 
-// Patch: Updates an enterprise.
+// Patch: Updates an enterprise. See also: SigninDetail
 //
 //   - name: The name of the enterprise in the form
 //     enterprises/{enterpriseId}.
@@ -7457,7 +7458,7 @@ func (c *EnterprisesPatchCall) Do(opts ...googleapi.CallOption) (*Enterprise, er
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates an enterprise.",
+	//   "description": "Updates an enterprise. See also: SigninDetail",
 	//   "flatPath": "v1/enterprises/{enterprisesId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "androidmanagement.enterprises.patch",

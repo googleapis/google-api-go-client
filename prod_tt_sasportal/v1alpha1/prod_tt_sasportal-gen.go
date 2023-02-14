@@ -1683,6 +1683,51 @@ func (s *SasPortalPolicy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// SasPortalProvisionDeploymentRequest: Request for
+// [ProvisionDeployment].
+// [spectrum.sas.portal.v1alpha1.Provisioning.ProvisionDeployment]. No
+// input is needed, because GCP Project, Organization Info, and
+// caller’s GAIA ID should be retrieved from the RPC handler, and used
+// as inputs to create a new SAS organization (if not exists) and a new
+// SAS deployment.
+type SasPortalProvisionDeploymentRequest struct {
+}
+
+// SasPortalProvisionDeploymentResponse: Response for
+// [ProvisionDeployment].
+// [spectrum.sas.portal.v1alpha1.Provisioning.ProvisionDeployment].
+type SasPortalProvisionDeploymentResponse struct {
+	// ErrorMessage: Optional. Optional error message if the provisioning
+	// request is not successful.
+	ErrorMessage string `json:"errorMessage,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "ErrorMessage") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ErrorMessage") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SasPortalProvisionDeploymentResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod SasPortalProvisionDeploymentResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // SasPortalSetPolicyRequest: Request message for `SetPolicy` method.
 type SasPortalSetPolicyRequest struct {
 	// DisableNotification: Optional. Set the field as `true` to disable the
@@ -2406,6 +2451,134 @@ func (c *CustomersPatchCall) Do(opts ...googleapi.CallOption) (*SasPortalCustome
 	//   },
 	//   "response": {
 	//     "$ref": "SasPortalCustomer"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/sasportal"
+	//   ]
+	// }
+
+}
+
+// method id "prod_tt_sasportal.customers.provisionDeployment":
+
+type CustomersProvisionDeploymentCall struct {
+	s                                   *Service
+	sasportalprovisiondeploymentrequest *SasPortalProvisionDeploymentRequest
+	urlParams_                          gensupport.URLParams
+	ctx_                                context.Context
+	header_                             http.Header
+}
+
+// ProvisionDeployment: Creates a new SAS deployment through the GCP
+// workflow. Creates a SAS organization if an organization match is not
+// found.
+func (r *CustomersService) ProvisionDeployment(sasportalprovisiondeploymentrequest *SasPortalProvisionDeploymentRequest) *CustomersProvisionDeploymentCall {
+	c := &CustomersProvisionDeploymentCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.sasportalprovisiondeploymentrequest = sasportalprovisiondeploymentrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CustomersProvisionDeploymentCall) Fields(s ...googleapi.Field) *CustomersProvisionDeploymentCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *CustomersProvisionDeploymentCall) Context(ctx context.Context) *CustomersProvisionDeploymentCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *CustomersProvisionDeploymentCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersProvisionDeploymentCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.sasportalprovisiondeploymentrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/customers:provisionDeployment")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "prod_tt_sasportal.customers.provisionDeployment" call.
+// Exactly one of *SasPortalProvisionDeploymentResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *SasPortalProvisionDeploymentResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *CustomersProvisionDeploymentCall) Do(opts ...googleapi.CallOption) (*SasPortalProvisionDeploymentResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SasPortalProvisionDeploymentResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new SAS deployment through the GCP workflow. Creates a SAS organization if an organization match is not found.",
+	//   "flatPath": "v1alpha1/customers:provisionDeployment",
+	//   "httpMethod": "POST",
+	//   "id": "prod_tt_sasportal.customers.provisionDeployment",
+	//   "parameterOrder": [],
+	//   "parameters": {},
+	//   "path": "v1alpha1/customers:provisionDeployment",
+	//   "request": {
+	//     "$ref": "SasPortalProvisionDeploymentRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "SasPortalProvisionDeploymentResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/sasportal"

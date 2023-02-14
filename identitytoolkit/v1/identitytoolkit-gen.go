@@ -2505,7 +2505,10 @@ type GoogleCloudIdentitytoolkitV1SignInWithGameCenterRequest struct {
 	// account represented by this ID token.
 	IdToken string `json:"idToken,omitempty"`
 
-	// PlayerId: Required. The user's Game Center player ID.
+	// PlayerId: Required. The user's Game Center player ID. Deprecated by
+	// Apple. Pass `playerID` along with `gamePlayerID` and `teamPlayerID`
+	// to initiate the migration of a user's Game Center player ID to
+	// `gamePlayerID`.
 	PlayerId string `json:"playerId,omitempty"`
 
 	// PublicKeyUrl: Required. The URL to fetch the Apple public key in
@@ -2580,7 +2583,9 @@ type GoogleCloudIdentitytoolkitV1SignInWithGameCenterResponse struct {
 	// response.
 	LocalId string `json:"localId,omitempty"`
 
-	// PlayerId: The user's Game Center player ID.
+	// PlayerId: The user's Game Center player ID. Pass `playerID` along
+	// with `gamePlayerID` and `teamPlayerID` to initiate the migration of a
+	// user's Game Center player ID to `gamePlayerID`.
 	PlayerId string `json:"playerId,omitempty"`
 
 	// RefreshToken: An Identity Platform refresh token for the
@@ -4955,7 +4960,18 @@ type AccountsSignInWithGameCenterCall struct {
 // bundle ID is required in the request header as
 // `x-ios-bundle-identifier`. An API key
 // (https://cloud.google.com/docs/authentication/api-keys) is required
-// in the request in order to identify the Google Cloud project.
+// in the request in order to identify the Google Cloud project. Apple
+// has deprecated the `playerID` field
+// (https://developer.apple.com/documentation/gamekit/gkplayer/1521127-playerid/).
+// The Apple platform Firebase SDK will use `gamePlayerID` and
+// `teamPlayerID` from version 10.5.0 and onwards. Upgrading to SDK
+// version 10.5.0 or later updates existing integrations that use
+// `playerID` to instead use `gamePlayerID` and `teamPlayerID`. When
+// making calls to `signInWithGameCenter`, you must include `playerID`
+// along with the new fields `gamePlayerID` and `teamPlayerID` to
+// successfully identify all existing users. Upgrading existing Game
+// Center sign in integrations to SDK version 10.5.0 or later is
+// irreversible.
 func (r *AccountsService) SignInWithGameCenter(googlecloudidentitytoolkitv1signinwithgamecenterrequest *GoogleCloudIdentitytoolkitV1SignInWithGameCenterRequest) *AccountsSignInWithGameCenterCall {
 	c := &AccountsSignInWithGameCenterCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.googlecloudidentitytoolkitv1signinwithgamecenterrequest = googlecloudidentitytoolkitv1signinwithgamecenterrequest
@@ -5053,7 +5069,7 @@ func (c *AccountsSignInWithGameCenterCall) Do(opts ...googleapi.CallOption) (*Go
 	}
 	return ret, nil
 	// {
-	//   "description": "Signs in or signs up a user with iOS Game Center credentials. If the sign-in succeeds, a new Identity Platform ID token and refresh token are issued for the authenticated user. The bundle ID is required in the request header as `x-ios-bundle-identifier`. An [API key](https://cloud.google.com/docs/authentication/api-keys) is required in the request in order to identify the Google Cloud project.",
+	//   "description": "Signs in or signs up a user with iOS Game Center credentials. If the sign-in succeeds, a new Identity Platform ID token and refresh token are issued for the authenticated user. The bundle ID is required in the request header as `x-ios-bundle-identifier`. An [API key](https://cloud.google.com/docs/authentication/api-keys) is required in the request in order to identify the Google Cloud project. Apple has [deprecated the `playerID` field](https://developer.apple.com/documentation/gamekit/gkplayer/1521127-playerid/). The Apple platform Firebase SDK will use `gamePlayerID` and `teamPlayerID` from version 10.5.0 and onwards. Upgrading to SDK version 10.5.0 or later updates existing integrations that use `playerID` to instead use `gamePlayerID` and `teamPlayerID`. When making calls to `signInWithGameCenter`, you must include `playerID` along with the new fields `gamePlayerID` and `teamPlayerID` to successfully identify all existing users. Upgrading existing Game Center sign in integrations to SDK version 10.5.0 or later is irreversible.",
 	//   "flatPath": "v1/accounts:signInWithGameCenter",
 	//   "httpMethod": "POST",
 	//   "id": "identitytoolkit.accounts.signInWithGameCenter",

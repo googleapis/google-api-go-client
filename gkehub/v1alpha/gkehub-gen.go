@@ -3374,6 +3374,10 @@ type MembershipEndpoint struct {
 	// GkeCluster: Optional. Specific information for a GKE-on-GCP cluster.
 	GkeCluster *GkeCluster `json:"gkeCluster,omitempty"`
 
+	// GoogleManaged: Output only. Whether the lifecycle of this membership
+	// is managed by a google cluster platform service.
+	GoogleManaged bool `json:"googleManaged,omitempty"`
+
 	// KubernetesMetadata: Output only. Useful Kubernetes-specific metadata.
 	KubernetesMetadata *KubernetesMetadata `json:"kubernetesMetadata,omitempty"`
 

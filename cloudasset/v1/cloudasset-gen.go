@@ -7350,7 +7350,7 @@ type FeedsCreateCall struct {
 //   - parent: The name of the project/folder/organization where this feed
 //     should be created in. It can only be an organization number (such
 //     as "organizations/123"), a folder number (such as "folders/123"), a
-//     project ID (such as "projects/my-project-id")", or a project number
+//     project ID (such as "projects/my-project-id"), or a project number
 //     (such as "projects/12345").
 func (r *FeedsService) Create(parent string, createfeedrequest *CreateFeedRequest) *FeedsCreateCall {
 	c := &FeedsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -7459,7 +7459,7 @@ func (c *FeedsCreateCall) Do(opts ...googleapi.CallOption) (*Feed, error) {
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The name of the project/folder/organization where this feed should be created in. It can only be an organization number (such as \"organizations/123\"), a folder number (such as \"folders/123\"), a project ID (such as \"projects/my-project-id\")\", or a project number (such as \"projects/12345\").",
+	//       "description": "Required. The name of the project/folder/organization where this feed should be created in. It can only be an organization number (such as \"organizations/123\"), a folder number (such as \"folders/123\"), a project ID (such as \"projects/my-project-id\"), or a project number (such as \"projects/12345\").",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+$",
 	//       "required": true,
@@ -8226,8 +8226,8 @@ type SavedQueriesCreateCall struct {
 //   - parent: The name of the project/folder/organization where this
 //     saved_query should be created in. It can only be an organization
 //     number (such as "organizations/123"), a folder number (such as
-//     "folders/123"), a project ID (such as "projects/my-project-id")",
-//     or a project number (such as "projects/12345").
+//     "folders/123"), a project ID (such as "projects/my-project-id"), or
+//     a project number (such as "projects/12345").
 func (r *SavedQueriesService) Create(parent string, savedquery *SavedQuery) *SavedQueriesCreateCall {
 	c := &SavedQueriesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8347,7 +8347,7 @@ func (c *SavedQueriesCreateCall) Do(opts ...googleapi.CallOption) (*SavedQuery, 
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The name of the project/folder/organization where this saved_query should be created in. It can only be an organization number (such as \"organizations/123\"), a folder number (such as \"folders/123\"), a project ID (such as \"projects/my-project-id\")\", or a project number (such as \"projects/12345\").",
+	//       "description": "Required. The name of the project/folder/organization where this saved_query should be created in. It can only be an organization number (such as \"organizations/123\"), a folder number (such as \"folders/123\"), a project ID (such as \"projects/my-project-id\"), or a project number (such as \"projects/12345\").",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+$",
 	//       "required": true,

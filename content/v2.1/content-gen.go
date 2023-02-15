@@ -883,7 +883,8 @@ type AccountBusinessInformation struct {
 	// if explicitly set.
 	KoreanBusinessRegistrationNumber string `json:"koreanBusinessRegistrationNumber,omitempty"`
 
-	// PhoneNumber: The phone number of the business. This can only be
+	// PhoneNumber: The phone number of the business in E.164
+	// (https://en.wikipedia.org/wiki/E.164) format. This can only be
 	// updated if a verified phone number is not already set. To replace a
 	// verified phone number use the `Accounts.requestphoneverification` and
 	// `Accounts.verifyphonenumber`.

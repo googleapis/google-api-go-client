@@ -429,9 +429,9 @@ type GoogleCloudRecaptchaenterpriseV1AnnotateAssessmentRequest struct {
 	// phishing, or social engineering.
 	Reasons []string `json:"reasons,omitempty"`
 
-	// TransactionEvent: Optional. If the Assessment is part of a Payment
-	// Transaction, provide details on Payment Lifecycle Events that occur
-	// in the Transaction.
+	// TransactionEvent: Optional. If the assessment is part of a payment
+	// transaction, provide details on payment lifecycle events that occur
+	// in the transaction.
 	TransactionEvent *GoogleCloudRecaptchaenterpriseV1TransactionEvent `json:"transactionEvent,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Annotation") to
@@ -1464,19 +1464,19 @@ type GoogleCloudRecaptchaenterpriseV1TransactionEvent struct {
 	//   "TRANSACTION_EVENT_TYPE_UNSPECIFIED" - Default, unspecified event
 	// type.
 	//   "MERCHANT_APPROVE" - Indicates that the transaction is approved by
-	// the merchant's risk engine. The accompanying reasons can include
-	// 'INHOUSE', 'ACCERTIFY', or 'RECAPTCHA'.
+	// the merchant. The accompanying reasons can include terms such as
+	// 'INHOUSE', 'ACCERTIFY', 'CYBERSOURCE', or 'MANUAL_REVIEW'.
 	//   "MERCHANT_DENY" - Indicates that the transaction is denied and
-	// concluded due to risks detected by the merchant's risk engine. The
-	// accompanying reasons can include 'INHOUSE', 'ACCERTIFY',
-	// 'MANUAL_REVIEW', or 'RECAPTCHA'.
+	// concluded due to risks detected by the merchant. The accompanying
+	// reasons can include terms such as 'INHOUSE', 'ACCERTIFY',
+	// 'CYBERSOURCE', or 'MANUAL_REVIEW'.
 	//   "MANUAL_REVIEW" - Indicates that the transaction is being evaluated
 	// by a human, due to suspicion or risk.
 	//   "AUTHORIZATION" - Indicates that the authorization attempt with the
 	// card issuer succeeded.
 	//   "AUTHORIZATION_DECLINE" - Indicates that the authorization attempt
 	// with the card issuer failed. The accompanying reasons can include
-	// Visa's '54' indicating that the card is expired or '82' indicating
+	// Visa's '54' indicating that the card is expired, or '82' indicating
 	// that the CVV is incorrect.
 	//   "PAYMENT_CAPTURE" - Indicates that the transaction is completed
 	// because the funds were settled.
@@ -1486,12 +1486,13 @@ type GoogleCloudRecaptchaenterpriseV1TransactionEvent struct {
 	// Specify the reason for the cancellation. For example,
 	// 'INSUFFICIENT_INVENTORY'.
 	//   "CHARGEBACK_INQUIRY" - Indicates that the merchant has received a
-	// chargeback inquiry for the transaction, requesting additional
-	// information before a chargeback is officially issued and a formal
-	// chargeback notification is sent.
+	// chargeback inquiry due to fraud for the transaction, requesting
+	// additional information before a fraud chargeback is officially issued
+	// and a formal chargeback notification is sent.
 	//   "CHARGEBACK_ALERT" - Indicates that the merchant has received a
-	// chargeback alert for the transaction. The process of resolving the
-	// dispute without involving the payment network is started.
+	// chargeback alert due to fraud for the transaction. The process of
+	// resolving the dispute without involving the payment network is
+	// started.
 	//   "FRAUD_NOTIFICATION" - Indicates that a fraud notification is
 	// issued for the transaction, sent by the payment instrument's issuing
 	// bank because the transaction appears to be fraudulent. We recommend
@@ -1500,18 +1501,18 @@ type GoogleCloudRecaptchaenterpriseV1TransactionEvent struct {
 	// amount in the `value` field.
 	//   "CHARGEBACK" - Indicates that the merchant is informed by the
 	// payment network that the transaction has entered the chargeback
-	// process. Reason code examples include Discover's '4553' and '6041'.
+	// process due to fraud. Reason code examples include Discover's '6005'
+	// and '6041'. For partial chargebacks, we recommend that you include an
+	// amount in the `value` field.
+	//   "CHARGEBACK_REPRESENTMENT" - Indicates that the transaction has
+	// entered the chargeback process due to fraud, and that the merchant
+	// has chosen to enter representment. Reason examples include Discover's
+	// '6005' and '6041'. For partial chargebacks, we recommend that you
+	// include an amount in the `value` field.
+	//   "CHARGEBACK_REVERSE" - Indicates that the transaction has had a
+	// fraud chargeback which was illegitimate and was reversed as a result.
 	// For partial chargebacks, we recommend that you include an amount in
 	// the `value` field.
-	//   "CHARGEBACK_REPRESENTMENT" - Indicates that the transaction has
-	// entered the chargeback process, and that the merchant has chosen to
-	// enter representment. Reason examples include Discover's '4553' and
-	// '6041'. For partial chargebacks, we recommend that you include an
-	// amount in the `value` field.
-	//   "CHARGEBACK_REVERSE" - Indicates that the transaction has had a
-	// chargeback which was illegitimate and was reversed as a result. For
-	// partial chargebacks, we recommend that you include an amount in the
-	// `value` field.
 	//   "REFUND_REQUEST" - Indicates that the merchant has received a
 	// refund for a completed transaction. For partial refunds, we recommend
 	// that you include an amount in the `value` field. Reason example:
@@ -1531,14 +1532,14 @@ type GoogleCloudRecaptchaenterpriseV1TransactionEvent struct {
 	// `value` field.
 	EventType string `json:"eventType,omitempty"`
 
-	// Reason: Optional. The reason or standardized code which corresponds
-	// with this transaction event, if one exists. E.g. a CHARGEBACK Event
-	// with code 4553.
+	// Reason: Optional. The reason or standardized code that corresponds
+	// with this transaction event, if one exists. For example, a CHARGEBACK
+	// event with code 6005.
 	Reason string `json:"reason,omitempty"`
 
 	// Value: Optional. The value that corresponds with this transaction
-	// event, if one exists. E.g. A refund event where $5.00 was refunded.
-	// Currency is obtained from the original transaction data.
+	// event, if one exists. For example, a refund event where $5.00 was
+	// refunded. Currency is obtained from the original transaction data.
 	Value float64 `json:"value,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EventTime") to

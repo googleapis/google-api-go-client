@@ -2186,7 +2186,8 @@ type TranslateDocumentRequest struct {
 
 	// EnableShadowRemovalNativePdf: Optional. If true, use the text removal
 	// server to remove the shadow text on background image for native pdf
-	// translation.
+	// translation. Shadow removal feature can only be enabled when
+	// is_translate_native_pdf_only: false && pdf_native_only: false
 	EnableShadowRemovalNativePdf bool `json:"enableShadowRemovalNativePdf,omitempty"`
 
 	// GlossaryConfig: Optional. Glossary to be applied. The glossary must

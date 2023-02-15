@@ -5953,7 +5953,7 @@
       }
     }
   },
-  "revision": "20230202",
+  "revision": "20230208",
   "rootUrl": "https://shoppingcontent.googleapis.com/",
   "schemas": {
     "Account": {
@@ -6123,7 +6123,7 @@
           "type": "string"
         },
         "phoneNumber": {
-          "description": "The phone number of the business. This can only be updated if a verified phone number is not already set. To replace a verified phone number use the `Accounts.requestphoneverification` and `Accounts.verifyphonenumber`.",
+          "description": "The phone number of the business in [E.164](https://en.wikipedia.org/wiki/E.164) format. This can only be updated if a verified phone number is not already set. To replace a verified phone number use the `Accounts.requestphoneverification` and `Accounts.verifyphonenumber`.",
           "type": "string"
         },
         "phoneVerificationStatus": {

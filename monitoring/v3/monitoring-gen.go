@@ -2561,7 +2561,17 @@ type HttpCheck struct {
 	//   "URL_ENCODED" - body is in URL-encoded form. Equivalent to setting
 	// the Content-Type to application/x-www-form-urlencoded in the HTTP
 	// request.
+	//   "USER_PROVIDED" - body is in custom_content_type form. Equivalent
+	// to setting the Content-Type to the contents of custom_content_type in
+	// the HTTP request.
 	ContentType string `json:"contentType,omitempty"`
+
+	// CustomContentType: A user provided content type header to use for the
+	// check. The invalid configurations outlined in the content_type field
+	// apply to custom_content_type, as well as the following: 1.
+	// content_type is URL_ENCODED and custom_content_type is set. 2.
+	// content_type is USER_PROVIDED and custom_content_type is not set.
+	CustomContentType string `json:"customContentType,omitempty"`
 
 	// Headers: The list of headers to send as part of the Uptime check
 	// request. If two headers have the same key and different values, they

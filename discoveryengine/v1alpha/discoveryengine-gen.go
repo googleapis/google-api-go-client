@@ -783,7 +783,8 @@ type GoogleCloudDiscoveryengineV1alphaDocumentInfo struct {
 	Id string `json:"id,omitempty"`
 
 	// Name: Required. The Document resource full name, of the form:
-	// projects//locations//dataStores//branches//documents/
+	// projects/{project\_id}/locations/{location}/dataStores/{data\_store\_i
+	// d}/branches/{branch\_id}/documents/{document\_id}
 	Name string `json:"name,omitempty"`
 
 	// PromotionIds: The promotion IDs associated with this Document.

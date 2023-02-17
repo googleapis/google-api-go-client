@@ -492,6 +492,11 @@ func (r *LocationsService) GetDailyMetricsTimeSeries(name string) *LocationsGetD
 //	"BUSINESS_FOOD_ORDERS" - The number of food orders received from
 //
 // the business profile.
+//
+//	"BUSINESS_FOOD_MENU_CLICKS" - The number of clicks to view or
+//
+// interact with the menu content on the business profile. Multiple
+// clicks by a unique user within a single day are counted as 1.
 func (c *LocationsGetDailyMetricsTimeSeriesCall) DailyMetric(dailyMetric string) *LocationsGetDailyMetricsTimeSeriesCall {
 	c.urlParams_.Set("dailyMetric", dailyMetric)
 	return c
@@ -721,7 +726,8 @@ func (c *LocationsGetDailyMetricsTimeSeriesCall) Do(opts ...googleapi.CallOption
 	//         "CALL_CLICKS",
 	//         "WEBSITE_CLICKS",
 	//         "BUSINESS_BOOKINGS",
-	//         "BUSINESS_FOOD_ORDERS"
+	//         "BUSINESS_FOOD_ORDERS",
+	//         "BUSINESS_FOOD_MENU_CLICKS"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Represents the default unknown value.",
@@ -734,7 +740,8 @@ func (c *LocationsGetDailyMetricsTimeSeriesCall) Do(opts ...googleapi.CallOption
 	//         "The number of times the business profile call button was clicked.",
 	//         "The number of times the business profile website was clicked.",
 	//         "The number of bookings received from the business profile.",
-	//         "The number of food orders received from the business profile."
+	//         "The number of food orders received from the business profile.",
+	//         "The number of clicks to view or interact with the menu content on the business profile. Multiple clicks by a unique user within a single day are counted as 1."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"

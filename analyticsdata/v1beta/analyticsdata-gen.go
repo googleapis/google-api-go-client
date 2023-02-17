@@ -2458,7 +2458,7 @@ type RunReportRequest struct {
 	// cohort request, this `dateRanges` must be unspecified.
 	DateRanges []*DateRange `json:"dateRanges,omitempty"`
 
-	// DimensionFilter: Dimension filters allow you to ask for only specific
+	// DimensionFilter: Dimension filters let you ask for only specific
 	// dimension values in the report. To learn more, see Fundamentals of
 	// Dimension Filters
 	// (https://developers.google.com/analytics/devguides/reporting/data/v1/basics#dimension_filters)

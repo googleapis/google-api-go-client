@@ -84,6 +84,9 @@ const mtlsBasePath = "https://chat.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
+	// Private Service: https://www.googleapis.com/auth/chat.bot
+	ChatBotScope = "https://www.googleapis.com/auth/chat.bot"
+
 	// View, add, and remove members from conversations in Google Chat
 	ChatMembershipsScope = "https://www.googleapis.com/auth/chat.memberships"
 
@@ -111,6 +114,7 @@ const (
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := internaloption.WithDefaultScopes(
+		"https://www.googleapis.com/auth/chat.bot",
 		"https://www.googleapis.com/auth/chat.memberships",
 		"https://www.googleapis.com/auth/chat.memberships.readonly",
 		"https://www.googleapis.com/auth/chat.messages",
@@ -1144,8 +1148,10 @@ type DeprecatedEvent struct {
 	// Possible values:
 	//   "UNSPECIFIED" - Default value for the enum. DO NOT USE.
 	//   "MESSAGE" - A message was sent in a space.
-	//   "ADDED_TO_SPACE" - The Chat app was added to a space.
-	//   "REMOVED_FROM_SPACE" - The Chat app was removed from a space.
+	//   "ADDED_TO_SPACE" - The Chat app was added to a space by a Chat user
+	// or Workspace administrator.
+	//   "REMOVED_FROM_SPACE" - The Chat app was removed from a space by a
+	// Chat user or Workspace administrator.
 	//   "CARD_CLICKED" - The Chat app's interactive card was clicked.
 	Type string `json:"type,omitempty"`
 
@@ -1957,7 +1963,7 @@ func (s *GoogleAppsCardV1DecoratedText) MarshalJSON() ([]byte, error) {
 
 // GoogleAppsCardV1Divider: Displays a divider between widgets, a
 // horizontal line. For example, the following JSON creates a divider:
-// ``` "divider": { } ```
+// ``` "divider": {} ```
 type GoogleAppsCardV1Divider struct {
 }
 
@@ -1971,12 +1977,12 @@ type GoogleAppsCardV1Divider struct {
 // (https://developers.google.com/chat/api/guides/message-formats/cards)
 // is coming soon. For example, the following JSON creates a 2 column
 // grid with a single item: ``` "grid": { "title": "A fine collection of
-// items", "numColumns": 2, "borderStyle": { "type": "STROKE",
-// "cornerRadius": 4.0 }, "items": [ "image": { "imageUri":
+// items", "columnCount": 2, "borderStyle": { "type": "STROKE",
+// "cornerRadius": 4 }, "items": [ { "image": { "imageUri":
 // "https://www.example.com/image.png", "cropStyle": { "type": "SQUARE"
 // }, "borderStyle": { "type": "STROKE" } }, "title": "An item",
-// "textAlignment": "CENTER" ], "onClick": { "openLink": {
-// "url":"https://www.example.com" } } } ```
+// "textAlignment": "CENTER" } ], "onClick": { "openLink": { "url":
+// "https://www.example.com" } } } ```
 type GoogleAppsCardV1Grid struct {
 	// BorderStyle: The border style to apply to each grid item.
 	BorderStyle *GoogleAppsCardV1BorderStyle `json:"borderStyle,omitempty"`
@@ -2817,28 +2823,27 @@ type GoogleAppsCardV1Widget struct {
 	// ButtonList: A list of buttons. For example, the following JSON
 	// creates two buttons. The first is a blue text button and the second
 	// is an image button that opens a link: ``` "buttonList": { "buttons":
-	// [ "button": { "text": "Edit", "color": { "red": 0, "green": 0,
-	// "blue": 1, "alpha": 1 } "disabled": true }, "button": { "icon": {
-	// "knownIcon": "INVITE" "altText": "check calendar" }, "onClick": {
-	// "openLink": { "url": "https://example.com/calendar" } } }, ] } ```
+	// [ { "text": "Edit", "color": { "red": 0, "green": 0, "blue": 1,
+	// "alpha": 1 }, "disabled": true, }, { "icon": { "knownIcon": "INVITE",
+	// "altText": "check calendar" }, "onClick": { "openLink": { "url":
+	// "https://example.com/calendar" } } } ] } ```
 	ButtonList *GoogleAppsCardV1ButtonList `json:"buttonList,omitempty"`
 
 	// DateTimePicker: Displays a selection/input widget for date, time, or
 	// date and time. Not supported by Chat apps. Support by Chat apps is
 	// coming soon. For example, the following JSON creates a datetime
-	// picker to schedule an appointment: ``` "date_time_picker": { "name":
+	// picker to schedule an appointment: ``` "dateTimePicker": { "name":
 	// "appointment_time", "label": "Book your appointment at:", "type":
-	// "DateTimePickerType.DATE_AND_TIME", "valueMsEpoch": "796435200000" }
-	// ```
+	// "DATE_AND_TIME", "valueMsEpoch": "796435200000" } ```
 	DateTimePicker *GoogleAppsCardV1DateTimePicker `json:"dateTimePicker,omitempty"`
 
 	// DecoratedText: Displays a decorated text item. For example, the
 	// following JSON creates a decorated text widget showing email address:
 	// ``` "decoratedText": { "icon": { "knownIcon": "EMAIL" }, "topLabel":
 	// "Email Address", "text": "sasha@example.com", "bottomLabel": "This is
-	// a new Email address!", "switchWidget": { "name":
+	// a new Email address!", "switchControl": { "name":
 	// "has_send_welcome_email_to_sasha", "selected": false, "controlType":
-	// "ControlType.CHECKBOX" } } ```
+	// "CHECKBOX" } } ```
 	DecoratedText *GoogleAppsCardV1DecoratedText `json:"decoratedText,omitempty"`
 
 	// Divider: Displays a horizontal line divider between widgets. For
@@ -2855,18 +2860,18 @@ type GoogleAppsCardV1Widget struct {
 	// (https://developers.google.com/chat/api/guides/message-formats/cards)
 	// is coming soon. For example, the following JSON creates a 2 column
 	// grid with a single item: ``` "grid": { "title": "A fine collection of
-	// items", "numColumns": 2, "borderStyle": { "type": "STROKE",
-	// "cornerRadius": 4.0 }, "items": [ "image": { "imageUri":
+	// items", "columnCount": 2, "borderStyle": { "type": "STROKE",
+	// "cornerRadius": 4 }, "items": [ { "image": { "imageUri":
 	// "https://www.example.com/image.png", "cropStyle": { "type": "SQUARE"
 	// }, "borderStyle": { "type": "STROKE" } }, "title": "An item",
-	// "textAlignment": "CENTER" ], "onClick": { "openLink": {
-	// "url":"https://www.example.com" } } } ```
+	// "textAlignment": "CENTER" } ], "onClick": { "openLink": { "url":
+	// "https://www.example.com" } } } ```
 	Grid *GoogleAppsCardV1Grid `json:"grid,omitempty"`
 
 	// Image: Displays an image. For example, the following JSON creates an
 	// image with alternative text: ``` "image": { "imageUrl":
-	// "https://developers.google.com/chat/images/quickstart-app-avatar.png"
-	// "altText": "Chat app avatar" } ```
+	// "https://developers.google.com/chat/images/quickstart-app-avatar.png",
+	//  "altText": "Chat app avatar" } ```
 	Image *GoogleAppsCardV1Image `json:"image,omitempty"`
 
 	// SelectionInput: Displays a selection control that lets users select
@@ -2877,10 +2882,10 @@ type GoogleAppsCardV1Widget struct {
 	// (https://developers.google.com/chat/api/guides/message-formats/cards)
 	// is coming soon. For example, the following JSON creates a dropdown
 	// menu that lets users choose a size: ``` "selectionInput": { "name":
-	// "size", "label": "Size" "type": "SelectionType.DROPDOWN", "items": [
-	// { "text": "S", "value": "small", "selected": false }, { "text": "M",
-	// "value": "medium", "selected": true }, { "text": "L", "value":
-	// "large", "selected": false }, { "text": "XL", "value": "extra_large",
+	// "size", "label": "Size" "type": "DROPDOWN", "items": [ { "text": "S",
+	// "value": "small", "selected": false }, { "text": "M", "value":
+	// "medium", "selected": true }, { "text": "L", "value": "large",
+	// "selected": false }, { "text": "XL", "value": "extra_large",
 	// "selected": false } ] } ```
 	SelectionInput *GoogleAppsCardV1SelectionInput `json:"selectionInput,omitempty"`
 
@@ -3676,6 +3681,14 @@ func (s *SlashCommandMetadata) MarshalJSON() ([]byte, error) {
 // Space: A space in Google Chat. Spaces are conversations between two
 // or more users or 1:1 messages between a user and a Chat app.
 type Space struct {
+	// AdminInstalled: Output only. Whether the Chat app was installed by a
+	// Google Workspace administrator. Administrators can install a Chat app
+	// for their domain, organizational unit, or a group of users.
+	// Administrators can only install Chat apps for direct messaging
+	// between users and the app. To support admin install, your app must
+	// feature direct messaging.
+	AdminInstalled bool `json:"adminInstalled,omitempty"`
+
 	// DisplayName: The space's display name. Required when creating a space
 	// (https://developers.google.com/chat/api/reference/rest/v1/spaces/create).
 	// For direct messages, this field may be empty. Supports up to 128
@@ -3726,7 +3739,7 @@ type Space struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// ForceSendFields is a list of field names (e.g. "AdminInstalled") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -3734,12 +3747,13 @@ type Space struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DisplayName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AdminInstalled") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -4307,6 +4321,7 @@ func (c *MediaDownloadCall) Do(opts ...googleapi.CallOption) (*Media, error) {
 	//     "$ref": "Media"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/chat.bot",
 	//     "https://www.googleapis.com/auth/chat.messages",
 	//     "https://www.googleapis.com/auth/chat.messages.readonly"
 	//   ],
@@ -4466,6 +4481,7 @@ func (c *SpacesGetCall) Do(opts ...googleapi.CallOption) (*Space, error) {
 	//     "$ref": "Space"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/chat.bot",
 	//     "https://www.googleapis.com/auth/chat.spaces",
 	//     "https://www.googleapis.com/auth/chat.spaces.readonly"
 	//   ]
@@ -4640,6 +4656,7 @@ func (c *SpacesListCall) Do(opts ...googleapi.CallOption) (*ListSpacesResponse, 
 	//     "$ref": "ListSpacesResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/chat.bot",
 	//     "https://www.googleapis.com/auth/chat.spaces",
 	//     "https://www.googleapis.com/auth/chat.spaces.readonly"
 	//   ]
@@ -4820,6 +4837,7 @@ func (c *SpacesMembersGetCall) Do(opts ...googleapi.CallOption) (*Membership, er
 	//     "$ref": "Membership"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/chat.bot",
 	//     "https://www.googleapis.com/auth/chat.memberships",
 	//     "https://www.googleapis.com/auth/chat.memberships.readonly"
 	//   ]
@@ -5011,6 +5029,7 @@ func (c *SpacesMembersListCall) Do(opts ...googleapi.CallOption) (*ListMembershi
 	//     "$ref": "ListMembershipsResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/chat.bot",
 	//     "https://www.googleapis.com/auth/chat.memberships",
 	//     "https://www.googleapis.com/auth/chat.memberships.readonly"
 	//   ]
@@ -5274,6 +5293,7 @@ func (c *SpacesMessagesCreateCall) Do(opts ...googleapi.CallOption) (*Message, e
 	//     "$ref": "Message"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/chat.bot",
 	//     "https://www.googleapis.com/auth/chat.messages",
 	//     "https://www.googleapis.com/auth/chat.messages.create"
 	//   ]
@@ -5421,6 +5441,7 @@ func (c *SpacesMessagesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, err
 	//     "$ref": "Empty"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/chat.bot",
 	//     "https://www.googleapis.com/auth/chat.messages"
 	//   ]
 	// }
@@ -5586,6 +5607,7 @@ func (c *SpacesMessagesGetCall) Do(opts ...googleapi.CallOption) (*Message, erro
 	//     "$ref": "Message"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/chat.bot",
 	//     "https://www.googleapis.com/auth/chat.messages",
 	//     "https://www.googleapis.com/auth/chat.messages.readonly"
 	//   ]
@@ -5774,6 +5796,7 @@ func (c *SpacesMessagesPatchCall) Do(opts ...googleapi.CallOption) (*Message, er
 	//     "$ref": "Message"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/chat.bot",
 	//     "https://www.googleapis.com/auth/chat.messages"
 	//   ]
 	// }
@@ -5961,6 +5984,7 @@ func (c *SpacesMessagesUpdateCall) Do(opts ...googleapi.CallOption) (*Message, e
 	//     "$ref": "Message"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/chat.bot",
 	//     "https://www.googleapis.com/auth/chat.messages"
 	//   ]
 	// }
@@ -6110,7 +6134,10 @@ func (c *SpacesMessagesAttachmentsGetCall) Do(opts ...googleapi.CallOption) (*At
 	//   "path": "v1/{+name}",
 	//   "response": {
 	//     "$ref": "Attachment"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/chat.bot"
+	//   ]
 	// }
 
 }

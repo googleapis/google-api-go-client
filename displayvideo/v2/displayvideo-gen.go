@@ -11634,11 +11634,7 @@ type LineItem struct {
 	// TargetingExpansion: The targeting expansion
 	// (//support.google.com/displayvideo/answer/10191558) settings of the
 	// line item. This config is only applicable when eligible audience list
-	// targeting is assigned to the line item. Beginning November 7, 2022,
-	// these settings may represent the optimized targeting feature
-	// (//support.google.com/displayvideo/answer/12060859) in place of
-	// targeting expansion. This feature will be rolled out to all partners
-	// by November 9, 2022.
+	// targeting is assigned to the line item.
 	TargetingExpansion *TargetingExpansionConfig `json:"targetingExpansion,omitempty"`
 
 	// UpdateTime: Output only. The timestamp when the line item was last
@@ -16497,11 +16493,7 @@ func (s *TargetFrequency) MarshalJSON() ([]byte, error) {
 // TargetingExpansionConfig: Settings that control the targeting
 // expansion of the line item. Targeting expansion allows the line item
 // to reach a larger audience based on the original audience list and
-// the targeting expansion level. Beginning November 7, 2022, these
-// settings may represent the optimized targeting feature
-// (//support.google.com/displayvideo/answer/12060859) in place of
-// targeting expansion. This feature will be rolled out to all partners
-// by November 9, 2022.
+// the targeting expansion level.
 type TargetingExpansionConfig struct {
 	// ExcludeFirstPartyAudience: Required. Whether to exclude first-party
 	// audiences from use in targeting expansion or optimized targeting.
@@ -16512,17 +16504,7 @@ type TargetingExpansionConfig struct {
 	ExcludeFirstPartyAudience bool `json:"excludeFirstPartyAudience,omitempty"`
 
 	// TargetingExpansionLevel: Required. Magnitude of expansion for
-	// applicable targeting under this line item. Beginning November 7,
-	// 2022, the behavior of this field will change in the following ways
-	// with the replacement of targeting expansion with optimized targeting
-	// (//support.google.com/displayvideo/answer/12060859): * This field
-	// will represent the optimized targeting checkbox, with a
-	// `NO_EXPANSION` value representing optimized targeting turned off and
-	// a `LEAST_EXPANSION` value representing optimized targeting turned on.
-	// * `NO_EXPANSION` will be the default value for the field and will be
-	// automatically assigned if you do not set the field. * If you set the
-	// field to any value other than `NO_EXPANSION`, it will automatically
-	// be set to `LEAST_EXPANSION`.
+	// applicable targeting under this line item.
 	//
 	// Possible values:
 	//   "TARGETING_EXPANSION_LEVEL_UNSPECIFIED" - Targeting expansion level

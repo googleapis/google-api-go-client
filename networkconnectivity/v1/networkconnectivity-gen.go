@@ -2710,7 +2710,7 @@ func (c *ProjectsLocationsGlobalHubsListCall) OrderBy(orderBy string) *ProjectsL
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of results per page that should be returned.
+// of results per page to return.
 func (c *ProjectsLocationsGlobalHubsListCall) PageSize(pageSize int64) *ProjectsLocationsGlobalHubsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -2840,7 +2840,7 @@ func (c *ProjectsLocationsGlobalHubsListCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The maximum number of results per page that should be returned.",
+	//       "description": "The maximum number of results per page to return.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -7477,7 +7477,7 @@ func (c *ProjectsLocationsSpokesListCall) OrderBy(orderBy string) *ProjectsLocat
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of results per page that should be returned.
+// of results to return per page.
 func (c *ProjectsLocationsSpokesListCall) PageSize(pageSize int64) *ProjectsLocationsSpokesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -7607,7 +7607,7 @@ func (c *ProjectsLocationsSpokesListCall) Do(opts ...googleapi.CallOption) (*Lis
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The maximum number of results per page that should be returned.",
+	//       "description": "The maximum number of results to return per page.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"

@@ -518,7 +518,7 @@
       }
     }
   },
-  "revision": "20230212",
+  "revision": "20230216",
   "rootUrl": "https://chat.googleapis.com/",
   "schemas": {
     "ActionParameter": {
@@ -1430,7 +1430,7 @@
       "id": "GoogleAppsCardV1DecoratedText",
       "properties": {
         "bottomLabel": {
-          "description": "The text that appears below `text`. Always truncates. Supports simple formatting. See Text formatting for formatting details.",
+          "description": "The text that appears below `text`. Always truncates.",
           "type": "string"
         },
         "button": {
@@ -1462,7 +1462,7 @@
           "type": "string"
         },
         "topLabel": {
-          "description": "The text that appears above `text`. Always truncates. Supports simple formatting. See Text formatting for formatting details.",
+          "description": "The text that appears above `text`. Always truncates.",
           "type": "string"
         },
         "wrapText": {

@@ -605,10 +605,6 @@ func (s *CheckRequest) MarshalJSON() ([]byte, error) {
 
 // CheckResponse: Response message for the Check method.
 type CheckResponse struct {
-	// EsfMigrationServerOverride: Esf migration server override during
-	// check v2 migration. This is temporary and Chemist internal only.
-	EsfMigrationServerOverride *EsfMigrationServerOverride `json:"esfMigrationServerOverride,omitempty"`
-
 	// Headers: Returns a set of request contexts generated from the
 	// `CheckRequest`.
 	Headers map[string]string `json:"headers,omitempty"`
@@ -622,45 +618,7 @@ type CheckResponse struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g.
-	// "EsfMigrationServerOverride") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g.
-	// "EsfMigrationServerOverride") to include in API requests with the
-	// JSON null value. By default, fields with empty values are omitted
-	// from API requests. However, any field with an empty value appearing
-	// in NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *CheckResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod CheckResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// EsfMigrationServerOverride: Esf migration server override during
-// chemist check v2 migration
-type EsfMigrationServerOverride struct {
-	// OverrideMode: Esf migration override mode
-	//
-	// Possible values:
-	//   "ESF_MIGRATION_OVERRIDE_MODE_UNSPECIFIED" - Default, ESF should use
-	// the mode that is determined by the configuration.
-	//   "DRY_RUN" - ESF should send 95% v1 request and 5% dry run request.
-	//   "NO_OVERRIDE" - Same as ESF_MIGRATION_OVERRIDE_MODE_UNSPECIFIED,
-	// remove the override mode. This is used for safe unpush.
-	OverrideMode string `json:"overrideMode,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "OverrideMode") to
+	// ForceSendFields is a list of field names (e.g. "Headers") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -668,17 +626,17 @@ type EsfMigrationServerOverride struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "OverrideMode") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "Headers") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
-func (s *EsfMigrationServerOverride) MarshalJSON() ([]byte, error) {
-	type NoMethod EsfMigrationServerOverride
+func (s *CheckResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod CheckResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

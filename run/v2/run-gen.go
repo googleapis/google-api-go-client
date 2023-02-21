@@ -928,7 +928,8 @@ func (s *GoogleCloudRunV2ExecutionTemplate) MarshalJSON() ([]byte, error) {
 // a GRPC port.
 type GoogleCloudRunV2GRPCAction struct {
 	// Port: Port number of the gRPC service. Number must be in the range 1
-	// to 65535. If not specified, defaults to 8080.
+	// to 65535. If not specified, defaults to the exposed port of the
+	// container, which is the value of container.ports[0].containerPort.
 	Port int64 `json:"port,omitempty"`
 
 	// Service: Service is the name of the service to place in the gRPC
@@ -971,7 +972,8 @@ type GoogleCloudRunV2HTTPGetAction struct {
 	Path string `json:"path,omitempty"`
 
 	// Port: Port number to access on the container. Must be in the range 1
-	// to 65535.
+	// to 65535. If not specified, defaults to the exposed port of the
+	// container, which is the value of container.ports[0].containerPort.
 	Port int64 `json:"port,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "HttpHeaders") to
@@ -2192,7 +2194,8 @@ func (s *GoogleCloudRunV2Service) MarshalJSON() ([]byte, error) {
 // based on opening a socket
 type GoogleCloudRunV2TCPSocketAction struct {
 	// Port: Port number to access on the container. Must be in the range 1
-	// to 65535. If not specified, defaults to 8080.
+	// to 65535. If not specified, defaults to the exposed port of the
+	// container, which is the value of container.ports[0].containerPort.
 	Port int64 `json:"port,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Port") to

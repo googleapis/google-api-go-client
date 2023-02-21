@@ -3048,7 +3048,13 @@ type AppsDynamiteSharedSpaceInfo struct {
 
 	Name string `json:"name,omitempty"`
 
+	// NumMembers: Deprecated. Use segmented_membership_counts instead which
+	// also includes other counts such as rosters.
 	NumMembers int64 `json:"numMembers,omitempty"`
+
+	// SegmentedMembershipCounts: Member counts object with types of members
+	// and their respective counts.
+	SegmentedMembershipCounts *AppsDynamiteSharedSegmentedMembershipCounts `json:"segmentedMembershipCounts,omitempty"`
 
 	// UserMembershipState: searching user's membership state in this space
 	//
@@ -3326,6 +3332,21 @@ type AppsDynamiteStorageAction struct {
 
 	// Parameters: List of action parameters.
 	Parameters []*AppsDynamiteStorageActionActionParameter `json:"parameters,omitempty"`
+
+	// PersistValues: Indicates whether form values persist after the
+	// action. The default value is `false`. If `true`, form values remain
+	// after the action is triggered. When using LoadIndicator.NONE
+	// (workspace/add-ons/reference/rpc/google.apps.card.v1#loadindicator)
+	// for actions, `persist_values` = `true`is recommended, as it ensures
+	// that any changes made by the user after form or on change actions are
+	// sent to the server are not overwritten by the response. If `false`,
+	// the form values are cleared when the action is triggered. When
+	// `persist_values` is set to `false`, it is strongly recommended that
+	// the card use LoadIndicator.SPINNER
+	// (workspace/add-ons/reference/rpc/google.apps.card.v1#loadindicator)
+	// for all actions, as this locks the UI to ensure no changes are made
+	// by the user while the action is being processed.
+	PersistValues bool `json:"persistValues,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Function") to
 	// unconditionally include in API requests. By default, fields with
@@ -4503,6 +4524,7 @@ type AppsDynamiteStorageSelectionInput struct {
 	//   "RADIO_BUTTON" - The selection type is a radio button.
 	//   "SWITCH" - The selection type is a switch.
 	//   "DROPDOWN" - The selection type is a dropdown.
+	//   "MULTI_SELECT" - The selection type is multi-select
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Items") to
@@ -16661,6 +16683,12 @@ type MessageDeleted struct {
 
 	MessageKeys []*MultiKey `json:"messageKeys,omitempty"`
 
+	// WonderCardMappings: Value of coproc's message delete history record
+	// extension that exports /wonder/message_mapping/{vertical} attribute
+	// of deleted messages which have smartmail label (eg. ^cob_sm_invoice,
+	// etc).
+	WonderCardMappings []*WonderCardDelete `json:"wonderCardMappings,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "ImapSyncMappings") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -24785,6 +24813,17 @@ type UserMentionMetadata struct {
 	// strikethrough.
 	Type string `json:"type,omitempty"`
 
+	// UserMentionError: Specific reason for the user mention failing, for
+	// fine-grained processing by clients (i.e. specific error message for
+	// space limit exceeded case) IMPORTANT: Set this only for FAILED_TO_ADD
+	// case.
+	//
+	// Possible values:
+	//   "USER_MENTION_ERROR_UNSPECIFIED"
+	//   "MEMBERSHIP_LIMIT_EXCEEDED" - Failure caused by adding user to a
+	// room that is full
+	UserMentionError string `json:"userMentionError,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -25183,6 +25222,74 @@ type WidgetMarkup struct {
 
 func (s *WidgetMarkup) MarshalJSON() ([]byte, error) {
 	type NoMethod WidgetMarkup
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// WonderCardDelete: Message delete history record extension that
+// exports /wonder/message_mapping/{vertical} attribute of deleted
+// messages which have any smartmail label (eg. ^cob_sm_invoice).
+// go/how-dd-card-deletion
+type WonderCardDelete struct {
+	// MessageMappings: Contains <{@code WonderCardType} enum value, value
+	// of /wonder/message_mapping/{vertical} attribute of deleted message>
+	// pairs.
+	MessageMappings map[string]WonderMessageMapping `json:"messageMappings,omitempty"`
+
+	// MsgId: Message ID of the original deleted message
+	MsgId uint64 `json:"msgId,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "MessageMappings") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MessageMappings") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *WonderCardDelete) MarshalJSON() ([]byte, error) {
+	type NoMethod WonderCardDelete
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// WonderMessageMapping: Card mapping attached to original message as an
+// attribute stored at /wonder/message_mapping/{vertical} Next ID: 2
+type WonderMessageMapping struct {
+	// WonderCardMessageId: List of wonder card (client-generated) message
+	// IDs generated based on the original message.
+	WonderCardMessageId []string `json:"wonderCardMessageId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "WonderCardMessageId")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "WonderCardMessageId") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *WonderMessageMapping) MarshalJSON() ([]byte, error) {
+	type NoMethod WonderMessageMapping
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

@@ -487,6 +487,10 @@ type Instance struct {
 	// will be used.
 	AuthorizedNetwork string `json:"authorizedNetwork,omitempty"`
 
+	// AvailableMaintenanceVersions: Optional. The available maintenance
+	// versions that an instance could update to.
+	AvailableMaintenanceVersions []string `json:"availableMaintenanceVersions,omitempty"`
+
 	// ConnectMode: Optional. The network connect mode of the Redis
 	// instance. If not provided, the connect mode defaults to
 	// DIRECT_PEERING.
@@ -540,6 +544,10 @@ type Instance struct {
 	// MaintenanceSchedule: Output only. Date and time of upcoming
 	// maintenance events which have been scheduled.
 	MaintenanceSchedule *MaintenanceSchedule `json:"maintenanceSchedule,omitempty"`
+
+	// MaintenanceVersion: Optional. The self service update maintenance
+	// version. The version is date based such as "20210712_00_00".
+	MaintenanceVersion string `json:"maintenanceVersion,omitempty"`
 
 	// MemorySizeGb: Required. Redis memory size in GiB.
 	MemorySizeGb int64 `json:"memorySizeGb,omitempty"`

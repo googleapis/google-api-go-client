@@ -768,6 +768,59 @@ func (s *BigQueryOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// BucketMetadata: Metadata for LongRunningUpdateBucket Operations.
+type BucketMetadata struct {
+	// CreateBucketRequest: LongRunningCreateBucket RPC request.
+	CreateBucketRequest *CreateBucketRequest `json:"createBucketRequest,omitempty"`
+
+	// EndTime: The end time of an operation.
+	EndTime string `json:"endTime,omitempty"`
+
+	// StartTime: The create time of an operation.
+	StartTime string `json:"startTime,omitempty"`
+
+	// State: State of an operation.
+	//
+	// Possible values:
+	//   "OPERATION_STATE_UNSPECIFIED" - Should not be used.
+	//   "OPERATION_STATE_SCHEDULED" - The operation is scheduled.
+	//   "OPERATION_STATE_WAITING_FOR_PERMISSIONS" - Waiting for necessary
+	// permissions.
+	//   "OPERATION_STATE_RUNNING" - The operation is running.
+	//   "OPERATION_STATE_SUCCEEDED" - The operation was completed
+	// successfully.
+	//   "OPERATION_STATE_FAILED" - The operation failed.
+	//   "OPERATION_STATE_CANCELLED" - The operation was cancelled by the
+	// user.
+	State string `json:"state,omitempty"`
+
+	// UpdateBucketRequest: LongRunningUpdateBucket RPC request.
+	UpdateBucketRequest *UpdateBucketRequest `json:"updateBucketRequest,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateBucketRequest")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateBucketRequest") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BucketMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod BucketMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // BucketOptions: BucketOptions describes the bucket boundaries used to
 // create a histogram for the distribution. The buckets can be in a
 // linear sequence, an exponential sequence, or each bucket can be
@@ -1034,6 +1087,46 @@ type CopyLogEntriesResponse struct {
 
 func (s *CopyLogEntriesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod CopyLogEntriesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CreateBucketRequest: The parameters to CreateBucket.
+type CreateBucketRequest struct {
+	// Bucket: Required. The new bucket. The region specified in the new
+	// bucket must be compliant with any Location Restriction Org Policy.
+	// The name field in the bucket is ignored.
+	Bucket *LogBucket `json:"bucket,omitempty"`
+
+	// BucketId: Required. A client-assigned identifier such as "my-bucket".
+	// Identifiers are limited to 100 characters and can include only
+	// letters, digits, underscores, hyphens, and periods.
+	BucketId string `json:"bucketId,omitempty"`
+
+	// Parent: Required. The resource in which to create the log bucket:
+	// "projects/[PROJECT_ID]/locations/[LOCATION_ID]" For
+	// example:"projects/my-project/locations/global"
+	Parent string `json:"parent,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Bucket") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Bucket") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CreateBucketRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod CreateBucketRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1889,6 +1982,10 @@ func (s *Location) MarshalJSON() ([]byte, error) {
 
 // LogBucket: Describes a repository in which log entries are stored.
 type LogBucket struct {
+	// AnalyticsEnabled: Whether log analytics is enabled for this
+	// bucket.Once enabled, log analytics features cannot be disabled.
+	AnalyticsEnabled bool `json:"analyticsEnabled,omitempty"`
+
 	// CmekSettings: The CMEK settings of the log bucket. If present, new
 	// log entries written to this log bucket are encrypted using the CMEK
 	// key provided in this configuration. If a log bucket has CMEK
@@ -1916,6 +2013,11 @@ type LogBucket struct {
 	//   "DELETE_REQUESTED" - The resource has been marked for deletion by
 	// the user. For some resources (e.g. buckets), this can be reversed by
 	// an un-delete operation.
+	//   "UPDATING" - The resource has been marked for an update by the
+	// user. It will remain in this state until the update is complete.
+	//   "CREATING" - The resource has been marked for creation by the user.
+	// It will remain in this state until the creation is complete.
+	//   "FAILED" - The resource is in an INTERNAL error state.
 	LifecycleState string `json:"lifecycleState,omitempty"`
 
 	// Locked: Whether the bucket is locked.The retention period on a locked
@@ -1953,7 +2055,7 @@ type LogBucket struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "CmekSettings") to
+	// ForceSendFields is a list of field names (e.g. "AnalyticsEnabled") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1961,12 +2063,13 @@ type LogBucket struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CmekSettings") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AnalyticsEnabled") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -3742,6 +3845,52 @@ func (s *TailLogEntriesResponse) MarshalJSON() ([]byte, error) {
 type UndeleteBucketRequest struct {
 }
 
+// UpdateBucketRequest: The parameters to UpdateBucket.
+type UpdateBucketRequest struct {
+	// Bucket: Required. The updated bucket.
+	Bucket *LogBucket `json:"bucket,omitempty"`
+
+	// Name: Required. The full resource name of the bucket to update.
+	// "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+	// "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCK
+	// ET_ID]"
+	// "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/
+	// [BUCKET_ID]"
+	// "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]" For
+	// example:"projects/my-project/locations/global/buckets/my-bucket"
+	Name string `json:"name,omitempty"`
+
+	// UpdateMask: Required. Field mask that specifies the fields in bucket
+	// that need an update. A bucket field will be overwritten if, and only
+	// if, it is in the update mask. name and output only fields cannot be
+	// updated.For a detailed FieldMask definition, see:
+	// https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#google.protobuf.FieldMaskFor
+	// example: updateMask=retention_days
+	UpdateMask string `json:"updateMask,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Bucket") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Bucket") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UpdateBucketRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod UpdateBucketRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // WriteLogEntriesRequest: The parameters to WriteLogEntries.
 type WriteLogEntriesRequest struct {
 	// DryRun: Optional. If true, the request should expect normal response,
@@ -5502,6 +5651,167 @@ func (c *BillingAccountsLocationsBucketsCreateCall) Do(opts ...googleapi.CallOpt
 
 }
 
+// method id "logging.billingAccounts.locations.buckets.createAsync":
+
+type BillingAccountsLocationsBucketsCreateAsyncCall struct {
+	s          *Service
+	parent     string
+	logbucket  *LogBucket
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// CreateAsync: Creates a log bucket asynchronously that can be used to
+// store log entries.After a bucket has been created, the bucket's
+// location cannot be changed.
+//
+//   - parent: The resource in which to create the log bucket:
+//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]" For
+//     example:"projects/my-project/locations/global".
+func (r *BillingAccountsLocationsBucketsService) CreateAsync(parent string, logbucket *LogBucket) *BillingAccountsLocationsBucketsCreateAsyncCall {
+	c := &BillingAccountsLocationsBucketsCreateAsyncCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.logbucket = logbucket
+	return c
+}
+
+// BucketId sets the optional parameter "bucketId": Required. A
+// client-assigned identifier such as "my-bucket". Identifiers are
+// limited to 100 characters and can include only letters, digits,
+// underscores, hyphens, and periods.
+func (c *BillingAccountsLocationsBucketsCreateAsyncCall) BucketId(bucketId string) *BillingAccountsLocationsBucketsCreateAsyncCall {
+	c.urlParams_.Set("bucketId", bucketId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BillingAccountsLocationsBucketsCreateAsyncCall) Fields(s ...googleapi.Field) *BillingAccountsLocationsBucketsCreateAsyncCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *BillingAccountsLocationsBucketsCreateAsyncCall) Context(ctx context.Context) *BillingAccountsLocationsBucketsCreateAsyncCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BillingAccountsLocationsBucketsCreateAsyncCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BillingAccountsLocationsBucketsCreateAsyncCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.logbucket)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/buckets:createAsync")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.billingAccounts.locations.buckets.createAsync" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *BillingAccountsLocationsBucketsCreateAsyncCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a log bucket asynchronously that can be used to store log entries.After a bucket has been created, the bucket's location cannot be changed.",
+	//   "flatPath": "v2/billingAccounts/{billingAccountsId}/locations/{locationsId}/buckets:createAsync",
+	//   "httpMethod": "POST",
+	//   "id": "logging.billingAccounts.locations.buckets.createAsync",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "bucketId": {
+	//       "description": "Required. A client-assigned identifier such as \"my-bucket\". Identifiers are limited to 100 characters and can include only letters, digits, underscores, hyphens, and periods.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The resource in which to create the log bucket: \"projects/[PROJECT_ID]/locations/[LOCATION_ID]\" For example:\"projects/my-project/locations/global\"",
+	//       "location": "path",
+	//       "pattern": "^billingAccounts/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/buckets:createAsync",
+	//   "request": {
+	//     "$ref": "LogBucket"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/logging.admin"
+	//   ]
+	// }
+
+}
+
 // method id "logging.billingAccounts.locations.buckets.delete":
 
 type BillingAccountsLocationsBucketsDeleteCall struct {
@@ -6019,13 +6329,9 @@ type BillingAccountsLocationsBucketsPatchCall struct {
 	header_    http.Header
 }
 
-// Patch: Updates a log bucket. This method replaces the following
-// fields in the existing bucket with values from the new bucket:
-// retention_periodIf the retention period is decreased and the bucket
-// is locked, FAILED_PRECONDITION will be returned.If the bucket has a
-// lifecycle_state of DELETE_REQUESTED, then FAILED_PRECONDITION will be
-// returned.After a bucket has been created, the bucket's location
-// cannot be changed.
+// Patch: Updates a log bucket.If the bucket has a lifecycle_state of
+// DELETE_REQUESTED, then FAILED_PRECONDITION will be returned.After a
+// bucket has been created, the bucket's location cannot be changed.
 //
 //   - name: The full resource name of the bucket to update.
 //     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
@@ -6146,7 +6452,7 @@ func (c *BillingAccountsLocationsBucketsPatchCall) Do(opts ...googleapi.CallOpti
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a log bucket. This method replaces the following fields in the existing bucket with values from the new bucket: retention_periodIf the retention period is decreased and the bucket is locked, FAILED_PRECONDITION will be returned.If the bucket has a lifecycle_state of DELETE_REQUESTED, then FAILED_PRECONDITION will be returned.After a bucket has been created, the bucket's location cannot be changed.",
+	//   "description": "Updates a log bucket.If the bucket has a lifecycle_state of DELETE_REQUESTED, then FAILED_PRECONDITION will be returned.After a bucket has been created, the bucket's location cannot be changed.",
 	//   "flatPath": "v2/billingAccounts/{billingAccountsId}/locations/{locationsId}/buckets/{bucketsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "logging.billingAccounts.locations.buckets.patch",
@@ -6326,6 +6632,178 @@ func (c *BillingAccountsLocationsBucketsUndeleteCall) Do(opts ...googleapi.CallO
 	//   },
 	//   "response": {
 	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/logging.admin"
+	//   ]
+	// }
+
+}
+
+// method id "logging.billingAccounts.locations.buckets.updateAsync":
+
+type BillingAccountsLocationsBucketsUpdateAsyncCall struct {
+	s          *Service
+	name       string
+	logbucket  *LogBucket
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// UpdateAsync: Updates a log bucket asynchronously.If the bucket has a
+// lifecycle_state of DELETE_REQUESTED, then FAILED_PRECONDITION will be
+// returned.After a bucket has been created, the bucket's location
+// cannot be changed.
+//
+//   - name: The full resource name of the bucket to update.
+//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
+//     CKET_ID]"
+//     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
+//     s/[BUCKET_ID]"
+//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//     For
+//     example:"projects/my-project/locations/global/buckets/my-bucket".
+func (r *BillingAccountsLocationsBucketsService) UpdateAsync(name string, logbucket *LogBucket) *BillingAccountsLocationsBucketsUpdateAsyncCall {
+	c := &BillingAccountsLocationsBucketsUpdateAsyncCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.logbucket = logbucket
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. Field
+// mask that specifies the fields in bucket that need an update. A
+// bucket field will be overwritten if, and only if, it is in the update
+// mask. name and output only fields cannot be updated.For a detailed
+// FieldMask definition, see:
+// https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#google.protobuf.FieldMaskFor
+// example: updateMask=retention_days
+func (c *BillingAccountsLocationsBucketsUpdateAsyncCall) UpdateMask(updateMask string) *BillingAccountsLocationsBucketsUpdateAsyncCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BillingAccountsLocationsBucketsUpdateAsyncCall) Fields(s ...googleapi.Field) *BillingAccountsLocationsBucketsUpdateAsyncCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *BillingAccountsLocationsBucketsUpdateAsyncCall) Context(ctx context.Context) *BillingAccountsLocationsBucketsUpdateAsyncCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BillingAccountsLocationsBucketsUpdateAsyncCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BillingAccountsLocationsBucketsUpdateAsyncCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.logbucket)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}:updateAsync")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.billingAccounts.locations.buckets.updateAsync" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *BillingAccountsLocationsBucketsUpdateAsyncCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a log bucket asynchronously.If the bucket has a lifecycle_state of DELETE_REQUESTED, then FAILED_PRECONDITION will be returned.After a bucket has been created, the bucket's location cannot be changed.",
+	//   "flatPath": "v2/billingAccounts/{billingAccountsId}/locations/{locationsId}/buckets/{bucketsId}:updateAsync",
+	//   "httpMethod": "POST",
+	//   "id": "logging.billingAccounts.locations.buckets.updateAsync",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The full resource name of the bucket to update. \"projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\" \"organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\" \"billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\" \"folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\" For example:\"projects/my-project/locations/global/buckets/my-bucket\"",
+	//       "location": "path",
+	//       "pattern": "^billingAccounts/[^/]+/locations/[^/]+/buckets/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Required. Field mask that specifies the fields in bucket that need an update. A bucket field will be overwritten if, and only if, it is in the update mask. name and output only fields cannot be updated.For a detailed FieldMask definition, see: https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#google.protobuf.FieldMaskFor example: updateMask=retention_days",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}:updateAsync",
+	//   "request": {
+	//     "$ref": "LogBucket"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
@@ -12515,6 +12993,167 @@ func (c *FoldersLocationsBucketsCreateCall) Do(opts ...googleapi.CallOption) (*L
 
 }
 
+// method id "logging.folders.locations.buckets.createAsync":
+
+type FoldersLocationsBucketsCreateAsyncCall struct {
+	s          *Service
+	parent     string
+	logbucket  *LogBucket
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// CreateAsync: Creates a log bucket asynchronously that can be used to
+// store log entries.After a bucket has been created, the bucket's
+// location cannot be changed.
+//
+//   - parent: The resource in which to create the log bucket:
+//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]" For
+//     example:"projects/my-project/locations/global".
+func (r *FoldersLocationsBucketsService) CreateAsync(parent string, logbucket *LogBucket) *FoldersLocationsBucketsCreateAsyncCall {
+	c := &FoldersLocationsBucketsCreateAsyncCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.logbucket = logbucket
+	return c
+}
+
+// BucketId sets the optional parameter "bucketId": Required. A
+// client-assigned identifier such as "my-bucket". Identifiers are
+// limited to 100 characters and can include only letters, digits,
+// underscores, hyphens, and periods.
+func (c *FoldersLocationsBucketsCreateAsyncCall) BucketId(bucketId string) *FoldersLocationsBucketsCreateAsyncCall {
+	c.urlParams_.Set("bucketId", bucketId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersLocationsBucketsCreateAsyncCall) Fields(s ...googleapi.Field) *FoldersLocationsBucketsCreateAsyncCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersLocationsBucketsCreateAsyncCall) Context(ctx context.Context) *FoldersLocationsBucketsCreateAsyncCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersLocationsBucketsCreateAsyncCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersLocationsBucketsCreateAsyncCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.logbucket)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/buckets:createAsync")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.folders.locations.buckets.createAsync" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *FoldersLocationsBucketsCreateAsyncCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a log bucket asynchronously that can be used to store log entries.After a bucket has been created, the bucket's location cannot be changed.",
+	//   "flatPath": "v2/folders/{foldersId}/locations/{locationsId}/buckets:createAsync",
+	//   "httpMethod": "POST",
+	//   "id": "logging.folders.locations.buckets.createAsync",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "bucketId": {
+	//       "description": "Required. A client-assigned identifier such as \"my-bucket\". Identifiers are limited to 100 characters and can include only letters, digits, underscores, hyphens, and periods.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The resource in which to create the log bucket: \"projects/[PROJECT_ID]/locations/[LOCATION_ID]\" For example:\"projects/my-project/locations/global\"",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/buckets:createAsync",
+	//   "request": {
+	//     "$ref": "LogBucket"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/logging.admin"
+	//   ]
+	// }
+
+}
+
 // method id "logging.folders.locations.buckets.delete":
 
 type FoldersLocationsBucketsDeleteCall struct {
@@ -13032,13 +13671,9 @@ type FoldersLocationsBucketsPatchCall struct {
 	header_    http.Header
 }
 
-// Patch: Updates a log bucket. This method replaces the following
-// fields in the existing bucket with values from the new bucket:
-// retention_periodIf the retention period is decreased and the bucket
-// is locked, FAILED_PRECONDITION will be returned.If the bucket has a
-// lifecycle_state of DELETE_REQUESTED, then FAILED_PRECONDITION will be
-// returned.After a bucket has been created, the bucket's location
-// cannot be changed.
+// Patch: Updates a log bucket.If the bucket has a lifecycle_state of
+// DELETE_REQUESTED, then FAILED_PRECONDITION will be returned.After a
+// bucket has been created, the bucket's location cannot be changed.
 //
 //   - name: The full resource name of the bucket to update.
 //     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
@@ -13159,7 +13794,7 @@ func (c *FoldersLocationsBucketsPatchCall) Do(opts ...googleapi.CallOption) (*Lo
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a log bucket. This method replaces the following fields in the existing bucket with values from the new bucket: retention_periodIf the retention period is decreased and the bucket is locked, FAILED_PRECONDITION will be returned.If the bucket has a lifecycle_state of DELETE_REQUESTED, then FAILED_PRECONDITION will be returned.After a bucket has been created, the bucket's location cannot be changed.",
+	//   "description": "Updates a log bucket.If the bucket has a lifecycle_state of DELETE_REQUESTED, then FAILED_PRECONDITION will be returned.After a bucket has been created, the bucket's location cannot be changed.",
 	//   "flatPath": "v2/folders/{foldersId}/locations/{locationsId}/buckets/{bucketsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "logging.folders.locations.buckets.patch",
@@ -13339,6 +13974,178 @@ func (c *FoldersLocationsBucketsUndeleteCall) Do(opts ...googleapi.CallOption) (
 	//   },
 	//   "response": {
 	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/logging.admin"
+	//   ]
+	// }
+
+}
+
+// method id "logging.folders.locations.buckets.updateAsync":
+
+type FoldersLocationsBucketsUpdateAsyncCall struct {
+	s          *Service
+	name       string
+	logbucket  *LogBucket
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// UpdateAsync: Updates a log bucket asynchronously.If the bucket has a
+// lifecycle_state of DELETE_REQUESTED, then FAILED_PRECONDITION will be
+// returned.After a bucket has been created, the bucket's location
+// cannot be changed.
+//
+//   - name: The full resource name of the bucket to update.
+//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
+//     CKET_ID]"
+//     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
+//     s/[BUCKET_ID]"
+//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//     For
+//     example:"projects/my-project/locations/global/buckets/my-bucket".
+func (r *FoldersLocationsBucketsService) UpdateAsync(name string, logbucket *LogBucket) *FoldersLocationsBucketsUpdateAsyncCall {
+	c := &FoldersLocationsBucketsUpdateAsyncCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.logbucket = logbucket
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. Field
+// mask that specifies the fields in bucket that need an update. A
+// bucket field will be overwritten if, and only if, it is in the update
+// mask. name and output only fields cannot be updated.For a detailed
+// FieldMask definition, see:
+// https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#google.protobuf.FieldMaskFor
+// example: updateMask=retention_days
+func (c *FoldersLocationsBucketsUpdateAsyncCall) UpdateMask(updateMask string) *FoldersLocationsBucketsUpdateAsyncCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersLocationsBucketsUpdateAsyncCall) Fields(s ...googleapi.Field) *FoldersLocationsBucketsUpdateAsyncCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersLocationsBucketsUpdateAsyncCall) Context(ctx context.Context) *FoldersLocationsBucketsUpdateAsyncCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersLocationsBucketsUpdateAsyncCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersLocationsBucketsUpdateAsyncCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.logbucket)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}:updateAsync")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.folders.locations.buckets.updateAsync" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *FoldersLocationsBucketsUpdateAsyncCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a log bucket asynchronously.If the bucket has a lifecycle_state of DELETE_REQUESTED, then FAILED_PRECONDITION will be returned.After a bucket has been created, the bucket's location cannot be changed.",
+	//   "flatPath": "v2/folders/{foldersId}/locations/{locationsId}/buckets/{bucketsId}:updateAsync",
+	//   "httpMethod": "POST",
+	//   "id": "logging.folders.locations.buckets.updateAsync",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The full resource name of the bucket to update. \"projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\" \"organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\" \"billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\" \"folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\" For example:\"projects/my-project/locations/global/buckets/my-bucket\"",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+/locations/[^/]+/buckets/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Required. Field mask that specifies the fields in bucket that need an update. A bucket field will be overwritten if, and only if, it is in the update mask. name and output only fields cannot be updated.For a detailed FieldMask definition, see: https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#google.protobuf.FieldMaskFor example: updateMask=retention_days",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}:updateAsync",
+	//   "request": {
+	//     "$ref": "LogBucket"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
@@ -16862,6 +17669,167 @@ func (c *LocationsBucketsCreateCall) Do(opts ...googleapi.CallOption) (*LogBucke
 
 }
 
+// method id "logging.locations.buckets.createAsync":
+
+type LocationsBucketsCreateAsyncCall struct {
+	s          *Service
+	parent     string
+	logbucket  *LogBucket
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// CreateAsync: Creates a log bucket asynchronously that can be used to
+// store log entries.After a bucket has been created, the bucket's
+// location cannot be changed.
+//
+//   - parent: The resource in which to create the log bucket:
+//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]" For
+//     example:"projects/my-project/locations/global".
+func (r *LocationsBucketsService) CreateAsync(parent string, logbucket *LogBucket) *LocationsBucketsCreateAsyncCall {
+	c := &LocationsBucketsCreateAsyncCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.logbucket = logbucket
+	return c
+}
+
+// BucketId sets the optional parameter "bucketId": Required. A
+// client-assigned identifier such as "my-bucket". Identifiers are
+// limited to 100 characters and can include only letters, digits,
+// underscores, hyphens, and periods.
+func (c *LocationsBucketsCreateAsyncCall) BucketId(bucketId string) *LocationsBucketsCreateAsyncCall {
+	c.urlParams_.Set("bucketId", bucketId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LocationsBucketsCreateAsyncCall) Fields(s ...googleapi.Field) *LocationsBucketsCreateAsyncCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *LocationsBucketsCreateAsyncCall) Context(ctx context.Context) *LocationsBucketsCreateAsyncCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *LocationsBucketsCreateAsyncCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *LocationsBucketsCreateAsyncCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.logbucket)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/buckets:createAsync")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.locations.buckets.createAsync" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *LocationsBucketsCreateAsyncCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a log bucket asynchronously that can be used to store log entries.After a bucket has been created, the bucket's location cannot be changed.",
+	//   "flatPath": "v2/{v2Id}/{v2Id1}/locations/{locationsId}/buckets:createAsync",
+	//   "httpMethod": "POST",
+	//   "id": "logging.locations.buckets.createAsync",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "bucketId": {
+	//       "description": "Required. A client-assigned identifier such as \"my-bucket\". Identifiers are limited to 100 characters and can include only letters, digits, underscores, hyphens, and periods.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The resource in which to create the log bucket: \"projects/[PROJECT_ID]/locations/[LOCATION_ID]\" For example:\"projects/my-project/locations/global\"",
+	//       "location": "path",
+	//       "pattern": "^[^/]+/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/buckets:createAsync",
+	//   "request": {
+	//     "$ref": "LogBucket"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/logging.admin"
+	//   ]
+	// }
+
+}
+
 // method id "logging.locations.buckets.delete":
 
 type LocationsBucketsDeleteCall struct {
@@ -17379,13 +18347,9 @@ type LocationsBucketsPatchCall struct {
 	header_    http.Header
 }
 
-// Patch: Updates a log bucket. This method replaces the following
-// fields in the existing bucket with values from the new bucket:
-// retention_periodIf the retention period is decreased and the bucket
-// is locked, FAILED_PRECONDITION will be returned.If the bucket has a
-// lifecycle_state of DELETE_REQUESTED, then FAILED_PRECONDITION will be
-// returned.After a bucket has been created, the bucket's location
-// cannot be changed.
+// Patch: Updates a log bucket.If the bucket has a lifecycle_state of
+// DELETE_REQUESTED, then FAILED_PRECONDITION will be returned.After a
+// bucket has been created, the bucket's location cannot be changed.
 //
 //   - name: The full resource name of the bucket to update.
 //     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
@@ -17506,7 +18470,7 @@ func (c *LocationsBucketsPatchCall) Do(opts ...googleapi.CallOption) (*LogBucket
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a log bucket. This method replaces the following fields in the existing bucket with values from the new bucket: retention_periodIf the retention period is decreased and the bucket is locked, FAILED_PRECONDITION will be returned.If the bucket has a lifecycle_state of DELETE_REQUESTED, then FAILED_PRECONDITION will be returned.After a bucket has been created, the bucket's location cannot be changed.",
+	//   "description": "Updates a log bucket.If the bucket has a lifecycle_state of DELETE_REQUESTED, then FAILED_PRECONDITION will be returned.After a bucket has been created, the bucket's location cannot be changed.",
 	//   "flatPath": "v2/{v2Id}/{v2Id1}/locations/{locationsId}/buckets/{bucketsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "logging.locations.buckets.patch",
@@ -17686,6 +18650,178 @@ func (c *LocationsBucketsUndeleteCall) Do(opts ...googleapi.CallOption) (*Empty,
 	//   },
 	//   "response": {
 	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/logging.admin"
+	//   ]
+	// }
+
+}
+
+// method id "logging.locations.buckets.updateAsync":
+
+type LocationsBucketsUpdateAsyncCall struct {
+	s          *Service
+	name       string
+	logbucket  *LogBucket
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// UpdateAsync: Updates a log bucket asynchronously.If the bucket has a
+// lifecycle_state of DELETE_REQUESTED, then FAILED_PRECONDITION will be
+// returned.After a bucket has been created, the bucket's location
+// cannot be changed.
+//
+//   - name: The full resource name of the bucket to update.
+//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
+//     CKET_ID]"
+//     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
+//     s/[BUCKET_ID]"
+//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//     For
+//     example:"projects/my-project/locations/global/buckets/my-bucket".
+func (r *LocationsBucketsService) UpdateAsync(name string, logbucket *LogBucket) *LocationsBucketsUpdateAsyncCall {
+	c := &LocationsBucketsUpdateAsyncCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.logbucket = logbucket
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. Field
+// mask that specifies the fields in bucket that need an update. A
+// bucket field will be overwritten if, and only if, it is in the update
+// mask. name and output only fields cannot be updated.For a detailed
+// FieldMask definition, see:
+// https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#google.protobuf.FieldMaskFor
+// example: updateMask=retention_days
+func (c *LocationsBucketsUpdateAsyncCall) UpdateMask(updateMask string) *LocationsBucketsUpdateAsyncCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LocationsBucketsUpdateAsyncCall) Fields(s ...googleapi.Field) *LocationsBucketsUpdateAsyncCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *LocationsBucketsUpdateAsyncCall) Context(ctx context.Context) *LocationsBucketsUpdateAsyncCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *LocationsBucketsUpdateAsyncCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *LocationsBucketsUpdateAsyncCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.logbucket)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}:updateAsync")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.locations.buckets.updateAsync" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *LocationsBucketsUpdateAsyncCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a log bucket asynchronously.If the bucket has a lifecycle_state of DELETE_REQUESTED, then FAILED_PRECONDITION will be returned.After a bucket has been created, the bucket's location cannot be changed.",
+	//   "flatPath": "v2/{v2Id}/{v2Id1}/locations/{locationsId}/buckets/{bucketsId}:updateAsync",
+	//   "httpMethod": "POST",
+	//   "id": "logging.locations.buckets.updateAsync",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The full resource name of the bucket to update. \"projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\" \"organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\" \"billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\" \"folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\" For example:\"projects/my-project/locations/global/buckets/my-bucket\"",
+	//       "location": "path",
+	//       "pattern": "^[^/]+/[^/]+/locations/[^/]+/buckets/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Required. Field mask that specifies the fields in bucket that need an update. A bucket field will be overwritten if, and only if, it is in the update mask. name and output only fields cannot be updated.For a detailed FieldMask definition, see: https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#google.protobuf.FieldMaskFor example: updateMask=retention_days",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}:updateAsync",
+	//   "request": {
+	//     "$ref": "LogBucket"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
@@ -21609,6 +22745,167 @@ func (c *OrganizationsLocationsBucketsCreateCall) Do(opts ...googleapi.CallOptio
 
 }
 
+// method id "logging.organizations.locations.buckets.createAsync":
+
+type OrganizationsLocationsBucketsCreateAsyncCall struct {
+	s          *Service
+	parent     string
+	logbucket  *LogBucket
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// CreateAsync: Creates a log bucket asynchronously that can be used to
+// store log entries.After a bucket has been created, the bucket's
+// location cannot be changed.
+//
+//   - parent: The resource in which to create the log bucket:
+//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]" For
+//     example:"projects/my-project/locations/global".
+func (r *OrganizationsLocationsBucketsService) CreateAsync(parent string, logbucket *LogBucket) *OrganizationsLocationsBucketsCreateAsyncCall {
+	c := &OrganizationsLocationsBucketsCreateAsyncCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.logbucket = logbucket
+	return c
+}
+
+// BucketId sets the optional parameter "bucketId": Required. A
+// client-assigned identifier such as "my-bucket". Identifiers are
+// limited to 100 characters and can include only letters, digits,
+// underscores, hyphens, and periods.
+func (c *OrganizationsLocationsBucketsCreateAsyncCall) BucketId(bucketId string) *OrganizationsLocationsBucketsCreateAsyncCall {
+	c.urlParams_.Set("bucketId", bucketId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsLocationsBucketsCreateAsyncCall) Fields(s ...googleapi.Field) *OrganizationsLocationsBucketsCreateAsyncCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsLocationsBucketsCreateAsyncCall) Context(ctx context.Context) *OrganizationsLocationsBucketsCreateAsyncCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsLocationsBucketsCreateAsyncCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsBucketsCreateAsyncCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.logbucket)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/buckets:createAsync")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.organizations.locations.buckets.createAsync" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsLocationsBucketsCreateAsyncCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a log bucket asynchronously that can be used to store log entries.After a bucket has been created, the bucket's location cannot be changed.",
+	//   "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}/buckets:createAsync",
+	//   "httpMethod": "POST",
+	//   "id": "logging.organizations.locations.buckets.createAsync",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "bucketId": {
+	//       "description": "Required. A client-assigned identifier such as \"my-bucket\". Identifiers are limited to 100 characters and can include only letters, digits, underscores, hyphens, and periods.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The resource in which to create the log bucket: \"projects/[PROJECT_ID]/locations/[LOCATION_ID]\" For example:\"projects/my-project/locations/global\"",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/buckets:createAsync",
+	//   "request": {
+	//     "$ref": "LogBucket"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/logging.admin"
+	//   ]
+	// }
+
+}
+
 // method id "logging.organizations.locations.buckets.delete":
 
 type OrganizationsLocationsBucketsDeleteCall struct {
@@ -22126,13 +23423,9 @@ type OrganizationsLocationsBucketsPatchCall struct {
 	header_    http.Header
 }
 
-// Patch: Updates a log bucket. This method replaces the following
-// fields in the existing bucket with values from the new bucket:
-// retention_periodIf the retention period is decreased and the bucket
-// is locked, FAILED_PRECONDITION will be returned.If the bucket has a
-// lifecycle_state of DELETE_REQUESTED, then FAILED_PRECONDITION will be
-// returned.After a bucket has been created, the bucket's location
-// cannot be changed.
+// Patch: Updates a log bucket.If the bucket has a lifecycle_state of
+// DELETE_REQUESTED, then FAILED_PRECONDITION will be returned.After a
+// bucket has been created, the bucket's location cannot be changed.
 //
 //   - name: The full resource name of the bucket to update.
 //     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
@@ -22253,7 +23546,7 @@ func (c *OrganizationsLocationsBucketsPatchCall) Do(opts ...googleapi.CallOption
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a log bucket. This method replaces the following fields in the existing bucket with values from the new bucket: retention_periodIf the retention period is decreased and the bucket is locked, FAILED_PRECONDITION will be returned.If the bucket has a lifecycle_state of DELETE_REQUESTED, then FAILED_PRECONDITION will be returned.After a bucket has been created, the bucket's location cannot be changed.",
+	//   "description": "Updates a log bucket.If the bucket has a lifecycle_state of DELETE_REQUESTED, then FAILED_PRECONDITION will be returned.After a bucket has been created, the bucket's location cannot be changed.",
 	//   "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}/buckets/{bucketsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "logging.organizations.locations.buckets.patch",
@@ -22433,6 +23726,178 @@ func (c *OrganizationsLocationsBucketsUndeleteCall) Do(opts ...googleapi.CallOpt
 	//   },
 	//   "response": {
 	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/logging.admin"
+	//   ]
+	// }
+
+}
+
+// method id "logging.organizations.locations.buckets.updateAsync":
+
+type OrganizationsLocationsBucketsUpdateAsyncCall struct {
+	s          *Service
+	name       string
+	logbucket  *LogBucket
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// UpdateAsync: Updates a log bucket asynchronously.If the bucket has a
+// lifecycle_state of DELETE_REQUESTED, then FAILED_PRECONDITION will be
+// returned.After a bucket has been created, the bucket's location
+// cannot be changed.
+//
+//   - name: The full resource name of the bucket to update.
+//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
+//     CKET_ID]"
+//     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
+//     s/[BUCKET_ID]"
+//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//     For
+//     example:"projects/my-project/locations/global/buckets/my-bucket".
+func (r *OrganizationsLocationsBucketsService) UpdateAsync(name string, logbucket *LogBucket) *OrganizationsLocationsBucketsUpdateAsyncCall {
+	c := &OrganizationsLocationsBucketsUpdateAsyncCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.logbucket = logbucket
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. Field
+// mask that specifies the fields in bucket that need an update. A
+// bucket field will be overwritten if, and only if, it is in the update
+// mask. name and output only fields cannot be updated.For a detailed
+// FieldMask definition, see:
+// https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#google.protobuf.FieldMaskFor
+// example: updateMask=retention_days
+func (c *OrganizationsLocationsBucketsUpdateAsyncCall) UpdateMask(updateMask string) *OrganizationsLocationsBucketsUpdateAsyncCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsLocationsBucketsUpdateAsyncCall) Fields(s ...googleapi.Field) *OrganizationsLocationsBucketsUpdateAsyncCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsLocationsBucketsUpdateAsyncCall) Context(ctx context.Context) *OrganizationsLocationsBucketsUpdateAsyncCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsLocationsBucketsUpdateAsyncCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsBucketsUpdateAsyncCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.logbucket)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}:updateAsync")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.organizations.locations.buckets.updateAsync" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsLocationsBucketsUpdateAsyncCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a log bucket asynchronously.If the bucket has a lifecycle_state of DELETE_REQUESTED, then FAILED_PRECONDITION will be returned.After a bucket has been created, the bucket's location cannot be changed.",
+	//   "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}/buckets/{bucketsId}:updateAsync",
+	//   "httpMethod": "POST",
+	//   "id": "logging.organizations.locations.buckets.updateAsync",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The full resource name of the bucket to update. \"projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\" \"organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\" \"billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\" \"folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\" For example:\"projects/my-project/locations/global/buckets/my-bucket\"",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/locations/[^/]+/buckets/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Required. Field mask that specifies the fields in bucket that need an update. A bucket field will be overwritten if, and only if, it is in the update mask. name and output only fields cannot be updated.For a detailed FieldMask definition, see: https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#google.protobuf.FieldMaskFor example: updateMask=retention_days",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}:updateAsync",
+	//   "request": {
+	//     "$ref": "LogBucket"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
@@ -27097,6 +28562,167 @@ func (c *ProjectsLocationsBucketsCreateCall) Do(opts ...googleapi.CallOption) (*
 
 }
 
+// method id "logging.projects.locations.buckets.createAsync":
+
+type ProjectsLocationsBucketsCreateAsyncCall struct {
+	s          *Service
+	parent     string
+	logbucket  *LogBucket
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// CreateAsync: Creates a log bucket asynchronously that can be used to
+// store log entries.After a bucket has been created, the bucket's
+// location cannot be changed.
+//
+//   - parent: The resource in which to create the log bucket:
+//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]" For
+//     example:"projects/my-project/locations/global".
+func (r *ProjectsLocationsBucketsService) CreateAsync(parent string, logbucket *LogBucket) *ProjectsLocationsBucketsCreateAsyncCall {
+	c := &ProjectsLocationsBucketsCreateAsyncCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.logbucket = logbucket
+	return c
+}
+
+// BucketId sets the optional parameter "bucketId": Required. A
+// client-assigned identifier such as "my-bucket". Identifiers are
+// limited to 100 characters and can include only letters, digits,
+// underscores, hyphens, and periods.
+func (c *ProjectsLocationsBucketsCreateAsyncCall) BucketId(bucketId string) *ProjectsLocationsBucketsCreateAsyncCall {
+	c.urlParams_.Set("bucketId", bucketId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsBucketsCreateAsyncCall) Fields(s ...googleapi.Field) *ProjectsLocationsBucketsCreateAsyncCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsBucketsCreateAsyncCall) Context(ctx context.Context) *ProjectsLocationsBucketsCreateAsyncCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsBucketsCreateAsyncCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsBucketsCreateAsyncCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.logbucket)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/buckets:createAsync")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.projects.locations.buckets.createAsync" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsBucketsCreateAsyncCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a log bucket asynchronously that can be used to store log entries.After a bucket has been created, the bucket's location cannot be changed.",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/buckets:createAsync",
+	//   "httpMethod": "POST",
+	//   "id": "logging.projects.locations.buckets.createAsync",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "bucketId": {
+	//       "description": "Required. A client-assigned identifier such as \"my-bucket\". Identifiers are limited to 100 characters and can include only letters, digits, underscores, hyphens, and periods.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The resource in which to create the log bucket: \"projects/[PROJECT_ID]/locations/[LOCATION_ID]\" For example:\"projects/my-project/locations/global\"",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/buckets:createAsync",
+	//   "request": {
+	//     "$ref": "LogBucket"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/logging.admin"
+	//   ]
+	// }
+
+}
+
 // method id "logging.projects.locations.buckets.delete":
 
 type ProjectsLocationsBucketsDeleteCall struct {
@@ -27614,13 +29240,9 @@ type ProjectsLocationsBucketsPatchCall struct {
 	header_    http.Header
 }
 
-// Patch: Updates a log bucket. This method replaces the following
-// fields in the existing bucket with values from the new bucket:
-// retention_periodIf the retention period is decreased and the bucket
-// is locked, FAILED_PRECONDITION will be returned.If the bucket has a
-// lifecycle_state of DELETE_REQUESTED, then FAILED_PRECONDITION will be
-// returned.After a bucket has been created, the bucket's location
-// cannot be changed.
+// Patch: Updates a log bucket.If the bucket has a lifecycle_state of
+// DELETE_REQUESTED, then FAILED_PRECONDITION will be returned.After a
+// bucket has been created, the bucket's location cannot be changed.
 //
 //   - name: The full resource name of the bucket to update.
 //     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
@@ -27741,7 +29363,7 @@ func (c *ProjectsLocationsBucketsPatchCall) Do(opts ...googleapi.CallOption) (*L
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a log bucket. This method replaces the following fields in the existing bucket with values from the new bucket: retention_periodIf the retention period is decreased and the bucket is locked, FAILED_PRECONDITION will be returned.If the bucket has a lifecycle_state of DELETE_REQUESTED, then FAILED_PRECONDITION will be returned.After a bucket has been created, the bucket's location cannot be changed.",
+	//   "description": "Updates a log bucket.If the bucket has a lifecycle_state of DELETE_REQUESTED, then FAILED_PRECONDITION will be returned.After a bucket has been created, the bucket's location cannot be changed.",
 	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/buckets/{bucketsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "logging.projects.locations.buckets.patch",
@@ -27921,6 +29543,178 @@ func (c *ProjectsLocationsBucketsUndeleteCall) Do(opts ...googleapi.CallOption) 
 	//   },
 	//   "response": {
 	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/logging.admin"
+	//   ]
+	// }
+
+}
+
+// method id "logging.projects.locations.buckets.updateAsync":
+
+type ProjectsLocationsBucketsUpdateAsyncCall struct {
+	s          *Service
+	name       string
+	logbucket  *LogBucket
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// UpdateAsync: Updates a log bucket asynchronously.If the bucket has a
+// lifecycle_state of DELETE_REQUESTED, then FAILED_PRECONDITION will be
+// returned.After a bucket has been created, the bucket's location
+// cannot be changed.
+//
+//   - name: The full resource name of the bucket to update.
+//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
+//     CKET_ID]"
+//     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
+//     s/[BUCKET_ID]"
+//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//     For
+//     example:"projects/my-project/locations/global/buckets/my-bucket".
+func (r *ProjectsLocationsBucketsService) UpdateAsync(name string, logbucket *LogBucket) *ProjectsLocationsBucketsUpdateAsyncCall {
+	c := &ProjectsLocationsBucketsUpdateAsyncCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.logbucket = logbucket
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. Field
+// mask that specifies the fields in bucket that need an update. A
+// bucket field will be overwritten if, and only if, it is in the update
+// mask. name and output only fields cannot be updated.For a detailed
+// FieldMask definition, see:
+// https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#google.protobuf.FieldMaskFor
+// example: updateMask=retention_days
+func (c *ProjectsLocationsBucketsUpdateAsyncCall) UpdateMask(updateMask string) *ProjectsLocationsBucketsUpdateAsyncCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsBucketsUpdateAsyncCall) Fields(s ...googleapi.Field) *ProjectsLocationsBucketsUpdateAsyncCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsBucketsUpdateAsyncCall) Context(ctx context.Context) *ProjectsLocationsBucketsUpdateAsyncCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsBucketsUpdateAsyncCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsBucketsUpdateAsyncCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.logbucket)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}:updateAsync")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.projects.locations.buckets.updateAsync" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsBucketsUpdateAsyncCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a log bucket asynchronously.If the bucket has a lifecycle_state of DELETE_REQUESTED, then FAILED_PRECONDITION will be returned.After a bucket has been created, the bucket's location cannot be changed.",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/buckets/{bucketsId}:updateAsync",
+	//   "httpMethod": "POST",
+	//   "id": "logging.projects.locations.buckets.updateAsync",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The full resource name of the bucket to update. \"projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\" \"organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\" \"billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\" \"folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\" For example:\"projects/my-project/locations/global/buckets/my-bucket\"",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/buckets/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Required. Field mask that specifies the fields in bucket that need an update. A bucket field will be overwritten if, and only if, it is in the update mask. name and output only fields cannot be updated.For a detailed FieldMask definition, see: https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#google.protobuf.FieldMaskFor example: updateMask=retention_days",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}:updateAsync",
+	//   "request": {
+	//     "$ref": "LogBucket"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",

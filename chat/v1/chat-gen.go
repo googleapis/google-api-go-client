@@ -1892,8 +1892,6 @@ func (s *GoogleAppsCardV1DateTimePicker) MarshalJSON() ([]byte, error) {
 // in front of the text, a selection widget or a button after the text.
 type GoogleAppsCardV1DecoratedText struct {
 	// BottomLabel: The text that appears below `text`. Always truncates.
-	// Supports simple formatting. See Text formatting for formatting
-	// details.
 	BottomLabel string `json:"bottomLabel,omitempty"`
 
 	// Button: A button that can be clicked to trigger an action.
@@ -1929,8 +1927,6 @@ type GoogleAppsCardV1DecoratedText struct {
 	Text string `json:"text,omitempty"`
 
 	// TopLabel: The text that appears above `text`. Always truncates.
-	// Supports simple formatting. See Text formatting for formatting
-	// details.
 	TopLabel string `json:"topLabel,omitempty"`
 
 	// WrapText: The wrap text setting. If `true`, the text wraps and

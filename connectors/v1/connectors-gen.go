@@ -870,6 +870,8 @@ type ConnectionStatus struct {
 	//   "DELETING" - Connection is being deleted.
 	//   "UPDATING" - Connection is being updated.
 	//   "ERROR" - Connection is not running due to an error.
+	//   "AUTHORIZATION_REQUIRED" - Connection is not running due to an auth
+	// error for the Oauth2 Auth Code based connector.
 	State string `json:"state,omitempty"`
 
 	// Status: Status provides detailed information for the state.

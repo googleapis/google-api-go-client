@@ -673,12 +673,12 @@ type Gateway struct {
 	// of type 'OPEN_MESH' listen on 0.0.0.0 and support multiple ports.
 	Ports []int64 `json:"ports,omitempty"`
 
-	// Scope: Required. Immutable. Scope determines how configuration across
-	// multiple Gateway instances are merged. The configuration for multiple
-	// Gateway instances with the same scope will be merged as presented as
-	// a single coniguration to the proxy/load balancer. Max length 64
-	// characters. Scope should start with a letter and can only have
-	// letters, numbers, hyphens.
+	// Scope: Optional. Scope determines how configuration across multiple
+	// Gateway instances are merged. The configuration for multiple Gateway
+	// instances with the same scope will be merged as presented as a single
+	// coniguration to the proxy/load balancer. Max length 64 characters.
+	// Scope should start with a letter and can only have letters, numbers,
+	// hyphens.
 	Scope string `json:"scope,omitempty"`
 
 	// SelfLink: Output only. Server-defined URL of this resource

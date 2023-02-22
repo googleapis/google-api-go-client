@@ -468,6 +468,11 @@
                       "pattern": "^projects/[^/]+/locations/[^/]+$",
                       "required": true,
                       "type": "string"
+                    },
+                    "validateOnly": {
+                      "description": "Optional. Only validate the request, but do not perform mutations. The default is false.",
+                      "location": "query",
+                      "type": "boolean"
                     }
                   },
                   "path": "v1/{+parent}/dataScans",
@@ -644,6 +649,11 @@
                       "format": "google-fieldmask",
                       "location": "query",
                       "type": "string"
+                    },
+                    "validateOnly": {
+                      "description": "Optional. Only validate the request, but do not perform mutations. The default is false.",
+                      "location": "query",
+                      "type": "boolean"
                     }
                   },
                   "path": "v1/{+name}",
@@ -3980,7 +3990,7 @@
       }
     }
   },
-  "revision": "20230125",
+  "revision": "20230208",
   "rootUrl": "https://dataplex.googleapis.com/",
   "schemas": {
     "Empty": {
@@ -4478,6 +4488,11 @@
       "description": "Status of the resource referenced by an asset.",
       "id": "GoogleCloudDataplexV1AssetResourceStatus",
       "properties": {
+        "managedAccessIdentity": {
+          "description": "Output only. Service account associated with the BigQuery Connection.",
+          "readOnly": true,
+          "type": "string"
+        },
         "message": {
           "description": "Additional information about the current state.",
           "type": "string"
@@ -4787,7 +4802,7 @@
           "type": "array"
         },
         "resource": {
-          "description": "Optional. Immutable. The resource name of the resource that is binded to attributes. Presently, only entity resource is supported in the form: projects/{project}/locations/{location}/lakes/{lake}/zones/{zone}/entities/{entity_id} Must belong in the same project and region as the attribute binding, and there can only exist one active binding for a resource.",
+          "description": "Optional. Immutable. The resource name of the resource that is associated to attributes. Presently, only entity resource is supported in the form: projects/{project}/locations/{location}/lakes/{lake}/zones/{zone}/entities/{entity_id} Must belong in the same project and region as the attribute binding, and there can only exist one active binding for a resource.",
           "type": "string"
         },
         "uid": {

@@ -2157,16 +2157,11 @@ func (s *QosPolicy) UnmarshalJSON(data []byte) error {
 
 // RenameInstanceRequest: Message requesting rename of a server.
 type RenameInstanceRequest struct {
-	// Instance: Required. The `name` field is used to identify the
-	// instance. Format:
-	// projects/{project}/locations/{location}/instances/{instance}
-	Instance *Instance `json:"instance,omitempty"`
-
-	// Name: Required. The new `name` of the instance. Format:
+	// NewName: Required. The new `name` of the instance. Format:
 	// {instancename}
-	Name string `json:"name,omitempty"`
+	NewName string `json:"newName,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Instance") to
+	// ForceSendFields is a list of field names (e.g. "NewName") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2174,7 +2169,7 @@ type RenameInstanceRequest struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Instance") to include in
+	// NullFields is a list of field names (e.g. "NewName") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -4468,10 +4463,8 @@ type ProjectsLocationsInstancesRenameCall struct {
 
 // Rename: RenameInstance sets a new name for an instance.
 //
-//   - name: Immutable. The resource name of this `Instance`. Resource
-//     names are schemeless URIs that follow the conventions in
-//     https://cloud.google.com/apis/design/resource_names. Format:
-//     `projects/{project}/locations/{location}/instances/{instance}`.
+//   - name: The `name` field is used to identify the instance. Format:
+//     projects/{project}/locations/{location}/instances/{instance}.
 func (r *ProjectsLocationsInstancesService) Rename(name string, renameinstancerequest *RenameInstanceRequest) *ProjectsLocationsInstancesRenameCall {
 	c := &ProjectsLocationsInstancesRenameCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4533,13 +4526,13 @@ func (c *ProjectsLocationsInstancesRenameCall) doRequest(alt string) (*http.Resp
 }
 
 // Do executes the "baremetalsolution.projects.locations.instances.rename" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
+// Exactly one of *Instance or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Instance.ServerResponse.Header or (if a response was returned at
 // all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
 // to check whether the returned error was because
 // http.StatusNotModified was returned.
-func (c *ProjectsLocationsInstancesRenameCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+func (c *ProjectsLocationsInstancesRenameCall) Do(opts ...googleapi.CallOption) (*Instance, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -4558,7 +4551,7 @@ func (c *ProjectsLocationsInstancesRenameCall) Do(opts ...googleapi.CallOption) 
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, gensupport.WrapError(err)
 	}
-	ret := &Operation{
+	ret := &Instance{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -4579,7 +4572,7 @@ func (c *ProjectsLocationsInstancesRenameCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Immutable. The resource name of this `Instance`. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. Format: `projects/{project}/locations/{location}/instances/{instance}`",
+	//       "description": "Required. The `name` field is used to identify the instance. Format: projects/{project}/locations/{location}/instances/{instance}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
 	//       "required": true,
@@ -4591,7 +4584,7 @@ func (c *ProjectsLocationsInstancesRenameCall) Do(opts ...googleapi.CallOption) 
 	//     "$ref": "RenameInstanceRequest"
 	//   },
 	//   "response": {
-	//     "$ref": "Operation"
+	//     "$ref": "Instance"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

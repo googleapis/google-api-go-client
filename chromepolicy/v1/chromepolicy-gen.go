@@ -1024,6 +1024,84 @@ func (s *GoogleChromePolicyVersionsV1NumericRangeConstraint) MarshalJSON() ([]by
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleChromePolicyVersionsV1PolicyModificationError: Error
+// information for a modification request of a specific policy on a
+// specific target.
+type GoogleChromePolicyVersionsV1PolicyModificationError struct {
+	// Errors: Output only. The non-field errors related to the
+	// modification.
+	Errors []string `json:"errors,omitempty"`
+
+	// FieldErrors: Output only. The error messages related to the
+	// modification.
+	FieldErrors []*GoogleChromePolicyVersionsV1PolicyModificationFieldError `json:"fieldErrors,omitempty"`
+
+	// PolicySchema: Output only. The specific policy schema modification
+	// that had an error.
+	PolicySchema string `json:"policySchema,omitempty"`
+
+	// PolicyTargetKey: Output only. The specific policy target modification
+	// that had error.
+	PolicyTargetKey *GoogleChromePolicyVersionsV1PolicyTargetKey `json:"policyTargetKey,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Errors") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Errors") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromePolicyVersionsV1PolicyModificationError) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromePolicyVersionsV1PolicyModificationError
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromePolicyVersionsV1PolicyModificationErrorDetails: Details
+// of the errors encountered during a policy modification request. This
+// message will be returned as part of the details of a
+// google.rpc.Status returned to the user when there is an error in
+// their request.
+type GoogleChromePolicyVersionsV1PolicyModificationErrorDetails struct {
+	// ModificationErrors: Output only. List of specific policy
+	// modifications errors that may have occurred during a modifying
+	// request.
+	ModificationErrors []*GoogleChromePolicyVersionsV1PolicyModificationError `json:"modificationErrors,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ModificationErrors")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ModificationErrors") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromePolicyVersionsV1PolicyModificationErrorDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromePolicyVersionsV1PolicyModificationErrorDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleChromePolicyVersionsV1PolicyModificationFieldError: Error
 // information for a modification request of a specific field on a
 // specific policy.

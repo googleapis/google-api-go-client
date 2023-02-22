@@ -2162,6 +2162,12 @@ type MigratingVm struct {
 	// Labels: The labels of the migrating VM.
 	Labels map[string]string `json:"labels,omitempty"`
 
+	// LastReplicationCycle: Output only. Details of the last replication
+	// cycle. This will be updated whenever a replication cycle is finished
+	// and is not to be confused with last_sync which is only updated on
+	// successful replication cycles.
+	LastReplicationCycle *ReplicationCycle `json:"lastReplicationCycle,omitempty"`
+
 	// LastSync: Output only. The most updated snapshot created time in the
 	// source that finished replication.
 	LastSync *ReplicationSync `json:"lastSync,omitempty"`
@@ -2318,6 +2324,54 @@ type MigrationError struct {
 
 func (s *MigrationError) MarshalJSON() ([]byte, error) {
 	type NoMethod MigrationError
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MigrationWarning: Represents migration resource warning information
+// that can be used with google.rpc.Status message. MigrationWarning is
+// used to present the user with warning information in migration
+// operations.
+type MigrationWarning struct {
+	// ActionItem: Suggested action for solving the warning.
+	ActionItem *LocalizedMessage `json:"actionItem,omitempty"`
+
+	// Code: The warning code.
+	//
+	// Possible values:
+	//   "WARNING_CODE_UNSPECIFIED" - Default value. This value is not used.
+	//   "ADAPTATION_WARNING" - A warning originated from OS Adaptation.
+	Code string `json:"code,omitempty"`
+
+	// HelpLinks: URL(s) pointing to additional information on handling the
+	// current warning.
+	HelpLinks []*Link `json:"helpLinks,omitempty"`
+
+	// WarningMessage: The localized warning message.
+	WarningMessage *LocalizedMessage `json:"warningMessage,omitempty"`
+
+	// WarningTime: The time the warning occurred.
+	WarningTime string `json:"warningTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ActionItem") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ActionItem") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MigrationWarning) MarshalJSON() ([]byte, error) {
+	type NoMethod MigrationWarning
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2603,6 +2657,9 @@ type ReplicationCycle struct {
 	// TotalPauseDuration: The accumulated duration the replication cycle
 	// was paused.
 	TotalPauseDuration string `json:"totalPauseDuration,omitempty"`
+
+	// Warnings: Output only. Warnings that occurred during the cycle.
+	Warnings []*MigrationWarning `json:"warnings,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.

@@ -358,12 +358,11 @@ type CapacityCommitment struct {
 	// period. It is applicable only for ACTIVE capacity commitments.
 	CommitmentStartTime string `json:"commitmentStartTime,omitempty"`
 
-	// Edition: Edition of the capacity commitment.
+	// Edition: Do not use.
 	//
 	// Possible values:
-	//   "EDITION_UNSPECIFIED" - Default value, only for legacy reservations
-	// and capacity commitments.
-	//   "ENTERPRISE" - Enterprise edition.
+	//   "EDITION_UNSPECIFIED" - Do not use.
+	//   "ENTERPRISE" - Do not use.
 	Edition string `json:"edition,omitempty"`
 
 	// FailureStatus: Output only. For FAILED commitment plan, provides the
@@ -404,13 +403,7 @@ type CapacityCommitment struct {
 	//   "ANNUAL" - Annual commitments have a committed period of 365 days
 	// after becoming ACTIVE. After that they are converted to a new
 	// commitment based on the renewal_plan.
-	//   "NONE" - Should only be used for `renewal_plan` and is only
-	// meaningful if edition is specified to values other than
-	// EDITION_UNSPECIFIED. Otherwise CreateCapacityCommitmentRequest or
-	// UpdateCapacityCommitmentRequest will be rejected with error code
-	// `google.rpc.Code.INVALID_ARGUMENT`. If the renewal_plan is NONE,
-	// capacity commitment will be removed at the end of its commitment
-	// period.
+	//   "NONE" - Do not use.
 	Plan string `json:"plan,omitempty"`
 
 	// RenewalPlan: The plan this capacity commitment is converted to after
@@ -436,13 +429,7 @@ type CapacityCommitment struct {
 	//   "ANNUAL" - Annual commitments have a committed period of 365 days
 	// after becoming ACTIVE. After that they are converted to a new
 	// commitment based on the renewal_plan.
-	//   "NONE" - Should only be used for `renewal_plan` and is only
-	// meaningful if edition is specified to values other than
-	// EDITION_UNSPECIFIED. Otherwise CreateCapacityCommitmentRequest or
-	// UpdateCapacityCommitmentRequest will be rejected with error code
-	// `google.rpc.Code.INVALID_ARGUMENT`. If the renewal_plan is NONE,
-	// capacity commitment will be removed at the end of its commitment
-	// period.
+	//   "NONE" - Do not use.
 	RenewalPlan string `json:"renewalPlan,omitempty"`
 
 	// SlotCount: Number of slots in this commitment.
@@ -702,12 +689,11 @@ type Reservation struct {
 	// CreationTime: Output only. Creation time of the reservation.
 	CreationTime string `json:"creationTime,omitempty"`
 
-	// Edition: Edition of the reservation.
+	// Edition: Do not use.
 	//
 	// Possible values:
-	//   "EDITION_UNSPECIFIED" - Default value, only for legacy reservations
-	// and capacity commitments.
-	//   "ENTERPRISE" - Enterprise edition.
+	//   "EDITION_UNSPECIFIED" - Do not use.
+	//   "ENTERPRISE" - Do not use.
 	Edition string `json:"edition,omitempty"`
 
 	// IgnoreIdleSlots: If false, any query or pipeline job using this

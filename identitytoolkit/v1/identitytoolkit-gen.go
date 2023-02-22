@@ -1976,6 +1976,16 @@ type GoogleCloudIdentitytoolkitV1SendVerificationCodeRequest struct {
 	// E.164 format.
 	PhoneNumber string `json:"phoneNumber,omitempty"`
 
+	// PlayIntegrityToken: Android only. Used to assert application identity
+	// in place of a recaptcha token (and safety_net_token). At least one of
+	// (`ios_receipt` and `ios_secret`), `recaptcha_token`, , or
+	// `play_integrity_token` must be specified to verify the verification
+	// code is being sent on behalf of a real app and not an emulator. A
+	// Play Integrity Token can be generated via the PlayIntegrity API
+	// (https://developer.android.com/google/play/integrity) with applying
+	// SHA256 to the `phone_number` field as the nonce.
+	PlayIntegrityToken string `json:"playIntegrityToken,omitempty"`
+
 	// RecaptchaToken: Recaptcha token for app verification. At least one of
 	// (`ios_receipt` and `ios_secret`), `recaptcha_token`, or
 	// `safety_net_token` must be specified to verify the verification code

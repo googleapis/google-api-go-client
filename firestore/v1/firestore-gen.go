@@ -1375,6 +1375,10 @@ type GoogleFirestoreAdminV1Database struct {
 	// Firestore with Datastore Mode but is not recommended.
 	ConcurrencyMode string `json:"concurrencyMode,omitempty"`
 
+	// CreateTime: Output only. The timestamp at which this database was
+	// created.
+	CreateTime string `json:"createTime,omitempty"`
+
 	// Etag: This checksum is computed by the server based on the value of
 	// other fields, and may be sent on update and delete requests to ensure
 	// the client has an up-to-date value before proceeding.
@@ -1406,6 +1410,14 @@ type GoogleFirestoreAdminV1Database struct {
 	//   "FIRESTORE_NATIVE" - Firestore Native Mode
 	//   "DATASTORE_MODE" - Firestore in Datastore Mode.
 	Type string `json:"type,omitempty"`
+
+	// Uid: Output only. The system-generated UUID4 for this Database.
+	Uid string `json:"uid,omitempty"`
+
+	// UpdateTime: Output only. The timestamp at which this database was
+	// most recently updated. Note this only includes updates to the
+	// database resource and not data contained by the database.
+	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -8146,7 +8158,8 @@ type ProjectsDatabasesDocumentsListenCall struct {
 	header_       http.Header
 }
 
-// Listen: Listens to changes.
+// Listen: Listens to changes. This method is only available via the
+// gRPC API (not REST).
 //
 //   - database: The database name. In the format:
 //     `projects/{project_id}/databases/{database_id}`.
@@ -8248,7 +8261,7 @@ func (c *ProjectsDatabasesDocumentsListenCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Listens to changes.",
+	//   "description": "Listens to changes. This method is only available via the gRPC API (not REST).",
 	//   "flatPath": "v1/projects/{projectsId}/databases/{databasesId}/documents:listen",
 	//   "httpMethod": "POST",
 	//   "id": "firestore.projects.databases.documents.listen",
@@ -9109,6 +9122,7 @@ type ProjectsDatabasesDocumentsWriteCall struct {
 }
 
 // Write: Streams batches of document updates and deletes, in order.
+// This method is only available via the gRPC API (not REST).
 //
 //   - database: The database name. In the format:
 //     `projects/{project_id}/databases/{database_id}`. This is only
@@ -9211,7 +9225,7 @@ func (c *ProjectsDatabasesDocumentsWriteCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Streams batches of document updates and deletes, in order.",
+	//   "description": "Streams batches of document updates and deletes, in order. This method is only available via the gRPC API (not REST).",
 	//   "flatPath": "v1/projects/{projectsId}/databases/{databasesId}/documents:write",
 	//   "httpMethod": "POST",
 	//   "id": "firestore.projects.databases.documents.write",

@@ -1074,6 +1074,10 @@ func (s *GoogleCloudDataplexV1AssetResourceSpec) MarshalJSON() ([]byte, error) {
 // GoogleCloudDataplexV1AssetResourceStatus: Status of the resource
 // referenced by an asset.
 type GoogleCloudDataplexV1AssetResourceStatus struct {
+	// ManagedAccessIdentity: Output only. Service account associated with
+	// the BigQuery Connection.
+	ManagedAccessIdentity string `json:"managedAccessIdentity,omitempty"`
+
 	// Message: Additional information about the current state.
 	Message string `json:"message,omitempty"`
 
@@ -1088,20 +1092,22 @@ type GoogleCloudDataplexV1AssetResourceStatus struct {
 	// UpdateTime: Last update time of the status.
 	UpdateTime string `json:"updateTime,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Message") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "ManagedAccessIdentity") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Message") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ManagedAccessIdentity") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1491,8 +1497,8 @@ type GoogleCloudDataplexV1DataAttributeBinding struct {
 	Paths []*GoogleCloudDataplexV1DataAttributeBindingPath `json:"paths,omitempty"`
 
 	// Resource: Optional. Immutable. The resource name of the resource that
-	// is binded to attributes. Presently, only entity resource is supported
-	// in the form:
+	// is associated to attributes. Presently, only entity resource is
+	// supported in the form:
 	// projects/{project}/locations/{location}/lakes/{lake}/zones/{zone}/enti
 	// ties/{entity_id} Must belong in the same project and region as the
 	// attribute binding, and there can only exist one active binding for a
@@ -8708,6 +8714,14 @@ func (c *ProjectsLocationsDataScansCreateCall) DataScanId(dataScanId string) *Pr
 	return c
 }
 
+// ValidateOnly sets the optional parameter "validateOnly": Only
+// validate the request, but do not perform mutations. The default is
+// false.
+func (c *ProjectsLocationsDataScansCreateCall) ValidateOnly(validateOnly bool) *ProjectsLocationsDataScansCreateCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -8818,6 +8832,11 @@ func (c *ProjectsLocationsDataScansCreateCall) Do(opts ...googleapi.CallOption) 
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "validateOnly": {
+	//       "description": "Optional. Only validate the request, but do not perform mutations. The default is false.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     }
 	//   },
 	//   "path": "v1/{+parent}/dataScans",
@@ -9581,6 +9600,14 @@ func (c *ProjectsLocationsDataScansPatchCall) UpdateMask(updateMask string) *Pro
 	return c
 }
 
+// ValidateOnly sets the optional parameter "validateOnly": Only
+// validate the request, but do not perform mutations. The default is
+// false.
+func (c *ProjectsLocationsDataScansPatchCall) ValidateOnly(validateOnly bool) *ProjectsLocationsDataScansPatchCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -9692,6 +9719,11 @@ func (c *ProjectsLocationsDataScansPatchCall) Do(opts ...googleapi.CallOption) (
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
+	//     },
+	//     "validateOnly": {
+	//       "description": "Optional. Only validate the request, but do not perform mutations. The default is false.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     }
 	//   },
 	//   "path": "v1/{+name}",

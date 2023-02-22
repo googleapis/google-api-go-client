@@ -506,6 +506,15 @@ type AudioStream struct {
 	// `ac3` - `eac3`
 	Codec string `json:"codec,omitempty"`
 
+	// DisplayName: The name for this particular audio stream that will be
+	// added to the HLS/DASH manifest.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// LanguageCode: The BCP-47 language code, such as `en-US` or `sr-Latn`.
+	// For more information, see
+	// https://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
+	LanguageCode string `json:"languageCode,omitempty"`
+
 	// Mapping: The mapping for the `Job.edit_list` atoms with audio
 	// `EditAtom.inputs`.
 	Mapping []*AudioMapping `json:"mapping,omitempty"`
@@ -2125,6 +2134,15 @@ type TextStream struct {
 	// Supported text codecs: - `srt` - `ttml` - `cea608` - `cea708` -
 	// `webvtt`
 	Codec string `json:"codec,omitempty"`
+
+	// DisplayName: The name for this particular text stream that will be
+	// added to the HLS/DASH manifest.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// LanguageCode: The BCP-47 language code, such as `en-US` or `sr-Latn`.
+	// For more information, see
+	// https://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
+	LanguageCode string `json:"languageCode,omitempty"`
 
 	// Mapping: The mapping for the `Job.edit_list` atoms with text
 	// `EditAtom.inputs`.

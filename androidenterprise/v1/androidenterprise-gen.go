@@ -1184,6 +1184,18 @@ type Device struct {
 	// as a lowercase hex string. For example, "123456789abcdef0".
 	AndroidId string `json:"androidId,omitempty"`
 
+	// Device: The internal hardware codename of the device. This comes from
+	// android.os.Build.DEVICE. (field named "device" per
+	// logs/wireless/android/android_checkin.proto)
+	Device string `json:"device,omitempty"`
+
+	// LatestBuildFingerprint: The build fingerprint of the device if known.
+	LatestBuildFingerprint string `json:"latestBuildFingerprint,omitempty"`
+
+	// Maker: The manufacturer of the device. This comes from
+	// android.os.Build.MANUFACTURER.
+	Maker string `json:"maker,omitempty"`
+
 	// ManagementType: Identifies the extent to which the device is
 	// controlled by a managed Google Play EMM in various deployment
 	// configurations. Possible values include: - "managedDevice", a device
@@ -1203,11 +1215,26 @@ type Device struct {
 	//   "unmanagedProfile"
 	ManagementType string `json:"managementType,omitempty"`
 
+	// Model: The model name of the device. This comes from
+	// android.os.Build.MODEL.
+	Model string `json:"model,omitempty"`
+
 	// Policy: The policy enforced on the device.
 	Policy *Policy `json:"policy,omitempty"`
 
+	// Product: The product name of the device. This comes from
+	// android.os.Build.PRODUCT.
+	Product string `json:"product,omitempty"`
+
 	// Report: The device report updated with the latest app states.
 	Report *DeviceReport `json:"report,omitempty"`
+
+	// RetailBrand: Retail brand for the device, if set. See
+	// https://developer.android.com/reference/android/os/Build.html#BRAND
+	RetailBrand string `json:"retailBrand,omitempty"`
+
+	// SdkVersion: API compatibility version.
+	SdkVersion int64 `json:"sdkVersion,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.

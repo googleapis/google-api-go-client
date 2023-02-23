@@ -1441,7 +1441,7 @@ type ExecutionSpec struct {
 	// TaskCount: Optional. Specifies the desired number of tasks the
 	// execution should run. Setting to 1 means that parallelism is limited
 	// to 1 and the success of that task signals the success of the
-	// execution.
+	// execution. Defaults to 1.
 	TaskCount int64 `json:"taskCount,omitempty"`
 
 	// Template: Optional. The template used to create tasks for this
@@ -4087,7 +4087,7 @@ type TaskSpec struct {
 	Containers []*Container `json:"containers,omitempty"`
 
 	// MaxRetries: Optional. Number of retries allowed per task, before
-	// marking this job failed.
+	// marking this job failed. Defaults to 3.
 	MaxRetries int64 `json:"maxRetries,omitempty"`
 
 	// ServiceAccountName: Optional. Email address of the IAM service
@@ -4100,7 +4100,7 @@ type TaskSpec struct {
 	// TimeoutSeconds: Optional. Duration in seconds the task may be active
 	// before the system will actively try to mark it failed and kill
 	// associated containers. This applies per attempt of a task, meaning
-	// each retry can run for the full timeout.
+	// each retry can run for the full timeout. Defaults to 600 seconds.
 	TimeoutSeconds int64 `json:"timeoutSeconds,omitempty,string"`
 
 	// Volumes: Optional. List of volumes that can be mounted by containers

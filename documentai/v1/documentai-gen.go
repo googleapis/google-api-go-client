@@ -3706,7 +3706,7 @@ type GoogleCloudDocumentaiV1DocumentSchemaEntityType struct {
 	// honored for backward compatibility.
 	Name string `json:"name,omitempty"`
 
-	// Properties: Describing the nested structure, or composition of an
+	// Properties: Description the nested structure, or composition of an
 	// entity.
 	Properties []*GoogleCloudDocumentaiV1DocumentSchemaEntityTypeProperty `json:"properties,omitempty"`
 
@@ -3775,10 +3775,11 @@ type GoogleCloudDocumentaiV1DocumentSchemaEntityTypeProperty struct {
 	// Possible values:
 	//   "OCCURRENCE_TYPE_UNSPECIFIED" - Unspecified occurrence type.
 	//   "OPTIONAL_ONCE" - There will be zero or one instance of this entity
-	// type.
+	// type. The same entity instance may be mentioned multiple times.
 	//   "OPTIONAL_MULTIPLE" - The entity type will appear zero or multiple
 	// times.
 	//   "REQUIRED_ONCE" - The entity type will only appear exactly once.
+	// The same entity instance may be mentioned multiple times.
 	//   "REQUIRED_MULTIPLE" - The entity type will appear once or more
 	// times.
 	OccurrenceType string `json:"occurrenceType,omitempty"`

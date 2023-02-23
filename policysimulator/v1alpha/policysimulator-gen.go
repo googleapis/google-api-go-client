@@ -160,6 +160,7 @@ type FoldersService struct {
 
 func NewFoldersLocationsService(s *Service) *FoldersLocationsService {
 	rs := &FoldersLocationsService{s: s}
+	rs.OrgPolicyViolationsPreviews = NewFoldersLocationsOrgPolicyViolationsPreviewsService(s)
 	rs.Replays = NewFoldersLocationsReplaysService(s)
 	return rs
 }
@@ -167,7 +168,30 @@ func NewFoldersLocationsService(s *Service) *FoldersLocationsService {
 type FoldersLocationsService struct {
 	s *Service
 
+	OrgPolicyViolationsPreviews *FoldersLocationsOrgPolicyViolationsPreviewsService
+
 	Replays *FoldersLocationsReplaysService
+}
+
+func NewFoldersLocationsOrgPolicyViolationsPreviewsService(s *Service) *FoldersLocationsOrgPolicyViolationsPreviewsService {
+	rs := &FoldersLocationsOrgPolicyViolationsPreviewsService{s: s}
+	rs.Operations = NewFoldersLocationsOrgPolicyViolationsPreviewsOperationsService(s)
+	return rs
+}
+
+type FoldersLocationsOrgPolicyViolationsPreviewsService struct {
+	s *Service
+
+	Operations *FoldersLocationsOrgPolicyViolationsPreviewsOperationsService
+}
+
+func NewFoldersLocationsOrgPolicyViolationsPreviewsOperationsService(s *Service) *FoldersLocationsOrgPolicyViolationsPreviewsOperationsService {
+	rs := &FoldersLocationsOrgPolicyViolationsPreviewsOperationsService{s: s}
+	return rs
+}
+
+type FoldersLocationsOrgPolicyViolationsPreviewsOperationsService struct {
+	s *Service
 }
 
 func NewFoldersLocationsReplaysService(s *Service) *FoldersLocationsReplaysService {
@@ -214,6 +238,7 @@ type OrganizationsService struct {
 
 func NewOrganizationsLocationsService(s *Service) *OrganizationsLocationsService {
 	rs := &OrganizationsLocationsService{s: s}
+	rs.OrgPolicyViolationsPreviews = NewOrganizationsLocationsOrgPolicyViolationsPreviewsService(s)
 	rs.Replays = NewOrganizationsLocationsReplaysService(s)
 	return rs
 }
@@ -221,7 +246,30 @@ func NewOrganizationsLocationsService(s *Service) *OrganizationsLocationsService
 type OrganizationsLocationsService struct {
 	s *Service
 
+	OrgPolicyViolationsPreviews *OrganizationsLocationsOrgPolicyViolationsPreviewsService
+
 	Replays *OrganizationsLocationsReplaysService
+}
+
+func NewOrganizationsLocationsOrgPolicyViolationsPreviewsService(s *Service) *OrganizationsLocationsOrgPolicyViolationsPreviewsService {
+	rs := &OrganizationsLocationsOrgPolicyViolationsPreviewsService{s: s}
+	rs.Operations = NewOrganizationsLocationsOrgPolicyViolationsPreviewsOperationsService(s)
+	return rs
+}
+
+type OrganizationsLocationsOrgPolicyViolationsPreviewsService struct {
+	s *Service
+
+	Operations *OrganizationsLocationsOrgPolicyViolationsPreviewsOperationsService
+}
+
+func NewOrganizationsLocationsOrgPolicyViolationsPreviewsOperationsService(s *Service) *OrganizationsLocationsOrgPolicyViolationsPreviewsOperationsService {
+	rs := &OrganizationsLocationsOrgPolicyViolationsPreviewsOperationsService{s: s}
+	return rs
+}
+
+type OrganizationsLocationsOrgPolicyViolationsPreviewsOperationsService struct {
+	s *Service
 }
 
 func NewOrganizationsLocationsReplaysService(s *Service) *OrganizationsLocationsReplaysService {
@@ -259,6 +307,7 @@ type ProjectsService struct {
 
 func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs := &ProjectsLocationsService{s: s}
+	rs.OrgPolicyViolationsPreviews = NewProjectsLocationsOrgPolicyViolationsPreviewsService(s)
 	rs.Replays = NewProjectsLocationsReplaysService(s)
 	return rs
 }
@@ -266,7 +315,30 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 type ProjectsLocationsService struct {
 	s *Service
 
+	OrgPolicyViolationsPreviews *ProjectsLocationsOrgPolicyViolationsPreviewsService
+
 	Replays *ProjectsLocationsReplaysService
+}
+
+func NewProjectsLocationsOrgPolicyViolationsPreviewsService(s *Service) *ProjectsLocationsOrgPolicyViolationsPreviewsService {
+	rs := &ProjectsLocationsOrgPolicyViolationsPreviewsService{s: s}
+	rs.Operations = NewProjectsLocationsOrgPolicyViolationsPreviewsOperationsService(s)
+	return rs
+}
+
+type ProjectsLocationsOrgPolicyViolationsPreviewsService struct {
+	s *Service
+
+	Operations *ProjectsLocationsOrgPolicyViolationsPreviewsOperationsService
+}
+
+func NewProjectsLocationsOrgPolicyViolationsPreviewsOperationsService(s *Service) *ProjectsLocationsOrgPolicyViolationsPreviewsOperationsService {
+	rs := &ProjectsLocationsOrgPolicyViolationsPreviewsOperationsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsOrgPolicyViolationsPreviewsOperationsService struct {
+	s *Service
 }
 
 func NewProjectsLocationsReplaysService(s *Service) *ProjectsLocationsReplaysService {
@@ -771,7 +843,9 @@ type GoogleIamV1Binding struct {
 	// (https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts).
 	// For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`.
 	// * `group:{emailid}`: An email address that represents a Google group.
-	// For example, `admins@example.com`. *
+	// For example, `admins@example.com`. * `domain:{domain}`: The G Suite
+	// domain (primary) that represents all the users of that domain. For
+	// example, `google.com` or `example.com`. *
 	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
 	// unique identifier) representing a user that has been recently
 	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
@@ -788,9 +862,7 @@ type GoogleIamV1Binding struct {
 	// that has been recently deleted. For example,
 	// `admins@example.com?uid=123456789012345678901`. If the group is
 	// recovered, this value reverts to `group:{emailid}` and the recovered
-	// group retains the role in the binding. * `domain:{domain}`: The G
-	// Suite domain (primary) that represents all the users of that domain.
-	// For example, `google.com` or `example.com`.
+	// group retains the role in the binding.
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of `members`, or principals.
@@ -1174,6 +1246,154 @@ func (s *GoogleTypeExpr) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeExpr
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// method id "policysimulator.folders.locations.orgPolicyViolationsPreviews.operations.get":
+
+type FoldersLocationsOrgPolicyViolationsPreviewsOperationsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the latest state of a long-running operation. Clients can
+// use this method to poll the operation result at intervals as
+// recommended by the API service.
+//
+// - name: The name of the operation resource.
+func (r *FoldersLocationsOrgPolicyViolationsPreviewsOperationsService) Get(name string) *FoldersLocationsOrgPolicyViolationsPreviewsOperationsGetCall {
+	c := &FoldersLocationsOrgPolicyViolationsPreviewsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersLocationsOrgPolicyViolationsPreviewsOperationsGetCall) Fields(s ...googleapi.Field) *FoldersLocationsOrgPolicyViolationsPreviewsOperationsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *FoldersLocationsOrgPolicyViolationsPreviewsOperationsGetCall) IfNoneMatch(entityTag string) *FoldersLocationsOrgPolicyViolationsPreviewsOperationsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersLocationsOrgPolicyViolationsPreviewsOperationsGetCall) Context(ctx context.Context) *FoldersLocationsOrgPolicyViolationsPreviewsOperationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersLocationsOrgPolicyViolationsPreviewsOperationsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersLocationsOrgPolicyViolationsPreviewsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "policysimulator.folders.locations.orgPolicyViolationsPreviews.operations.get" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *FoldersLocationsOrgPolicyViolationsPreviewsOperationsGetCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
+	//   "flatPath": "v1alpha/folders/{foldersId}/locations/{locationsId}/orgPolicyViolationsPreviews/{orgPolicyViolationsPreviewsId}/operations/{operationsId}",
+	//   "httpMethod": "GET",
+	//   "id": "policysimulator.folders.locations.orgPolicyViolationsPreviews.operations.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The name of the operation resource.",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+/locations/[^/]+/orgPolicyViolationsPreviews/[^/]+/operations/.*$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
 }
 
 // method id "policysimulator.folders.locations.replays.operations.get":
@@ -1900,6 +2120,154 @@ func (c *OperationsListCall) Pages(ctx context.Context, f func(*GoogleLongrunnin
 	}
 }
 
+// method id "policysimulator.organizations.locations.orgPolicyViolationsPreviews.operations.get":
+
+type OrganizationsLocationsOrgPolicyViolationsPreviewsOperationsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the latest state of a long-running operation. Clients can
+// use this method to poll the operation result at intervals as
+// recommended by the API service.
+//
+// - name: The name of the operation resource.
+func (r *OrganizationsLocationsOrgPolicyViolationsPreviewsOperationsService) Get(name string) *OrganizationsLocationsOrgPolicyViolationsPreviewsOperationsGetCall {
+	c := &OrganizationsLocationsOrgPolicyViolationsPreviewsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsLocationsOrgPolicyViolationsPreviewsOperationsGetCall) Fields(s ...googleapi.Field) *OrganizationsLocationsOrgPolicyViolationsPreviewsOperationsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsLocationsOrgPolicyViolationsPreviewsOperationsGetCall) IfNoneMatch(entityTag string) *OrganizationsLocationsOrgPolicyViolationsPreviewsOperationsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsLocationsOrgPolicyViolationsPreviewsOperationsGetCall) Context(ctx context.Context) *OrganizationsLocationsOrgPolicyViolationsPreviewsOperationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsLocationsOrgPolicyViolationsPreviewsOperationsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsOrgPolicyViolationsPreviewsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "policysimulator.organizations.locations.orgPolicyViolationsPreviews.operations.get" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsLocationsOrgPolicyViolationsPreviewsOperationsGetCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
+	//   "flatPath": "v1alpha/organizations/{organizationsId}/locations/{locationsId}/orgPolicyViolationsPreviews/{orgPolicyViolationsPreviewsId}/operations/{operationsId}",
+	//   "httpMethod": "GET",
+	//   "id": "policysimulator.organizations.locations.orgPolicyViolationsPreviews.operations.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The name of the operation resource.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/locations/[^/]+/orgPolicyViolationsPreviews/[^/]+/operations/.*$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "policysimulator.organizations.locations.replays.operations.get":
 
 type OrganizationsLocationsReplaysOperationsGetCall struct {
@@ -2260,6 +2628,154 @@ func (c *OrganizationsLocationsReplaysOperationsListCall) Pages(ctx context.Cont
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "policysimulator.projects.locations.orgPolicyViolationsPreviews.operations.get":
+
+type ProjectsLocationsOrgPolicyViolationsPreviewsOperationsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the latest state of a long-running operation. Clients can
+// use this method to poll the operation result at intervals as
+// recommended by the API service.
+//
+// - name: The name of the operation resource.
+func (r *ProjectsLocationsOrgPolicyViolationsPreviewsOperationsService) Get(name string) *ProjectsLocationsOrgPolicyViolationsPreviewsOperationsGetCall {
+	c := &ProjectsLocationsOrgPolicyViolationsPreviewsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsOrgPolicyViolationsPreviewsOperationsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsOrgPolicyViolationsPreviewsOperationsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsOrgPolicyViolationsPreviewsOperationsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsOrgPolicyViolationsPreviewsOperationsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsOrgPolicyViolationsPreviewsOperationsGetCall) Context(ctx context.Context) *ProjectsLocationsOrgPolicyViolationsPreviewsOperationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsOrgPolicyViolationsPreviewsOperationsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsOrgPolicyViolationsPreviewsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "policysimulator.projects.locations.orgPolicyViolationsPreviews.operations.get" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsOrgPolicyViolationsPreviewsOperationsGetCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/orgPolicyViolationsPreviews/{orgPolicyViolationsPreviewsId}/operations/{operationsId}",
+	//   "httpMethod": "GET",
+	//   "id": "policysimulator.projects.locations.orgPolicyViolationsPreviews.operations.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The name of the operation resource.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/orgPolicyViolationsPreviews/[^/]+/operations/.*$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
 }
 
 // method id "policysimulator.projects.locations.replays.operations.get":

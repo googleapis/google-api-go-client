@@ -893,8 +893,8 @@ type GoogleCloudRunV2ExecutionTemplate struct {
 
 	// TaskCount: Specifies the desired number of tasks the execution should
 	// run. Setting to 1 means that parallelism is limited to 1 and the
-	// success of that task signals the success of the execution. More info:
-	// https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/
+	// success of that task signals the success of the execution. Defaults
+	// to 1.
 	TaskCount int64 `json:"taskCount,omitempty"`
 
 	// Template: Required. Describes the task(s) that will be created when
@@ -2446,7 +2446,7 @@ type GoogleCloudRunV2TaskTemplate struct {
 	ExecutionEnvironment string `json:"executionEnvironment,omitempty"`
 
 	// MaxRetries: Number of retries allowed per Task, before marking this
-	// Task failed.
+	// Task failed. Defaults to 3.
 	MaxRetries int64 `json:"maxRetries,omitempty"`
 
 	// ServiceAccount: Email address of the IAM service account associated
@@ -2459,7 +2459,7 @@ type GoogleCloudRunV2TaskTemplate struct {
 	// Timeout: Max allowed time duration the Task may be active before the
 	// system will actively try to mark it failed and kill associated
 	// containers. This applies per attempt of a task, meaning each retry
-	// can run for the full timeout.
+	// can run for the full timeout. Defaults to 600 seconds.
 	Timeout string `json:"timeout,omitempty"`
 
 	// Volumes: A list of Volumes to make available to containers.

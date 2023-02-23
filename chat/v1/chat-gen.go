@@ -1327,7 +1327,8 @@ func (s *FormAction) MarshalJSON() ([]byte, error) {
 
 // GoogleAppsCardV1Action: An action that describes the behavior when
 // the form is submitted. For example, an Apps Script can be invoked to
-// handle the form.
+// handle the form. If the action is triggered, the form values are sent
+// to the server.
 type GoogleAppsCardV1Action struct {
 	// Function: A custom function to invoke when the containing element is
 	// clicked or othrwise activated. For example usage, see Create
@@ -1373,18 +1374,20 @@ type GoogleAppsCardV1Action struct {
 
 	// PersistValues: Indicates whether form values persist after the
 	// action. The default value is `false`. If `true`, form values remain
-	// after the action is triggered. When using LoadIndicator.NONE
+	// after the action is triggered. To let the user make changes while the
+	// action is being processed, set LoadIndicator
 	// (https://developers.google.com/workspace/add-ons/reference/rpc/google.apps.card.v1#loadindicator)
-	// for actions, `persist_values` = `true`is recommended, as it ensures
-	// that any changes made by the user after form or on change actions are
-	// sent to the server are not overwritten by the response. If `false`,
-	// the form values are cleared when the action is triggered. When
-	// `persist_values` is set to `false`, it is strongly recommended that
-	// the card use LoadIndicator.SPINNER
+	// to `NONE`. For card messages
+	// (https://developers.google.com/chat/api/guides/message-formats/cards)
+	// in Chat apps, you must also set the action's ResponseType
+	// (https://developers.google.com/chat/api/reference/rest/v1/spaces.messages#responsetype)
+	// to `UPDATE_MESSAGE` and use the same `card_id`
+	// (https://developers.google.com/chat/api/reference/rest/v1/spaces.messages#CardWithId)
+	// from the card that contained the action. If `false`, the form values
+	// are cleared when the action is triggered. To prevent the user from
+	// making changes while the action is being processed, set LoadIndicator
 	// (https://developers.google.com/workspace/add-ons/reference/rpc/google.apps.card.v1#loadindicator)
-	// for all actions, as this locks the UI to ensure no changes are made
-	// by the user while the action is being processed. Not supported by
-	// Chat apps.
+	// to `SPINNER`.
 	PersistValues bool `json:"persistValues,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Function") to
@@ -1897,7 +1900,7 @@ type GoogleAppsCardV1DecoratedText struct {
 	// Button: A button that can be clicked to trigger an action.
 	Button *GoogleAppsCardV1Button `json:"button,omitempty"`
 
-	// EndIcon: An icon displayed after the text. Supports standard
+	// EndIcon: An icon displayed after the text. Supports built-in
 	// (https://developers.google.com/chat/api/guides/message-formats/cards#builtinicons)
 	// and custom
 	// (https://developers.google.com/chat/api/guides/message-formats/cards#customicons)
@@ -1915,11 +1918,7 @@ type GoogleAppsCardV1DecoratedText struct {
 	StartIcon *GoogleAppsCardV1Icon `json:"startIcon,omitempty"`
 
 	// SwitchControl: A switch widget can be clicked to change its state and
-	// trigger an action. Currently supported in dialogs
-	// (https://developers.google.com/chat/how-tos/dialogs). Support for
-	// card messages
-	// (https://developers.google.com/chat/api/guides/message-formats/cards)
-	// is coming soon.
+	// trigger an action.
 	SwitchControl *GoogleAppsCardV1SwitchControl `json:"switchControl,omitempty"`
 
 	// Text: Required. The primary text. Supports simple formatting. See
@@ -1967,14 +1966,10 @@ type GoogleAppsCardV1Divider struct {
 // grid supports any number of columns and items. The number of rows is
 // determined by items divided by columns. A grid with 10 items and 2
 // columns has 5 rows. A grid with 11 items and 2 columns has 6 rows.
-// Currently supported in dialogs
-// (https://developers.google.com/chat/how-tos/dialogs). Support for
-// card messages
-// (https://developers.google.com/chat/api/guides/message-formats/cards)
-// is coming soon. For example, the following JSON creates a 2 column
-// grid with a single item: ``` "grid": { "title": "A fine collection of
-// items", "columnCount": 2, "borderStyle": { "type": "STROKE",
-// "cornerRadius": 4 }, "items": [ { "image": { "imageUri":
+// For example, the following JSON creates a 2 column grid with a single
+// item: ``` "grid": { "title": "A fine collection of items",
+// "columnCount": 2, "borderStyle": { "type": "STROKE", "cornerRadius":
+// 4 }, "items": [ { "image": { "imageUri":
 // "https://www.example.com/image.png", "cropStyle": { "type": "SQUARE"
 // }, "borderStyle": { "type": "STROKE" } }, "title": "An item",
 // "textAlignment": "CENTER" } ], "onClick": { "openLink": { "url":
@@ -2073,8 +2068,8 @@ func (s *GoogleAppsCardV1GridItem) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleAppsCardV1Icon: An icon displayed in a widget on a card.
-// Supports standard
-// (https://developers.google.com/chat/api/guides/message-formats/cards)
+// Supports built-in
+// (https://developers.google.com/chat/api/guides/message-formats/cards#builtinicons)
 // and custom
 // (https://developers.google.com/chat/api/guides/message-formats/cards#customicons)
 // icons.
@@ -2099,7 +2094,7 @@ type GoogleAppsCardV1Icon struct {
 
 	// ImageType: The crop style applied to the image. In some cases,
 	// applying a `CIRCLE` crop causes the image to be drawn larger than a
-	// standard icon.
+	// built-in icon.
 	//
 	// Possible values:
 	//   "SQUARE" - Default value. Applies a square mask to the image. For
@@ -2108,11 +2103,11 @@ type GoogleAppsCardV1Icon struct {
 	// image becomes a circle with a diameter of 3.
 	ImageType string `json:"imageType,omitempty"`
 
-	// KnownIcon: Display one of the standard icons provided by Google
+	// KnownIcon: Display one of the built-in icons provided by Google
 	// Workspace. For example, to display an airplane icon, specify
 	// `AIRPLANE`. For a bus, specify `BUS`. For a full list of supported
-	// icons, see standard icons
-	// (https://developers.google.com/chat/api/guides/message-formats/cards).
+	// icons, see built-in icons
+	// (https://developers.google.com/chat/api/guides/message-formats/cards#builtinicons).
 	KnownIcon string `json:"knownIcon,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AltText") to
@@ -2425,11 +2420,7 @@ func (s *GoogleAppsCardV1Section) MarshalJSON() ([]byte, error) {
 // (https://developers.google.com/chat/how-tos/dialogs#receive_form_data_from_dialogs).
 // When you need to collect data from users that matches options you
 // set, use a selection input. To collect abstract data from users, use
-// the text input widget instead. Only supported in dialogs
-// (https://developers.google.com/chat/how-tos/dialogs). Support for
-// card messages
-// (https://developers.google.com/chat/api/guides/message-formats/cards)
-// coming soon.
+// the text input widget instead.
 type GoogleAppsCardV1SelectionInput struct {
 	// Items: An array of the selected items. For example, all the selected
 	// check boxes.
@@ -2463,29 +2454,13 @@ type GoogleAppsCardV1SelectionInput struct {
 	//
 	// Possible values:
 	//   "CHECK_BOX" - A set of checkboxes. Users can select multiple check
-	// boxes per selection input. Currently supported in
-	// [dialogs](https://developers.google.com/chat/how-tos/dialogs).
-	// Support for [card
-	// messages](https://developers.google.com/chat/api/guides/message-format
-	// s/cards) is coming soon.
+	// boxes per selection input.
 	//   "RADIO_BUTTON" - A set of radio buttons. Users can select one radio
-	// button per selection input. Currently supported in
-	// [dialogs](https://developers.google.com/chat/how-tos/dialogs).
-	// Support for [card
-	// messages](https://developers.google.com/chat/api/guides/message-format
-	// s/cards) is coming soon.
+	// button per selection input.
 	//   "SWITCH" - A set of switches. Users can turn on multiple switches
-	// at once per selection input. Currently supported in
-	// [dialogs](https://developers.google.com/chat/how-tos/dialogs).
-	// Support for [card
-	// messages](https://developers.google.com/chat/api/guides/message-format
-	// s/cards) is coming soon.
+	// at once per selection input.
 	//   "DROPDOWN" - A dropdown menu. Users can select one dropdown menu
-	// item per selection input. Currently supported in
-	// [dialogs](https://developers.google.com/chat/how-tos/dialogs).
-	// Support for [card
-	// messages](https://developers.google.com/chat/api/guides/message-format
-	// s/cards) is coming soon.
+	// item per selection input.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Items") to
@@ -2623,11 +2598,7 @@ func (s *GoogleAppsCardV1Suggestions) MarshalJSON() ([]byte, error) {
 
 // GoogleAppsCardV1SwitchControl: Either a toggle-style switch or a
 // checkbox inside a `decoratedText` widget. Only supported on the
-// `decoratedText` widget. Currently supported in dialogs
-// (https://developers.google.com/chat/how-tos/dialogs). Support for
-// card messages
-// (https://developers.google.com/chat/api/guides/message-formats/cards)
-// is coming soon.
+// `decoratedText` widget.
 type GoogleAppsCardV1SwitchControl struct {
 	// ControlType: How the switch appears in the user interface.
 	//
@@ -2686,11 +2657,7 @@ func (s *GoogleAppsCardV1SwitchControl) MarshalJSON() ([]byte, error) {
 // (https://developers.google.com/chat/how-tos/dialogs#receive_form_data_from_dialogs).
 // When you need to collect abstract data from users, use a text input.
 // To collect defined data from users, use the selection input widget
-// instead. Only supported in dialogs
-// (https://developers.google.com/chat/how-tos/dialogs). Support for
-// card messages
-// (https://developers.google.com/chat/api/guides/message-formats/cards)
-// coming soon.
+// instead.
 type GoogleAppsCardV1TextInput struct {
 	// AutoCompleteAction: Optional. Specify what action to take when the
 	// text input field provides suggestions to users who interact with it.
@@ -2850,14 +2817,10 @@ type GoogleAppsCardV1Widget struct {
 	// number of columns and items. The number of rows is determined by the
 	// upper bounds of the number items divided by the number of columns. A
 	// grid with 10 items and 2 columns has 5 rows. A grid with 11 items and
-	// 2 columns has 6 rows. Currently supported in dialogs
-	// (https://developers.google.com/chat/how-tos/dialogs). Support for
-	// card messages
-	// (https://developers.google.com/chat/api/guides/message-formats/cards)
-	// is coming soon. For example, the following JSON creates a 2 column
-	// grid with a single item: ``` "grid": { "title": "A fine collection of
-	// items", "columnCount": 2, "borderStyle": { "type": "STROKE",
-	// "cornerRadius": 4 }, "items": [ { "image": { "imageUri":
+	// 2 columns has 6 rows. For example, the following JSON creates a 2
+	// column grid with a single item: ``` "grid": { "title": "A fine
+	// collection of items", "columnCount": 2, "borderStyle": { "type":
+	// "STROKE", "cornerRadius": 4 }, "items": [ { "image": { "imageUri":
 	// "https://www.example.com/image.png", "cropStyle": { "type": "SQUARE"
 	// }, "borderStyle": { "type": "STROKE" } }, "title": "An item",
 	// "textAlignment": "CENTER" } ], "onClick": { "openLink": { "url":
@@ -2872,32 +2835,24 @@ type GoogleAppsCardV1Widget struct {
 
 	// SelectionInput: Displays a selection control that lets users select
 	// items. Selection controls can be check boxes, radio buttons,
-	// switches, or dropdown menus. Currently supported in dialogs
-	// (https://developers.google.com/chat/how-tos/dialogs). Support for
-	// card messages
-	// (https://developers.google.com/chat/api/guides/message-formats/cards)
-	// is coming soon. For example, the following JSON creates a dropdown
-	// menu that lets users choose a size: ``` "selectionInput": { "name":
-	// "size", "label": "Size" "type": "DROPDOWN", "items": [ { "text": "S",
-	// "value": "small", "selected": false }, { "text": "M", "value":
-	// "medium", "selected": true }, { "text": "L", "value": "large",
-	// "selected": false }, { "text": "XL", "value": "extra_large",
+	// switches, or dropdown menus. For example, the following JSON creates
+	// a dropdown menu that lets users choose a size: ``` "selectionInput":
+	// { "name": "size", "label": "Size" "type": "DROPDOWN", "items": [ {
+	// "text": "S", "value": "small", "selected": false }, { "text": "M",
+	// "value": "medium", "selected": true }, { "text": "L", "value":
+	// "large", "selected": false }, { "text": "XL", "value": "extra_large",
 	// "selected": false } ] } ```
 	SelectionInput *GoogleAppsCardV1SelectionInput `json:"selectionInput,omitempty"`
 
-	// TextInput: Displays a text box that users can type into. Currently
-	// supported in dialogs
-	// (https://developers.google.com/chat/how-tos/dialogs). Support for
-	// card messages
-	// (https://developers.google.com/chat/api/guides/message-formats/cards)
-	// is coming soon. For example, the following JSON creates a text input
-	// for an email address: ``` "textInput": { "name": "mailing_address",
-	// "label": "Mailing Address" } ``` As another example, the following
-	// JSON creates a text input for a programming language with static
-	// suggestions: ``` "textInput": { "name":
-	// "preferred_programing_language", "label": "Preferred Language",
-	// "initialSuggestions": { "items": [ { "text": "C++" }, { "text":
-	// "Java" }, { "text": "JavaScript" }, { "text": "Python" } ] } } ```
+	// TextInput: Displays a text box that users can type into. For example,
+	// the following JSON creates a text input for an email address: ```
+	// "textInput": { "name": "mailing_address", "label": "Mailing Address"
+	// } ``` As another example, the following JSON creates a text input for
+	// a programming language with static suggestions: ``` "textInput": {
+	// "name": "preferred_programing_language", "label": "Preferred
+	// Language", "initialSuggestions": { "items": [ { "text": "C++" }, {
+	// "text": "Java" }, { "text": "JavaScript" }, { "text": "Python" } ] }
+	// } ```
 	TextInput *GoogleAppsCardV1TextInput `json:"textInput,omitempty"`
 
 	// TextParagraph: Displays a text paragraph. Supports simple HTML

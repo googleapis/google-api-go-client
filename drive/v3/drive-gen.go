@@ -2487,7 +2487,7 @@ func (s *ModifyLabelsResponse) MarshalJSON() ([]byte, error) {
 }
 
 // Permission: A permission for a file. A permission grants a user,
-// group, domain or the world access to a file or a folder hierarchy.
+// group, domain, or the world access to a file or a folder hierarchy.
 type Permission struct {
 	// AllowFileDiscovery: Whether the permission allows the file to be
 	// discovered through search. This is only applicable for permissions of
@@ -2500,15 +2500,18 @@ type Permission struct {
 
 	// DisplayName: The "pretty" name of the value of the permission. The
 	// following is a list of examples for each type of permission:
-	// - user - User's full name, as defined for their Google account, such
+	// - user - User's full name, as defined for their Google Account, such
 	// as "Joe Smith."
 	// - group - Name of the Google Group, such as "The Company
 	// Administrators."
-	// - domain - String domain name, such as "thecompany.com."
+	// - domain - String domain name, such as "your-company.com."
 	// - anyone - No displayName is present.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Domain: The domain to which this permission refers.
+	// Domain: The domain to which this permission refers. The following
+	// options are currently allowed:
+	// - The entire domain, such as "your-company.com."
+	// - A target audience, such as "ID.audience.googledomains.com."
 	Domain string `json:"domain,omitempty"`
 
 	// EmailAddress: The email address of the user or group to which this
@@ -2518,10 +2521,10 @@ type Permission struct {
 	// ExpirationTime: The time at which this permission will expire (RFC
 	// 3339 date-time). Expiration times have the following restrictions:
 	//
-	// - They cannot be set on shared drive items
-	// - They can only be set on user and group permissions
-	// - The time must be in the future
-	// - The time cannot be more than a year in the future
+	// - They cannot be set on shared drive items.
+	// - They can only be set on user and group permissions.
+	// - The time must be in the future.
+	// - The time cannot be more than one year in the future.
 	ExpirationTime string `json:"expirationTime,omitempty"`
 
 	// Id: The ID of this permission. This is a unique identifier for the
@@ -2535,12 +2538,12 @@ type Permission struct {
 
 	// PendingOwner: Whether the account associated with this permission is
 	// a pending owner. Only populated for user type permissions for files
-	// that are not in a shared drive.
+	// that aren't in a shared drive.
 	PendingOwner bool `json:"pendingOwner,omitempty"`
 
 	// PermissionDetails: Details of whether the permissions on this shared
-	// drive item are inherited or directly on this item. This is an
-	// output-only field which is present only for shared drive items.
+	// drive item are inherited or are directly on this item. This is an
+	// output-only field that's present only for shared drive items.
 	PermissionDetails []*PermissionPermissionDetails `json:"permissionDetails,omitempty"`
 
 	// PhotoLink: A link to the user's profile photo, if available.
@@ -2567,7 +2570,7 @@ type Permission struct {
 	// - anyone  When creating a permission, if type is user or group, you
 	// must provide an emailAddress for the user or group. When type is
 	// domain, you must provide a domain. There isn't extra information
-	// required for a anyone type.
+	// required for the anyone type.
 	Type string `json:"type,omitempty"`
 
 	// View: Indicates the view for this permission. Only populated for
@@ -2613,13 +2616,13 @@ type PermissionPermissionDetails struct {
 	InheritedFrom string `json:"inheritedFrom,omitempty"`
 
 	// PermissionType: The permission type for this user. While new values
-	// may be added in future, the following are currently possible:
+	// may be added in future, the following are currently allowed:
 	// - file
 	// - member
 	PermissionType string `json:"permissionType,omitempty"`
 
 	// Role: The primary role for this user. While new values may be added
-	// in the future, the following are currently possible:
+	// in the future, the following are currently allowed:
 	// - organizer
 	// - fileOrganizer
 	// - writer
@@ -4081,7 +4084,8 @@ type ChangesWatchCall struct {
 	header_    http.Header
 }
 
-// Watch: Subscribes to changes for a user.
+// Watch: Subscribes to changes for a user. To use this method, you must
+// include the pageToken query parameter.
 //
 //   - pageToken: The token for continuing a previous list request on the
 //     next page. This should be set to the value of 'nextPageToken' from
@@ -4289,7 +4293,7 @@ func (c *ChangesWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Subscribes to changes for a user.",
+	//   "description": "Subscribes to changes for a user. To use this method, you must include the pageToken query parameter.",
 	//   "httpMethod": "POST",
 	//   "id": "drive.changes.watch",
 	//   "parameterOrder": [
@@ -9101,7 +9105,9 @@ type PermissionsCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates a permission for a file or shared drive.
+// Create: Creates a permission for a file or shared drive. For more
+// information on creating permissions, see Share files, folders &
+// drives.
 //
 // - fileId: The ID of the file or shared drive.
 func (r *PermissionsService) Create(fileId string, permission *Permission) *PermissionsCreateCall {
@@ -9277,7 +9283,7 @@ func (c *PermissionsCreateCall) Do(opts ...googleapi.CallOption) (*Permission, e
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a permission for a file or shared drive.",
+	//   "description": "Creates a permission for a file or shared drive. For more information on creating permissions, see Share files, folders \u0026 drives.",
 	//   "httpMethod": "POST",
 	//   "id": "drive.permissions.create",
 	//   "parameterOrder": [

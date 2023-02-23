@@ -480,6 +480,10 @@ type GoogleCloudRecaptchaenterpriseV1Assessment struct {
 	// Event: The event being assessed.
 	Event *GoogleCloudRecaptchaenterpriseV1Event `json:"event,omitempty"`
 
+	// FraudPreventionAssessment: Assessment returned by Fraud Prevention
+	// when TransactionData is provided.
+	FraudPreventionAssessment *GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessment `json:"fraudPreventionAssessment,omitempty"`
+
 	// Name: Output only. The resource name for the Assessment in the format
 	// "projects/{project}/assessments/{assessment}".
 	Name string `json:"name,omitempty"`
@@ -631,6 +635,12 @@ type GoogleCloudRecaptchaenterpriseV1Event struct {
 	// Enterprise client-side integration on your site.
 	Token string `json:"token,omitempty"`
 
+	// TransactionData: Optional. Data describing a payment transaction to
+	// be assessed. Sending this data enables reCAPTCHA Enterprise Fraud
+	// Prevention and the FraudPreventionAssessment component in the
+	// response.
+	TransactionData *GoogleCloudRecaptchaenterpriseV1TransactionData `json:"transactionData,omitempty"`
+
 	// UserAgent: Optional. The user agent present in the request from the
 	// user's device related to this event.
 	UserAgent string `json:"userAgent,omitempty"`
@@ -661,6 +671,150 @@ func (s *GoogleCloudRecaptchaenterpriseV1Event) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecaptchaenterpriseV1Event
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessment: Assessment
+// for Fraud Prevention.
+type GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessment struct {
+	// CardTestingVerdict: Assessment of this transaction for risk of being
+	// part of a card testing attack.
+	CardTestingVerdict *GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessmentCardTestingVerdict `json:"cardTestingVerdict,omitempty"`
+
+	// StolenInstrumentVerdict: Assessment of this transaction for risk of a
+	// stolen instrument.
+	StolenInstrumentVerdict *GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessmentStolenInstrumentVerdict `json:"stolenInstrumentVerdict,omitempty"`
+
+	// TransactionRisk: Probability (0-1) of this transaction being
+	// fraudulent. Summarizes the combined risk of attack vectors below.
+	TransactionRisk float64 `json:"transactionRisk,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CardTestingVerdict")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CardTestingVerdict") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessment) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessment
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessment) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessment
+	var s1 struct {
+		TransactionRisk gensupport.JSONFloat64 `json:"transactionRisk"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.TransactionRisk = float64(s1.TransactionRisk)
+	return nil
+}
+
+// GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessmentCardTestingVe
+// rdict: Information about card testing fraud, where an adversary is
+// testing fraudulently obtained cards or brute forcing their details.
+type GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessmentCardTestingVerdict struct {
+	// Risk: Probability (0-1) of this transaction attempt being part of a
+	// card testing attack.
+	Risk float64 `json:"risk,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Risk") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Risk") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessmentCardTestingVerdict) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessmentCardTestingVerdict
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessmentCardTestingVerdict) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessmentCardTestingVerdict
+	var s1 struct {
+		Risk gensupport.JSONFloat64 `json:"risk"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Risk = float64(s1.Risk)
+	return nil
+}
+
+// GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessmentStolenInstrum
+// entVerdict: Information about stolen instrument fraud, where the user
+// is not the legitimate owner of the instrument being used for the
+// purchase.
+type GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessmentStolenInstrumentVerdict struct {
+	// Risk: Probability (0-1) of this transaction being executed with a
+	// stolen instrument.
+	Risk float64 `json:"risk,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Risk") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Risk") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessmentStolenInstrumentVerdict) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessmentStolenInstrumentVerdict
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessmentStolenInstrumentVerdict) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessmentStolenInstrumentVerdict
+	var s1 struct {
+		Risk gensupport.JSONFloat64 `json:"risk"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Risk = float64(s1.Risk)
+	return nil
 }
 
 // GoogleCloudRecaptchaenterpriseV1IOSKeySettings: Settings specific to
@@ -1131,6 +1285,10 @@ type GoogleCloudRecaptchaenterpriseV1RiskAnalysis struct {
 	// significantly different than expected patterns.
 	//   "LOW_CONFIDENCE_SCORE" - Too little traffic has been received from
 	// this site thus far to generate quality risk analysis.
+	//   "SUSPECTED_CARDING" - The request matches behavioral
+	// characteristics of a carding attack.
+	//   "SUSPECTED_CHARGEBACK" - The request matches behavioral
+	// characteristics of chargebacks for fraud.
 	Reasons []string `json:"reasons,omitempty"`
 
 	// Score: Legitimate event score from 0.0 to 1.0. (1.0 means very likely
@@ -1451,6 +1609,297 @@ func (s *GoogleCloudRecaptchaenterpriseV1TokenProperties) MarshalJSON() ([]byte,
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudRecaptchaenterpriseV1TransactionData: Transaction data
+// associated with a payment protected by reCAPTCHA Enterprise. All
+// fields are optional.
+type GoogleCloudRecaptchaenterpriseV1TransactionData struct {
+	// BillingAddress: Address associated with the payment method when
+	// applicable.
+	BillingAddress *GoogleCloudRecaptchaenterpriseV1TransactionDataAddress `json:"billingAddress,omitempty"`
+
+	// CardBin: The Bank Identification Number - generally the first 6 or 8
+	// digits of the card.
+	CardBin string `json:"cardBin,omitempty"`
+
+	// CardLastFour: The last four digits of the card.
+	CardLastFour string `json:"cardLastFour,omitempty"`
+
+	// CurrencyCode: The currency code in ISO-4217 format.
+	CurrencyCode string `json:"currencyCode,omitempty"`
+
+	// GatewayInfo: Information about the payment gateway's response to the
+	// transaction.
+	GatewayInfo *GoogleCloudRecaptchaenterpriseV1TransactionDataGatewayInfo `json:"gatewayInfo,omitempty"`
+
+	// Items: Items purchased in this transaction.
+	Items []*GoogleCloudRecaptchaenterpriseV1TransactionDataItem `json:"items,omitempty"`
+
+	// Merchants: Information about the user or users fulfilling the
+	// transaction.
+	Merchants []*GoogleCloudRecaptchaenterpriseV1TransactionDataUser `json:"merchants,omitempty"`
+
+	// PaymentMethod: The payment method for the transaction. The allowed
+	// values are: * credit-card * debit-card * gift-card * processor-{name}
+	// (If a third-party is used, for example, processor-paypal) *
+	// custom-{name} (If an alternative method is used, for example,
+	// custom-crypto)
+	PaymentMethod string `json:"paymentMethod,omitempty"`
+
+	// ShippingAddress: Destination address if this transaction involves
+	// shipping a physical item.
+	ShippingAddress *GoogleCloudRecaptchaenterpriseV1TransactionDataAddress `json:"shippingAddress,omitempty"`
+
+	// ShippingValue: The value of shipping in the specified currency. 0 for
+	// free or no shipping.
+	ShippingValue float64 `json:"shippingValue,omitempty"`
+
+	// TransactionId: Unique identifier for the transaction. This custom
+	// identifier can be used to reference this transaction in the future,
+	// for example, labeling a refund or chargeback event. Two attempts at
+	// the same transaction should use the same transaction id.
+	TransactionId string `json:"transactionId,omitempty"`
+
+	// User: Information about the user paying/initiating the transaction.
+	User *GoogleCloudRecaptchaenterpriseV1TransactionDataUser `json:"user,omitempty"`
+
+	// Value: The decimal value of the transaction in the specified
+	// currency.
+	Value float64 `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BillingAddress") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BillingAddress") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRecaptchaenterpriseV1TransactionData) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecaptchaenterpriseV1TransactionData
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudRecaptchaenterpriseV1TransactionData) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudRecaptchaenterpriseV1TransactionData
+	var s1 struct {
+		ShippingValue gensupport.JSONFloat64 `json:"shippingValue"`
+		Value         gensupport.JSONFloat64 `json:"value"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.ShippingValue = float64(s1.ShippingValue)
+	s.Value = float64(s1.Value)
+	return nil
+}
+
+// GoogleCloudRecaptchaenterpriseV1TransactionDataAddress: Structured
+// address format for billing and shipping addresses.
+type GoogleCloudRecaptchaenterpriseV1TransactionDataAddress struct {
+	// Address: The first lines of the address. The first line generally
+	// contains the street name and number, and further lines may include
+	// information such as an apartment number.
+	Address []string `json:"address,omitempty"`
+
+	// AdministrativeArea: The state, province, or otherwise administrative
+	// area of the address.
+	AdministrativeArea string `json:"administrativeArea,omitempty"`
+
+	// Locality: The town/city of the address.
+	Locality string `json:"locality,omitempty"`
+
+	// PostalCode: The postal or ZIP code of the address.
+	PostalCode string `json:"postalCode,omitempty"`
+
+	// Recipient: The recipient name, potentially including information such
+	// as "care of".
+	Recipient string `json:"recipient,omitempty"`
+
+	// RegionCode: The CLDR country/region of the address.
+	RegionCode string `json:"regionCode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Address") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Address") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRecaptchaenterpriseV1TransactionDataAddress) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecaptchaenterpriseV1TransactionDataAddress
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRecaptchaenterpriseV1TransactionDataGatewayInfo: Details
+// about the transaction from the gateway.
+type GoogleCloudRecaptchaenterpriseV1TransactionDataGatewayInfo struct {
+	// AvsResponseCode: AVS response code from the gateway (available only
+	// when reCAPTCHA Enterprise is called after authorization).
+	AvsResponseCode string `json:"avsResponseCode,omitempty"`
+
+	// CvvResponseCode: CVV response code from the gateway (available only
+	// when reCAPTCHA Enterprise is called after authorization).
+	CvvResponseCode string `json:"cvvResponseCode,omitempty"`
+
+	// GatewayResponseCode: Gateway response code describing the state of
+	// the transaction.
+	GatewayResponseCode string `json:"gatewayResponseCode,omitempty"`
+
+	// Name: Name of the gateway service (for example, stripe, square,
+	// paypal).
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AvsResponseCode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AvsResponseCode") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRecaptchaenterpriseV1TransactionDataGatewayInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecaptchaenterpriseV1TransactionDataGatewayInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRecaptchaenterpriseV1TransactionDataItem: Line items being
+// purchased in this transaction.
+type GoogleCloudRecaptchaenterpriseV1TransactionDataItem struct {
+	// MerchantAccountId: When a merchant is specified, its corresponding
+	// account_id. Necessary to populate marketplace-style transactions.
+	MerchantAccountId string `json:"merchantAccountId,omitempty"`
+
+	// Name: The full name of the item.
+	Name string `json:"name,omitempty"`
+
+	// Quantity: The quantity of this item that is being purchased.
+	Quantity int64 `json:"quantity,omitempty,string"`
+
+	// Value: The value per item that the user is paying, in the transaction
+	// currency, after discounts.
+	Value float64 `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MerchantAccountId")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MerchantAccountId") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRecaptchaenterpriseV1TransactionDataItem) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecaptchaenterpriseV1TransactionDataItem
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudRecaptchaenterpriseV1TransactionDataItem) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudRecaptchaenterpriseV1TransactionDataItem
+	var s1 struct {
+		Value gensupport.JSONFloat64 `json:"value"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Value = float64(s1.Value)
+	return nil
+}
+
+// GoogleCloudRecaptchaenterpriseV1TransactionDataUser: Details about a
+// user's account involved in the transaction.
+type GoogleCloudRecaptchaenterpriseV1TransactionDataUser struct {
+	// AccountId: Unique account identifier for this user. If using account
+	// defender, this should match the hashed_account_id field. Otherwise, a
+	// unique and persistent identifier for this account.
+	AccountId string `json:"accountId,omitempty"`
+
+	// CreationMs: The epoch milliseconds of the user's account creation.
+	CreationMs int64 `json:"creationMs,omitempty,string"`
+
+	// Email: The email address of the user.
+	Email string `json:"email,omitempty"`
+
+	// EmailVerified: Whether the email has been verified to be accessible
+	// by the user (OTP or similar).
+	EmailVerified bool `json:"emailVerified,omitempty"`
+
+	// PhoneNumber: The phone number of the user, with country code.
+	PhoneNumber string `json:"phoneNumber,omitempty"`
+
+	// PhoneVerified: Whether the phone number has been verified to be
+	// accessible by the user (OTP or similar).
+	PhoneVerified bool `json:"phoneVerified,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AccountId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AccountId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRecaptchaenterpriseV1TransactionDataUser) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecaptchaenterpriseV1TransactionDataUser
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRecaptchaenterpriseV1TransactionEvent: Describes an event
 // in the lifecycle of a payment transaction.
 type GoogleCloudRecaptchaenterpriseV1TransactionEvent struct {
@@ -1598,6 +2047,7 @@ type GoogleCloudRecaptchaenterpriseV1WafSettings struct {
 	// Possible values:
 	//   "WAF_SERVICE_UNSPECIFIED" - Undefined WAF
 	//   "CA" - Cloud Armor
+	//   "FASTLY" - Fastly
 	WafService string `json:"wafService,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "WafFeature") to

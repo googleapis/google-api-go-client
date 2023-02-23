@@ -1298,6 +1298,44 @@ func (s *HttpBody) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// IncidentList: A widget that displays a list of incidents
+type IncidentList struct {
+	// MonitoredResources: Optional. The monitored resource for which
+	// incidents are listed. The resource doesn't need to be fully
+	// specified. That is, you can specify the resource type but not the
+	// values of the resource labels. The resource type and labels are used
+	// for filtering.
+	MonitoredResources []*MonitoredResource `json:"monitoredResources,omitempty"`
+
+	// PolicyNames: Optional. A list of alert policy names to filter the
+	// incident list by. Don't include the project ID prefix in the policy
+	// name. For example, use alertPolicies/utilization.
+	PolicyNames []string `json:"policyNames,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MonitoredResources")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MonitoredResources") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IncidentList) MarshalJSON() ([]byte, error) {
+	type NoMethod IncidentList
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ListDashboardsResponse: The ListDashboards request.
 type ListDashboardsResponse struct {
 	// Dashboards: The list of requested dashboards.
@@ -1531,6 +1569,56 @@ type MonitoredProject struct {
 
 func (s *MonitoredProject) MarshalJSON() ([]byte, error) {
 	type NoMethod MonitoredProject
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MonitoredResource: An object representing a resource that can be used
+// for monitoring, logging, billing, or other purposes. Examples include
+// virtual machine instances, databases, and storage devices such as
+// disks. The type field identifies a MonitoredResourceDescriptor object
+// that describes the resource's schema. Information in the labels field
+// identifies the actual resource and its attributes according to the
+// schema. For example, a particular Compute Engine VM instance could be
+// represented by the following object, because the
+// MonitoredResourceDescriptor for "gce_instance" has labels
+// "project_id", "instance_id" and "zone": { "type": "gce_instance",
+// "labels": { "project_id": "my-project", "instance_id":
+// "12345678901234", "zone": "us-central1-a" }}
+type MonitoredResource struct {
+	// Labels: Required. Values for all of the labels listed in the
+	// associated monitored resource descriptor. For example, Compute Engine
+	// VM instances use the labels "project_id", "instance_id", and "zone".
+	Labels map[string]string `json:"labels,omitempty"`
+
+	// Type: Required. The monitored resource type. This field must match
+	// the type field of a MonitoredResourceDescriptor object. For example,
+	// the type of a Compute Engine VM instance is gce_instance. For a list
+	// of types, see Monitoring resource types
+	// (https://cloud.google.com/monitoring/api/resources) and Logging
+	// resource types
+	// (https://cloud.google.com/logging/docs/api/v2/resource-list).
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Labels") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Labels") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MonitoredResource) MarshalJSON() ([]byte, error) {
+	type NoMethod MonitoredResource
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2777,6 +2865,9 @@ type Widget struct {
 	// that are within the area spanned by the grouping widget are
 	// considered member widgets.
 	CollapsibleGroup *CollapsibleGroup `json:"collapsibleGroup,omitempty"`
+
+	// IncidentList: A widget that shows list of incidents.
+	IncidentList *IncidentList `json:"incidentList,omitempty"`
 
 	// LogsPanel: A widget that shows a stream of logs.
 	LogsPanel *LogsPanel `json:"logsPanel,omitempty"`

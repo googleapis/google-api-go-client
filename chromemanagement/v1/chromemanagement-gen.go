@@ -1740,10 +1740,61 @@ func (s *GoogleChromeManagementV1DiskInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleChromeManagementV1DisplayDevice: Information of a display
+// device.
+type GoogleChromeManagementV1DisplayDevice struct {
+	// DisplayHeightMm: Output only. Display height in millimeters.
+	DisplayHeightMm int64 `json:"displayHeightMm,omitempty"`
+
+	// DisplayName: Output only. Display device name.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// DisplayWidthMm: Output only. Display width in millimeters.
+	DisplayWidthMm int64 `json:"displayWidthMm,omitempty"`
+
+	// Internal: Output only. Is display internal or not.
+	Internal bool `json:"internal,omitempty"`
+
+	// ManufactureYear: Output only. Year of manufacture.
+	ManufactureYear int64 `json:"manufactureYear,omitempty"`
+
+	// ManufacturerId: Output only. Three letter manufacturer ID.
+	ManufacturerId string `json:"manufacturerId,omitempty"`
+
+	// ModelId: Output only. Manufacturer product code.
+	ModelId int64 `json:"modelId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayHeightMm") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayHeightMm") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromeManagementV1DisplayDevice) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1DisplayDevice
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleChromeManagementV1DisplayInfo: Information for a display.
 type GoogleChromeManagementV1DisplayInfo struct {
 	// DeviceId: Output only. Represents the graphics card device id.
 	DeviceId int64 `json:"deviceId,omitempty,string"`
+
+	// DisplayName: Output only. Display device name.
+	DisplayName string `json:"displayName,omitempty"`
 
 	// IsInternal: Output only. Indicates if display is internal or not.
 	IsInternal bool `json:"isInternal,omitempty"`
@@ -1870,6 +1921,17 @@ type GoogleChromeManagementV1GraphicsInfo struct {
 	// AdapterInfo: Output only. Information about the graphics adapter
 	// (GPU).
 	AdapterInfo *GoogleChromeManagementV1GraphicsAdapterInfo `json:"adapterInfo,omitempty"`
+
+	// DisplayDevices: Output only. Information about the display(s) of the
+	// device.
+	DisplayDevices []*GoogleChromeManagementV1DisplayDevice `json:"displayDevices,omitempty"`
+
+	// EprivacySupported: Output only. Is ePrivacy screen supported or not.
+	EprivacySupported bool `json:"eprivacySupported,omitempty"`
+
+	// TouchScreenInfo: Output only. Information about the internal touch
+	// screen(s) of the device.
+	TouchScreenInfo *GoogleChromeManagementV1TouchScreenInfo `json:"touchScreenInfo,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AdapterInfo") to
 	// unconditionally include in API requests. By default, fields with
@@ -3330,6 +3392,76 @@ type GoogleChromeManagementV1TotalMemoryEncryptionInfo struct {
 
 func (s *GoogleChromeManagementV1TotalMemoryEncryptionInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1TotalMemoryEncryptionInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementV1TouchScreenDevice: Information of an internal
+// touch screen device.
+type GoogleChromeManagementV1TouchScreenDevice struct {
+	// DisplayName: Output only. Touch screen device display name.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// StylusCapable: Output only. Touch screen device is stylus capable or
+	// not.
+	StylusCapable bool `json:"stylusCapable,omitempty"`
+
+	// TouchPointCount: Output only. Number of touch points supported on the
+	// device.
+	TouchPointCount int64 `json:"touchPointCount,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromeManagementV1TouchScreenDevice) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1TouchScreenDevice
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementV1TouchScreenInfo: Information on the device
+// touch screen.
+type GoogleChromeManagementV1TouchScreenInfo struct {
+	// Devices: Output only. List of the internal touch screen devices.
+	Devices []*GoogleChromeManagementV1TouchScreenDevice `json:"devices,omitempty"`
+
+	// TouchpadLibrary: Output only. Touchpad library name used by the input
+	// stack.
+	TouchpadLibrary string `json:"touchpadLibrary,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Devices") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Devices") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromeManagementV1TouchScreenInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1TouchScreenInfo
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

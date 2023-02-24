@@ -5419,7 +5419,7 @@ type GoogleAnalyticsAdminV1alphaRunAccessReportRequest struct {
 
 	// ReturnEntityQuota: Toggles whether to return the current state of
 	// this Analytics Property's quota. Quota is returned in AccessQuota
-	// (#AccessQuota).
+	// (#AccessQuota). For account-level requests, this field must be false.
 	ReturnEntityQuota bool `json:"returnEntityQuota,omitempty"`
 
 	// TimeZone: This request's time zone if specified. If unspecified, the
@@ -5467,7 +5467,7 @@ type GoogleAnalyticsAdminV1alphaRunAccessReportResponse struct {
 	MetricHeaders []*GoogleAnalyticsAdminV1alphaAccessMetricHeader `json:"metricHeaders,omitempty"`
 
 	// Quota: The quota state for this Analytics property including this
-	// request.
+	// request. This field doesn't work with account-level requests.
 	Quota *GoogleAnalyticsAdminV1alphaAccessQuota `json:"quota,omitempty"`
 
 	// RowCount: The total number of rows in the query result. `rowCount` is
@@ -7016,9 +7016,13 @@ type AccountsRunAccessReportCall struct {
 // configuration change history, see searchChangeHistoryEvents
 // (https://developers.google.com/analytics/devguides/config/admin/v1/rest/v1alpha/accounts/searchChangeHistoryEvents).
 //
-//   - entity: The Data Access Report is requested for this property. For
-//     example if "123" is your GA4 property ID, then entity should be
-//     "properties/123".
+//   - entity: The Data Access Report supports requesting at the property
+//     level or account level. If requested at the account level, Data
+//     Access Reports include all access for all properties under that
+//     account. To request at the property level, entity should be for
+//     example 'properties/123' if "123" is your GA4 property ID. To
+//     request at the account level, entity should be for example
+//     'accounts/1234' if "1234" is your GA4 Account ID.
 func (r *AccountsService) RunAccessReport(entity string, googleanalyticsadminv1alpharunaccessreportrequest *GoogleAnalyticsAdminV1alphaRunAccessReportRequest) *AccountsRunAccessReportCall {
 	c := &AccountsRunAccessReportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.entity = entity
@@ -7128,7 +7132,7 @@ func (c *AccountsRunAccessReportCall) Do(opts ...googleapi.CallOption) (*GoogleA
 	//   ],
 	//   "parameters": {
 	//     "entity": {
-	//       "description": "The Data Access Report is requested for this property. For example if \"123\" is your GA4 property ID, then entity should be \"properties/123\".",
+	//       "description": "The Data Access Report supports requesting at the property level or account level. If requested at the account level, Data Access Reports include all access for all properties under that account. To request at the property level, entity should be for example 'properties/123' if \"123\" is your GA4 property ID. To request at the account level, entity should be for example 'accounts/1234' if \"1234\" is your GA4 Account ID.",
 	//       "location": "path",
 	//       "pattern": "^accounts/[^/]+$",
 	//       "required": true,
@@ -11833,9 +11837,13 @@ type PropertiesRunAccessReportCall struct {
 // configuration change history, see searchChangeHistoryEvents
 // (https://developers.google.com/analytics/devguides/config/admin/v1/rest/v1alpha/accounts/searchChangeHistoryEvents).
 //
-//   - entity: The Data Access Report is requested for this property. For
-//     example if "123" is your GA4 property ID, then entity should be
-//     "properties/123".
+//   - entity: The Data Access Report supports requesting at the property
+//     level or account level. If requested at the account level, Data
+//     Access Reports include all access for all properties under that
+//     account. To request at the property level, entity should be for
+//     example 'properties/123' if "123" is your GA4 property ID. To
+//     request at the account level, entity should be for example
+//     'accounts/1234' if "1234" is your GA4 Account ID.
 func (r *PropertiesService) RunAccessReport(entity string, googleanalyticsadminv1alpharunaccessreportrequest *GoogleAnalyticsAdminV1alphaRunAccessReportRequest) *PropertiesRunAccessReportCall {
 	c := &PropertiesRunAccessReportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.entity = entity
@@ -11945,7 +11953,7 @@ func (c *PropertiesRunAccessReportCall) Do(opts ...googleapi.CallOption) (*Googl
 	//   ],
 	//   "parameters": {
 	//     "entity": {
-	//       "description": "The Data Access Report is requested for this property. For example if \"123\" is your GA4 property ID, then entity should be \"properties/123\".",
+	//       "description": "The Data Access Report supports requesting at the property level or account level. If requested at the account level, Data Access Reports include all access for all properties under that account. To request at the property level, entity should be for example 'properties/123' if \"123\" is your GA4 property ID. To request at the account level, entity should be for example 'accounts/1234' if \"1234\" is your GA4 Account ID.",
 	//       "location": "path",
 	//       "pattern": "^properties/[^/]+$",
 	//       "required": true,

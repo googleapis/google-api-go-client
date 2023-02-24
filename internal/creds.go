@@ -10,6 +10,8 @@ import (
 	"errors"
 	"fmt"
 	"io/ioutil"
+	//"log"
+	"crypto/tls"
 
 	"golang.org/x/oauth2"
 	"google.golang.org/api/internal/impersonate"
@@ -81,7 +83,18 @@ const (
 // More details: google.aip.dev/auth/4111
 func credentialsFromJSON(ctx context.Context, data []byte, ds *DialSettings) (*google.Credentials, error) {
 	// By default, a standard OAuth 2.0 token source is created
-	cred, err := google.CredentialsFromJSON(ctx, data, ds.GetScopes()...)
+	var params google.CredentialsParams
+	params.Scopes = ds.GetScopes()
+	var oauthds DialSettings
+	oauthds.DefaultEndpoint = google.Endpoint.TokenURL
+	oauthds.DefaultMTLSEndpoint = google.MTLSTokenURL
+	oauthds.ClientCertSource = ds.ClientCertSource
+	clientCertSource,oauthendpoint,err := GetClientCertificateSourceAndEndpoint(&oauthds);
+	params.TLSConfig = &tls.Config{
+			GetClientCertificate: clientCertSource,
+		}
+	params.TokenURL = oauthendpoint
+	cred, err := google.CredentialsFromJSONWithParams(ctx, data, params)
 	if err != nil {
 		return nil, err
 	}

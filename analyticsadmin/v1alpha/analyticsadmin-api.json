@@ -320,7 +320,7 @@
           ],
           "parameters": {
             "entity": {
-              "description": "The Data Access Report is requested for this property. For example if \"123\" is your GA4 property ID, then entity should be \"properties/123\".",
+              "description": "The Data Access Report supports requesting at the property level or account level. If requested at the account level, Data Access Reports include all access for all properties under that account. To request at the property level, entity should be for example 'properties/123' if \"123\" is your GA4 property ID. To request at the account level, entity should be for example 'accounts/1234' if \"1234\" is your GA4 Account ID.",
               "location": "path",
               "pattern": "^accounts/[^/]+$",
               "required": true,
@@ -1211,7 +1211,7 @@
           ],
           "parameters": {
             "entity": {
-              "description": "The Data Access Report is requested for this property. For example if \"123\" is your GA4 property ID, then entity should be \"properties/123\".",
+              "description": "The Data Access Report supports requesting at the property level or account level. If requested at the account level, Data Access Reports include all access for all properties under that account. To request at the property level, entity should be for example 'properties/123' if \"123\" is your GA4 property ID. To request at the account level, entity should be for example 'accounts/1234' if \"1234\" is your GA4 Account ID.",
               "location": "path",
               "pattern": "^properties/[^/]+$",
               "required": true,
@@ -3771,7 +3771,7 @@
       }
     }
   },
-  "revision": "20230222",
+  "revision": "20230223",
   "rootUrl": "https://analyticsadmin.googleapis.com/",
   "schemas": {
     "GoogleAnalyticsAdminV1alphaAccessBetweenFilter": {
@@ -6627,7 +6627,7 @@
           "type": "array"
         },
         "returnEntityQuota": {
-          "description": "Toggles whether to return the current state of this Analytics Property's quota. Quota is returned in [AccessQuota](#AccessQuota).",
+          "description": "Toggles whether to return the current state of this Analytics Property's quota. Quota is returned in [AccessQuota](#AccessQuota). For account-level requests, this field must be false.",
           "type": "boolean"
         },
         "timeZone": {
@@ -6657,7 +6657,7 @@
         },
         "quota": {
           "$ref": "GoogleAnalyticsAdminV1alphaAccessQuota",
-          "description": "The quota state for this Analytics property including this request."
+          "description": "The quota state for this Analytics property including this request. This field doesn't work with account-level requests."
         },
         "rowCount": {
           "description": "The total number of rows in the query result. `rowCount` is independent of the number of rows returned in the response, the `limit` request parameter, and the `offset` request parameter. For example if a query returns 175 rows and includes `limit` of 50 in the API request, the response will contain `rowCount` of 175 but only 50 rows. To learn more about this pagination parameter, see [Pagination](https://developers.google.com/analytics/devguides/reporting/data/v1/basics#pagination).",

@@ -3349,8 +3349,8 @@ type Message struct {
 	// this message.
 	Annotations []*Annotation `json:"annotations,omitempty"`
 
-	// ArgumentText: Plain-text body of the message with all Chat app
-	// mentions stripped out.
+	// ArgumentText: Output only. Plain-text body of the message with all
+	// Chat app mentions stripped out.
 	ArgumentText string `json:"argumentText,omitempty"`
 
 	// Attachment: User-uploaded attachment.
@@ -3359,7 +3359,8 @@ type Message struct {
 	// Cards: Deprecated: Use `cards_v2` instead. Rich, formatted and
 	// interactive cards that can be used to display UI elements such as:
 	// formatted texts, buttons, clickable images. Cards are normally
-	// displayed below the plain-text body of the message.
+	// displayed below the plain-text body of the message. `cards` and
+	// `cards_v2` can have a maximum size of 32 KB.
 	Cards []*Card `json:"cards,omitempty"`
 
 	// CardsV2: Richly formatted and interactive cards that display UI
@@ -3367,11 +3368,13 @@ type Message struct {
 	// Clickable images - Checkboxes - Radio buttons - Input widgets. Cards
 	// are usually displayed below the text body of a Chat message, but can
 	// situationally appear other places, such as dialogs
-	// (https://developers.google.com/chat/how-tos/dialogs). The `cardId` is
-	// a unique identifier among cards in the same message and for
-	// identifying user input values. Currently supported widgets include: -
-	// `TextParagraph` - `DecoratedText` - `Image` - `ButtonList` -
-	// `Divider`
+	// (https://developers.google.com/chat/how-tos/dialogs). `cards_v2` and
+	// `cards` can have a maximum size of 32 KB. The `cardId` is a unique
+	// identifier among cards in the same message and for identifying user
+	// input values. Currently supported widgets include: - `TextParagraph`
+	// - `DecoratedText` - `Image` - `ButtonList` - `Divider` - `TextInput`
+	// - `SelectionInput` (CHECKBOX, RADIO_BUTTON, SWITCH, DROPDOWN) -
+	// `Grid`
 	CardsV2 []*CardWithId `json:"cardsV2,omitempty"`
 
 	// ClientAssignedMessageId: A custom name for a Chat message assigned at

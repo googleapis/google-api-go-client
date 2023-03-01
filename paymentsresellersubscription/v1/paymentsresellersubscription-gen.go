@@ -1223,17 +1223,18 @@ func (s *GoogleCloudPaymentsResellerSubscriptionV1SubscriptionCancellationDetail
 // Individual line item definition of a subscription.
 type GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItem struct {
 	// Amount: Output only. The price of the product/service in this line
-	// item.
+	// item. The amount could be the wholesale price, or it can include a
+	// cost of sale based on the contract.
 	Amount *GoogleCloudPaymentsResellerSubscriptionV1Amount `json:"amount,omitempty"`
 
 	// Description: Output only. Description of this line item.
 	Description string `json:"description,omitempty"`
 
-	// LineItemFreeTrialEndTime: Output only. It is set only if the line
-	// item has its own free trial applied. End time of the line item free
-	// trial period, in ISO 8061 format. For example,
-	// "2019-08-31T17:28:54.564Z". It will be set the same as createTime if
-	// no free trial promotion is specified.
+	// LineItemFreeTrialEndTime: Output only. If the line item has its own
+	// free trial promotion, it is set after the line item is activated. End
+	// time of the line item free trial period, in ISO 8061 format. For
+	// example, "2019-08-31T17:28:54.564Z". It will be set the same as
+	// createTime if no free trial promotion is specified.
 	LineItemFreeTrialEndTime string `json:"lineItemFreeTrialEndTime,omitempty"`
 
 	// LineItemPromotionSpecs: Optional. The promotions applied on the line

@@ -1372,7 +1372,7 @@ type QueuedResource struct {
 	// QueueingPolicy: The queueing policy of the QueuedRequest.
 	QueueingPolicy *QueueingPolicy `json:"queueingPolicy,omitempty"`
 
-	// State: Output only. State of the QueuedResource request
+	// State: Output only. State of the QueuedResource request.
 	State *QueuedResourceState `json:"state,omitempty"`
 
 	// Tpu: Defines a TPU resource.

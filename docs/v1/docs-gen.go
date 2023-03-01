@@ -2491,9 +2491,9 @@ type InsertInlineImageRequest struct {
 	// Uri: The image URI. The image is fetched once at insertion time and a
 	// copy is stored for display inside the document. Images must be less
 	// than 50MB in size, cannot exceed 25 megapixels, and must be in one of
-	// PNG, JPEG, or GIF format. The provided URI can be at most 2 kB in
-	// length. The URI itself is saved with the image, and exposed via the
-	// ImageProperties.content_uri field.
+	// PNG, JPEG, or GIF format. The provided URI must be publicly
+	// accessible and at most 2 kB in length. The URI itself is saved with
+	// the image, and exposed via the ImageProperties.content_uri field.
 	Uri string `json:"uri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.

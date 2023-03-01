@@ -206,9 +206,49 @@ type ProjectsLocationsRuntimeVersionsService struct {
 	s *Service
 }
 
+// AcceleratorConfig: A TPU accelerator configuration.
+type AcceleratorConfig struct {
+	// Topology: Required. Topology of TPU in chips.
+	Topology string `json:"topology,omitempty"`
+
+	// Type: Required. Type of TPU.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Unspecified version.
+	//   "V2" - TPU v2.
+	//   "V3" - TPU v3.
+	//   "V4" - TPU v4.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Topology") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Topology") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AcceleratorConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod AcceleratorConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // AcceleratorType: A accelerator type that a Node can be configured
 // with.
 type AcceleratorType struct {
+	// AcceleratorConfigs: The accelerator config.
+	AcceleratorConfigs []*AcceleratorConfig `json:"acceleratorConfigs,omitempty"`
+
 	// Name: The resource name.
 	Name string `json:"name,omitempty"`
 
@@ -219,20 +259,21 @@ type AcceleratorType struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Name") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "AcceleratorConfigs")
+	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AcceleratorConfigs") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -840,6 +881,9 @@ func (s *NetworkEndpoint) MarshalJSON() ([]byte, error) {
 
 // Node: A TPU instance.
 type Node struct {
+	// AcceleratorConfig: The AccleratorConfig for the TPU Node.
+	AcceleratorConfig *AcceleratorConfig `json:"acceleratorConfig,omitempty"`
+
 	// AcceleratorType: Required. The type of hardware accelerators
 	// associated with this node.
 	AcceleratorType string `json:"acceleratorType,omitempty"`
@@ -960,15 +1004,15 @@ type Node struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "AcceleratorType") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "AcceleratorConfig")
+	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "AcceleratorType") to
+	// NullFields is a list of field names (e.g. "AcceleratorConfig") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the

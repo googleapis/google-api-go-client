@@ -3482,6 +3482,8 @@ func (s *GoogleCloudDataplexV1Environment) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDataplexV1EnvironmentEndpoints: URI Endpoints to access
+// sessions associated with the Environment.
 type GoogleCloudDataplexV1EnvironmentEndpoints struct {
 	// Notebooks: Output only. URI to serve notebook APIs
 	Notebooks string `json:"notebooks,omitempty"`
@@ -3628,6 +3630,8 @@ func (s *GoogleCloudDataplexV1EnvironmentInfrastructureSpecOsImageRuntime) Marsh
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDataplexV1EnvironmentSessionSpec: Configuration for
+// sessions created for this environment.
 type GoogleCloudDataplexV1EnvironmentSessionSpec struct {
 	// EnableFastStartup: Optional. If True, this causes sessions to be
 	// pre-created and available for faster startup to enable interactive
@@ -3665,6 +3669,8 @@ func (s *GoogleCloudDataplexV1EnvironmentSessionSpec) MarshalJSON() ([]byte, err
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDataplexV1EnvironmentSessionStatus: Status of sessions
+// created for this environment.
 type GoogleCloudDataplexV1EnvironmentSessionStatus struct {
 	// Active: Output only. Queries over sessions to mark whether the
 	// environment is currently active or not
@@ -5089,6 +5095,8 @@ type GoogleCloudDataplexV1Session struct {
 	// ent/{environment_id}/sessions/{session_id}
 	Name string `json:"name,omitempty"`
 
+	// State: Output only. State of Session
+	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - State is not specified.
 	//   "ACTIVE" - Resource is active, i.e., ready to use.
@@ -10201,9 +10209,8 @@ type ProjectsLocationsDataScansJobsGetCall struct {
 //
 //   - name: The resource name of the DataScanJob:
 //     projects/{project}/locations/{location_id}/dataScans/{data_scan_id}/
-//     dataScanJobs/{data_scan_job_id} where project refers to a
-//     project_id or project_number and location_id refers to a GCP
-//     region.
+//     jobs/{data_scan_job_id} where project refers to a project_id or
+//     project_number and location_id refers to a GCP region.
 func (r *ProjectsLocationsDataScansJobsService) Get(name string) *ProjectsLocationsDataScansJobsGetCall {
 	c := &ProjectsLocationsDataScansJobsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10334,7 +10341,7 @@ func (c *ProjectsLocationsDataScansJobsGetCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the DataScanJob: projects/{project}/locations/{location_id}/dataScans/{data_scan_id}/dataScanJobs/{data_scan_job_id} where project refers to a project_id or project_number and location_id refers to a GCP region.",
+	//       "description": "Required. The resource name of the DataScanJob: projects/{project}/locations/{location_id}/dataScans/{data_scan_id}/jobs/{data_scan_job_id} where project refers to a project_id or project_number and location_id refers to a GCP region.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/dataScans/[^/]+/jobs/[^/]+$",
 	//       "required": true,

@@ -875,7 +875,7 @@ type AllAuthenticatedUsersProto struct {
 
 // Annotation: NOTE WHEN ADDING NEW PROTO FIELDS: Be sure to add datapol
 // annotations to new fields with potential PII, so they get scrubbed
-// when logging protos for errors. NEXT TAG: 29
+// when logging protos for errors. NEXT TAG: 31
 type Annotation struct {
 	BabelPlaceholderMetadata *BabelPlaceholderMetadata `json:"babelPlaceholderMetadata,omitempty"`
 
@@ -884,18 +884,19 @@ type Annotation struct {
 	// nd/action/common/SystemMessageHelper.java)
 	CardCapabilityMetadata *CardCapabilityMetadata `json:"cardCapabilityMetadata,omitempty"`
 
-	// ChipRenderType: Whether the annotation should be rendered as a chip.
-	// If this is missing or unspecified, fallback to should_not_render on
-	// the metadata.
+	// ChipRenderType: Whether the annotation should be rendered as a
+	// preview chip. If this is missing or unspecified, fallback to
+	// should_not_render on the metadata.
 	//
 	// Possible values:
 	//   "CHIP_RENDER_TYPE_UNSPECIFIED"
-	//   "RENDER" - Clients must render the annotation as a chip, and if
-	// they cannot render this many Annotations, show a fallback card.
+	//   "RENDER" - Clients must render the annotation as a preview chip,
+	// and if they cannot render this many Annotations, show a fallback
+	// card.
 	//   "RENDER_IF_POSSIBLE" - Client can render the annotation if it has
 	// room to render it.
 	//   "DO_NOT_RENDER" - Client should not render the annotation as a
-	// chip.
+	// preview chip.
 	ChipRenderType string `json:"chipRenderType,omitempty"`
 
 	ConsentedAppUnfurlMetadata *ConsentedAppUnfurlMetadata `json:"consentedAppUnfurlMetadata,omitempty"`
@@ -920,10 +921,21 @@ type Annotation struct {
 
 	IncomingWebhookChangedMetadata *IncomingWebhookChangedMetadata `json:"incomingWebhookChangedMetadata,omitempty"`
 
+	// InlineRenderFormat: The inline render format of this annotation.
+	// go/drive-smart-chips-chat-v2.
+	//
+	// Possible values:
+	//   "INLINE_RENDER_FORMAT_UNSPECIFIED"
+	//   "SMART_CHIP"
+	InlineRenderFormat string `json:"inlineRenderFormat,omitempty"`
+
 	// IntegrationConfigUpdated:
 	// LINT.ThenChange(//depot/google3/java/com/google/apps/dynamite/v1/backe
 	// nd/action/common/SystemMessageHelper.java)
 	IntegrationConfigUpdated *IntegrationConfigUpdatedMetadata `json:"integrationConfigUpdated,omitempty"`
+
+	// InteractionData: Additional interaction data for this annotation.
+	InteractionData *InteractionData `json:"interactionData,omitempty"`
 
 	// Length: Length of the text_body substring beginning from start_index
 	// the Annotation corresponds to.
@@ -14370,6 +14382,41 @@ func (s *Interaction) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// InteractionData: Interaction data for an annotation, which may be
+// supplemental to the metadata oneof. For example, this will contain
+// the fully built navigation target for smart chips. NEXT TAG: 2
+type InteractionData struct {
+	// Url: A general navigation target associated with the annotation this
+	// message is contained in. For smart chips, this will be the
+	// destination of the tap/click target and will be returned by the
+	// server. For scenarios where the chip originated from a user-provided
+	// url, this value will be provided by clients; otherwise it will be
+	// built by the corresponding metadata parts.
+	Url *SafeUrlProto `json:"url,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Url") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Url") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InteractionData) MarshalJSON() ([]byte, error) {
+	type NoMethod InteractionData
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type InviteAcceptedEvent struct {
 	ParticipantId []*StoredParticipantId `json:"participantId,omitempty"`
 
@@ -16747,6 +16794,24 @@ func (s *MessageId) MarshalJSON() ([]byte, error) {
 }
 
 type MessageInfo struct {
+	// AuthorUserType: Message author’s user type (human/bot).
+	//
+	// Possible values:
+	//   "HUMAN" - Notes on HUMAN type: 1) Leaving UserId.UserType field
+	// empty will return HUMAN as default value. This is expected because
+	// all the existing UserIds are without explicitly setting UserType,
+	// most of which are HUMAN Ids. For Bot Ids we will always set BOT in
+	// UserType field. 2) DO NOT explicitly set HUMAN as type. This is a
+	// proto2 issue, that a UserId with explicitly set default value HUMAN
+	// as type is NOT equal to an id without setting the field. aka. UserId
+	// id1 = UserId.newBuilder()
+	// .setId("dummy").setType(UserType.HUMAN).build(); UserId id2 =
+	// UserId.newBuilder().setId("dummy").build();
+	// AssertThat(id1).isNotEqual(id2);
+	// AssertThat(id2.getType()).isEqualTo(UserType.HUMAN);
+	//   "BOT"
+	AuthorUserType string `json:"authorUserType,omitempty"`
+
 	// Message: The content of a matching message.
 	Message *Message `json:"message,omitempty"`
 
@@ -16763,7 +16828,7 @@ type MessageInfo struct {
 	// mutations have failed and the member is in its previous state.
 	SearcherMembershipState string `json:"searcherMembershipState,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Message") to
+	// ForceSendFields is a list of field names (e.g. "AuthorUserType") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -16771,12 +16836,13 @@ type MessageInfo struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Message") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AuthorUserType") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 

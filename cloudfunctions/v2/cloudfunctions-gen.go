@@ -670,6 +670,12 @@ type Function struct {
 	// that fires events in response to a condition in another service.
 	EventTrigger *EventTrigger `json:"eventTrigger,omitempty"`
 
+	// KmsKeyName: Resource name of a KMS crypto key (managed by the user)
+	// used to encrypt/decrypt function resources. It must match the pattern
+	// `projects/{project}/locations/{location}/keyRings/{key_ring}/cryptoKey
+	// s/{crypto_key}`.
+	KmsKeyName string `json:"kmsKeyName,omitempty"`
+
 	// Labels: Labels associated with this Cloud Function.
 	Labels map[string]string `json:"labels,omitempty"`
 
@@ -771,6 +777,42 @@ func (s *GenerateDownloadUrlResponse) MarshalJSON() ([]byte, error) {
 // GenerateUploadUrlRequest: Request of `GenerateSourceUploadUrl`
 // method.
 type GenerateUploadUrlRequest struct {
+	// KmsKeyName: Resource name of a KMS crypto key (managed by the user)
+	// used to encrypt/decrypt function source code objects in intermediate
+	// Cloud Storage buckets. When you generate an upload url and upload
+	// your source code, it gets copied to an intermediate Cloud Storage
+	// bucket. The source code is then copied to a versioned directory in
+	// the sources bucket in the consumer project during the function
+	// deployment. It must match the pattern
+	// `projects/{project}/locations/{location}/keyRings/{key_ring}/cryptoKey
+	// s/{crypto_key}`. The Google Cloud Functions service account
+	// (service-{project_number}@gcf-admin-robot.iam.gserviceaccount.com)
+	// must be granted the role 'Cloud KMS CryptoKey Encrypter/Decrypter
+	// (roles/cloudkms.cryptoKeyEncrypterDecrypter)' on the
+	// Key/KeyRing/Project/Organization (least access preferred).
+	KmsKeyName string `json:"kmsKeyName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "KmsKeyName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "KmsKeyName") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GenerateUploadUrlRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GenerateUploadUrlRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // GenerateUploadUrlResponse: Response of `GenerateSourceUploadUrl`

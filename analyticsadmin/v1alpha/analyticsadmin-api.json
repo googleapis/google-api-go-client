@@ -1006,6 +1006,21 @@
             "https://www.googleapis.com/auth/analytics.edit"
           ]
         },
+        "deleteConnectedSiteTag": {
+          "description": "Deletes a connected site tag for a Universal Analytics property. Note: this has no effect on GA4 properties.",
+          "flatPath": "v1alpha/properties:deleteConnectedSiteTag",
+          "httpMethod": "POST",
+          "id": "analyticsadmin.properties.deleteConnectedSiteTag",
+          "parameterOrder": [],
+          "parameters": {},
+          "path": "v1alpha/properties:deleteConnectedSiteTag",
+          "request": {
+            "$ref": "GoogleAnalyticsAdminV1alphaDeleteConnectedSiteTagRequest"
+          },
+          "response": {
+            "$ref": "GoogleProtobufEmpty"
+          }
+        },
         "fetchAutomatedGa4ConfigurationOptOut": {
           "description": "Fetches the opt out status for the automated GA4 setup process for a UA property. Note: this has no effect on GA4 property.",
           "flatPath": "v1alpha/properties:fetchAutomatedGa4ConfigurationOptOut",
@@ -1166,6 +1181,21 @@
             "https://www.googleapis.com/auth/analytics.edit",
             "https://www.googleapis.com/auth/analytics.readonly"
           ]
+        },
+        "listConnectedSiteTags": {
+          "description": "Lists the connected site tags for a Universal Analytics property. Note: this has no effect on GA4 property.",
+          "flatPath": "v1alpha/properties:listConnectedSiteTags",
+          "httpMethod": "POST",
+          "id": "analyticsadmin.properties.listConnectedSiteTags",
+          "parameterOrder": [],
+          "parameters": {},
+          "path": "v1alpha/properties:listConnectedSiteTags",
+          "request": {
+            "$ref": "GoogleAnalyticsAdminV1alphaListConnectedSiteTagsRequest"
+          },
+          "response": {
+            "$ref": "GoogleAnalyticsAdminV1alphaListConnectedSiteTagsResponse"
+          }
         },
         "patch": {
           "description": "Updates a property.",
@@ -3771,7 +3801,7 @@
       }
     }
   },
-  "revision": "20230223",
+  "revision": "20230228",
   "rootUrl": "https://analyticsadmin.googleapis.com/",
   "schemas": {
     "GoogleAnalyticsAdminV1alphaAccessBetweenFilter": {
@@ -5203,6 +5233,21 @@
       },
       "type": "object"
     },
+    "GoogleAnalyticsAdminV1alphaConnectedSiteTag": {
+      "description": "Configuration for a specific Connected Site Tag.",
+      "id": "GoogleAnalyticsAdminV1alphaConnectedSiteTag",
+      "properties": {
+        "displayName": {
+          "description": "Required. User-provided display name for the connected site tag. Must be less than 256 characters.",
+          "type": "string"
+        },
+        "measurementId": {
+          "description": "Required. Measurement ID to forward events to. Also known as “G-ID” (For example: G-12345).",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleAnalyticsAdminV1alphaConversionEvent": {
       "description": "A conversion event in a Google Analytics property.",
       "id": "GoogleAnalyticsAdminV1alphaConversionEvent",
@@ -5219,7 +5264,7 @@
           "type": "boolean"
         },
         "deletable": {
-          "description": "Output only. If set, this event can currently be deleted via DeleteConversionEvent.",
+          "description": "Output only. If set, this event can currently be deleted with DeleteConversionEvent.",
           "readOnly": true,
           "type": "boolean"
         },
@@ -5577,6 +5622,21 @@
       "properties": {
         "name": {
           "description": "Required. Formats: - accounts/{account}/accessBindings/{accessBinding} - properties/{property}/accessBindings/{accessBinding}",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleAnalyticsAdminV1alphaDeleteConnectedSiteTagRequest": {
+      "description": "Request message for DeleteConnectedSiteTag RPC.",
+      "id": "GoogleAnalyticsAdminV1alphaDeleteConnectedSiteTagRequest",
+      "properties": {
+        "measurementId": {
+          "description": "The measurement ID of the tag to remove from the Universal Analytics property. Also known as \"G-ID\". Example: \"G-12345\"",
+          "type": "string"
+        },
+        "property": {
+          "description": "The Universal Analytics property to delete connected site tags for. This API does not support GA4 properties. Format: properties/{universalAnalyticsPropertyId} Example: properties/1234",
           "type": "string"
         }
       },
@@ -6094,6 +6154,44 @@
       },
       "type": "object"
     },
+    "GoogleAnalyticsAdminV1alphaListConnectedSiteTagsRequest": {
+      "description": "Request message for ListConnectedSiteTags RPC.",
+      "id": "GoogleAnalyticsAdminV1alphaListConnectedSiteTagsRequest",
+      "properties": {
+        "pageSize": {
+          "description": "The maximum number of resources to return. The service may return fewer than this value, even if there are additional pages. If unspecified, at most 50 resources will be returned. The maximum value is 200; (higher values will be coerced to the maximum)",
+          "format": "int32",
+          "type": "integer"
+        },
+        "pageToken": {
+          "description": "A page token, received from a previous `ListConnectedSiteTags` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListConnectedSiteTags` must match the call that provided the page token.",
+          "type": "string"
+        },
+        "property": {
+          "description": "The Universal Analytics property to fetch connected site tags for. This does not work on GA4 properties. Format: `properties/1234`",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleAnalyticsAdminV1alphaListConnectedSiteTagsResponse": {
+      "description": "Response message for ListConnectedSiteTags RPC.",
+      "id": "GoogleAnalyticsAdminV1alphaListConnectedSiteTagsResponse",
+      "properties": {
+        "connectedSiteTags": {
+          "description": "The site tags for the Universal Analytics property",
+          "items": {
+            "$ref": "GoogleAnalyticsAdminV1alphaConnectedSiteTag"
+          },
+          "type": "array"
+        },
+        "nextPageToken": {
+          "description": "A token, which can be sent as `page_token` to retrieve the next page. If this field is omitted, there are no subsequent pages.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleAnalyticsAdminV1alphaListConversionEventsResponse": {
       "description": "Response message for ListConversionEvents RPC.",
       "id": "GoogleAnalyticsAdminV1alphaListConversionEventsResponse",
@@ -6472,7 +6570,7 @@
           "type": "string"
         },
         "propertyType": {
-          "description": "Immutable. The property type for this Property resource. When creating a property, if the type is \"PROPERTY_TYPE_UNSPECIFIED\", then \"ORDINARY_PROPERTY\" will be implied. \"SUBPROPERTY\" and \"ROLLUP_PROPERTY\" types cannot yet be created via Google Analytics Admin API.",
+          "description": "Immutable. The property type for this Property resource. When creating a property, if the type is \"PROPERTY_TYPE_UNSPECIFIED\", then \"ORDINARY_PROPERTY\" will be implied. \"SUBPROPERTY\" and \"ROLLUP_PROPERTY\" types cannot yet be created with the Google Analytics Admin API.",
           "enum": [
             "PROPERTY_TYPE_UNSPECIFIED",
             "PROPERTY_TYPE_ORDINARY",
@@ -6559,7 +6657,7 @@
           "description": "The account to create."
         },
         "redirectUri": {
-          "description": "Redirect URI where the user will be sent after accepting Terms of Service. Must be configured in Developers Console as a Redirect URI.",
+          "description": "Redirect URI where the user will be sent after accepting Terms of Service. Must be configured in Cloud Console as a Redirect URI.",
           "type": "string"
         }
       },

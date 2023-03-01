@@ -2025,6 +2025,34 @@ func (s *Location) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type Maintainer struct {
+	Kind string `json:"kind,omitempty"`
+
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Kind") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Maintainer) MarshalJSON() ([]byte, error) {
+	type NoMethod Maintainer
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type Material struct {
 	Digest map[string]string `json:"digest,omitempty"`
 
@@ -2326,6 +2354,9 @@ type PackageData struct {
 	// if the package is of type Maven. This field will be unset for non
 	// Maven packages.
 	HashDigest string `json:"hashDigest,omitempty"`
+
+	// Maintainer: The maintainer of the package.
+	Maintainer *Maintainer `json:"maintainer,omitempty"`
 
 	// Os: The OS affected by a vulnerability Used to generate the cpe_uri
 	// for OS packages

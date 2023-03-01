@@ -765,7 +765,7 @@
                       ],
                       "parameters": {
                         "name": {
-                          "description": "Required. The resource name of the DataScanJob: projects/{project}/locations/{location_id}/dataScans/{data_scan_id}/dataScanJobs/{data_scan_job_id} where project refers to a project_id or project_number and location_id refers to a GCP region.",
+                          "description": "Required. The resource name of the DataScanJob: projects/{project}/locations/{location_id}/dataScans/{data_scan_id}/jobs/{data_scan_job_id} where project refers to a project_id or project_number and location_id refers to a GCP region.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/dataScans/[^/]+/jobs/[^/]+$",
                           "required": true,
@@ -3990,7 +3990,7 @@
       }
     }
   },
-  "revision": "20230208",
+  "revision": "20230220",
   "rootUrl": "https://dataplex.googleapis.com/",
   "schemas": {
     "Empty": {
@@ -6129,6 +6129,7 @@
       "type": "object"
     },
     "GoogleCloudDataplexV1EnvironmentEndpoints": {
+      "description": "URI Endpoints to access sessions associated with the Environment.",
       "id": "GoogleCloudDataplexV1EnvironmentEndpoints",
       "properties": {
         "notebooks": {
@@ -6214,6 +6215,7 @@
       "type": "object"
     },
     "GoogleCloudDataplexV1EnvironmentSessionSpec": {
+      "description": "Configuration for sessions created for this environment.",
       "id": "GoogleCloudDataplexV1EnvironmentSessionSpec",
       "properties": {
         "enableFastStartup": {
@@ -6229,6 +6231,7 @@
       "type": "object"
     },
     "GoogleCloudDataplexV1EnvironmentSessionStatus": {
+      "description": "Status of sessions created for this environment.",
       "id": "GoogleCloudDataplexV1EnvironmentSessionStatus",
       "properties": {
         "active": {
@@ -7202,6 +7205,7 @@
           "type": "string"
         },
         "state": {
+          "description": "Output only. State of Session",
           "enum": [
             "STATE_UNSPECIFIED",
             "ACTIVE",

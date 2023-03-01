@@ -1288,9 +1288,9 @@ type GoogleCloudDialogflowCxV3Environment struct {
 	// UpdateTime: Output only. Update time of this environment.
 	UpdateTime string `json:"updateTime,omitempty"`
 
-	// VersionConfigs: Required. A list of configurations for flow versions.
-	// You should include version configs for all flows that are reachable
-	// from `Start Flow` in the agent. Otherwise, an error will be returned.
+	// VersionConfigs: A list of configurations for flow versions. You
+	// should include version configs for all flows that are reachable from
+	// `Start Flow` in the agent. Otherwise, an error will be returned.
 	VersionConfigs []*GoogleCloudDialogflowCxV3EnvironmentVersionConfig `json:"versionConfigs,omitempty"`
 
 	// WebhookConfig: The webhook configuration for this environment.
@@ -4789,9 +4789,9 @@ type GoogleCloudDialogflowCxV3beta1Environment struct {
 	// UpdateTime: Output only. Update time of this environment.
 	UpdateTime string `json:"updateTime,omitempty"`
 
-	// VersionConfigs: Required. A list of configurations for flow versions.
-	// You should include version configs for all flows that are reachable
-	// from `Start Flow` in the agent. Otherwise, an error will be returned.
+	// VersionConfigs: A list of configurations for flow versions. You
+	// should include version configs for all flows that are reachable from
+	// `Start Flow` in the agent. Otherwise, an error will be returned.
 	VersionConfigs []*GoogleCloudDialogflowCxV3beta1EnvironmentVersionConfig `json:"versionConfigs,omitempty"`
 
 	// WebhookConfig: The webhook configuration for this environment.
@@ -13146,6 +13146,12 @@ type GoogleCloudDialogflowV2beta1ConversationProfile struct {
 	// America/New_York, Europe/Paris. Defaults to America/New_York.
 	TimeZone string `json:"timeZone,omitempty"`
 
+	// TtsConfig: Configuration for Text-to-Speech synthesization. Used by
+	// Phone Gateway to specify synthesization options. If agent defines
+	// synthesization options as well, agent settings overrides the option
+	// here.
+	TtsConfig *GoogleCloudDialogflowV2beta1SynthesizeSpeechConfig `json:"ttsConfig,omitempty"`
+
 	// UpdateTime: Output only. Update time of the conversation profile.
 	UpdateTime string `json:"updateTime,omitempty"`
 
@@ -18148,8 +18154,8 @@ type GoogleCloudDialogflowV2beta1NotificationConfig struct {
 	// Possible values:
 	//   "MESSAGE_FORMAT_UNSPECIFIED" - If it is unspecified, PROTO will be
 	// used.
-	//   "PROTO" - Pubsub message will be serialized proto.
-	//   "JSON" - Pubsub message will be json.
+	//   "PROTO" - Pub/Sub message will be serialized proto.
+	//   "JSON" - Pub/Sub message will be json.
 	MessageFormat string `json:"messageFormat,omitempty"`
 
 	// Topic: Name of the Pub/Sub topic to publish conversation events like

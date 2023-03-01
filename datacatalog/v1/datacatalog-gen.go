@@ -6650,13 +6650,14 @@ type ProjectsLocationsEntryGroupsEntriesImportCall struct {
 }
 
 // Import: Imports entries from a source, such as data previously dumped
-// into a Cloud Storage bucket, into Data Catalog. `ImportEntries`
-// accepts source data snapshots of third-party system state. Import of
-// entries is a sync operation that reconciles the state of the
-// third-party system with Data Catalog. `ImportEntries` returns a
-// long-running operation resource that can be queried with
-// Operations.GetOperation to return ImportEntriesMetadata and an
-// ImportEntriesResponse message.
+// into a Cloud Storage bucket, into Data Catalog. Import of entries is
+// a sync operation that reconciles the state of the third-party system
+// with the Data Catalog. `ImportEntries` accepts source data snapshots
+// of a third-party system. Snapshot should be delivered as a .wire or
+// base65-encoded .txt file containing a sequence of Protocol Buffer
+// messages of DumpItem type. `ImportEntries` returns a long-running
+// operation resource that can be queried with Operations.GetOperation
+// to return ImportEntriesMetadata and an ImportEntriesResponse message.
 //
 // - parent: Target entry group for ingested entries.
 func (r *ProjectsLocationsEntryGroupsEntriesService) Import(parent string, googleclouddatacatalogv1importentriesrequest *GoogleCloudDatacatalogV1ImportEntriesRequest) *ProjectsLocationsEntryGroupsEntriesImportCall {
@@ -6757,7 +6758,7 @@ func (c *ProjectsLocationsEntryGroupsEntriesImportCall) Do(opts ...googleapi.Cal
 	}
 	return ret, nil
 	// {
-	//   "description": "Imports entries from a source, such as data previously dumped into a Cloud Storage bucket, into Data Catalog. `ImportEntries` accepts source data snapshots of third-party system state. Import of entries is a sync operation that reconciles the state of the third-party system with Data Catalog. `ImportEntries` returns a long-running operation resource that can be queried with Operations.GetOperation to return ImportEntriesMetadata and an ImportEntriesResponse message.",
+	//   "description": "Imports entries from a source, such as data previously dumped into a Cloud Storage bucket, into Data Catalog. Import of entries is a sync operation that reconciles the state of the third-party system with the Data Catalog. `ImportEntries` accepts source data snapshots of a third-party system. Snapshot should be delivered as a .wire or base65-encoded .txt file containing a sequence of Protocol Buffer messages of DumpItem type. `ImportEntries` returns a long-running operation resource that can be queried with Operations.GetOperation to return ImportEntriesMetadata and an ImportEntriesResponse message.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/entryGroups/{entryGroupsId}/entries:import",
 	//   "httpMethod": "POST",
 	//   "id": "datacatalog.projects.locations.entryGroups.entries.import",

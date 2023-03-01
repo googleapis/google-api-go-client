@@ -2725,9 +2725,9 @@ func (r *ProjectsSchemasService) DeleteRevision(name string) *ProjectsSchemasDel
 	return c
 }
 
-// RevisionId sets the optional parameter "revisionId": Required. The
-// revision ID to roll back to. It must be a revision of the same
-// schema. Example: c7cfa2a8
+// RevisionId sets the optional parameter "revisionId": This field is
+// deprecated and should not be used for specifying the revision ID. The
+// revision ID should be specified via the `name` parameter.
 func (c *ProjectsSchemasDeleteRevisionCall) RevisionId(revisionId string) *ProjectsSchemasDeleteRevisionCall {
 	c.urlParams_.Set("revisionId", revisionId)
 	return c
@@ -2835,7 +2835,7 @@ func (c *ProjectsSchemasDeleteRevisionCall) Do(opts ...googleapi.CallOption) (*S
 	//       "type": "string"
 	//     },
 	//     "revisionId": {
-	//       "description": "Required. The revision ID to roll back to. It must be a revision of the same schema. Example: c7cfa2a8",
+	//       "description": "Optional. This field is deprecated and should not be used for specifying the revision ID. The revision ID should be specified via the `name` parameter.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }

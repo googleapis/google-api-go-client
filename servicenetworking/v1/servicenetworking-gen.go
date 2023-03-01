@@ -4238,6 +4238,11 @@ type Publishing struct {
 	//   "STREET_VIEW" - Street View Org.
 	Organization string `json:"organization,omitempty"`
 
+	// ProtoReferenceDocumentationUri: Optional link to proto reference
+	// documentation. Example:
+	// https://cloud.google.com/pubsub/lite/docs/reference/rpc
+	ProtoReferenceDocumentationUri string `json:"protoReferenceDocumentationUri,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "ApiShortName") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any

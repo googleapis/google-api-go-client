@@ -647,6 +647,10 @@ type GceRegionalPersistentDisk struct {
 	// set.
 	SizeGb int64 `json:"sizeGb,omitempty"`
 
+	// SourceSnapshot: Name of the snapshot to use as the source for the
+	// disk. If set, size_gb and fs_type must be empty.
+	SourceSnapshot string `json:"sourceSnapshot,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "DiskType") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any

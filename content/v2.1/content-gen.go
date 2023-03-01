@@ -2882,7 +2882,7 @@ func (s *AttributionSettingsConversionType) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// BestSellers: Fields related to the Best Sellers reports
+// BestSellers: Fields related to the Best sellers reports
 // (https://support.google.com/merchants/answer/9488679).
 type BestSellers struct {
 	// CategoryId: Google product category ID to calculate the ranking for,
@@ -12542,7 +12542,7 @@ func (s *PriceAmount) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// PriceCompetitiveness: Price Competitiveness fields requested by the
+// PriceCompetitiveness: Price competitiveness fields requested by the
 // merchant in the query. Field values are only set if the merchant
 // queries `PriceCompetitivenessProductView`.
 // https://support.google.com/merchants/answer/9626903
@@ -12584,7 +12584,7 @@ func (s *PriceCompetitiveness) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// PriceInsights: Price Insights fields requested by the merchant in the
+// PriceInsights: Price insights fields requested by the merchant in the
 // query. Field values are only set if the merchant queries
 // `PriceInsightsProductView`.
 // https://support.google.com/merchants/answer/11916926
@@ -15560,7 +15560,7 @@ func (s *RegionalinventoryCustomBatchResponseEntry) MarshalJSON() ([]byte, error
 
 // ReportRow: Result row returned from the search query.
 type ReportRow struct {
-	// BestSellers: Best Sellers fields requested by the merchant in the
+	// BestSellers: Best sellers fields requested by the merchant in the
 	// query. Field values are only set if the merchant queries
 	// `BestSellersProductClusterView` or `BestSellersBrandView`.
 	BestSellers *BestSellers `json:"bestSellers,omitempty"`
@@ -15573,12 +15573,12 @@ type ReportRow struct {
 	// values are only set for metrics requested explicitly in the query.
 	Metrics *Metrics `json:"metrics,omitempty"`
 
-	// PriceCompetitiveness: Price Competitiveness fields requested by the
+	// PriceCompetitiveness: Price competitiveness fields requested by the
 	// merchant in the query. Field values are only set if the merchant
 	// queries `PriceCompetitivenessProductView`.
 	PriceCompetitiveness *PriceCompetitiveness `json:"priceCompetitiveness,omitempty"`
 
-	// PriceInsights: Price Insights fields requested by the merchant in the
+	// PriceInsights: Price insights fields requested by the merchant in the
 	// query. Field values are only set if the merchant queries
 	// `PriceInsightsProductView`.
 	PriceInsights *PriceInsights `json:"priceInsights,omitempty"`

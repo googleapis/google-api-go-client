@@ -1730,6 +1730,7 @@ type Operation struct {
 	// the onboarding process. It is only available to Google internal
 	// services, and the service must be approved by chemist-dev@google.com
 	// in order to use this level.
+	//   "PROMOTED" - Used internally by Chemist.
 	Importance string `json:"importance,omitempty"`
 
 	// Labels: Labels describing the operation. Only the following labels

@@ -1152,6 +1152,10 @@ type GoogleCloudChannelV1Customer struct {
 	// customer.
 	CloudIdentityInfo *GoogleCloudChannelV1CloudIdentityInfo `json:"cloudIdentityInfo,omitempty"`
 
+	// CorrelationId: Optional. External CRM ID for the customer. Populated
+	// only if a CRM ID exists for this customer.
+	CorrelationId string `json:"correlationId,omitempty"`
+
 	// CreateTime: Output only. Time when the customer was created.
 	CreateTime string `json:"createTime,omitempty"`
 

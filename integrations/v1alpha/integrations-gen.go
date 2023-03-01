@@ -3941,6 +3941,7 @@ type EnterpriseCrmEventbusProtoTaskMetadata struct {
 	//   "CUSTOM_TASK_TEMPLATE" - include connecting to Vector salesforce,
 	// CRM Hub Spanner etc. Task entities that derive from a custom task
 	// template.
+	//   "TASK_RECOMMENDATIONS" - Category to show task recommendations
 	Category string `json:"category,omitempty"`
 
 	// CodeSearchLink: The Code Search link to the Task Java file.
@@ -5550,6 +5551,18 @@ type EnterpriseCrmFrontendsEventbusProtoTaskConfig struct {
 	// resultant Event parameter.
 	DisableStrictTypeValidation bool `json:"disableStrictTypeValidation,omitempty"`
 
+	// ErrorCatcherConfigId: Optional Error catcher config id of the error
+	// catch flow which will be executed when execution error happens in the
+	// task
+	ErrorCatcherConfigId string `json:"errorCatcherConfigId,omitempty"`
+
+	// Possible values:
+	//   "EXTERNAL_TASK_TYPE_UNSPECIFIED" - Default value. External task
+	// type is not specified
+	//   "NORMAL_TASK" - Tasks belongs to the normal task flows
+	//   "ERROR_TASK" - Task belongs to the error catch task flows
+	ExternalTaskType string `json:"externalTaskType,omitempty"`
+
 	// FailurePolicy: Optional. Determines the number of times the task will
 	// be retried on failure and with what retry strategy. This is
 	// applicable for asynchronous calls to Eventbus alone (Post To Queue,
@@ -5758,7 +5771,7 @@ func (s *EnterpriseCrmFrontendsEventbusProtoTaskEntity) MarshalJSON() ([]byte, e
 }
 
 // EnterpriseCrmFrontendsEventbusProtoTriggerConfig: Configuration
-// detail of a trigger. Next available id: 17
+// detail of a trigger. Next available id: 18
 type EnterpriseCrmFrontendsEventbusProtoTriggerConfig struct {
 	// AlertConfig: An alert threshold configuration for the [trigger +
 	// client + workflow] tuple. If these values are not specified in the
@@ -5780,6 +5793,11 @@ type EnterpriseCrmFrontendsEventbusProtoTriggerConfig struct {
 	// against the list of enabled clients. For non-API triggers, one
 	// workflow execution is triggered on behalf of each enabled client.
 	EnabledClients []string `json:"enabledClients,omitempty"`
+
+	// ErrorCatcherConfigId: Optional Error catcher config id of the error
+	// catch flow which will be executed when execution error happens in the
+	// task
+	ErrorCatcherConfigId string `json:"errorCatcherConfigId,omitempty"`
 
 	// Label: The user created label for a particular trigger.
 	Label string `json:"label,omitempty"`
@@ -6488,6 +6506,9 @@ type GoogleCloudConnectorsV1Connection struct {
 	// s/istio-system/services/istio-ingressgateway-connectors"
 	ServiceDirectory string `json:"serviceDirectory,omitempty"`
 
+	// SslConfig: Optional. Ssl config of a connection
+	SslConfig *GoogleCloudConnectorsV1SslConfig `json:"sslConfig,omitempty"`
+
 	// Status: Output only. Current status of the connection.
 	Status *GoogleCloudConnectorsV1ConnectionStatus `json:"status,omitempty"`
 
@@ -6537,6 +6558,8 @@ type GoogleCloudConnectorsV1ConnectionStatus struct {
 	//   "DELETING" - Connection is being deleted.
 	//   "UPDATING" - Connection is being updated.
 	//   "ERROR" - Connection is not running due to an error.
+	//   "AUTHORIZATION_REQUIRED" - Connection is not running due to an auth
+	// error for the Oauth2 Auth Code based connector.
 	State string `json:"state,omitempty"`
 
 	// Status: Status provides detailed information for the state.
@@ -6723,6 +6746,82 @@ type GoogleCloudConnectorsV1Secret struct {
 
 func (s *GoogleCloudConnectorsV1Secret) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudConnectorsV1Secret
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudConnectorsV1SslConfig: SSL Configuration of a connection
+type GoogleCloudConnectorsV1SslConfig struct {
+	// AdditionalVariables: Additional SSL related field values
+	AdditionalVariables []*GoogleCloudConnectorsV1ConfigVariable `json:"additionalVariables,omitempty"`
+
+	// ClientCertType: Type of Client Cert (PEM/JKS/.. etc.)
+	//
+	// Possible values:
+	//   "CERT_TYPE_UNSPECIFIED" - Cert type unspecified.
+	//   "PEM" - Privacy Enhanced Mail (PEM) Type
+	ClientCertType string `json:"clientCertType,omitempty"`
+
+	// ClientCertificate: Client Certificate
+	ClientCertificate *GoogleCloudConnectorsV1Secret `json:"clientCertificate,omitempty"`
+
+	// ClientPrivateKey: Client Private Key
+	ClientPrivateKey *GoogleCloudConnectorsV1Secret `json:"clientPrivateKey,omitempty"`
+
+	// ClientPrivateKeyPass: Secret containing the passphrase protecting the
+	// Client Private Key
+	ClientPrivateKeyPass *GoogleCloudConnectorsV1Secret `json:"clientPrivateKeyPass,omitempty"`
+
+	// PrivateServerCertificate: Private Server Certificate. Needs to be
+	// specified if trust model is `PRIVATE`.
+	PrivateServerCertificate *GoogleCloudConnectorsV1Secret `json:"privateServerCertificate,omitempty"`
+
+	// ServerCertType: Type of Server Cert (PEM/JKS/.. etc.)
+	//
+	// Possible values:
+	//   "CERT_TYPE_UNSPECIFIED" - Cert type unspecified.
+	//   "PEM" - Privacy Enhanced Mail (PEM) Type
+	ServerCertType string `json:"serverCertType,omitempty"`
+
+	// TrustModel: Trust Model of the SSL connection
+	//
+	// Possible values:
+	//   "PUBLIC" - Public Trust Model. Takes the Default Java trust store.
+	//   "PRIVATE" - Private Trust Model. Takes custom/private trust store.
+	//   "INSECURE" - Insecure Trust Model. Accept all certificates.
+	TrustModel string `json:"trustModel,omitempty"`
+
+	// Type: Controls the ssl type for the given connector version.
+	//
+	// Possible values:
+	//   "SSL_TYPE_UNSPECIFIED" - No SSL configuration required.
+	//   "TLS" - TLS Handshake
+	//   "MTLS" - mutual TLS (MTLS) Handshake
+	Type string `json:"type,omitempty"`
+
+	// UseSsl: Bool for enabling SSL
+	UseSsl bool `json:"useSsl,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AdditionalVariables")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdditionalVariables") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudConnectorsV1SslConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudConnectorsV1SslConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -7477,6 +7576,54 @@ type GoogleCloudIntegrationsV1alphaEnumerateConnectorPlatformRegionsResponse str
 
 func (s *GoogleCloudIntegrationsV1alphaEnumerateConnectorPlatformRegionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIntegrationsV1alphaEnumerateConnectorPlatformRegionsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudIntegrationsV1alphaErrorCatcherConfig: Configuration
+// detail of a error catch task
+type GoogleCloudIntegrationsV1alphaErrorCatcherConfig struct {
+	// Description: Optional. User-provided description intended to give
+	// more business context about the error catcher config.
+	Description string `json:"description,omitempty"`
+
+	// ErrorCatchId: Required. An error catcher id is string representation
+	// for the error catcher config. Within a workflow, error_catch_id
+	// uniquely identifies an error catcher config among all error catcher
+	// configs for the workflow
+	ErrorCatchId string `json:"errorCatchId,omitempty"`
+
+	// ErrorCatcherNumber: Required. A number to uniquely identify each
+	// error catcher config within the workflow on UI.
+	ErrorCatcherNumber string `json:"errorCatcherNumber,omitempty"`
+
+	// Label: Optional. The user created label for a particular error
+	// catcher. Optional.
+	Label string `json:"label,omitempty"`
+
+	// StartErrorTasks: Required. The set of start tasks that are to be
+	// executed for the error catch flow
+	StartErrorTasks []*GoogleCloudIntegrationsV1alphaNextTask `json:"startErrorTasks,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Description") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudIntegrationsV1alphaErrorCatcherConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudIntegrationsV1alphaErrorCatcherConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -8287,6 +8434,10 @@ type GoogleCloudIntegrationsV1alphaIntegrationTemplateVersion struct {
 	// format is alphanumeric with underscores and no spaces.
 	Description string `json:"description,omitempty"`
 
+	// ErrorCatcherConfigs: Optional. Error Catch Task configuration for the
+	// IntegrationTemplateVersion. It's optional.
+	ErrorCatcherConfigs []*GoogleCloudIntegrationsV1alphaErrorCatcherConfig `json:"errorCatcherConfigs,omitempty"`
+
 	// LastModifierEmail: Optional. The last modifier's email address.
 	// Generated based on the End User Credentials/LOAS role of the user
 	// making the call.
@@ -8393,6 +8544,10 @@ type GoogleCloudIntegrationsV1alphaIntegrationVersion struct {
 
 	// Description: Optional. The integration description.
 	Description string `json:"description,omitempty"`
+
+	// ErrorCatcherConfigs: Optional. Error Catch Task configuration for the
+	// integration. It's optional.
+	ErrorCatcherConfigs []*GoogleCloudIntegrationsV1alphaErrorCatcherConfig `json:"errorCatcherConfigs,omitempty"`
 
 	// IntegrationParameters: Optional. Parameters that are expected to be
 	// passed to the integration when an event is triggered. This consists
@@ -10239,6 +10394,20 @@ type GoogleCloudIntegrationsV1alphaTaskConfig struct {
 	// TaskConfig in the UI.
 	DisplayName string `json:"displayName,omitempty"`
 
+	// ErrorCatcherConfigId: Optional. Optional Error catcher config id of
+	// the error catch flow which will be executed when execution error
+	// happens in the task
+	ErrorCatcherConfigId string `json:"errorCatcherConfigId,omitempty"`
+
+	// ExternalTaskType: Optional. External task type of the task
+	//
+	// Possible values:
+	//   "EXTERNAL_TASK_TYPE_UNSPECIFIED" - Default value. External task
+	// type is not specified
+	//   "NORMAL_TASK" - Tasks belongs to the normal task flows
+	//   "ERROR_TASK" - Task belongs to the error catch task flows
+	ExternalTaskType string `json:"externalTaskType,omitempty"`
+
 	// FailurePolicy: Optional. Determines the number of times the task will
 	// be retried on failure and with what retry strategy. This is
 	// applicable for asynchronous calls to Eventbus alone (Post To Queue,
@@ -10426,6 +10595,11 @@ type GoogleCloudIntegrationsV1alphaTriggerConfig struct {
 	// Description: Optional. User-provided description intended to give
 	// additional business context about the task.
 	Description string `json:"description,omitempty"`
+
+	// ErrorCatcherConfigId: Optional. Optional Error catcher config id of
+	// the error catch flow which will be executed when execution error
+	// happens in the task
+	ErrorCatcherConfigId string `json:"errorCatcherConfigId,omitempty"`
 
 	// Label: Optional. The user created label for a particular trigger.
 	Label string `json:"label,omitempty"`
@@ -18312,6 +18486,138 @@ func (c *ProjectsLocationsProductsCertificatesPatchCall) Do(opts ...googleapi.Ca
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleCloudIntegrationsV1alphaCertificate"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "integrations.projects.locations.products.integrations.delete":
+
+type ProjectsLocationsProductsIntegrationsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Delete the selected integration and all versions inside
+//
+// - name: The location resource of the request.
+func (r *ProjectsLocationsProductsIntegrationsService) Delete(name string) *ProjectsLocationsProductsIntegrationsDeleteCall {
+	c := &ProjectsLocationsProductsIntegrationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsProductsIntegrationsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsProductsIntegrationsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsProductsIntegrationsDeleteCall) Context(ctx context.Context) *ProjectsLocationsProductsIntegrationsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsProductsIntegrationsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsProductsIntegrationsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "integrations.projects.locations.products.integrations.delete" call.
+// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsProductsIntegrationsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Delete the selected integration and all versions inside",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/products/{productsId}/integrations/{integrationsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "integrations.projects.locations.products.integrations.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The location resource of the request.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/products/[^/]+/integrations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleProtobufEmpty"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

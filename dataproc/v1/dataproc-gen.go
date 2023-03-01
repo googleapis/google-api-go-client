@@ -1576,6 +1576,11 @@ type EncryptionConfig struct {
 	// encryption for all instances in the cluster.
 	GcePdKmsKeyName string `json:"gcePdKmsKeyName,omitempty"`
 
+	// KmsKey: Optional. The Cloud KMS key name to use for encrypting
+	// customer core content and cluster PD disk for all instances in the
+	// cluster.
+	KmsKey string `json:"kmsKey,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "GcePdKmsKeyName") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -1833,8 +1838,8 @@ type GceClusterConfig struct {
 	// (https://cloud.google.com/compute/docs/subnetworks) for more
 	// information).A full URL, partial URI, or short name are valid.
 	// Examples:
-	// https://www.googleapis.com/compute/v1/projects/[project_id]/regions/[region]/default
-	// projects/[project_id]/regions/[region]/default default
+	// https://www.googleapis.com/compute/v1/projects/[project_id]/global/networks/default
+	// projects/[project_id]/global/networks/default default
 	NetworkUri string `json:"networkUri,omitempty"`
 
 	// NodeGroupAffinity: Optional. Node Group Affinity for sole-tenant

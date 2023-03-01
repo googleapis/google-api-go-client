@@ -182,13 +182,49 @@ type ProjectsLocationsOperationsService struct {
 	s *Service
 }
 
+// AdminUser: Message storing info about the first admin user. Next ID:
+// 3
+type AdminUser struct {
+	// FamilyName: Optional. Last/family name of the first admin user.
+	FamilyName string `json:"familyName,omitempty"`
+
+	// GivenName: Optional. First/given name of the first admin user.
+	GivenName string `json:"givenName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FamilyName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FamilyName") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AdminUser) MarshalJSON() ([]byte, error) {
+	type NoMethod AdminUser
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // CancelOperationRequest: The request message for
 // Operations.CancelOperation.
 type CancelOperationRequest struct {
 }
 
-// ContactCenter: Message describing ContactCenter object
+// ContactCenter: Message describing ContactCenter object Next ID: 14
 type ContactCenter struct {
+	// AdminUser: Optional. Info about the first admin user, such as given
+	// name and family name.
+	AdminUser *AdminUser `json:"adminUser,omitempty"`
+
 	// CcaipManagedUsers: Optional. Whether to enable users to be created in
 	// the CCAIP-instance concurrently to having users in Cloud identity
 	CcaipManagedUsers bool `json:"ccaipManagedUsers,omitempty"`
@@ -236,28 +272,27 @@ type ContactCenter struct {
 	// Uris: Output only. URIs to access the deployed ContactCenters.
 	Uris *URIs `json:"uris,omitempty"`
 
-	// UserEmail: Optional. Email address of the first admin users.
+	// UserEmail: Optional. Email address of the first admin user.
 	UserEmail string `json:"userEmail,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "CcaipManagedUsers")
-	// to unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "AdminUser") to
+	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CcaipManagedUsers") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AdminUser") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1294,7 +1329,7 @@ func (c *ProjectsLocationsContactCentersCreateCall) ContactCenterId(contactCente
 // if you must retry your request, the server will know to ignore the
 // request if it has already been completed. The server will guarantee
 // that for at least 60 minutes since the first request. For example,
-// consider a situation where you make an initial request and t he
+// consider a situation where you make an initial request and the
 // request times out. If you make the request again with the same
 // request ID, the server can check if original operation with the same
 // request ID was received, and if so, will ignore the second request.
@@ -1419,7 +1454,7 @@ func (c *ProjectsLocationsContactCentersCreateCall) Do(opts ...googleapi.CallOpt
 	//       "type": "string"
 	//     },
 	//     "requestId": {
-	//       "description": "Optional. An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and t he request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "description": "Optional. An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -1462,7 +1497,7 @@ func (r *ProjectsLocationsContactCentersService) Delete(name string) *ProjectsLo
 // if you must retry your request, the server will know to ignore the
 // request if it has already been completed. The server will guarantee
 // that for at least 60 minutes after the first request. For example,
-// consider a situation where you make an initial request and t he
+// consider a situation where you make an initial request and the
 // request times out. If you make the request again with the same
 // request ID, the server can check if original operation with the same
 // request ID was received, and if so, will ignore the second request.
@@ -1577,7 +1612,7 @@ func (c *ProjectsLocationsContactCentersDeleteCall) Do(opts ...googleapi.CallOpt
 	//       "type": "string"
 	//     },
 	//     "requestId": {
-	//       "description": "Optional. An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes after the first request. For example, consider a situation where you make an initial request and t he request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "description": "Optional. An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes after the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -1981,7 +2016,7 @@ func (r *ProjectsLocationsContactCentersService) Patch(name string, contactcente
 // if you must retry your request, the server will know to ignore the
 // request if it has already been completed. The server will guarantee
 // that for at least 60 minutes since the first request. For example,
-// consider a situation where you make an initial request and t he
+// consider a situation where you make an initial request and the
 // request times out. If you make the request again with the same
 // request ID, the server can check if original operation with the same
 // request ID was received, and if so, will ignore the second request.
@@ -2112,7 +2147,7 @@ func (c *ProjectsLocationsContactCentersPatchCall) Do(opts ...googleapi.CallOpti
 	//       "type": "string"
 	//     },
 	//     "requestId": {
-	//       "description": "Optional. An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and t he request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "description": "Optional. An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

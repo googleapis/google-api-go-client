@@ -1828,9 +1828,9 @@ type GoogleCloudDialogflowCxV3Environment struct {
 	// UpdateTime: Output only. Update time of this environment.
 	UpdateTime string `json:"updateTime,omitempty"`
 
-	// VersionConfigs: Required. A list of configurations for flow versions.
-	// You should include version configs for all flows that are reachable
-	// from `Start Flow` in the agent. Otherwise, an error will be returned.
+	// VersionConfigs: A list of configurations for flow versions. You
+	// should include version configs for all flows that are reachable from
+	// `Start Flow` in the agent. Otherwise, an error will be returned.
 	VersionConfigs []*GoogleCloudDialogflowCxV3EnvironmentVersionConfig `json:"versionConfigs,omitempty"`
 
 	// WebhookConfig: The webhook configuration for this environment.
@@ -4782,26 +4782,32 @@ func (s *GoogleCloudDialogflowCxV3Match) UnmarshalJSON(data []byte) error {
 
 // GoogleCloudDialogflowCxV3MatchIntentRequest: Request of MatchIntent.
 type GoogleCloudDialogflowCxV3MatchIntentRequest struct {
+	// PersistParameterChanges: Persist session parameter changes from
+	// `query_params`.
+	PersistParameterChanges bool `json:"persistParameterChanges,omitempty"`
+
 	// QueryInput: Required. The input specification.
 	QueryInput *GoogleCloudDialogflowCxV3QueryInput `json:"queryInput,omitempty"`
 
 	// QueryParams: The parameters of this query.
 	QueryParams *GoogleCloudDialogflowCxV3QueryParameters `json:"queryParams,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "QueryInput") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "PersistParameterChanges") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "QueryInput") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "PersistParameterChanges")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -8910,9 +8916,9 @@ type GoogleCloudDialogflowCxV3beta1Environment struct {
 	// UpdateTime: Output only. Update time of this environment.
 	UpdateTime string `json:"updateTime,omitempty"`
 
-	// VersionConfigs: Required. A list of configurations for flow versions.
-	// You should include version configs for all flows that are reachable
-	// from `Start Flow` in the agent. Otherwise, an error will be returned.
+	// VersionConfigs: A list of configurations for flow versions. You
+	// should include version configs for all flows that are reachable from
+	// `Start Flow` in the agent. Otherwise, an error will be returned.
 	VersionConfigs []*GoogleCloudDialogflowCxV3beta1EnvironmentVersionConfig `json:"versionConfigs,omitempty"`
 
 	// WebhookConfig: The webhook configuration for this environment.

@@ -3801,7 +3801,7 @@
       }
     }
   },
-  "revision": "20230228",
+  "revision": "20230301",
   "rootUrl": "https://analyticsadmin.googleapis.com/",
   "schemas": {
     "GoogleAnalyticsAdminV1alphaAccessBetweenFilter": {
@@ -5052,6 +5052,10 @@
         },
         "includeAdvertisingId": {
           "description": "If set true, exported data will include advertising identifiers for mobile app streams.",
+          "type": "boolean"
+        },
+        "intradayExportEnabled": {
+          "description": "If set true, enables intraday export to the linked Google Cloud project.",
           "type": "boolean"
         },
         "name": {

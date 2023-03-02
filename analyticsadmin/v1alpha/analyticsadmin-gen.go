@@ -2686,6 +2686,10 @@ type GoogleAnalyticsAdminV1alphaBigQueryLink struct {
 	// advertising identifiers for mobile app streams.
 	IncludeAdvertisingId bool `json:"includeAdvertisingId,omitempty"`
 
+	// IntradayExportEnabled: If set true, enables intraday export to the
+	// linked Google Cloud project.
+	IntradayExportEnabled bool `json:"intradayExportEnabled,omitempty"`
+
 	// Name: Output only. Resource name of this BigQuery link. Format:
 	// 'properties/{property_id}/bigQueryLinks/{bigquery_link_id}' Format:
 	// 'properties/1234/bigQueryLinks/abc567'

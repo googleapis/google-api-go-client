@@ -154,6 +154,7 @@ type ProjectsService struct {
 
 func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs := &ProjectsLocationsService{s: s}
+	rs.Collections = NewProjectsLocationsCollectionsService(s)
 	rs.DataStores = NewProjectsLocationsDataStoresService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
 	return rs
@@ -162,9 +163,80 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 type ProjectsLocationsService struct {
 	s *Service
 
+	Collections *ProjectsLocationsCollectionsService
+
 	DataStores *ProjectsLocationsDataStoresService
 
 	Operations *ProjectsLocationsOperationsService
+}
+
+func NewProjectsLocationsCollectionsService(s *Service) *ProjectsLocationsCollectionsService {
+	rs := &ProjectsLocationsCollectionsService{s: s}
+	rs.DataStores = NewProjectsLocationsCollectionsDataStoresService(s)
+	return rs
+}
+
+type ProjectsLocationsCollectionsService struct {
+	s *Service
+
+	DataStores *ProjectsLocationsCollectionsDataStoresService
+}
+
+func NewProjectsLocationsCollectionsDataStoresService(s *Service) *ProjectsLocationsCollectionsDataStoresService {
+	rs := &ProjectsLocationsCollectionsDataStoresService{s: s}
+	rs.Branches = NewProjectsLocationsCollectionsDataStoresBranchesService(s)
+	rs.ServingConfigs = NewProjectsLocationsCollectionsDataStoresServingConfigsService(s)
+	rs.UserEvents = NewProjectsLocationsCollectionsDataStoresUserEventsService(s)
+	return rs
+}
+
+type ProjectsLocationsCollectionsDataStoresService struct {
+	s *Service
+
+	Branches *ProjectsLocationsCollectionsDataStoresBranchesService
+
+	ServingConfigs *ProjectsLocationsCollectionsDataStoresServingConfigsService
+
+	UserEvents *ProjectsLocationsCollectionsDataStoresUserEventsService
+}
+
+func NewProjectsLocationsCollectionsDataStoresBranchesService(s *Service) *ProjectsLocationsCollectionsDataStoresBranchesService {
+	rs := &ProjectsLocationsCollectionsDataStoresBranchesService{s: s}
+	rs.Documents = NewProjectsLocationsCollectionsDataStoresBranchesDocumentsService(s)
+	return rs
+}
+
+type ProjectsLocationsCollectionsDataStoresBranchesService struct {
+	s *Service
+
+	Documents *ProjectsLocationsCollectionsDataStoresBranchesDocumentsService
+}
+
+func NewProjectsLocationsCollectionsDataStoresBranchesDocumentsService(s *Service) *ProjectsLocationsCollectionsDataStoresBranchesDocumentsService {
+	rs := &ProjectsLocationsCollectionsDataStoresBranchesDocumentsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsCollectionsDataStoresBranchesDocumentsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsCollectionsDataStoresServingConfigsService(s *Service) *ProjectsLocationsCollectionsDataStoresServingConfigsService {
+	rs := &ProjectsLocationsCollectionsDataStoresServingConfigsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsCollectionsDataStoresServingConfigsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsCollectionsDataStoresUserEventsService(s *Service) *ProjectsLocationsCollectionsDataStoresUserEventsService {
+	rs := &ProjectsLocationsCollectionsDataStoresUserEventsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsCollectionsDataStoresUserEventsService struct {
+	s *Service
 }
 
 func NewProjectsLocationsDataStoresService(s *Service) *ProjectsLocationsDataStoresService {
@@ -394,27 +466,6 @@ type GoogleCloudDiscoveryengineLoggingErrorLog struct {
 	// Message: A message describing the error.
 	Message string `json:"message,omitempty"`
 
-	// RequestPayload: The API request payload, represented as a protocol
-	// buffer. Most API request types are supported. For example:
-	// "type.googleapis.com/google.cloud.discoveryengine.v1alpha.DocumentServ
-	// ice.CreateDocumentRequest"
-	// "type.googleapis.com/google.cloud.discoveryengine.v1alpha.UserEventSer
-	// vice.WriteUserEventRequest"
-	RequestPayload googleapi.RawMessage `json:"requestPayload,omitempty"`
-
-	// ResponsePayload: The API response payload, represented as a protocol
-	// buffer. This is used to log some "soft errors", where the response is
-	// valid but we consider there are some quality issues like unjoined
-	// events. The following API responses are supported and no PII is
-	// included:
-	// "google.cloud.discoveryengine.v1alpha.RecommendationService.Recommend"
-	//
-	// "google.cloud.discoveryengine.v1alpha.UserEventService.WriteUserEvent"
-	//
-	// "google.cloud.discoveryengine.v1alpha.UserEventService.CollectUserEven
-	// t"
-	ResponsePayload googleapi.RawMessage `json:"responsePayload,omitempty"`
-
 	// ServiceContext: The service context in which this error has occurred.
 	ServiceContext *GoogleCloudDiscoveryengineLoggingServiceContext `json:"serviceContext,omitempty"`
 
@@ -475,11 +526,14 @@ func (s *GoogleCloudDiscoveryengineLoggingHttpRequestContext) MarshalJSON() ([]b
 }
 
 // GoogleCloudDiscoveryengineLoggingImportErrorContext: The error
-// payload that is populated on LRO import APIs. Including:
-// "google.cloud.discoveryengine.v1alpha.DocumentService.ImportDocuments"
+// payload that is populated on LRO import APIs, including the
+// following: *
+// `google.cloud.discoveryengine.v1alpha.DocumentService.ImportDocuments`
 //
-// "google.cloud.discoveryengine.v1alpha.UserEventService.ImportUserEvent
-// s"
+//	*
+//
+// `google.cloud.discoveryengine.v1alpha.UserEventService.ImportUserEvent
+// s`
 type GoogleCloudDiscoveryengineLoggingImportErrorContext struct {
 	// Document: The detailed content which caused the error on importing a
 	// document.
@@ -526,8 +580,8 @@ func (s *GoogleCloudDiscoveryengineLoggingImportErrorContext) MarshalJSON() ([]b
 // GoogleCloudDiscoveryengineLoggingServiceContext: Describes a running
 // service that sends errors.
 type GoogleCloudDiscoveryengineLoggingServiceContext struct {
-	// Service: An identifier of the service. For example,
-	// "discoveryengine.googleapis.com".
+	// Service: An identifier of the service—for example,
+	// `discoveryengine.googleapis.com`.
 	Service string `json:"service,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Service") to
@@ -556,9 +610,10 @@ func (s *GoogleCloudDiscoveryengineLoggingServiceContext) MarshalJSON() ([]byte,
 // GoogleCloudDiscoveryengineLoggingSourceLocation: Indicates a location
 // in the source code of the service for which errors are reported.
 type GoogleCloudDiscoveryengineLoggingSourceLocation struct {
-	// FunctionName: Human-readable name of a function or method. For
-	// example, "
-	// google.cloud.discoveryengine.v1alpha.RecommendationService.Recommend".
+	// FunctionName: Human-readable name of a function or method—for
+	// example,
+	// `google.cloud.discoveryengine.v1alpha.RecommendationService.Recommend`
+	// .
 	FunctionName string `json:"functionName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FunctionName") to
@@ -729,9 +784,10 @@ type GoogleCloudDiscoveryengineV1alphaDocument struct {
 	JsonData string `json:"jsonData,omitempty"`
 
 	// Name: Immutable. The full resource name of the document. Format:
-	// `projects/{project}/locations/{location}/dataStores/{data_store}/branc
-	// hes/{branch}/documents/{document_id}`. This field must be a UTF-8
-	// encoded string with a length limit of 1024 characters.
+	// `projects/{project}/locations/{location}/collections/{collection}/data
+	// Stores/{data_store}/branches/{branch}/documents/{document_id}`. This
+	// field must be a UTF-8 encoded string with a length limit of 1024
+	// characters.
 	Name string `json:"name,omitempty"`
 
 	// ParentDocumentId: The identifier of the parent document. Currently
@@ -783,8 +839,9 @@ type GoogleCloudDiscoveryengineV1alphaDocumentInfo struct {
 	Id string `json:"id,omitempty"`
 
 	// Name: Required. The Document resource full name, of the form:
-	// projects/{project\_id}/locations/{location}/dataStores/{data\_store\_i
-	// d}/branches/{branch\_id}/documents/{document\_id}
+	// projects/{project\_id}/locations/{location}/collections/{collection\_i
+	// d}/dataStores/{data\_store\_id}/branches/{branch\_id}/documents/{docum
+	// ent\_id}
 	Name string `json:"name,omitempty"`
 
 	// PromotionIds: The promotion IDs associated with this Document.
@@ -2325,6 +2382,1612 @@ func (s *GoogleTypeDate) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// method id "discoveryengine.projects.locations.collections.dataStores.branches.documents.create":
+
+type ProjectsLocationsCollectionsDataStoresBranchesDocumentsCreateCall struct {
+	s                                         *Service
+	parent                                    string
+	googleclouddiscoveryenginev1alphadocument *GoogleCloudDiscoveryengineV1alphaDocument
+	urlParams_                                gensupport.URLParams
+	ctx_                                      context.Context
+	header_                                   http.Header
+}
+
+// Create: Creates a Document.
+//
+//   - parent: The parent resource name, such as
+//     `projects/{project}/locations/{location}/collections/{collection}/da
+//     taStores/{data_store}/branches/{branch}`.
+func (r *ProjectsLocationsCollectionsDataStoresBranchesDocumentsService) Create(parent string, googleclouddiscoveryenginev1alphadocument *GoogleCloudDiscoveryengineV1alphaDocument) *ProjectsLocationsCollectionsDataStoresBranchesDocumentsCreateCall {
+	c := &ProjectsLocationsCollectionsDataStoresBranchesDocumentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleclouddiscoveryenginev1alphadocument = googleclouddiscoveryenginev1alphadocument
+	return c
+}
+
+// DocumentId sets the optional parameter "documentId": Required. The ID
+// to use for the Document, which will become the final component of the
+// Document.name. If the caller does not have permission to create the
+// Document, regardless of whether or not it exists, a PERMISSION_DENIED
+// error is returned. This field must be unique among all Documents with
+// the same parent. Otherwise, an ALREADY_EXISTS error is returned. This
+// field must conform to RFC-1034 (https://tools.ietf.org/html/rfc1034)
+// standard with a length limit of 63 characters. Otherwise, an
+// INVALID_ARGUMENT error is returned.
+func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsCreateCall) DocumentId(documentId string) *ProjectsLocationsCollectionsDataStoresBranchesDocumentsCreateCall {
+	c.urlParams_.Set("documentId", documentId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsDataStoresBranchesDocumentsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsCreateCall) Context(ctx context.Context) *ProjectsLocationsCollectionsDataStoresBranchesDocumentsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddiscoveryenginev1alphadocument)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/documents")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.dataStores.branches.documents.create" call.
+// Exactly one of *GoogleCloudDiscoveryengineV1alphaDocument or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudDiscoveryengineV1alphaDocument.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1alphaDocument, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1alphaDocument{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a Document.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/dataStores/{dataStoresId}/branches/{branchesId}/documents",
+	//   "httpMethod": "POST",
+	//   "id": "discoveryengine.projects.locations.collections.dataStores.branches.documents.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "documentId": {
+	//       "description": "Required. The ID to use for the Document, which will become the final component of the Document.name. If the caller does not have permission to create the Document, regardless of whether or not it exists, a PERMISSION_DENIED error is returned. This field must be unique among all Documents with the same parent. Otherwise, an ALREADY_EXISTS error is returned. This field must conform to [RFC-1034](https://tools.ietf.org/html/rfc1034) standard with a length limit of 63 characters. Otherwise, an INVALID_ARGUMENT error is returned.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The parent resource name, such as `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}/branches/{branch}`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/dataStores/[^/]+/branches/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+parent}/documents",
+	//   "request": {
+	//     "$ref": "GoogleCloudDiscoveryengineV1alphaDocument"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudDiscoveryengineV1alphaDocument"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "discoveryengine.projects.locations.collections.dataStores.branches.documents.delete":
+
+type ProjectsLocationsCollectionsDataStoresBranchesDocumentsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a Document.
+//
+//   - name: Full resource name of Document, such as
+//     `projects/{project}/locations/{location}/collections/{collection}/da
+//     taStores/{data_store}/branches/{branch}/documents/{document}`. If
+//     the caller does not have permission to delete the Document,
+//     regardless of whether or not it exists, a PERMISSION_DENIED error
+//     is returned. If the Document to delete does not exist, a NOT_FOUND
+//     error is returned.
+func (r *ProjectsLocationsCollectionsDataStoresBranchesDocumentsService) Delete(name string) *ProjectsLocationsCollectionsDataStoresBranchesDocumentsDeleteCall {
+	c := &ProjectsLocationsCollectionsDataStoresBranchesDocumentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsDataStoresBranchesDocumentsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsDeleteCall) Context(ctx context.Context) *ProjectsLocationsCollectionsDataStoresBranchesDocumentsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.dataStores.branches.documents.delete" call.
+// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a Document.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/dataStores/{dataStoresId}/branches/{branchesId}/documents/{documentsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "discoveryengine.projects.locations.collections.dataStores.branches.documents.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Full resource name of Document, such as `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}/branches/{branch}/documents/{document}`. If the caller does not have permission to delete the Document, regardless of whether or not it exists, a PERMISSION_DENIED error is returned. If the Document to delete does not exist, a NOT_FOUND error is returned.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/dataStores/[^/]+/branches/[^/]+/documents/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleProtobufEmpty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "discoveryengine.projects.locations.collections.dataStores.branches.documents.get":
+
+type ProjectsLocationsCollectionsDataStoresBranchesDocumentsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a Document.
+//
+//   - name: Full resource name of Document, such as
+//     `projects/{project}/locations/{location}/collections/{collection}/da
+//     taStores/{data_store}/branches/{branch}/documents/{document}`. If
+//     the caller does not have permission to access the Document,
+//     regardless of whether or not it exists, a PERMISSION_DENIED error
+//     is returned. If the requested Document does not exist, a NOT_FOUND
+//     error is returned.
+func (r *ProjectsLocationsCollectionsDataStoresBranchesDocumentsService) Get(name string) *ProjectsLocationsCollectionsDataStoresBranchesDocumentsGetCall {
+	c := &ProjectsLocationsCollectionsDataStoresBranchesDocumentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsDataStoresBranchesDocumentsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsCollectionsDataStoresBranchesDocumentsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsGetCall) Context(ctx context.Context) *ProjectsLocationsCollectionsDataStoresBranchesDocumentsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.dataStores.branches.documents.get" call.
+// Exactly one of *GoogleCloudDiscoveryengineV1alphaDocument or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudDiscoveryengineV1alphaDocument.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1alphaDocument, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1alphaDocument{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a Document.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/dataStores/{dataStoresId}/branches/{branchesId}/documents/{documentsId}",
+	//   "httpMethod": "GET",
+	//   "id": "discoveryengine.projects.locations.collections.dataStores.branches.documents.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Full resource name of Document, such as `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}/branches/{branch}/documents/{document}`. If the caller does not have permission to access the Document, regardless of whether or not it exists, a PERMISSION_DENIED error is returned. If the requested Document does not exist, a NOT_FOUND error is returned.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/dataStores/[^/]+/branches/[^/]+/documents/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudDiscoveryengineV1alphaDocument"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "discoveryengine.projects.locations.collections.dataStores.branches.documents.import":
+
+type ProjectsLocationsCollectionsDataStoresBranchesDocumentsImportCall struct {
+	s                                                       *Service
+	parent                                                  string
+	googleclouddiscoveryenginev1alphaimportdocumentsrequest *GoogleCloudDiscoveryengineV1alphaImportDocumentsRequest
+	urlParams_                                              gensupport.URLParams
+	ctx_                                                    context.Context
+	header_                                                 http.Header
+}
+
+// Import: Bulk import of multiple Documents. Request processing may be
+// synchronous. Non-existing items will be created. Note: It is possible
+// for a subset of the Documents to be successfully updated.
+//
+//   - parent: The parent branch resource name, such as
+//     `projects/{project}/locations/{location}/collections/{collection}/da
+//     taStores/{data_store}/branches/{branch}`. Requires create/update
+//     permission.
+func (r *ProjectsLocationsCollectionsDataStoresBranchesDocumentsService) Import(parent string, googleclouddiscoveryenginev1alphaimportdocumentsrequest *GoogleCloudDiscoveryengineV1alphaImportDocumentsRequest) *ProjectsLocationsCollectionsDataStoresBranchesDocumentsImportCall {
+	c := &ProjectsLocationsCollectionsDataStoresBranchesDocumentsImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleclouddiscoveryenginev1alphaimportdocumentsrequest = googleclouddiscoveryenginev1alphaimportdocumentsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsImportCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsDataStoresBranchesDocumentsImportCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsImportCall) Context(ctx context.Context) *ProjectsLocationsCollectionsDataStoresBranchesDocumentsImportCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsImportCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsImportCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddiscoveryenginev1alphaimportdocumentsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/documents:import")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.dataStores.branches.documents.import" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsImportCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Bulk import of multiple Documents. Request processing may be synchronous. Non-existing items will be created. Note: It is possible for a subset of the Documents to be successfully updated.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/dataStores/{dataStoresId}/branches/{branchesId}/documents:import",
+	//   "httpMethod": "POST",
+	//   "id": "discoveryengine.projects.locations.collections.dataStores.branches.documents.import",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The parent branch resource name, such as `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}/branches/{branch}`. Requires create/update permission.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/dataStores/[^/]+/branches/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+parent}/documents:import",
+	//   "request": {
+	//     "$ref": "GoogleCloudDiscoveryengineV1alphaImportDocumentsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "discoveryengine.projects.locations.collections.dataStores.branches.documents.list":
+
+type ProjectsLocationsCollectionsDataStoresBranchesDocumentsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Gets a list of Documents.
+//
+//   - parent: The parent branch resource name, such as
+//     `projects/{project}/locations/{location}/collections/{collection}/da
+//     taStores/{data_store}/branches/{branch}`. Use `default_branch` as
+//     the branch ID, to list documents under the default branch. If the
+//     caller does not have permission to list Documentss under this
+//     branch, regardless of whether or not this branch exists, a
+//     PERMISSION_DENIED error is returned.
+func (r *ProjectsLocationsCollectionsDataStoresBranchesDocumentsService) List(parent string) *ProjectsLocationsCollectionsDataStoresBranchesDocumentsListCall {
+	c := &ProjectsLocationsCollectionsDataStoresBranchesDocumentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of
+// Documents to return. If unspecified, defaults to 100. The maximum
+// allowed value is 1000. Values above 1000 will be coerced to 1000. If
+// this field is negative, an INVALID_ARGUMENT error is returned.
+func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsListCall) PageSize(pageSize int64) *ProjectsLocationsCollectionsDataStoresBranchesDocumentsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token
+// ListDocumentsResponse.next_page_token, received from a previous
+// DocumentService.ListDocuments call. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided to
+// DocumentService.ListDocuments must match the call that provided the
+// page token. Otherwise, an INVALID_ARGUMENT error is returned.
+func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsListCall) PageToken(pageToken string) *ProjectsLocationsCollectionsDataStoresBranchesDocumentsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsDataStoresBranchesDocumentsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsCollectionsDataStoresBranchesDocumentsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsListCall) Context(ctx context.Context) *ProjectsLocationsCollectionsDataStoresBranchesDocumentsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/documents")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.dataStores.branches.documents.list" call.
+// Exactly one of
+// *GoogleCloudDiscoveryengineV1alphaListDocumentsResponse or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *GoogleCloudDiscoveryengineV1alphaListDocumentsResponse.ServerResponse
+// .Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1alphaListDocumentsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1alphaListDocumentsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a list of Documents.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/dataStores/{dataStoresId}/branches/{branchesId}/documents",
+	//   "httpMethod": "GET",
+	//   "id": "discoveryengine.projects.locations.collections.dataStores.branches.documents.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Maximum number of Documents to return. If unspecified, defaults to 100. The maximum allowed value is 1000. Values above 1000 will be coerced to 1000. If this field is negative, an INVALID_ARGUMENT error is returned.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A page token ListDocumentsResponse.next_page_token, received from a previous DocumentService.ListDocuments call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to DocumentService.ListDocuments must match the call that provided the page token. Otherwise, an INVALID_ARGUMENT error is returned.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The parent branch resource name, such as `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}/branches/{branch}`. Use `default_branch` as the branch ID, to list documents under the default branch. If the caller does not have permission to list Documentss under this branch, regardless of whether or not this branch exists, a PERMISSION_DENIED error is returned.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/dataStores/[^/]+/branches/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+parent}/documents",
+	//   "response": {
+	//     "$ref": "GoogleCloudDiscoveryengineV1alphaListDocumentsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsListCall) Pages(ctx context.Context, f func(*GoogleCloudDiscoveryengineV1alphaListDocumentsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "discoveryengine.projects.locations.collections.dataStores.branches.documents.patch":
+
+type ProjectsLocationsCollectionsDataStoresBranchesDocumentsPatchCall struct {
+	s                                         *Service
+	name                                      string
+	googleclouddiscoveryenginev1alphadocument *GoogleCloudDiscoveryengineV1alphaDocument
+	urlParams_                                gensupport.URLParams
+	ctx_                                      context.Context
+	header_                                   http.Header
+}
+
+// Patch: Updates a Document.
+//
+//   - name: Immutable. The full resource name of the document. Format:
+//     `projects/{project}/locations/{location}/collections/{collection}/da
+//     taStores/{data_store}/branches/{branch}/documents/{document_id}`.
+//     This field must be a UTF-8 encoded string with a length limit of
+//     1024 characters.
+func (r *ProjectsLocationsCollectionsDataStoresBranchesDocumentsService) Patch(name string, googleclouddiscoveryenginev1alphadocument *GoogleCloudDiscoveryengineV1alphaDocument) *ProjectsLocationsCollectionsDataStoresBranchesDocumentsPatchCall {
+	c := &ProjectsLocationsCollectionsDataStoresBranchesDocumentsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleclouddiscoveryenginev1alphadocument = googleclouddiscoveryenginev1alphadocument
+	return c
+}
+
+// AllowMissing sets the optional parameter "allowMissing": If set to
+// true, and the Document is not found, a new Document will be created.
+func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsPatchCall) AllowMissing(allowMissing bool) *ProjectsLocationsCollectionsDataStoresBranchesDocumentsPatchCall {
+	c.urlParams_.Set("allowMissing", fmt.Sprint(allowMissing))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsDataStoresBranchesDocumentsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsPatchCall) Context(ctx context.Context) *ProjectsLocationsCollectionsDataStoresBranchesDocumentsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddiscoveryenginev1alphadocument)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.dataStores.branches.documents.patch" call.
+// Exactly one of *GoogleCloudDiscoveryengineV1alphaDocument or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudDiscoveryengineV1alphaDocument.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1alphaDocument, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1alphaDocument{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a Document.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/dataStores/{dataStoresId}/branches/{branchesId}/documents/{documentsId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "discoveryengine.projects.locations.collections.dataStores.branches.documents.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "allowMissing": {
+	//       "description": "If set to true, and the Document is not found, a new Document will be created.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "name": {
+	//       "description": "Immutable. The full resource name of the document. Format: `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}/branches/{branch}/documents/{document_id}`. This field must be a UTF-8 encoded string with a length limit of 1024 characters.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/dataStores/[^/]+/branches/[^/]+/documents/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "request": {
+	//     "$ref": "GoogleCloudDiscoveryengineV1alphaDocument"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudDiscoveryengineV1alphaDocument"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "discoveryengine.projects.locations.collections.dataStores.servingConfigs.recommend":
+
+type ProjectsLocationsCollectionsDataStoresServingConfigsRecommendCall struct {
+	s                                                 *Service
+	servingConfig                                     string
+	googleclouddiscoveryenginev1alpharecommendrequest *GoogleCloudDiscoveryengineV1alphaRecommendRequest
+	urlParams_                                        gensupport.URLParams
+	ctx_                                              context.Context
+	header_                                           http.Header
+}
+
+// Recommend: Makes a recommendation, which requires a contextual user
+// event.
+//
+//   - servingConfig: Full resource name of the format:
+//     projects/*/locations/global/collections/*/dataStores/*/servingConfig
+//     s/* Before you can request recommendations from your model, you
+//     must create at least one serving config for it.
+func (r *ProjectsLocationsCollectionsDataStoresServingConfigsService) Recommend(servingConfig string, googleclouddiscoveryenginev1alpharecommendrequest *GoogleCloudDiscoveryengineV1alphaRecommendRequest) *ProjectsLocationsCollectionsDataStoresServingConfigsRecommendCall {
+	c := &ProjectsLocationsCollectionsDataStoresServingConfigsRecommendCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.servingConfig = servingConfig
+	c.googleclouddiscoveryenginev1alpharecommendrequest = googleclouddiscoveryenginev1alpharecommendrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsCollectionsDataStoresServingConfigsRecommendCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsDataStoresServingConfigsRecommendCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsCollectionsDataStoresServingConfigsRecommendCall) Context(ctx context.Context) *ProjectsLocationsCollectionsDataStoresServingConfigsRecommendCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsCollectionsDataStoresServingConfigsRecommendCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsDataStoresServingConfigsRecommendCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddiscoveryenginev1alpharecommendrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+servingConfig}:recommend")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"servingConfig": c.servingConfig,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.dataStores.servingConfigs.recommend" call.
+// Exactly one of *GoogleCloudDiscoveryengineV1alphaRecommendResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudDiscoveryengineV1alphaRecommendResponse.ServerResponse.Hea
+// der or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsCollectionsDataStoresServingConfigsRecommendCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1alphaRecommendResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1alphaRecommendResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Makes a recommendation, which requires a contextual user event.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/dataStores/{dataStoresId}/servingConfigs/{servingConfigsId}:recommend",
+	//   "httpMethod": "POST",
+	//   "id": "discoveryengine.projects.locations.collections.dataStores.servingConfigs.recommend",
+	//   "parameterOrder": [
+	//     "servingConfig"
+	//   ],
+	//   "parameters": {
+	//     "servingConfig": {
+	//       "description": "Required. Full resource name of the format: projects/*/locations/global/collections/*/dataStores/*/servingConfigs/* Before you can request recommendations from your model, you must create at least one serving config for it.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/dataStores/[^/]+/servingConfigs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+servingConfig}:recommend",
+	//   "request": {
+	//     "$ref": "GoogleCloudDiscoveryengineV1alphaRecommendRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudDiscoveryengineV1alphaRecommendResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "discoveryengine.projects.locations.collections.dataStores.userEvents.collect":
+
+type ProjectsLocationsCollectionsDataStoresUserEventsCollectCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Collect: Writes a single user event from the browser. This uses a GET
+// request to due to browser restriction of POST-ing to a 3rd party
+// domain. This method is used only by the Discovery Engine API
+// JavaScript pixel and Google Tag Manager. Users should not call this
+// method directly.
+//
+//   - parent: The parent DataStore resource name, such as
+//     `projects/{project}/locations/{location}/collections/{collection}/da
+//     taStores/{data_store}`.
+func (r *ProjectsLocationsCollectionsDataStoresUserEventsService) Collect(parent string) *ProjectsLocationsCollectionsDataStoresUserEventsCollectCall {
+	c := &ProjectsLocationsCollectionsDataStoresUserEventsCollectCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Ets sets the optional parameter "ets": The event timestamp in
+// milliseconds. This prevents browser caching of otherwise identical
+// get requests. The name is abbreviated to reduce the payload bytes.
+func (c *ProjectsLocationsCollectionsDataStoresUserEventsCollectCall) Ets(ets int64) *ProjectsLocationsCollectionsDataStoresUserEventsCollectCall {
+	c.urlParams_.Set("ets", fmt.Sprint(ets))
+	return c
+}
+
+// Uri sets the optional parameter "uri": The URL including
+// cgi-parameters but excluding the hash fragment with a length limit of
+// 5,000 characters. This is often more useful than the referer URL,
+// because many browsers only send the domain for 3rd party requests.
+func (c *ProjectsLocationsCollectionsDataStoresUserEventsCollectCall) Uri(uri string) *ProjectsLocationsCollectionsDataStoresUserEventsCollectCall {
+	c.urlParams_.Set("uri", uri)
+	return c
+}
+
+// UserEvent sets the optional parameter "userEvent": Required. URL
+// encoded UserEvent proto with a length limit of 2,000,000 characters.
+func (c *ProjectsLocationsCollectionsDataStoresUserEventsCollectCall) UserEvent(userEvent string) *ProjectsLocationsCollectionsDataStoresUserEventsCollectCall {
+	c.urlParams_.Set("userEvent", userEvent)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsCollectionsDataStoresUserEventsCollectCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsDataStoresUserEventsCollectCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsCollectionsDataStoresUserEventsCollectCall) IfNoneMatch(entityTag string) *ProjectsLocationsCollectionsDataStoresUserEventsCollectCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsCollectionsDataStoresUserEventsCollectCall) Context(ctx context.Context) *ProjectsLocationsCollectionsDataStoresUserEventsCollectCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsCollectionsDataStoresUserEventsCollectCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsDataStoresUserEventsCollectCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/userEvents:collect")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.dataStores.userEvents.collect" call.
+// Exactly one of *GoogleApiHttpBody or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleApiHttpBody.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsCollectionsDataStoresUserEventsCollectCall) Do(opts ...googleapi.CallOption) (*GoogleApiHttpBody, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleApiHttpBody{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Writes a single user event from the browser. This uses a GET request to due to browser restriction of POST-ing to a 3rd party domain. This method is used only by the Discovery Engine API JavaScript pixel and Google Tag Manager. Users should not call this method directly.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/dataStores/{dataStoresId}/userEvents:collect",
+	//   "httpMethod": "GET",
+	//   "id": "discoveryengine.projects.locations.collections.dataStores.userEvents.collect",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "ets": {
+	//       "description": "The event timestamp in milliseconds. This prevents browser caching of otherwise identical get requests. The name is abbreviated to reduce the payload bytes.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The parent DataStore resource name, such as `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/dataStores/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "uri": {
+	//       "description": "The URL including cgi-parameters but excluding the hash fragment with a length limit of 5,000 characters. This is often more useful than the referer URL, because many browsers only send the domain for 3rd party requests.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "userEvent": {
+	//       "description": "Required. URL encoded UserEvent proto with a length limit of 2,000,000 characters.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+parent}/userEvents:collect",
+	//   "response": {
+	//     "$ref": "GoogleApiHttpBody"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "discoveryengine.projects.locations.collections.dataStores.userEvents.import":
+
+type ProjectsLocationsCollectionsDataStoresUserEventsImportCall struct {
+	s                                                        *Service
+	parent                                                   string
+	googleclouddiscoveryenginev1alphaimportusereventsrequest *GoogleCloudDiscoveryengineV1alphaImportUserEventsRequest
+	urlParams_                                               gensupport.URLParams
+	ctx_                                                     context.Context
+	header_                                                  http.Header
+}
+
+// Import: Bulk import of User events. Request processing might be
+// synchronous. Events that already exist are skipped. Use this method
+// for backfilling historical user events. Operation.response is of type
+// ImportResponse. Note that it is possible for a subset of the items to
+// be successfully inserted. Operation.metadata is of type
+// ImportMetadata.
+//
+//   - parent: Parent DataStore resource name, of the form
+//     `projects/{project}/locations/{location}/collections/{collection}/da
+//     taStores/{data_store}`.
+func (r *ProjectsLocationsCollectionsDataStoresUserEventsService) Import(parent string, googleclouddiscoveryenginev1alphaimportusereventsrequest *GoogleCloudDiscoveryengineV1alphaImportUserEventsRequest) *ProjectsLocationsCollectionsDataStoresUserEventsImportCall {
+	c := &ProjectsLocationsCollectionsDataStoresUserEventsImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleclouddiscoveryenginev1alphaimportusereventsrequest = googleclouddiscoveryenginev1alphaimportusereventsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsCollectionsDataStoresUserEventsImportCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsDataStoresUserEventsImportCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsCollectionsDataStoresUserEventsImportCall) Context(ctx context.Context) *ProjectsLocationsCollectionsDataStoresUserEventsImportCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsCollectionsDataStoresUserEventsImportCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsDataStoresUserEventsImportCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddiscoveryenginev1alphaimportusereventsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/userEvents:import")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.dataStores.userEvents.import" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsCollectionsDataStoresUserEventsImportCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Bulk import of User events. Request processing might be synchronous. Events that already exist are skipped. Use this method for backfilling historical user events. Operation.response is of type ImportResponse. Note that it is possible for a subset of the items to be successfully inserted. Operation.metadata is of type ImportMetadata.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/dataStores/{dataStoresId}/userEvents:import",
+	//   "httpMethod": "POST",
+	//   "id": "discoveryengine.projects.locations.collections.dataStores.userEvents.import",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. Parent DataStore resource name, of the form `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/dataStores/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+parent}/userEvents:import",
+	//   "request": {
+	//     "$ref": "GoogleCloudDiscoveryengineV1alphaImportUserEventsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "discoveryengine.projects.locations.collections.dataStores.userEvents.write":
+
+type ProjectsLocationsCollectionsDataStoresUserEventsWriteCall struct {
+	s                                          *Service
+	parent                                     string
+	googleclouddiscoveryenginev1alphauserevent *GoogleCloudDiscoveryengineV1alphaUserEvent
+	urlParams_                                 gensupport.URLParams
+	ctx_                                       context.Context
+	header_                                    http.Header
+}
+
+// Write: Writes a single user event.
+//
+//   - parent: The parent DataStore resource name, such as
+//     `projects/{project}/locations/{location}/collections/{collection}/da
+//     taStores/{data_store}`.
+func (r *ProjectsLocationsCollectionsDataStoresUserEventsService) Write(parent string, googleclouddiscoveryenginev1alphauserevent *GoogleCloudDiscoveryengineV1alphaUserEvent) *ProjectsLocationsCollectionsDataStoresUserEventsWriteCall {
+	c := &ProjectsLocationsCollectionsDataStoresUserEventsWriteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleclouddiscoveryenginev1alphauserevent = googleclouddiscoveryenginev1alphauserevent
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsCollectionsDataStoresUserEventsWriteCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsDataStoresUserEventsWriteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsCollectionsDataStoresUserEventsWriteCall) Context(ctx context.Context) *ProjectsLocationsCollectionsDataStoresUserEventsWriteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsCollectionsDataStoresUserEventsWriteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsDataStoresUserEventsWriteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddiscoveryenginev1alphauserevent)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/userEvents:write")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.dataStores.userEvents.write" call.
+// Exactly one of *GoogleCloudDiscoveryengineV1alphaUserEvent or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudDiscoveryengineV1alphaUserEvent.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsCollectionsDataStoresUserEventsWriteCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1alphaUserEvent, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1alphaUserEvent{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Writes a single user event.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/dataStores/{dataStoresId}/userEvents:write",
+	//   "httpMethod": "POST",
+	//   "id": "discoveryengine.projects.locations.collections.dataStores.userEvents.write",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The parent DataStore resource name, such as `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/dataStores/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+parent}/userEvents:write",
+	//   "request": {
+	//     "$ref": "GoogleCloudDiscoveryengineV1alphaUserEvent"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudDiscoveryengineV1alphaUserEvent"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "discoveryengine.projects.locations.dataStores.branches.documents.create":
 
 type ProjectsLocationsDataStoresBranchesDocumentsCreateCall struct {
@@ -2339,8 +4002,8 @@ type ProjectsLocationsDataStoresBranchesDocumentsCreateCall struct {
 // Create: Creates a Document.
 //
 //   - parent: The parent resource name, such as
-//     `projects/{project}/locations/{location}/dataStores/{data_store}/bra
-//     nches/{branch}`.
+//     `projects/{project}/locations/{location}/collections/{collection}/da
+//     taStores/{data_store}/branches/{branch}`.
 func (r *ProjectsLocationsDataStoresBranchesDocumentsService) Create(parent string, googleclouddiscoveryenginev1alphadocument *GoogleCloudDiscoveryengineV1alphaDocument) *ProjectsLocationsDataStoresBranchesDocumentsCreateCall {
 	c := &ProjectsLocationsDataStoresBranchesDocumentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2469,7 +4132,7 @@ func (c *ProjectsLocationsDataStoresBranchesDocumentsCreateCall) Do(opts ...goog
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent resource name, such as `projects/{project}/locations/{location}/dataStores/{data_store}/branches/{branch}`.",
+	//       "description": "Required. The parent resource name, such as `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}/branches/{branch}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/dataStores/[^/]+/branches/[^/]+$",
 	//       "required": true,
@@ -2503,11 +4166,12 @@ type ProjectsLocationsDataStoresBranchesDocumentsDeleteCall struct {
 // Delete: Deletes a Document.
 //
 //   - name: Full resource name of Document, such as
-//     `projects/{project}/locations/{location}/dataStores/{data_store}/bra
-//     nches/{branch}/documents/{document}`. If the caller does not have
-//     permission to delete the Document, regardless of whether or not it
-//     exists, a PERMISSION_DENIED error is returned. If the Document to
-//     delete does not exist, a NOT_FOUND error is returned.
+//     `projects/{project}/locations/{location}/collections/{collection}/da
+//     taStores/{data_store}/branches/{branch}/documents/{document}`. If
+//     the caller does not have permission to delete the Document,
+//     regardless of whether or not it exists, a PERMISSION_DENIED error
+//     is returned. If the Document to delete does not exist, a NOT_FOUND
+//     error is returned.
 func (r *ProjectsLocationsDataStoresBranchesDocumentsService) Delete(name string) *ProjectsLocationsDataStoresBranchesDocumentsDeleteCall {
 	c := &ProjectsLocationsDataStoresBranchesDocumentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2609,7 +4273,7 @@ func (c *ProjectsLocationsDataStoresBranchesDocumentsDeleteCall) Do(opts ...goog
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Full resource name of Document, such as `projects/{project}/locations/{location}/dataStores/{data_store}/branches/{branch}/documents/{document}`. If the caller does not have permission to delete the Document, regardless of whether or not it exists, a PERMISSION_DENIED error is returned. If the Document to delete does not exist, a NOT_FOUND error is returned.",
+	//       "description": "Required. Full resource name of Document, such as `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}/branches/{branch}/documents/{document}`. If the caller does not have permission to delete the Document, regardless of whether or not it exists, a PERMISSION_DENIED error is returned. If the Document to delete does not exist, a NOT_FOUND error is returned.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/dataStores/[^/]+/branches/[^/]+/documents/[^/]+$",
 	//       "required": true,
@@ -2641,11 +4305,12 @@ type ProjectsLocationsDataStoresBranchesDocumentsGetCall struct {
 // Get: Gets a Document.
 //
 //   - name: Full resource name of Document, such as
-//     `projects/{project}/locations/{location}/dataStores/{data_store}/bra
-//     nches/{branch}/documents/{document}`. If the caller does not have
-//     permission to access the Document, regardless of whether or not it
-//     exists, a PERMISSION_DENIED error is returned. If the requested
-//     Document does not exist, a NOT_FOUND error is returned.
+//     `projects/{project}/locations/{location}/collections/{collection}/da
+//     taStores/{data_store}/branches/{branch}/documents/{document}`. If
+//     the caller does not have permission to access the Document,
+//     regardless of whether or not it exists, a PERMISSION_DENIED error
+//     is returned. If the requested Document does not exist, a NOT_FOUND
+//     error is returned.
 func (r *ProjectsLocationsDataStoresBranchesDocumentsService) Get(name string) *ProjectsLocationsDataStoresBranchesDocumentsGetCall {
 	c := &ProjectsLocationsDataStoresBranchesDocumentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2762,7 +4427,7 @@ func (c *ProjectsLocationsDataStoresBranchesDocumentsGetCall) Do(opts ...googlea
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Full resource name of Document, such as `projects/{project}/locations/{location}/dataStores/{data_store}/branches/{branch}/documents/{document}`. If the caller does not have permission to access the Document, regardless of whether or not it exists, a PERMISSION_DENIED error is returned. If the requested Document does not exist, a NOT_FOUND error is returned.",
+	//       "description": "Required. Full resource name of Document, such as `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}/branches/{branch}/documents/{document}`. If the caller does not have permission to access the Document, regardless of whether or not it exists, a PERMISSION_DENIED error is returned. If the requested Document does not exist, a NOT_FOUND error is returned.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/dataStores/[^/]+/branches/[^/]+/documents/[^/]+$",
 	//       "required": true,
@@ -2796,8 +4461,9 @@ type ProjectsLocationsDataStoresBranchesDocumentsImportCall struct {
 // for a subset of the Documents to be successfully updated.
 //
 //   - parent: The parent branch resource name, such as
-//     `projects/{project}/locations/{location}/dataStores/{data_store}/bra
-//     nches/{branch}`. Requires create/update permission.
+//     `projects/{project}/locations/{location}/collections/{collection}/da
+//     taStores/{data_store}/branches/{branch}`. Requires create/update
+//     permission.
 func (r *ProjectsLocationsDataStoresBranchesDocumentsService) Import(parent string, googleclouddiscoveryenginev1alphaimportdocumentsrequest *GoogleCloudDiscoveryengineV1alphaImportDocumentsRequest) *ProjectsLocationsDataStoresBranchesDocumentsImportCall {
 	c := &ProjectsLocationsDataStoresBranchesDocumentsImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2905,7 +4571,7 @@ func (c *ProjectsLocationsDataStoresBranchesDocumentsImportCall) Do(opts ...goog
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The parent branch resource name, such as `projects/{project}/locations/{location}/dataStores/{data_store}/branches/{branch}`. Requires create/update permission.",
+	//       "description": "Required. The parent branch resource name, such as `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}/branches/{branch}`. Requires create/update permission.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/dataStores/[^/]+/branches/[^/]+$",
 	//       "required": true,
@@ -2940,12 +4606,12 @@ type ProjectsLocationsDataStoresBranchesDocumentsListCall struct {
 // List: Gets a list of Documents.
 //
 //   - parent: The parent branch resource name, such as
-//     `projects/{project}/locations/{location}/dataStores/{data_store}/bra
-//     nches/{branch}`. Use `default_branch` as the branch ID, to list
-//     documents under the default branch. If the caller does not have
-//     permission to list Documentss under this branch, regardless of
-//     whether or not this branch exists, a PERMISSION_DENIED error is
-//     returned.
+//     `projects/{project}/locations/{location}/collections/{collection}/da
+//     taStores/{data_store}/branches/{branch}`. Use `default_branch` as
+//     the branch ID, to list documents under the default branch. If the
+//     caller does not have permission to list Documentss under this
+//     branch, regardless of whether or not this branch exists, a
+//     PERMISSION_DENIED error is returned.
 func (r *ProjectsLocationsDataStoresBranchesDocumentsService) List(parent string) *ProjectsLocationsDataStoresBranchesDocumentsListCall {
 	c := &ProjectsLocationsDataStoresBranchesDocumentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3094,7 +4760,7 @@ func (c *ProjectsLocationsDataStoresBranchesDocumentsListCall) Do(opts ...google
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent branch resource name, such as `projects/{project}/locations/{location}/dataStores/{data_store}/branches/{branch}`. Use `default_branch` as the branch ID, to list documents under the default branch. If the caller does not have permission to list Documentss under this branch, regardless of whether or not this branch exists, a PERMISSION_DENIED error is returned.",
+	//       "description": "Required. The parent branch resource name, such as `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}/branches/{branch}`. Use `default_branch` as the branch ID, to list documents under the default branch. If the caller does not have permission to list Documentss under this branch, regardless of whether or not this branch exists, a PERMISSION_DENIED error is returned.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/dataStores/[^/]+/branches/[^/]+$",
 	//       "required": true,
@@ -3147,9 +4813,10 @@ type ProjectsLocationsDataStoresBranchesDocumentsPatchCall struct {
 // Patch: Updates a Document.
 //
 //   - name: Immutable. The full resource name of the document. Format:
-//     `projects/{project}/locations/{location}/dataStores/{data_store}/bra
-//     nches/{branch}/documents/{document_id}`. This field must be a UTF-8
-//     encoded string with a length limit of 1024 characters.
+//     `projects/{project}/locations/{location}/collections/{collection}/da
+//     taStores/{data_store}/branches/{branch}/documents/{document_id}`.
+//     This field must be a UTF-8 encoded string with a length limit of
+//     1024 characters.
 func (r *ProjectsLocationsDataStoresBranchesDocumentsService) Patch(name string, googleclouddiscoveryenginev1alphadocument *GoogleCloudDiscoveryengineV1alphaDocument) *ProjectsLocationsDataStoresBranchesDocumentsPatchCall {
 	c := &ProjectsLocationsDataStoresBranchesDocumentsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3271,7 +4938,7 @@ func (c *ProjectsLocationsDataStoresBranchesDocumentsPatchCall) Do(opts ...googl
 	//       "type": "boolean"
 	//     },
 	//     "name": {
-	//       "description": "Immutable. The full resource name of the document. Format: `projects/{project}/locations/{location}/dataStores/{data_store}/branches/{branch}/documents/{document_id}`. This field must be a UTF-8 encoded string with a length limit of 1024 characters.",
+	//       "description": "Immutable. The full resource name of the document. Format: `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}/branches/{branch}/documents/{document_id}`. This field must be a UTF-8 encoded string with a length limit of 1024 characters.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/dataStores/[^/]+/branches/[^/]+/documents/[^/]+$",
 	//       "required": true,
@@ -4393,9 +6060,9 @@ type ProjectsLocationsDataStoresServingConfigsRecommendCall struct {
 // event.
 //
 //   - servingConfig: Full resource name of the format:
-//     projects/*/locations/global/dataStores/*/servingConfigs/* Before
-//     you can request recommendations from your model, you must create at
-//     least one serving config for it.
+//     projects/*/locations/global/collections/*/dataStores/*/servingConfig
+//     s/* Before you can request recommendations from your model, you
+//     must create at least one serving config for it.
 func (r *ProjectsLocationsDataStoresServingConfigsService) Recommend(servingConfig string, googleclouddiscoveryenginev1alpharecommendrequest *GoogleCloudDiscoveryengineV1alphaRecommendRequest) *ProjectsLocationsDataStoresServingConfigsRecommendCall {
 	c := &ProjectsLocationsDataStoresServingConfigsRecommendCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.servingConfig = servingConfig
@@ -4505,7 +6172,7 @@ func (c *ProjectsLocationsDataStoresServingConfigsRecommendCall) Do(opts ...goog
 	//   ],
 	//   "parameters": {
 	//     "servingConfig": {
-	//       "description": "Required. Full resource name of the format: projects/*/locations/global/dataStores/*/servingConfigs/* Before you can request recommendations from your model, you must create at least one serving config for it.",
+	//       "description": "Required. Full resource name of the format: projects/*/locations/global/collections/*/dataStores/*/servingConfigs/* Before you can request recommendations from your model, you must create at least one serving config for it.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/dataStores/[^/]+/servingConfigs/[^/]+$",
 	//       "required": true,
@@ -4544,7 +6211,8 @@ type ProjectsLocationsDataStoresUserEventsCollectCall struct {
 // method directly.
 //
 //   - parent: The parent DataStore resource name, such as
-//     `projects/{project}/locations/{location}/dataStores/{data_store}`.
+//     `projects/{project}/locations/{location}/collections/{collection}/da
+//     taStores/{data_store}`.
 func (r *ProjectsLocationsDataStoresUserEventsService) Collect(parent string) *ProjectsLocationsDataStoresUserEventsCollectCall {
 	c := &ProjectsLocationsDataStoresUserEventsCollectCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4689,7 +6357,7 @@ func (c *ProjectsLocationsDataStoresUserEventsCollectCall) Do(opts ...googleapi.
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent DataStore resource name, such as `projects/{project}/locations/{location}/dataStores/{data_store}`.",
+	//       "description": "Required. The parent DataStore resource name, such as `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/dataStores/[^/]+$",
 	//       "required": true,
@@ -4736,7 +6404,8 @@ type ProjectsLocationsDataStoresUserEventsImportCall struct {
 // ImportMetadata.
 //
 //   - parent: Parent DataStore resource name, of the form
-//     `projects/{project}/locations/{location}/dataStores/{data_store}`.
+//     `projects/{project}/locations/{location}/collections/{collection}/da
+//     taStores/{data_store}`.
 func (r *ProjectsLocationsDataStoresUserEventsService) Import(parent string, googleclouddiscoveryenginev1alphaimportusereventsrequest *GoogleCloudDiscoveryengineV1alphaImportUserEventsRequest) *ProjectsLocationsDataStoresUserEventsImportCall {
 	c := &ProjectsLocationsDataStoresUserEventsImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4844,7 +6513,7 @@ func (c *ProjectsLocationsDataStoresUserEventsImportCall) Do(opts ...googleapi.C
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Parent DataStore resource name, of the form `projects/{project}/locations/{location}/dataStores/{data_store}`",
+	//       "description": "Required. Parent DataStore resource name, of the form `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/dataStores/[^/]+$",
 	//       "required": true,
@@ -4879,7 +6548,8 @@ type ProjectsLocationsDataStoresUserEventsWriteCall struct {
 // Write: Writes a single user event.
 //
 //   - parent: The parent DataStore resource name, such as
-//     `projects/{project}/locations/{location}/dataStores/{data_store}`.
+//     `projects/{project}/locations/{location}/collections/{collection}/da
+//     taStores/{data_store}`.
 func (r *ProjectsLocationsDataStoresUserEventsService) Write(parent string, googleclouddiscoveryenginev1alphauserevent *GoogleCloudDiscoveryengineV1alphaUserEvent) *ProjectsLocationsDataStoresUserEventsWriteCall {
 	c := &ProjectsLocationsDataStoresUserEventsWriteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4989,7 +6659,7 @@ func (c *ProjectsLocationsDataStoresUserEventsWriteCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The parent DataStore resource name, such as `projects/{project}/locations/{location}/dataStores/{data_store}`.",
+	//       "description": "Required. The parent DataStore resource name, such as `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/dataStores/[^/]+$",
 	//       "required": true,

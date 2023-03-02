@@ -1857,13 +1857,13 @@ type OracleSourceConfig struct {
 	IncludeObjects *OracleRdbms `json:"includeObjects,omitempty"`
 
 	// MaxConcurrentBackfillTasks: Maximum number of concurrent backfill
-	// tasks. The number should be non negative. If not set (or set to 0),
-	// the system's default value will be used.
+	// tasks. The number should be non-negative. If not set (or set to 0),
+	// the system's default value is used.
 	MaxConcurrentBackfillTasks int64 `json:"maxConcurrentBackfillTasks,omitempty"`
 
 	// MaxConcurrentCdcTasks: Maximum number of concurrent CDC tasks. The
-	// number should be non negative. If not set (or set to 0), the system's
-	// default value will be used.
+	// number should be non-negative. If not set (or set to 0), the system's
+	// default value is used.
 	MaxConcurrentCdcTasks int64 `json:"maxConcurrentCdcTasks,omitempty"`
 
 	// StreamLargeObjects: Stream large object values. NOTE: This feature is

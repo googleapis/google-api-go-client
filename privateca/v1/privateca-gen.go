@@ -722,9 +722,9 @@ type Certificate struct {
 	// certificate request. This mode requires the caller to have the
 	// `privateca.certificates.create` permission.
 	//   "REFLECTED_SPIFFE" - A mode reserved for special cases. Indicates
-	// that the certificate should have one or more SPIFFE SubjectAltNames
-	// set by the service based on the caller's identity. This mode will
-	// ignore any explicitly specified Subject and/or SubjectAltNames in the
+	// that the certificate should have one SPIFFE SubjectAltNames set by
+	// the service based on the caller's identity. This mode will ignore any
+	// explicitly specified Subject and/or SubjectAltNames in the
 	// certificate request. This mode requires the caller to have the
 	// `privateca.certificates.createForSelf` permission.
 	SubjectMode string `json:"subjectMode,omitempty"`

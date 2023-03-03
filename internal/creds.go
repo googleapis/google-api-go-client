@@ -6,12 +6,14 @@ package internal
 
 import (
 	"context"
+	"crypto/tls"
 	"encoding/json"
 	"errors"
 	"fmt"
 	"io/ioutil"
-	//"log"
-	"crypto/tls"
+	"net"
+	"net/http"
+	"time"
 
 	"golang.org/x/oauth2"
 	"google.golang.org/api/internal/impersonate"
@@ -82,18 +84,21 @@ const (
 // - Otherwise, executes standard OAuth 2.0 flow
 // More details: google.aip.dev/auth/4111
 func credentialsFromJSON(ctx context.Context, data []byte, ds *DialSettings) (*google.Credentials, error) {
-	// By default, a standard OAuth 2.0 token source is created
 	var params google.CredentialsParams
 	params.Scopes = ds.GetScopes()
-	var oauthds DialSettings
-	oauthds.DefaultEndpoint = google.Endpoint.TokenURL
-	oauthds.DefaultMTLSEndpoint = google.MTLSTokenURL
-	oauthds.ClientCertSource = ds.ClientCertSource
-	clientCertSource,oauthendpoint,err := GetClientCertificateSourceAndEndpoint(&oauthds);
-	params.TLSConfig = &tls.Config{
+
+	// Determine configurations for the OAuth2 transport, which is separate from the API transport.
+	// The OAuth2 transport and endpoint will be configured for mTLS if applicable.
+	clientCertSource, oauth2Endpoint, err := GetClientCertificateSourceAndEndpoint(oauth2DialSettings(ds))
+	params.TokenURL = oauth2Endpoint
+	if clientCertSource != nil {
+		tlsConfig := &tls.Config{
 			GetClientCertificate: clientCertSource,
 		}
-	params.TokenURL = oauthendpoint
+		ctx = context.WithValue(ctx, oauth2.HTTPClient, customHTTPClient(tlsConfig))
+	}
+
+	// By default, a standard OAuth 2.0 token source is created
 	cred, err := google.CredentialsFromJSONWithParams(ctx, data, params)
 	if err != nil {
 		return nil, err
@@ -169,4 +174,36 @@ func impersonateCredentials(ctx context.Context, creds *google.Credentials, ds *
 		TokenSource: ts,
 		ProjectID:   creds.ProjectID,
 	}, nil
+}
+
+// oauth2DialSettings returns the settings to be used by the OAuth2 transport, which is separate from the API transport.
+func oauth2DialSettings(ds *DialSettings) *DialSettings {
+	var ods DialSettings
+	ods.DefaultEndpoint = google.Endpoint.TokenURL
+	ods.DefaultMTLSEndpoint = google.MTLSTokenURL
+	ods.ClientCertSource = ds.ClientCertSource
+	return &ods
+}
+
+// customHTTPClient constructs an HTTPClient using the provided tlsConfig, to support mTLS.
+func customHTTPClient(tlsConfig *tls.Config) *http.Client {
+	trans := baseTransport()
+	trans.TLSClientConfig = tlsConfig
+	return &http.Client{Transport: trans}
+}
+
+func baseTransport() *http.Transport {
+	return &http.Transport{
+		Proxy: http.ProxyFromEnvironment,
+		DialContext: (&net.Dialer{
+			Timeout:   30 * time.Second,
+			KeepAlive: 30 * time.Second,
+			DualStack: true,
+		}).DialContext,
+		MaxIdleConns:          100,
+		MaxIdleConnsPerHost:   100,
+		IdleConnTimeout:       90 * time.Second,
+		TLSHandshakeTimeout:   10 * time.Second,
+		ExpectContinueTimeout: 1 * time.Second,
+	}
 }

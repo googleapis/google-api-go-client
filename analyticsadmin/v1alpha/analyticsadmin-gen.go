@@ -2948,9 +2948,9 @@ type GoogleAnalyticsAdminV1alphaConnectedSiteTag struct {
 	// site tag. Must be less than 256 characters.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// MeasurementId: Required. Measurement ID to forward events to. Also
-	// known as “G-ID” (For example: G-12345).
-	MeasurementId string `json:"measurementId,omitempty"`
+	// TagId: Required. "Tag ID to forward events to. Also known as the
+	// Measurement ID, or the "G-ID" (For example: G-12345).
+	TagId string `json:"tagId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
@@ -3585,17 +3585,16 @@ func (s *GoogleAnalyticsAdminV1alphaDeleteAccessBindingRequest) MarshalJSON() ([
 // GoogleAnalyticsAdminV1alphaDeleteConnectedSiteTagRequest: Request
 // message for DeleteConnectedSiteTag RPC.
 type GoogleAnalyticsAdminV1alphaDeleteConnectedSiteTagRequest struct {
-	// MeasurementId: The measurement ID of the tag to remove from the
-	// Universal Analytics property. Also known as "G-ID". Example:
-	// "G-12345"
-	MeasurementId string `json:"measurementId,omitempty"`
-
 	// Property: The Universal Analytics property to delete connected site
 	// tags for. This API does not support GA4 properties. Format:
 	// properties/{universalAnalyticsPropertyId} Example: properties/1234
 	Property string `json:"property,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "MeasurementId") to
+	// TagId: Tag ID to forward events to. Also known as the Measurement ID,
+	// or the "G-ID" (For example: G-12345).
+	TagId string `json:"tagId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Property") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -3603,10 +3602,10 @@ type GoogleAnalyticsAdminV1alphaDeleteConnectedSiteTagRequest struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "MeasurementId") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "Property") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`

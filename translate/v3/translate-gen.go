@@ -387,13 +387,13 @@ type BatchTranslateDocumentRequest struct {
 	// output for duplicate inputs.
 	OutputConfig *BatchDocumentOutputConfig `json:"outputConfig,omitempty"`
 
-	// SourceLanguageCode: Required. The BCP-47 language code of the input
+	// SourceLanguageCode: Required. The ISO-639 language code of the input
 	// document if known, for example, "en-US" or "sr-Latn". Supported
 	// language codes are listed in Language Support
 	// (https://cloud.google.com/translate/docs/languages).
 	SourceLanguageCode string `json:"sourceLanguageCode,omitempty"`
 
-	// TargetLanguageCodes: Required. The BCP-47 language code to use for
+	// TargetLanguageCodes: Required. The ISO-639 language code to use for
 	// translation of the input document. Specify up to 10 language codes
 	// here.
 	TargetLanguageCodes []string `json:"targetLanguageCodes,omitempty"`
@@ -708,7 +708,7 @@ type DetectedLanguage struct {
 	// Confidence: The confidence of the detection result for this language.
 	Confidence float64 `json:"confidence,omitempty"`
 
-	// LanguageCode: The BCP-47 language code of the source content in the
+	// LanguageCode: The ISO-639 language code of the source content in the
 	// request, detected automatically.
 	LanguageCode string `json:"languageCode,omitempty"`
 
@@ -1454,12 +1454,12 @@ func (s *InputFile) MarshalJSON() ([]byte, error) {
 
 // LanguageCodePair: Used with unidirectional glossaries.
 type LanguageCodePair struct {
-	// SourceLanguageCode: Required. The BCP-47 language code of the input
+	// SourceLanguageCode: Required. The ISO-639 language code of the input
 	// text, for example, "en-US". Expected to be an exact match for
 	// GlossaryTerm.language_code.
 	SourceLanguageCode string `json:"sourceLanguageCode,omitempty"`
 
-	// TargetLanguageCode: Required. The BCP-47 language code for
+	// TargetLanguageCode: Required. The ISO-639 language code for
 	// translation output, for example, "zh-CN". Expected to be an exact
 	// match for GlossaryTerm.language_code.
 	TargetLanguageCode string `json:"targetLanguageCode,omitempty"`
@@ -1490,7 +1490,7 @@ func (s *LanguageCodePair) MarshalJSON() ([]byte, error) {
 
 // LanguageCodesSet: Used with equivalent term set glossaries.
 type LanguageCodesSet struct {
-	// LanguageCodes: The BCP-47 language code(s) for terms defined in the
+	// LanguageCodes: The ISO-639 language code(s) for terms defined in the
 	// glossary. All entries are unique. The list contains at least two
 	// entries. Expected to be an exact match for
 	// GlossaryTerm.language_code.
@@ -2099,7 +2099,7 @@ type SupportedLanguage struct {
 
 	// LanguageCode: Supported language code, generally consisting of its
 	// ISO 639-1 identifier, for example, 'en', 'ja'. In certain cases,
-	// BCP-47 codes including language and region identifiers are returned
+	// ISO-639 codes including language and region identifiers are returned
 	// (for example, 'zh-TW' and 'zh-CN').
 	LanguageCode string `json:"languageCode,omitempty"`
 
@@ -2219,7 +2219,7 @@ type TranslateDocumentRequest struct {
 	// for translation.
 	Model string `json:"model,omitempty"`
 
-	// SourceLanguageCode: Optional. The BCP-47 language code of the input
+	// SourceLanguageCode: Optional. The ISO-639 language code of the input
 	// document if known, for example, "en-US" or "sr-Latn". Supported
 	// language codes are listed in Language Support. If the source language
 	// isn't specified, the API attempts to identify the source language
@@ -2228,7 +2228,7 @@ type TranslateDocumentRequest struct {
 	// or a custom model.
 	SourceLanguageCode string `json:"sourceLanguageCode,omitempty"`
 
-	// TargetLanguageCode: Required. The BCP-47 language code to use for
+	// TargetLanguageCode: Required. The ISO-639 language code to use for
 	// translation of the input document, set to one of the language codes
 	// listed in Language Support.
 	TargetLanguageCode string `json:"targetLanguageCode,omitempty"`
@@ -2385,14 +2385,14 @@ type TranslateTextRequest struct {
 	//  If not provided, the default Google model (NMT) will be used
 	Model string `json:"model,omitempty"`
 
-	// SourceLanguageCode: Optional. The BCP-47 language code of the input
+	// SourceLanguageCode: Optional. The ISO-639 language code of the input
 	// text if known, for example, "en-US" or "sr-Latn". Supported language
 	// codes are listed in Language Support. If the source language isn't
 	// specified, the API attempts to identify the source language
 	// automatically and returns the source language within the response.
 	SourceLanguageCode string `json:"sourceLanguageCode,omitempty"`
 
-	// TargetLanguageCode: Required. The BCP-47 language code to use for
+	// TargetLanguageCode: Required. The ISO-639 language code to use for
 	// translation of the input text, set to one of the language codes
 	// listed in Language Support.
 	TargetLanguageCode string `json:"targetLanguageCode,omitempty"`
@@ -2461,7 +2461,7 @@ func (s *TranslateTextResponse) MarshalJSON() ([]byte, error) {
 
 // Translation: A single translation response.
 type Translation struct {
-	// DetectedLanguageCode: The BCP-47 language code of source text in the
+	// DetectedLanguageCode: The ISO-639 language code of source text in the
 	// initial request, detected automatically, if no source language was
 	// passed within the initial request. If the source language was passed,
 	// auto-detection of the language does not occur and this field is

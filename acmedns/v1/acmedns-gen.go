@@ -272,8 +272,10 @@ type AcmeChallengeSetsGetCall struct {
 // Get: Gets the ACME challenge set for a given domain name. Domain
 // names must be provided in Punycode.
 //
-//   - rootDomain: SLD + TLD domain name to list challenges. This MAY be
-//     Unicode or Punycode.
+//   - rootDomain: SLD + TLD domain name to list challenges. For example,
+//     this would be "google.com" for any FQDN under "google.com". That
+//     includes challenges for "subdomain.google.com". This MAY be Unicode
+//     or Punycode.
 func (r *AcmeChallengeSetsService) Get(rootDomain string) *AcmeChallengeSetsGetCall {
 	c := &AcmeChallengeSetsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.rootDomain = rootDomain
@@ -388,7 +390,7 @@ func (c *AcmeChallengeSetsGetCall) Do(opts ...googleapi.CallOption) (*AcmeChalle
 	//   ],
 	//   "parameters": {
 	//     "rootDomain": {
-	//       "description": "Required. SLD + TLD domain name to list challenges. This MAY be Unicode or Punycode.",
+	//       "description": "Required. SLD + TLD domain name to list challenges. For example, this would be \"google.com\" for any FQDN under \"google.com\". That includes challenges for \"subdomain.google.com\". This MAY be Unicode or Punycode.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -417,8 +419,10 @@ type AcmeChallengeSetsRotateChallengesCall struct {
 // By default, removes any challenges that are older than 30 days.
 // Domain names must be provided in Punycode.
 //
-//   - rootDomain: SLD + TLD domain name to update records for. This MAY
-//     be Unicode or Punycode.
+//   - rootDomain: SLD + TLD domain name to update records for. For
+//     example, this would be "google.com" for any FQDN under
+//     "google.com". That includes challenges for "subdomain.google.com".
+//     This MAY be Unicode or Punycode.
 func (r *AcmeChallengeSetsService) RotateChallenges(rootDomain string, rotatechallengesrequest *RotateChallengesRequest) *AcmeChallengeSetsRotateChallengesCall {
 	c := &AcmeChallengeSetsRotateChallengesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.rootDomain = rootDomain
@@ -526,7 +530,7 @@ func (c *AcmeChallengeSetsRotateChallengesCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "rootDomain": {
-	//       "description": "Required. SLD + TLD domain name to update records for. This MAY be Unicode or Punycode.",
+	//       "description": "Required. SLD + TLD domain name to update records for. For example, this would be \"google.com\" for any FQDN under \"google.com\". That includes challenges for \"subdomain.google.com\". This MAY be Unicode or Punycode.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"

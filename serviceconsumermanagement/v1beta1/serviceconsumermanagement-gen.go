@@ -551,6 +551,10 @@ type BackendRule struct {
 	// of a long running operation. The default is no deadline.
 	OperationDeadline float64 `json:"operationDeadline,omitempty"`
 
+	// OverridesByRequestProtocol: The map between request protocol and the
+	// backend address.
+	OverridesByRequestProtocol map[string]BackendRule `json:"overridesByRequestProtocol,omitempty"`
+
 	// Possible values:
 	//   "PATH_TRANSLATION_UNSPECIFIED"
 	//   "CONSTANT_ADDRESS" - Use the backend address as-is, with no
@@ -3089,6 +3093,11 @@ type Publishing struct {
 	//   "PHOTOS" - Photos Org.
 	//   "STREET_VIEW" - Street View Org.
 	Organization string `json:"organization,omitempty"`
+
+	// ProtoReferenceDocumentationUri: Optional link to proto reference
+	// documentation. Example:
+	// https://cloud.google.com/pubsub/lite/docs/reference/rpc
+	ProtoReferenceDocumentationUri string `json:"protoReferenceDocumentationUri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ApiShortName") to
 	// unconditionally include in API requests. By default, fields with

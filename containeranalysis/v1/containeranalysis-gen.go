@@ -6342,6 +6342,9 @@ type VulnerabilityNote struct {
 	// severity.
 	CvssScore float64 `json:"cvssScore,omitempty"`
 
+	// CvssV2: The full description of the v2 CVSS for this vulnerability.
+	CvssV2 *CVSS `json:"cvssV2,omitempty"`
+
 	// CvssV3: The full description of the CVSSv3 for this vulnerability.
 	CvssV3 *CVSSv3 `json:"cvssV3,omitempty"`
 
@@ -6424,6 +6427,9 @@ type VulnerabilityOccurrence struct {
 	// score is on a scale of 0 - 10 where 0 indicates low severity and 10
 	// indicates high severity.
 	CvssScore float64 `json:"cvssScore,omitempty"`
+
+	// CvssV2: The cvss v2 score for the vulnerability.
+	CvssV2 *CVSS `json:"cvssV2,omitempty"`
 
 	// CvssVersion: Output only. CVSS version used to populate cvss_score
 	// and severity.

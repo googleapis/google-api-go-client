@@ -2126,6 +2126,10 @@ type Dataset struct {
 	// expiration time indicated by this property.
 	DefaultPartitionExpirationMs int64 `json:"defaultPartitionExpirationMs,omitempty,string"`
 
+	// DefaultRoundingMode: [Output-only] The default rounding mode of the
+	// dataset.
+	DefaultRoundingMode string `json:"defaultRoundingMode,omitempty"`
+
 	// DefaultTableExpirationMs: [Optional] The default lifetime of all
 	// tables in the dataset, in milliseconds. The minimum value is 3600000
 	// milliseconds (one hour). Once this property is set, all newly-created
@@ -7912,6 +7916,10 @@ type Table struct {
 	// DefaultCollation: [Output-only] The default collation of the table.
 	DefaultCollation string `json:"defaultCollation,omitempty"`
 
+	// DefaultRoundingMode: [Output-only] The default rounding mode of the
+	// table.
+	DefaultRoundingMode string `json:"defaultRoundingMode,omitempty"`
+
 	// Description: [Optional] A user-friendly description of this table.
 	Description string `json:"description,omitempty"`
 
@@ -8395,6 +8403,10 @@ type TableFieldSchema struct {
 	// ≤ precision ≤ 38. If scale is specified but not precision, then
 	// it is invalid.
 	Precision int64 `json:"precision,omitempty,string"`
+
+	// RoundingMode: Optional. Rounding Mode specification of the field. It
+	// only can be set on NUMERIC or BIGNUMERIC type fields.
+	RoundingMode string `json:"roundingMode,omitempty"`
 
 	// Scale: [Optional] See documentation for precision.
 	Scale int64 `json:"scale,omitempty,string"`

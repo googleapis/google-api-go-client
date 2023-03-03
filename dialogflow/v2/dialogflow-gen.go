@@ -1360,9 +1360,9 @@ type GoogleCloudDialogflowCxV3Environment struct {
 	// UpdateTime: Output only. Update time of this environment.
 	UpdateTime string `json:"updateTime,omitempty"`
 
-	// VersionConfigs: Required. A list of configurations for flow versions.
-	// You should include version configs for all flows that are reachable
-	// from `Start Flow` in the agent. Otherwise, an error will be returned.
+	// VersionConfigs: A list of configurations for flow versions. You
+	// should include version configs for all flows that are reachable from
+	// `Start Flow` in the agent. Otherwise, an error will be returned.
 	VersionConfigs []*GoogleCloudDialogflowCxV3EnvironmentVersionConfig `json:"versionConfigs,omitempty"`
 
 	// WebhookConfig: The webhook configuration for this environment.
@@ -4861,9 +4861,9 @@ type GoogleCloudDialogflowCxV3beta1Environment struct {
 	// UpdateTime: Output only. Update time of this environment.
 	UpdateTime string `json:"updateTime,omitempty"`
 
-	// VersionConfigs: Required. A list of configurations for flow versions.
-	// You should include version configs for all flows that are reachable
-	// from `Start Flow` in the agent. Otherwise, an error will be returned.
+	// VersionConfigs: A list of configurations for flow versions. You
+	// should include version configs for all flows that are reachable from
+	// `Start Flow` in the agent. Otherwise, an error will be returned.
 	VersionConfigs []*GoogleCloudDialogflowCxV3beta1EnvironmentVersionConfig `json:"versionConfigs,omitempty"`
 
 	// WebhookConfig: The webhook configuration for this environment.
@@ -9622,6 +9622,12 @@ type GoogleCloudDialogflowV2ConversationProfile struct {
 	// zone database (https://www.iana.org/time-zones), e.g.,
 	// America/New_York, Europe/Paris. Defaults to America/New_York.
 	TimeZone string `json:"timeZone,omitempty"`
+
+	// TtsConfig: Configuration for Text-to-Speech synthesization. Used by
+	// Phone Gateway to specify synthesization options. If agent defines
+	// synthesization options as well, agent settings overrides the option
+	// here.
+	TtsConfig *GoogleCloudDialogflowV2SynthesizeSpeechConfig `json:"ttsConfig,omitempty"`
 
 	// UpdateTime: Output only. Update time of the conversation profile.
 	UpdateTime string `json:"updateTime,omitempty"`

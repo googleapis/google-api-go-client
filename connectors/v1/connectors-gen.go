@@ -637,6 +637,10 @@ type ConfigVariableTemplate struct {
 	// EnumOptions: Enum options. To be populated if `ValueType` is `ENUM`
 	EnumOptions []*EnumOption `json:"enumOptions,omitempty"`
 
+	// IsAdvanced: Indicates if current template is part of advanced
+	// settings
+	IsAdvanced bool `json:"isAdvanced,omitempty"`
+
 	// Key: Key of the config variable.
 	Key string `json:"key,omitempty"`
 
@@ -759,6 +763,9 @@ type Connection struct {
 	// s/istio-system/services/istio-ingressgateway-connectors"
 	ServiceDirectory string `json:"serviceDirectory,omitempty"`
 
+	// SslConfig: Optional. Ssl config of a connection
+	SslConfig *SslConfig `json:"sslConfig,omitempty"`
+
 	// Status: Output only. Current status of the connection.
 	Status *ConnectionStatus `json:"status,omitempty"`
 
@@ -870,6 +877,8 @@ type ConnectionStatus struct {
 	//   "DELETING" - Connection is being deleted.
 	//   "UPDATING" - Connection is being updated.
 	//   "ERROR" - Connection is not running due to an error.
+	//   "AUTHORIZATION_REQUIRED" - Connection is not running due to an auth
+	// error for the Oauth2 Auth Code based connector.
 	State string `json:"state,omitempty"`
 
 	// Status: Status provides detailed information for the state.
@@ -1025,6 +1034,10 @@ type ConnectorVersion struct {
 	// RoleGrants: Output only. Role grant configurations for this connector
 	// version.
 	RoleGrants []*RoleGrant `json:"roleGrants,omitempty"`
+
+	// SslConfigTemplate: Output only. Ssl configuration supported by the
+	// Connector.
+	SslConfigTemplate *SslConfigTemplate `json:"sslConfigTemplate,omitempty"`
 
 	// SupportedRuntimeFeatures: Output only. Information about the runtime
 	// features supported by the Connector.
@@ -2812,6 +2825,137 @@ type SshPublicKey struct {
 
 func (s *SshPublicKey) MarshalJSON() ([]byte, error) {
 	type NoMethod SshPublicKey
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SslConfig: SSL Configuration of a connection
+type SslConfig struct {
+	// AdditionalVariables: Additional SSL related field values
+	AdditionalVariables []*ConfigVariable `json:"additionalVariables,omitempty"`
+
+	// ClientCertType: Type of Client Cert (PEM/JKS/.. etc.)
+	//
+	// Possible values:
+	//   "CERT_TYPE_UNSPECIFIED" - Cert type unspecified.
+	//   "PEM" - Privacy Enhanced Mail (PEM) Type
+	ClientCertType string `json:"clientCertType,omitempty"`
+
+	// ClientCertificate: Client Certificate
+	ClientCertificate *Secret `json:"clientCertificate,omitempty"`
+
+	// ClientPrivateKey: Client Private Key
+	ClientPrivateKey *Secret `json:"clientPrivateKey,omitempty"`
+
+	// ClientPrivateKeyPass: Secret containing the passphrase protecting the
+	// Client Private Key
+	ClientPrivateKeyPass *Secret `json:"clientPrivateKeyPass,omitempty"`
+
+	// PrivateServerCertificate: Private Server Certificate. Needs to be
+	// specified if trust model is `PRIVATE`.
+	PrivateServerCertificate *Secret `json:"privateServerCertificate,omitempty"`
+
+	// ServerCertType: Type of Server Cert (PEM/JKS/.. etc.)
+	//
+	// Possible values:
+	//   "CERT_TYPE_UNSPECIFIED" - Cert type unspecified.
+	//   "PEM" - Privacy Enhanced Mail (PEM) Type
+	ServerCertType string `json:"serverCertType,omitempty"`
+
+	// TrustModel: Trust Model of the SSL connection
+	//
+	// Possible values:
+	//   "PUBLIC" - Public Trust Model. Takes the Default Java trust store.
+	//   "PRIVATE" - Private Trust Model. Takes custom/private trust store.
+	//   "INSECURE" - Insecure Trust Model. Accept all certificates.
+	TrustModel string `json:"trustModel,omitempty"`
+
+	// Type: Controls the ssl type for the given connector version.
+	//
+	// Possible values:
+	//   "SSL_TYPE_UNSPECIFIED" - No SSL configuration required.
+	//   "TLS" - TLS Handshake
+	//   "MTLS" - mutual TLS (MTLS) Handshake
+	Type string `json:"type,omitempty"`
+
+	// UseSsl: Bool for enabling SSL
+	UseSsl bool `json:"useSsl,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AdditionalVariables")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdditionalVariables") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SslConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod SslConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SslConfigTemplate: Ssl config details of a connector version
+type SslConfigTemplate struct {
+	// AdditionalVariables: Any additional fields that need to be rendered
+	AdditionalVariables []*ConfigVariableTemplate `json:"additionalVariables,omitempty"`
+
+	// ClientCertType: List of supported Client Cert Types
+	//
+	// Possible values:
+	//   "CERT_TYPE_UNSPECIFIED" - Cert type unspecified.
+	//   "PEM" - Privacy Enhanced Mail (PEM) Type
+	ClientCertType []string `json:"clientCertType,omitempty"`
+
+	// IsTlsMandatory: Boolean for determining if the connector version
+	// mandates TLS.
+	IsTlsMandatory bool `json:"isTlsMandatory,omitempty"`
+
+	// ServerCertType: List of supported Server Cert Types
+	//
+	// Possible values:
+	//   "CERT_TYPE_UNSPECIFIED" - Cert type unspecified.
+	//   "PEM" - Privacy Enhanced Mail (PEM) Type
+	ServerCertType []string `json:"serverCertType,omitempty"`
+
+	// SslType: Controls the ssl type for the given connector version
+	//
+	// Possible values:
+	//   "SSL_TYPE_UNSPECIFIED" - No SSL configuration required.
+	//   "TLS" - TLS Handshake
+	//   "MTLS" - mutual TLS (MTLS) Handshake
+	SslType string `json:"sslType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AdditionalVariables")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdditionalVariables") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SslConfigTemplate) MarshalJSON() ([]byte, error) {
+	type NoMethod SslConfigTemplate
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

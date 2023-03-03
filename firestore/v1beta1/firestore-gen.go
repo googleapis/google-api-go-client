@@ -5425,7 +5425,8 @@ type ProjectsDatabasesDocumentsListenCall struct {
 	header_       http.Header
 }
 
-// Listen: Listens to changes.
+// Listen: Listens to changes. This method is only available via the
+// gRPC API (not REST).
 //
 //   - database: The database name. In the format:
 //     `projects/{project_id}/databases/{database_id}`.
@@ -5527,7 +5528,7 @@ func (c *ProjectsDatabasesDocumentsListenCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Listens to changes.",
+	//   "description": "Listens to changes. This method is only available via the gRPC API (not REST).",
 	//   "flatPath": "v1beta1/projects/{projectsId}/databases/{databasesId}/documents:listen",
 	//   "httpMethod": "POST",
 	//   "id": "firestore.projects.databases.documents.listen",
@@ -6388,6 +6389,7 @@ type ProjectsDatabasesDocumentsWriteCall struct {
 }
 
 // Write: Streams batches of document updates and deletes, in order.
+// This method is only available via the gRPC API (not REST).
 //
 //   - database: The database name. In the format:
 //     `projects/{project_id}/databases/{database_id}`. This is only
@@ -6490,7 +6492,7 @@ func (c *ProjectsDatabasesDocumentsWriteCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Streams batches of document updates and deletes, in order.",
+	//   "description": "Streams batches of document updates and deletes, in order. This method is only available via the gRPC API (not REST).",
 	//   "flatPath": "v1beta1/projects/{projectsId}/databases/{databasesId}/documents:write",
 	//   "httpMethod": "POST",
 	//   "id": "firestore.projects.databases.documents.write",

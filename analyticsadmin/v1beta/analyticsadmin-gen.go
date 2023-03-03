@@ -593,7 +593,7 @@ type GoogleAnalyticsAdminV1betaConversionEvent struct {
 	Custom bool `json:"custom,omitempty"`
 
 	// Deletable: Output only. If set, this event can currently be deleted
-	// via DeleteConversionEvent.
+	// with DeleteConversionEvent.
 	Deletable bool `json:"deletable,omitempty"`
 
 	// EventName: Immutable. The event name for this conversion event.
@@ -1695,7 +1695,7 @@ type GoogleAnalyticsAdminV1betaProperty struct {
 	// resource. When creating a property, if the type is
 	// "PROPERTY_TYPE_UNSPECIFIED", then "ORDINARY_PROPERTY" will be
 	// implied. "SUBPROPERTY" and "ROLLUP_PROPERTY" types cannot yet be
-	// created via Google Analytics Admin API.
+	// created with the Google Analytics Admin API.
 	//
 	// Possible values:
 	//   "PROPERTY_TYPE_UNSPECIFIED" - Unknown or unspecified property type
@@ -1811,8 +1811,8 @@ type GoogleAnalyticsAdminV1betaProvisionAccountTicketRequest struct {
 	Account *GoogleAnalyticsAdminV1betaAccount `json:"account,omitempty"`
 
 	// RedirectUri: Redirect URI where the user will be sent after accepting
-	// Terms of Service. Must be configured in Developers Console as a
-	// Redirect URI
+	// Terms of Service. Must be configured in Cloud Console as a Redirect
+	// URI.
 	RedirectUri string `json:"redirectUri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Account") to
@@ -2865,8 +2865,8 @@ func (r *AccountsService) Patch(name string, googleanalyticsadminv1betaaccount *
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. The
-// list of fields to be updated. Field names must be in snake case
-// (e.g., "field_to_update"). Omitted fields will not be updated. To
+// list of fields to be updated. Field names must be in snake case (for
+// example, "field_to_update"). Omitted fields will not be updated. To
 // replace the entire entity, use one path with the string "*" to match
 // all fields.
 func (c *AccountsPatchCall) UpdateMask(updateMask string) *AccountsPatchCall {
@@ -2982,7 +2982,7 @@ func (c *AccountsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAd
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. The list of fields to be updated. Field names must be in snake case (e.g., \"field_to_update\"). Omitted fields will not be updated. To replace the entire entity, use one path with the string \"*\" to match all fields.",
+	//       "description": "Required. The list of fields to be updated. Field names must be in snake case (for example, \"field_to_update\"). Omitted fields will not be updated. To replace the entire entity, use one path with the string \"*\" to match all fields.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -3311,8 +3311,8 @@ type PropertiesAcknowledgeUserDataCollectionCall struct {
 
 // AcknowledgeUserDataCollection: Acknowledges the terms of user data
 // collection for the specified property. This acknowledgement must be
-// completed (either in the Google Analytics UI or via this API) before
-// MeasurementProtocolSecret resources may be created.
+// completed (either in the Google Analytics UI or through this API)
+// before MeasurementProtocolSecret resources may be created.
 //
 //   - property: The property for which to acknowledge user data
 //     collection.
@@ -3417,7 +3417,7 @@ func (c *PropertiesAcknowledgeUserDataCollectionCall) Do(opts ...googleapi.CallO
 	}
 	return ret, nil
 	// {
-	//   "description": "Acknowledges the terms of user data collection for the specified property. This acknowledgement must be completed (either in the Google Analytics UI or via this API) before MeasurementProtocolSecret resources may be created.",
+	//   "description": "Acknowledges the terms of user data collection for the specified property. This acknowledgement must be completed (either in the Google Analytics UI or through this API) before MeasurementProtocolSecret resources may be created.",
 	//   "flatPath": "v1beta/properties/{propertiesId}:acknowledgeUserDataCollection",
 	//   "httpMethod": "POST",
 	//   "id": "analyticsadmin.properties.acknowledgeUserDataCollection",

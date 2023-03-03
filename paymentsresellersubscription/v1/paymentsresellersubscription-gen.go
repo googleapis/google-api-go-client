@@ -1222,12 +1222,17 @@ func (s *GoogleCloudPaymentsResellerSubscriptionV1SubscriptionCancellationDetail
 // GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItem:
 // Individual line item definition of a subscription.
 type GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItem struct {
+	// Amount: Output only. The price of the product/service in this line
+	// item. The amount could be the wholesale price, or it can include a
+	// cost of sale based on the contract.
+	Amount *GoogleCloudPaymentsResellerSubscriptionV1Amount `json:"amount,omitempty"`
+
 	// Description: Output only. Description of this line item.
 	Description string `json:"description,omitempty"`
 
-	// LineItemFreeTrialEndTime: Output only. It is set only if the line
-	// item has its own free trial applied. End time of the line item free
-	// trial period, in ISO 8061 format. For example,
+	// LineItemFreeTrialEndTime: Output only. The free trial end time will
+	// be populated after the line item is successfully processed. End time
+	// of the line item free trial period, in ISO 8061 format. For example,
 	// "2019-08-31T17:28:54.564Z". It will be set the same as createTime if
 	// no free trial promotion is specified.
 	LineItemFreeTrialEndTime string `json:"lineItemFreeTrialEndTime,omitempty"`
@@ -1280,7 +1285,7 @@ type GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItem struct {
 	// scheduled to be deactivated at the end of the current cycle.
 	State string `json:"state,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Description") to
+	// ForceSendFields is a list of field names (e.g. "Amount") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1288,10 +1293,10 @@ type GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItem struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Description") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "Amount") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`

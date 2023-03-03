@@ -3503,6 +3503,11 @@ type GoogleCloudContactcenterinsightsV1SettingsAnalysisConfig struct {
 	// automatically, between [0, 100].
 	RuntimeIntegrationAnalysisPercentage float64 `json:"runtimeIntegrationAnalysisPercentage,omitempty"`
 
+	// UploadConversationAnalysisPercentage: Percentage of conversations
+	// created using the UploadConversation endpoint to analyze
+	// automatically, between [0, 100].
+	UploadConversationAnalysisPercentage float64 `json:"uploadConversationAnalysisPercentage,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "AnnotatorSelector")
 	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -3531,6 +3536,7 @@ func (s *GoogleCloudContactcenterinsightsV1SettingsAnalysisConfig) UnmarshalJSON
 	type NoMethod GoogleCloudContactcenterinsightsV1SettingsAnalysisConfig
 	var s1 struct {
 		RuntimeIntegrationAnalysisPercentage gensupport.JSONFloat64 `json:"runtimeIntegrationAnalysisPercentage"`
+		UploadConversationAnalysisPercentage gensupport.JSONFloat64 `json:"uploadConversationAnalysisPercentage"`
 		*NoMethod
 	}
 	s1.NoMethod = (*NoMethod)(s)
@@ -3538,6 +3544,7 @@ func (s *GoogleCloudContactcenterinsightsV1SettingsAnalysisConfig) UnmarshalJSON
 		return err
 	}
 	s.RuntimeIntegrationAnalysisPercentage = float64(s1.RuntimeIntegrationAnalysisPercentage)
+	s.UploadConversationAnalysisPercentage = float64(s1.UploadConversationAnalysisPercentage)
 	return nil
 }
 

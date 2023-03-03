@@ -3132,7 +3132,7 @@ func (c *ProjectsLocationsTransferConfigsCreateCall) AuthorizationCode(authoriza
 }
 
 // ServiceAccountName sets the optional parameter "serviceAccountName":
-// Optional service account name. If this field is set, the transfer
+// Optional service account email. If this field is set, the transfer
 // config will be created with this service account's credentials. It
 // requires that the requesting user calling this API has permissions to
 // act as this service account. Note that not all data sources support
@@ -3272,7 +3272,7 @@ func (c *ProjectsLocationsTransferConfigsCreateCall) Do(opts ...googleapi.CallOp
 	//       "type": "string"
 	//     },
 	//     "serviceAccountName": {
-	//       "description": "Optional service account name. If this field is set, the transfer config will be created with this service account's credentials. It requires that the requesting user calling this API has permissions to act as this service account. Note that not all data sources support service account credentials when creating a transfer config. For the latest list of data sources, read about [using service accounts](https://cloud.google.com/bigquery-transfer/docs/use-service-accounts).",
+	//       "description": "Optional service account email. If this field is set, the transfer config will be created with this service account's credentials. It requires that the requesting user calling this API has permissions to act as this service account. Note that not all data sources support service account credentials when creating a transfer config. For the latest list of data sources, read about [using service accounts](https://cloud.google.com/bigquery-transfer/docs/use-service-accounts).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3844,7 +3844,7 @@ func (c *ProjectsLocationsTransferConfigsPatchCall) AuthorizationCode(authorizat
 }
 
 // ServiceAccountName sets the optional parameter "serviceAccountName":
-// Optional service account name. If this field is set, the transfer
+// Optional service account email. If this field is set, the transfer
 // config will be created with this service account's credentials. It
 // requires that the requesting user calling this API has permissions to
 // act as this service account. Note that not all data sources support
@@ -3991,7 +3991,7 @@ func (c *ProjectsLocationsTransferConfigsPatchCall) Do(opts ...googleapi.CallOpt
 	//       "type": "string"
 	//     },
 	//     "serviceAccountName": {
-	//       "description": "Optional service account name. If this field is set, the transfer config will be created with this service account's credentials. It requires that the requesting user calling this API has permissions to act as this service account. Note that not all data sources support service account credentials when creating a transfer config. For the latest list of data sources, read about [using service accounts](https://cloud.google.com/bigquery-transfer/docs/use-service-accounts).",
+	//       "description": "Optional service account email. If this field is set, the transfer config will be created with this service account's credentials. It requires that the requesting user calling this API has permissions to act as this service account. Note that not all data sources support service account credentials when creating a transfer config. For the latest list of data sources, read about [using service accounts](https://cloud.google.com/bigquery-transfer/docs/use-service-accounts).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5157,7 +5157,7 @@ func (c *ProjectsTransferConfigsCreateCall) AuthorizationCode(authorizationCode 
 }
 
 // ServiceAccountName sets the optional parameter "serviceAccountName":
-// Optional service account name. If this field is set, the transfer
+// Optional service account email. If this field is set, the transfer
 // config will be created with this service account's credentials. It
 // requires that the requesting user calling this API has permissions to
 // act as this service account. Note that not all data sources support
@@ -5297,7 +5297,7 @@ func (c *ProjectsTransferConfigsCreateCall) Do(opts ...googleapi.CallOption) (*T
 	//       "type": "string"
 	//     },
 	//     "serviceAccountName": {
-	//       "description": "Optional service account name. If this field is set, the transfer config will be created with this service account's credentials. It requires that the requesting user calling this API has permissions to act as this service account. Note that not all data sources support service account credentials when creating a transfer config. For the latest list of data sources, read about [using service accounts](https://cloud.google.com/bigquery-transfer/docs/use-service-accounts).",
+	//       "description": "Optional service account email. If this field is set, the transfer config will be created with this service account's credentials. It requires that the requesting user calling this API has permissions to act as this service account. Note that not all data sources support service account credentials when creating a transfer config. For the latest list of data sources, read about [using service accounts](https://cloud.google.com/bigquery-transfer/docs/use-service-accounts).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5869,7 +5869,7 @@ func (c *ProjectsTransferConfigsPatchCall) AuthorizationCode(authorizationCode s
 }
 
 // ServiceAccountName sets the optional parameter "serviceAccountName":
-// Optional service account name. If this field is set, the transfer
+// Optional service account email. If this field is set, the transfer
 // config will be created with this service account's credentials. It
 // requires that the requesting user calling this API has permissions to
 // act as this service account. Note that not all data sources support
@@ -6016,7 +6016,7 @@ func (c *ProjectsTransferConfigsPatchCall) Do(opts ...googleapi.CallOption) (*Tr
 	//       "type": "string"
 	//     },
 	//     "serviceAccountName": {
-	//       "description": "Optional service account name. If this field is set, the transfer config will be created with this service account's credentials. It requires that the requesting user calling this API has permissions to act as this service account. Note that not all data sources support service account credentials when creating a transfer config. For the latest list of data sources, read about [using service accounts](https://cloud.google.com/bigquery-transfer/docs/use-service-accounts).",
+	//       "description": "Optional service account email. If this field is set, the transfer config will be created with this service account's credentials. It requires that the requesting user calling this API has permissions to act as this service account. Note that not all data sources support service account credentials when creating a transfer config. For the latest list of data sources, read about [using service accounts](https://cloud.google.com/bigquery-transfer/docs/use-service-accounts).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

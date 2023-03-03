@@ -2476,6 +2476,14 @@ func (r *ProjectsLocationsMembershipsService) Delete(name string) *ProjectsLocat
 	return c
 }
 
+// Force sets the optional parameter "force": If set to true, any
+// subresource from this Membership will also be deleted. Otherwise, the
+// request will only work if the Membership has no subresource.
+func (c *ProjectsLocationsMembershipsDeleteCall) Force(force bool) *ProjectsLocationsMembershipsDeleteCall {
+	c.urlParams_.Set("force", fmt.Sprint(force))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2570,6 +2578,11 @@ func (c *ProjectsLocationsMembershipsDeleteCall) Do(opts ...googleapi.CallOption
 	//     "name"
 	//   ],
 	//   "parameters": {
+	//     "force": {
+	//       "description": "Optional. If set to true, any subresource from this Membership will also be deleted. Otherwise, the request will only work if the Membership has no subresource.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "name": {
 	//       "description": "Required. The Membership resource name in the format `projects/*/locations/*/memberships/*`.",
 	//       "location": "path",

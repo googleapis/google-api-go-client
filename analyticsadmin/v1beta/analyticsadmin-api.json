@@ -269,7 +269,7 @@
               "type": "string"
             },
             "updateMask": {
-              "description": "Required. The list of fields to be updated. Field names must be in snake case (e.g., \"field_to_update\"). Omitted fields will not be updated. To replace the entire entity, use one path with the string \"*\" to match all fields.",
+              "description": "Required. The list of fields to be updated. Field names must be in snake case (for example, \"field_to_update\"). Omitted fields will not be updated. To replace the entire entity, use one path with the string \"*\" to match all fields.",
               "format": "google-fieldmask",
               "location": "query",
               "type": "string"
@@ -337,7 +337,7 @@
     "properties": {
       "methods": {
         "acknowledgeUserDataCollection": {
-          "description": "Acknowledges the terms of user data collection for the specified property. This acknowledgement must be completed (either in the Google Analytics UI or via this API) before MeasurementProtocolSecret resources may be created.",
+          "description": "Acknowledges the terms of user data collection for the specified property. This acknowledgement must be completed (either in the Google Analytics UI or through this API) before MeasurementProtocolSecret resources may be created.",
           "flatPath": "v1beta/properties/{propertiesId}:acknowledgeUserDataCollection",
           "httpMethod": "POST",
           "id": "analyticsadmin.properties.acknowledgeUserDataCollection",
@@ -1536,7 +1536,7 @@
       }
     }
   },
-  "revision": "20221201",
+  "revision": "20230228",
   "rootUrl": "https://analyticsadmin.googleapis.com/",
   "schemas": {
     "GoogleAnalyticsAdminV1betaAccount": {
@@ -1768,7 +1768,7 @@
           "type": "boolean"
         },
         "deletable": {
-          "description": "Output only. If set, this event can currently be deleted via DeleteConversionEvent.",
+          "description": "Output only. If set, this event can currently be deleted with DeleteConversionEvent.",
           "readOnly": true,
           "type": "boolean"
         },
@@ -2457,7 +2457,7 @@
           "type": "string"
         },
         "propertyType": {
-          "description": "Immutable. The property type for this Property resource. When creating a property, if the type is \"PROPERTY_TYPE_UNSPECIFIED\", then \"ORDINARY_PROPERTY\" will be implied. \"SUBPROPERTY\" and \"ROLLUP_PROPERTY\" types cannot yet be created via Google Analytics Admin API.",
+          "description": "Immutable. The property type for this Property resource. When creating a property, if the type is \"PROPERTY_TYPE_UNSPECIFIED\", then \"ORDINARY_PROPERTY\" will be implied. \"SUBPROPERTY\" and \"ROLLUP_PROPERTY\" types cannot yet be created with the Google Analytics Admin API.",
           "enum": [
             "PROPERTY_TYPE_UNSPECIFIED",
             "PROPERTY_TYPE_ORDINARY",
@@ -2544,7 +2544,7 @@
           "description": "The account to create."
         },
         "redirectUri": {
-          "description": "Redirect URI where the user will be sent after accepting Terms of Service. Must be configured in Developers Console as a Redirect URI",
+          "description": "Redirect URI where the user will be sent after accepting Terms of Service. Must be configured in Cloud Console as a Redirect URI.",
           "type": "string"
         }
       },

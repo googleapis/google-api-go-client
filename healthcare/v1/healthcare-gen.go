@@ -752,7 +752,9 @@ type Binding struct {
 	// (https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts).
 	// For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`.
 	// * `group:{emailid}`: An email address that represents a Google group.
-	// For example, `admins@example.com`. *
+	// For example, `admins@example.com`. * `domain:{domain}`: The G Suite
+	// domain (primary) that represents all the users of that domain. For
+	// example, `google.com` or `example.com`. *
 	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
 	// unique identifier) representing a user that has been recently
 	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
@@ -769,9 +771,7 @@ type Binding struct {
 	// that has been recently deleted. For example,
 	// `admins@example.com?uid=123456789012345678901`. If the group is
 	// recovered, this value reverts to `group:{emailid}` and the recovered
-	// group retains the role in the binding. * `domain:{domain}`: The G
-	// Suite domain (primary) that represents all the users of that domain.
-	// For example, `google.com` or `example.com`.
+	// group retains the role in the binding.
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of `members`, or principals.
@@ -2531,6 +2531,81 @@ type FhirStore struct {
 
 func (s *FhirStore) MarshalJSON() ([]byte, error) {
 	type NoMethod FhirStore
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// FhirStoreMetric: Count of resources and total storage size by type
+// for a given FHIR store.
+type FhirStoreMetric struct {
+	// Count: The total count of FHIR resources in the store of this
+	// resource type.
+	Count int64 `json:"count,omitempty,string"`
+
+	// ResourceType: The FHIR resource type this metric applies to.
+	ResourceType string `json:"resourceType,omitempty"`
+
+	// StructuredStorageSizeBytes: The total amount of structured storage
+	// used by FHIR resources of this resource type in the store.
+	StructuredStorageSizeBytes int64 `json:"structuredStorageSizeBytes,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "Count") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Count") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FhirStoreMetric) MarshalJSON() ([]byte, error) {
+	type NoMethod FhirStoreMetric
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// FhirStoreMetrics: List of metrics for a given FHIR store.
+type FhirStoreMetrics struct {
+	// Metrics: List of FhirStoreMetric by resource type.
+	Metrics []*FhirStoreMetric `json:"metrics,omitempty"`
+
+	// Name: The resource name of the FHIR store to get metrics for, in the
+	// format
+	// `projects/{project_id}/datasets/{dataset_id}/fhirStores/{fhir_store_id
+	// }`.
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Metrics") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Metrics") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FhirStoreMetrics) MarshalJSON() ([]byte, error) {
+	type NoMethod FhirStoreMetrics
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5070,6 +5145,10 @@ func (s *RevokeConsentRequest) MarshalJSON() ([]byte, error) {
 // SchemaConfig: Configuration for the FHIR BigQuery schema. Determines
 // how the server generates the schema.
 type SchemaConfig struct {
+	// LastUpdatedPartitionConfig: The configuration for exported BigQuery
+	// tables to be partitioned by FHIR resource's last updated time column.
+	LastUpdatedPartitionConfig *TimePartitioning `json:"lastUpdatedPartitionConfig,omitempty"`
+
 	// RecursiveStructureDepth: The depth for all recursive structures in
 	// the output analytics schema. For example, `concept` in the CodeSystem
 	// resource is a recursive structure; when the depth is 2, the
@@ -5098,7 +5177,7 @@ type SchemaConfig struct {
 	SchemaType string `json:"schemaType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
-	// "RecursiveStructureDepth") to unconditionally include in API
+	// "LastUpdatedPartitionConfig") to unconditionally include in API
 	// requests. By default, fields with empty or default values are omitted
 	// from API requests. However, any non-pointer, non-interface field
 	// appearing in ForceSendFields will be sent to the server regardless of
@@ -5106,13 +5185,13 @@ type SchemaConfig struct {
 	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "RecursiveStructureDepth")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g.
+	// "LastUpdatedPartitionConfig") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -5744,6 +5823,46 @@ type TextSpan struct {
 
 func (s *TextSpan) MarshalJSON() ([]byte, error) {
 	type NoMethod TextSpan
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// TimePartitioning: Configuration for FHIR BigQuery time-partitioned
+// tables.
+type TimePartitioning struct {
+	// ExpirationMs: Number of milliseconds for which to keep the storage
+	// for a partition.
+	ExpirationMs int64 `json:"expirationMs,omitempty,string"`
+
+	// Type: Type of partitioning.
+	//
+	// Possible values:
+	//   "PARTITION_TYPE_UNSPECIFIED" - Default unknown time.
+	//   "HOUR" - Data partitioned by hour.
+	//   "DAY" - Data partitioned by day.
+	//   "MONTH" - Data partitioned by month.
+	//   "YEAR" - Data partitioned by year.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ExpirationMs") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ExpirationMs") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TimePartitioning) MarshalJSON() ([]byte, error) {
+	type NoMethod TimePartitioning
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -18858,6 +18977,152 @@ func (c *ProjectsLocationsDatasetsFhirStoresGetCall) Do(opts ...googleapi.CallOp
 	//   "path": "v1/{+name}",
 	//   "response": {
 	//     "$ref": "FhirStore"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "healthcare.projects.locations.datasets.fhirStores.getFHIRStoreMetrics":
+
+type ProjectsLocationsDatasetsFhirStoresGetFHIRStoreMetricsCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetFHIRStoreMetrics: Gets metrics associated with the FHIR store.
+//
+// - name: The resource name of the FHIR store to get metrics for.
+func (r *ProjectsLocationsDatasetsFhirStoresService) GetFHIRStoreMetrics(name string) *ProjectsLocationsDatasetsFhirStoresGetFHIRStoreMetricsCall {
+	c := &ProjectsLocationsDatasetsFhirStoresGetFHIRStoreMetricsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDatasetsFhirStoresGetFHIRStoreMetricsCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsFhirStoresGetFHIRStoreMetricsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsDatasetsFhirStoresGetFHIRStoreMetricsCall) IfNoneMatch(entityTag string) *ProjectsLocationsDatasetsFhirStoresGetFHIRStoreMetricsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDatasetsFhirStoresGetFHIRStoreMetricsCall) Context(ctx context.Context) *ProjectsLocationsDatasetsFhirStoresGetFHIRStoreMetricsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDatasetsFhirStoresGetFHIRStoreMetricsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsFhirStoresGetFHIRStoreMetricsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:getFHIRStoreMetrics")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.fhirStores.getFHIRStoreMetrics" call.
+// Exactly one of *FhirStoreMetrics or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *FhirStoreMetrics.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDatasetsFhirStoresGetFHIRStoreMetricsCall) Do(opts ...googleapi.CallOption) (*FhirStoreMetrics, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &FhirStoreMetrics{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets metrics associated with the FHIR store.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}:getFHIRStoreMetrics",
+	//   "httpMethod": "GET",
+	//   "id": "healthcare.projects.locations.datasets.fhirStores.getFHIRStoreMetrics",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The resource name of the FHIR store to get metrics for.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:getFHIRStoreMetrics",
+	//   "response": {
+	//     "$ref": "FhirStoreMetrics"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

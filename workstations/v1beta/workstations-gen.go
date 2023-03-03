@@ -432,20 +432,20 @@ func (s *Container) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// CustomerEncryptionKey: A customer-specified encryption key for the
+// CustomerEncryptionKey: A customer-managed encryption key for the
 // Compute Engine resources of this workstation configuration.
 type CustomerEncryptionKey struct {
-	// KmsKey: The name of the encryption key that is stored in Google Cloud
-	// KMS, for example,
+	// KmsKey: The name of the Google Cloud KMS encryption key. For example,
 	// `projects/PROJECT_ID/locations/REGION/keyRings/KEY_RING/cryptoKeys/KEY
 	// _NAME`.
 	KmsKey string `json:"kmsKey,omitempty"`
 
-	// KmsKeyServiceAccount: The service account being used for the
-	// encryption request for the given KMS key. If absent, the Compute
-	// Engine default service account is used. However, it is recommended to
-	// use a separate service account and to follow KMS best practices
-	// mentioned at https://cloud.google.com/kms/docs/separation-of-duties
+	// KmsKeyServiceAccount: The service account to use with the specified
+	// KMS key. We recommend that you use a separate service account and
+	// follow KMS best practices. For more information, see Separation of
+	// duties (https://cloud.google.com/kms/docs/separation-of-duties) and
+	// `gcloud kms keys add-iam-policy-binding` `--member`
+	// (https://cloud.google.com/sdk/gcloud/reference/kms/keys/add-iam-policy-binding#--member).
 	KmsKeyServiceAccount string `json:"kmsKeyServiceAccount,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "KmsKey") to
@@ -646,6 +646,10 @@ type GceRegionalPersistentDisk struct {
 	// SizeGb: Size of the disk in GB. Must be empty if source_snapshot is
 	// set.
 	SizeGb int64 `json:"sizeGb,omitempty"`
+
+	// SourceSnapshot: Name of the snapshot to use as the source for the
+	// disk. If set, size_gb and fs_type must be empty.
+	SourceSnapshot string `json:"sourceSnapshot,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DiskType") to
 	// unconditionally include in API requests. By default, fields with
@@ -949,7 +953,7 @@ type ListWorkstationClustersResponse struct {
 	// Unreachable: Unreachable resources.
 	Unreachable []string `json:"unreachable,omitempty"`
 
-	// WorkstationClusters: The requested clusters.
+	// WorkstationClusters: The requested workstation clusters.
 	WorkstationClusters []*WorkstationCluster `json:"workstationClusters,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1778,18 +1782,17 @@ type WorkstationConfig struct {
 	DisplayName string `json:"displayName,omitempty"`
 
 	// EncryptionKey: Encrypts resources of this workstation configuration
-	// using a customer-specified encryption key. If specified, the boot
-	// disk of the Compute Engine instance and the persistent disk will be
-	// encrypted using this encryption key. If this field is not set, the
-	// disks will be encrypted using a generated key. Customer-specified
-	// encryption keys do not protect disk metadata. If the
-	// customer-specified encryption key is rotated, when the workstation
-	// instance is stopped, the system will attempt to recreate the
-	// persistent disk with the new version of the key. Be sure to keep
-	// older versions of the key until the persistent disk is recreated.
-	// Otherwise, data on the persistent disk will be lost. If the
-	// encryption key is revoked, the workstation session will automatically
-	// be stopped within 7 hours.
+	// using a customer-managed encryption key. If specified, the boot disk
+	// of the Compute Engine instance and the persistent disk are encrypted
+	// using this encryption key. If this field is not set, the disks are
+	// encrypted using a generated key. Customer-managed encryption keys do
+	// not protect disk metadata. If the customer-managed encryption key is
+	// rotated, when the workstation instance is stopped, the system
+	// attempts to recreate the persistent disk with the new version of the
+	// key. Be sure to keep older versions of the key until the persistent
+	// disk is recreated. Otherwise, data on the persistent disk will be
+	// lost. If the encryption key is revoked, the workstation session will
+	// automatically be stopped within 7 hours.
 	EncryptionKey *CustomerEncryptionKey `json:"encryptionKey,omitempty"`
 
 	// Etag: Checksum computed by the server. May be sent on update and
@@ -1823,9 +1826,9 @@ type WorkstationConfig struct {
 
 	// RunningTimeout: How long to wait before automatically stopping a
 	// workstation after it started. A value of 0 indicates that
-	// workstations using this config should never time out. Must be greater
-	// than 0 and less than 24 hours if encryption_key is set. Defaults to
-	// 12 hours.
+	// workstations using this configuration should never time out. Must be
+	// greater than 0 and less than 24 hours if encryption_key is set.
+	// Defaults to 12 hours.
 	RunningTimeout string `json:"runningTimeout,omitempty"`
 
 	// Uid: Output only. A system-assigned unique identified for this
@@ -2540,7 +2543,8 @@ func (c *ProjectsLocationsWorkstationClustersCreateCall) ValidateOnly(validateOn
 }
 
 // WorkstationClusterId sets the optional parameter
-// "workstationClusterId": Required. ID to use for the cluster.
+// "workstationClusterId": Required. ID to use for the workstation
+// cluster.
 func (c *ProjectsLocationsWorkstationClustersCreateCall) WorkstationClusterId(workstationClusterId string) *ProjectsLocationsWorkstationClustersCreateCall {
 	c.urlParams_.Set("workstationClusterId", workstationClusterId)
 	return c
@@ -2658,7 +2662,7 @@ func (c *ProjectsLocationsWorkstationClustersCreateCall) Do(opts ...googleapi.Ca
 	//       "type": "boolean"
 	//     },
 	//     "workstationClusterId": {
-	//       "description": "Required. ID to use for the cluster.",
+	//       "description": "Required. ID to use for the workstation cluster.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -2689,7 +2693,7 @@ type ProjectsLocationsWorkstationClustersDeleteCall struct {
 
 // Delete: Deletes the specified workstation cluster.
 //
-// - name: Name of the cluster to delete.
+// - name: Name of the workstation cluster to delete.
 func (r *ProjectsLocationsWorkstationClustersService) Delete(name string) *ProjectsLocationsWorkstationClustersDeleteCall {
 	c := &ProjectsLocationsWorkstationClustersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2697,25 +2701,24 @@ func (r *ProjectsLocationsWorkstationClustersService) Delete(name string) *Proje
 }
 
 // Etag sets the optional parameter "etag": If set, the request will be
-// rejected if the latest version of the cluster on the server does not
-// have this etag.
+// rejected if the latest version of the workstation cluster on the
+// server does not have this etag.
 func (c *ProjectsLocationsWorkstationClustersDeleteCall) Etag(etag string) *ProjectsLocationsWorkstationClustersDeleteCall {
 	c.urlParams_.Set("etag", etag)
 	return c
 }
 
 // Force sets the optional parameter "force": If set, any workstation
-// configurations and workstations in the cluster will also be deleted.
-// Otherwise, the request will work only if the cluster has no
-// configurations or workstations.
+// configurations and workstations in the workstation cluster are also
+// deleted. Otherwise, the request only works if the workstation cluster
+// has no configurations or workstations.
 func (c *ProjectsLocationsWorkstationClustersDeleteCall) Force(force bool) *ProjectsLocationsWorkstationClustersDeleteCall {
 	c.urlParams_.Set("force", fmt.Sprint(force))
 	return c
 }
 
 // ValidateOnly sets the optional parameter "validateOnly": If set,
-// validate the request and preview the review, but do not actually
-// apply it.
+// validate the request and preview the review, but do not apply it.
 func (c *ProjectsLocationsWorkstationClustersDeleteCall) ValidateOnly(validateOnly bool) *ProjectsLocationsWorkstationClustersDeleteCall {
 	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
@@ -2816,24 +2819,24 @@ func (c *ProjectsLocationsWorkstationClustersDeleteCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "etag": {
-	//       "description": "If set, the request will be rejected if the latest version of the cluster on the server does not have this etag.",
+	//       "description": "If set, the request will be rejected if the latest version of the workstation cluster on the server does not have this etag.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "force": {
-	//       "description": "If set, any workstation configurations and workstations in the cluster will also be deleted. Otherwise, the request will work only if the cluster has no configurations or workstations.",
+	//       "description": "If set, any workstation configurations and workstations in the workstation cluster are also deleted. Otherwise, the request only works if the workstation cluster has no configurations or workstations.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "name": {
-	//       "description": "Required. Name of the cluster to delete.",
+	//       "description": "Required. Name of the workstation cluster to delete.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/workstationClusters/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "validateOnly": {
-	//       "description": "If set, validate the request and preview the review, but do not actually apply it.",
+	//       "description": "If set, validate the request and preview the review, but do not apply it.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -3209,15 +3212,16 @@ func (r *ProjectsLocationsWorkstationClustersService) Patch(name string, worksta
 }
 
 // AllowMissing sets the optional parameter "allowMissing": If set, and
-// the cluster is not found, a new cluster will be created. In this
-// situation, update_mask is ignored.
+// the workstation cluster is not found, a new workstation cluster will
+// be created. In this situation, update_mask is ignored.
 func (c *ProjectsLocationsWorkstationClustersPatchCall) AllowMissing(allowMissing bool) *ProjectsLocationsWorkstationClustersPatchCall {
 	c.urlParams_.Set("allowMissing", fmt.Sprint(allowMissing))
 	return c
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. Mask
-// specifying which fields in the cluster should be updated.
+// that specifies which fields in the workstation cluster should be
+// updated.
 func (c *ProjectsLocationsWorkstationClustersPatchCall) UpdateMask(updateMask string) *ProjectsLocationsWorkstationClustersPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -3331,7 +3335,7 @@ func (c *ProjectsLocationsWorkstationClustersPatchCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "allowMissing": {
-	//       "description": "If set, and the cluster is not found, a new cluster will be created. In this situation, update_mask is ignored.",
+	//       "description": "If set, and the workstation cluster is not found, a new workstation cluster will be created. In this situation, update_mask is ignored.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -3343,7 +3347,7 @@ func (c *ProjectsLocationsWorkstationClustersPatchCall) Do(opts ...googleapi.Cal
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. Mask specifying which fields in the cluster should be updated.",
+	//       "description": "Required. Mask that specifies which fields in the workstation cluster should be updated.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"

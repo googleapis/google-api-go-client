@@ -211,6 +211,7 @@ func NewPropertiesService(s *Service) *PropertiesService {
 	rs.DataStreams = NewPropertiesDataStreamsService(s)
 	rs.DisplayVideo360AdvertiserLinkProposals = NewPropertiesDisplayVideo360AdvertiserLinkProposalsService(s)
 	rs.DisplayVideo360AdvertiserLinks = NewPropertiesDisplayVideo360AdvertiserLinksService(s)
+	rs.ExpandedDataSets = NewPropertiesExpandedDataSetsService(s)
 	rs.FirebaseLinks = NewPropertiesFirebaseLinksService(s)
 	rs.GoogleAdsLinks = NewPropertiesGoogleAdsLinksService(s)
 	rs.SearchAds360Links = NewPropertiesSearchAds360LinksService(s)
@@ -238,6 +239,8 @@ type PropertiesService struct {
 	DisplayVideo360AdvertiserLinkProposals *PropertiesDisplayVideo360AdvertiserLinkProposalsService
 
 	DisplayVideo360AdvertiserLinks *PropertiesDisplayVideo360AdvertiserLinksService
+
+	ExpandedDataSets *PropertiesExpandedDataSetsService
 
 	FirebaseLinks *PropertiesFirebaseLinksService
 
@@ -338,6 +341,15 @@ func NewPropertiesDisplayVideo360AdvertiserLinksService(s *Service) *PropertiesD
 }
 
 type PropertiesDisplayVideo360AdvertiserLinksService struct {
+	s *Service
+}
+
+func NewPropertiesExpandedDataSetsService(s *Service) *PropertiesExpandedDataSetsService {
+	rs := &PropertiesExpandedDataSetsService{s: s}
+	return rs
+}
+
+type PropertiesExpandedDataSetsService struct {
 	s *Service
 }
 
@@ -2674,6 +2686,10 @@ type GoogleAnalyticsAdminV1alphaBigQueryLink struct {
 	// advertising identifiers for mobile app streams.
 	IncludeAdvertisingId bool `json:"includeAdvertisingId,omitempty"`
 
+	// IntradayExportEnabled: If set true, enables intraday export to the
+	// linked Google Cloud project.
+	IntradayExportEnabled bool `json:"intradayExportEnabled,omitempty"`
+
 	// Name: Output only. Resource name of this BigQuery link. Format:
 	// 'properties/{property_id}/bigQueryLinks/{bigquery_link_id}' Format:
 	// 'properties/1234/bigQueryLinks/abc567'
@@ -2925,6 +2941,40 @@ func (s *GoogleAnalyticsAdminV1alphaChangeHistoryEvent) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAnalyticsAdminV1alphaConnectedSiteTag: Configuration for a
+// specific Connected Site Tag.
+type GoogleAnalyticsAdminV1alphaConnectedSiteTag struct {
+	// DisplayName: Required. User-provided display name for the connected
+	// site tag. Must be less than 256 characters.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// TagId: Required. "Tag ID to forward events to. Also known as the
+	// Measurement ID, or the "G-ID" (For example: G-12345).
+	TagId string `json:"tagId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaConnectedSiteTag) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaConnectedSiteTag
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAnalyticsAdminV1alphaConversionEvent: A conversion event in a
 // Google Analytics property.
 type GoogleAnalyticsAdminV1alphaConversionEvent struct {
@@ -2942,7 +2992,7 @@ type GoogleAnalyticsAdminV1alphaConversionEvent struct {
 	Custom bool `json:"custom,omitempty"`
 
 	// Deletable: Output only. If set, this event can currently be deleted
-	// via DeleteConversionEvent.
+	// with DeleteConversionEvent.
 	Deletable bool `json:"deletable,omitempty"`
 
 	// EventName: Immutable. The event name for this conversion event.
@@ -3532,6 +3582,41 @@ func (s *GoogleAnalyticsAdminV1alphaDeleteAccessBindingRequest) MarshalJSON() ([
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAnalyticsAdminV1alphaDeleteConnectedSiteTagRequest: Request
+// message for DeleteConnectedSiteTag RPC.
+type GoogleAnalyticsAdminV1alphaDeleteConnectedSiteTagRequest struct {
+	// Property: The Universal Analytics property to delete connected site
+	// tags for. This API does not support GA4 properties. Format:
+	// properties/{universalAnalyticsPropertyId} Example: properties/1234
+	Property string `json:"property,omitempty"`
+
+	// TagId: Tag ID to forward events to. Also known as the Measurement ID,
+	// or the "G-ID" (For example: G-12345).
+	TagId string `json:"tagId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Property") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Property") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaDeleteConnectedSiteTagRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaDeleteConnectedSiteTagRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAnalyticsAdminV1alphaDeleteUserLinkRequest: Request message for
 // DeleteUserLink RPC.
 type GoogleAnalyticsAdminV1alphaDeleteUserLinkRequest struct {
@@ -3744,6 +3829,10 @@ type GoogleAnalyticsAdminV1alphaExpandedDataSet struct {
 	// resource. Format:
 	// properties/{property_id}/expandedDataSets/{expanded_data_set}
 	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "DataCollectionStartTime") to unconditionally include in API
@@ -4490,6 +4579,89 @@ func (s *GoogleAnalyticsAdminV1alphaListBigQueryLinksResponse) MarshalJSON() ([]
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAnalyticsAdminV1alphaListConnectedSiteTagsRequest: Request
+// message for ListConnectedSiteTags RPC.
+type GoogleAnalyticsAdminV1alphaListConnectedSiteTagsRequest struct {
+	// PageSize: The maximum number of resources to return. The service may
+	// return fewer than this value, even if there are additional pages. If
+	// unspecified, at most 50 resources will be returned. The maximum value
+	// is 200; (higher values will be coerced to the maximum)
+	PageSize int64 `json:"pageSize,omitempty"`
+
+	// PageToken: A page token, received from a previous
+	// `ListConnectedSiteTags` call. Provide this to retrieve the subsequent
+	// page. When paginating, all other parameters provided to
+	// `ListConnectedSiteTags` must match the call that provided the page
+	// token.
+	PageToken string `json:"pageToken,omitempty"`
+
+	// Property: The Universal Analytics property to fetch connected site
+	// tags for. This does not work on GA4 properties. Format:
+	// `properties/1234`
+	Property string `json:"property,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PageSize") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PageSize") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaListConnectedSiteTagsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaListConnectedSiteTagsRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1alphaListConnectedSiteTagsResponse: Response
+// message for ListConnectedSiteTags RPC.
+type GoogleAnalyticsAdminV1alphaListConnectedSiteTagsResponse struct {
+	// ConnectedSiteTags: The site tags for the Universal Analytics property
+	ConnectedSiteTags []*GoogleAnalyticsAdminV1alphaConnectedSiteTag `json:"connectedSiteTags,omitempty"`
+
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "ConnectedSiteTags")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConnectedSiteTags") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaListConnectedSiteTagsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaListConnectedSiteTagsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAnalyticsAdminV1alphaListConversionEventsResponse: Response
 // message for ListConversionEvents RPC.
 type GoogleAnalyticsAdminV1alphaListConversionEventsResponse struct {
@@ -4724,6 +4896,46 @@ type GoogleAnalyticsAdminV1alphaListDisplayVideo360AdvertiserLinksResponse struc
 
 func (s *GoogleAnalyticsAdminV1alphaListDisplayVideo360AdvertiserLinksResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaListDisplayVideo360AdvertiserLinksResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1alphaListExpandedDataSetsResponse: Response
+// message for ListExpandedDataSets RPC.
+type GoogleAnalyticsAdminV1alphaListExpandedDataSetsResponse struct {
+	// ExpandedDataSets: List of ExpandedDataSet. These will be ordered
+	// stably, but in an arbitrary order.
+	ExpandedDataSets []*GoogleAnalyticsAdminV1alphaExpandedDataSet `json:"expandedDataSets,omitempty"`
+
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "ExpandedDataSets") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ExpandedDataSets") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaListExpandedDataSetsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaListExpandedDataSetsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5129,7 +5341,7 @@ type GoogleAnalyticsAdminV1alphaProperty struct {
 	// resource. When creating a property, if the type is
 	// "PROPERTY_TYPE_UNSPECIFIED", then "ORDINARY_PROPERTY" will be
 	// implied. "SUBPROPERTY" and "ROLLUP_PROPERTY" types cannot yet be
-	// created via Google Analytics Admin API.
+	// created with the Google Analytics Admin API.
 	//
 	// Possible values:
 	//   "PROPERTY_TYPE_UNSPECIFIED" - Unknown or unspecified property type
@@ -5245,8 +5457,8 @@ type GoogleAnalyticsAdminV1alphaProvisionAccountTicketRequest struct {
 	Account *GoogleAnalyticsAdminV1alphaAccount `json:"account,omitempty"`
 
 	// RedirectUri: Redirect URI where the user will be sent after accepting
-	// Terms of Service. Must be configured in Developers Console as a
-	// Redirect URI
+	// Terms of Service. Must be configured in Cloud Console as a Redirect
+	// URI.
 	RedirectUri string `json:"redirectUri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Account") to
@@ -5316,10 +5528,10 @@ type GoogleAnalyticsAdminV1alphaRunAccessReportRequest struct {
 	// ranges. Requests are allowed up to 2 date ranges.
 	DateRanges []*GoogleAnalyticsAdminV1alphaAccessDateRange `json:"dateRanges,omitempty"`
 
-	// DimensionFilter: Dimension filters allow you to restrict report
-	// response to specific dimension values which match the filter. For
-	// example, filtering on access records of a single user. To learn more,
-	// see Fundamentals of Dimension Filters
+	// DimensionFilter: Dimension filters let you restrict report response
+	// to specific dimension values which match the filter. For example,
+	// filtering on access records of a single user. To learn more, see
+	// Fundamentals of Dimension Filters
 	// (https://developers.google.com/analytics/devguides/reporting/data/v1/basics#dimension_filters)
 	// for examples. Metrics cannot be used in this filter.
 	DimensionFilter *GoogleAnalyticsAdminV1alphaAccessFilterExpression `json:"dimensionFilter,omitempty"`
@@ -5363,7 +5575,7 @@ type GoogleAnalyticsAdminV1alphaRunAccessReportRequest struct {
 
 	// ReturnEntityQuota: Toggles whether to return the current state of
 	// this Analytics Property's quota. Quota is returned in AccessQuota
-	// (#AccessQuota).
+	// (#AccessQuota). For account-level requests, this field must be false.
 	ReturnEntityQuota bool `json:"returnEntityQuota,omitempty"`
 
 	// TimeZone: This request's time zone if specified. If unspecified, the
@@ -5411,7 +5623,7 @@ type GoogleAnalyticsAdminV1alphaRunAccessReportResponse struct {
 	MetricHeaders []*GoogleAnalyticsAdminV1alphaAccessMetricHeader `json:"metricHeaders,omitempty"`
 
 	// Quota: The quota state for this Analytics property including this
-	// request.
+	// request. This field doesn't work with account-level requests.
 	Quota *GoogleAnalyticsAdminV1alphaAccessQuota `json:"quota,omitempty"`
 
 	// RowCount: The total number of rows in the query result. `rowCount` is
@@ -6671,8 +6883,8 @@ func (r *AccountsService) Patch(name string, googleanalyticsadminv1alphaaccount 
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. The
-// list of fields to be updated. Field names must be in snake case
-// (e.g., "field_to_update"). Omitted fields will not be updated. To
+// list of fields to be updated. Field names must be in snake case (for
+// example, "field_to_update"). Omitted fields will not be updated. To
 // replace the entire entity, use one path with the string "*" to match
 // all fields.
 func (c *AccountsPatchCall) UpdateMask(updateMask string) *AccountsPatchCall {
@@ -6788,7 +7000,7 @@ func (c *AccountsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAd
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. The list of fields to be updated. Field names must be in snake case (e.g., \"field_to_update\"). Omitted fields will not be updated. To replace the entire entity, use one path with the string \"*\" to match all fields.",
+	//       "description": "Required. The list of fields to be updated. Field names must be in snake case (for example, \"field_to_update\"). Omitted fields will not be updated. To replace the entire entity, use one path with the string \"*\" to match all fields.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -6931,6 +7143,168 @@ func (c *AccountsProvisionAccountTicketCall) Do(opts ...googleapi.CallOption) (*
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/analytics.edit"
+	//   ]
+	// }
+
+}
+
+// method id "analyticsadmin.accounts.runAccessReport":
+
+type AccountsRunAccessReportCall struct {
+	s                                                 *Service
+	entity                                            string
+	googleanalyticsadminv1alpharunaccessreportrequest *GoogleAnalyticsAdminV1alphaRunAccessReportRequest
+	urlParams_                                        gensupport.URLParams
+	ctx_                                              context.Context
+	header_                                           http.Header
+}
+
+// RunAccessReport: Returns a customized report of data access records.
+// The report provides records of each time a user reads Google
+// Analytics reporting data. Access records are retained for up to 2
+// years. Data Access Reports can be requested for a property. The
+// property must be in Google Analytics 360. This method is only
+// available to Administrators. These data access records include GA4 UI
+// Reporting, GA4 UI Explorations, GA4 Data API, and other products like
+// Firebase & Admob that can retrieve data from Google Analytics through
+// a linkage. These records don't include property configuration changes
+// like adding a stream or changing a property's time zone. For
+// configuration change history, see searchChangeHistoryEvents
+// (https://developers.google.com/analytics/devguides/config/admin/v1/rest/v1alpha/accounts/searchChangeHistoryEvents).
+//
+//   - entity: The Data Access Report supports requesting at the property
+//     level or account level. If requested at the account level, Data
+//     Access Reports include all access for all properties under that
+//     account. To request at the property level, entity should be for
+//     example 'properties/123' if "123" is your GA4 property ID. To
+//     request at the account level, entity should be for example
+//     'accounts/1234' if "1234" is your GA4 Account ID.
+func (r *AccountsService) RunAccessReport(entity string, googleanalyticsadminv1alpharunaccessreportrequest *GoogleAnalyticsAdminV1alphaRunAccessReportRequest) *AccountsRunAccessReportCall {
+	c := &AccountsRunAccessReportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.entity = entity
+	c.googleanalyticsadminv1alpharunaccessreportrequest = googleanalyticsadminv1alpharunaccessreportrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsRunAccessReportCall) Fields(s ...googleapi.Field) *AccountsRunAccessReportCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsRunAccessReportCall) Context(ctx context.Context) *AccountsRunAccessReportCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsRunAccessReportCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsRunAccessReportCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleanalyticsadminv1alpharunaccessreportrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+entity}:runAccessReport")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"entity": c.entity,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.accounts.runAccessReport" call.
+// Exactly one of *GoogleAnalyticsAdminV1alphaRunAccessReportResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleAnalyticsAdminV1alphaRunAccessReportResponse.ServerResponse.Hea
+// der or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *AccountsRunAccessReportCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaRunAccessReportResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAnalyticsAdminV1alphaRunAccessReportResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns a customized report of data access records. The report provides records of each time a user reads Google Analytics reporting data. Access records are retained for up to 2 years. Data Access Reports can be requested for a property. The property must be in Google Analytics 360. This method is only available to Administrators. These data access records include GA4 UI Reporting, GA4 UI Explorations, GA4 Data API, and other products like Firebase \u0026 Admob that can retrieve data from Google Analytics through a linkage. These records don't include property configuration changes like adding a stream or changing a property's time zone. For configuration change history, see [searchChangeHistoryEvents](https://developers.google.com/analytics/devguides/config/admin/v1/rest/v1alpha/accounts/searchChangeHistoryEvents).",
+	//   "flatPath": "v1alpha/accounts/{accountsId}:runAccessReport",
+	//   "httpMethod": "POST",
+	//   "id": "analyticsadmin.accounts.runAccessReport",
+	//   "parameterOrder": [
+	//     "entity"
+	//   ],
+	//   "parameters": {
+	//     "entity": {
+	//       "description": "The Data Access Report supports requesting at the property level or account level. If requested at the account level, Data Access Reports include all access for all properties under that account. To request at the property level, entity should be for example 'properties/123' if \"123\" is your GA4 property ID. To request at the account level, entity should be for example 'accounts/1234' if \"1234\" is your GA4 Account ID.",
+	//       "location": "path",
+	//       "pattern": "^accounts/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+entity}:runAccessReport",
+	//   "request": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaRunAccessReportRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaRunAccessReportResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit",
+	//     "https://www.googleapis.com/auth/analytics.readonly"
 	//   ]
 	// }
 
@@ -10071,8 +10445,8 @@ type PropertiesAcknowledgeUserDataCollectionCall struct {
 
 // AcknowledgeUserDataCollection: Acknowledges the terms of user data
 // collection for the specified property. This acknowledgement must be
-// completed (either in the Google Analytics UI or via this API) before
-// MeasurementProtocolSecret resources may be created.
+// completed (either in the Google Analytics UI or through this API)
+// before MeasurementProtocolSecret resources may be created.
 //
 //   - property: The property for which to acknowledge user data
 //     collection.
@@ -10177,7 +10551,7 @@ func (c *PropertiesAcknowledgeUserDataCollectionCall) Do(opts ...googleapi.CallO
 	}
 	return ret, nil
 	// {
-	//   "description": "Acknowledges the terms of user data collection for the specified property. This acknowledgement must be completed (either in the Google Analytics UI or via this API) before MeasurementProtocolSecret resources may be created.",
+	//   "description": "Acknowledges the terms of user data collection for the specified property. This acknowledgement must be completed (either in the Google Analytics UI or through this API) before MeasurementProtocolSecret resources may be created.",
 	//   "flatPath": "v1alpha/properties/{propertiesId}:acknowledgeUserDataCollection",
 	//   "httpMethod": "POST",
 	//   "id": "analyticsadmin.properties.acknowledgeUserDataCollection",
@@ -10471,6 +10845,129 @@ func (c *PropertiesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleAnalytic
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/analytics.edit"
 	//   ]
+	// }
+
+}
+
+// method id "analyticsadmin.properties.deleteConnectedSiteTag":
+
+type PropertiesDeleteConnectedSiteTagCall struct {
+	s                                                        *Service
+	googleanalyticsadminv1alphadeleteconnectedsitetagrequest *GoogleAnalyticsAdminV1alphaDeleteConnectedSiteTagRequest
+	urlParams_                                               gensupport.URLParams
+	ctx_                                                     context.Context
+	header_                                                  http.Header
+}
+
+// DeleteConnectedSiteTag: Deletes a connected site tag for a Universal
+// Analytics property. Note: this has no effect on GA4 properties.
+func (r *PropertiesService) DeleteConnectedSiteTag(googleanalyticsadminv1alphadeleteconnectedsitetagrequest *GoogleAnalyticsAdminV1alphaDeleteConnectedSiteTagRequest) *PropertiesDeleteConnectedSiteTagCall {
+	c := &PropertiesDeleteConnectedSiteTagCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.googleanalyticsadminv1alphadeleteconnectedsitetagrequest = googleanalyticsadminv1alphadeleteconnectedsitetagrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PropertiesDeleteConnectedSiteTagCall) Fields(s ...googleapi.Field) *PropertiesDeleteConnectedSiteTagCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PropertiesDeleteConnectedSiteTagCall) Context(ctx context.Context) *PropertiesDeleteConnectedSiteTagCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PropertiesDeleteConnectedSiteTagCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesDeleteConnectedSiteTagCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleanalyticsadminv1alphadeleteconnectedsitetagrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/properties:deleteConnectedSiteTag")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.deleteConnectedSiteTag" call.
+// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *PropertiesDeleteConnectedSiteTagCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a connected site tag for a Universal Analytics property. Note: this has no effect on GA4 properties.",
+	//   "flatPath": "v1alpha/properties:deleteConnectedSiteTag",
+	//   "httpMethod": "POST",
+	//   "id": "analyticsadmin.properties.deleteConnectedSiteTag",
+	//   "parameterOrder": [],
+	//   "parameters": {},
+	//   "path": "v1alpha/properties:deleteConnectedSiteTag",
+	//   "request": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaDeleteConnectedSiteTagRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleProtobufEmpty"
+	//   }
 	// }
 
 }
@@ -11435,6 +11932,153 @@ func (c *PropertiesListCall) Pages(ctx context.Context, f func(*GoogleAnalyticsA
 	}
 }
 
+// method id "analyticsadmin.properties.listConnectedSiteTags":
+
+type PropertiesListConnectedSiteTagsCall struct {
+	s                                                       *Service
+	googleanalyticsadminv1alphalistconnectedsitetagsrequest *GoogleAnalyticsAdminV1alphaListConnectedSiteTagsRequest
+	urlParams_                                              gensupport.URLParams
+	ctx_                                                    context.Context
+	header_                                                 http.Header
+}
+
+// ListConnectedSiteTags: Lists the connected site tags for a Universal
+// Analytics property. Note: this has no effect on GA4 property.
+func (r *PropertiesService) ListConnectedSiteTags(googleanalyticsadminv1alphalistconnectedsitetagsrequest *GoogleAnalyticsAdminV1alphaListConnectedSiteTagsRequest) *PropertiesListConnectedSiteTagsCall {
+	c := &PropertiesListConnectedSiteTagsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.googleanalyticsadminv1alphalistconnectedsitetagsrequest = googleanalyticsadminv1alphalistconnectedsitetagsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PropertiesListConnectedSiteTagsCall) Fields(s ...googleapi.Field) *PropertiesListConnectedSiteTagsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PropertiesListConnectedSiteTagsCall) Context(ctx context.Context) *PropertiesListConnectedSiteTagsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PropertiesListConnectedSiteTagsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesListConnectedSiteTagsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleanalyticsadminv1alphalistconnectedsitetagsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/properties:listConnectedSiteTags")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.listConnectedSiteTags" call.
+// Exactly one of
+// *GoogleAnalyticsAdminV1alphaListConnectedSiteTagsResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleAnalyticsAdminV1alphaListConnectedSiteTagsResponse.ServerRespon
+// se.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *PropertiesListConnectedSiteTagsCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaListConnectedSiteTagsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAnalyticsAdminV1alphaListConnectedSiteTagsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists the connected site tags for a Universal Analytics property. Note: this has no effect on GA4 property.",
+	//   "flatPath": "v1alpha/properties:listConnectedSiteTags",
+	//   "httpMethod": "POST",
+	//   "id": "analyticsadmin.properties.listConnectedSiteTags",
+	//   "parameterOrder": [],
+	//   "parameters": {},
+	//   "path": "v1alpha/properties:listConnectedSiteTags",
+	//   "request": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaListConnectedSiteTagsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaListConnectedSiteTagsResponse"
+	//   }
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *PropertiesListConnectedSiteTagsCall) Pages(ctx context.Context, f func(*GoogleAnalyticsAdminV1alphaListConnectedSiteTagsResponse) error) error {
+	c.ctx_ = ctx
+	defer func(pt string) { c.googleanalyticsadminv1alphalistconnectedsitetagsrequest.PageToken = pt }(c.googleanalyticsadminv1alphalistconnectedsitetagsrequest.PageToken) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.googleanalyticsadminv1alphalistconnectedsitetagsrequest.PageToken = x.NextPageToken
+	}
+}
+
 // method id "analyticsadmin.properties.patch":
 
 type PropertiesPatchCall struct {
@@ -11619,9 +12263,13 @@ type PropertiesRunAccessReportCall struct {
 // configuration change history, see searchChangeHistoryEvents
 // (https://developers.google.com/analytics/devguides/config/admin/v1/rest/v1alpha/accounts/searchChangeHistoryEvents).
 //
-//   - entity: The Data Access Report is requested for this property. For
-//     example if "123" is your GA4 property ID, then entity should be
-//     "properties/123".
+//   - entity: The Data Access Report supports requesting at the property
+//     level or account level. If requested at the account level, Data
+//     Access Reports include all access for all properties under that
+//     account. To request at the property level, entity should be for
+//     example 'properties/123' if "123" is your GA4 property ID. To
+//     request at the account level, entity should be for example
+//     'accounts/1234' if "1234" is your GA4 Account ID.
 func (r *PropertiesService) RunAccessReport(entity string, googleanalyticsadminv1alpharunaccessreportrequest *GoogleAnalyticsAdminV1alphaRunAccessReportRequest) *PropertiesRunAccessReportCall {
 	c := &PropertiesRunAccessReportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.entity = entity
@@ -11731,7 +12379,7 @@ func (c *PropertiesRunAccessReportCall) Do(opts ...googleapi.CallOption) (*Googl
 	//   ],
 	//   "parameters": {
 	//     "entity": {
-	//       "description": "The Data Access Report is requested for this property. For example if \"123\" is your GA4 property ID, then entity should be \"properties/123\".",
+	//       "description": "The Data Access Report supports requesting at the property level or account level. If requested at the account level, Data Access Reports include all access for all properties under that account. To request at the property level, entity should be for example 'properties/123' if \"123\" is your GA4 property ID. To request at the account level, entity should be for example 'accounts/1234' if \"1234\" is your GA4 Account ID.",
 	//       "location": "path",
 	//       "pattern": "^properties/[^/]+$",
 	//       "required": true,
@@ -20595,6 +21243,795 @@ func (c *PropertiesDisplayVideo360AdvertiserLinksPatchCall) Do(opts ...googleapi
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleAnalyticsAdminV1alphaDisplayVideo360AdvertiserLink"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit"
+	//   ]
+	// }
+
+}
+
+// method id "analyticsadmin.properties.expandedDataSets.create":
+
+type PropertiesExpandedDataSetsCreateCall struct {
+	s                                          *Service
+	parent                                     string
+	googleanalyticsadminv1alphaexpandeddataset *GoogleAnalyticsAdminV1alphaExpandedDataSet
+	urlParams_                                 gensupport.URLParams
+	ctx_                                       context.Context
+	header_                                    http.Header
+}
+
+// Create: Creates a ExpandedDataSet.
+//
+// - parent: Example format: properties/1234.
+func (r *PropertiesExpandedDataSetsService) Create(parent string, googleanalyticsadminv1alphaexpandeddataset *GoogleAnalyticsAdminV1alphaExpandedDataSet) *PropertiesExpandedDataSetsCreateCall {
+	c := &PropertiesExpandedDataSetsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleanalyticsadminv1alphaexpandeddataset = googleanalyticsadminv1alphaexpandeddataset
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PropertiesExpandedDataSetsCreateCall) Fields(s ...googleapi.Field) *PropertiesExpandedDataSetsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PropertiesExpandedDataSetsCreateCall) Context(ctx context.Context) *PropertiesExpandedDataSetsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PropertiesExpandedDataSetsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesExpandedDataSetsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleanalyticsadminv1alphaexpandeddataset)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/expandedDataSets")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.expandedDataSets.create" call.
+// Exactly one of *GoogleAnalyticsAdminV1alphaExpandedDataSet or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleAnalyticsAdminV1alphaExpandedDataSet.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *PropertiesExpandedDataSetsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaExpandedDataSet, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAnalyticsAdminV1alphaExpandedDataSet{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a ExpandedDataSet.",
+	//   "flatPath": "v1alpha/properties/{propertiesId}/expandedDataSets",
+	//   "httpMethod": "POST",
+	//   "id": "analyticsadmin.properties.expandedDataSets.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. Example format: properties/1234",
+	//       "location": "path",
+	//       "pattern": "^properties/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+parent}/expandedDataSets",
+	//   "request": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaExpandedDataSet"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaExpandedDataSet"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit"
+	//   ]
+	// }
+
+}
+
+// method id "analyticsadmin.properties.expandedDataSets.delete":
+
+type PropertiesExpandedDataSetsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a ExpandedDataSet on a property.
+//
+// - name: Example format: properties/1234/expandedDataSets/5678.
+func (r *PropertiesExpandedDataSetsService) Delete(name string) *PropertiesExpandedDataSetsDeleteCall {
+	c := &PropertiesExpandedDataSetsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PropertiesExpandedDataSetsDeleteCall) Fields(s ...googleapi.Field) *PropertiesExpandedDataSetsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PropertiesExpandedDataSetsDeleteCall) Context(ctx context.Context) *PropertiesExpandedDataSetsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PropertiesExpandedDataSetsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesExpandedDataSetsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.expandedDataSets.delete" call.
+// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *PropertiesExpandedDataSetsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a ExpandedDataSet on a property.",
+	//   "flatPath": "v1alpha/properties/{propertiesId}/expandedDataSets/{expandedDataSetsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "analyticsadmin.properties.expandedDataSets.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Example format: properties/1234/expandedDataSets/5678",
+	//       "location": "path",
+	//       "pattern": "^properties/[^/]+/expandedDataSets/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleProtobufEmpty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit"
+	//   ]
+	// }
+
+}
+
+// method id "analyticsadmin.properties.expandedDataSets.get":
+
+type PropertiesExpandedDataSetsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Lookup for a single ExpandedDataSet.
+//
+//   - name: The name of the Audience to get. Example format:
+//     properties/1234/expandedDataSets/5678.
+func (r *PropertiesExpandedDataSetsService) Get(name string) *PropertiesExpandedDataSetsGetCall {
+	c := &PropertiesExpandedDataSetsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PropertiesExpandedDataSetsGetCall) Fields(s ...googleapi.Field) *PropertiesExpandedDataSetsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *PropertiesExpandedDataSetsGetCall) IfNoneMatch(entityTag string) *PropertiesExpandedDataSetsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PropertiesExpandedDataSetsGetCall) Context(ctx context.Context) *PropertiesExpandedDataSetsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PropertiesExpandedDataSetsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesExpandedDataSetsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.expandedDataSets.get" call.
+// Exactly one of *GoogleAnalyticsAdminV1alphaExpandedDataSet or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleAnalyticsAdminV1alphaExpandedDataSet.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *PropertiesExpandedDataSetsGetCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaExpandedDataSet, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAnalyticsAdminV1alphaExpandedDataSet{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lookup for a single ExpandedDataSet.",
+	//   "flatPath": "v1alpha/properties/{propertiesId}/expandedDataSets/{expandedDataSetsId}",
+	//   "httpMethod": "GET",
+	//   "id": "analyticsadmin.properties.expandedDataSets.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the Audience to get. Example format: properties/1234/expandedDataSets/5678",
+	//       "location": "path",
+	//       "pattern": "^properties/[^/]+/expandedDataSets/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaExpandedDataSet"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit",
+	//     "https://www.googleapis.com/auth/analytics.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "analyticsadmin.properties.expandedDataSets.list":
+
+type PropertiesExpandedDataSetsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists ExpandedDataSets on a property.
+//
+// - parent: Example format: properties/1234.
+func (r *PropertiesExpandedDataSetsService) List(parent string) *PropertiesExpandedDataSetsListCall {
+	c := &PropertiesExpandedDataSetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of resources to return. If unspecified, at most 50 resources will be
+// returned. The maximum value is 200 (higher values will be coerced to
+// the maximum).
+func (c *PropertiesExpandedDataSetsListCall) PageSize(pageSize int64) *PropertiesExpandedDataSetsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `ListExpandedDataSets` call. Provide this to
+// retrieve the subsequent page. When paginating, all other parameters
+// provided to `ListExpandedDataSet` must match the call that provided
+// the page token.
+func (c *PropertiesExpandedDataSetsListCall) PageToken(pageToken string) *PropertiesExpandedDataSetsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PropertiesExpandedDataSetsListCall) Fields(s ...googleapi.Field) *PropertiesExpandedDataSetsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *PropertiesExpandedDataSetsListCall) IfNoneMatch(entityTag string) *PropertiesExpandedDataSetsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PropertiesExpandedDataSetsListCall) Context(ctx context.Context) *PropertiesExpandedDataSetsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PropertiesExpandedDataSetsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesExpandedDataSetsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/expandedDataSets")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.expandedDataSets.list" call.
+// Exactly one of
+// *GoogleAnalyticsAdminV1alphaListExpandedDataSetsResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleAnalyticsAdminV1alphaListExpandedDataSetsResponse.ServerRespons
+// e.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *PropertiesExpandedDataSetsListCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaListExpandedDataSetsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAnalyticsAdminV1alphaListExpandedDataSetsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists ExpandedDataSets on a property.",
+	//   "flatPath": "v1alpha/properties/{propertiesId}/expandedDataSets",
+	//   "httpMethod": "GET",
+	//   "id": "analyticsadmin.properties.expandedDataSets.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The maximum number of resources to return. If unspecified, at most 50 resources will be returned. The maximum value is 200 (higher values will be coerced to the maximum).",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A page token, received from a previous `ListExpandedDataSets` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListExpandedDataSet` must match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Example format: properties/1234",
+	//       "location": "path",
+	//       "pattern": "^properties/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+parent}/expandedDataSets",
+	//   "response": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaListExpandedDataSetsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit",
+	//     "https://www.googleapis.com/auth/analytics.readonly"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *PropertiesExpandedDataSetsListCall) Pages(ctx context.Context, f func(*GoogleAnalyticsAdminV1alphaListExpandedDataSetsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "analyticsadmin.properties.expandedDataSets.patch":
+
+type PropertiesExpandedDataSetsPatchCall struct {
+	s                                          *Service
+	name                                       string
+	googleanalyticsadminv1alphaexpandeddataset *GoogleAnalyticsAdminV1alphaExpandedDataSet
+	urlParams_                                 gensupport.URLParams
+	ctx_                                       context.Context
+	header_                                    http.Header
+}
+
+// Patch: Updates a ExpandedDataSet on a property.
+//
+//   - name: Output only. The resource name for this ExpandedDataSet
+//     resource. Format:
+//     properties/{property_id}/expandedDataSets/{expanded_data_set}.
+func (r *PropertiesExpandedDataSetsService) Patch(name string, googleanalyticsadminv1alphaexpandeddataset *GoogleAnalyticsAdminV1alphaExpandedDataSet) *PropertiesExpandedDataSetsPatchCall {
+	c := &PropertiesExpandedDataSetsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleanalyticsadminv1alphaexpandeddataset = googleanalyticsadminv1alphaexpandeddataset
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. The
+// list of fields to be updated. Field names must be in snake case
+// (e.g., "field_to_update"). Omitted fields will not be updated. To
+// replace the entire entity, use one path with the string "*" to match
+// all fields.
+func (c *PropertiesExpandedDataSetsPatchCall) UpdateMask(updateMask string) *PropertiesExpandedDataSetsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PropertiesExpandedDataSetsPatchCall) Fields(s ...googleapi.Field) *PropertiesExpandedDataSetsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PropertiesExpandedDataSetsPatchCall) Context(ctx context.Context) *PropertiesExpandedDataSetsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PropertiesExpandedDataSetsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesExpandedDataSetsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleanalyticsadminv1alphaexpandeddataset)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.expandedDataSets.patch" call.
+// Exactly one of *GoogleAnalyticsAdminV1alphaExpandedDataSet or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleAnalyticsAdminV1alphaExpandedDataSet.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *PropertiesExpandedDataSetsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaExpandedDataSet, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAnalyticsAdminV1alphaExpandedDataSet{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a ExpandedDataSet on a property.",
+	//   "flatPath": "v1alpha/properties/{propertiesId}/expandedDataSets/{expandedDataSetsId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "analyticsadmin.properties.expandedDataSets.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Output only. The resource name for this ExpandedDataSet resource. Format: properties/{property_id}/expandedDataSets/{expanded_data_set}",
+	//       "location": "path",
+	//       "pattern": "^properties/[^/]+/expandedDataSets/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Required. The list of fields to be updated. Field names must be in snake case (e.g., \"field_to_update\"). Omitted fields will not be updated. To replace the entire entity, use one path with the string \"*\" to match all fields.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "request": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaExpandedDataSet"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaExpandedDataSet"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/analytics.edit"

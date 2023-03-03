@@ -627,7 +627,7 @@ func (s *Binding) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// BufferTaskRequest: Request message for BufferTask.
+// BufferTaskRequest: LINT.IfChange Request message for BufferTask.
 type BufferTaskRequest struct {
 	// Body: Optional. Body of the HTTP request. The body can take any
 	// generic value. The value is written to the HttpRequest of the [Task].

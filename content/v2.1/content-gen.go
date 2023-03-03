@@ -123,6 +123,7 @@ func New(client *http.Client) (*APIService, error) {
 	s.Buyongoogleprograms = NewBuyongoogleprogramsService(s)
 	s.Collections = NewCollectionsService(s)
 	s.Collectionstatuses = NewCollectionstatusesService(s)
+	s.Conversionsources = NewConversionsourcesService(s)
 	s.Csses = NewCssesService(s)
 	s.Datafeeds = NewDatafeedsService(s)
 	s.Datafeedstatuses = NewDatafeedstatusesService(s)
@@ -171,6 +172,8 @@ type APIService struct {
 	Collections *CollectionsService
 
 	Collectionstatuses *CollectionstatusesService
+
+	Conversionsources *ConversionsourcesService
 
 	Csses *CssesService
 
@@ -325,6 +328,15 @@ func NewCollectionstatusesService(s *APIService) *CollectionstatusesService {
 }
 
 type CollectionstatusesService struct {
+	s *APIService
+}
+
+func NewConversionsourcesService(s *APIService) *ConversionsourcesService {
+	rs := &ConversionsourcesService{s: s}
+	return rs
+}
+
+type ConversionsourcesService struct {
 	s *APIService
 }
 
@@ -655,6 +667,9 @@ type Account struct {
 	// BusinessInformation: The business information of the account.
 	BusinessInformation *AccountBusinessInformation `json:"businessInformation,omitempty"`
 
+	// ConversionSettings: Settings for conversion tracking.
+	ConversionSettings *AccountConversionSettings `json:"conversionSettings,omitempty"`
+
 	// CssId: ID of CSS the account belongs to.
 	CssId uint64 `json:"cssId,omitempty,string"`
 
@@ -883,7 +898,8 @@ type AccountBusinessInformation struct {
 	// if explicitly set.
 	KoreanBusinessRegistrationNumber string `json:"koreanBusinessRegistrationNumber,omitempty"`
 
-	// PhoneNumber: The phone number of the business. This can only be
+	// PhoneNumber: The phone number of the business in E.164
+	// (https://en.wikipedia.org/wiki/E.164) format. This can only be
 	// updated if a verified phone number is not already set. To replace a
 	// verified phone number use the `Accounts.requestphoneverification` and
 	// `Accounts.verifyphonenumber`.
@@ -914,6 +930,39 @@ type AccountBusinessInformation struct {
 
 func (s *AccountBusinessInformation) MarshalJSON() ([]byte, error) {
 	type NoMethod AccountBusinessInformation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AccountConversionSettings: Settings for conversion tracking.
+type AccountConversionSettings struct {
+	// FreeListingsAutoTaggingEnabled: When enabled, free listing URLs have
+	// a parameter to enable conversion tracking for products owned by the
+	// current merchant account. See auto-tagging
+	// (https://support.google.com/merchants/answer/11127659).
+	FreeListingsAutoTaggingEnabled bool `json:"freeListingsAutoTaggingEnabled,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "FreeListingsAutoTaggingEnabled") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "FreeListingsAutoTaggingEnabled") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AccountConversionSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod AccountConversionSettings
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2745,7 +2794,95 @@ func (s *Amount) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// BestSellers: Fields related to the Best Sellers reports
+// AttributionSettings: Represents attribution settings for conversion
+// sources receiving pre-attribution data.
+type AttributionSettings struct {
+	// AttributionLookbackWindowInDays: Required. Lookback windows (in days)
+	// used for attribution in this source. Supported values are 7, 30, 60,
+	// 90.
+	AttributionLookbackWindowInDays int64 `json:"attributionLookbackWindowInDays,omitempty"`
+
+	// AttributionModel: Required. Attribution model.
+	//
+	// Possible values:
+	//   "ATTRIBUTION_MODEL_UNSPECIFIED"
+	//   "CROSS_CHANNEL_LAST_CLICK" - Cross-channel Last Click model.
+	//   "ADS_PREFERRED_LAST_CLICK" - Ads-preferred Last Click model.
+	//   "CROSS_CHANNEL_DATA_DRIVEN" - Cross-channel Data Driven model.
+	//   "CROSS_CHANNEL_FIRST_CLICK" - Cross-channel Frist Click model.
+	//   "CROSS_CHANNEL_LINEAR" - Cross-channel Linear model.
+	//   "CROSS_CHANNEL_POSITION_BASED" - Cross-channel Position Based
+	// model.
+	//   "CROSS_CHANNEL_TIME_DECAY" - Cross-channel Time Decay model.
+	AttributionModel string `json:"attributionModel,omitempty"`
+
+	// ConversionType: Immutable. Unordered list. List of different
+	// conversion types a conversion event can be classified as. A standard
+	// "purchase" type will be automatically created if this list is empty
+	// at creation time.
+	ConversionType []*AttributionSettingsConversionType `json:"conversionType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AttributionLookbackWindowInDays") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "AttributionLookbackWindowInDays") to include in API requests with
+	// the JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AttributionSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod AttributionSettings
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AttributionSettingsConversionType: Message representing a types of
+// conversion events
+type AttributionSettingsConversionType struct {
+	// IncludeInReporting: Output only. Option indicating if the type should
+	// be included in Merchant Center reporting.
+	IncludeInReporting bool `json:"includeInReporting,omitempty"`
+
+	// Name: Output only. Conversion event name, as it'll be reported by the
+	// client.
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IncludeInReporting")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IncludeInReporting") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AttributionSettingsConversionType) MarshalJSON() ([]byte, error) {
+	type NoMethod AttributionSettingsConversionType
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BestSellers: Fields related to the Best sellers reports
 // (https://support.google.com/merchants/answer/9488679).
 type BestSellers struct {
 	// CategoryId: Google product category ID to calculate the ranking for,
@@ -3454,6 +3591,72 @@ type CollectionStatusItemLevelIssue struct {
 
 func (s *CollectionStatusItemLevelIssue) MarshalJSON() ([]byte, error) {
 	type NoMethod CollectionStatusItemLevelIssue
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ConversionSource: Represents a conversion source owned by a Merchant
+// account. A merchant account can have up to 200 conversion sources.
+type ConversionSource struct {
+	// ConversionSourceId: Output only. Generated by the Content API upon
+	// creation of a new `ConversionSource`. Format: [a-z]{4}:.+ The four
+	// characters before the colon represent the type of conversio source.
+	// Content after the colon represents the ID of the conversion source
+	// within that type. The ID of two different conversion sources might be
+	// the same across different types. The following type prefixes are
+	// supported: - galk: For GoogleAnalyticsLink sources. - mcdn: For
+	// MerchantCenterDestination sources.
+	ConversionSourceId string `json:"conversionSourceId,omitempty"`
+
+	// ExpireTime: Output only. The time when an archived conversion source
+	// becomes permanently deleted and is no longer available to undelete.
+	ExpireTime string `json:"expireTime,omitempty"`
+
+	// GoogleAnalyticsLink: Immutable. Conversion Source of type "Link to
+	// Google Analytics Property".
+	GoogleAnalyticsLink *GoogleAnalyticsLink `json:"googleAnalyticsLink,omitempty"`
+
+	// MerchantCenterDestination: Conversion Source of type "Merchant Center
+	// Tag Destination".
+	MerchantCenterDestination *MerchantCenterDestination `json:"merchantCenterDestination,omitempty"`
+
+	// State: Output only. Current state of this conversion source. Can't be
+	// edited through the API.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED"
+	//   "ACTIVE" - Conversion source is fully functional.
+	//   "ARCHIVED" - Conversion source has been archived in the last 30
+	// days and not currently functional. Can be restored using the undelete
+	// method.
+	//   "PENDING" - Conversion source creation has started but not fully
+	// finished yet.
+	State string `json:"state,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "ConversionSourceId")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConversionSourceId") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ConversionSource) MarshalJSON() ([]byte, error) {
+	type NoMethod ConversionSource
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5026,6 +5229,46 @@ func (s *GmbAccountsGmbAccount) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAnalyticsLink: "Google Analytics Link" sources can be used to
+// get conversion data from an existing Google Analytics property into
+// the linked Merchant Center account.
+type GoogleAnalyticsLink struct {
+	// AttributionSettings: Output only. Attribution settings for the linked
+	// Google Analytics property.
+	AttributionSettings *AttributionSettings `json:"attributionSettings,omitempty"`
+
+	// PropertyId: Required. Immutable. ID of the Google Analytics property
+	// the merchant is linked to.
+	PropertyId int64 `json:"propertyId,omitempty,string"`
+
+	// PropertyName: Output only. Name of the Google Analytics property the
+	// merchant is linked to.
+	PropertyName string `json:"propertyName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AttributionSettings")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AttributionSettings") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsLink) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsLink
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Headers: A non-empty list of row or column headers for a table.
 // Exactly one of `prices`, `weights`, `numItems`,
 // `postalCodeGroupNames`, or `location` must be set.
@@ -6220,6 +6463,43 @@ func (s *ListCollectionsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ListConversionSourcesResponse: Response message for the
+// ListConversionSources method.
+type ListConversionSourcesResponse struct {
+	// ConversionSources: List of conversion sources.
+	ConversionSources []*ConversionSource `json:"conversionSources,omitempty"`
+
+	// NextPageToken: Token to be used to fetch the next results page.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "ConversionSources")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConversionSources") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListConversionSourcesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListConversionSourcesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ListCssesResponse: The response message for the `ListCsses` method
 type ListCssesResponse struct {
 	// Csses: The CSS domains affiliated with the specified CSS group.
@@ -6773,6 +7053,51 @@ func (s *LoyaltyPoints) UnmarshalJSON(data []byte) error {
 	}
 	s.Ratio = float64(s1.Ratio)
 	return nil
+}
+
+// MerchantCenterDestination: "Merchant Center Destination" sources can
+// be used to send conversion events from a website using a Google tag
+// directly to a Merchant Center account where the source is created.
+type MerchantCenterDestination struct {
+	// AttributionSettings: Required. Attribution settings being used for
+	// the Merchant Center Destination.
+	AttributionSettings *AttributionSettings `json:"attributionSettings,omitempty"`
+
+	// CurrencyCode: Required. Three-letter currency code (ISO 4217). The
+	// currency code defines in which currency the conversions sent to this
+	// destination will be reported in Merchant Center.
+	CurrencyCode string `json:"currencyCode,omitempty"`
+
+	// DestinationId: Output only. Merchant Center Destination ID.
+	DestinationId string `json:"destinationId,omitempty"`
+
+	// DisplayName: Required. Merchant-specified display name for the
+	// destination. This is the name that identifies the conversion source
+	// within the Merchant Center UI. Limited to 64 characters.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AttributionSettings")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AttributionSettings") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MerchantCenterDestination) MarshalJSON() ([]byte, error) {
+	type NoMethod MerchantCenterDestination
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // MerchantOrderReturn: Order return. Production access (all methods)
@@ -12217,7 +12542,7 @@ func (s *PriceAmount) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// PriceCompetitiveness: Price Competitiveness fields requested by the
+// PriceCompetitiveness: Price competitiveness fields requested by the
 // merchant in the query. Field values are only set if the merchant
 // queries `PriceCompetitivenessProductView`.
 // https://support.google.com/merchants/answer/9626903
@@ -12259,7 +12584,7 @@ func (s *PriceCompetitiveness) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// PriceInsights: Price Insights fields requested by the merchant in the
+// PriceInsights: Price insights fields requested by the merchant in the
 // query. Field values are only set if the merchant queries
 // `PriceInsightsProductView`.
 // https://support.google.com/merchants/answer/11916926
@@ -12503,8 +12828,8 @@ type Product struct {
 
 	// Id: The REST ID of the product. Content API methods that operate on
 	// products take this as their `productId` parameter. The REST ID for a
-	// product is of the form channel:contentLanguage: targetCountry:
-	// offerId.
+	// product has one of the 2 forms channel:contentLanguage:
+	// targetCountry: offerId or channel:contentLanguage:feedLabel: offerId.
 	Id string `json:"id,omitempty"`
 
 	// IdentifierExists: False when the item does not have unique product
@@ -15235,7 +15560,7 @@ func (s *RegionalinventoryCustomBatchResponseEntry) MarshalJSON() ([]byte, error
 
 // ReportRow: Result row returned from the search query.
 type ReportRow struct {
-	// BestSellers: Best Sellers fields requested by the merchant in the
+	// BestSellers: Best sellers fields requested by the merchant in the
 	// query. Field values are only set if the merchant queries
 	// `BestSellersProductClusterView` or `BestSellersBrandView`.
 	BestSellers *BestSellers `json:"bestSellers,omitempty"`
@@ -15248,12 +15573,12 @@ type ReportRow struct {
 	// values are only set for metrics requested explicitly in the query.
 	Metrics *Metrics `json:"metrics,omitempty"`
 
-	// PriceCompetitiveness: Price Competitiveness fields requested by the
+	// PriceCompetitiveness: Price competitiveness fields requested by the
 	// merchant in the query. Field values are only set if the merchant
 	// queries `PriceCompetitivenessProductView`.
 	PriceCompetitiveness *PriceCompetitiveness `json:"priceCompetitiveness,omitempty"`
 
-	// PriceInsights: Price Insights fields requested by the merchant in the
+	// PriceInsights: Price insights fields requested by the merchant in the
 	// query. Field values are only set if the merchant queries
 	// `PriceInsightsProductView`.
 	PriceInsights *PriceInsights `json:"priceInsights,omitempty"`
@@ -18959,6 +19284,11 @@ func (s *TransitTableTransitTimeRowTransitTimeValue) MarshalJSON() ([]byte, erro
 	type NoMethod TransitTableTransitTimeRowTransitTimeValue
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// UndeleteConversionSourceRequest: Request message for the
+// UndeleteConversionSource method.
+type UndeleteConversionSourceRequest struct {
 }
 
 type UnitInvoice struct {
@@ -25809,6 +26139,927 @@ func (c *CollectionstatusesListCall) Pages(ctx context.Context, f func(*ListColl
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "content.conversionsources.create":
+
+type ConversionsourcesCreateCall struct {
+	s                *APIService
+	merchantId       int64
+	conversionsource *ConversionSource
+	urlParams_       gensupport.URLParams
+	ctx_             context.Context
+	header_          http.Header
+}
+
+// Create: Creates a new conversion source.
+//
+//   - merchantId: The ID of the account that owns the new conversion
+//     source.
+func (r *ConversionsourcesService) Create(merchantId int64, conversionsource *ConversionSource) *ConversionsourcesCreateCall {
+	c := &ConversionsourcesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.merchantId = merchantId
+	c.conversionsource = conversionsource
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ConversionsourcesCreateCall) Fields(s ...googleapi.Field) *ConversionsourcesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ConversionsourcesCreateCall) Context(ctx context.Context) *ConversionsourcesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ConversionsourcesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ConversionsourcesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.conversionsource)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/conversionsources")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"merchantId": strconv.FormatInt(c.merchantId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "content.conversionsources.create" call.
+// Exactly one of *ConversionSource or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ConversionSource.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ConversionsourcesCreateCall) Do(opts ...googleapi.CallOption) (*ConversionSource, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ConversionSource{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new conversion source.",
+	//   "flatPath": "{merchantId}/conversionsources",
+	//   "httpMethod": "POST",
+	//   "id": "content.conversionsources.create",
+	//   "parameterOrder": [
+	//     "merchantId"
+	//   ],
+	//   "parameters": {
+	//     "merchantId": {
+	//       "description": "Required. The ID of the account that owns the new conversion source.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{merchantId}/conversionsources",
+	//   "request": {
+	//     "$ref": "ConversionSource"
+	//   },
+	//   "response": {
+	//     "$ref": "ConversionSource"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/content"
+	//   ]
+	// }
+
+}
+
+// method id "content.conversionsources.delete":
+
+type ConversionsourcesDeleteCall struct {
+	s                  *APIService
+	merchantId         int64
+	conversionSourceId string
+	urlParams_         gensupport.URLParams
+	ctx_               context.Context
+	header_            http.Header
+}
+
+// Delete: Archives an existing conversion source. It will be
+// recoverable for 30 days. This archiving behavior is not typical in
+// the Content API and unique to this service.
+//
+//   - conversionSourceId: The ID of the conversion source to be deleted.
+//   - merchantId: The ID of the account that owns the new conversion
+//     source.
+func (r *ConversionsourcesService) Delete(merchantId int64, conversionSourceId string) *ConversionsourcesDeleteCall {
+	c := &ConversionsourcesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.merchantId = merchantId
+	c.conversionSourceId = conversionSourceId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ConversionsourcesDeleteCall) Fields(s ...googleapi.Field) *ConversionsourcesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ConversionsourcesDeleteCall) Context(ctx context.Context) *ConversionsourcesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ConversionsourcesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ConversionsourcesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/conversionsources/{conversionSourceId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"merchantId":         strconv.FormatInt(c.merchantId, 10),
+		"conversionSourceId": c.conversionSourceId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "content.conversionsources.delete" call.
+func (c *ConversionsourcesDeleteCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return gensupport.WrapError(err)
+	}
+	return nil
+	// {
+	//   "description": "Archives an existing conversion source. It will be recoverable for 30 days. This archiving behavior is not typical in the Content API and unique to this service.",
+	//   "flatPath": "{merchantId}/conversionsources/{conversionSourceId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "content.conversionsources.delete",
+	//   "parameterOrder": [
+	//     "merchantId",
+	//     "conversionSourceId"
+	//   ],
+	//   "parameters": {
+	//     "conversionSourceId": {
+	//       "description": "Required. The ID of the conversion source to be deleted.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "merchantId": {
+	//       "description": "Required. The ID of the account that owns the new conversion source.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{merchantId}/conversionsources/{conversionSourceId}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/content"
+	//   ]
+	// }
+
+}
+
+// method id "content.conversionsources.get":
+
+type ConversionsourcesGetCall struct {
+	s                  *APIService
+	merchantId         int64
+	conversionSourceId string
+	urlParams_         gensupport.URLParams
+	ifNoneMatch_       string
+	ctx_               context.Context
+	header_            http.Header
+}
+
+// Get: Fetches a conversion source.
+//
+//   - conversionSourceId: The REST ID of the collection.
+//   - merchantId: The ID of the account that owns the new conversion
+//     source.
+func (r *ConversionsourcesService) Get(merchantId int64, conversionSourceId string) *ConversionsourcesGetCall {
+	c := &ConversionsourcesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.merchantId = merchantId
+	c.conversionSourceId = conversionSourceId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ConversionsourcesGetCall) Fields(s ...googleapi.Field) *ConversionsourcesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ConversionsourcesGetCall) IfNoneMatch(entityTag string) *ConversionsourcesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ConversionsourcesGetCall) Context(ctx context.Context) *ConversionsourcesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ConversionsourcesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ConversionsourcesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/conversionsources/{conversionSourceId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"merchantId":         strconv.FormatInt(c.merchantId, 10),
+		"conversionSourceId": c.conversionSourceId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "content.conversionsources.get" call.
+// Exactly one of *ConversionSource or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ConversionSource.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ConversionsourcesGetCall) Do(opts ...googleapi.CallOption) (*ConversionSource, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ConversionSource{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Fetches a conversion source.",
+	//   "flatPath": "{merchantId}/conversionsources/{conversionSourceId}",
+	//   "httpMethod": "GET",
+	//   "id": "content.conversionsources.get",
+	//   "parameterOrder": [
+	//     "merchantId",
+	//     "conversionSourceId"
+	//   ],
+	//   "parameters": {
+	//     "conversionSourceId": {
+	//       "description": "Required. The REST ID of the collection.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "merchantId": {
+	//       "description": "Required. The ID of the account that owns the new conversion source.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{merchantId}/conversionsources/{conversionSourceId}",
+	//   "response": {
+	//     "$ref": "ConversionSource"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/content"
+	//   ]
+	// }
+
+}
+
+// method id "content.conversionsources.list":
+
+type ConversionsourcesListCall struct {
+	s            *APIService
+	merchantId   int64
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Retrieves the list of conversion sources the caller has access
+// to.
+//
+//   - merchantId: The ID of the account that owns the new conversion
+//     source.
+func (r *ConversionsourcesService) List(merchantId int64) *ConversionsourcesListCall {
+	c := &ConversionsourcesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.merchantId = merchantId
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of conversion sources to return in a page. If no `page_size` is
+// specified, `100` is used as the default value. The maximum value is
+// `200`. Values above `200` will be coerced to `200`. Regardless of
+// pagination, at most `200` conversion sources are returned in total.
+func (c *ConversionsourcesListCall) PageSize(pageSize int64) *ConversionsourcesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Page token.
+func (c *ConversionsourcesListCall) PageToken(pageToken string) *ConversionsourcesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ShowDeleted sets the optional parameter "showDeleted": If true, also
+// returns archived conversion sources.
+func (c *ConversionsourcesListCall) ShowDeleted(showDeleted bool) *ConversionsourcesListCall {
+	c.urlParams_.Set("showDeleted", fmt.Sprint(showDeleted))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ConversionsourcesListCall) Fields(s ...googleapi.Field) *ConversionsourcesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ConversionsourcesListCall) IfNoneMatch(entityTag string) *ConversionsourcesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ConversionsourcesListCall) Context(ctx context.Context) *ConversionsourcesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ConversionsourcesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ConversionsourcesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/conversionsources")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"merchantId": strconv.FormatInt(c.merchantId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "content.conversionsources.list" call.
+// Exactly one of *ListConversionSourcesResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListConversionSourcesResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ConversionsourcesListCall) Do(opts ...googleapi.CallOption) (*ListConversionSourcesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListConversionSourcesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the list of conversion sources the caller has access to.",
+	//   "flatPath": "{merchantId}/conversionsources",
+	//   "httpMethod": "GET",
+	//   "id": "content.conversionsources.list",
+	//   "parameterOrder": [
+	//     "merchantId"
+	//   ],
+	//   "parameters": {
+	//     "merchantId": {
+	//       "description": "Required. The ID of the account that owns the new conversion source.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The maximum number of conversion sources to return in a page. If no `page_size` is specified, `100` is used as the default value. The maximum value is `200`. Values above `200` will be coerced to `200`. Regardless of pagination, at most `200` conversion sources are returned in total.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "showDeleted": {
+	//       "description": "If true, also returns archived conversion sources.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     }
+	//   },
+	//   "path": "{merchantId}/conversionsources",
+	//   "response": {
+	//     "$ref": "ListConversionSourcesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/content"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ConversionsourcesListCall) Pages(ctx context.Context, f func(*ListConversionSourcesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "content.conversionsources.patch":
+
+type ConversionsourcesPatchCall struct {
+	s                  *APIService
+	merchantId         int64
+	conversionSourceId string
+	conversionsource   *ConversionSource
+	urlParams_         gensupport.URLParams
+	ctx_               context.Context
+	header_            http.Header
+}
+
+// Patch: Updates information of an existing conversion source.
+//
+//   - conversionSourceId: The ID of the conversion source to be updated.
+//   - merchantId: The ID of the account that owns the new conversion
+//     source.
+func (r *ConversionsourcesService) Patch(merchantId int64, conversionSourceId string, conversionsource *ConversionSource) *ConversionsourcesPatchCall {
+	c := &ConversionsourcesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.merchantId = merchantId
+	c.conversionSourceId = conversionSourceId
+	c.conversionsource = conversionsource
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. List
+// of fields being updated.
+func (c *ConversionsourcesPatchCall) UpdateMask(updateMask string) *ConversionsourcesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ConversionsourcesPatchCall) Fields(s ...googleapi.Field) *ConversionsourcesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ConversionsourcesPatchCall) Context(ctx context.Context) *ConversionsourcesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ConversionsourcesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ConversionsourcesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.conversionsource)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/conversionsources/{conversionSourceId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"merchantId":         strconv.FormatInt(c.merchantId, 10),
+		"conversionSourceId": c.conversionSourceId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "content.conversionsources.patch" call.
+// Exactly one of *ConversionSource or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ConversionSource.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ConversionsourcesPatchCall) Do(opts ...googleapi.CallOption) (*ConversionSource, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ConversionSource{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates information of an existing conversion source.",
+	//   "flatPath": "{merchantId}/conversionsources/{conversionSourceId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "content.conversionsources.patch",
+	//   "parameterOrder": [
+	//     "merchantId",
+	//     "conversionSourceId"
+	//   ],
+	//   "parameters": {
+	//     "conversionSourceId": {
+	//       "description": "Required. The ID of the conversion source to be updated.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "merchantId": {
+	//       "description": "Required. The ID of the account that owns the new conversion source.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Required. List of fields being updated.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{merchantId}/conversionsources/{conversionSourceId}",
+	//   "request": {
+	//     "$ref": "ConversionSource"
+	//   },
+	//   "response": {
+	//     "$ref": "ConversionSource"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/content"
+	//   ]
+	// }
+
+}
+
+// method id "content.conversionsources.undelete":
+
+type ConversionsourcesUndeleteCall struct {
+	s                               *APIService
+	merchantId                      int64
+	conversionSourceId              string
+	undeleteconversionsourcerequest *UndeleteConversionSourceRequest
+	urlParams_                      gensupport.URLParams
+	ctx_                            context.Context
+	header_                         http.Header
+}
+
+// Undelete: Re-enables an archived conversion source.
+//
+//   - conversionSourceId: The ID of the conversion source to be
+//     undeleted.
+//   - merchantId: The ID of the account that owns the new conversion
+//     source.
+func (r *ConversionsourcesService) Undelete(merchantId int64, conversionSourceId string, undeleteconversionsourcerequest *UndeleteConversionSourceRequest) *ConversionsourcesUndeleteCall {
+	c := &ConversionsourcesUndeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.merchantId = merchantId
+	c.conversionSourceId = conversionSourceId
+	c.undeleteconversionsourcerequest = undeleteconversionsourcerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ConversionsourcesUndeleteCall) Fields(s ...googleapi.Field) *ConversionsourcesUndeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ConversionsourcesUndeleteCall) Context(ctx context.Context) *ConversionsourcesUndeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ConversionsourcesUndeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ConversionsourcesUndeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.undeleteconversionsourcerequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/conversionsources/{conversionSourceId}:undelete")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"merchantId":         strconv.FormatInt(c.merchantId, 10),
+		"conversionSourceId": c.conversionSourceId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "content.conversionsources.undelete" call.
+func (c *ConversionsourcesUndeleteCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return gensupport.WrapError(err)
+	}
+	return nil
+	// {
+	//   "description": "Re-enables an archived conversion source.",
+	//   "flatPath": "{merchantId}/conversionsources/{conversionSourceId}:undelete",
+	//   "httpMethod": "POST",
+	//   "id": "content.conversionsources.undelete",
+	//   "parameterOrder": [
+	//     "merchantId",
+	//     "conversionSourceId"
+	//   ],
+	//   "parameters": {
+	//     "conversionSourceId": {
+	//       "description": "Required. The ID of the conversion source to be undeleted.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "merchantId": {
+	//       "description": "Required. The ID of the account that owns the new conversion source.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{merchantId}/conversionsources/{conversionSourceId}:undelete",
+	//   "request": {
+	//     "$ref": "UndeleteConversionSourceRequest"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/content"
+	//   ]
+	// }
+
 }
 
 // method id "content.csses.get":

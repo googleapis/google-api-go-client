@@ -1769,6 +1769,12 @@ type DriveCapabilities struct {
 	// change the driveMembersOnly restriction of this shared drive.
 	CanChangeDriveMembersOnlyRestriction bool `json:"canChangeDriveMembersOnlyRestriction,omitempty"`
 
+	// CanChangeSharingFoldersRequiresOrganizerPermissionRestriction:
+	// Whether the current user can change the
+	// sharingFoldersRequiresOrganizerPermission restriction of this shared
+	// drive.
+	CanChangeSharingFoldersRequiresOrganizerPermissionRestriction bool `json:"canChangeSharingFoldersRequiresOrganizerPermissionRestriction,omitempty"`
+
 	// CanComment: Whether the current user can comment on files in this
 	// shared drive.
 	CanComment bool `json:"canComment,omitempty"`
@@ -1872,6 +1878,11 @@ type DriveRestrictions struct {
 	// DriveMembersOnly: Whether access to items inside this shared drive is
 	// restricted to its members.
 	DriveMembersOnly bool `json:"driveMembersOnly,omitempty"`
+
+	// SharingFoldersRequiresOrganizerPermission: If true, only users with
+	// the organizer role can share folders. If false, users with either the
+	// organizer role or the file organizer role can share folders.
+	SharingFoldersRequiresOrganizerPermission bool `json:"sharingFoldersRequiresOrganizerPermission,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "AdminManagedRestrictions") to unconditionally include in API
@@ -4137,6 +4148,12 @@ type TeamDriveCapabilities struct {
 	// change the domainUsersOnly restriction of this Team Drive.
 	CanChangeDomainUsersOnlyRestriction bool `json:"canChangeDomainUsersOnlyRestriction,omitempty"`
 
+	// CanChangeSharingFoldersRequiresOrganizerPermissionRestriction:
+	// Whether the current user can change the
+	// sharingFoldersRequiresOrganizerPermission restriction of this Team
+	// Drive.
+	CanChangeSharingFoldersRequiresOrganizerPermissionRestriction bool `json:"canChangeSharingFoldersRequiresOrganizerPermissionRestriction,omitempty"`
+
 	// CanChangeTeamDriveBackground: Whether the current user can change the
 	// background of this Team Drive.
 	CanChangeTeamDriveBackground bool `json:"canChangeTeamDriveBackground,omitempty"`
@@ -4247,6 +4264,11 @@ type TeamDriveRestrictions struct {
 	// Team Drive belongs. This restriction may be overridden by other
 	// sharing policies controlled outside of this Team Drive.
 	DomainUsersOnly bool `json:"domainUsersOnly,omitempty"`
+
+	// SharingFoldersRequiresOrganizerPermission: If true, only users with
+	// the organizer role can share folders. If false, users with either the
+	// organizer role or the file organizer role can share folders.
+	SharingFoldersRequiresOrganizerPermission bool `json:"sharingFoldersRequiresOrganizerPermission,omitempty"`
 
 	// TeamMembersOnly: Whether access to items inside this Team Drive is
 	// restricted to members of this Team Drive.

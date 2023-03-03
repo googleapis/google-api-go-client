@@ -2086,6 +2086,9 @@ type Release struct {
 	// command.
 	BuildArtifacts []*BuildArtifact `json:"buildArtifacts,omitempty"`
 
+	// Condition: Output only. Information around the state of the Release.
+	Condition *ReleaseCondition `json:"condition,omitempty"`
+
 	// CreateTime: Output only. Time at which the `Release` was created.
 	CreateTime string `json:"createTime,omitempty"`
 
@@ -2189,6 +2192,41 @@ func (s *Release) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ReleaseCondition: ReleaseCondition contains all conditions relevant
+// to a Release.
+type ReleaseCondition struct {
+	// ReleaseReadyCondition: Details around the Releases's overall status.
+	ReleaseReadyCondition *ReleaseReadyCondition `json:"releaseReadyCondition,omitempty"`
+
+	// SkaffoldSupportedCondition: Details around the support state of the
+	// release's skaffold version.
+	SkaffoldSupportedCondition *SkaffoldSupportedCondition `json:"skaffoldSupportedCondition,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ReleaseReadyCondition") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ReleaseReadyCondition") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ReleaseCondition) MarshalJSON() ([]byte, error) {
+	type NoMethod ReleaseCondition
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ReleaseNotificationEvent: Payload proto for
 // "clouddeploy.googleapis.com/release_notification" Platform Log event
 // that describes the failure to send release status change Pub/Sub
@@ -2229,6 +2267,39 @@ type ReleaseNotificationEvent struct {
 
 func (s *ReleaseNotificationEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod ReleaseNotificationEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ReleaseReadyCondition: ReleaseReadyCondition contains information
+// around the status of the Release. If a release is not ready, you
+// cannot create a rollout with the release.
+type ReleaseReadyCondition struct {
+	// Status: True if the Release is in a valid state. Otherwise at least
+	// one condition in `ReleaseCondition` is in an invalid state. Iterate
+	// over those conditions and see which condition(s) has status = false
+	// to find out what is wrong with the Release.
+	Status bool `json:"status,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Status") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Status") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ReleaseReadyCondition) MarshalJSON() ([]byte, error) {
+	type NoMethod ReleaseReadyCondition
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2576,24 +2647,86 @@ func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SkaffoldVersion: Details of a supported Skaffold version.
-type SkaffoldVersion struct {
-	// SupportEndDate: Date when this version is expected to no longer be
+// SkaffoldSupportedCondition: SkaffoldSupportedCondition contains
+// information about when support for the release's version of skaffold
+// ends.
+type SkaffoldSupportedCondition struct {
+	// MaintenanceModeTime: The time at which this release's version of
+	// skaffold will enter maintenance mode.
+	MaintenanceModeTime string `json:"maintenanceModeTime,omitempty"`
+
+	// SkaffoldSupportState: The skaffold support state for this release's
+	// version of skaffold.
+	//
+	// Possible values:
+	//   "SKAFFOLD_SUPPORT_STATE_UNSPECIFIED" - Default value. This value is
+	// unused.
+	//   "SKAFFOLD_SUPPORT_STATE_SUPPORTED" - This skaffold version is
+	// currently supported.
+	//   "SKAFFOLD_SUPPORT_STATE_MAINTENANCE_MODE" - This skaffold version
+	// is in maintenance mode.
+	//   "SKAFFOLD_SUPPORT_STATE_UNSUPPORTED" - This skaffold version is no
+	// longer supported.
+	SkaffoldSupportState string `json:"skaffoldSupportState,omitempty"`
+
+	// Status: True if the version of skaffold used by this release is
 	// supported.
-	SupportEndDate *Date `json:"supportEndDate,omitempty"`
+	Status bool `json:"status,omitempty"`
 
-	// Version: Release version number. For example, "1.20.3".
-	Version string `json:"version,omitempty"`
+	// SupportExpirationTime: The time at which this release's version of
+	// skaffold will no longer be supported.
+	SupportExpirationTime string `json:"supportExpirationTime,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "SupportEndDate") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "MaintenanceModeTime")
+	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "SupportEndDate") to
+	// NullFields is a list of field names (e.g. "MaintenanceModeTime") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SkaffoldSupportedCondition) MarshalJSON() ([]byte, error) {
+	type NoMethod SkaffoldSupportedCondition
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SkaffoldVersion: Details of a supported Skaffold version.
+type SkaffoldVersion struct {
+	// MaintenanceModeTime: The time at which this version of skaffold will
+	// enter maintenance mode.
+	MaintenanceModeTime string `json:"maintenanceModeTime,omitempty"`
+
+	// SupportEndDate: Date when this version is expected to no longer be
+	// supported.
+	SupportEndDate *Date `json:"supportEndDate,omitempty"`
+
+	// SupportExpirationTime: The time at which this version of skaffold
+	// will no longer be supported.
+	SupportExpirationTime string `json:"supportExpirationTime,omitempty"`
+
+	// Version: Release version number. For example, "1.20.3".
+	Version string `json:"version,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MaintenanceModeTime")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MaintenanceModeTime") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the

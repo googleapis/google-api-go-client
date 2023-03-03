@@ -84,6 +84,9 @@ const mtlsBasePath = "https://chat.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
+	// Private Service: https://www.googleapis.com/auth/chat.bot
+	ChatBotScope = "https://www.googleapis.com/auth/chat.bot"
+
 	// View, add, and remove members from conversations in Google Chat
 	ChatMembershipsScope = "https://www.googleapis.com/auth/chat.memberships"
 
@@ -111,6 +114,7 @@ const (
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := internaloption.WithDefaultScopes(
+		"https://www.googleapis.com/auth/chat.bot",
 		"https://www.googleapis.com/auth/chat.memberships",
 		"https://www.googleapis.com/auth/chat.memberships.readonly",
 		"https://www.googleapis.com/auth/chat.messages",
@@ -1144,8 +1148,10 @@ type DeprecatedEvent struct {
 	// Possible values:
 	//   "UNSPECIFIED" - Default value for the enum. DO NOT USE.
 	//   "MESSAGE" - A message was sent in a space.
-	//   "ADDED_TO_SPACE" - The Chat app was added to a space.
-	//   "REMOVED_FROM_SPACE" - The Chat app was removed from a space.
+	//   "ADDED_TO_SPACE" - The Chat app was added to a space by a Chat user
+	// or Workspace administrator.
+	//   "REMOVED_FROM_SPACE" - The Chat app was removed from a space by a
+	// Chat user or Workspace administrator.
 	//   "CARD_CLICKED" - The Chat app's interactive card was clicked.
 	Type string `json:"type,omitempty"`
 
@@ -1321,7 +1327,8 @@ func (s *FormAction) MarshalJSON() ([]byte, error) {
 
 // GoogleAppsCardV1Action: An action that describes the behavior when
 // the form is submitted. For example, an Apps Script can be invoked to
-// handle the form.
+// handle the form. If the action is triggered, the form values are sent
+// to the server.
 type GoogleAppsCardV1Action struct {
 	// Function: A custom function to invoke when the containing element is
 	// clicked or othrwise activated. For example usage, see Create
@@ -1367,18 +1374,20 @@ type GoogleAppsCardV1Action struct {
 
 	// PersistValues: Indicates whether form values persist after the
 	// action. The default value is `false`. If `true`, form values remain
-	// after the action is triggered. When using LoadIndicator.NONE
+	// after the action is triggered. To let the user make changes while the
+	// action is being processed, set LoadIndicator
 	// (https://developers.google.com/workspace/add-ons/reference/rpc/google.apps.card.v1#loadindicator)
-	// for actions, `persist_values` = `true`is recommended, as it ensures
-	// that any changes made by the user after form or on change actions are
-	// sent to the server are not overwritten by the response. If `false`,
-	// the form values are cleared when the action is triggered. When
-	// `persist_values` is set to `false`, it is strongly recommended that
-	// the card use LoadIndicator.SPINNER
+	// to `NONE`. For card messages
+	// (https://developers.google.com/chat/api/guides/message-formats/cards)
+	// in Chat apps, you must also set the action's ResponseType
+	// (https://developers.google.com/chat/api/reference/rest/v1/spaces.messages#responsetype)
+	// to `UPDATE_MESSAGE` and use the same `card_id`
+	// (https://developers.google.com/chat/api/reference/rest/v1/spaces.messages#CardWithId)
+	// from the card that contained the action. If `false`, the form values
+	// are cleared when the action is triggered. To prevent the user from
+	// making changes while the action is being processed, set LoadIndicator
 	// (https://developers.google.com/workspace/add-ons/reference/rpc/google.apps.card.v1#loadindicator)
-	// for all actions, as this locks the UI to ensure no changes are made
-	// by the user while the action is being processed. Not supported by
-	// Chat apps.
+	// to `SPINNER`.
 	PersistValues bool `json:"persistValues,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Function") to
@@ -1886,14 +1895,12 @@ func (s *GoogleAppsCardV1DateTimePicker) MarshalJSON() ([]byte, error) {
 // in front of the text, a selection widget or a button after the text.
 type GoogleAppsCardV1DecoratedText struct {
 	// BottomLabel: The text that appears below `text`. Always truncates.
-	// Supports simple formatting. See Text formatting for formatting
-	// details.
 	BottomLabel string `json:"bottomLabel,omitempty"`
 
 	// Button: A button that can be clicked to trigger an action.
 	Button *GoogleAppsCardV1Button `json:"button,omitempty"`
 
-	// EndIcon: An icon displayed after the text. Supports standard
+	// EndIcon: An icon displayed after the text. Supports built-in
 	// (https://developers.google.com/chat/api/guides/message-formats/cards#builtinicons)
 	// and custom
 	// (https://developers.google.com/chat/api/guides/message-formats/cards#customicons)
@@ -1911,11 +1918,7 @@ type GoogleAppsCardV1DecoratedText struct {
 	StartIcon *GoogleAppsCardV1Icon `json:"startIcon,omitempty"`
 
 	// SwitchControl: A switch widget can be clicked to change its state and
-	// trigger an action. Currently supported in dialogs
-	// (https://developers.google.com/chat/how-tos/dialogs). Support for
-	// card messages
-	// (https://developers.google.com/chat/api/guides/message-formats/cards)
-	// is coming soon.
+	// trigger an action.
 	SwitchControl *GoogleAppsCardV1SwitchControl `json:"switchControl,omitempty"`
 
 	// Text: Required. The primary text. Supports simple formatting. See
@@ -1923,8 +1926,6 @@ type GoogleAppsCardV1DecoratedText struct {
 	Text string `json:"text,omitempty"`
 
 	// TopLabel: The text that appears above `text`. Always truncates.
-	// Supports simple formatting. See Text formatting for formatting
-	// details.
 	TopLabel string `json:"topLabel,omitempty"`
 
 	// WrapText: The wrap text setting. If `true`, the text wraps and
@@ -1957,7 +1958,7 @@ func (s *GoogleAppsCardV1DecoratedText) MarshalJSON() ([]byte, error) {
 
 // GoogleAppsCardV1Divider: Displays a divider between widgets, a
 // horizontal line. For example, the following JSON creates a divider:
-// ``` "divider": { } ```
+// ``` "divider": {} ```
 type GoogleAppsCardV1Divider struct {
 }
 
@@ -1965,18 +1966,14 @@ type GoogleAppsCardV1Divider struct {
 // grid supports any number of columns and items. The number of rows is
 // determined by items divided by columns. A grid with 10 items and 2
 // columns has 5 rows. A grid with 11 items and 2 columns has 6 rows.
-// Currently supported in dialogs
-// (https://developers.google.com/chat/how-tos/dialogs). Support for
-// card messages
-// (https://developers.google.com/chat/api/guides/message-formats/cards)
-// is coming soon. For example, the following JSON creates a 2 column
-// grid with a single item: ``` "grid": { "title": "A fine collection of
-// items", "numColumns": 2, "borderStyle": { "type": "STROKE",
-// "cornerRadius": 4.0 }, "items": [ "image": { "imageUri":
+// For example, the following JSON creates a 2 column grid with a single
+// item: ``` "grid": { "title": "A fine collection of items",
+// "columnCount": 2, "borderStyle": { "type": "STROKE", "cornerRadius":
+// 4 }, "items": [ { "image": { "imageUri":
 // "https://www.example.com/image.png", "cropStyle": { "type": "SQUARE"
 // }, "borderStyle": { "type": "STROKE" } }, "title": "An item",
-// "textAlignment": "CENTER" ], "onClick": { "openLink": {
-// "url":"https://www.example.com" } } } ```
+// "textAlignment": "CENTER" } ], "onClick": { "openLink": { "url":
+// "https://www.example.com" } } } ```
 type GoogleAppsCardV1Grid struct {
 	// BorderStyle: The border style to apply to each grid item.
 	BorderStyle *GoogleAppsCardV1BorderStyle `json:"borderStyle,omitempty"`
@@ -2071,8 +2068,8 @@ func (s *GoogleAppsCardV1GridItem) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleAppsCardV1Icon: An icon displayed in a widget on a card.
-// Supports standard
-// (https://developers.google.com/chat/api/guides/message-formats/cards)
+// Supports built-in
+// (https://developers.google.com/chat/api/guides/message-formats/cards#builtinicons)
 // and custom
 // (https://developers.google.com/chat/api/guides/message-formats/cards#customicons)
 // icons.
@@ -2097,7 +2094,7 @@ type GoogleAppsCardV1Icon struct {
 
 	// ImageType: The crop style applied to the image. In some cases,
 	// applying a `CIRCLE` crop causes the image to be drawn larger than a
-	// standard icon.
+	// built-in icon.
 	//
 	// Possible values:
 	//   "SQUARE" - Default value. Applies a square mask to the image. For
@@ -2106,11 +2103,11 @@ type GoogleAppsCardV1Icon struct {
 	// image becomes a circle with a diameter of 3.
 	ImageType string `json:"imageType,omitempty"`
 
-	// KnownIcon: Display one of the standard icons provided by Google
+	// KnownIcon: Display one of the built-in icons provided by Google
 	// Workspace. For example, to display an airplane icon, specify
 	// `AIRPLANE`. For a bus, specify `BUS`. For a full list of supported
-	// icons, see standard icons
-	// (https://developers.google.com/chat/api/guides/message-formats/cards).
+	// icons, see built-in icons
+	// (https://developers.google.com/chat/api/guides/message-formats/cards#builtinicons).
 	KnownIcon string `json:"knownIcon,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AltText") to
@@ -2423,11 +2420,7 @@ func (s *GoogleAppsCardV1Section) MarshalJSON() ([]byte, error) {
 // (https://developers.google.com/chat/how-tos/dialogs#receive_form_data_from_dialogs).
 // When you need to collect data from users that matches options you
 // set, use a selection input. To collect abstract data from users, use
-// the text input widget instead. Only supported in dialogs
-// (https://developers.google.com/chat/how-tos/dialogs). Support for
-// card messages
-// (https://developers.google.com/chat/api/guides/message-formats/cards)
-// coming soon.
+// the text input widget instead.
 type GoogleAppsCardV1SelectionInput struct {
 	// Items: An array of the selected items. For example, all the selected
 	// check boxes.
@@ -2461,29 +2454,13 @@ type GoogleAppsCardV1SelectionInput struct {
 	//
 	// Possible values:
 	//   "CHECK_BOX" - A set of checkboxes. Users can select multiple check
-	// boxes per selection input. Currently supported in
-	// [dialogs](https://developers.google.com/chat/how-tos/dialogs).
-	// Support for [card
-	// messages](https://developers.google.com/chat/api/guides/message-format
-	// s/cards) is coming soon.
+	// boxes per selection input.
 	//   "RADIO_BUTTON" - A set of radio buttons. Users can select one radio
-	// button per selection input. Currently supported in
-	// [dialogs](https://developers.google.com/chat/how-tos/dialogs).
-	// Support for [card
-	// messages](https://developers.google.com/chat/api/guides/message-format
-	// s/cards) is coming soon.
+	// button per selection input.
 	//   "SWITCH" - A set of switches. Users can turn on multiple switches
-	// at once per selection input. Currently supported in
-	// [dialogs](https://developers.google.com/chat/how-tos/dialogs).
-	// Support for [card
-	// messages](https://developers.google.com/chat/api/guides/message-format
-	// s/cards) is coming soon.
+	// at once per selection input.
 	//   "DROPDOWN" - A dropdown menu. Users can select one dropdown menu
-	// item per selection input. Currently supported in
-	// [dialogs](https://developers.google.com/chat/how-tos/dialogs).
-	// Support for [card
-	// messages](https://developers.google.com/chat/api/guides/message-format
-	// s/cards) is coming soon.
+	// item per selection input.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Items") to
@@ -2621,11 +2598,7 @@ func (s *GoogleAppsCardV1Suggestions) MarshalJSON() ([]byte, error) {
 
 // GoogleAppsCardV1SwitchControl: Either a toggle-style switch or a
 // checkbox inside a `decoratedText` widget. Only supported on the
-// `decoratedText` widget. Currently supported in dialogs
-// (https://developers.google.com/chat/how-tos/dialogs). Support for
-// card messages
-// (https://developers.google.com/chat/api/guides/message-formats/cards)
-// is coming soon.
+// `decoratedText` widget.
 type GoogleAppsCardV1SwitchControl struct {
 	// ControlType: How the switch appears in the user interface.
 	//
@@ -2684,11 +2657,7 @@ func (s *GoogleAppsCardV1SwitchControl) MarshalJSON() ([]byte, error) {
 // (https://developers.google.com/chat/how-tos/dialogs#receive_form_data_from_dialogs).
 // When you need to collect abstract data from users, use a text input.
 // To collect defined data from users, use the selection input widget
-// instead. Only supported in dialogs
-// (https://developers.google.com/chat/how-tos/dialogs). Support for
-// card messages
-// (https://developers.google.com/chat/api/guides/message-formats/cards)
-// coming soon.
+// instead.
 type GoogleAppsCardV1TextInput struct {
 	// AutoCompleteAction: Optional. Specify what action to take when the
 	// text input field provides suggestions to users who interact with it.
@@ -2817,28 +2786,27 @@ type GoogleAppsCardV1Widget struct {
 	// ButtonList: A list of buttons. For example, the following JSON
 	// creates two buttons. The first is a blue text button and the second
 	// is an image button that opens a link: ``` "buttonList": { "buttons":
-	// [ "button": { "text": "Edit", "color": { "red": 0, "green": 0,
-	// "blue": 1, "alpha": 1 } "disabled": true }, "button": { "icon": {
-	// "knownIcon": "INVITE" "altText": "check calendar" }, "onClick": {
-	// "openLink": { "url": "https://example.com/calendar" } } }, ] } ```
+	// [ { "text": "Edit", "color": { "red": 0, "green": 0, "blue": 1,
+	// "alpha": 1 }, "disabled": true, }, { "icon": { "knownIcon": "INVITE",
+	// "altText": "check calendar" }, "onClick": { "openLink": { "url":
+	// "https://example.com/calendar" } } } ] } ```
 	ButtonList *GoogleAppsCardV1ButtonList `json:"buttonList,omitempty"`
 
 	// DateTimePicker: Displays a selection/input widget for date, time, or
 	// date and time. Not supported by Chat apps. Support by Chat apps is
 	// coming soon. For example, the following JSON creates a datetime
-	// picker to schedule an appointment: ``` "date_time_picker": { "name":
+	// picker to schedule an appointment: ``` "dateTimePicker": { "name":
 	// "appointment_time", "label": "Book your appointment at:", "type":
-	// "DateTimePickerType.DATE_AND_TIME", "valueMsEpoch": "796435200000" }
-	// ```
+	// "DATE_AND_TIME", "valueMsEpoch": "796435200000" } ```
 	DateTimePicker *GoogleAppsCardV1DateTimePicker `json:"dateTimePicker,omitempty"`
 
 	// DecoratedText: Displays a decorated text item. For example, the
 	// following JSON creates a decorated text widget showing email address:
 	// ``` "decoratedText": { "icon": { "knownIcon": "EMAIL" }, "topLabel":
 	// "Email Address", "text": "sasha@example.com", "bottomLabel": "This is
-	// a new Email address!", "switchWidget": { "name":
+	// a new Email address!", "switchControl": { "name":
 	// "has_send_welcome_email_to_sasha", "selected": false, "controlType":
-	// "ControlType.CHECKBOX" } } ```
+	// "CHECKBOX" } } ```
 	DecoratedText *GoogleAppsCardV1DecoratedText `json:"decoratedText,omitempty"`
 
 	// Divider: Displays a horizontal line divider between widgets. For
@@ -2849,54 +2817,42 @@ type GoogleAppsCardV1Widget struct {
 	// number of columns and items. The number of rows is determined by the
 	// upper bounds of the number items divided by the number of columns. A
 	// grid with 10 items and 2 columns has 5 rows. A grid with 11 items and
-	// 2 columns has 6 rows. Currently supported in dialogs
-	// (https://developers.google.com/chat/how-tos/dialogs). Support for
-	// card messages
-	// (https://developers.google.com/chat/api/guides/message-formats/cards)
-	// is coming soon. For example, the following JSON creates a 2 column
-	// grid with a single item: ``` "grid": { "title": "A fine collection of
-	// items", "numColumns": 2, "borderStyle": { "type": "STROKE",
-	// "cornerRadius": 4.0 }, "items": [ "image": { "imageUri":
+	// 2 columns has 6 rows. For example, the following JSON creates a 2
+	// column grid with a single item: ``` "grid": { "title": "A fine
+	// collection of items", "columnCount": 2, "borderStyle": { "type":
+	// "STROKE", "cornerRadius": 4 }, "items": [ { "image": { "imageUri":
 	// "https://www.example.com/image.png", "cropStyle": { "type": "SQUARE"
 	// }, "borderStyle": { "type": "STROKE" } }, "title": "An item",
-	// "textAlignment": "CENTER" ], "onClick": { "openLink": {
-	// "url":"https://www.example.com" } } } ```
+	// "textAlignment": "CENTER" } ], "onClick": { "openLink": { "url":
+	// "https://www.example.com" } } } ```
 	Grid *GoogleAppsCardV1Grid `json:"grid,omitempty"`
 
 	// Image: Displays an image. For example, the following JSON creates an
 	// image with alternative text: ``` "image": { "imageUrl":
-	// "https://developers.google.com/chat/images/quickstart-app-avatar.png"
-	// "altText": "Chat app avatar" } ```
+	// "https://developers.google.com/chat/images/quickstart-app-avatar.png",
+	//  "altText": "Chat app avatar" } ```
 	Image *GoogleAppsCardV1Image `json:"image,omitempty"`
 
 	// SelectionInput: Displays a selection control that lets users select
 	// items. Selection controls can be check boxes, radio buttons,
-	// switches, or dropdown menus. Currently supported in dialogs
-	// (https://developers.google.com/chat/how-tos/dialogs). Support for
-	// card messages
-	// (https://developers.google.com/chat/api/guides/message-formats/cards)
-	// is coming soon. For example, the following JSON creates a dropdown
-	// menu that lets users choose a size: ``` "selectionInput": { "name":
-	// "size", "label": "Size" "type": "SelectionType.DROPDOWN", "items": [
-	// { "text": "S", "value": "small", "selected": false }, { "text": "M",
+	// switches, or dropdown menus. For example, the following JSON creates
+	// a dropdown menu that lets users choose a size: ``` "selectionInput":
+	// { "name": "size", "label": "Size" "type": "DROPDOWN", "items": [ {
+	// "text": "S", "value": "small", "selected": false }, { "text": "M",
 	// "value": "medium", "selected": true }, { "text": "L", "value":
 	// "large", "selected": false }, { "text": "XL", "value": "extra_large",
 	// "selected": false } ] } ```
 	SelectionInput *GoogleAppsCardV1SelectionInput `json:"selectionInput,omitempty"`
 
-	// TextInput: Displays a text box that users can type into. Currently
-	// supported in dialogs
-	// (https://developers.google.com/chat/how-tos/dialogs). Support for
-	// card messages
-	// (https://developers.google.com/chat/api/guides/message-formats/cards)
-	// is coming soon. For example, the following JSON creates a text input
-	// for an email address: ``` "textInput": { "name": "mailing_address",
-	// "label": "Mailing Address" } ``` As another example, the following
-	// JSON creates a text input for a programming language with static
-	// suggestions: ``` "textInput": { "name":
-	// "preferred_programing_language", "label": "Preferred Language",
-	// "initialSuggestions": { "items": [ { "text": "C++" }, { "text":
-	// "Java" }, { "text": "JavaScript" }, { "text": "Python" } ] } } ```
+	// TextInput: Displays a text box that users can type into. For example,
+	// the following JSON creates a text input for an email address: ```
+	// "textInput": { "name": "mailing_address", "label": "Mailing Address"
+	// } ``` As another example, the following JSON creates a text input for
+	// a programming language with static suggestions: ``` "textInput": {
+	// "name": "preferred_programing_language", "label": "Preferred
+	// Language", "initialSuggestions": { "items": [ { "text": "C++" }, {
+	// "text": "Java" }, { "text": "JavaScript" }, { "text": "Python" } ] }
+	// } ```
 	TextInput *GoogleAppsCardV1TextInput `json:"textInput,omitempty"`
 
 	// TextParagraph: Displays a text paragraph. Supports simple HTML
@@ -3393,8 +3349,8 @@ type Message struct {
 	// this message.
 	Annotations []*Annotation `json:"annotations,omitempty"`
 
-	// ArgumentText: Plain-text body of the message with all Chat app
-	// mentions stripped out.
+	// ArgumentText: Output only. Plain-text body of the message with all
+	// Chat app mentions stripped out.
 	ArgumentText string `json:"argumentText,omitempty"`
 
 	// Attachment: User-uploaded attachment.
@@ -3403,7 +3359,8 @@ type Message struct {
 	// Cards: Deprecated: Use `cards_v2` instead. Rich, formatted and
 	// interactive cards that can be used to display UI elements such as:
 	// formatted texts, buttons, clickable images. Cards are normally
-	// displayed below the plain-text body of the message.
+	// displayed below the plain-text body of the message. `cards` and
+	// `cards_v2` can have a maximum size of 32 KB.
 	Cards []*Card `json:"cards,omitempty"`
 
 	// CardsV2: Richly formatted and interactive cards that display UI
@@ -3411,11 +3368,13 @@ type Message struct {
 	// Clickable images - Checkboxes - Radio buttons - Input widgets. Cards
 	// are usually displayed below the text body of a Chat message, but can
 	// situationally appear other places, such as dialogs
-	// (https://developers.google.com/chat/how-tos/dialogs). The `cardId` is
-	// a unique identifier among cards in the same message and for
-	// identifying user input values. Currently supported widgets include: -
-	// `TextParagraph` - `DecoratedText` - `Image` - `ButtonList` -
-	// `Divider`
+	// (https://developers.google.com/chat/how-tos/dialogs). `cards_v2` and
+	// `cards` can have a maximum size of 32 KB. The `cardId` is a unique
+	// identifier among cards in the same message and for identifying user
+	// input values. Currently supported widgets include: - `TextParagraph`
+	// - `DecoratedText` - `Image` - `ButtonList` - `Divider` - `TextInput`
+	// - `SelectionInput` (CHECKBOX, RADIO_BUTTON, SWITCH, DROPDOWN) -
+	// `Grid`
 	CardsV2 []*CardWithId `json:"cardsV2,omitempty"`
 
 	// ClientAssignedMessageId: A custom name for a Chat message assigned at
@@ -3676,6 +3635,14 @@ func (s *SlashCommandMetadata) MarshalJSON() ([]byte, error) {
 // Space: A space in Google Chat. Spaces are conversations between two
 // or more users or 1:1 messages between a user and a Chat app.
 type Space struct {
+	// AdminInstalled: Output only. Whether the Chat app was installed by a
+	// Google Workspace administrator. Administrators can install a Chat app
+	// for their domain, organizational unit, or a group of users.
+	// Administrators can only install Chat apps for direct messaging
+	// between users and the app. To support admin install, your app must
+	// feature direct messaging.
+	AdminInstalled bool `json:"adminInstalled,omitempty"`
+
 	// DisplayName: The space's display name. Required when creating a space
 	// (https://developers.google.com/chat/api/reference/rest/v1/spaces/create).
 	// For direct messages, this field may be empty. Supports up to 128
@@ -3726,7 +3693,7 @@ type Space struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// ForceSendFields is a list of field names (e.g. "AdminInstalled") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -3734,12 +3701,13 @@ type Space struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DisplayName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AdminInstalled") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -4307,6 +4275,7 @@ func (c *MediaDownloadCall) Do(opts ...googleapi.CallOption) (*Media, error) {
 	//     "$ref": "Media"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/chat.bot",
 	//     "https://www.googleapis.com/auth/chat.messages",
 	//     "https://www.googleapis.com/auth/chat.messages.readonly"
 	//   ],
@@ -4466,6 +4435,7 @@ func (c *SpacesGetCall) Do(opts ...googleapi.CallOption) (*Space, error) {
 	//     "$ref": "Space"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/chat.bot",
 	//     "https://www.googleapis.com/auth/chat.spaces",
 	//     "https://www.googleapis.com/auth/chat.spaces.readonly"
 	//   ]
@@ -4640,6 +4610,7 @@ func (c *SpacesListCall) Do(opts ...googleapi.CallOption) (*ListSpacesResponse, 
 	//     "$ref": "ListSpacesResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/chat.bot",
 	//     "https://www.googleapis.com/auth/chat.spaces",
 	//     "https://www.googleapis.com/auth/chat.spaces.readonly"
 	//   ]
@@ -4820,6 +4791,7 @@ func (c *SpacesMembersGetCall) Do(opts ...googleapi.CallOption) (*Membership, er
 	//     "$ref": "Membership"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/chat.bot",
 	//     "https://www.googleapis.com/auth/chat.memberships",
 	//     "https://www.googleapis.com/auth/chat.memberships.readonly"
 	//   ]
@@ -5011,6 +4983,7 @@ func (c *SpacesMembersListCall) Do(opts ...googleapi.CallOption) (*ListMembershi
 	//     "$ref": "ListMembershipsResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/chat.bot",
 	//     "https://www.googleapis.com/auth/chat.memberships",
 	//     "https://www.googleapis.com/auth/chat.memberships.readonly"
 	//   ]
@@ -5274,6 +5247,7 @@ func (c *SpacesMessagesCreateCall) Do(opts ...googleapi.CallOption) (*Message, e
 	//     "$ref": "Message"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/chat.bot",
 	//     "https://www.googleapis.com/auth/chat.messages",
 	//     "https://www.googleapis.com/auth/chat.messages.create"
 	//   ]
@@ -5421,6 +5395,7 @@ func (c *SpacesMessagesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, err
 	//     "$ref": "Empty"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/chat.bot",
 	//     "https://www.googleapis.com/auth/chat.messages"
 	//   ]
 	// }
@@ -5586,6 +5561,7 @@ func (c *SpacesMessagesGetCall) Do(opts ...googleapi.CallOption) (*Message, erro
 	//     "$ref": "Message"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/chat.bot",
 	//     "https://www.googleapis.com/auth/chat.messages",
 	//     "https://www.googleapis.com/auth/chat.messages.readonly"
 	//   ]
@@ -5774,6 +5750,7 @@ func (c *SpacesMessagesPatchCall) Do(opts ...googleapi.CallOption) (*Message, er
 	//     "$ref": "Message"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/chat.bot",
 	//     "https://www.googleapis.com/auth/chat.messages"
 	//   ]
 	// }
@@ -5961,6 +5938,7 @@ func (c *SpacesMessagesUpdateCall) Do(opts ...googleapi.CallOption) (*Message, e
 	//     "$ref": "Message"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/chat.bot",
 	//     "https://www.googleapis.com/auth/chat.messages"
 	//   ]
 	// }
@@ -6110,7 +6088,10 @@ func (c *SpacesMessagesAttachmentsGetCall) Do(opts ...googleapi.CallOption) (*At
 	//   "path": "v1/{+name}",
 	//   "response": {
 	//     "$ref": "Attachment"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/chat.bot"
+	//   ]
 	// }
 
 }

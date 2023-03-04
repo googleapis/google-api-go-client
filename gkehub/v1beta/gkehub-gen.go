@@ -3942,7 +3942,9 @@ type RBACRoleBinding struct {
 
 	// Name: The resource name for the rbacrolebinding
 	// `projects/{project}/locations/{location}/namespaces/{namespace}/rbacro
-	// lebindings/{rbacrolebinding}`
+	// lebindings/{rbacrolebinding}` or
+	// `projects/{project}/locations/{location}/memberships/{membership}/rbac
+	// rolebindings/{rbacrolebinding}`
 	Name string `json:"name,omitempty"`
 
 	// Role: Required. Role to bind to the principal
@@ -4036,6 +4038,8 @@ type Role struct {
 	//   "ADMIN" - ADMIN has EDIT and RBAC permissions
 	//   "EDIT" - EDIT can edit all resources except RBAC
 	//   "VIEW" - VIEW can only read resources
+	//   "ANTHOS_SUPPORT" - ANTHOS_SUPPORT gives Google Support read-only
+	// access to a number of cluster resources.
 	PredefinedRole string `json:"predefinedRole,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PredefinedRole") to
@@ -8967,7 +8971,9 @@ type ProjectsLocationsNamespacesRbacrolebindingsPatchCall struct {
 //
 //   - name: The resource name for the rbacrolebinding
 //     `projects/{project}/locations/{location}/namespaces/{namespace}/rbac
-//     rolebindings/{rbacrolebinding}`.
+//     rolebindings/{rbacrolebinding}` or
+//     `projects/{project}/locations/{location}/memberships/{membership}/rb
+//     acrolebindings/{rbacrolebinding}`.
 func (r *ProjectsLocationsNamespacesRbacrolebindingsService) Patch(name string, rbacrolebinding *RBACRoleBinding) *ProjectsLocationsNamespacesRbacrolebindingsPatchCall {
 	c := &ProjectsLocationsNamespacesRbacrolebindingsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9082,7 +9088,7 @@ func (c *ProjectsLocationsNamespacesRbacrolebindingsPatchCall) Do(opts ...google
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name for the rbacrolebinding `projects/{project}/locations/{location}/namespaces/{namespace}/rbacrolebindings/{rbacrolebinding}`",
+	//       "description": "The resource name for the rbacrolebinding `projects/{project}/locations/{location}/namespaces/{namespace}/rbacrolebindings/{rbacrolebinding}` or `projects/{project}/locations/{location}/memberships/{membership}/rbacrolebindings/{rbacrolebinding}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/namespaces/[^/]+/rbacrolebindings/[^/]+$",
 	//       "required": true,

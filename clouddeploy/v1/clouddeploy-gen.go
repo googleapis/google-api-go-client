@@ -241,6 +241,45 @@ type AbandonReleaseResponse struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// AdvanceChildRolloutJob: An advanceChildRollout Job.
+type AdvanceChildRolloutJob struct {
+}
+
+// AdvanceChildRolloutJobRun: AdvanceChildRolloutJobRun contains
+// information specific to a advanceChildRollout `JobRun`.
+type AdvanceChildRolloutJobRun struct {
+	// Rollout: Output only. Name of the `ChildRollout`. Format is
+	// projects/{project}/
+	// locations/{location}/deliveryPipelines/{deliveryPipeline}/
+	// releases/{release}/rollouts/a-z{0,62}.
+	Rollout string `json:"rollout,omitempty"`
+
+	// RolloutPhaseId: Output only. the ID of the ChildRollout's Phase.
+	RolloutPhaseId string `json:"rolloutPhaseId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Rollout") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Rollout") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AdvanceChildRolloutJobRun) MarshalJSON() ([]byte, error) {
+	type NoMethod AdvanceChildRolloutJobRun
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // AnthosCluster: Information specifying an Anthos Cluster.
 type AnthosCluster struct {
 	// Membership: Membership of the GKE Hub-registered cluster to which to
@@ -521,6 +560,38 @@ func (s *BuildArtifact) MarshalJSON() ([]byte, error) {
 type CancelOperationRequest struct {
 }
 
+// ChildRolloutJobs: ChildRollouts job composition
+type ChildRolloutJobs struct {
+	// AdvanceRolloutJobs: Output only. List of AdvanceChildRolloutJobs
+	AdvanceRolloutJobs []*Job `json:"advanceRolloutJobs,omitempty"`
+
+	// CreateRolloutJobs: Output only. List of CreateChildRolloutJobs
+	CreateRolloutJobs []*Job `json:"createRolloutJobs,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AdvanceRolloutJobs")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdvanceRolloutJobs") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ChildRolloutJobs) MarshalJSON() ([]byte, error) {
+	type NoMethod ChildRolloutJobs
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // CloudRunLocation: Information specifying where to deploy a Cloud Run
 // Service.
 type CloudRunLocation struct {
@@ -627,6 +698,46 @@ type Config struct {
 
 func (s *Config) MarshalJSON() ([]byte, error) {
 	type NoMethod Config
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CreateChildRolloutJob: A createChildRollout Job.
+type CreateChildRolloutJob struct {
+}
+
+// CreateChildRolloutJobRun: CreateChildRolloutJobRun contains
+// information specific to a createChildRollout `JobRun`.
+type CreateChildRolloutJobRun struct {
+	// Rollout: Output only. Name of the `ChildRollout`. Format is
+	// projects/{project}/
+	// locations/{location}/deliveryPipelines/{deliveryPipeline}/
+	// releases/{release}/rollouts/a-z{0,62}.
+	Rollout string `json:"rollout,omitempty"`
+
+	// RolloutPhaseId: Output only. The ID of the childRollout Phase
+	// initiated by this JobRun.
+	RolloutPhaseId string `json:"rolloutPhaseId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Rollout") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Rollout") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CreateChildRolloutJobRun) MarshalJSON() ([]byte, error) {
+	type NoMethod CreateChildRolloutJobRun
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1143,6 +1254,12 @@ func (s *GkeCluster) MarshalJSON() ([]byte, error) {
 
 // Job: Job represents an operation for a `Rollout`.
 type Job struct {
+	// AdvanceChildRolloutJob: Output only. An advanceChildRollout Job.
+	AdvanceChildRolloutJob *AdvanceChildRolloutJob `json:"advanceChildRolloutJob,omitempty"`
+
+	// CreateChildRolloutJob: Output only. A createChildRollout Job.
+	CreateChildRolloutJob *CreateChildRolloutJob `json:"createChildRolloutJob,omitempty"`
+
 	// DeployJob: Output only. A deploy Job.
 	DeployJob *DeployJob `json:"deployJob,omitempty"`
 
@@ -1169,20 +1286,22 @@ type Job struct {
 	// VerifyJob: Output only. A verify Job.
 	VerifyJob *VerifyJob `json:"verifyJob,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "DeployJob") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "AdvanceChildRolloutJob") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DeployJob") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AdvanceChildRolloutJob")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1195,6 +1314,14 @@ func (s *Job) MarshalJSON() ([]byte, error) {
 // JobRun: A `JobRun` resource in the Google Cloud Deploy API. A
 // `JobRun` contains information of a single `Rollout` job evaluation.
 type JobRun struct {
+	// AdvanceChildRolloutJobRun: Output only. Information specific to an
+	// advanceChildRollout `JobRun`
+	AdvanceChildRolloutJobRun *AdvanceChildRolloutJobRun `json:"advanceChildRolloutJobRun,omitempty"`
+
+	// CreateChildRolloutJobRun: Output only. Information specific to a
+	// createChildRollout `JobRun`.
+	CreateChildRolloutJobRun *CreateChildRolloutJobRun `json:"createChildRolloutJobRun,omitempty"`
+
 	// CreateTime: Output only. Time at which the `JobRun` was created.
 	CreateTime string `json:"createTime,omitempty"`
 
@@ -1246,20 +1373,22 @@ type JobRun struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "AdvanceChildRolloutJobRun") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g.
+	// "AdvanceChildRolloutJobRun") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1682,6 +1811,34 @@ func (s *Metadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// MultiTarget: Information specifying a multiTarget.
+type MultiTarget struct {
+	// TargetIds: Required. The target_ids of this multiTarget.
+	TargetIds []string `json:"targetIds,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "TargetIds") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "TargetIds") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MultiTarget) MarshalJSON() ([]byte, error) {
+	type NoMethod MultiTarget
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Operation: This resource represents a long-running operation that is
 // the result of a network API call.
 type Operation struct {
@@ -1799,6 +1956,9 @@ func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
 // Phase: Phase represents a collection of jobs that are logically
 // grouped together for a `Rollout`.
 type Phase struct {
+	// ChildRolloutJobs: Output only. ChildRollout job composition.
+	ChildRolloutJobs *ChildRolloutJobs `json:"childRolloutJobs,omitempty"`
+
 	// DeploymentJobs: Output only. Deployment job composition.
 	DeploymentJobs *DeploymentJobs `json:"deploymentJobs,omitempty"`
 
@@ -1817,7 +1977,7 @@ type Phase struct {
 	//   "ABORTED" - The Phase was aborted.
 	State string `json:"state,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "DeploymentJobs") to
+	// ForceSendFields is a list of field names (e.g. "ChildRolloutJobs") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1825,7 +1985,7 @@ type Phase struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DeploymentJobs") to
+	// NullFields is a list of field names (e.g. "ChildRolloutJobs") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -2401,6 +2561,12 @@ type Rollout struct {
 	// ApproveTime: Output only. Time at which the `Rollout` was approved.
 	ApproveTime string `json:"approveTime,omitempty"`
 
+	// ControllerRollout: Output only. Name of the `ControllerRollout`.
+	// Format is projects/{project}/
+	// locations/{location}/deliveryPipelines/{deliveryPipeline}/
+	// releases/{release}/rollouts/a-z{0,62}.
+	ControllerRollout string `json:"controllerRollout,omitempty"`
+
 	// CreateTime: Output only. Time at which the `Rollout` was created.
 	CreateTime string `json:"createTime,omitempty"`
 
@@ -2930,6 +3096,9 @@ type Target struct {
 	// character. * Each resource is limited to a maximum of 64 labels. Both
 	// keys and values are additionally constrained to be <= 128 bytes.
 	Labels map[string]string `json:"labels,omitempty"`
+
+	// MultiTarget: Information specifying a multiTarget.
+	MultiTarget *MultiTarget `json:"multiTarget,omitempty"`
 
 	// Name: Optional. Name of the `Target`. Format is
 	// projects/{project}/locations/{location}/targets/a-z{0,62}.

@@ -342,6 +342,39 @@ func (s *ApplyConversionWorkspaceRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ApplyJobDetails: Details regarding an Apply background job.
+type ApplyJobDetails struct {
+	// ConnectionProfile: The connection profile which was used for the
+	// apply job.
+	ConnectionProfile string `json:"connectionProfile,omitempty"`
+
+	// Filter: AIP-160 based filter used to specify the entities to apply
+	Filter string `json:"filter,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConnectionProfile")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConnectionProfile") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ApplyJobDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod ApplyJobDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // AuditConfig: Specifies the audit configuration for a service. The
 // configuration determines which permission types are logged, and what
 // identities, if any, are exempted from logging. An AuditConfig must
@@ -441,6 +474,9 @@ func (s *AuditLogConfig) MarshalJSON() ([]byte, error) {
 
 // BackgroundJobLogEntry: Execution log of a background job.
 type BackgroundJobLogEntry struct {
+	// ApplyJobDetails: Apply job details.
+	ApplyJobDetails *ApplyJobDetails `json:"applyJobDetails,omitempty"`
+
 	// CompletionComment: Job completion comment, such as how many entities
 	// were seeded, how many warnings were found during conversion, and
 	// similar information.
@@ -455,6 +491,9 @@ type BackgroundJobLogEntry struct {
 	//   "SUCCEEDED" - Success.
 	//   "FAILED" - Error.
 	CompletionState string `json:"completionState,omitempty"`
+
+	// ConvertJobDetails: Convert job details.
+	ConvertJobDetails *ConvertJobDetails `json:"convertJobDetails,omitempty"`
 
 	// FinishTime: The timestamp when the background job was finished.
 	FinishTime string `json:"finishTime,omitempty"`
@@ -490,15 +529,15 @@ type BackgroundJobLogEntry struct {
 	// StartTime: The timestamp when the background job was started.
 	StartTime string `json:"startTime,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "CompletionComment")
-	// to unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "ApplyJobDetails") to
+	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CompletionComment") to
+	// NullFields is a list of field names (e.g. "ApplyJobDetails") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -1188,6 +1227,34 @@ type ConvertConversionWorkspaceRequest struct {
 
 func (s *ConvertConversionWorkspaceRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ConvertConversionWorkspaceRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ConvertJobDetails: Details regarding a Convert background job.
+type ConvertJobDetails struct {
+	// Filter: AIP-160 based filter used to specify the entities to convert
+	Filter string `json:"filter,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Filter") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Filter") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ConvertJobDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod ConvertJobDetails
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

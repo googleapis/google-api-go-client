@@ -669,8 +669,9 @@ func (s *ComputeResource) MarshalJSON() ([]byte, error) {
 // Container: Container runnable.
 type Container struct {
 	// BlockExternalNetwork: If set to true, external network access to and
-	// from container will be blocked. The container will use the default
-	// internal network 'goog-internal'.
+	// from container will be blocked, containers that are with
+	// block_external_network as true can still communicate with each other,
+	// network cannot be specified in the `container.options` field.
 	BlockExternalNetwork bool `json:"blockExternalNetwork,omitempty"`
 
 	// Commands: Overrides the `CMD` specified in the container. If there is
@@ -730,8 +731,8 @@ func (s *Container) MarshalJSON() ([]byte, error) {
 }
 
 // Disk: A new persistent disk or a local ssd. A VM can only have one
-// local SSD setting but multiple local SSD partitions.
-// https://cloud.google.com/compute/docs/disks#pdspecs.
+// local SSD setting but multiple local SSD partitions. See
+// https://cloud.google.com/compute/docs/disks#pdspecs and
 // https://cloud.google.com/compute/docs/disks#localssds.
 type Disk struct {
 	// DiskInterface: Local SSDs are available through both "SCSI" and
@@ -740,14 +741,14 @@ type Disk struct {
 	DiskInterface string `json:"diskInterface,omitempty"`
 
 	// Image: Name of a public or custom image used as the data source. For
-	// example, the following are all valid URLs: (1) Specify the image by
-	// its family name:
-	// projects/{project}/global/images/family/{image_family} (2) Specify
-	// the image version: projects/{project}/global/images/{image_version}
-	// You can also use Batch customized image in short names. The following
-	// image values are supported for a boot disk: "batch-debian": use Batch
-	// Debian images. "batch-centos": use Batch CentOS images. "batch-cos":
-	// use Batch Container-Optimized images.
+	// example, the following are all valid URLs: * Specify the image by its
+	// family name: projects/{project}/global/images/family/{image_family} *
+	// Specify the image version:
+	// projects/{project}/global/images/{image_version} You can also use
+	// Batch customized image in short names. The following image values are
+	// supported for a boot disk: * "batch-debian": use Batch Debian images.
+	// * "batch-centos": use Batch CentOS images. * "batch-cos": use Batch
+	// Container-Optimized images.
 	Image string `json:"image,omitempty"`
 
 	// SizeGb: Disk size in GB. For persistent disk, this field is ignored
@@ -876,7 +877,7 @@ type InstancePolicy struct {
 	// Accelerators: The accelerators attached to each VM instance.
 	Accelerators []*Accelerator `json:"accelerators,omitempty"`
 
-	// BootDisk: Book disk to be created and attached to each VM by this
+	// BootDisk: Boot disk to be created and attached to each VM by this
 	// InstancePolicy. Boot disk will be deleted when the VM is deleted.
 	BootDisk *Disk `json:"bootDisk,omitempty"`
 
@@ -888,8 +889,8 @@ type InstancePolicy struct {
 	MachineType string `json:"machineType,omitempty"`
 
 	// MinCpuPlatform: The minimum CPU platform. See
-	// `https://cloud.google.com/compute/docs/instances/specify-min-cpu-platf
-	// orm`. Not yet implemented.
+	// https://cloud.google.com/compute/docs/instances/specify-min-cpu-platform.
+	// Not yet implemented.
 	MinCpuPlatform string `json:"minCpuPlatform,omitempty"`
 
 	// ProvisioningModel: The provisioning model.
@@ -1634,9 +1635,9 @@ func (s *NFS) MarshalJSON() ([]byte, error) {
 type NetworkInterface struct {
 	// Network: The URL of an existing network resource. You can specify the
 	// network as a full or partial URL. For example, the following are all
-	// valid URLs:
+	// valid URLs: *
 	// https://www.googleapis.com/compute/v1/projects/{project}/global/networks/{network}
-	// projects/{project}/global/networks/{network}
+	// * projects/{project}/global/networks/{network} *
 	// global/networks/{network}
 	Network string `json:"network,omitempty"`
 
@@ -1651,9 +1652,9 @@ type NetworkInterface struct {
 
 	// Subnetwork: The URL of an existing subnetwork resource in the
 	// network. You can specify the subnetwork as a full or partial URL. For
-	// example, the following are all valid URLs:
+	// example, the following are all valid URLs: *
 	// https://www.googleapis.com/compute/v1/projects/{project}/regions/{region}/subnetworks/{subnetwork}
-	// projects/{project}/regions/{region}/subnetworks/{subnetwork}
+	// * projects/{project}/regions/{region}/subnetworks/{subnetwork} *
 	// regions/{region}/subnetworks/{subnetwork}
 	Subnetwork string `json:"subnetwork,omitempty"`
 
@@ -2224,7 +2225,7 @@ type TaskGroup struct {
 	// environment variable to the path of that file. Defaults to false.
 	RequireHostsFile bool `json:"requireHostsFile,omitempty"`
 
-	// TaskCount: Number of Tasks in the TaskGroup. default is 1
+	// TaskCount: Number of Tasks in the TaskGroup. Default is 1.
 	TaskCount int64 `json:"taskCount,omitempty,string"`
 
 	// TaskCountPerNode: Max number of tasks that can be run on a VM at the

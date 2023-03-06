@@ -212,8 +212,8 @@ func TestQuotaProjectFromCreds(t *testing.T) {
 	if err != nil {
 		t.Fatalf("got %v, wanted no error", err)
 	}
-	if want, got := "", QuotaProjectFromCreds(cred); want != got {
-		t.Errorf("QuotaProjectFromCreds(validServiceAccountJSON): want %q, got %q", want, got)
+	if want, got := "", GetQuotaProject(cred, ""); want != got {
+		t.Errorf("QuotaProjectFromCreds(validServiceAccountJSON, \"\"): want %q, got %q", want, got)
 	}
 
 	quotaProjectJSON := []byte(`
@@ -232,8 +232,8 @@ func TestQuotaProjectFromCreds(t *testing.T) {
 	if err != nil {
 		t.Fatalf("got %v, wanted no error", err)
 	}
-	if want, got := "foobar", QuotaProjectFromCreds(cred); want != got {
-		t.Errorf("QuotaProjectFromCreds(quotaProjectJSON): want %q, got %q", want, got)
+	if want, got := "foobar", GetQuotaProject(cred, ""); want != got {
+		t.Errorf("QuotaProjectFromCreds(quotaProjectJSON, \"\"): want %q, got %q", want, got)
 	}
 }
 

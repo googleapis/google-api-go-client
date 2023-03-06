@@ -107,6 +107,8 @@ func New(client *http.Client) (*Service, error) {
 	}
 	s := &Service{client: client, BasePath: basePath}
 	s.Labels = NewLabelsService(s)
+	s.Limits = NewLimitsService(s)
+	s.Users = NewUsersService(s)
 	return s, nil
 }
 
@@ -116,6 +118,10 @@ type Service struct {
 	UserAgent string // optional additional User-Agent fragment
 
 	Labels *LabelsService
+
+	Limits *LimitsService
+
+	Users *UsersService
 }
 
 func (s *Service) userAgent() string {
@@ -127,10 +133,88 @@ func (s *Service) userAgent() string {
 
 func NewLabelsService(s *Service) *LabelsService {
 	rs := &LabelsService{s: s}
+	rs.Locks = NewLabelsLocksService(s)
+	rs.Permissions = NewLabelsPermissionsService(s)
+	rs.Revisions = NewLabelsRevisionsService(s)
 	return rs
 }
 
 type LabelsService struct {
+	s *Service
+
+	Locks *LabelsLocksService
+
+	Permissions *LabelsPermissionsService
+
+	Revisions *LabelsRevisionsService
+}
+
+func NewLabelsLocksService(s *Service) *LabelsLocksService {
+	rs := &LabelsLocksService{s: s}
+	return rs
+}
+
+type LabelsLocksService struct {
+	s *Service
+}
+
+func NewLabelsPermissionsService(s *Service) *LabelsPermissionsService {
+	rs := &LabelsPermissionsService{s: s}
+	return rs
+}
+
+type LabelsPermissionsService struct {
+	s *Service
+}
+
+func NewLabelsRevisionsService(s *Service) *LabelsRevisionsService {
+	rs := &LabelsRevisionsService{s: s}
+	rs.Locks = NewLabelsRevisionsLocksService(s)
+	rs.Permissions = NewLabelsRevisionsPermissionsService(s)
+	return rs
+}
+
+type LabelsRevisionsService struct {
+	s *Service
+
+	Locks *LabelsRevisionsLocksService
+
+	Permissions *LabelsRevisionsPermissionsService
+}
+
+func NewLabelsRevisionsLocksService(s *Service) *LabelsRevisionsLocksService {
+	rs := &LabelsRevisionsLocksService{s: s}
+	return rs
+}
+
+type LabelsRevisionsLocksService struct {
+	s *Service
+}
+
+func NewLabelsRevisionsPermissionsService(s *Service) *LabelsRevisionsPermissionsService {
+	rs := &LabelsRevisionsPermissionsService{s: s}
+	return rs
+}
+
+type LabelsRevisionsPermissionsService struct {
+	s *Service
+}
+
+func NewLimitsService(s *Service) *LimitsService {
+	rs := &LimitsService{s: s}
+	return rs
+}
+
+type LimitsService struct {
+	s *Service
+}
+
+func NewUsersService(s *Service) *UsersService {
+	rs := &UsersService{s: s}
+	return rs
+}
+
+type UsersService struct {
 	s *Service
 }
 
@@ -204,6 +288,1091 @@ type GoogleAppsDriveLabelsV2BadgeConfig struct {
 
 func (s *GoogleAppsDriveLabelsV2BadgeConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2BadgeConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsDriveLabelsV2BatchDeleteLabelPermissionsRequest: Deletes
+// one of more Label Permissions.
+type GoogleAppsDriveLabelsV2BatchDeleteLabelPermissionsRequest struct {
+	// Requests: Required. The request message specifying the resources to
+	// update.
+	Requests []*GoogleAppsDriveLabelsV2DeleteLabelPermissionRequest `json:"requests,omitempty"`
+
+	// UseAdminAccess: Set to `true` in order to use the user's admin
+	// credentials. The server will verify the user is an admin for the
+	// Label before allowing access. If this is set, the use_admin_access
+	// field in the DeleteLabelPermissionRequest messages must either be
+	// empty or match this field.
+	UseAdminAccess bool `json:"useAdminAccess,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Requests") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Requests") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsDriveLabelsV2BatchDeleteLabelPermissionsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsDriveLabelsV2BatchDeleteLabelPermissionsRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsDriveLabelsV2BatchUpdateLabelPermissionsRequest: Updates
+// one or more Label Permissions.
+type GoogleAppsDriveLabelsV2BatchUpdateLabelPermissionsRequest struct {
+	// Requests: Required. The request message specifying the resources to
+	// update.
+	Requests []*GoogleAppsDriveLabelsV2UpdateLabelPermissionRequest `json:"requests,omitempty"`
+
+	// UseAdminAccess: Set to `true` in order to use the user's admin
+	// credentials. The server will verify the user is an admin for the
+	// Label before allowing access. If this is set, the use_admin_access
+	// field in the UpdateLabelPermissionRequest messages must either be
+	// empty or match this field.
+	UseAdminAccess bool `json:"useAdminAccess,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Requests") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Requests") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsDriveLabelsV2BatchUpdateLabelPermissionsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsDriveLabelsV2BatchUpdateLabelPermissionsRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsDriveLabelsV2BatchUpdateLabelPermissionsResponse: Response
+// for updating one or more Label Permissions.
+type GoogleAppsDriveLabelsV2BatchUpdateLabelPermissionsResponse struct {
+	// Permissions: Required. Permissions updated.
+	Permissions []*GoogleAppsDriveLabelsV2LabelPermission `json:"permissions,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Permissions") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Permissions") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsDriveLabelsV2BatchUpdateLabelPermissionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsDriveLabelsV2BatchUpdateLabelPermissionsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsDriveLabelsV2DateLimits: Limits for date Field type.
+type GoogleAppsDriveLabelsV2DateLimits struct {
+	// MaxValue: Maximum value for the date Field type.
+	MaxValue *GoogleTypeDate `json:"maxValue,omitempty"`
+
+	// MinValue: Minimum value for the date Field type.
+	MinValue *GoogleTypeDate `json:"minValue,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MaxValue") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MaxValue") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsDriveLabelsV2DateLimits) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsDriveLabelsV2DateLimits
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsDriveLabelsV2DeleteLabelPermissionRequest: Deletes a Label
+// Permission. Permissions affect the Label resource as a whole, are not
+// revisioned, and do not require publishing.
+type GoogleAppsDriveLabelsV2DeleteLabelPermissionRequest struct {
+	// Name: Required. Label Permission resource name.
+	Name string `json:"name,omitempty"`
+
+	// UseAdminAccess: Set to `true` in order to use the user's admin
+	// credentials. The server will verify the user is an admin for the
+	// Label before allowing access.
+	UseAdminAccess bool `json:"useAdminAccess,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsDriveLabelsV2DeleteLabelPermissionRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsDriveLabelsV2DeleteLabelPermissionRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsDriveLabelsV2DeltaUpdateLabelRequest: The set of requests
+// for updating aspects of a Label. If any request is not valid, no
+// requests will be applied.
+type GoogleAppsDriveLabelsV2DeltaUpdateLabelRequest struct {
+	// LanguageCode: The BCP-47 language code to use for evaluating
+	// localized Field labels when `include_label_in_response` is `true`.
+	LanguageCode string `json:"languageCode,omitempty"`
+
+	// Requests: A list of updates to apply to the Label. Requests will be
+	// applied in the order they are specified.
+	Requests []*GoogleAppsDriveLabelsV2DeltaUpdateLabelRequestRequest `json:"requests,omitempty"`
+
+	// UseAdminAccess: Set to `true` in order to use the user's admin
+	// credentials. The server will verify the user is an admin for the
+	// Label before allowing access.
+	UseAdminAccess bool `json:"useAdminAccess,omitempty"`
+
+	// View: When specified, only certain fields belonging to the indicated
+	// view will be returned.
+	//
+	// Possible values:
+	//   "LABEL_VIEW_BASIC" - Implies the field mask:
+	// `name,id,revision_id,label_type,properties.*`
+	//   "LABEL_VIEW_FULL" - All possible fields.
+	View string `json:"view,omitempty"`
+
+	// WriteControl: Provides control over how write requests are executed.
+	WriteControl *GoogleAppsDriveLabelsV2WriteControl `json:"writeControl,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "LanguageCode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LanguageCode") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsDriveLabelsV2DeltaUpdateLabelRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsDriveLabelsV2DeltaUpdateLabelRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsDriveLabelsV2DeltaUpdateLabelRequestCreateFieldRequest:
+// Request to create a Field within a Label.
+type GoogleAppsDriveLabelsV2DeltaUpdateLabelRequestCreateFieldRequest struct {
+	// Field: Required. Field to create.
+	Field *GoogleAppsDriveLabelsV2Field `json:"field,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Field") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Field") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsDriveLabelsV2DeltaUpdateLabelRequestCreateFieldRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsDriveLabelsV2DeltaUpdateLabelRequestCreateFieldRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsDriveLabelsV2DeltaUpdateLabelRequestCreateSelectionChoiceReq
+// uest: Request to create a Selection Choice.
+type GoogleAppsDriveLabelsV2DeltaUpdateLabelRequestCreateSelectionChoiceRequest struct {
+	// Choice: Required. The Choice to create.
+	Choice *GoogleAppsDriveLabelsV2FieldSelectionOptionsChoice `json:"choice,omitempty"`
+
+	// FieldId: Required. The Selection Field in which a Choice will be
+	// created.
+	FieldId string `json:"fieldId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Choice") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Choice") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsDriveLabelsV2DeltaUpdateLabelRequestCreateSelectionChoiceRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsDriveLabelsV2DeltaUpdateLabelRequestCreateSelectionChoiceRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsDriveLabelsV2DeltaUpdateLabelRequestDeleteFieldRequest:
+// Request to delete the Field.
+type GoogleAppsDriveLabelsV2DeltaUpdateLabelRequestDeleteFieldRequest struct {
+	// Id: Required. ID of the Field to delete.
+	Id string `json:"id,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Id") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsDriveLabelsV2DeltaUpdateLabelRequestDeleteFieldRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsDriveLabelsV2DeltaUpdateLabelRequestDeleteFieldRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsDriveLabelsV2DeltaUpdateLabelRequestDeleteSelectionChoiceReq
+// uest: Request to delete a Choice.
+type GoogleAppsDriveLabelsV2DeltaUpdateLabelRequestDeleteSelectionChoiceRequest struct {
+	// FieldId: Required. The Selection Field from which a Choice will be
+	// deleted.
+	FieldId string `json:"fieldId,omitempty"`
+
+	// Id: Required. Choice to delete.
+	Id string `json:"id,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FieldId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FieldId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsDriveLabelsV2DeltaUpdateLabelRequestDeleteSelectionChoiceRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsDriveLabelsV2DeltaUpdateLabelRequestDeleteSelectionChoiceRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsDriveLabelsV2DeltaUpdateLabelRequestDisableFieldRequest:
+// Request to disable the Field.
+type GoogleAppsDriveLabelsV2DeltaUpdateLabelRequestDisableFieldRequest struct {
+	// DisabledPolicy: Required. Field Disabled Policy.
+	DisabledPolicy *GoogleAppsDriveLabelsV2LifecycleDisabledPolicy `json:"disabledPolicy,omitempty"`
+
+	// Id: Required. Key of the Field to disable.
+	Id string `json:"id,omitempty"`
+
+	// UpdateMask: The fields that should be updated. At least one field
+	// must be specified. The root `disabled_policy` is implied and should
+	// not be specified. A single `*` can be used as short-hand for updating
+	// every field.
+	UpdateMask string `json:"updateMask,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisabledPolicy") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisabledPolicy") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsDriveLabelsV2DeltaUpdateLabelRequestDisableFieldRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsDriveLabelsV2DeltaUpdateLabelRequestDisableFieldRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsDriveLabelsV2DeltaUpdateLabelRequestDisableSelectionChoiceRe
+// quest: Request to disable a Choice.
+type GoogleAppsDriveLabelsV2DeltaUpdateLabelRequestDisableSelectionChoiceRequest struct {
+	// DisabledPolicy: Required. The disabled policy to update.
+	DisabledPolicy *GoogleAppsDriveLabelsV2LifecycleDisabledPolicy `json:"disabledPolicy,omitempty"`
+
+	// FieldId: Required. The Selection Field in which a Choice will be
+	// disabled.
+	FieldId string `json:"fieldId,omitempty"`
+
+	// Id: Required. Choice to disable.
+	Id string `json:"id,omitempty"`
+
+	// UpdateMask: The fields that should be updated. At least one field
+	// must be specified. The root `disabled_policy` is implied and should
+	// not be specified. A single `*` can be used as short-hand for updating
+	// every field.
+	UpdateMask string `json:"updateMask,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisabledPolicy") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisabledPolicy") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsDriveLabelsV2DeltaUpdateLabelRequestDisableSelectionChoiceRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsDriveLabelsV2DeltaUpdateLabelRequestDisableSelectionChoiceRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsDriveLabelsV2DeltaUpdateLabelRequestEnableFieldRequest:
+// Request to enable the Field.
+type GoogleAppsDriveLabelsV2DeltaUpdateLabelRequestEnableFieldRequest struct {
+	// Id: Required. ID of the Field to enable.
+	Id string `json:"id,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Id") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsDriveLabelsV2DeltaUpdateLabelRequestEnableFieldRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsDriveLabelsV2DeltaUpdateLabelRequestEnableFieldRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsDriveLabelsV2DeltaUpdateLabelRequestEnableSelectionChoiceReq
+// uest: Request to enable a Choice.
+type GoogleAppsDriveLabelsV2DeltaUpdateLabelRequestEnableSelectionChoiceRequest struct {
+	// FieldId: Required. The Selection Field in which a Choice will be
+	// enabled.
+	FieldId string `json:"fieldId,omitempty"`
+
+	// Id: Required. Choice to enable.
+	Id string `json:"id,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FieldId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FieldId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsDriveLabelsV2DeltaUpdateLabelRequestEnableSelectionChoiceRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsDriveLabelsV2DeltaUpdateLabelRequestEnableSelectionChoiceRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsDriveLabelsV2DeltaUpdateLabelRequestRequest: A single kind
+// of update to apply to a Label.
+type GoogleAppsDriveLabelsV2DeltaUpdateLabelRequestRequest struct {
+	// CreateField: Creates a new Field.
+	CreateField *GoogleAppsDriveLabelsV2DeltaUpdateLabelRequestCreateFieldRequest `json:"createField,omitempty"`
+
+	// CreateSelectionChoice: Creates Choice within a Selection field.
+	CreateSelectionChoice *GoogleAppsDriveLabelsV2DeltaUpdateLabelRequestCreateSelectionChoiceRequest `json:"createSelectionChoice,omitempty"`
+
+	// DeleteField: Deletes a Field from the label.
+	DeleteField *GoogleAppsDriveLabelsV2DeltaUpdateLabelRequestDeleteFieldRequest `json:"deleteField,omitempty"`
+
+	// DeleteSelectionChoice: Delete a Choice within a Selection Field.
+	DeleteSelectionChoice *GoogleAppsDriveLabelsV2DeltaUpdateLabelRequestDeleteSelectionChoiceRequest `json:"deleteSelectionChoice,omitempty"`
+
+	// DisableField: Disables the Field.
+	DisableField *GoogleAppsDriveLabelsV2DeltaUpdateLabelRequestDisableFieldRequest `json:"disableField,omitempty"`
+
+	// DisableSelectionChoice: Disable a Choice within a Selection Field.
+	DisableSelectionChoice *GoogleAppsDriveLabelsV2DeltaUpdateLabelRequestDisableSelectionChoiceRequest `json:"disableSelectionChoice,omitempty"`
+
+	// EnableField: Enables the Field.
+	EnableField *GoogleAppsDriveLabelsV2DeltaUpdateLabelRequestEnableFieldRequest `json:"enableField,omitempty"`
+
+	// EnableSelectionChoice: Enable a Choice within a Selection Field.
+	EnableSelectionChoice *GoogleAppsDriveLabelsV2DeltaUpdateLabelRequestEnableSelectionChoiceRequest `json:"enableSelectionChoice,omitempty"`
+
+	// UpdateField: Updates basic properties of a Field.
+	UpdateField *GoogleAppsDriveLabelsV2DeltaUpdateLabelRequestUpdateFieldPropertiesRequest `json:"updateField,omitempty"`
+
+	// UpdateFieldType: Update Field type and/or type options.
+	UpdateFieldType *GoogleAppsDriveLabelsV2DeltaUpdateLabelRequestUpdateFieldTypeRequest `json:"updateFieldType,omitempty"`
+
+	// UpdateLabel: Updates the Label properties.
+	UpdateLabel *GoogleAppsDriveLabelsV2DeltaUpdateLabelRequestUpdateLabelPropertiesRequest `json:"updateLabel,omitempty"`
+
+	// UpdateSelectionChoiceProperties: Update a Choice properties within a
+	// Selection Field.
+	UpdateSelectionChoiceProperties *GoogleAppsDriveLabelsV2DeltaUpdateLabelRequestUpdateSelectionChoicePropertiesRequest `json:"updateSelectionChoiceProperties,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateField") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateField") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsDriveLabelsV2DeltaUpdateLabelRequestRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsDriveLabelsV2DeltaUpdateLabelRequestRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsDriveLabelsV2DeltaUpdateLabelRequestUpdateFieldPropertiesReq
+// uest: Request to update Field properties.
+type GoogleAppsDriveLabelsV2DeltaUpdateLabelRequestUpdateFieldPropertiesRequest struct {
+	// Id: Required. The Field to update.
+	Id string `json:"id,omitempty"`
+
+	// Properties: Required. Basic Field properties.
+	Properties *GoogleAppsDriveLabelsV2FieldProperties `json:"properties,omitempty"`
+
+	// UpdateMask: The fields that should be updated. At least one field
+	// must be specified. The root `properties` is implied and should not be
+	// specified. A single `*` can be used as short-hand for updating every
+	// field.
+	UpdateMask string `json:"updateMask,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Id") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsDriveLabelsV2DeltaUpdateLabelRequestUpdateFieldPropertiesRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsDriveLabelsV2DeltaUpdateLabelRequestUpdateFieldPropertiesRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsDriveLabelsV2DeltaUpdateLabelRequestUpdateFieldTypeRequest:
+// Request to change the type of a Field.
+type GoogleAppsDriveLabelsV2DeltaUpdateLabelRequestUpdateFieldTypeRequest struct {
+	// DateOptions: Update field to Date.
+	DateOptions *GoogleAppsDriveLabelsV2FieldDateOptions `json:"dateOptions,omitempty"`
+
+	// Id: Required. The Field to update.
+	Id string `json:"id,omitempty"`
+
+	// IntegerOptions: Update field to Integer.
+	IntegerOptions *GoogleAppsDriveLabelsV2FieldIntegerOptions `json:"integerOptions,omitempty"`
+
+	// LongTextOptions: Update field to Long Text.
+	LongTextOptions *GoogleAppsDriveLabelsV2FieldLongTextOptions `json:"longTextOptions,omitempty"`
+
+	// SelectionOptions: Update field to Selection.
+	SelectionOptions *GoogleAppsDriveLabelsV2FieldSelectionOptions `json:"selectionOptions,omitempty"`
+
+	// TextOptions: Update field to Text.
+	TextOptions *GoogleAppsDriveLabelsV2FieldTextOptions `json:"textOptions,omitempty"`
+
+	// UpdateMask: The fields that should be updated. At least one field
+	// must be specified. The root of `type_options` is implied and should
+	// not be specified. A single `*` can be used as short-hand for updating
+	// every field.
+	UpdateMask string `json:"updateMask,omitempty"`
+
+	// UserOptions: Update field to User.
+	UserOptions *GoogleAppsDriveLabelsV2FieldUserOptions `json:"userOptions,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DateOptions") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DateOptions") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsDriveLabelsV2DeltaUpdateLabelRequestUpdateFieldTypeRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsDriveLabelsV2DeltaUpdateLabelRequestUpdateFieldTypeRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsDriveLabelsV2DeltaUpdateLabelRequestUpdateLabelPropertiesReq
+// uest: Updates basic properties of a Label.
+type GoogleAppsDriveLabelsV2DeltaUpdateLabelRequestUpdateLabelPropertiesRequest struct {
+	// Properties: Required. Label properties to update.
+	Properties *GoogleAppsDriveLabelsV2LabelProperties `json:"properties,omitempty"`
+
+	// UpdateMask: The fields that should be updated. At least one field
+	// must be specified. The root `label_properties` is implied and should
+	// not be specified. A single `*` can be used as short-hand for updating
+	// every field.
+	UpdateMask string `json:"updateMask,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Properties") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Properties") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsDriveLabelsV2DeltaUpdateLabelRequestUpdateLabelPropertiesRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsDriveLabelsV2DeltaUpdateLabelRequestUpdateLabelPropertiesRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsDriveLabelsV2DeltaUpdateLabelRequestUpdateSelectionChoicePro
+// pertiesRequest: Request to update a Choice properties.
+type GoogleAppsDriveLabelsV2DeltaUpdateLabelRequestUpdateSelectionChoicePropertiesRequest struct {
+	// FieldId: Required. The Selection Field to update.
+	FieldId string `json:"fieldId,omitempty"`
+
+	// Id: Required. The Choice to update.
+	Id string `json:"id,omitempty"`
+
+	// Properties: Required. The Choice properties to update.
+	Properties *GoogleAppsDriveLabelsV2FieldSelectionOptionsChoiceProperties `json:"properties,omitempty"`
+
+	// UpdateMask: The fields that should be updated. At least one field
+	// must be specified. The root `properties` is implied and should not be
+	// specified. A single `*` can be used as short-hand for updating every
+	// field.
+	UpdateMask string `json:"updateMask,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FieldId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FieldId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsDriveLabelsV2DeltaUpdateLabelRequestUpdateSelectionChoicePropertiesRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsDriveLabelsV2DeltaUpdateLabelRequestUpdateSelectionChoicePropertiesRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsDriveLabelsV2DeltaUpdateLabelResponse: Response for Label
+// update.
+type GoogleAppsDriveLabelsV2DeltaUpdateLabelResponse struct {
+	// Responses: The reply of the updates. This maps 1:1 with the updates,
+	// although responses to some requests may be empty.
+	Responses []*GoogleAppsDriveLabelsV2DeltaUpdateLabelResponseResponse `json:"responses,omitempty"`
+
+	// UpdatedLabel: The label after updates were applied. This is only set
+	// if [BatchUpdateLabelResponse2.include_label_in_response] is `true`
+	// and there were no errors.
+	UpdatedLabel *GoogleAppsDriveLabelsV2Label `json:"updatedLabel,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Responses") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Responses") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsDriveLabelsV2DeltaUpdateLabelResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsDriveLabelsV2DeltaUpdateLabelResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsDriveLabelsV2DeltaUpdateLabelResponseCreateFieldResponse:
+// Response following Field create.
+type GoogleAppsDriveLabelsV2DeltaUpdateLabelResponseCreateFieldResponse struct {
+	// Id: The field of the created field. When left blank in a create
+	// request, a key will be autogenerated and can be identified here.
+	Id string `json:"id,omitempty"`
+
+	// Priority: The priority of the created field. The priority may change
+	// from what was specified to assure contiguous priorities between
+	// fields (1-n).
+	Priority int64 `json:"priority,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Id") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsDriveLabelsV2DeltaUpdateLabelResponseCreateFieldResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsDriveLabelsV2DeltaUpdateLabelResponseCreateFieldResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsDriveLabelsV2DeltaUpdateLabelResponseCreateSelectionChoiceRe
+// sponse: Response following Selection Choice create.
+type GoogleAppsDriveLabelsV2DeltaUpdateLabelResponseCreateSelectionChoiceResponse struct {
+	// FieldId: The server-generated id of the field.
+	FieldId string `json:"fieldId,omitempty"`
+
+	// Id: The server-generated ID of the created choice within the Field
+	Id string `json:"id,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FieldId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FieldId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsDriveLabelsV2DeltaUpdateLabelResponseCreateSelectionChoiceResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsDriveLabelsV2DeltaUpdateLabelResponseCreateSelectionChoiceResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsDriveLabelsV2DeltaUpdateLabelResponseDeleteFieldResponse:
+// Response following Field delete.
+type GoogleAppsDriveLabelsV2DeltaUpdateLabelResponseDeleteFieldResponse struct {
+}
+
+// GoogleAppsDriveLabelsV2DeltaUpdateLabelResponseDeleteSelectionChoiceRe
+// sponse: Response following Choice delete.
+type GoogleAppsDriveLabelsV2DeltaUpdateLabelResponseDeleteSelectionChoiceResponse struct {
+}
+
+// GoogleAppsDriveLabelsV2DeltaUpdateLabelResponseDisableFieldResponse:
+// Response following Field disable.
+type GoogleAppsDriveLabelsV2DeltaUpdateLabelResponseDisableFieldResponse struct {
+}
+
+// GoogleAppsDriveLabelsV2DeltaUpdateLabelResponseDisableSelectionChoiceR
+// esponse: Response following Choice disable.
+type GoogleAppsDriveLabelsV2DeltaUpdateLabelResponseDisableSelectionChoiceResponse struct {
+}
+
+// GoogleAppsDriveLabelsV2DeltaUpdateLabelResponseEnableFieldResponse:
+// Response following Field enable.
+type GoogleAppsDriveLabelsV2DeltaUpdateLabelResponseEnableFieldResponse struct {
+}
+
+// GoogleAppsDriveLabelsV2DeltaUpdateLabelResponseEnableSelectionChoiceRe
+// sponse: Response following Choice enable.
+type GoogleAppsDriveLabelsV2DeltaUpdateLabelResponseEnableSelectionChoiceResponse struct {
+}
+
+// GoogleAppsDriveLabelsV2DeltaUpdateLabelResponseResponse: A single
+// response from an update.
+type GoogleAppsDriveLabelsV2DeltaUpdateLabelResponseResponse struct {
+	// CreateField: Creates a new Field.
+	CreateField *GoogleAppsDriveLabelsV2DeltaUpdateLabelResponseCreateFieldResponse `json:"createField,omitempty"`
+
+	// CreateSelectionChoice: Creates a new selection list option to add to
+	// a Selection Field.
+	CreateSelectionChoice *GoogleAppsDriveLabelsV2DeltaUpdateLabelResponseCreateSelectionChoiceResponse `json:"createSelectionChoice,omitempty"`
+
+	// DeleteField: Deletes a Field from the label.
+	DeleteField *GoogleAppsDriveLabelsV2DeltaUpdateLabelResponseDeleteFieldResponse `json:"deleteField,omitempty"`
+
+	// DeleteSelectionChoice: Deletes a Choice from a Selection Field.
+	DeleteSelectionChoice *GoogleAppsDriveLabelsV2DeltaUpdateLabelResponseDeleteSelectionChoiceResponse `json:"deleteSelectionChoice,omitempty"`
+
+	// DisableField: Disables Field.
+	DisableField *GoogleAppsDriveLabelsV2DeltaUpdateLabelResponseDisableFieldResponse `json:"disableField,omitempty"`
+
+	// DisableSelectionChoice: Disables a Choice within a Selection Field.
+	DisableSelectionChoice *GoogleAppsDriveLabelsV2DeltaUpdateLabelResponseDisableSelectionChoiceResponse `json:"disableSelectionChoice,omitempty"`
+
+	// EnableField: Enables Field.
+	EnableField *GoogleAppsDriveLabelsV2DeltaUpdateLabelResponseEnableFieldResponse `json:"enableField,omitempty"`
+
+	// EnableSelectionChoice: Enables a Choice within a Selection Field.
+	EnableSelectionChoice *GoogleAppsDriveLabelsV2DeltaUpdateLabelResponseEnableSelectionChoiceResponse `json:"enableSelectionChoice,omitempty"`
+
+	// UpdateField: Updates basic properties of a Field.
+	UpdateField *GoogleAppsDriveLabelsV2DeltaUpdateLabelResponseUpdateFieldPropertiesResponse `json:"updateField,omitempty"`
+
+	// UpdateFieldType: Update Field type and/or type options.
+	UpdateFieldType *GoogleAppsDriveLabelsV2DeltaUpdateLabelResponseUpdateFieldTypeResponse `json:"updateFieldType,omitempty"`
+
+	// UpdateLabel: Updated basic properties of a Label.
+	UpdateLabel *GoogleAppsDriveLabelsV2DeltaUpdateLabelResponseUpdateLabelPropertiesResponse `json:"updateLabel,omitempty"`
+
+	// UpdateSelectionChoiceProperties: Updates a Choice within a Selection
+	// Field.
+	UpdateSelectionChoiceProperties *GoogleAppsDriveLabelsV2DeltaUpdateLabelResponseUpdateSelectionChoicePropertiesResponse `json:"updateSelectionChoiceProperties,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateField") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateField") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsDriveLabelsV2DeltaUpdateLabelResponseResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsDriveLabelsV2DeltaUpdateLabelResponseResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsDriveLabelsV2DeltaUpdateLabelResponseUpdateFieldPropertiesRe
+// sponse: Response following update to Field properties.
+type GoogleAppsDriveLabelsV2DeltaUpdateLabelResponseUpdateFieldPropertiesResponse struct {
+	// Priority: The priority of the updated field. The priority may change
+	// from what was specified to assure contiguous priorities between
+	// fields (1-n).
+	Priority int64 `json:"priority,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Priority") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Priority") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsDriveLabelsV2DeltaUpdateLabelResponseUpdateFieldPropertiesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsDriveLabelsV2DeltaUpdateLabelResponseUpdateFieldPropertiesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsDriveLabelsV2DeltaUpdateLabelResponseUpdateFieldTypeResponse
+// : Response following update to Field type.
+type GoogleAppsDriveLabelsV2DeltaUpdateLabelResponseUpdateFieldTypeResponse struct {
+}
+
+// GoogleAppsDriveLabelsV2DeltaUpdateLabelResponseUpdateLabelPropertiesRe
+// sponse: Response following update to Label properties.
+type GoogleAppsDriveLabelsV2DeltaUpdateLabelResponseUpdateLabelPropertiesResponse struct {
+}
+
+// GoogleAppsDriveLabelsV2DeltaUpdateLabelResponseUpdateSelectionChoicePr
+// opertiesResponse: Response following update to Selection Choice
+// properties.
+type GoogleAppsDriveLabelsV2DeltaUpdateLabelResponseUpdateSelectionChoicePropertiesResponse struct {
+	// Priority: The priority of the updated choice. The priority may change
+	// from what was specified to assure contiguous priorities between
+	// choices (1-n).
+	Priority int64 `json:"priority,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Priority") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Priority") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsDriveLabelsV2DeltaUpdateLabelResponseUpdateSelectionChoicePropertiesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsDriveLabelsV2DeltaUpdateLabelResponseUpdateSelectionChoicePropertiesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsDriveLabelsV2DisableLabelRequest: Request to deprecate a
+// published Label.
+type GoogleAppsDriveLabelsV2DisableLabelRequest struct {
+	// DisabledPolicy: Disabled policy to use.
+	DisabledPolicy *GoogleAppsDriveLabelsV2LifecycleDisabledPolicy `json:"disabledPolicy,omitempty"`
+
+	// LanguageCode: The BCP-47 language code to use for evaluating
+	// localized field labels. When not specified, values in the default
+	// configured language will be used.
+	LanguageCode string `json:"languageCode,omitempty"`
+
+	// UpdateMask: The fields that should be updated. At least one field
+	// must be specified. The root `disabled_policy` is implied and should
+	// not be specified. A single `*` can be used as short-hand for updating
+	// every field.
+	UpdateMask string `json:"updateMask,omitempty"`
+
+	// UseAdminAccess: Set to `true` in order to use the user's admin
+	// credentials. The server will verify the user is an admin for the
+	// Label before allowing access.
+	UseAdminAccess bool `json:"useAdminAccess,omitempty"`
+
+	// WriteControl: Provides control over how write requests are executed.
+	// Defaults to unset, which means last write wins.
+	WriteControl *GoogleAppsDriveLabelsV2WriteControl `json:"writeControl,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisabledPolicy") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisabledPolicy") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsDriveLabelsV2DisableLabelRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsDriveLabelsV2DisableLabelRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsDriveLabelsV2EnableLabelRequest: Request to enable a label.
+type GoogleAppsDriveLabelsV2EnableLabelRequest struct {
+	// LanguageCode: The BCP-47 language code to use for evaluating
+	// localized field labels. When not specified, values in the default
+	// configured language will be used.
+	LanguageCode string `json:"languageCode,omitempty"`
+
+	// UseAdminAccess: Set to `true` in order to use the user's admin
+	// credentials. The server will verify the user is an admin for the
+	// Label before allowing access.
+	UseAdminAccess bool `json:"useAdminAccess,omitempty"`
+
+	// WriteControl: Provides control over how write requests are executed.
+	// Defaults to unset, which means last write wins.
+	WriteControl *GoogleAppsDriveLabelsV2WriteControl `json:"writeControl,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "LanguageCode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LanguageCode") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsDriveLabelsV2EnableLabelRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsDriveLabelsV2EnableLabelRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -459,6 +1628,62 @@ func (s *GoogleAppsDriveLabelsV2FieldIntegerOptions) MarshalJSON() ([]byte, erro
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAppsDriveLabelsV2FieldLimits: Field constants governing the
+// structure of a Field; such as, the maximum title length, minimum and
+// maximum field values or length, etc.
+type GoogleAppsDriveLabelsV2FieldLimits struct {
+	// DateLimits: Date Field limits.
+	DateLimits *GoogleAppsDriveLabelsV2DateLimits `json:"dateLimits,omitempty"`
+
+	// IntegerLimits: Integer Field limits.
+	IntegerLimits *GoogleAppsDriveLabelsV2IntegerLimits `json:"integerLimits,omitempty"`
+
+	// LongTextLimits: Long text Field limits.
+	LongTextLimits *GoogleAppsDriveLabelsV2LongTextLimits `json:"longTextLimits,omitempty"`
+
+	// MaxDescriptionLength: Limits for Field description, also called help
+	// text.
+	MaxDescriptionLength int64 `json:"maxDescriptionLength,omitempty"`
+
+	// MaxDisplayNameLength: Limits for Field title.
+	MaxDisplayNameLength int64 `json:"maxDisplayNameLength,omitempty"`
+
+	// MaxIdLength: Max length for the id.
+	MaxIdLength int64 `json:"maxIdLength,omitempty"`
+
+	// SelectionLimits: Selection Field limits.
+	SelectionLimits *GoogleAppsDriveLabelsV2SelectionLimits `json:"selectionLimits,omitempty"`
+
+	// TextLimits: The relevant limits for the specified Field.Type. Text
+	// Field limits.
+	TextLimits *GoogleAppsDriveLabelsV2TextLimits `json:"textLimits,omitempty"`
+
+	// UserLimits: User Field limits.
+	UserLimits *GoogleAppsDriveLabelsV2UserLimits `json:"userLimits,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DateLimits") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DateLimits") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsDriveLabelsV2FieldLimits) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsDriveLabelsV2FieldLimits
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAppsDriveLabelsV2FieldListOptions: Options for a multi-valued
 // variant of an associated field type.
 type GoogleAppsDriveLabelsV2FieldListOptions struct {
@@ -484,6 +1709,40 @@ type GoogleAppsDriveLabelsV2FieldListOptions struct {
 
 func (s *GoogleAppsDriveLabelsV2FieldListOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2FieldListOptions
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsDriveLabelsV2FieldLongTextOptions: Options the Long Text
+// field type.
+type GoogleAppsDriveLabelsV2FieldLongTextOptions struct {
+	// MaxLength: Output only. The maximum valid length of values for the
+	// text field.
+	MaxLength int64 `json:"maxLength,omitempty"`
+
+	// MinLength: Output only. The minimum valid length of values for the
+	// text field.
+	MinLength int64 `json:"minLength,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MaxLength") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MaxLength") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsDriveLabelsV2FieldLongTextOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsDriveLabelsV2FieldLongTextOptions
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -914,6 +2173,37 @@ func (s *GoogleAppsDriveLabelsV2FieldUserOptions) MarshalJSON() ([]byte, error) 
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAppsDriveLabelsV2IntegerLimits: Limits for integer Field type.
+type GoogleAppsDriveLabelsV2IntegerLimits struct {
+	// MaxValue: Maximum value for an integer Field type.
+	MaxValue int64 `json:"maxValue,omitempty,string"`
+
+	// MinValue: Minimum value for an integer Field type.
+	MinValue int64 `json:"minValue,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "MaxValue") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MaxValue") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsDriveLabelsV2IntegerLimits) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsDriveLabelsV2IntegerLimits
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAppsDriveLabelsV2Label: A label defines a taxonomy that can be
 // applied to Drive items in order to organize and search across items.
 // Labels can be simple strings, or can contain fields that describe
@@ -1152,6 +2442,220 @@ func (s *GoogleAppsDriveLabelsV2LabelDisplayHints) MarshalJSON() ([]byte, error)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAppsDriveLabelsV2LabelLimits: Label constraints governing the
+// structure of a Label; such as, the maximum number of Fields allowed
+// and maximum length of the label title.
+type GoogleAppsDriveLabelsV2LabelLimits struct {
+	// FieldLimits: The limits for Fields.
+	FieldLimits *GoogleAppsDriveLabelsV2FieldLimits `json:"fieldLimits,omitempty"`
+
+	// MaxDeletedFields: The maximum number of published Fields that can be
+	// deleted.
+	MaxDeletedFields int64 `json:"maxDeletedFields,omitempty"`
+
+	// MaxDescriptionLength: The maximum number of characters allowed for
+	// the description.
+	MaxDescriptionLength int64 `json:"maxDescriptionLength,omitempty"`
+
+	// MaxDraftRevisions: The maximum number of draft revisions that will be
+	// kept before deleting old drafts.
+	MaxDraftRevisions int64 `json:"maxDraftRevisions,omitempty"`
+
+	// MaxFields: The maximum number of Fields allowed within the label.
+	MaxFields int64 `json:"maxFields,omitempty"`
+
+	// MaxTitleLength: The maximum number of characters allowed for the
+	// title.
+	MaxTitleLength int64 `json:"maxTitleLength,omitempty"`
+
+	// Name: Resource name.
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "FieldLimits") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FieldLimits") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsDriveLabelsV2LabelLimits) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsDriveLabelsV2LabelLimits
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsDriveLabelsV2LabelLock: A Lock that can be applied to a
+// Label, Field, or Choice.
+type GoogleAppsDriveLabelsV2LabelLock struct {
+	// Capabilities: Output only. The user's capabilities on this LabelLock.
+	Capabilities *GoogleAppsDriveLabelsV2LabelLockCapabilities `json:"capabilities,omitempty"`
+
+	// ChoiceId: The ID of the Selection Field Choice that should be locked.
+	// If present, `field_id` must also be present.
+	ChoiceId string `json:"choiceId,omitempty"`
+
+	// CreateTime: Output only. The time this LabelLock was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// Creator: Output only. The user whose credentials were used to create
+	// the LabelLock. This will not be present if no user was responsible
+	// for creating the LabelLock.
+	Creator *GoogleAppsDriveLabelsV2UserInfo `json:"creator,omitempty"`
+
+	// DeleteTime: Output only. A timestamp indicating when this LabelLock
+	// was scheduled for deletion. This will be present only if this
+	// LabelLock is in the DELETING state.
+	DeleteTime string `json:"deleteTime,omitempty"`
+
+	// FieldId: The ID of the Field that should be locked. Empty if the
+	// whole Label should be locked.
+	FieldId string `json:"fieldId,omitempty"`
+
+	// Name: Output only. Resource name of this LabelLock.
+	Name string `json:"name,omitempty"`
+
+	// State: Output only. This LabelLock's state.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Unknown state.
+	//   "ACTIVE" - The LabelLock is active and is being enforced by the
+	// server.
+	//   "DELETING" - The LabelLock is being deleted. The LabelLock will
+	// continue to be enforced by the server until it has been fully
+	// removed.
+	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Capabilities") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Capabilities") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsDriveLabelsV2LabelLock) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsDriveLabelsV2LabelLock
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsDriveLabelsV2LabelLockCapabilities: A description of a
+// user's capabilities on a LabelLock.
+type GoogleAppsDriveLabelsV2LabelLockCapabilities struct {
+	// CanViewPolicy: True if the user is authorized to view the policy.
+	CanViewPolicy bool `json:"canViewPolicy,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CanViewPolicy") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CanViewPolicy") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsDriveLabelsV2LabelLockCapabilities) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsDriveLabelsV2LabelLockCapabilities
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsDriveLabelsV2LabelPermission: The permission that applies
+// to a principal (user, group, audience) on a label.
+type GoogleAppsDriveLabelsV2LabelPermission struct {
+	// Audience: Audience to grant a role to. The magic value of
+	// `audiences/default` may be used to apply the role to the default
+	// audience in the context of the organization that owns the Label.
+	Audience string `json:"audience,omitempty"`
+
+	// Email: Specifies the email address for a user or group pricinpal. Not
+	// populated for audience principals. User and Group permissions may
+	// only be inserted using email address. On update requests, if email
+	// address is specified, no principal should be specified.
+	Email string `json:"email,omitempty"`
+
+	// Group: Group resource name.
+	Group string `json:"group,omitempty"`
+
+	// Name: Resource name of this permission.
+	Name string `json:"name,omitempty"`
+
+	// Person: Person resource name.
+	Person string `json:"person,omitempty"`
+
+	// Role: The role the principal should have.
+	//
+	// Possible values:
+	//   "LABEL_ROLE_UNSPECIFIED" - Unknown role.
+	//   "READER" - A reader can read the label and associated metadata
+	// applied to Drive items.
+	//   "APPLIER" - An applier can write associated metadata on Drive items
+	// in which they also have write access to. Implies `READER`.
+	//   "ORGANIZER" - An organizer can pin this label in shared drives they
+	// manage and add new appliers to the label.
+	//   "EDITOR" - Editors can make any update including deleting the label
+	// which also deletes the associated Drive item metadata. Implies
+	// `APPLIER`.
+	Role string `json:"role,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Audience") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Audience") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsDriveLabelsV2LabelPermission) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsDriveLabelsV2LabelPermission
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAppsDriveLabelsV2LabelProperties: Basic properties of the
 // label.
 type GoogleAppsDriveLabelsV2LabelProperties struct {
@@ -1327,6 +2831,79 @@ func (s *GoogleAppsDriveLabelsV2LifecycleDisabledPolicy) MarshalJSON() ([]byte, 
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAppsDriveLabelsV2ListLabelLocksResponse: The response to a
+// ListLabelLocksRequest.
+type GoogleAppsDriveLabelsV2ListLabelLocksResponse struct {
+	// LabelLocks: LabelLocks.
+	LabelLocks []*GoogleAppsDriveLabelsV2LabelLock `json:"labelLocks,omitempty"`
+
+	// NextPageToken: The token of the next page in the response.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "LabelLocks") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LabelLocks") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsDriveLabelsV2ListLabelLocksResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsDriveLabelsV2ListLabelLocksResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsDriveLabelsV2ListLabelPermissionsResponse: Response for
+// listing the permissions on a Label.
+type GoogleAppsDriveLabelsV2ListLabelPermissionsResponse struct {
+	// LabelPermissions: Label permissions.
+	LabelPermissions []*GoogleAppsDriveLabelsV2LabelPermission `json:"labelPermissions,omitempty"`
+
+	// NextPageToken: The token of the next page in the response.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "LabelPermissions") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LabelPermissions") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsDriveLabelsV2ListLabelPermissionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsDriveLabelsV2ListLabelPermissionsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAppsDriveLabelsV2ListLabelsResponse: Response for listing
 // Labels.
 type GoogleAppsDriveLabelsV2ListLabelsResponse struct {
@@ -1363,6 +2940,35 @@ func (s *GoogleAppsDriveLabelsV2ListLabelsResponse) MarshalJSON() ([]byte, error
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAppsDriveLabelsV2ListLimits: Limits for list-variant of a Field
+// type.
+type GoogleAppsDriveLabelsV2ListLimits struct {
+	// MaxEntries: Maximum number of values allowed for the Field type.
+	MaxEntries int64 `json:"maxEntries,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MaxEntries") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MaxEntries") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsDriveLabelsV2ListLimits) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsDriveLabelsV2ListLimits
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAppsDriveLabelsV2LockStatus: Contains information about whether
 // a label component should be considered locked.
 type GoogleAppsDriveLabelsV2LockStatus struct {
@@ -1395,6 +3001,300 @@ func (s *GoogleAppsDriveLabelsV2LockStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAppsDriveLabelsV2LongTextLimits: Limits for long text Field
+// type.
+type GoogleAppsDriveLabelsV2LongTextLimits struct {
+	// MaxLength: Maximum length allowed for a long text Field type.
+	MaxLength int64 `json:"maxLength,omitempty"`
+
+	// MinLength: Minimum length allowed for a long text Field type.
+	MinLength int64 `json:"minLength,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MaxLength") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MaxLength") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsDriveLabelsV2LongTextLimits) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsDriveLabelsV2LongTextLimits
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsDriveLabelsV2PublishLabelRequest: Request to publish a
+// label.
+type GoogleAppsDriveLabelsV2PublishLabelRequest struct {
+	// LanguageCode: The BCP-47 language code to use for evaluating
+	// localized field labels. When not specified, values in the default
+	// configured language will be used.
+	LanguageCode string `json:"languageCode,omitempty"`
+
+	// UseAdminAccess: Set to `true` in order to use the user's admin
+	// credentials. The server will verify the user is an admin for the
+	// Label before allowing access.
+	UseAdminAccess bool `json:"useAdminAccess,omitempty"`
+
+	// WriteControl: Provides control over how write requests are executed.
+	// Defaults to unset, which means last write wins.
+	WriteControl *GoogleAppsDriveLabelsV2WriteControl `json:"writeControl,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "LanguageCode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LanguageCode") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsDriveLabelsV2PublishLabelRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsDriveLabelsV2PublishLabelRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsDriveLabelsV2SelectionLimits: Limits for selection Field
+// type.
+type GoogleAppsDriveLabelsV2SelectionLimits struct {
+	// ListLimits: Limits for list-variant of a Field type.
+	ListLimits *GoogleAppsDriveLabelsV2ListLimits `json:"listLimits,omitempty"`
+
+	// MaxChoices: The max number of choices.
+	MaxChoices int64 `json:"maxChoices,omitempty"`
+
+	// MaxDeletedChoices: Maximum number of deleted choices.
+	MaxDeletedChoices int64 `json:"maxDeletedChoices,omitempty"`
+
+	// MaxDisplayNameLength: Maximum length for display name.
+	MaxDisplayNameLength int64 `json:"maxDisplayNameLength,omitempty"`
+
+	// MaxIdLength: Maximum ID length for a selection options.
+	MaxIdLength int64 `json:"maxIdLength,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ListLimits") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ListLimits") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsDriveLabelsV2SelectionLimits) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsDriveLabelsV2SelectionLimits
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsDriveLabelsV2TextLimits: Limits for text Field type.
+type GoogleAppsDriveLabelsV2TextLimits struct {
+	// MaxLength: Maximum length allowed for a text Field type.
+	MaxLength int64 `json:"maxLength,omitempty"`
+
+	// MinLength: Minimum length allowed for a text Field type.
+	MinLength int64 `json:"minLength,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MaxLength") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MaxLength") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsDriveLabelsV2TextLimits) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsDriveLabelsV2TextLimits
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsDriveLabelsV2UpdateLabelCopyModeRequest: Request to update
+// the `CopyMode` of the given Label. Changes to this policy are not
+// revisioned, do not require publishing, and take effect immediately. \
+type GoogleAppsDriveLabelsV2UpdateLabelCopyModeRequest struct {
+	// CopyMode: Required. Indicates how the applied Label, and Field values
+	// should be copied when a Drive item is copied.
+	//
+	// Possible values:
+	//   "COPY_MODE_UNSPECIFIED" - Copy mode unspecified.
+	//   "DO_NOT_COPY" - The applied label and field values are not copied
+	// by default when the Drive item it's applied to is copied.
+	//   "ALWAYS_COPY" - The applied label and field values are always
+	// copied when the Drive item it's applied to is copied. Only admins can
+	// use this mode.
+	//   "COPY_APPLIABLE" - The applied label and field values are copied if
+	// the label is appliable by the user making the copy.
+	CopyMode string `json:"copyMode,omitempty"`
+
+	// LanguageCode: The BCP-47 language code to use for evaluating
+	// localized field labels. When not specified, values in the default
+	// configured language will be used.
+	LanguageCode string `json:"languageCode,omitempty"`
+
+	// UseAdminAccess: Set to `true` in order to use the user's admin
+	// credentials. The server will verify the user is an admin for the
+	// Label before allowing access.
+	UseAdminAccess bool `json:"useAdminAccess,omitempty"`
+
+	// View: When specified, only certain fields belonging to the indicated
+	// view will be returned.
+	//
+	// Possible values:
+	//   "LABEL_VIEW_BASIC" - Implies the field mask:
+	// `name,id,revision_id,label_type,properties.*`
+	//   "LABEL_VIEW_FULL" - All possible fields.
+	View string `json:"view,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CopyMode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CopyMode") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsDriveLabelsV2UpdateLabelCopyModeRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsDriveLabelsV2UpdateLabelCopyModeRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsDriveLabelsV2UpdateLabelPermissionRequest: Updates a Label
+// Permission. Permissions affect the Label resource as a whole, are not
+// revisioned, and do not require publishing.
+type GoogleAppsDriveLabelsV2UpdateLabelPermissionRequest struct {
+	// LabelPermission: Required. The permission to create or update on the
+	// Label.
+	LabelPermission *GoogleAppsDriveLabelsV2LabelPermission `json:"labelPermission,omitempty"`
+
+	// Parent: Required. The parent Label resource name.
+	Parent string `json:"parent,omitempty"`
+
+	// UseAdminAccess: Set to `true` in order to use the user's admin
+	// credentials. The server will verify the user is an admin for the
+	// Label before allowing access.
+	UseAdminAccess bool `json:"useAdminAccess,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "LabelPermission") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LabelPermission") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsDriveLabelsV2UpdateLabelPermissionRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsDriveLabelsV2UpdateLabelPermissionRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsDriveLabelsV2UserCapabilities: The capabilities of a user.
+type GoogleAppsDriveLabelsV2UserCapabilities struct {
+	// CanAccessLabelManager: Output only. Whether the user is allowed
+	// access to the label manager.
+	CanAccessLabelManager bool `json:"canAccessLabelManager,omitempty"`
+
+	// CanAdministrateLabels: Output only. Whether the user is an
+	// administrator for the shared labels feature.
+	CanAdministrateLabels bool `json:"canAdministrateLabels,omitempty"`
+
+	// CanCreateAdminLabels: Output only. Whether the user is allowed to
+	// create new admin labels.
+	CanCreateAdminLabels bool `json:"canCreateAdminLabels,omitempty"`
+
+	// CanCreateSharedLabels: Output only. Whether the user is allowed to
+	// create new shared labels.
+	CanCreateSharedLabels bool `json:"canCreateSharedLabels,omitempty"`
+
+	// Name: Output only. Resource name for the user capabilities.
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CanAccessLabelManager") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CanAccessLabelManager") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsDriveLabelsV2UserCapabilities) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsDriveLabelsV2UserCapabilities
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAppsDriveLabelsV2UserInfo: Information about a user.
 type GoogleAppsDriveLabelsV2UserInfo struct {
 	// Person: The identifier for this user that can be used with the People
@@ -1422,6 +3322,78 @@ func (s *GoogleAppsDriveLabelsV2UserInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2UserInfo
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsDriveLabelsV2UserLimits: Limits for Field.Type.USER.
+type GoogleAppsDriveLabelsV2UserLimits struct {
+	// ListLimits: Limits for list-variant of a Field type.
+	ListLimits *GoogleAppsDriveLabelsV2ListLimits `json:"listLimits,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ListLimits") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ListLimits") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsDriveLabelsV2UserLimits) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsDriveLabelsV2UserLimits
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsDriveLabelsV2WriteControl: Provides control over how write
+// requests are executed. When not specified, the last write wins.
+type GoogleAppsDriveLabelsV2WriteControl struct {
+	// RequiredRevisionId: The revision_id of the label that the write
+	// request will be applied to. If this is not the latest revision of the
+	// label, the request will not be processed and will return a 400 Bad
+	// Request error.
+	RequiredRevisionId string `json:"requiredRevisionId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "RequiredRevisionId")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "RequiredRevisionId") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsDriveLabelsV2WriteControl) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsDriveLabelsV2WriteControl
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleProtobufEmpty: A generic empty message that you can re-use to
+// avoid defining duplicated empty messages in your APIs. A typical
+// example is to use it as the request or the response type of an API
+// method. For instance: service Foo { rpc Bar(google.protobuf.Empty)
+// returns (google.protobuf.Empty); }
+type GoogleProtobufEmpty struct {
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 }
 
 // GoogleTypeColor: Represents a color in the RGBA color space. This
@@ -1590,6 +3562,749 @@ func (s *GoogleTypeDate) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeDate
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// method id "drivelabels.labels.create":
+
+type LabelsCreateCall struct {
+	s                            *Service
+	googleappsdrivelabelsv2label *GoogleAppsDriveLabelsV2Label
+	urlParams_                   gensupport.URLParams
+	ctx_                         context.Context
+	header_                      http.Header
+}
+
+// Create: Creates a new Label.
+func (r *LabelsService) Create(googleappsdrivelabelsv2label *GoogleAppsDriveLabelsV2Label) *LabelsCreateCall {
+	c := &LabelsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.googleappsdrivelabelsv2label = googleappsdrivelabelsv2label
+	return c
+}
+
+// LanguageCode sets the optional parameter "languageCode": The BCP-47
+// language code to use for evaluating localized Field labels in
+// response. When not specified, values in the default configured
+// language will be used.
+func (c *LabelsCreateCall) LanguageCode(languageCode string) *LabelsCreateCall {
+	c.urlParams_.Set("languageCode", languageCode)
+	return c
+}
+
+// UseAdminAccess sets the optional parameter "useAdminAccess": Set to
+// `true` in order to use the user's admin privileges. The server will
+// verify the user is an admin before allowing access.
+func (c *LabelsCreateCall) UseAdminAccess(useAdminAccess bool) *LabelsCreateCall {
+	c.urlParams_.Set("useAdminAccess", fmt.Sprint(useAdminAccess))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LabelsCreateCall) Fields(s ...googleapi.Field) *LabelsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *LabelsCreateCall) Context(ctx context.Context) *LabelsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *LabelsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *LabelsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleappsdrivelabelsv2label)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/labels")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "drivelabels.labels.create" call.
+// Exactly one of *GoogleAppsDriveLabelsV2Label or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleAppsDriveLabelsV2Label.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *LabelsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleAppsDriveLabelsV2Label, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAppsDriveLabelsV2Label{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new Label.",
+	//   "flatPath": "v2/labels",
+	//   "httpMethod": "POST",
+	//   "id": "drivelabels.labels.create",
+	//   "parameterOrder": [],
+	//   "parameters": {
+	//     "languageCode": {
+	//       "description": "The BCP-47 language code to use for evaluating localized Field labels in response. When not specified, values in the default configured language will be used.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "useAdminAccess": {
+	//       "description": "Set to `true` in order to use the user's admin privileges. The server will verify the user is an admin before allowing access.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     }
+	//   },
+	//   "path": "v2/labels",
+	//   "request": {
+	//     "$ref": "GoogleAppsDriveLabelsV2Label"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleAppsDriveLabelsV2Label"
+	//   }
+	// }
+
+}
+
+// method id "drivelabels.labels.delete":
+
+type LabelsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Permanently deletes a Label and related metadata on Drive
+// Items. Once deleted, the Label and related Drive item metadata will
+// be deleted. Only draft Labels, and disabled Labels may be deleted.
+//
+// - name: Label resource name.
+func (r *LabelsService) Delete(name string) *LabelsDeleteCall {
+	c := &LabelsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// UseAdminAccess sets the optional parameter "useAdminAccess": Set to
+// `true` in order to use the user's admin credentials. The server will
+// verify the user is an admin for the Label before allowing access.
+func (c *LabelsDeleteCall) UseAdminAccess(useAdminAccess bool) *LabelsDeleteCall {
+	c.urlParams_.Set("useAdminAccess", fmt.Sprint(useAdminAccess))
+	return c
+}
+
+// WriteControlRequiredRevisionId sets the optional parameter
+// "writeControl.requiredRevisionId": The revision_id of the label that
+// the write request will be applied to. If this is not the latest
+// revision of the label, the request will not be processed and will
+// return a 400 Bad Request error.
+func (c *LabelsDeleteCall) WriteControlRequiredRevisionId(writeControlRequiredRevisionId string) *LabelsDeleteCall {
+	c.urlParams_.Set("writeControl.requiredRevisionId", writeControlRequiredRevisionId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LabelsDeleteCall) Fields(s ...googleapi.Field) *LabelsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *LabelsDeleteCall) Context(ctx context.Context) *LabelsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *LabelsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *LabelsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "drivelabels.labels.delete" call.
+// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *LabelsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Permanently deletes a Label and related metadata on Drive Items. Once deleted, the Label and related Drive item metadata will be deleted. Only draft Labels, and disabled Labels may be deleted.",
+	//   "flatPath": "v2/labels/{labelsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "drivelabels.labels.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Label resource name.",
+	//       "location": "path",
+	//       "pattern": "^labels/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "useAdminAccess": {
+	//       "description": "Set to `true` in order to use the user's admin credentials. The server will verify the user is an admin for the Label before allowing access.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "writeControl.requiredRevisionId": {
+	//       "description": "The revision_id of the label that the write request will be applied to. If this is not the latest revision of the label, the request will not be processed and will return a 400 Bad Request error.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleProtobufEmpty"
+	//   }
+	// }
+
+}
+
+// method id "drivelabels.labels.delta":
+
+type LabelsDeltaCall struct {
+	s                                              *Service
+	name                                           string
+	googleappsdrivelabelsv2deltaupdatelabelrequest *GoogleAppsDriveLabelsV2DeltaUpdateLabelRequest
+	urlParams_                                     gensupport.URLParams
+	ctx_                                           context.Context
+	header_                                        http.Header
+}
+
+// Delta: Updates a single Label by applying a set of update requests
+// resulting in a new draft revision. The batch update is
+// all-or-nothing: If any of the update requests are invalid, no changes
+// are applied. The resulting draft revision must be published before
+// the changes may be used with Drive Items.
+//
+// - name: The resource name of the Label to update.
+func (r *LabelsService) Delta(name string, googleappsdrivelabelsv2deltaupdatelabelrequest *GoogleAppsDriveLabelsV2DeltaUpdateLabelRequest) *LabelsDeltaCall {
+	c := &LabelsDeltaCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleappsdrivelabelsv2deltaupdatelabelrequest = googleappsdrivelabelsv2deltaupdatelabelrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LabelsDeltaCall) Fields(s ...googleapi.Field) *LabelsDeltaCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *LabelsDeltaCall) Context(ctx context.Context) *LabelsDeltaCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *LabelsDeltaCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *LabelsDeltaCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleappsdrivelabelsv2deltaupdatelabelrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}:delta")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "drivelabels.labels.delta" call.
+// Exactly one of *GoogleAppsDriveLabelsV2DeltaUpdateLabelResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleAppsDriveLabelsV2DeltaUpdateLabelResponse.ServerResponse.Header
+//
+//	or (if a response was returned at all) in
+//
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *LabelsDeltaCall) Do(opts ...googleapi.CallOption) (*GoogleAppsDriveLabelsV2DeltaUpdateLabelResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAppsDriveLabelsV2DeltaUpdateLabelResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a single Label by applying a set of update requests resulting in a new draft revision. The batch update is all-or-nothing: If any of the update requests are invalid, no changes are applied. The resulting draft revision must be published before the changes may be used with Drive Items.",
+	//   "flatPath": "v2/labels/{labelsId}:delta",
+	//   "httpMethod": "POST",
+	//   "id": "drivelabels.labels.delta",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the Label to update.",
+	//       "location": "path",
+	//       "pattern": "^labels/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}:delta",
+	//   "request": {
+	//     "$ref": "GoogleAppsDriveLabelsV2DeltaUpdateLabelRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleAppsDriveLabelsV2DeltaUpdateLabelResponse"
+	//   }
+	// }
+
+}
+
+// method id "drivelabels.labels.disable":
+
+type LabelsDisableCall struct {
+	s                                          *Service
+	name                                       string
+	googleappsdrivelabelsv2disablelabelrequest *GoogleAppsDriveLabelsV2DisableLabelRequest
+	urlParams_                                 gensupport.URLParams
+	ctx_                                       context.Context
+	header_                                    http.Header
+}
+
+// Disable: Disable a published Label. Disabling a Label will result in
+// a new disabled published revision based on the current published
+// revision. If there is a draft revision, a new disabled draft revision
+// will be created based on the latest draft revision. Older draft
+// revisions will be deleted. Once disabled, a label may be deleted with
+// `DeleteLabel`.
+//
+// - name: Label resource name.
+func (r *LabelsService) Disable(name string, googleappsdrivelabelsv2disablelabelrequest *GoogleAppsDriveLabelsV2DisableLabelRequest) *LabelsDisableCall {
+	c := &LabelsDisableCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleappsdrivelabelsv2disablelabelrequest = googleappsdrivelabelsv2disablelabelrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LabelsDisableCall) Fields(s ...googleapi.Field) *LabelsDisableCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *LabelsDisableCall) Context(ctx context.Context) *LabelsDisableCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *LabelsDisableCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *LabelsDisableCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleappsdrivelabelsv2disablelabelrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}:disable")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "drivelabels.labels.disable" call.
+// Exactly one of *GoogleAppsDriveLabelsV2Label or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleAppsDriveLabelsV2Label.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *LabelsDisableCall) Do(opts ...googleapi.CallOption) (*GoogleAppsDriveLabelsV2Label, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAppsDriveLabelsV2Label{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Disable a published Label. Disabling a Label will result in a new disabled published revision based on the current published revision. If there is a draft revision, a new disabled draft revision will be created based on the latest draft revision. Older draft revisions will be deleted. Once disabled, a label may be deleted with `DeleteLabel`.",
+	//   "flatPath": "v2/labels/{labelsId}:disable",
+	//   "httpMethod": "POST",
+	//   "id": "drivelabels.labels.disable",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Label resource name.",
+	//       "location": "path",
+	//       "pattern": "^labels/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}:disable",
+	//   "request": {
+	//     "$ref": "GoogleAppsDriveLabelsV2DisableLabelRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleAppsDriveLabelsV2Label"
+	//   }
+	// }
+
+}
+
+// method id "drivelabels.labels.enable":
+
+type LabelsEnableCall struct {
+	s                                         *Service
+	name                                      string
+	googleappsdrivelabelsv2enablelabelrequest *GoogleAppsDriveLabelsV2EnableLabelRequest
+	urlParams_                                gensupport.URLParams
+	ctx_                                      context.Context
+	header_                                   http.Header
+}
+
+// Enable: Enable a disabled Label and restore it to its published
+// state. This will result in a new published revision based on the
+// current disabled published revision. If there is an existing disabled
+// draft revision, a new revision will be created based on that draft
+// and will be enabled.
+//
+// - name: Label resource name.
+func (r *LabelsService) Enable(name string, googleappsdrivelabelsv2enablelabelrequest *GoogleAppsDriveLabelsV2EnableLabelRequest) *LabelsEnableCall {
+	c := &LabelsEnableCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleappsdrivelabelsv2enablelabelrequest = googleappsdrivelabelsv2enablelabelrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LabelsEnableCall) Fields(s ...googleapi.Field) *LabelsEnableCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *LabelsEnableCall) Context(ctx context.Context) *LabelsEnableCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *LabelsEnableCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *LabelsEnableCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleappsdrivelabelsv2enablelabelrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}:enable")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "drivelabels.labels.enable" call.
+// Exactly one of *GoogleAppsDriveLabelsV2Label or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleAppsDriveLabelsV2Label.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *LabelsEnableCall) Do(opts ...googleapi.CallOption) (*GoogleAppsDriveLabelsV2Label, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAppsDriveLabelsV2Label{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Enable a disabled Label and restore it to its published state. This will result in a new published revision based on the current disabled published revision. If there is an existing disabled draft revision, a new revision will be created based on that draft and will be enabled.",
+	//   "flatPath": "v2/labels/{labelsId}:enable",
+	//   "httpMethod": "POST",
+	//   "id": "drivelabels.labels.enable",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Label resource name.",
+	//       "location": "path",
+	//       "pattern": "^labels/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}:enable",
+	//   "request": {
+	//     "$ref": "GoogleAppsDriveLabelsV2EnableLabelRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleAppsDriveLabelsV2Label"
+	//   }
+	// }
+
 }
 
 // method id "drivelabels.labels.get":
@@ -2089,4 +4804,2880 @@ func (c *LabelsListCall) Pages(ctx context.Context, f func(*GoogleAppsDriveLabel
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "drivelabels.labels.publish":
+
+type LabelsPublishCall struct {
+	s                                          *Service
+	name                                       string
+	googleappsdrivelabelsv2publishlabelrequest *GoogleAppsDriveLabelsV2PublishLabelRequest
+	urlParams_                                 gensupport.URLParams
+	ctx_                                       context.Context
+	header_                                    http.Header
+}
+
+// Publish: Publish all draft changes to the Label. Once published, the
+// Label may not return to its draft state. See
+// `google.apps.drive.labels.v2.Lifecycle` for more information.
+// Publishing a Label will result in a new published revision. All
+// previous draft revisions will be deleted. Previous published
+// revisions will be kept but are subject to automated deletion as
+// needed. Once published, some changes are no longer permitted.
+// Generally, any change that would invalidate or cause new restrictions
+// on existing metadata related to the Label will be rejected. For
+// example, the following changes to a Label will be rejected after the
+// Label is published: * The label cannot be directly deleted. It must
+// be disabled first, then deleted. * Field.FieldType cannot be changed.
+// * Changes to Field validation options cannot reject something that
+// was previously accepted. * Reducing the max entries.
+//
+// - name: Label resource name.
+func (r *LabelsService) Publish(name string, googleappsdrivelabelsv2publishlabelrequest *GoogleAppsDriveLabelsV2PublishLabelRequest) *LabelsPublishCall {
+	c := &LabelsPublishCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleappsdrivelabelsv2publishlabelrequest = googleappsdrivelabelsv2publishlabelrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LabelsPublishCall) Fields(s ...googleapi.Field) *LabelsPublishCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *LabelsPublishCall) Context(ctx context.Context) *LabelsPublishCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *LabelsPublishCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *LabelsPublishCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleappsdrivelabelsv2publishlabelrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}:publish")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "drivelabels.labels.publish" call.
+// Exactly one of *GoogleAppsDriveLabelsV2Label or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleAppsDriveLabelsV2Label.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *LabelsPublishCall) Do(opts ...googleapi.CallOption) (*GoogleAppsDriveLabelsV2Label, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAppsDriveLabelsV2Label{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Publish all draft changes to the Label. Once published, the Label may not return to its draft state. See `google.apps.drive.labels.v2.Lifecycle` for more information. Publishing a Label will result in a new published revision. All previous draft revisions will be deleted. Previous published revisions will be kept but are subject to automated deletion as needed. Once published, some changes are no longer permitted. Generally, any change that would invalidate or cause new restrictions on existing metadata related to the Label will be rejected. For example, the following changes to a Label will be rejected after the Label is published: * The label cannot be directly deleted. It must be disabled first, then deleted. * Field.FieldType cannot be changed. * Changes to Field validation options cannot reject something that was previously accepted. * Reducing the max entries.",
+	//   "flatPath": "v2/labels/{labelsId}:publish",
+	//   "httpMethod": "POST",
+	//   "id": "drivelabels.labels.publish",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Label resource name.",
+	//       "location": "path",
+	//       "pattern": "^labels/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}:publish",
+	//   "request": {
+	//     "$ref": "GoogleAppsDriveLabelsV2PublishLabelRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleAppsDriveLabelsV2Label"
+	//   }
+	// }
+
+}
+
+// method id "drivelabels.labels.updateLabelCopyMode":
+
+type LabelsUpdateLabelCopyModeCall struct {
+	s                                                 *Service
+	name                                              string
+	googleappsdrivelabelsv2updatelabelcopymoderequest *GoogleAppsDriveLabelsV2UpdateLabelCopyModeRequest
+	urlParams_                                        gensupport.URLParams
+	ctx_                                              context.Context
+	header_                                           http.Header
+}
+
+// UpdateLabelCopyMode: Updates a Label's `CopyMode`. Changes to this
+// policy are not revisioned, do not require publishing, and take effect
+// immediately.
+//
+// - name: The resource name of the Label to update.
+func (r *LabelsService) UpdateLabelCopyMode(name string, googleappsdrivelabelsv2updatelabelcopymoderequest *GoogleAppsDriveLabelsV2UpdateLabelCopyModeRequest) *LabelsUpdateLabelCopyModeCall {
+	c := &LabelsUpdateLabelCopyModeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleappsdrivelabelsv2updatelabelcopymoderequest = googleappsdrivelabelsv2updatelabelcopymoderequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LabelsUpdateLabelCopyModeCall) Fields(s ...googleapi.Field) *LabelsUpdateLabelCopyModeCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *LabelsUpdateLabelCopyModeCall) Context(ctx context.Context) *LabelsUpdateLabelCopyModeCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *LabelsUpdateLabelCopyModeCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *LabelsUpdateLabelCopyModeCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleappsdrivelabelsv2updatelabelcopymoderequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}:updateLabelCopyMode")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "drivelabels.labels.updateLabelCopyMode" call.
+// Exactly one of *GoogleAppsDriveLabelsV2Label or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleAppsDriveLabelsV2Label.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *LabelsUpdateLabelCopyModeCall) Do(opts ...googleapi.CallOption) (*GoogleAppsDriveLabelsV2Label, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAppsDriveLabelsV2Label{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a Label's `CopyMode`. Changes to this policy are not revisioned, do not require publishing, and take effect immediately.",
+	//   "flatPath": "v2/labels/{labelsId}:updateLabelCopyMode",
+	//   "httpMethod": "POST",
+	//   "id": "drivelabels.labels.updateLabelCopyMode",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the Label to update.",
+	//       "location": "path",
+	//       "pattern": "^labels/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}:updateLabelCopyMode",
+	//   "request": {
+	//     "$ref": "GoogleAppsDriveLabelsV2UpdateLabelCopyModeRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleAppsDriveLabelsV2Label"
+	//   }
+	// }
+
+}
+
+// method id "drivelabels.labels.updatePermissions":
+
+type LabelsUpdatePermissionsCall struct {
+	s                                      *Service
+	parent                                 string
+	googleappsdrivelabelsv2labelpermission *GoogleAppsDriveLabelsV2LabelPermission
+	urlParams_                             gensupport.URLParams
+	ctx_                                   context.Context
+	header_                                http.Header
+}
+
+// UpdatePermissions: Updates a Label's permissions. If a permission for
+// the indicated principal doesn't exist, a new Label Permission is
+// created, otherwise the existing permission is updated. Permissions
+// affect the Label resource as a whole, are not revisioned, and do not
+// require publishing.
+//
+// - parent: The parent Label resource name.
+func (r *LabelsService) UpdatePermissions(parent string, googleappsdrivelabelsv2labelpermission *GoogleAppsDriveLabelsV2LabelPermission) *LabelsUpdatePermissionsCall {
+	c := &LabelsUpdatePermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleappsdrivelabelsv2labelpermission = googleappsdrivelabelsv2labelpermission
+	return c
+}
+
+// UseAdminAccess sets the optional parameter "useAdminAccess": Set to
+// `true` in order to use the user's admin credentials. The server will
+// verify the user is an admin for the Label before allowing access.
+func (c *LabelsUpdatePermissionsCall) UseAdminAccess(useAdminAccess bool) *LabelsUpdatePermissionsCall {
+	c.urlParams_.Set("useAdminAccess", fmt.Sprint(useAdminAccess))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LabelsUpdatePermissionsCall) Fields(s ...googleapi.Field) *LabelsUpdatePermissionsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *LabelsUpdatePermissionsCall) Context(ctx context.Context) *LabelsUpdatePermissionsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *LabelsUpdatePermissionsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *LabelsUpdatePermissionsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleappsdrivelabelsv2labelpermission)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/permissions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "drivelabels.labels.updatePermissions" call.
+// Exactly one of *GoogleAppsDriveLabelsV2LabelPermission or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *GoogleAppsDriveLabelsV2LabelPermission.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *LabelsUpdatePermissionsCall) Do(opts ...googleapi.CallOption) (*GoogleAppsDriveLabelsV2LabelPermission, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAppsDriveLabelsV2LabelPermission{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a Label's permissions. If a permission for the indicated principal doesn't exist, a new Label Permission is created, otherwise the existing permission is updated. Permissions affect the Label resource as a whole, are not revisioned, and do not require publishing.",
+	//   "flatPath": "v2/labels/{labelsId}/permissions",
+	//   "httpMethod": "PATCH",
+	//   "id": "drivelabels.labels.updatePermissions",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The parent Label resource name.",
+	//       "location": "path",
+	//       "pattern": "^labels/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "useAdminAccess": {
+	//       "description": "Set to `true` in order to use the user's admin credentials. The server will verify the user is an admin for the Label before allowing access.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/permissions",
+	//   "request": {
+	//     "$ref": "GoogleAppsDriveLabelsV2LabelPermission"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleAppsDriveLabelsV2LabelPermission"
+	//   }
+	// }
+
+}
+
+// method id "drivelabels.labels.locks.list":
+
+type LabelsLocksListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists the LabelLocks on a Label.
+//
+// - parent: Label on which Locks are applied. Format: labels/{label}.
+func (r *LabelsLocksService) List(parent string) *LabelsLocksListCall {
+	c := &LabelsLocksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of
+// Locks to return per page. Default: 100. Max: 200.
+func (c *LabelsLocksListCall) PageSize(pageSize int64) *LabelsLocksListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The token of the
+// page to return.
+func (c *LabelsLocksListCall) PageToken(pageToken string) *LabelsLocksListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LabelsLocksListCall) Fields(s ...googleapi.Field) *LabelsLocksListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *LabelsLocksListCall) IfNoneMatch(entityTag string) *LabelsLocksListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *LabelsLocksListCall) Context(ctx context.Context) *LabelsLocksListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *LabelsLocksListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *LabelsLocksListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/locks")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "drivelabels.labels.locks.list" call.
+// Exactly one of *GoogleAppsDriveLabelsV2ListLabelLocksResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleAppsDriveLabelsV2ListLabelLocksResponse.ServerResponse.Header
+// or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *LabelsLocksListCall) Do(opts ...googleapi.CallOption) (*GoogleAppsDriveLabelsV2ListLabelLocksResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAppsDriveLabelsV2ListLabelLocksResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists the LabelLocks on a Label.",
+	//   "flatPath": "v2/labels/{labelsId}/locks",
+	//   "httpMethod": "GET",
+	//   "id": "drivelabels.labels.locks.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Maximum number of Locks to return per page. Default: 100. Max: 200.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The token of the page to return.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Label on which Locks are applied. Format: labels/{label}",
+	//       "location": "path",
+	//       "pattern": "^labels/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/locks",
+	//   "response": {
+	//     "$ref": "GoogleAppsDriveLabelsV2ListLabelLocksResponse"
+	//   }
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *LabelsLocksListCall) Pages(ctx context.Context, f func(*GoogleAppsDriveLabelsV2ListLabelLocksResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "drivelabels.labels.permissions.batchDelete":
+
+type LabelsPermissionsBatchDeleteCall struct {
+	s                                                         *Service
+	parent                                                    string
+	googleappsdrivelabelsv2batchdeletelabelpermissionsrequest *GoogleAppsDriveLabelsV2BatchDeleteLabelPermissionsRequest
+	urlParams_                                                gensupport.URLParams
+	ctx_                                                      context.Context
+	header_                                                   http.Header
+}
+
+// BatchDelete: Deletes Label permissions. Permissions affect the Label
+// resource as a whole, are not revisioned, and do not require
+// publishing.
+//
+//   - parent: The parent Label resource name shared by all permissions
+//     being deleted. Format: labels/{label} If this is set, the parent
+//     field in the UpdateLabelPermissionRequest messages must either be
+//     empty or match this field.
+func (r *LabelsPermissionsService) BatchDelete(parent string, googleappsdrivelabelsv2batchdeletelabelpermissionsrequest *GoogleAppsDriveLabelsV2BatchDeleteLabelPermissionsRequest) *LabelsPermissionsBatchDeleteCall {
+	c := &LabelsPermissionsBatchDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleappsdrivelabelsv2batchdeletelabelpermissionsrequest = googleappsdrivelabelsv2batchdeletelabelpermissionsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LabelsPermissionsBatchDeleteCall) Fields(s ...googleapi.Field) *LabelsPermissionsBatchDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *LabelsPermissionsBatchDeleteCall) Context(ctx context.Context) *LabelsPermissionsBatchDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *LabelsPermissionsBatchDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *LabelsPermissionsBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleappsdrivelabelsv2batchdeletelabelpermissionsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/permissions:batchDelete")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "drivelabels.labels.permissions.batchDelete" call.
+// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *LabelsPermissionsBatchDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes Label permissions. Permissions affect the Label resource as a whole, are not revisioned, and do not require publishing.",
+	//   "flatPath": "v2/labels/{labelsId}/permissions:batchDelete",
+	//   "httpMethod": "POST",
+	//   "id": "drivelabels.labels.permissions.batchDelete",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The parent Label resource name shared by all permissions being deleted. Format: labels/{label} If this is set, the parent field in the UpdateLabelPermissionRequest messages must either be empty or match this field.",
+	//       "location": "path",
+	//       "pattern": "^labels/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/permissions:batchDelete",
+	//   "request": {
+	//     "$ref": "GoogleAppsDriveLabelsV2BatchDeleteLabelPermissionsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleProtobufEmpty"
+	//   }
+	// }
+
+}
+
+// method id "drivelabels.labels.permissions.batchUpdate":
+
+type LabelsPermissionsBatchUpdateCall struct {
+	s                                                         *Service
+	parent                                                    string
+	googleappsdrivelabelsv2batchupdatelabelpermissionsrequest *GoogleAppsDriveLabelsV2BatchUpdateLabelPermissionsRequest
+	urlParams_                                                gensupport.URLParams
+	ctx_                                                      context.Context
+	header_                                                   http.Header
+}
+
+// BatchUpdate: Updates Label permissions. If a permission for the
+// indicated principal doesn't exist, a new Label Permission is created,
+// otherwise the existing permission is updated. Permissions affect the
+// Label resource as a whole, are not revisioned, and do not require
+// publishing.
+//
+//   - parent: The parent Label resource name shared by all permissions
+//     being updated. Format: labels/{label} If this is set, the parent
+//     field in the UpdateLabelPermissionRequest messages must either be
+//     empty or match this field.
+func (r *LabelsPermissionsService) BatchUpdate(parent string, googleappsdrivelabelsv2batchupdatelabelpermissionsrequest *GoogleAppsDriveLabelsV2BatchUpdateLabelPermissionsRequest) *LabelsPermissionsBatchUpdateCall {
+	c := &LabelsPermissionsBatchUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleappsdrivelabelsv2batchupdatelabelpermissionsrequest = googleappsdrivelabelsv2batchupdatelabelpermissionsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LabelsPermissionsBatchUpdateCall) Fields(s ...googleapi.Field) *LabelsPermissionsBatchUpdateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *LabelsPermissionsBatchUpdateCall) Context(ctx context.Context) *LabelsPermissionsBatchUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *LabelsPermissionsBatchUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *LabelsPermissionsBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleappsdrivelabelsv2batchupdatelabelpermissionsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/permissions:batchUpdate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "drivelabels.labels.permissions.batchUpdate" call.
+// Exactly one of
+// *GoogleAppsDriveLabelsV2BatchUpdateLabelPermissionsResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleAppsDriveLabelsV2BatchUpdateLabelPermissionsResponse.ServerResp
+// onse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *LabelsPermissionsBatchUpdateCall) Do(opts ...googleapi.CallOption) (*GoogleAppsDriveLabelsV2BatchUpdateLabelPermissionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAppsDriveLabelsV2BatchUpdateLabelPermissionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates Label permissions. If a permission for the indicated principal doesn't exist, a new Label Permission is created, otherwise the existing permission is updated. Permissions affect the Label resource as a whole, are not revisioned, and do not require publishing.",
+	//   "flatPath": "v2/labels/{labelsId}/permissions:batchUpdate",
+	//   "httpMethod": "POST",
+	//   "id": "drivelabels.labels.permissions.batchUpdate",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The parent Label resource name shared by all permissions being updated. Format: labels/{label} If this is set, the parent field in the UpdateLabelPermissionRequest messages must either be empty or match this field.",
+	//       "location": "path",
+	//       "pattern": "^labels/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/permissions:batchUpdate",
+	//   "request": {
+	//     "$ref": "GoogleAppsDriveLabelsV2BatchUpdateLabelPermissionsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleAppsDriveLabelsV2BatchUpdateLabelPermissionsResponse"
+	//   }
+	// }
+
+}
+
+// method id "drivelabels.labels.permissions.create":
+
+type LabelsPermissionsCreateCall struct {
+	s                                      *Service
+	parent                                 string
+	googleappsdrivelabelsv2labelpermission *GoogleAppsDriveLabelsV2LabelPermission
+	urlParams_                             gensupport.URLParams
+	ctx_                                   context.Context
+	header_                                http.Header
+}
+
+// Create: Updates a Label's permissions. If a permission for the
+// indicated principal doesn't exist, a new Label Permission is created,
+// otherwise the existing permission is updated. Permissions affect the
+// Label resource as a whole, are not revisioned, and do not require
+// publishing.
+//
+//   - parent: The parent Label resource name on the Label Permission is
+//     created. Format: labels/{label}.
+func (r *LabelsPermissionsService) Create(parent string, googleappsdrivelabelsv2labelpermission *GoogleAppsDriveLabelsV2LabelPermission) *LabelsPermissionsCreateCall {
+	c := &LabelsPermissionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleappsdrivelabelsv2labelpermission = googleappsdrivelabelsv2labelpermission
+	return c
+}
+
+// UseAdminAccess sets the optional parameter "useAdminAccess": Set to
+// `true` in order to use the user's admin credentials. The server will
+// verify the user is an admin for the Label before allowing access.
+func (c *LabelsPermissionsCreateCall) UseAdminAccess(useAdminAccess bool) *LabelsPermissionsCreateCall {
+	c.urlParams_.Set("useAdminAccess", fmt.Sprint(useAdminAccess))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LabelsPermissionsCreateCall) Fields(s ...googleapi.Field) *LabelsPermissionsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *LabelsPermissionsCreateCall) Context(ctx context.Context) *LabelsPermissionsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *LabelsPermissionsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *LabelsPermissionsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleappsdrivelabelsv2labelpermission)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/permissions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "drivelabels.labels.permissions.create" call.
+// Exactly one of *GoogleAppsDriveLabelsV2LabelPermission or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *GoogleAppsDriveLabelsV2LabelPermission.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *LabelsPermissionsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleAppsDriveLabelsV2LabelPermission, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAppsDriveLabelsV2LabelPermission{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a Label's permissions. If a permission for the indicated principal doesn't exist, a new Label Permission is created, otherwise the existing permission is updated. Permissions affect the Label resource as a whole, are not revisioned, and do not require publishing.",
+	//   "flatPath": "v2/labels/{labelsId}/permissions",
+	//   "httpMethod": "POST",
+	//   "id": "drivelabels.labels.permissions.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The parent Label resource name on the Label Permission is created. Format: labels/{label}",
+	//       "location": "path",
+	//       "pattern": "^labels/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "useAdminAccess": {
+	//       "description": "Set to `true` in order to use the user's admin credentials. The server will verify the user is an admin for the Label before allowing access.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/permissions",
+	//   "request": {
+	//     "$ref": "GoogleAppsDriveLabelsV2LabelPermission"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleAppsDriveLabelsV2LabelPermission"
+	//   }
+	// }
+
+}
+
+// method id "drivelabels.labels.permissions.delete":
+
+type LabelsPermissionsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a Label's permission. Permissions affect the Label
+// resource as a whole, are not revisioned, and do not require
+// publishing.
+//
+// - name: Label Permission resource name.
+func (r *LabelsPermissionsService) Delete(name string) *LabelsPermissionsDeleteCall {
+	c := &LabelsPermissionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// UseAdminAccess sets the optional parameter "useAdminAccess": Set to
+// `true` in order to use the user's admin credentials. The server will
+// verify the user is an admin for the Label before allowing access.
+func (c *LabelsPermissionsDeleteCall) UseAdminAccess(useAdminAccess bool) *LabelsPermissionsDeleteCall {
+	c.urlParams_.Set("useAdminAccess", fmt.Sprint(useAdminAccess))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LabelsPermissionsDeleteCall) Fields(s ...googleapi.Field) *LabelsPermissionsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *LabelsPermissionsDeleteCall) Context(ctx context.Context) *LabelsPermissionsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *LabelsPermissionsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *LabelsPermissionsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "drivelabels.labels.permissions.delete" call.
+// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *LabelsPermissionsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a Label's permission. Permissions affect the Label resource as a whole, are not revisioned, and do not require publishing.",
+	//   "flatPath": "v2/labels/{labelsId}/permissions/{permissionsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "drivelabels.labels.permissions.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Label Permission resource name.",
+	//       "location": "path",
+	//       "pattern": "^labels/[^/]+/permissions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "useAdminAccess": {
+	//       "description": "Set to `true` in order to use the user's admin credentials. The server will verify the user is an admin for the Label before allowing access.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleProtobufEmpty"
+	//   }
+	// }
+
+}
+
+// method id "drivelabels.labels.permissions.list":
+
+type LabelsPermissionsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists a Label's permissions.
+//
+//   - parent: The parent Label resource name on which Label Permission
+//     are listed. Format: labels/{label}.
+func (r *LabelsPermissionsService) List(parent string) *LabelsPermissionsListCall {
+	c := &LabelsPermissionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of
+// permissions to return per page. Default: 50. Max: 200.
+func (c *LabelsPermissionsListCall) PageSize(pageSize int64) *LabelsPermissionsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The token of the
+// page to return.
+func (c *LabelsPermissionsListCall) PageToken(pageToken string) *LabelsPermissionsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// UseAdminAccess sets the optional parameter "useAdminAccess": Set to
+// `true` in order to use the user's admin credentials. The server will
+// verify the user is an admin for the Label before allowing access.
+func (c *LabelsPermissionsListCall) UseAdminAccess(useAdminAccess bool) *LabelsPermissionsListCall {
+	c.urlParams_.Set("useAdminAccess", fmt.Sprint(useAdminAccess))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LabelsPermissionsListCall) Fields(s ...googleapi.Field) *LabelsPermissionsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *LabelsPermissionsListCall) IfNoneMatch(entityTag string) *LabelsPermissionsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *LabelsPermissionsListCall) Context(ctx context.Context) *LabelsPermissionsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *LabelsPermissionsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *LabelsPermissionsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/permissions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "drivelabels.labels.permissions.list" call.
+// Exactly one of *GoogleAppsDriveLabelsV2ListLabelPermissionsResponse
+// or error will be non-nil. Any non-2xx status code is an error.
+// Response headers are in either
+// *GoogleAppsDriveLabelsV2ListLabelPermissionsResponse.ServerResponse.He
+// ader or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *LabelsPermissionsListCall) Do(opts ...googleapi.CallOption) (*GoogleAppsDriveLabelsV2ListLabelPermissionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAppsDriveLabelsV2ListLabelPermissionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists a Label's permissions.",
+	//   "flatPath": "v2/labels/{labelsId}/permissions",
+	//   "httpMethod": "GET",
+	//   "id": "drivelabels.labels.permissions.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Maximum number of permissions to return per page. Default: 50. Max: 200.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The token of the page to return.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The parent Label resource name on which Label Permission are listed. Format: labels/{label}",
+	//       "location": "path",
+	//       "pattern": "^labels/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "useAdminAccess": {
+	//       "description": "Set to `true` in order to use the user's admin credentials. The server will verify the user is an admin for the Label before allowing access.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/permissions",
+	//   "response": {
+	//     "$ref": "GoogleAppsDriveLabelsV2ListLabelPermissionsResponse"
+	//   }
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *LabelsPermissionsListCall) Pages(ctx context.Context, f func(*GoogleAppsDriveLabelsV2ListLabelPermissionsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "drivelabels.labels.revisions.updatePermissions":
+
+type LabelsRevisionsUpdatePermissionsCall struct {
+	s                                      *Service
+	parent                                 string
+	googleappsdrivelabelsv2labelpermission *GoogleAppsDriveLabelsV2LabelPermission
+	urlParams_                             gensupport.URLParams
+	ctx_                                   context.Context
+	header_                                http.Header
+}
+
+// UpdatePermissions: Updates a Label's permissions. If a permission for
+// the indicated principal doesn't exist, a new Label Permission is
+// created, otherwise the existing permission is updated. Permissions
+// affect the Label resource as a whole, are not revisioned, and do not
+// require publishing.
+//
+// - parent: The parent Label resource name.
+func (r *LabelsRevisionsService) UpdatePermissions(parent string, googleappsdrivelabelsv2labelpermission *GoogleAppsDriveLabelsV2LabelPermission) *LabelsRevisionsUpdatePermissionsCall {
+	c := &LabelsRevisionsUpdatePermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleappsdrivelabelsv2labelpermission = googleappsdrivelabelsv2labelpermission
+	return c
+}
+
+// UseAdminAccess sets the optional parameter "useAdminAccess": Set to
+// `true` in order to use the user's admin credentials. The server will
+// verify the user is an admin for the Label before allowing access.
+func (c *LabelsRevisionsUpdatePermissionsCall) UseAdminAccess(useAdminAccess bool) *LabelsRevisionsUpdatePermissionsCall {
+	c.urlParams_.Set("useAdminAccess", fmt.Sprint(useAdminAccess))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LabelsRevisionsUpdatePermissionsCall) Fields(s ...googleapi.Field) *LabelsRevisionsUpdatePermissionsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *LabelsRevisionsUpdatePermissionsCall) Context(ctx context.Context) *LabelsRevisionsUpdatePermissionsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *LabelsRevisionsUpdatePermissionsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *LabelsRevisionsUpdatePermissionsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleappsdrivelabelsv2labelpermission)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/permissions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "drivelabels.labels.revisions.updatePermissions" call.
+// Exactly one of *GoogleAppsDriveLabelsV2LabelPermission or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *GoogleAppsDriveLabelsV2LabelPermission.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *LabelsRevisionsUpdatePermissionsCall) Do(opts ...googleapi.CallOption) (*GoogleAppsDriveLabelsV2LabelPermission, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAppsDriveLabelsV2LabelPermission{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a Label's permissions. If a permission for the indicated principal doesn't exist, a new Label Permission is created, otherwise the existing permission is updated. Permissions affect the Label resource as a whole, are not revisioned, and do not require publishing.",
+	//   "flatPath": "v2/labels/{labelsId}/revisions/{revisionsId}/permissions",
+	//   "httpMethod": "PATCH",
+	//   "id": "drivelabels.labels.revisions.updatePermissions",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The parent Label resource name.",
+	//       "location": "path",
+	//       "pattern": "^labels/[^/]+/revisions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "useAdminAccess": {
+	//       "description": "Set to `true` in order to use the user's admin credentials. The server will verify the user is an admin for the Label before allowing access.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/permissions",
+	//   "request": {
+	//     "$ref": "GoogleAppsDriveLabelsV2LabelPermission"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleAppsDriveLabelsV2LabelPermission"
+	//   }
+	// }
+
+}
+
+// method id "drivelabels.labels.revisions.locks.list":
+
+type LabelsRevisionsLocksListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists the LabelLocks on a Label.
+//
+// - parent: Label on which Locks are applied. Format: labels/{label}.
+func (r *LabelsRevisionsLocksService) List(parent string) *LabelsRevisionsLocksListCall {
+	c := &LabelsRevisionsLocksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of
+// Locks to return per page. Default: 100. Max: 200.
+func (c *LabelsRevisionsLocksListCall) PageSize(pageSize int64) *LabelsRevisionsLocksListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The token of the
+// page to return.
+func (c *LabelsRevisionsLocksListCall) PageToken(pageToken string) *LabelsRevisionsLocksListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LabelsRevisionsLocksListCall) Fields(s ...googleapi.Field) *LabelsRevisionsLocksListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *LabelsRevisionsLocksListCall) IfNoneMatch(entityTag string) *LabelsRevisionsLocksListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *LabelsRevisionsLocksListCall) Context(ctx context.Context) *LabelsRevisionsLocksListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *LabelsRevisionsLocksListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *LabelsRevisionsLocksListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/locks")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "drivelabels.labels.revisions.locks.list" call.
+// Exactly one of *GoogleAppsDriveLabelsV2ListLabelLocksResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleAppsDriveLabelsV2ListLabelLocksResponse.ServerResponse.Header
+// or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *LabelsRevisionsLocksListCall) Do(opts ...googleapi.CallOption) (*GoogleAppsDriveLabelsV2ListLabelLocksResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAppsDriveLabelsV2ListLabelLocksResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists the LabelLocks on a Label.",
+	//   "flatPath": "v2/labels/{labelsId}/revisions/{revisionsId}/locks",
+	//   "httpMethod": "GET",
+	//   "id": "drivelabels.labels.revisions.locks.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Maximum number of Locks to return per page. Default: 100. Max: 200.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The token of the page to return.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Label on which Locks are applied. Format: labels/{label}",
+	//       "location": "path",
+	//       "pattern": "^labels/[^/]+/revisions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/locks",
+	//   "response": {
+	//     "$ref": "GoogleAppsDriveLabelsV2ListLabelLocksResponse"
+	//   }
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *LabelsRevisionsLocksListCall) Pages(ctx context.Context, f func(*GoogleAppsDriveLabelsV2ListLabelLocksResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "drivelabels.labels.revisions.permissions.batchDelete":
+
+type LabelsRevisionsPermissionsBatchDeleteCall struct {
+	s                                                         *Service
+	parent                                                    string
+	googleappsdrivelabelsv2batchdeletelabelpermissionsrequest *GoogleAppsDriveLabelsV2BatchDeleteLabelPermissionsRequest
+	urlParams_                                                gensupport.URLParams
+	ctx_                                                      context.Context
+	header_                                                   http.Header
+}
+
+// BatchDelete: Deletes Label permissions. Permissions affect the Label
+// resource as a whole, are not revisioned, and do not require
+// publishing.
+//
+//   - parent: The parent Label resource name shared by all permissions
+//     being deleted. Format: labels/{label} If this is set, the parent
+//     field in the UpdateLabelPermissionRequest messages must either be
+//     empty or match this field.
+func (r *LabelsRevisionsPermissionsService) BatchDelete(parent string, googleappsdrivelabelsv2batchdeletelabelpermissionsrequest *GoogleAppsDriveLabelsV2BatchDeleteLabelPermissionsRequest) *LabelsRevisionsPermissionsBatchDeleteCall {
+	c := &LabelsRevisionsPermissionsBatchDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleappsdrivelabelsv2batchdeletelabelpermissionsrequest = googleappsdrivelabelsv2batchdeletelabelpermissionsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LabelsRevisionsPermissionsBatchDeleteCall) Fields(s ...googleapi.Field) *LabelsRevisionsPermissionsBatchDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *LabelsRevisionsPermissionsBatchDeleteCall) Context(ctx context.Context) *LabelsRevisionsPermissionsBatchDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *LabelsRevisionsPermissionsBatchDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *LabelsRevisionsPermissionsBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleappsdrivelabelsv2batchdeletelabelpermissionsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/permissions:batchDelete")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "drivelabels.labels.revisions.permissions.batchDelete" call.
+// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *LabelsRevisionsPermissionsBatchDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes Label permissions. Permissions affect the Label resource as a whole, are not revisioned, and do not require publishing.",
+	//   "flatPath": "v2/labels/{labelsId}/revisions/{revisionsId}/permissions:batchDelete",
+	//   "httpMethod": "POST",
+	//   "id": "drivelabels.labels.revisions.permissions.batchDelete",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The parent Label resource name shared by all permissions being deleted. Format: labels/{label} If this is set, the parent field in the UpdateLabelPermissionRequest messages must either be empty or match this field.",
+	//       "location": "path",
+	//       "pattern": "^labels/[^/]+/revisions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/permissions:batchDelete",
+	//   "request": {
+	//     "$ref": "GoogleAppsDriveLabelsV2BatchDeleteLabelPermissionsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleProtobufEmpty"
+	//   }
+	// }
+
+}
+
+// method id "drivelabels.labels.revisions.permissions.batchUpdate":
+
+type LabelsRevisionsPermissionsBatchUpdateCall struct {
+	s                                                         *Service
+	parent                                                    string
+	googleappsdrivelabelsv2batchupdatelabelpermissionsrequest *GoogleAppsDriveLabelsV2BatchUpdateLabelPermissionsRequest
+	urlParams_                                                gensupport.URLParams
+	ctx_                                                      context.Context
+	header_                                                   http.Header
+}
+
+// BatchUpdate: Updates Label permissions. If a permission for the
+// indicated principal doesn't exist, a new Label Permission is created,
+// otherwise the existing permission is updated. Permissions affect the
+// Label resource as a whole, are not revisioned, and do not require
+// publishing.
+//
+//   - parent: The parent Label resource name shared by all permissions
+//     being updated. Format: labels/{label} If this is set, the parent
+//     field in the UpdateLabelPermissionRequest messages must either be
+//     empty or match this field.
+func (r *LabelsRevisionsPermissionsService) BatchUpdate(parent string, googleappsdrivelabelsv2batchupdatelabelpermissionsrequest *GoogleAppsDriveLabelsV2BatchUpdateLabelPermissionsRequest) *LabelsRevisionsPermissionsBatchUpdateCall {
+	c := &LabelsRevisionsPermissionsBatchUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleappsdrivelabelsv2batchupdatelabelpermissionsrequest = googleappsdrivelabelsv2batchupdatelabelpermissionsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LabelsRevisionsPermissionsBatchUpdateCall) Fields(s ...googleapi.Field) *LabelsRevisionsPermissionsBatchUpdateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *LabelsRevisionsPermissionsBatchUpdateCall) Context(ctx context.Context) *LabelsRevisionsPermissionsBatchUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *LabelsRevisionsPermissionsBatchUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *LabelsRevisionsPermissionsBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleappsdrivelabelsv2batchupdatelabelpermissionsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/permissions:batchUpdate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "drivelabels.labels.revisions.permissions.batchUpdate" call.
+// Exactly one of
+// *GoogleAppsDriveLabelsV2BatchUpdateLabelPermissionsResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleAppsDriveLabelsV2BatchUpdateLabelPermissionsResponse.ServerResp
+// onse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *LabelsRevisionsPermissionsBatchUpdateCall) Do(opts ...googleapi.CallOption) (*GoogleAppsDriveLabelsV2BatchUpdateLabelPermissionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAppsDriveLabelsV2BatchUpdateLabelPermissionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates Label permissions. If a permission for the indicated principal doesn't exist, a new Label Permission is created, otherwise the existing permission is updated. Permissions affect the Label resource as a whole, are not revisioned, and do not require publishing.",
+	//   "flatPath": "v2/labels/{labelsId}/revisions/{revisionsId}/permissions:batchUpdate",
+	//   "httpMethod": "POST",
+	//   "id": "drivelabels.labels.revisions.permissions.batchUpdate",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The parent Label resource name shared by all permissions being updated. Format: labels/{label} If this is set, the parent field in the UpdateLabelPermissionRequest messages must either be empty or match this field.",
+	//       "location": "path",
+	//       "pattern": "^labels/[^/]+/revisions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/permissions:batchUpdate",
+	//   "request": {
+	//     "$ref": "GoogleAppsDriveLabelsV2BatchUpdateLabelPermissionsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleAppsDriveLabelsV2BatchUpdateLabelPermissionsResponse"
+	//   }
+	// }
+
+}
+
+// method id "drivelabels.labels.revisions.permissions.create":
+
+type LabelsRevisionsPermissionsCreateCall struct {
+	s                                      *Service
+	parent                                 string
+	googleappsdrivelabelsv2labelpermission *GoogleAppsDriveLabelsV2LabelPermission
+	urlParams_                             gensupport.URLParams
+	ctx_                                   context.Context
+	header_                                http.Header
+}
+
+// Create: Updates a Label's permissions. If a permission for the
+// indicated principal doesn't exist, a new Label Permission is created,
+// otherwise the existing permission is updated. Permissions affect the
+// Label resource as a whole, are not revisioned, and do not require
+// publishing.
+//
+//   - parent: The parent Label resource name on the Label Permission is
+//     created. Format: labels/{label}.
+func (r *LabelsRevisionsPermissionsService) Create(parent string, googleappsdrivelabelsv2labelpermission *GoogleAppsDriveLabelsV2LabelPermission) *LabelsRevisionsPermissionsCreateCall {
+	c := &LabelsRevisionsPermissionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleappsdrivelabelsv2labelpermission = googleappsdrivelabelsv2labelpermission
+	return c
+}
+
+// UseAdminAccess sets the optional parameter "useAdminAccess": Set to
+// `true` in order to use the user's admin credentials. The server will
+// verify the user is an admin for the Label before allowing access.
+func (c *LabelsRevisionsPermissionsCreateCall) UseAdminAccess(useAdminAccess bool) *LabelsRevisionsPermissionsCreateCall {
+	c.urlParams_.Set("useAdminAccess", fmt.Sprint(useAdminAccess))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LabelsRevisionsPermissionsCreateCall) Fields(s ...googleapi.Field) *LabelsRevisionsPermissionsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *LabelsRevisionsPermissionsCreateCall) Context(ctx context.Context) *LabelsRevisionsPermissionsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *LabelsRevisionsPermissionsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *LabelsRevisionsPermissionsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleappsdrivelabelsv2labelpermission)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/permissions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "drivelabels.labels.revisions.permissions.create" call.
+// Exactly one of *GoogleAppsDriveLabelsV2LabelPermission or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *GoogleAppsDriveLabelsV2LabelPermission.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *LabelsRevisionsPermissionsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleAppsDriveLabelsV2LabelPermission, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAppsDriveLabelsV2LabelPermission{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a Label's permissions. If a permission for the indicated principal doesn't exist, a new Label Permission is created, otherwise the existing permission is updated. Permissions affect the Label resource as a whole, are not revisioned, and do not require publishing.",
+	//   "flatPath": "v2/labels/{labelsId}/revisions/{revisionsId}/permissions",
+	//   "httpMethod": "POST",
+	//   "id": "drivelabels.labels.revisions.permissions.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The parent Label resource name on the Label Permission is created. Format: labels/{label}",
+	//       "location": "path",
+	//       "pattern": "^labels/[^/]+/revisions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "useAdminAccess": {
+	//       "description": "Set to `true` in order to use the user's admin credentials. The server will verify the user is an admin for the Label before allowing access.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/permissions",
+	//   "request": {
+	//     "$ref": "GoogleAppsDriveLabelsV2LabelPermission"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleAppsDriveLabelsV2LabelPermission"
+	//   }
+	// }
+
+}
+
+// method id "drivelabels.labels.revisions.permissions.delete":
+
+type LabelsRevisionsPermissionsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a Label's permission. Permissions affect the Label
+// resource as a whole, are not revisioned, and do not require
+// publishing.
+//
+// - name: Label Permission resource name.
+func (r *LabelsRevisionsPermissionsService) Delete(name string) *LabelsRevisionsPermissionsDeleteCall {
+	c := &LabelsRevisionsPermissionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// UseAdminAccess sets the optional parameter "useAdminAccess": Set to
+// `true` in order to use the user's admin credentials. The server will
+// verify the user is an admin for the Label before allowing access.
+func (c *LabelsRevisionsPermissionsDeleteCall) UseAdminAccess(useAdminAccess bool) *LabelsRevisionsPermissionsDeleteCall {
+	c.urlParams_.Set("useAdminAccess", fmt.Sprint(useAdminAccess))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LabelsRevisionsPermissionsDeleteCall) Fields(s ...googleapi.Field) *LabelsRevisionsPermissionsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *LabelsRevisionsPermissionsDeleteCall) Context(ctx context.Context) *LabelsRevisionsPermissionsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *LabelsRevisionsPermissionsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *LabelsRevisionsPermissionsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "drivelabels.labels.revisions.permissions.delete" call.
+// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *LabelsRevisionsPermissionsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a Label's permission. Permissions affect the Label resource as a whole, are not revisioned, and do not require publishing.",
+	//   "flatPath": "v2/labels/{labelsId}/revisions/{revisionsId}/permissions/{permissionsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "drivelabels.labels.revisions.permissions.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Label Permission resource name.",
+	//       "location": "path",
+	//       "pattern": "^labels/[^/]+/revisions/[^/]+/permissions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "useAdminAccess": {
+	//       "description": "Set to `true` in order to use the user's admin credentials. The server will verify the user is an admin for the Label before allowing access.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleProtobufEmpty"
+	//   }
+	// }
+
+}
+
+// method id "drivelabels.labels.revisions.permissions.list":
+
+type LabelsRevisionsPermissionsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists a Label's permissions.
+//
+//   - parent: The parent Label resource name on which Label Permission
+//     are listed. Format: labels/{label}.
+func (r *LabelsRevisionsPermissionsService) List(parent string) *LabelsRevisionsPermissionsListCall {
+	c := &LabelsRevisionsPermissionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of
+// permissions to return per page. Default: 50. Max: 200.
+func (c *LabelsRevisionsPermissionsListCall) PageSize(pageSize int64) *LabelsRevisionsPermissionsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The token of the
+// page to return.
+func (c *LabelsRevisionsPermissionsListCall) PageToken(pageToken string) *LabelsRevisionsPermissionsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// UseAdminAccess sets the optional parameter "useAdminAccess": Set to
+// `true` in order to use the user's admin credentials. The server will
+// verify the user is an admin for the Label before allowing access.
+func (c *LabelsRevisionsPermissionsListCall) UseAdminAccess(useAdminAccess bool) *LabelsRevisionsPermissionsListCall {
+	c.urlParams_.Set("useAdminAccess", fmt.Sprint(useAdminAccess))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LabelsRevisionsPermissionsListCall) Fields(s ...googleapi.Field) *LabelsRevisionsPermissionsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *LabelsRevisionsPermissionsListCall) IfNoneMatch(entityTag string) *LabelsRevisionsPermissionsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *LabelsRevisionsPermissionsListCall) Context(ctx context.Context) *LabelsRevisionsPermissionsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *LabelsRevisionsPermissionsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *LabelsRevisionsPermissionsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/permissions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "drivelabels.labels.revisions.permissions.list" call.
+// Exactly one of *GoogleAppsDriveLabelsV2ListLabelPermissionsResponse
+// or error will be non-nil. Any non-2xx status code is an error.
+// Response headers are in either
+// *GoogleAppsDriveLabelsV2ListLabelPermissionsResponse.ServerResponse.He
+// ader or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *LabelsRevisionsPermissionsListCall) Do(opts ...googleapi.CallOption) (*GoogleAppsDriveLabelsV2ListLabelPermissionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAppsDriveLabelsV2ListLabelPermissionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists a Label's permissions.",
+	//   "flatPath": "v2/labels/{labelsId}/revisions/{revisionsId}/permissions",
+	//   "httpMethod": "GET",
+	//   "id": "drivelabels.labels.revisions.permissions.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Maximum number of permissions to return per page. Default: 50. Max: 200.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The token of the page to return.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The parent Label resource name on which Label Permission are listed. Format: labels/{label}",
+	//       "location": "path",
+	//       "pattern": "^labels/[^/]+/revisions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "useAdminAccess": {
+	//       "description": "Set to `true` in order to use the user's admin credentials. The server will verify the user is an admin for the Label before allowing access.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/permissions",
+	//   "response": {
+	//     "$ref": "GoogleAppsDriveLabelsV2ListLabelPermissionsResponse"
+	//   }
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *LabelsRevisionsPermissionsListCall) Pages(ctx context.Context, f func(*GoogleAppsDriveLabelsV2ListLabelPermissionsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "drivelabels.limits.getLabel":
+
+type LimitsGetLabelCall struct {
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetLabel: Get the constraints on the structure of a Label; such as,
+// the maximum number of Fields allowed and maximum length of the label
+// title.
+func (r *LimitsService) GetLabel() *LimitsGetLabelCall {
+	c := &LimitsGetLabelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// Name sets the optional parameter "name": Required. Label revision
+// resource name Must be: "limits/label"
+func (c *LimitsGetLabelCall) Name(name string) *LimitsGetLabelCall {
+	c.urlParams_.Set("name", name)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LimitsGetLabelCall) Fields(s ...googleapi.Field) *LimitsGetLabelCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *LimitsGetLabelCall) IfNoneMatch(entityTag string) *LimitsGetLabelCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *LimitsGetLabelCall) Context(ctx context.Context) *LimitsGetLabelCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *LimitsGetLabelCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *LimitsGetLabelCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/limits/label")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "drivelabels.limits.getLabel" call.
+// Exactly one of *GoogleAppsDriveLabelsV2LabelLimits or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleAppsDriveLabelsV2LabelLimits.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *LimitsGetLabelCall) Do(opts ...googleapi.CallOption) (*GoogleAppsDriveLabelsV2LabelLimits, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAppsDriveLabelsV2LabelLimits{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get the constraints on the structure of a Label; such as, the maximum number of Fields allowed and maximum length of the label title.",
+	//   "flatPath": "v2/limits/label",
+	//   "httpMethod": "GET",
+	//   "id": "drivelabels.limits.getLabel",
+	//   "parameterOrder": [],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Label revision resource name Must be: \"limits/label\"",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/limits/label",
+	//   "response": {
+	//     "$ref": "GoogleAppsDriveLabelsV2LabelLimits"
+	//   }
+	// }
+
+}
+
+// method id "drivelabels.users.getCapabilities":
+
+type UsersGetCapabilitiesCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetCapabilities: Gets the user capabilities.
+//
+//   - name: The resource name of the user. Only "users/me/capabilities"
+//     is supported.
+func (r *UsersService) GetCapabilities(name string) *UsersGetCapabilitiesCall {
+	c := &UsersGetCapabilitiesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *UsersGetCapabilitiesCall) Fields(s ...googleapi.Field) *UsersGetCapabilitiesCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *UsersGetCapabilitiesCall) IfNoneMatch(entityTag string) *UsersGetCapabilitiesCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *UsersGetCapabilitiesCall) Context(ctx context.Context) *UsersGetCapabilitiesCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *UsersGetCapabilitiesCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *UsersGetCapabilitiesCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "drivelabels.users.getCapabilities" call.
+// Exactly one of *GoogleAppsDriveLabelsV2UserCapabilities or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *GoogleAppsDriveLabelsV2UserCapabilities.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *UsersGetCapabilitiesCall) Do(opts ...googleapi.CallOption) (*GoogleAppsDriveLabelsV2UserCapabilities, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAppsDriveLabelsV2UserCapabilities{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the user capabilities.",
+	//   "flatPath": "v2/users/{usersId}/capabilities",
+	//   "httpMethod": "GET",
+	//   "id": "drivelabels.users.getCapabilities",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the user. Only \"users/me/capabilities\" is supported.",
+	//       "location": "path",
+	//       "pattern": "^users/[^/]+/capabilities$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleAppsDriveLabelsV2UserCapabilities"
+	//   }
+	// }
+
 }

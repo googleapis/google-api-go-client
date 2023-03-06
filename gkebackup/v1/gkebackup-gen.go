@@ -778,14 +778,23 @@ func (s *ClusterMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ClusterResourceRestoreScope: Identifies the cluster-scoped resources
-// to restore from the Backup.
+// ClusterResourceRestoreScope: Defines the scope of cluster-scoped
+// resources to restore. Some group kinds are not reasonable choices for
+// a restore, and will cause an error if selected here. Any scope
+// selection that would restore "all valid" resources automatically
+// excludes these group kinds. - gkebackup.gke.io/BackupJob -
+// gkebackup.gke.io/RestoreJob - metrics.k8s.io/NodeMetrics -
+// migration.k8s.io/StorageState -
+// migration.k8s.io/StorageVersionMigration - Node -
+// snapshot.storage.k8s.io/VolumeSnapshotContent -
+// storage.k8s.io/CSINode Some group kinds are driven by restore
+// configuration elsewhere, and will cause an error if selected here. -
+// Namespace - PersistentVolume
 type ClusterResourceRestoreScope struct {
-	// SelectedGroupKinds: A list of "types" of cluster-scoped resources to
-	// be restored from the Backup. An empty list means that NO
-	// cluster-scoped resources will be restored. Note that Namespaces and
-	// PersistentVolume restoration is handled separately and is not
-	// governed by this field.
+	// SelectedGroupKinds: A list of cluster-scoped resource group kinds to
+	// restore from the backup. If specified, only the selected resources
+	// will be restored. Mutually exclusive to any other field in the
+	// message.
 	SelectedGroupKinds []*GroupKind `json:"selectedGroupKinds,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "SelectedGroupKinds")
@@ -1795,7 +1804,7 @@ func (s *Restore) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// RestoreConfig: Configuration of a restore. Next id: 9
+// RestoreConfig: Configuration of a restore. Next id: 11
 type RestoreConfig struct {
 	// AllNamespaces: Restore all namespaced resources in the Backup if set
 	// to "True". Specifying this field to "False" is an error.
@@ -2136,7 +2145,7 @@ type SubstitutionRule struct {
 	// not match this expression. If this field is NOT specified, then ALL
 	// fields matched by the target_json_path expression will undergo
 	// substitution. Note that an empty (e.g., "", rather than unspecified)
-	// value for for this field will only match empty fields.
+	// value for this field will only match empty fields.
 	OriginalValuePattern string `json:"originalValuePattern,omitempty"`
 
 	// TargetGroupKinds: (Filtering parameter) Any resource subject to

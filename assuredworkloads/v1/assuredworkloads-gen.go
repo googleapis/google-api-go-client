@@ -791,6 +791,10 @@ type GoogleCloudAssuredworkloadsV1Workload struct {
 	// spaces. Example: My Workload
 	DisplayName string `json:"displayName,omitempty"`
 
+	// EkmProvisioningResponse: Optional. Represents the Ekm Provisioning
+	// State of the given workload.
+	EkmProvisioningResponse *GoogleCloudAssuredworkloadsV1WorkloadEkmProvisioningResponse `json:"ekmProvisioningResponse,omitempty"`
+
 	// EnableSovereignControls: Optional. Indicates the sovereignty status
 	// of the given workload. Currently meant to be used by Europe/Canada
 	// customers.
@@ -925,6 +929,66 @@ func (s *GoogleCloudAssuredworkloadsV1WorkloadComplianceStatus) MarshalJSON() ([
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudAssuredworkloadsV1WorkloadEkmProvisioningResponse:
+// External key management systems(EKM) Provisioning response
+type GoogleCloudAssuredworkloadsV1WorkloadEkmProvisioningResponse struct {
+	// EkmProvisioningErrorDomain: Indicates Ekm provisioning error if any.
+	//
+	// Possible values:
+	//   "EKM_PROVISIONING_ERROR_DOMAIN_UNSPECIFIED" - No error domain
+	//   "UNSPECIFIED_ERROR" - Error but domain is unspecified.
+	//   "GOOGLE_SERVER_ERROR" - Internal logic breaks within provisioning
+	// code.
+	//   "EXTERNAL_USER_ERROR" - Error occurred with the customer not
+	// granting permission/creating resource.
+	//   "EXTERNAL_PARTNER_ERROR" - Error occurred within the partner’s
+	// provisioning cluster.
+	//   "TIMEOUT_ERROR" - Resource wasn't provisioned in the required 7 day
+	// time period
+	EkmProvisioningErrorDomain string `json:"ekmProvisioningErrorDomain,omitempty"`
+
+	// EkmProvisioningErrorMessage: Detailed error message if Ekm
+	// provisioning fails
+	EkmProvisioningErrorMessage string `json:"ekmProvisioningErrorMessage,omitempty"`
+
+	// EkmProvisioningState: Indicates Ekm enrollment Provisioning of a
+	// given workload.
+	//
+	// Possible values:
+	//   "EKM_PROVISIONING_STATE_UNSPECIFIED" - Default State for Ekm
+	// Provisioning
+	//   "EKM_PROVISIONING_STATE_PENDING" - Pending State for Ekm
+	// Provisioning
+	//   "EKM_PROVISIONING_STATE_FAILED" - Failed State for Ekm Provisioning
+	//   "EKM_PROVISIONING_STATE_COMPLETED" - Completed State for Ekm
+	// Provisioning
+	EkmProvisioningState string `json:"ekmProvisioningState,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "EkmProvisioningErrorDomain") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "EkmProvisioningErrorDomain") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAssuredworkloadsV1WorkloadEkmProvisioningResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssuredworkloadsV1WorkloadEkmProvisioningResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudAssuredworkloadsV1WorkloadKMSSettings: Settings specific
 // to the Key Management Service. This message is deprecated. In order
 // to create a Keyring, callers should specify, ENCRYPTION_KEYS_PROJECT
@@ -968,7 +1032,8 @@ func (s *GoogleCloudAssuredworkloadsV1WorkloadKMSSettings) MarshalJSON() ([]byte
 // GoogleCloudAssuredworkloadsV1WorkloadPartnerPermissions: Permissions
 // granted to the AW Partner SA account for the customer workload
 type GoogleCloudAssuredworkloadsV1WorkloadPartnerPermissions struct {
-	// DataLogsViewer: Allow partner to view data and logs
+	// DataLogsViewer: Allow the partner to view inspectability logs and
+	// monitoring violations.
 	DataLogsViewer bool `json:"dataLogsViewer,omitempty"`
 
 	// RemediateFolderViolations: Allow partner to monitor folder and

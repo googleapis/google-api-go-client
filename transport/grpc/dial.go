@@ -155,14 +155,10 @@ func dial(ctx context.Context, insecure bool, o *internal.DialSettings) (*grpc.C
 			return nil, err
 		}
 
-		if o.QuotaProject == "" {
-			o.QuotaProject = internal.QuotaProjectFromCreds(creds)
-		}
-
 		grpcOpts = append(grpcOpts,
 			grpc.WithPerRPCCredentials(grpcTokenSource{
 				TokenSource:   oauth.TokenSource{creds.TokenSource},
-				quotaProject:  o.QuotaProject,
+				quotaProject:  internal.GetQuotaProject(creds, o.QuotaProject),
 				requestReason: o.RequestReason,
 			}),
 		)

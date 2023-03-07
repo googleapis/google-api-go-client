@@ -23,6 +23,8 @@
 //
 // This package is not intended for use by end developers. Use the
 // google.golang.org/api/option package to configure API clients.
+
+// Package internal supports the options and transport packages.
 package internal
 
 import (

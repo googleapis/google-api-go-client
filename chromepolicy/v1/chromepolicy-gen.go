@@ -1169,9 +1169,6 @@ type GoogleChromePolicyVersionsV1PolicySchema struct {
 	// PolicyApiLifecycle: Output only. Current lifecycle information.
 	PolicyApiLifecycle *ChromeCrosDpanelAutosettingsProtoPolicyApiLifecycle `json:"policyApiLifecycle,omitempty"`
 
-	// PolicyApiLifeycle: Deprecated field because of typo.
-	PolicyApiLifeycle *ChromeCrosDpanelAutosettingsProtoPolicyApiLifecycle `json:"policyApiLifeycle,omitempty"`
-
 	// PolicyDescription: Output only. Description about the policy schema
 	// for user consumption.
 	PolicyDescription string `json:"policyDescription,omitempty"`
@@ -1644,11 +1641,11 @@ type GoogleChromePolicyVersionsV1ResolveRequest struct {
 	// request.
 	PageToken string `json:"pageToken,omitempty"`
 
-	// PolicySchemaFilter: The schema filter to apply to the resolve
-	// request. Specify a schema name to view a particular schema, for
-	// example: chrome.users.ShowLogoutButton Wildcards are supported, but
-	// only in the leaf portion of the schema name. Wildcards cannot be used
-	// in namespace directly. Please read
+	// PolicySchemaFilter: Required. The schema filter to apply to the
+	// resolve request. Specify a schema name to view a particular schema,
+	// for example: chrome.users.ShowLogoutButton Wildcards are supported,
+	// but only in the leaf portion of the schema name. Wildcards cannot be
+	// used in namespace directly. Please read
 	// https://developers.google.com/chrome/policy/guides/policy-schemas for
 	// details on schema namespaces. For example: Valid: "chrome.users.*",
 	// "chrome.users.apps.*", "chrome.printers.*" Invalid: "*", "*.users",

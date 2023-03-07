@@ -159,7 +159,6 @@ func NewProjectsService(s *Service) *ProjectsService {
 	rs := &ProjectsService{s: s}
 	rs.Operations = NewProjectsOperationsService(s)
 	rs.Submissions = NewProjectsSubmissionsService(s)
-	rs.Uris = NewProjectsUrisService(s)
 	return rs
 }
 
@@ -169,8 +168,6 @@ type ProjectsService struct {
 	Operations *ProjectsOperationsService
 
 	Submissions *ProjectsSubmissionsService
-
-	Uris *ProjectsUrisService
 }
 
 func NewProjectsOperationsService(s *Service) *ProjectsOperationsService {
@@ -188,15 +185,6 @@ func NewProjectsSubmissionsService(s *Service) *ProjectsSubmissionsService {
 }
 
 type ProjectsSubmissionsService struct {
-	s *Service
-}
-
-func NewProjectsUrisService(s *Service) *ProjectsUrisService {
-	rs := &ProjectsUrisService{s: s}
-	return rs
-}
-
-type ProjectsUrisService struct {
 	s *Service
 }
 
@@ -593,20 +581,6 @@ func (s *GoogleCloudWebriskV1SearchUrisResponseThreatUri) MarshalJSON() ([]byte,
 // GoogleCloudWebriskV1Submission: Wraps a URI that might be displaying
 // malicious content.
 type GoogleCloudWebriskV1Submission struct {
-	// ThreatTypes: ThreatTypes found to be associated with the submitted
-	// URI after reviewing it. This might be empty if the URI was not added
-	// to any list.
-	//
-	// Possible values:
-	//   "THREAT_TYPE_UNSPECIFIED" - No entries should match this threat
-	// type. This threat type is unused.
-	//   "MALWARE" - Malware targeting any platform.
-	//   "SOCIAL_ENGINEERING" - Social engineering targeting any platform.
-	//   "UNWANTED_SOFTWARE" - Unwanted software targeting any platform.
-	//   "SOCIAL_ENGINEERING_EXTENDED_COVERAGE" - A list of extended
-	// coverage social engineering URIs targeting any platform.
-	ThreatTypes []string `json:"threatTypes,omitempty"`
-
 	// Uri: Required. The URI that is being reported for malicious content
 	// to be analyzed.
 	Uri string `json:"uri,omitempty"`
@@ -615,7 +589,7 @@ type GoogleCloudWebriskV1Submission struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "ThreatTypes") to
+	// ForceSendFields is a list of field names (e.g. "Uri") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -623,10 +597,10 @@ type GoogleCloudWebriskV1Submission struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ThreatTypes") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "Uri") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -634,79 +608,6 @@ type GoogleCloudWebriskV1Submission struct {
 
 func (s *GoogleCloudWebriskV1Submission) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudWebriskV1Submission
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudWebriskV1SubmitUriMetadata: Metadata for the Submit URI
-// long-running operation.
-type GoogleCloudWebriskV1SubmitUriMetadata struct {
-	// CreateTime: Creation time of the operation.
-	CreateTime string `json:"createTime,omitempty"`
-
-	// State: The state of the operation.
-	//
-	// Possible values:
-	//   "STATE_UNSPECIFIED" - Default unspecified state.
-	//   "RUNNING" - The operation is currently running.
-	//   "SUCCEEDED" - The operation finished with a success status.
-	//   "CANCELLED" - The operation was cancelled.
-	//   "FAILED" - The operation finished with a failure status.
-	//   "CLOSED" - The operation was closed with no action taken.
-	State string `json:"state,omitempty"`
-
-	// UpdateTime: Latest update time of the operation.
-	UpdateTime string `json:"updateTime,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudWebriskV1SubmitUriMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudWebriskV1SubmitUriMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudWebriskV1SubmitUriRequest: Request to send a potentially
-// malicious URI to WebRisk.
-type GoogleCloudWebriskV1SubmitUriRequest struct {
-	// Submission: Required. The submission that contains the URI to be
-	// scanned.
-	Submission *GoogleCloudWebriskV1Submission `json:"submission,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Submission") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Submission") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudWebriskV1SubmitUriRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudWebriskV1SubmitUriRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1569,14 +1470,7 @@ type ProjectsOperationsListCall struct {
 
 // List: Lists operations that match the specified filter in the
 // request. If the server doesn't support this method, it returns
-// `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to
-// override the binding to use different resource name schemes, such as
-// `users/*/operations`. To override the binding, API services can add a
-// binding such as "/v1/{name=users/*}/operations" to their service
-// configuration. For backwards compatibility, the default name includes
-// the operations collection id, however overriding users must ensure
-// the name binding is the parent resource, without the operations
-// collection id.
+// `UNIMPLEMENTED`.
 //
 // - name: The name of the operation's parent resource.
 func (r *ProjectsOperationsService) List(name string) *ProjectsOperationsListCall {
@@ -1706,7 +1600,7 @@ func (c *ProjectsOperationsListCall) Do(opts ...googleapi.CallOption) (*GoogleLo
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.",
 	//   "flatPath": "v1/projects/{projectsId}/operations",
 	//   "httpMethod": "GET",
 	//   "id": "webrisk.projects.operations.list",
@@ -1909,159 +1803,6 @@ func (c *ProjectsSubmissionsCreateCall) Do(opts ...googleapi.CallOption) (*Googl
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleCloudWebriskV1Submission"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "webrisk.projects.uris.submit":
-
-type ProjectsUrisSubmitCall struct {
-	s                                    *Service
-	parent                               string
-	googlecloudwebriskv1submiturirequest *GoogleCloudWebriskV1SubmitUriRequest
-	urlParams_                           gensupport.URLParams
-	ctx_                                 context.Context
-	header_                              http.Header
-}
-
-// Submit: Submits a URI suspected of containing malicious content to be
-// reviewed. Returns a google.longrunning.Operation which, once the
-// review is complete, is updated with its result. You can use the
-// [Pub/Sub API] (https://cloud.google.com/pubsub) to receive
-// notifications for the returned Operation. If the result verifies the
-// existence of malicious content, the site will be added to the
-// [Google's Social Engineering lists]
-// (https://support.google.com/webmasters/answer/6350487/) in order to
-// protect users that could get exposed to this threat in the future.
-// Only allowlisted projects can use this method during Early Access.
-// Please reach out to Sales or your customer engineer to obtain access.
-//
-//   - parent: The name of the project that is making the submission. This
-//     string is in the format "projects/{project_number}".
-func (r *ProjectsUrisService) Submit(parent string, googlecloudwebriskv1submiturirequest *GoogleCloudWebriskV1SubmitUriRequest) *ProjectsUrisSubmitCall {
-	c := &ProjectsUrisSubmitCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	c.googlecloudwebriskv1submiturirequest = googlecloudwebriskv1submiturirequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsUrisSubmitCall) Fields(s ...googleapi.Field) *ProjectsUrisSubmitCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsUrisSubmitCall) Context(ctx context.Context) *ProjectsUrisSubmitCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ProjectsUrisSubmitCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsUrisSubmitCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudwebriskv1submiturirequest)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/uris:submit")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "webrisk.projects.uris.submit" call.
-// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
-// Any non-2xx status code is an error. Response headers are in either
-// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *ProjectsUrisSubmitCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &GoogleLongrunningOperation{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Submits a URI suspected of containing malicious content to be reviewed. Returns a google.longrunning.Operation which, once the review is complete, is updated with its result. You can use the [Pub/Sub API] (https://cloud.google.com/pubsub) to receive notifications for the returned Operation. If the result verifies the existence of malicious content, the site will be added to the [Google's Social Engineering lists] (https://support.google.com/webmasters/answer/6350487/) in order to protect users that could get exposed to this threat in the future. Only allowlisted projects can use this method during Early Access. Please reach out to Sales or your customer engineer to obtain access.",
-	//   "flatPath": "v1/projects/{projectsId}/uris:submit",
-	//   "httpMethod": "POST",
-	//   "id": "webrisk.projects.uris.submit",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The name of the project that is making the submission. This string is in the format \"projects/{project_number}\".",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/uris:submit",
-	//   "request": {
-	//     "$ref": "GoogleCloudWebriskV1SubmitUriRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleLongrunningOperation"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

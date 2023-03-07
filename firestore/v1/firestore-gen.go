@@ -693,6 +693,8 @@ type CompositeFilter struct {
 	//   "OPERATOR_UNSPECIFIED" - Unspecified. This value must not be used.
 	//   "AND" - Documents are required to satisfy all of the combined
 	// filters.
+	//   "OR" - Documents are required to satisfy at least one of the
+	// combined filters.
 	Op string `json:"op,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Filters") to
@@ -3216,7 +3218,12 @@ func (s *RunAggregationQueryRequest) MarshalJSON() ([]byte, error) {
 // RunAggregationQueryResponse: The response for
 // Firestore.RunAggregationQuery.
 type RunAggregationQueryResponse struct {
-	// ReadTime: The time at which the aggregate value is valid for.
+	// ReadTime: The time at which the aggregate result was computed. This
+	// is always monotonically increasing; in this case, the previous
+	// AggregationResult in the result stream are guaranteed not to have
+	// changed between their `read_time` and this one. If the query returns
+	// no results, a response with `read_time` and no `result` will be sent,
+	// and this represents the time at which the query was run.
 	ReadTime string `json:"readTime,omitempty"`
 
 	// Result: A single aggregation result. Not present when reporting
@@ -3469,7 +3476,9 @@ type StructuredQuery struct {
 	// ASC, __name__ ASC`
 	OrderBy []*Order `json:"orderBy,omitempty"`
 
-	// Select: The projection to return.
+	// Select: Optional sub-set of the fields to return. This acts as a
+	// DocumentMask over the documents returned from a query. When not set,
+	// assumes that the caller wants all fields returned.
 	Select *Projection `json:"select,omitempty"`
 
 	// StartAt: A potential prefix of a position in the result set to start
@@ -4005,11 +4014,7 @@ func (r *ProjectsDatabasesService) Create(parent string, googlefirestoreadminv1d
 
 // DatabaseId sets the optional parameter "databaseId": Required. The ID
 // to use for the database, which will become the final component of the
-// database's resource name. This value should be 4-63 characters. Valid
-// characters are /a-z-/ with first character a letter and the last a
-// letter or a number. Must not be UUID-like
-// /[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}/. "(default)" database id
-// is also valid.
+// database's resource name. The value must be set to "(default)".
 func (c *ProjectsDatabasesCreateCall) DatabaseId(databaseId string) *ProjectsDatabasesCreateCall {
 	c.urlParams_.Set("databaseId", databaseId)
 	return c
@@ -4115,7 +4120,7 @@ func (c *ProjectsDatabasesCreateCall) Do(opts ...googleapi.CallOption) (*GoogleL
 	//   ],
 	//   "parameters": {
 	//     "databaseId": {
-	//       "description": "Required. The ID to use for the database, which will become the final component of the database's resource name. This value should be 4-63 characters. Valid characters are /a-z-/ with first character a letter and the last a letter or a number. Must not be UUID-like /[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}/. \"(default)\" database id is also valid.",
+	//       "description": "Required. The ID to use for the database, which will become the final component of the database's resource name. The value must be set to \"(default)\".",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4176,14 +4181,6 @@ func (c *ProjectsDatabasesDeleteCall) AllowMissing(allowMissing bool) *ProjectsD
 // error will be returned.
 func (c *ProjectsDatabasesDeleteCall) Etag(etag string) *ProjectsDatabasesDeleteCall {
 	c.urlParams_.Set("etag", etag)
-	return c
-}
-
-// FreeId sets the optional parameter "freeId": If set, will free the
-// database_id associated with this database. uid will be used as the
-// resource id to identify this deleted database.
-func (c *ProjectsDatabasesDeleteCall) FreeId(freeId bool) *ProjectsDatabasesDeleteCall {
-	c.urlParams_.Set("freeId", fmt.Sprint(freeId))
 	return c
 }
 
@@ -4298,11 +4295,6 @@ func (c *ProjectsDatabasesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleL
 	//       "description": "The current etag of the Database. If an etag is provided and does not match the current etag of the database, deletion will be blocked and a FAILED_PRECONDITION error will be returned.",
 	//       "location": "query",
 	//       "type": "string"
-	//     },
-	//     "freeId": {
-	//       "description": "If set, will free the database_id associated with this database. uid will be used as the resource id to identify this deleted database.",
-	//       "location": "query",
-	//       "type": "boolean"
 	//     },
 	//     "name": {
 	//       "description": "Required. A name of the form `projects/{project_id}/databases/{database_id}`",
@@ -8158,8 +8150,8 @@ type ProjectsDatabasesDocumentsListenCall struct {
 	header_       http.Header
 }
 
-// Listen: Listens to changes. This method is only available via the
-// gRPC API (not REST).
+// Listen: Listens to changes. This method is only available via gRPC or
+// WebChannel (not REST).
 //
 //   - database: The database name. In the format:
 //     `projects/{project_id}/databases/{database_id}`.
@@ -8261,7 +8253,7 @@ func (c *ProjectsDatabasesDocumentsListenCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Listens to changes. This method is only available via the gRPC API (not REST).",
+	//   "description": "Listens to changes. This method is only available via gRPC or WebChannel (not REST).",
 	//   "flatPath": "v1/projects/{projectsId}/databases/{databasesId}/documents:listen",
 	//   "httpMethod": "POST",
 	//   "id": "firestore.projects.databases.documents.listen",
@@ -9122,7 +9114,7 @@ type ProjectsDatabasesDocumentsWriteCall struct {
 }
 
 // Write: Streams batches of document updates and deletes, in order.
-// This method is only available via the gRPC API (not REST).
+// This method is only available via gRPC or WebChannel (not REST).
 //
 //   - database: The database name. In the format:
 //     `projects/{project_id}/databases/{database_id}`. This is only
@@ -9225,7 +9217,7 @@ func (c *ProjectsDatabasesDocumentsWriteCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Streams batches of document updates and deletes, in order. This method is only available via the gRPC API (not REST).",
+	//   "description": "Streams batches of document updates and deletes, in order. This method is only available via gRPC or WebChannel (not REST).",
 	//   "flatPath": "v1/projects/{projectsId}/databases/{databasesId}/documents:write",
 	//   "httpMethod": "POST",
 	//   "id": "firestore.projects.databases.documents.write",

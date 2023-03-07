@@ -340,6 +340,10 @@ type GoogleCloudOrgpolicyV2Constraint struct {
 	// example, "/projects/123/constraints/compute.disableSerialPortAccess".
 	Name string `json:"name,omitempty"`
 
+	// SupportsDryRun: Shows if dry run is supported for this constraint or
+	// not.
+	SupportsDryRun bool `json:"supportsDryRun,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "BooleanConstraint")
 	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any

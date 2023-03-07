@@ -20,8 +20,8 @@ import (
 	"golang.org/x/oauth2"
 	"google.golang.org/api/googleapi/transport"
 	"google.golang.org/api/internal"
-	"google.golang.org/api/option"
 	"google.golang.org/api/internal/cert"
+	"google.golang.org/api/option"
 	"google.golang.org/api/transport/http/internal/propagation"
 )
 

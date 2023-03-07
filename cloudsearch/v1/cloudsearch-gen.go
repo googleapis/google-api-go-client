@@ -6265,6 +6265,9 @@ type CallInfo struct {
 	// automatically join, everyone else must knock and be admitted.
 	// (Subject to organization policies) Participants cannot dial out from
 	// the meeting. And only hosts can accept knocks.
+	//   "ACCESS_TYPE_CLOSED" - Only participants invited by a host can
+	// join. Knocking is not allowed, dial in and dial out are also
+	// disabled.
 	AvailableAccessTypes []string `json:"availableAccessTypes,omitempty"`
 
 	// AvailableReactions: Output only. The set of reactions that clients
@@ -6409,6 +6412,9 @@ type CallSettings struct {
 	// automatically join, everyone else must knock and be admitted.
 	// (Subject to organization policies) Participants cannot dial out from
 	// the meeting. And only hosts can accept knocks.
+	//   "ACCESS_TYPE_CLOSED" - Only participants invited by a host can
+	// join. Knocking is not allowed, dial in and dial out are also
+	// disabled.
 	AccessType string `json:"accessType,omitempty"`
 
 	// AllowJoiningBeforeHost: Whether users can join this conference before
@@ -8688,7 +8694,8 @@ type DlpScanSummary struct {
 	// not be set. This flag is used to identify messages that DLP did not
 	// attempt to scan for monitoring scan coverage. Contents that DLP
 	// attempted to scan but skipped can be identified by
-	// DlpScanOutcome.SCAN_SKIPPED_* reasons.
+	// DlpScanOutcome.SCAN_SKIPPED_* reasons. DEPRECATED: The prober can
+	// determine this from the context.
 	ScanNotApplicableForContext bool `json:"scanNotApplicableForContext,omitempty"`
 
 	// ScanOutcome: The outcome of a DLP Scan. If this is set,
@@ -9268,6 +9275,8 @@ type DynamiteMessagesScoringInfo struct {
 
 	CreatorInSearcherContactList bool `json:"creatorInSearcherContactList,omitempty"`
 
+	CrowdingMultiplier float64 `json:"crowdingMultiplier,omitempty"`
+
 	DasContactCount int64 `json:"dasContactCount,omitempty,string"`
 
 	FinalScore float64 `json:"finalScore,omitempty"`
@@ -9319,6 +9328,7 @@ func (s *DynamiteMessagesScoringInfo) UnmarshalJSON(data []byte) error {
 	var s1 struct {
 		CommonCountToContactListCountRatio gensupport.JSONFloat64 `json:"commonCountToContactListCountRatio"`
 		CommonCountToMembershipCountRatio  gensupport.JSONFloat64 `json:"commonCountToMembershipCountRatio"`
+		CrowdingMultiplier                 gensupport.JSONFloat64 `json:"crowdingMultiplier"`
 		FinalScore                         gensupport.JSONFloat64 `json:"finalScore"`
 		FreshnessScore                     gensupport.JSONFloat64 `json:"freshnessScore"`
 		JoinedSpaceAffinityScore           gensupport.JSONFloat64 `json:"joinedSpaceAffinityScore"`
@@ -9335,6 +9345,7 @@ func (s *DynamiteMessagesScoringInfo) UnmarshalJSON(data []byte) error {
 	}
 	s.CommonCountToContactListCountRatio = float64(s1.CommonCountToContactListCountRatio)
 	s.CommonCountToMembershipCountRatio = float64(s1.CommonCountToMembershipCountRatio)
+	s.CrowdingMultiplier = float64(s1.CrowdingMultiplier)
 	s.FinalScore = float64(s1.FinalScore)
 	s.FreshnessScore = float64(s1.FreshnessScore)
 	s.JoinedSpaceAffinityScore = float64(s1.JoinedSpaceAffinityScore)
@@ -16350,93 +16361,10 @@ type Message struct {
 	// deleted by user.
 	DeletedByVault bool `json:"deletedByVault,omitempty"`
 
-	// DlpScanOutcome: Data Loss Prevention scan information for this
-	// message. Messages are evaluated in the backend on create
-	// message/topic and edit message actions. DEPRECATED: use
-	// dlp_scan_summary instead.
-	//
-	// Possible values:
-	//   "SCAN_UNKNOWN_OUTCOME"
-	//   "SCAN_SUCCEEDED_NO_VIOLATION" - This means no violation is detected
-	// on the given message/attachment.
-	//   "SCAN_SUCCEEDED_BLOCK" - Violation is detected. The
-	// message/attachment will be blocked (or deleted if this happens in
-	// failure recovery), the user will be warned, and the violation will be
-	// logged to BIP.
-	//   "SCAN_SUCCEEDED_WARN" - Violation is detected. The user will be
-	// warned, and the violation will be logged to BIP.
-	//   "SCAN_SUCCEEDED_AUDIT_ONLY" - Violation is detected and will be
-	// logged to BIP (no user-facing action performed).
-	//   "SCAN_FAILURE_EXCEPTION" - Rule fetch and evaluation were attempted
-	// but an exception occurred.
-	//   "SCAN_FAILURE_RULE_FETCH_FAILED" - Rule fetch was attempted but
-	// failed, so rule evaluation could not be performed.
-	//   "SCAN_FAILURE_TIMEOUT" - Rule fetch and evaluation were attempted
-	// but the scanning timed out.
-	//   "SCAN_FAILURE_ALL_RULES_FAILED" - Rule fetch completed and
-	// evaluation were attempted, but all of the rules failed to be
-	// evaluated.
-	//   "SCAN_FAILURE_ILLEGAL_STATE_FOR_ATTACHMENTS" - An
-	// IllegalStateException is thrown when executing DLP on attachments.
-	// This could happen if the space row is missing.
-	//   "SCAN_SKIPPED_EXPERIMENT_DISABLED" - Rule fetch and evaluation is
-	// skipped because DLP is not enabled for the user.
-	//   "SCAN_SKIPPED_CONSUMER" - Rule fetch and evaluation are skipped
-	// because the user sending message is consumer.
-	//   "SCAN_SKIPPED_NON_HUMAN_USER" - Rule fetch and evaluation are
-	// skipped because the user sending message is a non-human user (i.e. a
-	// bot).
-	//   "SCAN_SKIPPED_NO_MESSAGE" - Rule fetch and evaluation are skipped
-	// because there is no message to scan. Deprecated: this should not
-	// happen since there must be message or attachment for DLP scan.
-	//   "SCAN_SKIPPED_USER_ACKNOWLEDGED_WARNING" - Rule fetch and
-	// evaluation are skipped because the user has acknowledged the warning
-	// on the message that triggered the Warn violation and sent the message
-	// anyway.
-	//   "SCAN_SKIPPED_MESSAGE_FROM_UNSUPPORTED_ORIGIN" - Scanning was
-	// skipped because the message originated from Interop or Babel.
-	//   "SCAN_SKIPPED_MESSAGE_SENT_DURING_SPACE_MIGRATION" - Scanning was
-	// skipped because the message was sent while the space is in migration
-	// mode. See go/migration-mode for details.
-	//   "SCAN_RULE_EVALUATION_SKIPPED_NO_RULES_FOUND" - Rule fetch
-	// happened, but rule evaluation is skipped because no rules were found.
-	//
-	// "SCAN_RULE_EVALUATION_SKIPPED_NO_APPLICABLE_RULES_FOR_ACTION_PARAMS"
-	// - Rule fetch happened, but rule evaluation is skipped because none of
-	// the rules are applicable to the given action params.
-	//   "SCAN_RULE_EVALUATION_SKIPPED_NO_APPLICABLE_RULES_FOR_TRIGGER" -
-	// Rule fetch happened, but rule evaluation is skipped because none of
-	// the rules are applicable to the given trigger.
-	//   "SCAN_RULE_EVALUATION_SKIPPED_CHANGELING_PERMANENT_ERROR" - Rule
-	// fetch happened, but rule evaluation is skipped because Changeling
-	// returned permanent failure while converting the attachment to text.
-	//   "SCAN_RULE_EVALUATION_SKIPPED_CHANGELING_EMPTY_RESPONSE" - Rule
-	// fetch happened, but rule evaluation is skipped because Changeling
-	// returned an empty response while converting the attachment to text.
-	//   "SCAN_RULE_EVALUATION_SKIPPED_UNSUPPORTED_FILE_TYPE" - Rule fetch
-	// happened, but rule evaluation is skipped because file type is
-	// unsupported.
-	//   "SCAN_SUCCEEDED_WITH_FAILURES_NO_VIOLATION" - Rules were fetched
-	// but some evaluations failed. No violation was found in the rules that
-	// were successfully evaluated.
-	//   "SCAN_SUCCEEDED_WITH_FAILURES_BLOCK" - Rules were fetched but some
-	// evaluations failed. A blocking violation was found in the rules that
-	// were successfully evaluated. The message/attachment will be blocked,
-	// the user will be notified, and the violation will be logged to BIP. A
-	// blocking violation takes precedence over all other violation types.
-	//   "SCAN_SUCCEEDED_WITH_FAILURES_WARN" - Rules were fetched but some
-	// evaluations failed. A warn violation was found in the rules that were
-	// successfully evaluated. The user will be warned, and the violation
-	// will be logged to BIP.
-	//   "SCAN_SUCCEEDED_WITH_FAILURES_AUDIT_ONLY" - Rules were fetched but
-	// some evaluations failed. An audit-only violation was found in the
-	// rules that were successfully evaluated. The violation will be logged
-	// to BIP (no user-facing action performed).
-	DlpScanOutcome string `json:"dlpScanOutcome,omitempty"`
-
 	// DlpScanSummary: Data Loss Prevention scan information for this
 	// message. Messages are evaluated in the backend on create
-	// message/topic and edit message actions.
+	// message/topic and edit message actions. DEPRECATED: Use
+	// DATA_LOSS_PREVENTION Annotation.
 	DlpScanSummary *DlpScanSummary `json:"dlpScanSummary,omitempty"`
 
 	// EditableBy: Indicates who can edit the message. This field is set on
@@ -19928,6 +19856,7 @@ type RequiredMessageFeaturesMetadata struct {
 	//   "REQUIRED_FEATURE_MESSAGE_QUOTING"
 	//   "REQUIRED_FEATURE_TOMBSTONES_IN_DMS_AND_UFRS"
 	//   "REQUIRED_FEATURE_CUSTOM_HYPERLINK"
+	//   "REQUIRED_FEATURE_SMART_CHIP"
 	RequiredFeatures []string `json:"requiredFeatures,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "RequiredFeatures") to
@@ -21471,6 +21400,9 @@ type Settings struct {
 	// automatically join, everyone else must knock and be admitted.
 	// (Subject to organization policies) Participants cannot dial out from
 	// the meeting. And only hosts can accept knocks.
+	//   "ACCESS_TYPE_CLOSED" - Only participants invited by a host can
+	// join. Knocking is not allowed, dial in and dial out are also
+	// disabled.
 	AccessType string `json:"accessType,omitempty"`
 
 	// AllowJoiningBeforeHost: Whether users can join before host in the

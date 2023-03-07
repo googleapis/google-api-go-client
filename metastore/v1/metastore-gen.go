@@ -315,6 +315,49 @@ func (s *AuditLogConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AuxiliaryVersionConfig: Configuration information for the auxiliary
+// service versions.
+type AuxiliaryVersionConfig struct {
+	// ConfigOverrides: A mapping of Hive metastore configuration key-value
+	// pairs to apply to the auxiliary Hive metastore (configured in
+	// hive-site.xml) in addition to the primary version's overrides. If
+	// keys are present in both the auxiliary version's overrides and the
+	// primary version's overrides, the value from the auxiliary version's
+	// overrides takes precedence.
+	ConfigOverrides map[string]string `json:"configOverrides,omitempty"`
+
+	// NetworkConfig: Output only. The network configuration contains the
+	// endpoint URI(s) of the auxiliary Hive metastore service.
+	NetworkConfig *NetworkConfig `json:"networkConfig,omitempty"`
+
+	// Version: The Hive metastore version of the auxiliary service. It must
+	// be less than the primary Hive metastore service's version.
+	Version string `json:"version,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConfigOverrides") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConfigOverrides") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AuxiliaryVersionConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod AuxiliaryVersionConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // BackendMetastore: Represents a backend metastore for the federation.
 type BackendMetastore struct {
 	// MetastoreType: The type of the backend metastore.
@@ -837,6 +880,17 @@ func (s *Federation) MarshalJSON() ([]byte, error) {
 // HiveMetastoreConfig: Specifies configuration information specific to
 // running Hive metastore software as the metastore service.
 type HiveMetastoreConfig struct {
+	// AuxiliaryVersions: A mapping of Hive metastore version to the
+	// auxiliary version configuration. When specified, a secondary Hive
+	// metastore service is created along with the primary service. All
+	// auxiliary versions must be less than the service's primary version.
+	// The key is the auxiliary service name and it must match the regular
+	// expression a-z?. This means that the first character must be a
+	// lowercase letter, and all the following characters must be hyphens,
+	// lowercase letters, or digits, except the last character, which cannot
+	// be a hyphen.
+	AuxiliaryVersions map[string]AuxiliaryVersionConfig `json:"auxiliaryVersions,omitempty"`
+
 	// ConfigOverrides: A mapping of Hive metastore configuration key-value
 	// pairs to apply to the Hive metastore (configured in hive-site.xml).
 	// The mappings override system defaults (some keys cannot be
@@ -855,15 +909,15 @@ type HiveMetastoreConfig struct {
 	// Version: Immutable. The Hive metastore schema version.
 	Version string `json:"version,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "ConfigOverrides") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "AuxiliaryVersions")
+	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ConfigOverrides") to
+	// NullFields is a list of field names (e.g. "AuxiliaryVersions") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -1828,6 +1882,65 @@ func (s *RestoreServiceRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ScalingConfig: Represents the scaling configuration of a metastore
+// service.
+type ScalingConfig struct {
+	// InstanceSize: An enum of readable instance sizes, with each instance
+	// size mapping to a float value (e.g. InstanceSize.EXTRA_SMALL =
+	// scaling_factor(0.1))
+	//
+	// Possible values:
+	//   "INSTANCE_SIZE_UNSPECIFIED" - Unspecified instance size
+	//   "EXTRA_SMALL" - Extra small instance size, maps to a scaling factor
+	// of 0.1.
+	//   "SMALL" - Small instance size, maps to a scaling factor of 0.5.
+	//   "MEDIUM" - Medium instance size, maps to a scaling factor of 1.0.
+	//   "LARGE" - Large instance size, maps to a scaling factor of 3.0.
+	//   "EXTRA_LARGE" - Extra large instance size, maps to a scaling factor
+	// of 6.0.
+	InstanceSize string `json:"instanceSize,omitempty"`
+
+	// ScalingFactor: Scaling factor, increments of 0.1 for values less than
+	// 1.0, and increments of 1.0 for values greater than 1.0.
+	ScalingFactor float64 `json:"scalingFactor,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "InstanceSize") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "InstanceSize") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ScalingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ScalingConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *ScalingConfig) UnmarshalJSON(data []byte) error {
+	type NoMethod ScalingConfig
+	var s1 struct {
+		ScalingFactor gensupport.JSONFloat64 `json:"scalingFactor"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.ScalingFactor = float64(s1.ScalingFactor)
+	return nil
+}
+
 // Secret: A securely stored value.
 type Secret struct {
 	// CloudSecret: The relative resource name of a Secret Manager secret
@@ -1936,6 +2049,9 @@ type Service struct {
 	//   "STABLE" - The STABLE release channel contains features that are
 	// considered stable and have been validated for production use.
 	ReleaseChannel string `json:"releaseChannel,omitempty"`
+
+	// ScalingConfig: Scaling configuration of the metastore service.
+	ScalingConfig *ScalingConfig `json:"scalingConfig,omitempty"`
 
 	// State: Output only. The current state of the metastore service.
 	//

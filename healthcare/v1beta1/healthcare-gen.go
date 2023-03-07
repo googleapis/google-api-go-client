@@ -3151,8 +3151,9 @@ type FhirNotificationConfig struct {
 	// to a project. The Cloud Healthcare API service account,
 	// service-@gcp-sa-healthcare.iam.gserviceaccount.com, must have
 	// publisher permissions on the given Pub/Sub topic. Not having adequate
-	// permissions causes the calls that send notifications to fail. If a
-	// notification can't be published to Pub/Sub, errors are logged to
+	// permissions causes the calls that send notifications to fail
+	// (https://cloud.google.com/healthcare-api/docs/permissions-healthcare-api-gcp-products#dicom_fhir_and_hl7v2_store_cloud_pubsub_permissions).
+	// If a notification can't be published to Pub/Sub, errors are logged to
 	// Cloud Logging. For more information, see Viewing error logs in Cloud
 	// Logging
 	// (https://cloud.google.com/healthcare-api/docs/how-tos/logging).

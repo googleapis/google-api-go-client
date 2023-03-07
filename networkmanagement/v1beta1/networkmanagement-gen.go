@@ -970,6 +970,8 @@ type DropInfo struct {
 	// service.
 	//   "CLOUD_RUN_REVISION_NOT_READY" - Packet sent from a Cloud Run
 	// revision that is not ready.
+	//   "DROPPED_INSIDE_PSC_SERVICE_PRODUCER" - Packet was dropped inside
+	// Private Service Connect service producer.
 	Cause string `json:"cause,omitempty"`
 
 	// ResourceUri: URI of the resource that caused the drop.

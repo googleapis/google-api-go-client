@@ -1817,22 +1817,22 @@ type GoogleCloudAssetV1AnalyzeOrgPolicyGovernedAssetsResponseGovernedIamPolicy s
 	// for more information.
 	AttachedResource string `json:"attachedResource,omitempty"`
 
-	// Folders: The folder(s) that this IAM policy belongs to, in the form
+	// Folders: The folder(s) that this IAM policy belongs to, in the format
 	// of folders/{FOLDER_NUMBER}. This field is available when the IAM
-	// policy belongs(directly or cascadingly) to one or more folders.
+	// policy belongs (directly or cascadingly) to one or more folders.
 	Folders []string `json:"folders,omitempty"`
 
 	// Organization: The organization that this IAM policy belongs to, in
-	// the form of organizations/{ORGANIZATION_NUMBER}. This field is
-	// available when the IAM policy belongs(directly or cascadingly) to an
+	// the format of organizations/{ORGANIZATION_NUMBER}. This field is
+	// available when the IAM policy belongs (directly or cascadingly) to an
 	// organization.
 	Organization string `json:"organization,omitempty"`
 
 	// Policy: The IAM policy directly set on the given resource.
 	Policy *Policy `json:"policy,omitempty"`
 
-	// Project: The project that this IAM policy belongs to, in the form of
-	// projects/{PROJECT_NUMBER}. This field is available when the IAM
+	// Project: The project that this IAM policy belongs to, in the format
+	// of projects/{PROJECT_NUMBER}. This field is available when the IAM
 	// policy belongs to a project.
 	Project string `json:"project,omitempty"`
 
@@ -1864,9 +1864,9 @@ func (s *GoogleCloudAssetV1AnalyzeOrgPolicyGovernedAssetsResponseGovernedIamPoli
 // ce: The Google Cloud resources governed by the organization policies
 // of the AnalyzeOrgPolicyGovernedAssetsRequest.constraint.
 type GoogleCloudAssetV1AnalyzeOrgPolicyGovernedAssetsResponseGovernedResource struct {
-	// Folders: The folder(s) that this resource belongs to, in the form of
-	// folders/{FOLDER_NUMBER}. This field is available when the resource
-	// belongs(directly or cascadingly) to one or more folders.
+	// Folders: The folder(s) that this resource belongs to, in the format
+	// of folders/{FOLDER_NUMBER}. This field is available when the resource
+	// belongs (directly or cascadingly) to one or more folders.
 	Folders []string `json:"folders,omitempty"`
 
 	// FullResourceName: The [full resource name]
@@ -1875,8 +1875,8 @@ type GoogleCloudAssetV1AnalyzeOrgPolicyGovernedAssetsResponseGovernedResource st
 	FullResourceName string `json:"fullResourceName,omitempty"`
 
 	// Organization: The organization that this resource belongs to, in the
-	// form of organizations/{ORGANIZATION_NUMBER}. This field is available
-	// when the resource belongs(directly or cascadingly) to an
+	// format of organizations/{ORGANIZATION_NUMBER}. This field is
+	// available when the resource belongs (directly or cascadingly) to an
 	// organization.
 	Organization string `json:"organization,omitempty"`
 
@@ -1887,7 +1887,7 @@ type GoogleCloudAssetV1AnalyzeOrgPolicyGovernedAssetsResponseGovernedResource st
 	// name.
 	Parent string `json:"parent,omitempty"`
 
-	// Project: The project that this resource belongs to, in the form of
+	// Project: The project that this resource belongs to, in the format of
 	// projects/{PROJECT_NUMBER}. This field is available when the resource
 	// belongs to a project.
 	Project string `json:"project,omitempty"`

@@ -778,10 +778,10 @@ type CreateTaskRequest struct {
 	// that of an existing task or a task that was deleted or completed
 	// recently then the call will fail with ALREADY_EXISTS. If the task's
 	// queue was created using Cloud Tasks, then another task with the same
-	// name can't be created for ~1hour after the original task was deleted
+	// name can't be created for ~1 hour after the original task was deleted
 	// or completed. If the task's queue was created using queue.yaml or
 	// queue.xml, then another task with the same name can't be created for
-	// ~9days after the original task was deleted or completed. Because
+	// ~9 days after the original task was deleted or completed. Because
 	// there is an extra lookup cost to identify duplicate task names, these
 	// CreateTask calls have significantly increased latency. Using hashed
 	// strings for the task id or for the prefix of the task id is
@@ -1184,8 +1184,8 @@ type HttpTarget struct {
 	HeaderOverrides []*HeaderOverride `json:"headerOverrides,omitempty"`
 
 	// HttpMethod: The HTTP method to use for the request. When specified,
-	// it will override HttpRequest for the task. Note that if the value is
-	// set to HttpMethod the HttpRequest of the task will be ignored at
+	// it overrides HttpRequest for the task. Note that if the value is set
+	// to HttpMethod the HttpRequest of the task will be ignored at
 	// execution time.
 	//
 	// Possible values:
@@ -1214,8 +1214,8 @@ type HttpTarget struct {
 	// to validate the token yourself.
 	OidcToken *OidcToken `json:"oidcToken,omitempty"`
 
-	// UriOverride: Uri override. When specified, modifies the execution Uri
-	// for all the tasks in the queue.
+	// UriOverride: Uri override. When specified, overrides the execution
+	// Uri for all the tasks in the queue.
 	UriOverride *UriOverride `json:"uriOverride,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "HeaderOverrides") to
@@ -1606,7 +1606,7 @@ func (s *OidcToken) MarshalJSON() ([]byte, error) {
 // PathOverride: PathOverride. Path message defines path override for
 // HTTP targets.
 type PathOverride struct {
-	// Path: The URI path (e.g., a/b/c). Default is Empty string.
+	// Path: The URI path (e.g., /users/1234). Default is an empty string.
 	Path string `json:"path,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Path") to
@@ -1798,7 +1798,7 @@ type PurgeQueueRequest struct {
 // for HTTP targets.
 type QueryOverride struct {
 	// QueryParams: The query parameters (e.g., qparam1=123&qparam2=456).
-	// Default is Empty string.
+	// Default is an empty string.
 	QueryParams string `json:"queryParams,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "QueryParams") to
@@ -2603,28 +2603,28 @@ func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 // the queue will be partially or fully overridden depending on the
 // configured values.
 type UriOverride struct {
-	// Host: Host override. When specified, will replace the host part of
-	// the task URL. For example, if the task URL is
-	// "https://www.google.com", and host value is set to "example.net", the
-	// overridden URI will be changed to "https://example.net". Host value
-	// cannot be an empty string.
+	// Host: Host override. When specified, replaces the host part of the
+	// task URL. For example, if the task URL is "https://www.google.com,"
+	// and host value is set to "example.net", the overridden URI will be
+	// changed to "https://example.net." Host value cannot be an empty
+	// string (INVALID_ARGUMENT).
 	Host string `json:"host,omitempty"`
 
-	// PathOverride: URI path. When specified, will replace the existing
-	// path of the task URL. Setting the path value to an empty string
-	// clears the URI path segment.
+	// PathOverride: URI path. When specified, replaces the existing path of
+	// the task URL. Setting the path value to an empty string clears the
+	// URI path segment.
 	PathOverride *PathOverride `json:"pathOverride,omitempty"`
 
-	// Port: Port override. When specified, will replace the port part of
-	// the task URI. For instance, for a URI http://www.google.com/foo and
+	// Port: Port override. When specified, replaces the port part of the
+	// task URI. For instance, for a URI http://www.google.com/foo and
 	// port=123, the overridden URI becomes http://www.google.com:123/foo.
 	// Note that the port value must be a positive integer. Setting the port
 	// to 0 (Zero) clears the URI port.
 	Port int64 `json:"port,omitempty,string"`
 
-	// QueryOverride: URI Query. When specified, will replace the query part
-	// of the task URI. Setting the query value to an empty string clears
-	// the URI query segment.
+	// QueryOverride: URI Query. When specified, replaces the query part of
+	// the task URI. Setting the query value to an empty string clears the
+	// URI query segment.
 	QueryOverride *QueryOverride `json:"queryOverride,omitempty"`
 
 	// Scheme: Scheme override. When specified, the task URI scheme is

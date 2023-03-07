@@ -256,8 +256,10 @@ type Execution struct {
 	// Labels: Labels associated with this execution. Labels can contain at
 	// most 64 entries. Keys and values can be no longer than 63 characters
 	// and can only contain lowercase letters, numeric characters,
-	// underscores and dashes. Label keys must start with a letter.
-	// International characters are allowed.
+	// underscores, and dashes. Label keys must start with a letter.
+	// International characters are allowed. By default, labels are
+	// inherited from the workflow but are overridden by any labels
+	// associated with the execution.
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// Name: Output only. The resource name of the execution. Format:
@@ -1090,10 +1092,10 @@ func (r *ProjectsLocationsWorkflowsExecutionsService) Get(name string) *Projects
 // Possible values:
 //
 //	"EXECUTION_VIEW_UNSPECIFIED" - The default / unset value.
-//	"BASIC" - Includes only basic metadata about the execution.
+//	"BASIC" - Includes only basic metadata about the execution. The
 //
-// Following fields are returned: name, start_time, end_time, duration,
-// state and workflow_revision_id.
+// following fields are returned: name, start_time, end_time, duration,
+// state, and workflow_revision_id.
 //
 //	"FULL" - Includes all data.
 func (c *ProjectsLocationsWorkflowsExecutionsGetCall) View(view string) *ProjectsLocationsWorkflowsExecutionsGetCall {
@@ -1224,7 +1226,7 @@ func (c *ProjectsLocationsWorkflowsExecutionsGetCall) Do(opts ...googleapi.CallO
 	//       ],
 	//       "enumDescriptions": [
 	//         "The default / unset value.",
-	//         "Includes only basic metadata about the execution. Following fields are returned: name, start_time, end_time, duration, state and workflow_revision_id.",
+	//         "Includes only basic metadata about the execution. The following fields are returned: name, start_time, end_time, duration, state, and workflow_revision_id.",
 	//         "Includes all data."
 	//       ],
 	//       "location": "query",
@@ -1276,7 +1278,7 @@ func (c *ProjectsLocationsWorkflowsExecutionsListCall) Filter(filter string) *Pr
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": The orderding applied
+// OrderBy sets the optional parameter "orderBy": The ordering applied
 // to the [Executions.ListExecutions] results. By default the ordering
 // is based on descending start time. The following fields are supported
 // for order by: executionID, startTime, endTime, duration, state, and
@@ -1301,7 +1303,8 @@ func (c *ProjectsLocationsWorkflowsExecutionsListCall) PageSize(pageSize int64) 
 // received from a previous `ListExecutions` call. Provide this to
 // retrieve the subsequent page. When paginating, all other parameters
 // provided to `ListExecutions` must match the call that provided the
-// page token.
+// page token. Note that pagination is applied to dynamic data. The list
+// of executions returned can change between page requests.
 func (c *ProjectsLocationsWorkflowsExecutionsListCall) PageToken(pageToken string) *ProjectsLocationsWorkflowsExecutionsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -1314,10 +1317,10 @@ func (c *ProjectsLocationsWorkflowsExecutionsListCall) PageToken(pageToken strin
 // Possible values:
 //
 //	"EXECUTION_VIEW_UNSPECIFIED" - The default / unset value.
-//	"BASIC" - Includes only basic metadata about the execution.
+//	"BASIC" - Includes only basic metadata about the execution. The
 //
-// Following fields are returned: name, start_time, end_time, duration,
-// state and workflow_revision_id.
+// following fields are returned: name, start_time, end_time, duration,
+// state, and workflow_revision_id.
 //
 //	"FULL" - Includes all data.
 func (c *ProjectsLocationsWorkflowsExecutionsListCall) View(view string) *ProjectsLocationsWorkflowsExecutionsListCall {
@@ -1438,7 +1441,7 @@ func (c *ProjectsLocationsWorkflowsExecutionsListCall) Do(opts ...googleapi.Call
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Optional. The orderding applied to the [Executions.ListExecutions] results. By default the ordering is based on descending start time. The following fields are supported for order by: executionID, startTime, endTime, duration, state, and workflowRevisionID.",
+	//       "description": "Optional. The ordering applied to the [Executions.ListExecutions] results. By default the ordering is based on descending start time. The following fields are supported for order by: executionID, startTime, endTime, duration, state, and workflowRevisionID.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -1449,7 +1452,7 @@ func (c *ProjectsLocationsWorkflowsExecutionsListCall) Do(opts ...googleapi.Call
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A page token, received from a previous `ListExecutions` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListExecutions` must match the call that provided the page token.",
+	//       "description": "A page token, received from a previous `ListExecutions` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListExecutions` must match the call that provided the page token. Note that pagination is applied to dynamic data. The list of executions returned can change between page requests.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -1469,7 +1472,7 @@ func (c *ProjectsLocationsWorkflowsExecutionsListCall) Do(opts ...googleapi.Call
 	//       ],
 	//       "enumDescriptions": [
 	//         "The default / unset value.",
-	//         "Includes only basic metadata about the execution. Following fields are returned: name, start_time, end_time, duration, state and workflow_revision_id.",
+	//         "Includes only basic metadata about the execution. The following fields are returned: name, start_time, end_time, duration, state, and workflow_revision_id.",
 	//         "Includes all data."
 	//       ],
 	//       "location": "query",

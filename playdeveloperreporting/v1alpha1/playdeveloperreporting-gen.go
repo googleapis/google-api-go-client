@@ -1104,6 +1104,28 @@ type GooglePlayDeveloperReportingV1alpha1QueryAnrRateMetricSetRequest struct {
 	// and only supported timezone is `America/Los_Angeles`.
 	TimelineSpec *GooglePlayDeveloperReportingV1alpha1TimelineSpec `json:"timelineSpec,omitempty"`
 
+	// UserCohort: User view to select. The output data will correspond to
+	// the selected view. **Supported values:** * `OS_PUBLIC` To select data
+	// from all publicly released Android versions. This is the default.
+	// Supports all the above dimensions. * `APP_TESTERS` To select data
+	// from users who have opted in to be testers. Supports all the above
+	// dimensions. * `OS_BETA` To select data from beta android versions
+	// only, excluding data from released android versions. Only the
+	// following dimensions are supported: * `versionCode` (int64): version
+	// of the app that was running on the user's device. * `osBuild`
+	// (string): OS build of the user's device, e.g., "T1B2.220916.004".
+	//
+	// Possible values:
+	//   "USER_COHORT_UNSPECIFIED" - Unspecified User cohort. This will
+	// automatically choose the default value.
+	//   "OS_PUBLIC" - This is default view. Contains data from public
+	// released android versions only.
+	//   "OS_BETA" - This is the view with just android beta data excluding
+	// released OS version data.
+	//   "APP_TESTERS" - This is the view with data only from users who have
+	// opted in to be testers for a given app, excluding OS beta data.
+	UserCohort string `json:"userCohort,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Dimensions") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -1246,6 +1268,28 @@ type GooglePlayDeveloperReportingV1alpha1QueryCrashRateMetricSetRequest struct {
 	// calendar date intervals. Due to historical constraints, the default
 	// and only supported timezone is `America/Los_Angeles`.
 	TimelineSpec *GooglePlayDeveloperReportingV1alpha1TimelineSpec `json:"timelineSpec,omitempty"`
+
+	// UserCohort: User view to select. The output data will correspond to
+	// the selected view. **Supported values:** * `OS_PUBLIC` To select data
+	// from all publicly released Android versions. This is the default.
+	// Supports all the above dimensions. * `APP_TESTERS` To select data
+	// from users who have opted in to be testers. Supports all the above
+	// dimensions. * `OS_BETA` To select data from beta android versions
+	// only, excluding data from released android versions. Only the
+	// following dimensions are supported: * `versionCode` (int64): version
+	// of the app that was running on the user's device. * `osBuild`
+	// (string): OS build of the user's device, e.g., "T1B2.220916.004".
+	//
+	// Possible values:
+	//   "USER_COHORT_UNSPECIFIED" - Unspecified User cohort. This will
+	// automatically choose the default value.
+	//   "OS_PUBLIC" - This is default view. Contains data from public
+	// released android versions only.
+	//   "OS_BETA" - This is the view with just android beta data excluding
+	// released OS version data.
+	//   "APP_TESTERS" - This is the view with data only from users who have
+	// opted in to be testers for a given app, excluding OS beta data.
+	UserCohort string `json:"userCohort,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Dimensions") to
 	// unconditionally include in API requests. By default, fields with
@@ -1499,6 +1543,28 @@ type GooglePlayDeveloperReportingV1alpha1QueryExcessiveWakeupRateMetricSetReques
 	// supported timezone is `America/Los_Angeles`.
 	TimelineSpec *GooglePlayDeveloperReportingV1alpha1TimelineSpec `json:"timelineSpec,omitempty"`
 
+	// UserCohort: User view to select. The output data will correspond to
+	// the selected view. **Supported values:** * `OS_PUBLIC` To select data
+	// from all publicly released Android versions. This is the default.
+	// Supports all the above dimensions. * `APP_TESTERS` To select data
+	// from users who have opted in to be testers. Supports all the above
+	// dimensions. * `OS_BETA` To select data from beta android versions
+	// only, excluding data from released android versions. Only the
+	// following dimensions are supported: * `versionCode` (int64): version
+	// of the app that was running on the user's device. * `osBuild`
+	// (string): OS build of the user's device, e.g., "T1B2.220916.004".
+	//
+	// Possible values:
+	//   "USER_COHORT_UNSPECIFIED" - Unspecified User cohort. This will
+	// automatically choose the default value.
+	//   "OS_PUBLIC" - This is default view. Contains data from public
+	// released android versions only.
+	//   "OS_BETA" - This is the view with just android beta data excluding
+	// released OS version data.
+	//   "APP_TESTERS" - This is the view with data only from users who have
+	// opted in to be testers for a given app, excluding OS beta data.
+	UserCohort string `json:"userCohort,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Dimensions") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -1630,6 +1696,28 @@ type GooglePlayDeveloperReportingV1alpha1QueryStuckBackgroundWakelockRateMetricS
 	// calendar date intervals. Due to historical constraints, the only
 	// supported timezone is `America/Los_Angeles`.
 	TimelineSpec *GooglePlayDeveloperReportingV1alpha1TimelineSpec `json:"timelineSpec,omitempty"`
+
+	// UserCohort: User view to select. The output data will correspond to
+	// the selected view. **Supported values:** * `OS_PUBLIC` To select data
+	// from all publicly released Android versions. This is the default.
+	// Supports all the above dimensions. * `APP_TESTERS` To select data
+	// from users who have opted in to be testers. Supports all the above
+	// dimensions. * `OS_BETA` To select data from beta android versions
+	// only, excluding data from released android versions. Only the
+	// following dimensions are supported: * `versionCode` (int64): version
+	// of the app that was running on the user's device. * `osBuild`
+	// (string): OS build of the user's device, e.g., "T1B2.220916.004".
+	//
+	// Possible values:
+	//   "USER_COHORT_UNSPECIFIED" - Unspecified User cohort. This will
+	// automatically choose the default value.
+	//   "OS_PUBLIC" - This is default view. Contains data from public
+	// released android versions only.
+	//   "OS_BETA" - This is the view with just android beta data excluding
+	// released OS version data.
+	//   "APP_TESTERS" - This is the view with data only from users who have
+	// opted in to be testers for a given app, excluding OS beta data.
+	UserCohort string `json:"userCohort,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Dimensions") to
 	// unconditionally include in API requests. By default, fields with

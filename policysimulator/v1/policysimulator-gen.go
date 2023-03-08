@@ -1133,183 +1133,6 @@ func (s *GoogleCloudPolicysimulatorV1ReplayResultsSummary) MarshalJSON() ([]byte
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPolicysimulatorV1beta1Replay: A resource describing a
-// `Replay`, or simulation.
-type GoogleCloudPolicysimulatorV1beta1Replay struct {
-	// Config: Required. The configuration used for the `Replay`.
-	Config *GoogleCloudPolicysimulatorV1beta1ReplayConfig `json:"config,omitempty"`
-
-	// Name: Output only. The resource name of the `Replay`, which has the
-	// following format:
-	// `{projects|folders|organizations}/{resource-id}/locations/global/repla
-	// ys/{replay-id}`, where `{resource-id}` is the ID of the project,
-	// folder, or organization that owns the Replay. Example:
-	// `projects/my-example-project/locations/global/replays/506a5f7f-38ce-4d
-	// 7d-8e03-479ce1833c36`
-	Name string `json:"name,omitempty"`
-
-	// ResultsSummary: Output only. Summary statistics about the replayed
-	// log entries.
-	ResultsSummary *GoogleCloudPolicysimulatorV1beta1ReplayResultsSummary `json:"resultsSummary,omitempty"`
-
-	// State: Output only. The current state of the `Replay`.
-	//
-	// Possible values:
-	//   "STATE_UNSPECIFIED" - The state is unspecified.
-	//   "PENDING" - The `Replay` has not started yet.
-	//   "RUNNING" - The `Replay` is currently running.
-	//   "SUCCEEDED" - The `Replay` has successfully completed.
-	//   "FAILED" - The `Replay` has finished with an error.
-	State string `json:"state,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Config") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Config") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudPolicysimulatorV1beta1Replay) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudPolicysimulatorV1beta1Replay
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudPolicysimulatorV1beta1ReplayConfig: The configuration used
-// for a Replay.
-type GoogleCloudPolicysimulatorV1beta1ReplayConfig struct {
-	// LogSource: The logs to use as input for the Replay.
-	//
-	// Possible values:
-	//   "LOG_SOURCE_UNSPECIFIED" - An unspecified log source. If the log
-	// source is unspecified, the Replay defaults to using
-	// `RECENT_ACCESSES`.
-	//   "RECENT_ACCESSES" - All access logs from the last 90 days. These
-	// logs may not include logs from the most recent 7 days.
-	LogSource string `json:"logSource,omitempty"`
-
-	// PolicyOverlay: A mapping of the resources that you want to simulate
-	// policies for and the policies that you want to simulate. Keys are the
-	// full resource names for the resources. For example,
-	// `//cloudresourcemanager.googleapis.com/projects/my-project`. For
-	// examples of full resource names for Google Cloud services, see
-	// https://cloud.google.com/iam/help/troubleshooter/full-resource-names.
-	// Values are Policy objects representing the policies that you want to
-	// simulate. Replays automatically take into account any IAM policies
-	// inherited through the resource hierarchy, and any policies set on
-	// descendant resources. You do not need to include these policies in
-	// the policy overlay.
-	PolicyOverlay map[string]GoogleIamV1Policy `json:"policyOverlay,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "LogSource") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "LogSource") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudPolicysimulatorV1beta1ReplayConfig) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudPolicysimulatorV1beta1ReplayConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudPolicysimulatorV1beta1ReplayOperationMetadata: Metadata
-// about a Replay operation.
-type GoogleCloudPolicysimulatorV1beta1ReplayOperationMetadata struct {
-	// StartTime: Time when the request was received.
-	StartTime string `json:"startTime,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "StartTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "StartTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudPolicysimulatorV1beta1ReplayOperationMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudPolicysimulatorV1beta1ReplayOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudPolicysimulatorV1beta1ReplayResultsSummary: Summary
-// statistics about the replayed log entries.
-type GoogleCloudPolicysimulatorV1beta1ReplayResultsSummary struct {
-	// DifferenceCount: The number of replayed log entries with a difference
-	// between baseline and simulated policies.
-	DifferenceCount int64 `json:"differenceCount,omitempty"`
-
-	// ErrorCount: The number of log entries that could not be replayed.
-	ErrorCount int64 `json:"errorCount,omitempty"`
-
-	// LogCount: The total number of log entries replayed.
-	LogCount int64 `json:"logCount,omitempty"`
-
-	// NewestDate: The date of the newest log entry replayed.
-	NewestDate *GoogleTypeDate `json:"newestDate,omitempty"`
-
-	// OldestDate: The date of the oldest log entry replayed.
-	OldestDate *GoogleTypeDate `json:"oldestDate,omitempty"`
-
-	// UnchangedCount: The number of replayed log entries with no difference
-	// between baseline and simulated policies.
-	UnchangedCount int64 `json:"unchangedCount,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "DifferenceCount") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DifferenceCount") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudPolicysimulatorV1beta1ReplayResultsSummary) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudPolicysimulatorV1beta1ReplayResultsSummary
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // GoogleIamV1AuditConfig: Specifies the audit configuration for a
 // service. The configuration determines which permission types are
 // logged, and what identities, if any, are exempted from logging. An
@@ -2448,14 +2271,7 @@ type FoldersLocationsReplaysOperationsListCall struct {
 
 // List: Lists operations that match the specified filter in the
 // request. If the server doesn't support this method, it returns
-// `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to
-// override the binding to use different resource name schemes, such as
-// `users/*/operations`. To override the binding, API services can add a
-// binding such as "/v1/{name=users/*}/operations" to their service
-// configuration. For backwards compatibility, the default name includes
-// the operations collection id, however overriding users must ensure
-// the name binding is the parent resource, without the operations
-// collection id.
+// `UNIMPLEMENTED`.
 //
 // - name: The name of the operation's parent resource.
 func (r *FoldersLocationsReplaysOperationsService) List(name string) *FoldersLocationsReplaysOperationsListCall {
@@ -2585,7 +2401,7 @@ func (c *FoldersLocationsReplaysOperationsListCall) Do(opts ...googleapi.CallOpt
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.",
 	//   "flatPath": "v1/folders/{foldersId}/locations/{locationsId}/replays/{replaysId}/operations",
 	//   "httpMethod": "GET",
 	//   "id": "policysimulator.folders.locations.replays.operations.list",
@@ -3013,14 +2829,7 @@ type OperationsListCall struct {
 
 // List: Lists operations that match the specified filter in the
 // request. If the server doesn't support this method, it returns
-// `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to
-// override the binding to use different resource name schemes, such as
-// `users/*/operations`. To override the binding, API services can add a
-// binding such as "/v1/{name=users/*}/operations" to their service
-// configuration. For backwards compatibility, the default name includes
-// the operations collection id, however overriding users must ensure
-// the name binding is the parent resource, without the operations
-// collection id.
+// `UNIMPLEMENTED`.
 //
 // - name: The name of the operation's parent resource.
 func (r *OperationsService) List(name string) *OperationsListCall {
@@ -3150,7 +2959,7 @@ func (c *OperationsListCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunnin
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.",
 	//   "flatPath": "v1/operations",
 	//   "httpMethod": "GET",
 	//   "id": "policysimulator.operations.list",
@@ -3820,14 +3629,7 @@ type OrganizationsLocationsReplaysOperationsListCall struct {
 
 // List: Lists operations that match the specified filter in the
 // request. If the server doesn't support this method, it returns
-// `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to
-// override the binding to use different resource name schemes, such as
-// `users/*/operations`. To override the binding, API services can add a
-// binding such as "/v1/{name=users/*}/operations" to their service
-// configuration. For backwards compatibility, the default name includes
-// the operations collection id, however overriding users must ensure
-// the name binding is the parent resource, without the operations
-// collection id.
+// `UNIMPLEMENTED`.
 //
 // - name: The name of the operation's parent resource.
 func (r *OrganizationsLocationsReplaysOperationsService) List(name string) *OrganizationsLocationsReplaysOperationsListCall {
@@ -3957,7 +3759,7 @@ func (c *OrganizationsLocationsReplaysOperationsListCall) Do(opts ...googleapi.C
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.",
 	//   "flatPath": "v1/organizations/{organizationsId}/locations/{locationsId}/replays/{replaysId}/operations",
 	//   "httpMethod": "GET",
 	//   "id": "policysimulator.organizations.locations.replays.operations.list",
@@ -4830,14 +4632,7 @@ type ProjectsLocationsReplaysOperationsListCall struct {
 
 // List: Lists operations that match the specified filter in the
 // request. If the server doesn't support this method, it returns
-// `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to
-// override the binding to use different resource name schemes, such as
-// `users/*/operations`. To override the binding, API services can add a
-// binding such as "/v1/{name=users/*}/operations" to their service
-// configuration. For backwards compatibility, the default name includes
-// the operations collection id, however overriding users must ensure
-// the name binding is the parent resource, without the operations
-// collection id.
+// `UNIMPLEMENTED`.
 //
 // - name: The name of the operation's parent resource.
 func (r *ProjectsLocationsReplaysOperationsService) List(name string) *ProjectsLocationsReplaysOperationsListCall {
@@ -4967,7 +4762,7 @@ func (c *ProjectsLocationsReplaysOperationsListCall) Do(opts ...googleapi.CallOp
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/replays/{replaysId}/operations",
 	//   "httpMethod": "GET",
 	//   "id": "policysimulator.projects.locations.replays.operations.list",

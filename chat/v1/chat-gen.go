@@ -3368,13 +3368,12 @@ type Message struct {
 	// Clickable images - Checkboxes - Radio buttons - Input widgets. Cards
 	// are usually displayed below the text body of a Chat message, but can
 	// situationally appear other places, such as dialogs
-	// (https://developers.google.com/chat/how-tos/dialogs). `cards_v2` and
-	// `cards` can have a maximum size of 32 KB. The `cardId` is a unique
-	// identifier among cards in the same message and for identifying user
-	// input values. Currently supported widgets include: - `TextParagraph`
-	// - `DecoratedText` - `Image` - `ButtonList` - `Divider` - `TextInput`
-	// - `SelectionInput` (CHECKBOX, RADIO_BUTTON, SWITCH, DROPDOWN) -
-	// `Grid`
+	// (https://developers.google.com/chat/how-tos/dialogs). Each card can
+	// have a maximum size of 32 KB. The `cardId` is a unique identifier
+	// among cards in the same message and for identifying user input
+	// values. Currently supported widgets include: - `TextParagraph` -
+	// `DecoratedText` - `Image` - `ButtonList` - `Divider` - `TextInput` -
+	// `SelectionInput` - `Grid`
 	CardsV2 []*CardWithId `json:"cardsV2,omitempty"`
 
 	// ClientAssignedMessageId: A custom name for a Chat message assigned at
@@ -3408,16 +3407,22 @@ type Message struct {
 	// `spaces/AAAAAAAAAAA/messages/BBBBBBBBBBB.BBBBBBBBBBB`
 	Name string `json:"name,omitempty"`
 
-	// Sender: Output only. The user who created the message.
+	// Sender: Output only. The user who created the message. If your Chat
+	// app authenticates as a user
+	// (https://developers.google.com/chat/api/guides/auth/users), the
+	// output populates the user
+	// (https://developers.google.com/chat/api/reference/rest/v1/User)
+	// `name` and `type`.
 	Sender *User `json:"sender,omitempty"`
 
 	// SlashCommand: Output only. Slash command information, if applicable.
 	SlashCommand *SlashCommand `json:"slashCommand,omitempty"`
 
-	// Space: The space the message belongs to. When accessed with user
-	// authentication
-	// (https://developers.google.com/chat/api/guides/auth/users), only the
-	// name of the Space is populated.
+	// Space: If your Chat app authenticates as a user
+	// (https://developers.google.com/chat/api/guides/auth/users), the
+	// output populates the space
+	// (https://developers.google.com/chat/api/reference/rest/v1/spaces)
+	// `name`.
 	Space *Space `json:"space,omitempty"`
 
 	// Text: Plain-text body of the message. The first link to an image,
@@ -4475,7 +4480,7 @@ func (r *SpacesService) List() *SpacesListCall {
 // of spaces to return. The service may return fewer than this value. If
 // unspecified, at most 100 spaces are returned. The maximum value is
 // 1000; values above 1000 are coerced to 1000. Negative values return
-// an INVALID_ARGUMENT error.
+// an `INVALID_ARGUMENT` error.
 func (c *SpacesListCall) PageSize(pageSize int64) *SpacesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -4594,7 +4599,7 @@ func (c *SpacesListCall) Do(opts ...googleapi.CallOption) (*ListSpacesResponse, 
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "Optional. The maximum number of spaces to return. The service may return fewer than this value. If unspecified, at most 100 spaces are returned. The maximum value is 1000; values above 1000 are coerced to 1000. Negative values return an INVALID_ARGUMENT error.",
+	//       "description": "Optional. The maximum number of spaces to return. The service may return fewer than this value. If unspecified, at most 100 spaces are returned. The maximum value is 1000; values above 1000 are coerced to 1000. Negative values return an `INVALID_ARGUMENT` error.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -4842,7 +4847,7 @@ func (c *SpacesMembersListCall) PageSize(pageSize int64) *SpacesMembersListCall 
 }
 
 // PageToken sets the optional parameter "pageToken": A page token,
-// received from a previous list memberships call. Provide this to
+// received from a previous call to list memberships. Provide this to
 // retrieve the subsequent page. When paginating, all other parameters
 // provided should match the call that provided the page token. Passing
 // different values to the other parameters may lead to unexpected
@@ -4966,7 +4971,7 @@ func (c *SpacesMembersListCall) Do(opts ...googleapi.CallOption) (*ListMembershi
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A page token, received from a previous list memberships call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided should match the call that provided the page token. Passing different values to the other parameters may lead to unexpected results.",
+	//       "description": "A page token, received from a previous call to list memberships. Provide this to retrieve the subsequent page. When paginating, all other parameters provided should match the call that provided the page token. Passing different values to the other parameters may lead to unexpected results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

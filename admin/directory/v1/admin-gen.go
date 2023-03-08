@@ -2599,6 +2599,11 @@ type DirectoryChromeosdevicesCommand struct {
 	// caution, as this is an irreversible action!
 	//   "DEVICE_START_CRD_SESSION" - Starts a Chrome Remote Desktop
 	// session.
+	//   "CAPTURE_LOGS" - Capture the system logs of a kiosk device. The
+	// logs can be downloaded from the downloadUrl link present in
+	// deviceFiles field of
+	// [chromeosdevices](https://developers.google.com/admin-sdk/directory/re
+	// ference/rest/v1/chromeosdevices)
 	Type string `json:"type,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2706,6 +2711,11 @@ type DirectoryChromeosdevicesIssueCommandRequest struct {
 	// caution, as this is an irreversible action!
 	//   "DEVICE_START_CRD_SESSION" - Starts a Chrome Remote Desktop
 	// session.
+	//   "CAPTURE_LOGS" - Capture the system logs of a kiosk device. The
+	// logs can be downloaded from the downloadUrl link present in
+	// deviceFiles field of
+	// [chromeosdevices](https://developers.google.com/admin-sdk/directory/re
+	// ference/rest/v1/chromeosdevices)
 	CommandType string `json:"commandType,omitempty"`
 
 	// Payload: The payload for the command, provide it only if command
@@ -20213,9 +20223,9 @@ func (c *RoleAssignmentsListCall) RoleId(roleId string) *RoleAssignmentsListCall
 	return c
 }
 
-// UserKey sets the optional parameter "userKey": The user's primary
-// email address, alias email address, or unique user ID. If included in
-// the request, returns role assignments only for this user.
+// UserKey sets the optional parameter "userKey": The primary email
+// address, alias email address, or unique user or group ID. If included
+// in the request, returns role assignments only for this user or group.
 func (c *RoleAssignmentsListCall) UserKey(userKey string) *RoleAssignmentsListCall {
 	c.urlParams_.Set("userKey", userKey)
 	return c
@@ -20353,7 +20363,7 @@ func (c *RoleAssignmentsListCall) Do(opts ...googleapi.CallOption) (*RoleAssignm
 	//       "type": "string"
 	//     },
 	//     "userKey": {
-	//       "description": "The user's primary email address, alias email address, or unique user ID. If included in the request, returns role assignments only for this user.",
+	//       "description": "The primary email address, alias email address, or unique user or group ID. If included in the request, returns role assignments only for this user or group.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }

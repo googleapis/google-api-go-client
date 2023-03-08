@@ -5665,10 +5665,10 @@ type GoogleCloudRetailV2betaProduct struct {
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// LocalInventories: Output only. A list of local inventories specific
-	// to different places. This is only available for users who have Retail
-	// Search enabled, and it can be managed by
+	// to different places. This field can be managed by
 	// ProductService.AddLocalInventories and
-	// ProductService.RemoveLocalInventories APIs.
+	// ProductService.RemoveLocalInventories APIs if fine-grained,
+	// high-volume updates are necessary.
 	LocalInventories []*GoogleCloudRetailV2betaLocalInventory `json:"localInventories,omitempty"`
 
 	// Materials: The material of the product. For example, "leather",
@@ -8294,6 +8294,12 @@ type GoogleCloudRetailV2betaUserEvent struct {
 	// event. This field should be set for `search` event when autocomplete
 	// function is enabled and the user clicks a suggestion for search.
 	CompletionDetail *GoogleCloudRetailV2betaCompletionDetail `json:"completionDetail,omitempty"`
+
+	// Domain: Represents the domain of the user event, for projects that
+	// combine domains. For example: retailer can have events from multiple
+	// domains like retailer-main, retailer-baby, retailer-meds, etc. under
+	// one project.
+	Domain string `json:"domain,omitempty"`
 
 	// EventTime: Only required for UserEventService.ImportUserEvents
 	// method. Timestamp of when the user event happened.
@@ -11120,7 +11126,12 @@ type ProjectsLocationsCatalogsBranchesProductsAddFulfillmentPlacesCall struct {
 	header_                                            http.Header
 }
 
-// AddFulfillmentPlaces: Incrementally adds place IDs to
+// AddFulfillmentPlaces: It is recommended to use the
+// ProductService.AddLocalInventories method instead of
+// ProductService.AddFulfillmentPlaces.
+// ProductService.AddLocalInventories achieves the same results but
+// provides more fine-grained control over ingesting local inventory
+// data. Incrementally adds place IDs to
 // Product.fulfillment_info.place_ids. This process is asynchronous and
 // does not require the Product to exist before updating fulfillment
 // information. If the request is valid, the update will be enqueued and
@@ -11235,7 +11246,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsAddFulfillmentPlacesCall) Do(o
 	}
 	return ret, nil
 	// {
-	//   "description": "Incrementally adds place IDs to Product.fulfillment_info.place_ids. This process is asynchronous and does not require the Product to exist before updating fulfillment information. If the request is valid, the update will be enqueued and processed downstream. As a consequence, when a response is returned, the added place IDs are not immediately manifested in the Product queried by ProductService.GetProduct or ProductService.ListProducts. The returned Operations will be obsolete after 1 day, and GetOperation API will return NOT_FOUND afterwards. If conflicting updates are issued, the Operations associated with the stale updates will not be marked as done until being obsolete.",
+	//   "description": "It is recommended to use the ProductService.AddLocalInventories method instead of ProductService.AddFulfillmentPlaces. ProductService.AddLocalInventories achieves the same results but provides more fine-grained control over ingesting local inventory data. Incrementally adds place IDs to Product.fulfillment_info.place_ids. This process is asynchronous and does not require the Product to exist before updating fulfillment information. If the request is valid, the update will be enqueued and processed downstream. As a consequence, when a response is returned, the added place IDs are not immediately manifested in the Product queried by ProductService.GetProduct or ProductService.ListProducts. The returned Operations will be obsolete after 1 day, and GetOperation API will return NOT_FOUND afterwards. If conflicting updates are issued, the Operations associated with the stale updates will not be marked as done until being obsolete.",
 	//   "flatPath": "v2beta/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/branches/{branchesId}/products/{productsId}:addFulfillmentPlaces",
 	//   "httpMethod": "POST",
 	//   "id": "retail.projects.locations.catalogs.branches.products.addFulfillmentPlaces",
@@ -12460,7 +12471,12 @@ type ProjectsLocationsCatalogsBranchesProductsRemoveFulfillmentPlacesCall struct
 	header_                                               http.Header
 }
 
-// RemoveFulfillmentPlaces: Incrementally removes place IDs from a
+// RemoveFulfillmentPlaces: It is recommended to use the
+// ProductService.RemoveLocalInventories method instead of
+// ProductService.RemoveFulfillmentPlaces.
+// ProductService.RemoveLocalInventories achieves the same results but
+// provides more fine-grained control over ingesting local inventory
+// data. Incrementally removes place IDs from a
 // Product.fulfillment_info.place_ids. This process is asynchronous and
 // does not require the Product to exist before updating fulfillment
 // information. If the request is valid, the update will be enqueued and
@@ -12575,7 +12591,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsRemoveFulfillmentPlacesCall) D
 	}
 	return ret, nil
 	// {
-	//   "description": "Incrementally removes place IDs from a Product.fulfillment_info.place_ids. This process is asynchronous and does not require the Product to exist before updating fulfillment information. If the request is valid, the update will be enqueued and processed downstream. As a consequence, when a response is returned, the removed place IDs are not immediately manifested in the Product queried by ProductService.GetProduct or ProductService.ListProducts. The returned Operations will be obsolete after 1 day, and GetOperation API will return NOT_FOUND afterwards. If conflicting updates are issued, the Operations associated with the stale updates will not be marked as done until being obsolete.",
+	//   "description": "It is recommended to use the ProductService.RemoveLocalInventories method instead of ProductService.RemoveFulfillmentPlaces. ProductService.RemoveLocalInventories achieves the same results but provides more fine-grained control over ingesting local inventory data. Incrementally removes place IDs from a Product.fulfillment_info.place_ids. This process is asynchronous and does not require the Product to exist before updating fulfillment information. If the request is valid, the update will be enqueued and processed downstream. As a consequence, when a response is returned, the removed place IDs are not immediately manifested in the Product queried by ProductService.GetProduct or ProductService.ListProducts. The returned Operations will be obsolete after 1 day, and GetOperation API will return NOT_FOUND afterwards. If conflicting updates are issued, the Operations associated with the stale updates will not be marked as done until being obsolete.",
 	//   "flatPath": "v2beta/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/branches/{branchesId}/products/{productsId}:removeFulfillmentPlaces",
 	//   "httpMethod": "POST",
 	//   "id": "retail.projects.locations.catalogs.branches.products.removeFulfillmentPlaces",

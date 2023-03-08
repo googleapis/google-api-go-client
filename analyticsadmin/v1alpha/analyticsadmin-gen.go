@@ -2831,6 +2831,10 @@ type GoogleAnalyticsAdminV1alphaChangeHistoryChangeChangeHistoryResource struct 
 	// DisplayVideo360AdvertiserLinkProposal resource in change history.
 	DisplayVideo360AdvertiserLinkProposal *GoogleAnalyticsAdminV1alphaDisplayVideo360AdvertiserLinkProposal `json:"displayVideo360AdvertiserLinkProposal,omitempty"`
 
+	// EnhancedMeasurementSettings: A snapshot of
+	// EnhancedMeasurementSettings resource in change history.
+	EnhancedMeasurementSettings *GoogleAnalyticsAdminV1alphaEnhancedMeasurementSettings `json:"enhancedMeasurementSettings,omitempty"`
+
 	// ExpandedDataSet: A snapshot of an ExpandedDataSet resource in change
 	// history.
 	ExpandedDataSet *GoogleAnalyticsAdminV1alphaExpandedDataSet `json:"expandedDataSet,omitempty"`
@@ -2941,6 +2945,40 @@ func (s *GoogleAnalyticsAdminV1alphaChangeHistoryEvent) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAnalyticsAdminV1alphaConnectedSiteTag: Configuration for a
+// specific Connected Site Tag.
+type GoogleAnalyticsAdminV1alphaConnectedSiteTag struct {
+	// DisplayName: Required. User-provided display name for the connected
+	// site tag. Must be less than 256 characters.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// TagId: Required. "Tag ID to forward events to. Also known as the
+	// Measurement ID, or the "G-ID" (For example: G-12345).
+	TagId string `json:"tagId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaConnectedSiteTag) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaConnectedSiteTag
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAnalyticsAdminV1alphaConversionEvent: A conversion event in a
 // Google Analytics property.
 type GoogleAnalyticsAdminV1alphaConversionEvent struct {
@@ -3027,6 +3065,50 @@ func (s *GoogleAnalyticsAdminV1alphaCreateAccessBindingRequest) MarshalJSON() ([
 	type NoMethod GoogleAnalyticsAdminV1alphaCreateAccessBindingRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1alphaCreateConnectedSiteTagRequest: Request
+// message for CreateConnectedSiteTag RPC.
+type GoogleAnalyticsAdminV1alphaCreateConnectedSiteTagRequest struct {
+	// ConnectedSiteTag: Required. The tag to add to the Universal Analytics
+	// property
+	ConnectedSiteTag *GoogleAnalyticsAdminV1alphaConnectedSiteTag `json:"connectedSiteTag,omitempty"`
+
+	// Property: The Universal Analytics property to create connected site
+	// tags for. This API does not support GA4 properties. Format:
+	// properties/{universalAnalyticsPropertyId} Example: properties/1234
+	Property string `json:"property,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConnectedSiteTag") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConnectedSiteTag") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaCreateConnectedSiteTagRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaCreateConnectedSiteTagRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1alphaCreateConnectedSiteTagResponse: Response
+// message for CreateConnectedSiteTag RPC.
+type GoogleAnalyticsAdminV1alphaCreateConnectedSiteTagResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 }
 
 // GoogleAnalyticsAdminV1alphaCreateUserLinkRequest: Request message for
@@ -3548,6 +3630,41 @@ func (s *GoogleAnalyticsAdminV1alphaDeleteAccessBindingRequest) MarshalJSON() ([
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAnalyticsAdminV1alphaDeleteConnectedSiteTagRequest: Request
+// message for DeleteConnectedSiteTag RPC.
+type GoogleAnalyticsAdminV1alphaDeleteConnectedSiteTagRequest struct {
+	// Property: The Universal Analytics property to delete connected site
+	// tags for. This API does not support GA4 properties. Format:
+	// properties/{universalAnalyticsPropertyId} Example: properties/1234
+	Property string `json:"property,omitempty"`
+
+	// TagId: Tag ID to forward events to. Also known as the Measurement ID,
+	// or the "G-ID" (For example: G-12345).
+	TagId string `json:"tagId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Property") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Property") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaDeleteConnectedSiteTagRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaDeleteConnectedSiteTagRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAnalyticsAdminV1alphaDeleteUserLinkRequest: Request message for
 // DeleteUserLink RPC.
 type GoogleAnalyticsAdminV1alphaDeleteUserLinkRequest struct {
@@ -3719,6 +3836,93 @@ type GoogleAnalyticsAdminV1alphaDisplayVideo360AdvertiserLinkProposal struct {
 
 func (s *GoogleAnalyticsAdminV1alphaDisplayVideo360AdvertiserLinkProposal) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaDisplayVideo360AdvertiserLinkProposal
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1alphaEnhancedMeasurementSettings: Singleton
+// resource under a WebDataStream, configuring measurement of additional
+// site interactions and content.
+type GoogleAnalyticsAdminV1alphaEnhancedMeasurementSettings struct {
+	// FileDownloadsEnabled: If enabled, capture a file download event each
+	// time a link is clicked with a common document, compressed file,
+	// application, video, or audio extension.
+	FileDownloadsEnabled bool `json:"fileDownloadsEnabled,omitempty"`
+
+	// FormInteractionsEnabled: If enabled, capture a form interaction event
+	// each time a visitor interacts with a form on your website. False by
+	// default.
+	FormInteractionsEnabled bool `json:"formInteractionsEnabled,omitempty"`
+
+	// Name: Output only. Resource name of the Enhanced Measurement
+	// Settings. Format:
+	// properties/{property_id}/dataStreams/{data_stream}/enhancedMeasurement
+	// Settings Example:
+	// "properties/1000/dataStreams/2000/enhancedMeasurementSettings"
+	Name string `json:"name,omitempty"`
+
+	// OutboundClicksEnabled: If enabled, capture an outbound click event
+	// each time a visitor clicks a link that leads them away from your
+	// domain.
+	OutboundClicksEnabled bool `json:"outboundClicksEnabled,omitempty"`
+
+	// PageChangesEnabled: If enabled, capture a page view event each time
+	// the website changes the browser history state.
+	PageChangesEnabled bool `json:"pageChangesEnabled,omitempty"`
+
+	// ScrollsEnabled: If enabled, capture scroll events each time a visitor
+	// gets to the bottom of a page.
+	ScrollsEnabled bool `json:"scrollsEnabled,omitempty"`
+
+	// SearchQueryParameter: Required. URL query parameters to interpret as
+	// site search parameters. Max length is 1024 characters. Must not be
+	// empty.
+	SearchQueryParameter string `json:"searchQueryParameter,omitempty"`
+
+	// SiteSearchEnabled: If enabled, capture a view search results event
+	// each time a visitor performs a search on your site (based on a query
+	// parameter).
+	SiteSearchEnabled bool `json:"siteSearchEnabled,omitempty"`
+
+	// StreamEnabled: Indicates whether Enhanced Measurement Settings will
+	// be used to automatically measure interactions and content on this web
+	// stream. Changing this value does not affect the settings themselves,
+	// but determines whether they are respected.
+	StreamEnabled bool `json:"streamEnabled,omitempty"`
+
+	// UriQueryParameter: Additional URL query parameters. Max length is
+	// 1024 characters.
+	UriQueryParameter string `json:"uriQueryParameter,omitempty"`
+
+	// VideoEngagementEnabled: If enabled, capture video play, progress, and
+	// complete events as visitors view embedded videos on your site.
+	VideoEngagementEnabled bool `json:"videoEngagementEnabled,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "FileDownloadsEnabled") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FileDownloadsEnabled") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaEnhancedMeasurementSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaEnhancedMeasurementSettings
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4506,6 +4710,73 @@ type GoogleAnalyticsAdminV1alphaListBigQueryLinksResponse struct {
 
 func (s *GoogleAnalyticsAdminV1alphaListBigQueryLinksResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaListBigQueryLinksResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1alphaListConnectedSiteTagsRequest: Request
+// message for ListConnectedSiteTags RPC.
+type GoogleAnalyticsAdminV1alphaListConnectedSiteTagsRequest struct {
+	// Property: The Universal Analytics property to fetch connected site
+	// tags for. This does not work on GA4 properties. A maximum of 20
+	// connected site tags will be returned. Example Format:
+	// `properties/1234`
+	Property string `json:"property,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Property") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Property") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaListConnectedSiteTagsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaListConnectedSiteTagsRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1alphaListConnectedSiteTagsResponse: Response
+// message for ListConnectedSiteTags RPC.
+type GoogleAnalyticsAdminV1alphaListConnectedSiteTagsResponse struct {
+	// ConnectedSiteTags: The site tags for the Universal Analytics
+	// property. A maximum of 20 connected site tags will be returned.
+	ConnectedSiteTags []*GoogleAnalyticsAdminV1alphaConnectedSiteTag `json:"connectedSiteTags,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "ConnectedSiteTags")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConnectedSiteTags") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaListConnectedSiteTagsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaListConnectedSiteTagsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5652,6 +5923,8 @@ type GoogleAnalyticsAdminV1alphaSearchChangeHistoryEventsRequest struct {
 	//   "ATTRIBUTION_SETTINGS" - AttributionSettings resource
 	//   "EXPANDED_DATA_SET" - ExpandedDataSet resource
 	//   "CHANNEL_GROUP" - ChannelGroup resource
+	//   "ENHANCED_MEASUREMENT_SETTINGS" - EnhancedMeasurementSettings
+	// resource
 	ResourceType []string `json:"resourceType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Action") to
@@ -10556,6 +10829,136 @@ func (c *PropertiesCreateCall) Do(opts ...googleapi.CallOption) (*GoogleAnalytic
 
 }
 
+// method id "analyticsadmin.properties.createConnectedSiteTag":
+
+type PropertiesCreateConnectedSiteTagCall struct {
+	s                                                        *Service
+	googleanalyticsadminv1alphacreateconnectedsitetagrequest *GoogleAnalyticsAdminV1alphaCreateConnectedSiteTagRequest
+	urlParams_                                               gensupport.URLParams
+	ctx_                                                     context.Context
+	header_                                                  http.Header
+}
+
+// CreateConnectedSiteTag: Creates a connected site tag for a Universal
+// Analytics property. You can create a maximum of 20 connected site
+// tags per property. Note: This API cannot be used on GA4 properties.
+func (r *PropertiesService) CreateConnectedSiteTag(googleanalyticsadminv1alphacreateconnectedsitetagrequest *GoogleAnalyticsAdminV1alphaCreateConnectedSiteTagRequest) *PropertiesCreateConnectedSiteTagCall {
+	c := &PropertiesCreateConnectedSiteTagCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.googleanalyticsadminv1alphacreateconnectedsitetagrequest = googleanalyticsadminv1alphacreateconnectedsitetagrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PropertiesCreateConnectedSiteTagCall) Fields(s ...googleapi.Field) *PropertiesCreateConnectedSiteTagCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PropertiesCreateConnectedSiteTagCall) Context(ctx context.Context) *PropertiesCreateConnectedSiteTagCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PropertiesCreateConnectedSiteTagCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesCreateConnectedSiteTagCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleanalyticsadminv1alphacreateconnectedsitetagrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/properties:createConnectedSiteTag")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.createConnectedSiteTag" call.
+// Exactly one of
+// *GoogleAnalyticsAdminV1alphaCreateConnectedSiteTagResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleAnalyticsAdminV1alphaCreateConnectedSiteTagResponse.ServerRespo
+// nse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *PropertiesCreateConnectedSiteTagCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaCreateConnectedSiteTagResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAnalyticsAdminV1alphaCreateConnectedSiteTagResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a connected site tag for a Universal Analytics property. You can create a maximum of 20 connected site tags per property. Note: This API cannot be used on GA4 properties.",
+	//   "flatPath": "v1alpha/properties:createConnectedSiteTag",
+	//   "httpMethod": "POST",
+	//   "id": "analyticsadmin.properties.createConnectedSiteTag",
+	//   "parameterOrder": [],
+	//   "parameters": {},
+	//   "path": "v1alpha/properties:createConnectedSiteTag",
+	//   "request": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaCreateConnectedSiteTagRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaCreateConnectedSiteTagResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit"
+	//   ]
+	// }
+
+}
+
 // method id "analyticsadmin.properties.delete":
 
 type PropertiesDeleteCall struct {
@@ -10689,6 +11092,132 @@ func (c *PropertiesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleAnalytic
 	//   "path": "v1alpha/{+name}",
 	//   "response": {
 	//     "$ref": "GoogleAnalyticsAdminV1alphaProperty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit"
+	//   ]
+	// }
+
+}
+
+// method id "analyticsadmin.properties.deleteConnectedSiteTag":
+
+type PropertiesDeleteConnectedSiteTagCall struct {
+	s                                                        *Service
+	googleanalyticsadminv1alphadeleteconnectedsitetagrequest *GoogleAnalyticsAdminV1alphaDeleteConnectedSiteTagRequest
+	urlParams_                                               gensupport.URLParams
+	ctx_                                                     context.Context
+	header_                                                  http.Header
+}
+
+// DeleteConnectedSiteTag: Deletes a connected site tag for a Universal
+// Analytics property. Note: this has no effect on GA4 properties.
+func (r *PropertiesService) DeleteConnectedSiteTag(googleanalyticsadminv1alphadeleteconnectedsitetagrequest *GoogleAnalyticsAdminV1alphaDeleteConnectedSiteTagRequest) *PropertiesDeleteConnectedSiteTagCall {
+	c := &PropertiesDeleteConnectedSiteTagCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.googleanalyticsadminv1alphadeleteconnectedsitetagrequest = googleanalyticsadminv1alphadeleteconnectedsitetagrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PropertiesDeleteConnectedSiteTagCall) Fields(s ...googleapi.Field) *PropertiesDeleteConnectedSiteTagCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PropertiesDeleteConnectedSiteTagCall) Context(ctx context.Context) *PropertiesDeleteConnectedSiteTagCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PropertiesDeleteConnectedSiteTagCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesDeleteConnectedSiteTagCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleanalyticsadminv1alphadeleteconnectedsitetagrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/properties:deleteConnectedSiteTag")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.deleteConnectedSiteTag" call.
+// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *PropertiesDeleteConnectedSiteTagCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a connected site tag for a Universal Analytics property. Note: this has no effect on GA4 properties.",
+	//   "flatPath": "v1alpha/properties:deleteConnectedSiteTag",
+	//   "httpMethod": "POST",
+	//   "id": "analyticsadmin.properties.deleteConnectedSiteTag",
+	//   "parameterOrder": [],
+	//   "parameters": {},
+	//   "path": "v1alpha/properties:deleteConnectedSiteTag",
+	//   "request": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaDeleteConnectedSiteTagRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleProtobufEmpty"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/analytics.edit"
@@ -11655,6 +12184,137 @@ func (c *PropertiesListCall) Pages(ctx context.Context, f func(*GoogleAnalyticsA
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "analyticsadmin.properties.listConnectedSiteTags":
+
+type PropertiesListConnectedSiteTagsCall struct {
+	s                                                       *Service
+	googleanalyticsadminv1alphalistconnectedsitetagsrequest *GoogleAnalyticsAdminV1alphaListConnectedSiteTagsRequest
+	urlParams_                                              gensupport.URLParams
+	ctx_                                                    context.Context
+	header_                                                 http.Header
+}
+
+// ListConnectedSiteTags: Lists the connected site tags for a Universal
+// Analytics property. A maximum of 20 connected site tags will be
+// returned. Note: this has no effect on GA4 property.
+func (r *PropertiesService) ListConnectedSiteTags(googleanalyticsadminv1alphalistconnectedsitetagsrequest *GoogleAnalyticsAdminV1alphaListConnectedSiteTagsRequest) *PropertiesListConnectedSiteTagsCall {
+	c := &PropertiesListConnectedSiteTagsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.googleanalyticsadminv1alphalistconnectedsitetagsrequest = googleanalyticsadminv1alphalistconnectedsitetagsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PropertiesListConnectedSiteTagsCall) Fields(s ...googleapi.Field) *PropertiesListConnectedSiteTagsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PropertiesListConnectedSiteTagsCall) Context(ctx context.Context) *PropertiesListConnectedSiteTagsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PropertiesListConnectedSiteTagsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesListConnectedSiteTagsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleanalyticsadminv1alphalistconnectedsitetagsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/properties:listConnectedSiteTags")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.listConnectedSiteTags" call.
+// Exactly one of
+// *GoogleAnalyticsAdminV1alphaListConnectedSiteTagsResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleAnalyticsAdminV1alphaListConnectedSiteTagsResponse.ServerRespon
+// se.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *PropertiesListConnectedSiteTagsCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaListConnectedSiteTagsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAnalyticsAdminV1alphaListConnectedSiteTagsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists the connected site tags for a Universal Analytics property. A maximum of 20 connected site tags will be returned. Note: this has no effect on GA4 property.",
+	//   "flatPath": "v1alpha/properties:listConnectedSiteTags",
+	//   "httpMethod": "POST",
+	//   "id": "analyticsadmin.properties.listConnectedSiteTags",
+	//   "parameterOrder": [],
+	//   "parameters": {},
+	//   "path": "v1alpha/properties:listConnectedSiteTags",
+	//   "request": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaListConnectedSiteTagsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaListConnectedSiteTagsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit",
+	//     "https://www.googleapis.com/auth/analytics.readonly"
+	//   ]
+	// }
+
 }
 
 // method id "analyticsadmin.properties.patch":
@@ -17788,6 +18448,161 @@ func (c *PropertiesDataStreamsGetCall) Do(opts ...googleapi.CallOption) (*Google
 
 }
 
+// method id "analyticsadmin.properties.dataStreams.getEnhancedMeasurementSettings":
+
+type PropertiesDataStreamsGetEnhancedMeasurementSettingsCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetEnhancedMeasurementSettings: Returns the enhanced measurement
+// settings for this data stream. Note that the stream must enable
+// enhanced measurement for these settings to take effect.
+//
+//   - name: The name of the settings to lookup. Format:
+//     properties/{property}/dataStreams/{data_stream}/enhancedMeasurementS
+//     ettings Example:
+//     "properties/1000/dataStreams/2000/enhancedMeasurementSettings".
+func (r *PropertiesDataStreamsService) GetEnhancedMeasurementSettings(name string) *PropertiesDataStreamsGetEnhancedMeasurementSettingsCall {
+	c := &PropertiesDataStreamsGetEnhancedMeasurementSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PropertiesDataStreamsGetEnhancedMeasurementSettingsCall) Fields(s ...googleapi.Field) *PropertiesDataStreamsGetEnhancedMeasurementSettingsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *PropertiesDataStreamsGetEnhancedMeasurementSettingsCall) IfNoneMatch(entityTag string) *PropertiesDataStreamsGetEnhancedMeasurementSettingsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PropertiesDataStreamsGetEnhancedMeasurementSettingsCall) Context(ctx context.Context) *PropertiesDataStreamsGetEnhancedMeasurementSettingsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PropertiesDataStreamsGetEnhancedMeasurementSettingsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesDataStreamsGetEnhancedMeasurementSettingsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.dataStreams.getEnhancedMeasurementSettings" call.
+// Exactly one of
+// *GoogleAnalyticsAdminV1alphaEnhancedMeasurementSettings or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *GoogleAnalyticsAdminV1alphaEnhancedMeasurementSettings.ServerResponse
+// .Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *PropertiesDataStreamsGetEnhancedMeasurementSettingsCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaEnhancedMeasurementSettings, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAnalyticsAdminV1alphaEnhancedMeasurementSettings{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns the enhanced measurement settings for this data stream. Note that the stream must enable enhanced measurement for these settings to take effect.",
+	//   "flatPath": "v1alpha/properties/{propertiesId}/dataStreams/{dataStreamsId}/enhancedMeasurementSettings",
+	//   "httpMethod": "GET",
+	//   "id": "analyticsadmin.properties.dataStreams.getEnhancedMeasurementSettings",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the settings to lookup. Format: properties/{property}/dataStreams/{data_stream}/enhancedMeasurementSettings Example: \"properties/1000/dataStreams/2000/enhancedMeasurementSettings\"",
+	//       "location": "path",
+	//       "pattern": "^properties/[^/]+/dataStreams/[^/]+/enhancedMeasurementSettings$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaEnhancedMeasurementSettings"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit",
+	//     "https://www.googleapis.com/auth/analytics.readonly"
+	//   ]
+	// }
+
+}
+
 // method id "analyticsadmin.properties.dataStreams.getGlobalSiteTag":
 
 type PropertiesDataStreamsGetGlobalSiteTagCall struct {
@@ -18293,6 +19108,173 @@ func (c *PropertiesDataStreamsPatchCall) Do(opts ...googleapi.CallOption) (*Goog
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleAnalyticsAdminV1alphaDataStream"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit"
+	//   ]
+	// }
+
+}
+
+// method id "analyticsadmin.properties.dataStreams.updateEnhancedMeasurementSettings":
+
+type PropertiesDataStreamsUpdateEnhancedMeasurementSettingsCall struct {
+	s                                                      *Service
+	name                                                   string
+	googleanalyticsadminv1alphaenhancedmeasurementsettings *GoogleAnalyticsAdminV1alphaEnhancedMeasurementSettings
+	urlParams_                                             gensupport.URLParams
+	ctx_                                                   context.Context
+	header_                                                http.Header
+}
+
+// UpdateEnhancedMeasurementSettings: Updates the enhanced measurement
+// settings for this data stream. Note that the stream must enable
+// enhanced measurement for these settings to take effect.
+//
+//   - name: Output only. Resource name of the Enhanced Measurement
+//     Settings. Format:
+//     properties/{property_id}/dataStreams/{data_stream}/enhancedMeasureme
+//     ntSettings Example:
+//     "properties/1000/dataStreams/2000/enhancedMeasurementSettings".
+func (r *PropertiesDataStreamsService) UpdateEnhancedMeasurementSettings(name string, googleanalyticsadminv1alphaenhancedmeasurementsettings *GoogleAnalyticsAdminV1alphaEnhancedMeasurementSettings) *PropertiesDataStreamsUpdateEnhancedMeasurementSettingsCall {
+	c := &PropertiesDataStreamsUpdateEnhancedMeasurementSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleanalyticsadminv1alphaenhancedmeasurementsettings = googleanalyticsadminv1alphaenhancedmeasurementsettings
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. The
+// list of fields to be updated. Field names must be in snake case
+// (e.g., "field_to_update"). Omitted fields will not be updated. To
+// replace the entire entity, use one path with the string "*" to match
+// all fields.
+func (c *PropertiesDataStreamsUpdateEnhancedMeasurementSettingsCall) UpdateMask(updateMask string) *PropertiesDataStreamsUpdateEnhancedMeasurementSettingsCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PropertiesDataStreamsUpdateEnhancedMeasurementSettingsCall) Fields(s ...googleapi.Field) *PropertiesDataStreamsUpdateEnhancedMeasurementSettingsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PropertiesDataStreamsUpdateEnhancedMeasurementSettingsCall) Context(ctx context.Context) *PropertiesDataStreamsUpdateEnhancedMeasurementSettingsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PropertiesDataStreamsUpdateEnhancedMeasurementSettingsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesDataStreamsUpdateEnhancedMeasurementSettingsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleanalyticsadminv1alphaenhancedmeasurementsettings)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.dataStreams.updateEnhancedMeasurementSettings" call.
+// Exactly one of
+// *GoogleAnalyticsAdminV1alphaEnhancedMeasurementSettings or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *GoogleAnalyticsAdminV1alphaEnhancedMeasurementSettings.ServerResponse
+// .Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *PropertiesDataStreamsUpdateEnhancedMeasurementSettingsCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaEnhancedMeasurementSettings, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAnalyticsAdminV1alphaEnhancedMeasurementSettings{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates the enhanced measurement settings for this data stream. Note that the stream must enable enhanced measurement for these settings to take effect.",
+	//   "flatPath": "v1alpha/properties/{propertiesId}/dataStreams/{dataStreamsId}/enhancedMeasurementSettings",
+	//   "httpMethod": "PATCH",
+	//   "id": "analyticsadmin.properties.dataStreams.updateEnhancedMeasurementSettings",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Output only. Resource name of the Enhanced Measurement Settings. Format: properties/{property_id}/dataStreams/{data_stream}/enhancedMeasurementSettings Example: \"properties/1000/dataStreams/2000/enhancedMeasurementSettings\"",
+	//       "location": "path",
+	//       "pattern": "^properties/[^/]+/dataStreams/[^/]+/enhancedMeasurementSettings$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Required. The list of fields to be updated. Field names must be in snake case (e.g., \"field_to_update\"). Omitted fields will not be updated. To replace the entire entity, use one path with the string \"*\" to match all fields.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "request": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaEnhancedMeasurementSettings"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaEnhancedMeasurementSettings"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/analytics.edit"

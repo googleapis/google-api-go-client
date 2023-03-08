@@ -1774,6 +1774,10 @@ func (s *GoogleAppsCloudidentityDevicesV1WipeDeviceUserResponse) MarshalJSON() (
 // collection of entities, where each entity is either a user, another
 // group, or a service account.
 type Group struct {
+	// AdditionalGroupKeys: Output only. Additional group keys associated
+	// with the Group.
+	AdditionalGroupKeys []*EntityKey `json:"additionalGroupKeys,omitempty"`
+
 	// CreateTime: Output only. The time when the `Group` was created.
 	CreateTime string `json:"createTime,omitempty"`
 
@@ -1825,20 +1829,21 @@ type Group struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "AdditionalGroupKeys")
+	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AdditionalGroupKeys") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -2940,13 +2945,13 @@ type SamlIdpConfig struct {
 	// the identity provider. When a user clicks the sign-out link on a
 	// Google page, they will be redirected to this URL. This is a pure
 	// redirect with no attached SAML `LogoutRequest` i.e. SAML single
-	// logout is currently not supported. Must use `HTTPS`.
+	// logout is not supported. Must use `HTTPS`.
 	LogoutRedirectUri string `json:"logoutRedirectUri,omitempty"`
 
 	// SingleSignOnServiceUri: Required. The `SingleSignOnService` endpoint
 	// location (sign-in page URL) of the identity provider. This is the URL
-	// where the `AuthnRequest` will be sent. Must use `HTTPS`. Currently
-	// assumed to accept the `HTTP-Redirect` binding.
+	// where the `AuthnRequest` will be sent. Must use `HTTPS`. Assumed to
+	// accept the `HTTP-Redirect` binding.
 	SingleSignOnServiceUri string `json:"singleSignOnServiceUri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ChangePasswordUri")
@@ -2977,8 +2982,7 @@ func (s *SamlIdpConfig) MarshalJSON() ([]byte, error) {
 type SamlSpConfig struct {
 	// AssertionConsumerServiceUri: Output only. The SAML **Assertion
 	// Consumer Service (ACS) URL** to be used for the IDP-initiated login.
-	// Currently assumed to accept response messages via the `HTTP-POST`
-	// binding.
+	// Assumed to accept response messages via the `HTTP-POST` binding.
 	AssertionConsumerServiceUri string `json:"assertionConsumerServiceUri,omitempty"`
 
 	// EntityId: Output only. The SAML **Entity ID** for this service
@@ -8478,14 +8482,22 @@ func (c *GroupsSearchCall) PageToken(pageToken string) *GroupsSearchCall {
 }
 
 // Query sets the optional parameter "query": Required. The search
-// query. Must be specified in Common Expression Language
-// (https://opensource.google/projects/cel). May only contain equality
-// operators on the parent and inclusion operators on labels (e.g.,
-// `parent == 'customers/{customer_id}' &&
-// 'cloudidentity.googleapis.com/groups.discussion_forum' in labels`).
+// query. * Must be specified in Common Expression Language
+// (https://opensource.google/projects/cel). * Must contain equality
+// operators on the parent, e.g. `parent == 'customers/{customer_id}'`.
 // The `customer_id` must begin with "C" (for example, 'C046psxkn').
 // [Find your customer ID.]
-// (https://support.google.com/cloudidentity/answer/10070793)
+// (https://support.google.com/cloudidentity/answer/10070793) * Can
+// contain optional inclusion operators on `labels` such as
+// `'cloudidentity.googleapis.com/groups.discussion_forum' in labels`).
+// * Can contain an optional equality operator on `domain_name`. e.g.
+// `domain_name == 'abc.com'` * Can contain optional
+// `startsWith/contains/equality` operators on `group_key`, e.g.
+// `group_key.startsWith('dev')`, `group_key.contains('dev'), group_key
+// == 'dev@abc.com'` * Can contain optional
+// `startsWith/contains/equality` operators on `display_name`, such as
+// `display_name.startsWith('dev')` , `display_name.contains('dev')`,
+// `display_name == 'dev'`
 func (c *GroupsSearchCall) Query(query string) *GroupsSearchCall {
 	c.urlParams_.Set("query", query)
 	return c
@@ -8618,7 +8630,7 @@ func (c *GroupsSearchCall) Do(opts ...googleapi.CallOption) (*SearchGroupsRespon
 	//       "type": "string"
 	//     },
 	//     "query": {
-	//       "description": "Required. The search query. Must be specified in [Common Expression Language](https://opensource.google/projects/cel). May only contain equality operators on the parent and inclusion operators on labels (e.g., `parent == 'customers/{customer_id}' \u0026\u0026 'cloudidentity.googleapis.com/groups.discussion_forum' in labels`). The `customer_id` must begin with \"C\" (for example, 'C046psxkn'). [Find your customer ID.] (https://support.google.com/cloudidentity/answer/10070793)",
+	//       "description": "Required. The search query. * Must be specified in [Common Expression Language](https://opensource.google/projects/cel). * Must contain equality operators on the parent, e.g. `parent == 'customers/{customer_id}'`. The `customer_id` must begin with \"C\" (for example, 'C046psxkn'). [Find your customer ID.] (https://support.google.com/cloudidentity/answer/10070793) * Can contain optional inclusion operators on `labels` such as `'cloudidentity.googleapis.com/groups.discussion_forum' in labels`). * Can contain an optional equality operator on `domain_name`. e.g. `domain_name == 'abc.com'` * Can contain optional `startsWith/contains/equality` operators on `group_key`, e.g. `group_key.startsWith('dev')`, `group_key.contains('dev'), group_key == 'dev@abc.com'` * Can contain optional `startsWith/contains/equality` operators on `display_name`, such as `display_name.startsWith('dev')` , `display_name.contains('dev')`, `display_name == 'dev'`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -10230,7 +10242,14 @@ func (c *GroupsMembershipsSearchTransitiveGroupsCall) PageToken(pageToken string
 // are uniquely identified by both a `member_key_id` and a
 // `member_key_namespace`, which requires an additional query input:
 // `member_key_namespace`. Example query: `member_key_id ==
-// 'member_key_id_value' && in labels`
+// 'member_key_id_value' && in labels` Query may optionally contain
+// equality operators on the parent of the group restricting the search
+// within a particular customer, e.g. `parent ==
+// 'customers/{customer_id}'`. The `customer_id` must begin with "C"
+// (for example, 'C046psxkn'). This filtering is only supported for
+// Admins with groups read permissons on the input customer. Example
+// query: `member_key_id == 'member_key_id_value' && in labels && parent
+// == 'customers/C046psxkn'`
 func (c *GroupsMembershipsSearchTransitiveGroupsCall) Query(query string) *GroupsMembershipsSearchTransitiveGroupsCall {
 	c.urlParams_.Set("query", query)
 	return c
@@ -10362,7 +10381,7 @@ func (c *GroupsMembershipsSearchTransitiveGroupsCall) Do(opts ...googleapi.CallO
 	//       "type": "string"
 	//     },
 	//     "query": {
-	//       "description": "Required. A CEL expression that MUST include member specification AND label(s). This is a `required` field. Users can search on label attributes of groups. CONTAINS match ('in') is supported on labels. Identity-mapped groups are uniquely identified by both a `member_key_id` and a `member_key_namespace`, which requires an additional query input: `member_key_namespace`. Example query: `member_key_id == 'member_key_id_value' \u0026\u0026 in labels`",
+	//       "description": "Required. A CEL expression that MUST include member specification AND label(s). This is a `required` field. Users can search on label attributes of groups. CONTAINS match ('in') is supported on labels. Identity-mapped groups are uniquely identified by both a `member_key_id` and a `member_key_namespace`, which requires an additional query input: `member_key_namespace`. Example query: `member_key_id == 'member_key_id_value' \u0026\u0026 in labels` Query may optionally contain equality operators on the parent of the group restricting the search within a particular customer, e.g. `parent == 'customers/{customer_id}'`. The `customer_id` must begin with \"C\" (for example, 'C046psxkn'). This filtering is only supported for Admins with groups read permissons on the input customer. Example query: `member_key_id == 'member_key_id_value' \u0026\u0026 in labels \u0026\u0026 parent == 'customers/C046psxkn'`",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -11033,11 +11052,11 @@ func (r *InboundSamlSsoProfilesService) List() *InboundSamlSsoProfilesListCall {
 
 // Filter sets the optional parameter "filter": A Common Expression
 // Language (https://github.com/google/cel-spec) expression to filter
-// the results. The only currently-supported filter is filtering by
-// customer. For example: `customer=="customers/C0123abc". Omitting the
-// filter or specifying a filter of `customer=="customers/my_customer"
-// will return the profiles for the customer that the caller
-// (authenticated user) belongs to.
+// the results. The only supported filter is filtering by customer. For
+// example: `customer=="customers/C0123abc". Omitting the filter or
+// specifying a filter of `customer=="customers/my_customer" will
+// return the profiles for the customer that the caller (authenticated
+// user) belongs to.
 func (c *InboundSamlSsoProfilesListCall) Filter(filter string) *InboundSamlSsoProfilesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -11168,7 +11187,7 @@ func (c *InboundSamlSsoProfilesListCall) Do(opts ...googleapi.CallOption) (*List
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "A [Common Expression Language](https://github.com/google/cel-spec) expression to filter the results. The only currently-supported filter is filtering by customer. For example: `customer==\"customers/C0123abc\"`. Omitting the filter or specifying a filter of `customer==\"customers/my_customer\"` will return the profiles for the customer that the caller (authenticated user) belongs to.",
+	//       "description": "A [Common Expression Language](https://github.com/google/cel-spec) expression to filter the results. The only supported filter is filtering by customer. For example: `customer==\"customers/C0123abc\"`. Omitting the filter or specifying a filter of `customer==\"customers/my_customer\"` will return the profiles for the customer that the caller (authenticated user) belongs to.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -12427,11 +12446,11 @@ func (r *InboundSsoAssignmentsService) List() *InboundSsoAssignmentsListCall {
 }
 
 // Filter sets the optional parameter "filter": A CEL expression to
-// filter the results. The only currently-supported filter is filtering
-// by customer. For example: `customer==customers/C0123abc`. Omitting
-// the filter or specifying a filter of
-// `customer==customers/my_customer` will return the assignments for the
-// customer that the caller (authenticated user) belongs to.
+// filter the results. The only supported filter is filtering by
+// customer. For example: `customer==customers/C0123abc`. Omitting the
+// filter or specifying a filter of `customer==customers/my_customer`
+// will return the assignments for the customer that the caller
+// (authenticated user) belongs to.
 func (c *InboundSsoAssignmentsListCall) Filter(filter string) *InboundSsoAssignmentsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -12563,7 +12582,7 @@ func (c *InboundSsoAssignmentsListCall) Do(opts ...googleapi.CallOption) (*ListI
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "A CEL expression to filter the results. The only currently-supported filter is filtering by customer. For example: `customer==customers/C0123abc`. Omitting the filter or specifying a filter of `customer==customers/my_customer` will return the assignments for the customer that the caller (authenticated user) belongs to.",
+	//       "description": "A CEL expression to filter the results. The only supported filter is filtering by customer. For example: `customer==customers/C0123abc`. Omitting the filter or specifying a filter of `customer==customers/my_customer` will return the assignments for the customer that the caller (authenticated user) belongs to.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

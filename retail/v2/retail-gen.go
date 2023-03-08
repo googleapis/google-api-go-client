@@ -3368,10 +3368,10 @@ type GoogleCloudRetailV2Product struct {
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// LocalInventories: Output only. A list of local inventories specific
-	// to different places. This is only available for users who have Retail
-	// Search enabled, and it can be managed by
+	// to different places. This field can be managed by
 	// ProductService.AddLocalInventories and
-	// ProductService.RemoveLocalInventories APIs.
+	// ProductService.RemoveLocalInventories APIs if fine-grained,
+	// high-volume updates are necessary.
 	LocalInventories []*GoogleCloudRetailV2LocalInventory `json:"localInventories,omitempty"`
 
 	// Materials: The material of the product. For example, "leather",
@@ -5997,6 +5997,12 @@ type GoogleCloudRetailV2UserEvent struct {
 	// event. This field should be set for `search` event when autocomplete
 	// function is enabled and the user clicks a suggestion for search.
 	CompletionDetail *GoogleCloudRetailV2CompletionDetail `json:"completionDetail,omitempty"`
+
+	// Domain: Represents the domain of the user event, for projects that
+	// combine domains. For example: retailer can have events from multiple
+	// domains like retailer-main, retailer-baby, retailer-meds, etc. under
+	// one project.
+	Domain string `json:"domain,omitempty"`
 
 	// EventTime: Only required for UserEventService.ImportUserEvents
 	// method. Timestamp of when the user event happened.
@@ -10727,7 +10733,12 @@ type ProjectsLocationsCatalogsBranchesProductsAddFulfillmentPlacesCall struct {
 	header_                                        http.Header
 }
 
-// AddFulfillmentPlaces: Incrementally adds place IDs to
+// AddFulfillmentPlaces: It is recommended to use the
+// ProductService.AddLocalInventories method instead of
+// ProductService.AddFulfillmentPlaces.
+// ProductService.AddLocalInventories achieves the same results but
+// provides more fine-grained control over ingesting local inventory
+// data. Incrementally adds place IDs to
 // Product.fulfillment_info.place_ids. This process is asynchronous and
 // does not require the Product to exist before updating fulfillment
 // information. If the request is valid, the update will be enqueued and
@@ -10842,7 +10853,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsAddFulfillmentPlacesCall) Do(o
 	}
 	return ret, nil
 	// {
-	//   "description": "Incrementally adds place IDs to Product.fulfillment_info.place_ids. This process is asynchronous and does not require the Product to exist before updating fulfillment information. If the request is valid, the update will be enqueued and processed downstream. As a consequence, when a response is returned, the added place IDs are not immediately manifested in the Product queried by ProductService.GetProduct or ProductService.ListProducts. The returned Operations will be obsolete after 1 day, and GetOperation API will return NOT_FOUND afterwards. If conflicting updates are issued, the Operations associated with the stale updates will not be marked as done until being obsolete.",
+	//   "description": "It is recommended to use the ProductService.AddLocalInventories method instead of ProductService.AddFulfillmentPlaces. ProductService.AddLocalInventories achieves the same results but provides more fine-grained control over ingesting local inventory data. Incrementally adds place IDs to Product.fulfillment_info.place_ids. This process is asynchronous and does not require the Product to exist before updating fulfillment information. If the request is valid, the update will be enqueued and processed downstream. As a consequence, when a response is returned, the added place IDs are not immediately manifested in the Product queried by ProductService.GetProduct or ProductService.ListProducts. The returned Operations will be obsolete after 1 day, and GetOperation API will return NOT_FOUND afterwards. If conflicting updates are issued, the Operations associated with the stale updates will not be marked as done until being obsolete.",
 	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/branches/{branchesId}/products/{productsId}:addFulfillmentPlaces",
 	//   "httpMethod": "POST",
 	//   "id": "retail.projects.locations.catalogs.branches.products.addFulfillmentPlaces",
@@ -12066,7 +12077,12 @@ type ProjectsLocationsCatalogsBranchesProductsRemoveFulfillmentPlacesCall struct
 	header_                                           http.Header
 }
 
-// RemoveFulfillmentPlaces: Incrementally removes place IDs from a
+// RemoveFulfillmentPlaces: It is recommended to use the
+// ProductService.RemoveLocalInventories method instead of
+// ProductService.RemoveFulfillmentPlaces.
+// ProductService.RemoveLocalInventories achieves the same results but
+// provides more fine-grained control over ingesting local inventory
+// data. Incrementally removes place IDs from a
 // Product.fulfillment_info.place_ids. This process is asynchronous and
 // does not require the Product to exist before updating fulfillment
 // information. If the request is valid, the update will be enqueued and
@@ -12181,7 +12197,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsRemoveFulfillmentPlacesCall) D
 	}
 	return ret, nil
 	// {
-	//   "description": "Incrementally removes place IDs from a Product.fulfillment_info.place_ids. This process is asynchronous and does not require the Product to exist before updating fulfillment information. If the request is valid, the update will be enqueued and processed downstream. As a consequence, when a response is returned, the removed place IDs are not immediately manifested in the Product queried by ProductService.GetProduct or ProductService.ListProducts. The returned Operations will be obsolete after 1 day, and GetOperation API will return NOT_FOUND afterwards. If conflicting updates are issued, the Operations associated with the stale updates will not be marked as done until being obsolete.",
+	//   "description": "It is recommended to use the ProductService.RemoveLocalInventories method instead of ProductService.RemoveFulfillmentPlaces. ProductService.RemoveLocalInventories achieves the same results but provides more fine-grained control over ingesting local inventory data. Incrementally removes place IDs from a Product.fulfillment_info.place_ids. This process is asynchronous and does not require the Product to exist before updating fulfillment information. If the request is valid, the update will be enqueued and processed downstream. As a consequence, when a response is returned, the removed place IDs are not immediately manifested in the Product queried by ProductService.GetProduct or ProductService.ListProducts. The returned Operations will be obsolete after 1 day, and GetOperation API will return NOT_FOUND afterwards. If conflicting updates are issued, the Operations associated with the stale updates will not be marked as done until being obsolete.",
 	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/branches/{branchesId}/products/{productsId}:removeFulfillmentPlaces",
 	//   "httpMethod": "POST",
 	//   "id": "retail.projects.locations.catalogs.branches.products.removeFulfillmentPlaces",
@@ -13781,6 +13797,154 @@ func (c *ProjectsLocationsCatalogsModelsDeleteCall) Do(opts ...googleapi.CallOpt
 	//   "path": "v2/{+name}",
 	//   "response": {
 	//     "$ref": "GoogleProtobufEmpty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "retail.projects.locations.catalogs.models.get":
+
+type ProjectsLocationsCatalogsModelsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a model.
+//
+//   - name: The resource name of the Model to get. Format:
+//     `projects/{project_number}/locations/{location_id}/catalogs/{catalog
+//     }/models/{model_id}`.
+func (r *ProjectsLocationsCatalogsModelsService) Get(name string) *ProjectsLocationsCatalogsModelsGetCall {
+	c := &ProjectsLocationsCatalogsModelsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsCatalogsModelsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsCatalogsModelsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsCatalogsModelsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsCatalogsModelsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsCatalogsModelsGetCall) Context(ctx context.Context) *ProjectsLocationsCatalogsModelsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsCatalogsModelsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCatalogsModelsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "retail.projects.locations.catalogs.models.get" call.
+// Exactly one of *GoogleCloudRetailV2Model or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudRetailV2Model.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsCatalogsModelsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRetailV2Model, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudRetailV2Model{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a model.",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/models/{modelsId}",
+	//   "httpMethod": "GET",
+	//   "id": "retail.projects.locations.catalogs.models.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the Model to get. Format: `projects/{project_number}/locations/{location_id}/catalogs/{catalog}/models/{model_id}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+/models/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudRetailV2Model"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

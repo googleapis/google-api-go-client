@@ -393,21 +393,22 @@ type AttributePropagationSettings struct {
 	Enable bool `json:"enable,omitempty"`
 
 	// Expression: Raw string CEL expression. Must return a list of
-	// attributes. Maximum of 45 attributes can be selected. Expressions can
-	// select different attribute types from `attributes`:
-	// `attributes.saml_attributes`, `attributes.iap_attributes`. Limited
-	// functions are supported: - filter: .filter(, ) -> returns a subset of
-	// where is true for every item - in: in -> returns true if contains -
-	// selectByName: .selectByName() -> returns the attribute in with the
-	// given name, otherwise returns empty. - emitAs: .emitAs() -> sets the
-	// name field to the given for propagation in selected output
-	// credentials. - strict: .strict() -> ignore the `x-goog-iap-attr-`
-	// prefix for the provided attribute when propagating via the `HEADER`
-	// output credential, i.e. request headers. - append: .append() OR
-	// .append() -> append the provided or onto the end of Example
-	// expression: attributes.saml_attributes.filter(x, x.name in
+	// attributes. A maximum of 45 attributes can be selected. Expressions
+	// can select different attribute types from `attributes`:
+	// `attributes.saml_attributes`, `attributes.iap_attributes`. The
+	// following functions are supported: - filter `.filter(, )`: Returns a
+	// subset of `` where `` is true for every item. - in ` in `: Returns
+	// true if `` contains ``. - selectByName `.selectByName()`: Returns the
+	// attribute in `` with the given `` name, otherwise returns empty. -
+	// emitAs `.emitAs()`: Sets the `` name field to the given `` for
+	// propagation in selected output credentials. - strict `.strict()`:
+	// Ignores the `x-goog-iap-attr-` prefix for the provided `` when
+	// propagating with the `HEADER` output credential, such as request
+	// headers. - append `.append()` OR `.append()`: Appends the provided ``
+	// or `` to the end of ``. Example expression:
+	// `attributes.saml_attributes.filter(x, x.name in
 	// ['test']).append(attributes.iap_attributes.selectByName('exact').emitA
-	// s('custom').strict())
+	// s('custom').strict())`
 	Expression string `json:"expression,omitempty"`
 
 	// OutputCredentials: Which output credentials attributes selected by
@@ -415,14 +416,14 @@ type AttributePropagationSettings struct {
 	// fully duplicated in each selected output credential.
 	//
 	// Possible values:
-	//   "OUTPUT_CREDENTIALS_UNSPECIFIED" - No output credential. This is
-	// unsupported in IAP, there must be an output credential.
+	//   "OUTPUT_CREDENTIALS_UNSPECIFIED" - Output credential not provided.
+	// This is unsupported in IAP. An output credential is required.
 	//   "HEADER" - Propagate attributes in the headers with
 	// "x-goog-iap-attr-" prefix.
 	//   "JWT" - Propagate attributes in the JWT of the form:
-	// "additional_claims": { "my_attribute": ["value1", "value2"] }
+	// "additional_claims": { "my_attribute": ["value1", "value2"] }`
 	//   "RCTOKEN" - Propagate attributes in the RCToken of the form:
-	// "additional_claims": { "my_attribute": ["value1", "value2"] }
+	// "additional_claims": { "my_attribute": ["value1", "value2"] }`
 	OutputCredentials []string `json:"outputCredentials,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Enable") to
@@ -1248,7 +1249,7 @@ type ReauthSettings struct {
 	// Possible values:
 	//   "METHOD_UNSPECIFIED" - Reauthentication disabled.
 	//   "LOGIN" - Prompts the user to log in again.
-	//   "PASSWORD" - Deprecated, no longer accepted by IAP APIs.
+	//   "PASSWORD" - Deprecated.
 	//   "SECURE_KEY" - User must use their secure key 2nd factor device.
 	//   "ENROLLED_SECOND_FACTORS" - User can use any enabled 2nd factor.
 	Method string `json:"method,omitempty"`

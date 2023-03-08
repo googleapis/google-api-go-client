@@ -4147,7 +4147,8 @@ type DatafeedTarget struct {
 
 	// FeedLabel: Feed label for the DatafeedTarget. Either `country` or
 	// `feedLabel` is required. If both `feedLabel` and `country` is
-	// specified, the values must match.
+	// specified, the values must match. Must be less than or equal to 20
+	// uppercase letters (A-Z), numbers (0-9), and dashes (-).
 	FeedLabel string `json:"feedLabel,omitempty"`
 
 	// IncludedDestinations: The list of destinations to include for this
@@ -12809,7 +12810,8 @@ type Product struct {
 	ExternalSellerId string `json:"externalSellerId,omitempty"`
 
 	// FeedLabel: Feed label for the item. Either `targetCountry` or
-	// `feedLabel` is required.
+	// `feedLabel` is required. Must be less than or equal to 20 uppercase
+	// letters (A-Z), numbers (0-9), and dashes (-).
 	FeedLabel string `json:"feedLabel,omitempty"`
 
 	// Gender: Target gender of the item.
@@ -13947,9 +13949,7 @@ func (s *ProductUnitPricingMeasure) UnmarshalJSON(data []byte) error {
 }
 
 // ProductView: Product fields. Values are only set for fields requested
-// explicitly in the request's search query. Available only to selected
-// merchants. Submit the interest form
-// (https://forms.gle/7Uy8htzAN8oNokz9A) to request access.
+// explicitly in the request's search query.
 type ProductView struct {
 	// AggregatedDestinationStatus: Aggregated destination status.
 	//
@@ -15590,8 +15590,6 @@ type ReportRow struct {
 
 	// ProductView: Product fields requested by the merchant in the query.
 	// Field values are only set if the merchant queries `ProductView`.
-	// Available only to selected merchants. Submit the interest form
-	// (https://forms.gle/7Uy8htzAN8oNokz9A) to request access.
 	ProductView *ProductView `json:"productView,omitempty"`
 
 	// Segments: Segmentation dimensions requested by the merchant in the
@@ -19844,6 +19842,8 @@ type AccountsClaimwebsiteCall struct {
 }
 
 // Claimwebsite: Claims the website of a Merchant Center sub-account.
+// Merchant accounts with approved third-party CSSs aren't required to
+// claim a website.
 //
 //   - accountId: The ID of the account whose website is claimed.
 //   - merchantId: The ID of the managing account. If this parameter is
@@ -19954,7 +19954,7 @@ func (c *AccountsClaimwebsiteCall) Do(opts ...googleapi.CallOption) (*AccountsCl
 	}
 	return ret, nil
 	// {
-	//   "description": "Claims the website of a Merchant Center sub-account.",
+	//   "description": "Claims the website of a Merchant Center sub-account. Merchant accounts with approved third-party CSSs aren't required to claim a website.",
 	//   "flatPath": "{merchantId}/accounts/{accountId}/claimwebsite",
 	//   "httpMethod": "POST",
 	//   "id": "content.accounts.claimwebsite",

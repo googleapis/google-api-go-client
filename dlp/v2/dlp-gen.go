@@ -4491,6 +4491,7 @@ type GooglePrivacyDlpV2InfoTypeCategory struct {
 	//   "CHILE" - The infoType is typically used in Chile.
 	//   "CHINA" - The infoType is typically used in China.
 	//   "COLOMBIA" - The infoType is typically used in Colombia.
+	//   "CROATIA" - The infoType is typically used in Croatia.
 	//   "DENMARK" - The infoType is typically used in Denmark.
 	//   "FRANCE" - The infoType is typically used in France.
 	//   "FINLAND" - The infoType is typically used in Finland.
@@ -4504,6 +4505,7 @@ type GooglePrivacyDlpV2InfoTypeCategory struct {
 	//   "JAPAN" - The infoType is typically used in Japan.
 	//   "KOREA" - The infoType is typically used in Korea.
 	//   "MEXICO" - The infoType is typically used in Mexico.
+	//   "NEW_ZEALAND" - The infoType is typically used in New Zealand.
 	//   "THE_NETHERLANDS" - The infoType is typically used in the
 	// Netherlands.
 	//   "NORWAY" - The infoType is typically used in Norway.
@@ -4525,7 +4527,6 @@ type GooglePrivacyDlpV2InfoTypeCategory struct {
 	//   "URUGUAY" - The infoType is typically used in Uruguay.
 	//   "VENEZUELA" - The infoType is typically used in Venezuela.
 	//   "INTERNAL" - The infoType is typically used in Google internally.
-	//   "NEW_ZEALAND" - The infoType is typically used in New Zealand.
 	LocationCategory string `json:"locationCategory,omitempty"`
 
 	// TypeCategory: The class of identifiers where this infoType belongs

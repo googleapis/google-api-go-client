@@ -1466,9 +1466,9 @@ func (s *DeveloperComment) MarshalJSON() ([]byte, error) {
 type DeveloperInitiatedCancellation struct {
 }
 
-// DeviceGroup: LINT.IfChange A group of devices. A group is defined by
-// a set of device selectors. A device belongs to the group if it
-// matches any selector (logical OR).
+// DeviceGroup: A group of devices. A group is defined by a set of
+// device selectors. A device belongs to the group if it matches any
+// selector (logical OR).
 type DeviceGroup struct {
 	// DeviceSelectors: Device selectors for this group. A device matching
 	// any of the selectors is included in this group.
@@ -1753,8 +1753,8 @@ func (s *DeviceTier) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DeviceTierConfig: LINT.IfChange Configuration describing device
-// targeting criteria for the content of an app.
+// DeviceTierConfig: Configuration describing device targeting criteria
+// for the content of an app.
 type DeviceTierConfig struct {
 	// DeviceGroups: Definition of device groups for the app.
 	DeviceGroups []*DeviceGroup `json:"deviceGroups,omitempty"`

@@ -854,7 +854,7 @@ func (s *ContentRestriction) MarshalJSON() ([]byte, error) {
 // Drive: Representation of a shared drive.
 type Drive struct {
 	// BackgroundImageFile: An image file and cropping parameters from which
-	// a background image for this shared drive is set. This is a write only
+	// a background image for this shared drive is set. This is a write-only
 	// field; it can only be set on drive.drives.update requests that don't
 	// set themeId. When specified, all fields of the backgroundImageFile
 	// must be set.
@@ -868,8 +868,7 @@ type Drive struct {
 	Capabilities *DriveCapabilities `json:"capabilities,omitempty"`
 
 	// ColorRgb: The color of this shared drive as an RGB hex string. It can
-	// only be set on a drive.drives.update request that does not set
-	// themeId.
+	// only be set on drive.drives.update requests that don't set themeId.
 	ColorRgb string `json:"colorRgb,omitempty"`
 
 	// CreatedTime: The time at which the shared drive was created (RFC 3339
@@ -900,8 +899,8 @@ type Drive struct {
 	Restrictions *DriveRestrictions `json:"restrictions,omitempty"`
 
 	// ThemeId: The ID of the theme from which the background image and
-	// color will be set. The set of possible driveThemes can be retrieved
-	// from a drive.about.get response. When not specified on a
+	// color are set. The set of possible driveThemes can be retrieved from
+	// a drive.about.get response. When not specified on a
 	// drive.drives.create request, a random theme is chosen from which the
 	// background image and color are set. This is a write-only field; it
 	// can only be set on requests that don't set colorRgb or
@@ -938,7 +937,7 @@ func (s *Drive) MarshalJSON() ([]byte, error) {
 
 // DriveBackgroundImageFile: An image file and cropping parameters from
 // which a background image for this shared drive is set. This is a
-// write only field; it can only be set on drive.drives.update requests
+// write-only field; it can only be set on drive.drives.update requests
 // that don't set themeId. When specified, all fields of the
 // backgroundImageFile must be set.
 type DriveBackgroundImageFile struct {
@@ -6218,7 +6217,7 @@ type DrivesUpdateCall struct {
 	header_    http.Header
 }
 
-// Update: Updates the metadate for a shared drive.
+// Update: Updates the metadata for a shared drive.
 //
 // - driveId: The ID of the shared drive.
 func (r *DrivesService) Update(driveId string, drive *Drive) *DrivesUpdateCall {
@@ -6229,9 +6228,9 @@ func (r *DrivesService) Update(driveId string, drive *Drive) *DrivesUpdateCall {
 }
 
 // UseDomainAdminAccess sets the optional parameter
-// "useDomainAdminAccess": Issue the request as a domain administrator;
-// if set to true, then the requester will be granted access if they are
-// an administrator of the domain to which the shared drive belongs.
+// "useDomainAdminAccess": Issue the request as a domain administrator.
+// If set to true, then the requester is granted access if they're an
+// administrator of the domain to which the shared drive belongs.
 func (c *DrivesUpdateCall) UseDomainAdminAccess(useDomainAdminAccess bool) *DrivesUpdateCall {
 	c.urlParams_.Set("useDomainAdminAccess", fmt.Sprint(useDomainAdminAccess))
 	return c
@@ -6328,7 +6327,7 @@ func (c *DrivesUpdateCall) Do(opts ...googleapi.CallOption) (*Drive, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the metadate for a shared drive.",
+	//   "description": "Updates the metadata for a shared drive.",
 	//   "httpMethod": "PATCH",
 	//   "id": "drive.drives.update",
 	//   "parameterOrder": [
@@ -6343,7 +6342,7 @@ func (c *DrivesUpdateCall) Do(opts ...googleapi.CallOption) (*Drive, error) {
 	//     },
 	//     "useDomainAdminAccess": {
 	//       "default": "false",
-	//       "description": "Issue the request as a domain administrator; if set to true, then the requester will be granted access if they are an administrator of the domain to which the shared drive belongs.",
+	//       "description": "Issue the request as a domain administrator. If set to true, then the requester is granted access if they're an administrator of the domain to which the shared drive belongs.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }

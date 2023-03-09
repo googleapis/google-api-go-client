@@ -1685,12 +1685,44 @@ func (s *SasPortalPolicy) MarshalJSON() ([]byte, error) {
 
 // SasPortalProvisionDeploymentRequest: Request for
 // [ProvisionDeployment].
-// [spectrum.sas.portal.v1alpha1.Provisioning.ProvisionDeployment]. No
-// input is needed, because GCP Project, Organization Info, and
-// caller’s GAIA ID should be retrieved from the RPC handler, and used
-// as inputs to create a new SAS organization (if not exists) and a new
-// SAS deployment.
+// [spectrum.sas.portal.v1alpha1.Provisioning.ProvisionDeployment]. GCP
+// Project, Organization Info, and caller’s GAIA ID should be
+// retrieved from the RPC handler, and used as inputs to create a new
+// SAS organization (if not exists) and a new SAS deployment.
 type SasPortalProvisionDeploymentRequest struct {
+	// NewDeploymentDisplayName: Optional. If this field is set, and a new
+	// SAS Portal Deployment needs to be created, its display name will be
+	// set to the value of this field.
+	NewDeploymentDisplayName string `json:"newDeploymentDisplayName,omitempty"`
+
+	// NewOrganizationDisplayName: Optional. If this field is set, and a new
+	// SAS Portal Organization needs to be created, its display name will be
+	// set to the value of this field.
+	NewOrganizationDisplayName string `json:"newOrganizationDisplayName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "NewDeploymentDisplayName") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NewDeploymentDisplayName")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SasPortalProvisionDeploymentRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod SasPortalProvisionDeploymentRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // SasPortalProvisionDeploymentResponse: Response for

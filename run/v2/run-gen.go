@@ -772,6 +772,9 @@ type GoogleCloudRunV2Execution struct {
 	// RunningCount: Output only. The number of actively running tasks.
 	RunningCount int64 `json:"runningCount,omitempty"`
 
+	// SatisfiesPzs: Output only. Reserved for future use.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
+
 	// StartTime: Output only. Represents time when the execution started to
 	// run. It is not guaranteed to be set in happens-before order across
 	// separate operations.
@@ -1177,6 +1180,9 @@ type GoogleCloudRunV2Job struct {
 	// information on the failure can be found in `terminal_condition` and
 	// `conditions`.
 	Reconciling bool `json:"reconciling,omitempty"`
+
+	// SatisfiesPzs: Output only. Reserved for future use.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 
 	// Template: Required. The template used to create executions for this
 	// Job.
@@ -1645,6 +1651,9 @@ type GoogleCloudRunV2Revision struct {
 	// `Service.reconciling` for additional information on reconciliation
 	// process in Cloud Run.
 	Reconciling bool `json:"reconciling,omitempty"`
+
+	// SatisfiesPzs: Output only. Reserved for future use.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 
 	// Scaling: Scaling settings for this revision.
 	Scaling *GoogleCloudRunV2RevisionScaling `json:"scaling,omitempty"`
@@ -2131,6 +2140,9 @@ type GoogleCloudRunV2Service struct {
 	// on the failure can be found in `terminal_condition` and `conditions`.
 	Reconciling bool `json:"reconciling,omitempty"`
 
+	// SatisfiesPzs: Output only. Reserved for future use.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
+
 	// Template: Required. The template used to create revisions for this
 	// Service.
 	Template *GoogleCloudRunV2RevisionTemplate `json:"template,omitempty"`
@@ -2327,6 +2339,9 @@ type GoogleCloudRunV2Task struct {
 	// Retried: Output only. The number of times this Task was retried.
 	// Tasks are retried when they fail up to the maxRetries limit.
 	Retried int64 `json:"retried,omitempty"`
+
+	// SatisfiesPzs: Output only. Reserved for future use.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 
 	// ServiceAccount: Email address of the IAM service account associated
 	// with the Task of a Job. The service account represents the identity
@@ -6039,14 +6054,7 @@ type ProjectsLocationsOperationsListCall struct {
 
 // List: Lists operations that match the specified filter in the
 // request. If the server doesn't support this method, it returns
-// `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to
-// override the binding to use different resource name schemes, such as
-// `users/*/operations`. To override the binding, API services can add a
-// binding such as "/v1/{name=users/*}/operations" to their service
-// configuration. For backwards compatibility, the default name includes
-// the operations collection id, however overriding users must ensure
-// the name binding is the parent resource, without the operations
-// collection id.
+// `UNIMPLEMENTED`.
 //
 // - name: To query for all of the operations for a project.
 func (r *ProjectsLocationsOperationsService) List(name string) *ProjectsLocationsOperationsListCall {
@@ -6182,7 +6190,7 @@ func (c *ProjectsLocationsOperationsListCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.",
 	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/operations",
 	//   "httpMethod": "GET",
 	//   "id": "run.projects.locations.operations.list",

@@ -274,7 +274,7 @@ type ClaimDeviceRequest struct {
 
 	// SimlockProfileId: Optional. Must and can only be set when
 	// DeviceProvisioningSectionType is SECTION_TYPE_SIM_LOCK. The unique
-	// identifier of the SimLock profile (go/simlock/profiles).
+	// identifier of the SimLock profile.
 	SimlockProfileId int64 `json:"simlockProfileId,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "CustomerId") to
@@ -1675,6 +1675,11 @@ type PartnerClaim struct {
 	//   "SECTION_TYPE_SIM_LOCK" - SIM-lock section type.
 	//   "SECTION_TYPE_ZERO_TOUCH" - Zero-touch enrollment section type.
 	SectionType string `json:"sectionType,omitempty"`
+
+	// SimlockProfileId: Optional. Must and can only be set when
+	// DeviceProvisioningSectionType is SECTION_TYPE_SIM_LOCK. The unique
+	// identifier of the SimLock profile.
+	SimlockProfileId int64 `json:"simlockProfileId,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "CustomerId") to
 	// unconditionally include in API requests. By default, fields with

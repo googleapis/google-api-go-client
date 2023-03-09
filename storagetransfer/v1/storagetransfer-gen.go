@@ -2012,6 +2012,9 @@ type TransferOperation struct {
 	// entries.
 	ErrorBreakdowns []*ErrorSummary `json:"errorBreakdowns,omitempty"`
 
+	// LoggingConfig: Cloud Logging configuration.
+	LoggingConfig *LoggingConfig `json:"loggingConfig,omitempty"`
+
 	// Name: A globally unique ID assigned by the system.
 	Name string `json:"name,omitempty"`
 

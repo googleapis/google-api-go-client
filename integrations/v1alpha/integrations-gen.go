@@ -1001,6 +1001,56 @@ func (s *EnterpriseCrmEventbusProtoBuganizerNotification) MarshalJSON() ([]byte,
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type EnterpriseCrmEventbusProtoCloudKmsConfig struct {
+	// GcpProjectId: Optional. The id of GCP project where the KMS key is
+	// stored. If not provided, assume the key is stored in the same GCP
+	// project defined in Client (tag 14).
+	GcpProjectId string `json:"gcpProjectId,omitempty"`
+
+	// KeyName: A Cloud KMS key is a named object containing one or more key
+	// versions, along with metadata for the key. A key exists on exactly
+	// one key ring tied to a specific location.
+	KeyName string `json:"keyName,omitempty"`
+
+	// KeyRingName: A key ring organizes keys in a specific Google Cloud
+	// location and allows you to manage access control on groups of keys. A
+	// key ring's name does not need to be unique across a Google Cloud
+	// project, but must be unique within a given location.
+	KeyRingName string `json:"keyRingName,omitempty"`
+
+	// KeyVersionName: Optional. Each version of a key contains key material
+	// used for encryption or signing. A key's version is represented by an
+	// integer, starting at 1. To decrypt data or verify a signature, you
+	// must use the same key version that was used to encrypt or sign the
+	// data.
+	KeyVersionName string `json:"keyVersionName,omitempty"`
+
+	// LocationName: Location name of the key ring, e.g. "us-west1".
+	LocationName string `json:"locationName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "GcpProjectId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "GcpProjectId") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EnterpriseCrmEventbusProtoCloudKmsConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod EnterpriseCrmEventbusProtoCloudKmsConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // EnterpriseCrmEventbusProtoCloudSchedulerConfig: Cloud Scheduler
 // Trigger configuration
 type EnterpriseCrmEventbusProtoCloudSchedulerConfig struct {
@@ -3630,8 +3680,17 @@ func (s *EnterpriseCrmEventbusProtoSuspensionExpiration) MarshalJSON() ([]byte, 
 type EnterpriseCrmEventbusProtoSuspensionResolutionInfo struct {
 	Audit *EnterpriseCrmEventbusProtoSuspensionResolutionInfoAudit `json:"audit,omitempty"`
 
+	// ClientId: The event data user sends as request.
+	ClientId string `json:"clientId,omitempty"`
+
+	// CloudKmsConfig: KMS info, used by cmek/gmek integration
+	CloudKmsConfig *EnterpriseCrmEventbusProtoCloudKmsConfig `json:"cloudKmsConfig,omitempty"`
+
 	// CreatedTimestamp: Auto-generated.
 	CreatedTimestamp string `json:"createdTimestamp,omitempty"`
+
+	// EncryptedSuspensionResolutionInfo: Encrypted SuspensionResolutionInfo
+	EncryptedSuspensionResolutionInfo string `json:"encryptedSuspensionResolutionInfo,omitempty"`
 
 	// EventExecutionInfoId: Required. ID of the associated execution.
 	EventExecutionInfoId string `json:"eventExecutionInfoId,omitempty"`
@@ -3669,6 +3728,9 @@ type EnterpriseCrmEventbusProtoSuspensionResolutionInfo struct {
 
 	// WorkflowName: Required. The name of the originating workflow.
 	WorkflowName string `json:"workflowName,omitempty"`
+
+	// WrappedDek: Wrapped dek
+	WrappedDek string `json:"wrappedDek,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Audit") to
 	// unconditionally include in API requests. By default, fields with
@@ -5551,10 +5613,9 @@ type EnterpriseCrmFrontendsEventbusProtoTaskConfig struct {
 	// resultant Event parameter.
 	DisableStrictTypeValidation bool `json:"disableStrictTypeValidation,omitempty"`
 
-	// ErrorCatcherConfigId: Optional Error catcher config id of the error
-	// catch flow which will be executed when execution error happens in the
-	// task
-	ErrorCatcherConfigId string `json:"errorCatcherConfigId,omitempty"`
+	// ErrorCatcherId: Optional Error catcher id of the error catch flow
+	// which will be executed when execution error happens in the task
+	ErrorCatcherId string `json:"errorCatcherId,omitempty"`
 
 	// Possible values:
 	//   "EXTERNAL_TASK_TYPE_UNSPECIFIED" - Default value. External task
@@ -5771,7 +5832,7 @@ func (s *EnterpriseCrmFrontendsEventbusProtoTaskEntity) MarshalJSON() ([]byte, e
 }
 
 // EnterpriseCrmFrontendsEventbusProtoTriggerConfig: Configuration
-// detail of a trigger. Next available id: 18
+// detail of a trigger. Next available id: 19
 type EnterpriseCrmFrontendsEventbusProtoTriggerConfig struct {
 	// AlertConfig: An alert threshold configuration for the [trigger +
 	// client + workflow] tuple. If these values are not specified in the
@@ -5794,10 +5855,9 @@ type EnterpriseCrmFrontendsEventbusProtoTriggerConfig struct {
 	// workflow execution is triggered on behalf of each enabled client.
 	EnabledClients []string `json:"enabledClients,omitempty"`
 
-	// ErrorCatcherConfigId: Optional Error catcher config id of the error
-	// catch flow which will be executed when execution error happens in the
-	// task
-	ErrorCatcherConfigId string `json:"errorCatcherConfigId,omitempty"`
+	// ErrorCatcherId: Optional Error catcher id of the error catch flow
+	// which will be executed when execution error happens in the task
+	ErrorCatcherId string `json:"errorCatcherId,omitempty"`
 
 	// Label: The user created label for a particular trigger.
 	Label string `json:"label,omitempty"`
@@ -7343,6 +7403,38 @@ func (s *GoogleCloudIntegrationsV1alphaConnectionSchemaMetadata) MarshalJSON() (
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudIntegrationsV1alphaCoordinate: Configuration detail of
+// coordinate, it used for UI
+type GoogleCloudIntegrationsV1alphaCoordinate struct {
+	// X: Required. X axis of the coordinate
+	X int64 `json:"x,omitempty"`
+
+	// Y: Required. Y axis of the coordinate
+	Y int64 `json:"y,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "X") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "X") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudIntegrationsV1alphaCoordinate) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudIntegrationsV1alphaCoordinate
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudIntegrationsV1alphaCreateAppsScriptProjectRequest: Request
 // for CreateAppsScriptProject rpc call.
 type GoogleCloudIntegrationsV1alphaCreateAppsScriptProjectRequest struct {
@@ -7587,11 +7679,11 @@ type GoogleCloudIntegrationsV1alphaErrorCatcherConfig struct {
 	// more business context about the error catcher config.
 	Description string `json:"description,omitempty"`
 
-	// ErrorCatchId: Required. An error catcher id is string representation
-	// for the error catcher config. Within a workflow, error_catch_id
-	// uniquely identifies an error catcher config among all error catcher
-	// configs for the workflow
-	ErrorCatchId string `json:"errorCatchId,omitempty"`
+	// ErrorCatcherId: Required. An error catcher id is string
+	// representation for the error catcher config. Within a workflow,
+	// error_catcher_id uniquely identifies an error catcher config among
+	// all error catcher configs for the workflow
+	ErrorCatcherId string `json:"errorCatcherId,omitempty"`
 
 	// ErrorCatcherNumber: Required. A number to uniquely identify each
 	// error catcher config within the workflow on UI.
@@ -7600,6 +7692,10 @@ type GoogleCloudIntegrationsV1alphaErrorCatcherConfig struct {
 	// Label: Optional. The user created label for a particular error
 	// catcher. Optional.
 	Label string `json:"label,omitempty"`
+
+	// Position: Optional. Informs the front-end application where to draw
+	// this error catcher config on the UI.
+	Position *GoogleCloudIntegrationsV1alphaCoordinate `json:"position,omitempty"`
 
 	// StartErrorTasks: Required. The set of start tasks that are to be
 	// executed for the error catch flow
@@ -10394,10 +10490,10 @@ type GoogleCloudIntegrationsV1alphaTaskConfig struct {
 	// TaskConfig in the UI.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// ErrorCatcherConfigId: Optional. Optional Error catcher config id of
-	// the error catch flow which will be executed when execution error
-	// happens in the task
-	ErrorCatcherConfigId string `json:"errorCatcherConfigId,omitempty"`
+	// ErrorCatcherId: Optional. Optional Error catcher id of the error
+	// catch flow which will be executed when execution error happens in the
+	// task
+	ErrorCatcherId string `json:"errorCatcherId,omitempty"`
 
 	// ExternalTaskType: Optional. External task type of the task
 	//
@@ -10450,6 +10546,10 @@ type GoogleCloudIntegrationsV1alphaTaskConfig struct {
 	// Parameters: Optional. The customized parameters the user can pass to
 	// this task.
 	Parameters map[string]GoogleCloudIntegrationsV1alphaEventParameter `json:"parameters,omitempty"`
+
+	// Position: Optional. Informs the front-end application where to draw
+	// this error catcher config on the UI.
+	Position *GoogleCloudIntegrationsV1alphaCoordinate `json:"position,omitempty"`
 
 	// SuccessPolicy: Optional. Determines what action to take upon
 	// successful task completion.
@@ -10596,10 +10696,10 @@ type GoogleCloudIntegrationsV1alphaTriggerConfig struct {
 	// additional business context about the task.
 	Description string `json:"description,omitempty"`
 
-	// ErrorCatcherConfigId: Optional. Optional Error catcher config id of
-	// the error catch flow which will be executed when execution error
-	// happens in the task
-	ErrorCatcherConfigId string `json:"errorCatcherConfigId,omitempty"`
+	// ErrorCatcherId: Optional. Optional Error catcher id of the error
+	// catch flow which will be executed when execution error happens in the
+	// task
+	ErrorCatcherId string `json:"errorCatcherId,omitempty"`
 
 	// Label: Optional. The user created label for a particular trigger.
 	Label string `json:"label,omitempty"`
@@ -10614,6 +10714,10 @@ type GoogleCloudIntegrationsV1alphaTriggerConfig struct {
 	//   "RUN_FIRST_MATCH" - Execute the first task that satisfies the
 	// associated condition.
 	NextTasksExecutionPolicy string `json:"nextTasksExecutionPolicy,omitempty"`
+
+	// Position: Optional. Informs the front-end application where to draw
+	// this error catcher config on the UI.
+	Position *GoogleCloudIntegrationsV1alphaCoordinate `json:"position,omitempty"`
 
 	// Properties: Optional. Configurable properties of the trigger, not to
 	// be confused with integration parameters. E.g. "name" is a property
@@ -14150,12 +14254,16 @@ func (r *ProjectsLocationsIntegrationsExecutionsService) List(parent string) *Pr
 }
 
 // Filter sets the optional parameter "filter": Standard filter field,
-// we support filtering on all fields in EventExecutionParamIndexes
-// table. All fields support for EQUALS, in additional: CreateTimestamp
-// support for LESS_THAN, GREATER_THAN ParameterKey, ParameterValue,
-// ParameterType support for HAS For example: "parameter_value" HAS
-// \"parameter1\" Also supports operators like AND, OR, NOT For example,
-// trigger_id=\"id1\" AND event_execution_state=\"FAILED\"
+// we support filtering on following fields: workflow_name: the name of
+// the integration. CreateTimestamp: the execution created time.
+// event_execution_state: the state of the executions. execution_id: the
+// id of the execution. trigger_id: the id of the trigger.
+// parameter_type: the type of the parameters involved in the execution.
+// All fields support for EQUALS, in additional: CreateTimestamp support
+// for LESS_THAN, GREATER_THAN ParameterType support for HAS For
+// example: "parameter_type" HAS \"string\" Also supports operators like
+// AND, OR, NOT For example, trigger_id=\"id1\" AND
+// workflow_name=\"testWorkflow\"
 func (c *ProjectsLocationsIntegrationsExecutionsListCall) Filter(filter string) *ProjectsLocationsIntegrationsExecutionsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -14409,7 +14517,7 @@ func (c *ProjectsLocationsIntegrationsExecutionsListCall) Do(opts ...googleapi.C
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Standard filter field, we support filtering on all fields in EventExecutionParamIndexes table. All fields support for EQUALS, in additional: CreateTimestamp support for LESS_THAN, GREATER_THAN ParameterKey, ParameterValue, ParameterType support for HAS For example: \"parameter_value\" HAS \\\"parameter1\\\" Also supports operators like AND, OR, NOT For example, trigger_id=\\\"id1\\\" AND event_execution_state=\\\"FAILED\\\"",
+	//       "description": "Optional. Standard filter field, we support filtering on following fields: workflow_name: the name of the integration. CreateTimestamp: the execution created time. event_execution_state: the state of the executions. execution_id: the id of the execution. trigger_id: the id of the trigger. parameter_type: the type of the parameters involved in the execution. All fields support for EQUALS, in additional: CreateTimestamp support for LESS_THAN, GREATER_THAN ParameterType support for HAS For example: \"parameter_type\" HAS \\\"string\\\" Also supports operators like AND, OR, NOT For example, trigger_id=\\\"id1\\\" AND workflow_name=\\\"testWorkflow\\\"",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -19470,12 +19578,16 @@ func (r *ProjectsLocationsProductsIntegrationsExecutionsService) List(parent str
 }
 
 // Filter sets the optional parameter "filter": Standard filter field,
-// we support filtering on all fields in EventExecutionParamIndexes
-// table. All fields support for EQUALS, in additional: CreateTimestamp
-// support for LESS_THAN, GREATER_THAN ParameterKey, ParameterValue,
-// ParameterType support for HAS For example: "parameter_value" HAS
-// \"parameter1\" Also supports operators like AND, OR, NOT For example,
-// trigger_id=\"id1\" AND event_execution_state=\"FAILED\"
+// we support filtering on following fields: workflow_name: the name of
+// the integration. CreateTimestamp: the execution created time.
+// event_execution_state: the state of the executions. execution_id: the
+// id of the execution. trigger_id: the id of the trigger.
+// parameter_type: the type of the parameters involved in the execution.
+// All fields support for EQUALS, in additional: CreateTimestamp support
+// for LESS_THAN, GREATER_THAN ParameterType support for HAS For
+// example: "parameter_type" HAS \"string\" Also supports operators like
+// AND, OR, NOT For example, trigger_id=\"id1\" AND
+// workflow_name=\"testWorkflow\"
 func (c *ProjectsLocationsProductsIntegrationsExecutionsListCall) Filter(filter string) *ProjectsLocationsProductsIntegrationsExecutionsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -19729,7 +19841,7 @@ func (c *ProjectsLocationsProductsIntegrationsExecutionsListCall) Do(opts ...goo
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Standard filter field, we support filtering on all fields in EventExecutionParamIndexes table. All fields support for EQUALS, in additional: CreateTimestamp support for LESS_THAN, GREATER_THAN ParameterKey, ParameterValue, ParameterType support for HAS For example: \"parameter_value\" HAS \\\"parameter1\\\" Also supports operators like AND, OR, NOT For example, trigger_id=\\\"id1\\\" AND event_execution_state=\\\"FAILED\\\"",
+	//       "description": "Optional. Standard filter field, we support filtering on following fields: workflow_name: the name of the integration. CreateTimestamp: the execution created time. event_execution_state: the state of the executions. execution_id: the id of the execution. trigger_id: the id of the trigger. parameter_type: the type of the parameters involved in the execution. All fields support for EQUALS, in additional: CreateTimestamp support for LESS_THAN, GREATER_THAN ParameterType support for HAS For example: \"parameter_type\" HAS \\\"string\\\" Also supports operators like AND, OR, NOT For example, trigger_id=\\\"id1\\\" AND workflow_name=\\\"testWorkflow\\\"",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

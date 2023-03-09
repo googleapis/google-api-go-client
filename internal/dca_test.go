@@ -2,14 +2,12 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-package dca
+package internal
 
 import (
 	"testing"
 
 	"crypto/tls"
-
-	"google.golang.org/api/internal"
 )
 
 func TestGetEndpoint(t *testing.T) {
@@ -51,7 +49,7 @@ func TestGetEndpoint(t *testing.T) {
 	}
 
 	for _, tc := range testCases {
-		got, err := getEndpoint(&internal.DialSettings{
+		got, err := getEndpoint(&DialSettings{
 			Endpoint:        tc.UserEndpoint,
 			DefaultEndpoint: tc.DefaultEndpoint,
 		}, nil)
@@ -106,7 +104,7 @@ func TestGetEndpointWithClientCertSource(t *testing.T) {
 	}
 
 	for _, tc := range testCases {
-		got, err := getEndpoint(&internal.DialSettings{
+		got, err := getEndpoint(&DialSettings{
 			Endpoint:            tc.UserEndpoint,
 			DefaultEndpoint:     tc.DefaultEndpoint,
 			DefaultMTLSEndpoint: tc.DefaultMTLSEndpoint,

@@ -518,6 +518,108 @@ func (s *CommitAuthor) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// CommitLogEntry: Represents a single commit log.
+type CommitLogEntry struct {
+	// Author: The commit author for this commit log entry.
+	Author *CommitAuthor `json:"author,omitempty"`
+
+	// CommitMessage: The commit message for this commit log entry.
+	CommitMessage string `json:"commitMessage,omitempty"`
+
+	// CommitSha: The commit SHA for this commit log entry.
+	CommitSha string `json:"commitSha,omitempty"`
+
+	// CommitTime: Commit timestamp.
+	CommitTime string `json:"commitTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Author") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Author") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CommitLogEntry) MarshalJSON() ([]byte, error) {
+	type NoMethod CommitLogEntry
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CommitMetadata: Represents a Dataform Git commit.
+type CommitMetadata struct {
+	// Author: Required. The commit's author.
+	Author *CommitAuthor `json:"author,omitempty"`
+
+	// CommitMessage: Optional. The commit's message.
+	CommitMessage string `json:"commitMessage,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Author") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Author") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CommitMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod CommitMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CommitRepositoryChangesRequest: `CommitRepositoryChanges` request
+// message.
+type CommitRepositoryChangesRequest struct {
+	// CommitMetadata: Required. The changes to commit to the repository.
+	CommitMetadata *CommitMetadata `json:"commitMetadata,omitempty"`
+
+	// FileOperations: A map to the path of the file to the operation. The
+	// path is the ull file path including filename, from repository root.
+	FileOperations map[string]FileOperation `json:"fileOperations,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CommitMetadata") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CommitMetadata") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CommitRepositoryChangesRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod CommitRepositoryChangesRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // CommitWorkspaceChangesRequest: `CommitWorkspaceChanges` request
 // message.
 type CommitWorkspaceChangesRequest struct {
@@ -746,7 +848,11 @@ func (s *Declaration) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DirectoryEntry: Represents a single entry in a workspace directory.
+// DeleteFile: Represents the delete file operation.
+type DeleteFile struct {
+}
+
+// DirectoryEntry: Represents a single entry in a directory.
 type DirectoryEntry struct {
 	// Directory: A child directory in the directory.
 	Directory string `json:"directory,omitempty"`
@@ -981,6 +1087,75 @@ type FetchRemoteBranchesResponse struct {
 
 func (s *FetchRemoteBranchesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod FetchRemoteBranchesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// FetchRepositoryHistoryResponse: `FetchRepositoryHistory` response
+// message.
+type FetchRepositoryHistoryResponse struct {
+	// Commits: A list of commit logs, ordered by 'git log' default order.
+	Commits []*CommitLogEntry `json:"commits,omitempty"`
+
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Commits") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Commits") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FetchRepositoryHistoryResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod FetchRepositoryHistoryResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// FileOperation: Represents a single file operation to the repository.
+type FileOperation struct {
+	// DeleteFile: Represents the delete operation.
+	DeleteFile *DeleteFile `json:"deleteFile,omitempty"`
+
+	// WriteFile: Represents the write operation.
+	WriteFile *WriteFile `json:"writeFile,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DeleteFile") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DeleteFile") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FileOperation) MarshalJSON() ([]byte, error) {
+	type NoMethod FileOperation
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1982,6 +2157,45 @@ func (s *QueryDirectoryContentsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// QueryRepositoryDirectoryContentsResponse:
+// `QueryRepositoryDirectoryContents` response message.
+type QueryRepositoryDirectoryContentsResponse struct {
+	// DirectoryEntries: List of entries in the directory.
+	DirectoryEntries []*DirectoryEntry `json:"directoryEntries,omitempty"`
+
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "DirectoryEntries") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DirectoryEntries") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *QueryRepositoryDirectoryContentsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod QueryRepositoryDirectoryContentsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // QueryWorkflowInvocationActionsResponse:
 // `QueryWorkflowInvocationActions` response message.
 type QueryWorkflowInvocationActionsResponse struct {
@@ -2048,6 +2262,38 @@ type ReadFileResponse struct {
 
 func (s *ReadFileResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ReadFileResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ReadRepositoryFileResponse: `ReadRepositoryFile` response message.
+type ReadRepositoryFileResponse struct {
+	// Contents: The file's contents.
+	Contents string `json:"contents,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Contents") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Contents") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ReadRepositoryFileResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ReadRepositoryFileResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2307,6 +2553,20 @@ type Repository struct {
 	// GitRemoteSettings: Optional. If set, configures this repository to be
 	// linked to a Git remote.
 	GitRemoteSettings *GitRemoteSettings `json:"gitRemoteSettings,omitempty"`
+
+	// InitialCommitFileContents: Optional. Input only. The initial commit
+	// file contents. Represented as map from file path to contents. The
+	// path is the full file path to commit including filename, from
+	// repository root.
+	InitialCommitFileContents map[string]string `json:"initialCommitFileContents,omitempty"`
+
+	// InitialCommitMetadata: Optional. Input only. An optional initial
+	// commit metadata for the Repository. The Repository must not have a
+	// value for `git_remote_settings.url`.
+	InitialCommitMetadata *CommitMetadata `json:"initialCommitMetadata,omitempty"`
+
+	// Labels: Optional. Repository user labels.
+	Labels map[string]string `json:"labels,omitempty"`
 
 	// Name: Output only. The repository's name.
 	Name string `json:"name,omitempty"`
@@ -2945,6 +3205,35 @@ func (s *WorkspaceCompilationOverrides) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// WriteFile: Represents the write file operation (for files added or
+// modified).
+type WriteFile struct {
+	// Contents: The file's contents.
+	Contents string `json:"contents,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Contents") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Contents") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *WriteFile) MarshalJSON() ([]byte, error) {
+	type NoMethod WriteFile
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // WriteFileRequest: `WriteFile` request message.
 type WriteFileRequest struct {
 	// Contents: Required. The file's contents.
@@ -3351,6 +3640,149 @@ func (c *ProjectsLocationsListCall) Pages(ctx context.Context, f func(*ListLocat
 	}
 }
 
+// method id "dataform.projects.locations.repositories.commit":
+
+type ProjectsLocationsRepositoriesCommitCall struct {
+	s                              *Service
+	name                           string
+	commitrepositorychangesrequest *CommitRepositoryChangesRequest
+	urlParams_                     gensupport.URLParams
+	ctx_                           context.Context
+	header_                        http.Header
+}
+
+// Commit: Applies a Git commit to a Repository. The Repository must not
+// have a value for `git_remote_settings.url`.
+//
+// - name: The repository's name.
+func (r *ProjectsLocationsRepositoriesService) Commit(name string, commitrepositorychangesrequest *CommitRepositoryChangesRequest) *ProjectsLocationsRepositoriesCommitCall {
+	c := &ProjectsLocationsRepositoriesCommitCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.commitrepositorychangesrequest = commitrepositorychangesrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsRepositoriesCommitCall) Fields(s ...googleapi.Field) *ProjectsLocationsRepositoriesCommitCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsRepositoriesCommitCall) Context(ctx context.Context) *ProjectsLocationsRepositoriesCommitCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsRepositoriesCommitCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRepositoriesCommitCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.commitrepositorychangesrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}:commit")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataform.projects.locations.repositories.commit" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsRepositoriesCommitCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Applies a Git commit to a Repository. The Repository must not have a value for `git_remote_settings.url`.",
+	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/repositories/{repositoriesId}:commit",
+	//   "httpMethod": "POST",
+	//   "id": "dataform.projects.locations.repositories.commit",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The repository's name.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/repositories/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+name}:commit",
+	//   "request": {
+	//     "$ref": "CommitRepositoryChangesRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "dataform.projects.locations.repositories.create":
 
 type ProjectsLocationsRepositoriesCreateCall struct {
@@ -3650,6 +4082,203 @@ func (c *ProjectsLocationsRepositoriesDeleteCall) Do(opts ...googleapi.CallOptio
 	//   ]
 	// }
 
+}
+
+// method id "dataform.projects.locations.repositories.fetchHistory":
+
+type ProjectsLocationsRepositoriesFetchHistoryCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// FetchHistory: Fetches a Repository's history of changes. The
+// Repository must not have a value for `git_remote_settings.url`.
+//
+// - name: The repository's name.
+func (r *ProjectsLocationsRepositoriesService) FetchHistory(name string) *ProjectsLocationsRepositoriesFetchHistoryCall {
+	c := &ProjectsLocationsRepositoriesFetchHistoryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of
+// paths to return. The server may return fewer items than requested. If
+// unspecified, the server will pick an appropriate default.
+func (c *ProjectsLocationsRepositoriesFetchHistoryCall) PageSize(pageSize int64) *ProjectsLocationsRepositoriesFetchHistoryCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Page token
+// received from a previous `FetchRepositoryHistory` call. Provide this
+// to retrieve the subsequent page. When paginating, all other
+// parameters provided to `FetchRepositoryHistory` must match the call
+// that provided the page token.
+func (c *ProjectsLocationsRepositoriesFetchHistoryCall) PageToken(pageToken string) *ProjectsLocationsRepositoriesFetchHistoryCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsRepositoriesFetchHistoryCall) Fields(s ...googleapi.Field) *ProjectsLocationsRepositoriesFetchHistoryCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsRepositoriesFetchHistoryCall) IfNoneMatch(entityTag string) *ProjectsLocationsRepositoriesFetchHistoryCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsRepositoriesFetchHistoryCall) Context(ctx context.Context) *ProjectsLocationsRepositoriesFetchHistoryCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsRepositoriesFetchHistoryCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRepositoriesFetchHistoryCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}:fetchHistory")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataform.projects.locations.repositories.fetchHistory" call.
+// Exactly one of *FetchRepositoryHistoryResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *FetchRepositoryHistoryResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsRepositoriesFetchHistoryCall) Do(opts ...googleapi.CallOption) (*FetchRepositoryHistoryResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &FetchRepositoryHistoryResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Fetches a Repository's history of changes. The Repository must not have a value for `git_remote_settings.url`.",
+	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/repositories/{repositoriesId}:fetchHistory",
+	//   "httpMethod": "GET",
+	//   "id": "dataform.projects.locations.repositories.fetchHistory",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The repository's name.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/repositories/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. Maximum number of paths to return. The server may return fewer items than requested. If unspecified, the server will pick an appropriate default.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. Page token received from a previous `FetchRepositoryHistory` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `FetchRepositoryHistory` must match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+name}:fetchHistory",
+	//   "response": {
+	//     "$ref": "FetchRepositoryHistoryResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsRepositoriesFetchHistoryCall) Pages(ctx context.Context, f func(*FetchRepositoryHistoryResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "dataform.projects.locations.repositories.fetchRemoteBranches":
@@ -4491,6 +5120,403 @@ func (c *ProjectsLocationsRepositoriesPatchCall) Do(opts ...googleapi.CallOption
 	//   },
 	//   "response": {
 	//     "$ref": "Repository"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "dataform.projects.locations.repositories.queryDirectoryContents":
+
+type ProjectsLocationsRepositoriesQueryDirectoryContentsCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// QueryDirectoryContents: Returns the contents of a given Repository
+// directory. The Repository must not have a value for
+// `git_remote_settings.url`.
+//
+// - name: The repository's name.
+func (r *ProjectsLocationsRepositoriesService) QueryDirectoryContents(name string) *ProjectsLocationsRepositoriesQueryDirectoryContentsCall {
+	c := &ProjectsLocationsRepositoriesQueryDirectoryContentsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// CommitSha sets the optional parameter "commitSha": The Commit SHA for
+// the commit to query from. If unset, the directory will be queried
+// from HEAD.
+func (c *ProjectsLocationsRepositoriesQueryDirectoryContentsCall) CommitSha(commitSha string) *ProjectsLocationsRepositoriesQueryDirectoryContentsCall {
+	c.urlParams_.Set("commitSha", commitSha)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of
+// paths to return. The server may return fewer items than requested. If
+// unspecified, the server will pick an appropriate default.
+func (c *ProjectsLocationsRepositoriesQueryDirectoryContentsCall) PageSize(pageSize int64) *ProjectsLocationsRepositoriesQueryDirectoryContentsCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Page token
+// received from a previous `QueryRepositoryDirectoryContents` call.
+// Provide this to retrieve the subsequent page. When paginating, all
+// other parameters provided to `QueryRepositoryDirectoryContents` must
+// match the call that provided the page token.
+func (c *ProjectsLocationsRepositoriesQueryDirectoryContentsCall) PageToken(pageToken string) *ProjectsLocationsRepositoriesQueryDirectoryContentsCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Path sets the optional parameter "path": The directory's full path
+// including directory name, relative to root. If left unset, the root
+// is used.
+func (c *ProjectsLocationsRepositoriesQueryDirectoryContentsCall) Path(path string) *ProjectsLocationsRepositoriesQueryDirectoryContentsCall {
+	c.urlParams_.Set("path", path)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsRepositoriesQueryDirectoryContentsCall) Fields(s ...googleapi.Field) *ProjectsLocationsRepositoriesQueryDirectoryContentsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsRepositoriesQueryDirectoryContentsCall) IfNoneMatch(entityTag string) *ProjectsLocationsRepositoriesQueryDirectoryContentsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsRepositoriesQueryDirectoryContentsCall) Context(ctx context.Context) *ProjectsLocationsRepositoriesQueryDirectoryContentsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsRepositoriesQueryDirectoryContentsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRepositoriesQueryDirectoryContentsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}:queryDirectoryContents")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataform.projects.locations.repositories.queryDirectoryContents" call.
+// Exactly one of *QueryRepositoryDirectoryContentsResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *QueryRepositoryDirectoryContentsResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsRepositoriesQueryDirectoryContentsCall) Do(opts ...googleapi.CallOption) (*QueryRepositoryDirectoryContentsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &QueryRepositoryDirectoryContentsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns the contents of a given Repository directory. The Repository must not have a value for `git_remote_settings.url`.",
+	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/repositories/{repositoriesId}:queryDirectoryContents",
+	//   "httpMethod": "GET",
+	//   "id": "dataform.projects.locations.repositories.queryDirectoryContents",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "commitSha": {
+	//       "description": "Optional. The Commit SHA for the commit to query from. If unset, the directory will be queried from HEAD.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "Required. The repository's name.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/repositories/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. Maximum number of paths to return. The server may return fewer items than requested. If unspecified, the server will pick an appropriate default.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. Page token received from a previous `QueryRepositoryDirectoryContents` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `QueryRepositoryDirectoryContents` must match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "path": {
+	//       "description": "Optional. The directory's full path including directory name, relative to root. If left unset, the root is used.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+name}:queryDirectoryContents",
+	//   "response": {
+	//     "$ref": "QueryRepositoryDirectoryContentsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsRepositoriesQueryDirectoryContentsCall) Pages(ctx context.Context, f func(*QueryRepositoryDirectoryContentsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "dataform.projects.locations.repositories.readFile":
+
+type ProjectsLocationsRepositoriesReadFileCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// ReadFile: Returns the contents of a file (inside a Repository). The
+// Repository must not have a value for `git_remote_settings.url`.
+//
+// - name: The repository's name.
+func (r *ProjectsLocationsRepositoriesService) ReadFile(name string) *ProjectsLocationsRepositoriesReadFileCall {
+	c := &ProjectsLocationsRepositoriesReadFileCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// CommitSha sets the optional parameter "commitSha": The commit SHA for
+// the commit to read from. If unset, the file will be read from HEAD.
+func (c *ProjectsLocationsRepositoriesReadFileCall) CommitSha(commitSha string) *ProjectsLocationsRepositoriesReadFileCall {
+	c.urlParams_.Set("commitSha", commitSha)
+	return c
+}
+
+// Path sets the optional parameter "path": Required. Full file path to
+// read including filename, from repository root.
+func (c *ProjectsLocationsRepositoriesReadFileCall) Path(path string) *ProjectsLocationsRepositoriesReadFileCall {
+	c.urlParams_.Set("path", path)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsRepositoriesReadFileCall) Fields(s ...googleapi.Field) *ProjectsLocationsRepositoriesReadFileCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsRepositoriesReadFileCall) IfNoneMatch(entityTag string) *ProjectsLocationsRepositoriesReadFileCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsRepositoriesReadFileCall) Context(ctx context.Context) *ProjectsLocationsRepositoriesReadFileCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsRepositoriesReadFileCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRepositoriesReadFileCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}:readFile")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataform.projects.locations.repositories.readFile" call.
+// Exactly one of *ReadRepositoryFileResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *ReadRepositoryFileResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsRepositoriesReadFileCall) Do(opts ...googleapi.CallOption) (*ReadRepositoryFileResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ReadRepositoryFileResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns the contents of a file (inside a Repository). The Repository must not have a value for `git_remote_settings.url`.",
+	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/repositories/{repositoriesId}:readFile",
+	//   "httpMethod": "GET",
+	//   "id": "dataform.projects.locations.repositories.readFile",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "commitSha": {
+	//       "description": "Optional. The commit SHA for the commit to read from. If unset, the file will be read from HEAD.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "Required. The repository's name.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/repositories/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "path": {
+	//       "description": "Required. Full file path to read including filename, from repository root.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+name}:readFile",
+	//   "response": {
+	//     "$ref": "ReadRepositoryFileResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

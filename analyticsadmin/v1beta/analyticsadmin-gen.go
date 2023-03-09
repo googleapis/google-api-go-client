@@ -261,6 +261,726 @@ type PropertiesGoogleAdsLinksService struct {
 	s *Service
 }
 
+// GoogleAnalyticsAdminV1betaAccessBetweenFilter: To express that the
+// result needs to be between two numbers (inclusive).
+type GoogleAnalyticsAdminV1betaAccessBetweenFilter struct {
+	// FromValue: Begins with this number.
+	FromValue *GoogleAnalyticsAdminV1betaNumericValue `json:"fromValue,omitempty"`
+
+	// ToValue: Ends with this number.
+	ToValue *GoogleAnalyticsAdminV1betaNumericValue `json:"toValue,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FromValue") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FromValue") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1betaAccessBetweenFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1betaAccessBetweenFilter
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1betaAccessDateRange: A contiguous range of
+// days: startDate, startDate + 1, ..., endDate.
+type GoogleAnalyticsAdminV1betaAccessDateRange struct {
+	// EndDate: The inclusive end date for the query in the format
+	// `YYYY-MM-DD`. Cannot be before `startDate`. The format `NdaysAgo`,
+	// `yesterday`, or `today` is also accepted, and in that case, the date
+	// is inferred based on the current time in the request's time zone.
+	EndDate string `json:"endDate,omitempty"`
+
+	// StartDate: The inclusive start date for the query in the format
+	// `YYYY-MM-DD`. Cannot be after `endDate`. The format `NdaysAgo`,
+	// `yesterday`, or `today` is also accepted, and in that case, the date
+	// is inferred based on the current time in the request's time zone.
+	StartDate string `json:"startDate,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EndDate") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EndDate") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1betaAccessDateRange) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1betaAccessDateRange
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1betaAccessDimension: Dimensions are attributes
+// of your data. For example, the dimension `userEmail` indicates the
+// email of the user that accessed reporting data. Dimension values in
+// report responses are strings.
+type GoogleAnalyticsAdminV1betaAccessDimension struct {
+	// DimensionName: The API name of the dimension. See Data Access Schema
+	// (https://developers.google.com/analytics/devguides/config/admin/v1/access-api-schema)
+	// for the list of dimensions supported in this API. Dimensions are
+	// referenced by name in `dimensionFilter` and `orderBys`.
+	DimensionName string `json:"dimensionName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DimensionName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DimensionName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1betaAccessDimension) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1betaAccessDimension
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1betaAccessDimensionHeader: Describes a
+// dimension column in the report. Dimensions requested in a report
+// produce column entries within rows and DimensionHeaders. However,
+// dimensions used exclusively within filters or expressions do not
+// produce columns in a report; correspondingly, those dimensions do not
+// produce headers.
+type GoogleAnalyticsAdminV1betaAccessDimensionHeader struct {
+	// DimensionName: The dimension's name; for example 'userEmail'.
+	DimensionName string `json:"dimensionName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DimensionName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DimensionName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1betaAccessDimensionHeader) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1betaAccessDimensionHeader
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1betaAccessDimensionValue: The value of a
+// dimension.
+type GoogleAnalyticsAdminV1betaAccessDimensionValue struct {
+	// Value: The dimension value. For example, this value may be 'France'
+	// for the 'country' dimension.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Value") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Value") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1betaAccessDimensionValue) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1betaAccessDimensionValue
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1betaAccessFilter: An expression to filter
+// dimension or metric values.
+type GoogleAnalyticsAdminV1betaAccessFilter struct {
+	// BetweenFilter: A filter for two values.
+	BetweenFilter *GoogleAnalyticsAdminV1betaAccessBetweenFilter `json:"betweenFilter,omitempty"`
+
+	// FieldName: The dimension name or metric name.
+	FieldName string `json:"fieldName,omitempty"`
+
+	// InListFilter: A filter for in list values.
+	InListFilter *GoogleAnalyticsAdminV1betaAccessInListFilter `json:"inListFilter,omitempty"`
+
+	// NumericFilter: A filter for numeric or date values.
+	NumericFilter *GoogleAnalyticsAdminV1betaAccessNumericFilter `json:"numericFilter,omitempty"`
+
+	// StringFilter: Strings related filter.
+	StringFilter *GoogleAnalyticsAdminV1betaAccessStringFilter `json:"stringFilter,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BetweenFilter") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BetweenFilter") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1betaAccessFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1betaAccessFilter
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1betaAccessFilterExpression: Expresses dimension
+// or metric filters. The fields in the same expression need to be
+// either all dimensions or all metrics.
+type GoogleAnalyticsAdminV1betaAccessFilterExpression struct {
+	// AccessFilter: A primitive filter. In the same FilterExpression, all
+	// of the filter's field names need to be either all dimensions or all
+	// metrics.
+	AccessFilter *GoogleAnalyticsAdminV1betaAccessFilter `json:"accessFilter,omitempty"`
+
+	// AndGroup: Each of the FilterExpressions in the and_group has an AND
+	// relationship.
+	AndGroup *GoogleAnalyticsAdminV1betaAccessFilterExpressionList `json:"andGroup,omitempty"`
+
+	// NotExpression: The FilterExpression is NOT of not_expression.
+	NotExpression *GoogleAnalyticsAdminV1betaAccessFilterExpression `json:"notExpression,omitempty"`
+
+	// OrGroup: Each of the FilterExpressions in the or_group has an OR
+	// relationship.
+	OrGroup *GoogleAnalyticsAdminV1betaAccessFilterExpressionList `json:"orGroup,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AccessFilter") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AccessFilter") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1betaAccessFilterExpression) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1betaAccessFilterExpression
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1betaAccessFilterExpressionList: A list of
+// filter expressions.
+type GoogleAnalyticsAdminV1betaAccessFilterExpressionList struct {
+	// Expressions: A list of filter expressions.
+	Expressions []*GoogleAnalyticsAdminV1betaAccessFilterExpression `json:"expressions,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Expressions") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Expressions") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1betaAccessFilterExpressionList) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1betaAccessFilterExpressionList
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1betaAccessInListFilter: The result needs to be
+// in a list of string values.
+type GoogleAnalyticsAdminV1betaAccessInListFilter struct {
+	// CaseSensitive: If true, the string value is case sensitive.
+	CaseSensitive bool `json:"caseSensitive,omitempty"`
+
+	// Values: The list of string values. Must be non-empty.
+	Values []string `json:"values,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CaseSensitive") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CaseSensitive") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1betaAccessInListFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1betaAccessInListFilter
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1betaAccessMetric: The quantitative measurements
+// of a report. For example, the metric `accessCount` is the total
+// number of data access records.
+type GoogleAnalyticsAdminV1betaAccessMetric struct {
+	// MetricName: The API name of the metric. See Data Access Schema
+	// (https://developers.google.com/analytics/devguides/config/admin/v1/access-api-schema)
+	// for the list of metrics supported in this API. Metrics are referenced
+	// by name in `metricFilter` & `orderBys`.
+	MetricName string `json:"metricName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MetricName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MetricName") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1betaAccessMetric) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1betaAccessMetric
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1betaAccessMetricHeader: Describes a metric
+// column in the report. Visible metrics requested in a report produce
+// column entries within rows and MetricHeaders. However, metrics used
+// exclusively within filters or expressions do not produce columns in a
+// report; correspondingly, those metrics do not produce headers.
+type GoogleAnalyticsAdminV1betaAccessMetricHeader struct {
+	// MetricName: The metric's name; for example 'accessCount'.
+	MetricName string `json:"metricName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MetricName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MetricName") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1betaAccessMetricHeader) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1betaAccessMetricHeader
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1betaAccessMetricValue: The value of a metric.
+type GoogleAnalyticsAdminV1betaAccessMetricValue struct {
+	// Value: The measurement value. For example, this value may be '13'.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Value") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Value") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1betaAccessMetricValue) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1betaAccessMetricValue
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1betaAccessNumericFilter: Filters for numeric or
+// date values.
+type GoogleAnalyticsAdminV1betaAccessNumericFilter struct {
+	// Operation: The operation type for this filter.
+	//
+	// Possible values:
+	//   "OPERATION_UNSPECIFIED" - Unspecified.
+	//   "EQUAL" - Equal
+	//   "LESS_THAN" - Less than
+	//   "LESS_THAN_OR_EQUAL" - Less than or equal
+	//   "GREATER_THAN" - Greater than
+	//   "GREATER_THAN_OR_EQUAL" - Greater than or equal
+	Operation string `json:"operation,omitempty"`
+
+	// Value: A numeric value or a date value.
+	Value *GoogleAnalyticsAdminV1betaNumericValue `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Operation") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Operation") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1betaAccessNumericFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1betaAccessNumericFilter
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1betaAccessOrderBy: Order bys define how rows
+// will be sorted in the response. For example, ordering rows by
+// descending access count is one ordering, and ordering rows by the
+// country string is a different ordering.
+type GoogleAnalyticsAdminV1betaAccessOrderBy struct {
+	// Desc: If true, sorts by descending order. If false or unspecified,
+	// sorts in ascending order.
+	Desc bool `json:"desc,omitempty"`
+
+	// Dimension: Sorts results by a dimension's values.
+	Dimension *GoogleAnalyticsAdminV1betaAccessOrderByDimensionOrderBy `json:"dimension,omitempty"`
+
+	// Metric: Sorts results by a metric's values.
+	Metric *GoogleAnalyticsAdminV1betaAccessOrderByMetricOrderBy `json:"metric,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Desc") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Desc") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1betaAccessOrderBy) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1betaAccessOrderBy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1betaAccessOrderByDimensionOrderBy: Sorts by
+// dimension values.
+type GoogleAnalyticsAdminV1betaAccessOrderByDimensionOrderBy struct {
+	// DimensionName: A dimension name in the request to order by.
+	DimensionName string `json:"dimensionName,omitempty"`
+
+	// OrderType: Controls the rule for dimension value ordering.
+	//
+	// Possible values:
+	//   "ORDER_TYPE_UNSPECIFIED" - Unspecified.
+	//   "ALPHANUMERIC" - Alphanumeric sort by Unicode code point. For
+	// example, "2" < "A" < "X" < "b" < "z".
+	//   "CASE_INSENSITIVE_ALPHANUMERIC" - Case insensitive alphanumeric
+	// sort by lower case Unicode code point. For example, "2" < "A" < "b" <
+	// "X" < "z".
+	//   "NUMERIC" - Dimension values are converted to numbers before
+	// sorting. For example in NUMERIC sort, "25" < "100", and in
+	// `ALPHANUMERIC` sort, "100" < "25". Non-numeric dimension values all
+	// have equal ordering value below all numeric values.
+	OrderType string `json:"orderType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DimensionName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DimensionName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1betaAccessOrderByDimensionOrderBy) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1betaAccessOrderByDimensionOrderBy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1betaAccessOrderByMetricOrderBy: Sorts by metric
+// values.
+type GoogleAnalyticsAdminV1betaAccessOrderByMetricOrderBy struct {
+	// MetricName: A metric name in the request to order by.
+	MetricName string `json:"metricName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MetricName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MetricName") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1betaAccessOrderByMetricOrderBy) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1betaAccessOrderByMetricOrderBy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1betaAccessQuota: Current state of all quotas
+// for this Analytics property. If any quota for a property is
+// exhausted, all requests to that property will return Resource
+// Exhausted errors.
+type GoogleAnalyticsAdminV1betaAccessQuota struct {
+	// ConcurrentRequests: Properties can use up to 50 concurrent requests.
+	ConcurrentRequests *GoogleAnalyticsAdminV1betaAccessQuotaStatus `json:"concurrentRequests,omitempty"`
+
+	// ServerErrorsPerProjectPerHour: Properties and cloud project pairs can
+	// have up to 50 server errors per hour.
+	ServerErrorsPerProjectPerHour *GoogleAnalyticsAdminV1betaAccessQuotaStatus `json:"serverErrorsPerProjectPerHour,omitempty"`
+
+	// TokensPerDay: Properties can use 250,000 tokens per day. Most
+	// requests consume fewer than 10 tokens.
+	TokensPerDay *GoogleAnalyticsAdminV1betaAccessQuotaStatus `json:"tokensPerDay,omitempty"`
+
+	// TokensPerHour: Properties can use 50,000 tokens per hour. An API
+	// request consumes a single number of tokens, and that number is
+	// deducted from all of the hourly, daily, and per project hourly
+	// quotas.
+	TokensPerHour *GoogleAnalyticsAdminV1betaAccessQuotaStatus `json:"tokensPerHour,omitempty"`
+
+	// TokensPerProjectPerHour: Properties can use up to 25% of their tokens
+	// per project per hour. This amounts to Analytics 360 Properties can
+	// use 12,500 tokens per project per hour. An API request consumes a
+	// single number of tokens, and that number is deducted from all of the
+	// hourly, daily, and per project hourly quotas.
+	TokensPerProjectPerHour *GoogleAnalyticsAdminV1betaAccessQuotaStatus `json:"tokensPerProjectPerHour,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConcurrentRequests")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConcurrentRequests") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1betaAccessQuota) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1betaAccessQuota
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1betaAccessQuotaStatus: Current state for a
+// particular quota group.
+type GoogleAnalyticsAdminV1betaAccessQuotaStatus struct {
+	// Consumed: Quota consumed by this request.
+	Consumed int64 `json:"consumed,omitempty"`
+
+	// Remaining: Quota remaining after this request.
+	Remaining int64 `json:"remaining,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Consumed") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Consumed") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1betaAccessQuotaStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1betaAccessQuotaStatus
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1betaAccessRow: Access report data for each row.
+type GoogleAnalyticsAdminV1betaAccessRow struct {
+	// DimensionValues: List of dimension values. These values are in the
+	// same order as specified in the request.
+	DimensionValues []*GoogleAnalyticsAdminV1betaAccessDimensionValue `json:"dimensionValues,omitempty"`
+
+	// MetricValues: List of metric values. These values are in the same
+	// order as specified in the request.
+	MetricValues []*GoogleAnalyticsAdminV1betaAccessMetricValue `json:"metricValues,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DimensionValues") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DimensionValues") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1betaAccessRow) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1betaAccessRow
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1betaAccessStringFilter: The filter for strings.
+type GoogleAnalyticsAdminV1betaAccessStringFilter struct {
+	// CaseSensitive: If true, the string value is case sensitive.
+	CaseSensitive bool `json:"caseSensitive,omitempty"`
+
+	// MatchType: The match type for this filter.
+	//
+	// Possible values:
+	//   "MATCH_TYPE_UNSPECIFIED" - Unspecified
+	//   "EXACT" - Exact match of the string value.
+	//   "BEGINS_WITH" - Begins with the string value.
+	//   "ENDS_WITH" - Ends with the string value.
+	//   "CONTAINS" - Contains the string value.
+	//   "FULL_REGEXP" - Full match for the regular expression with the
+	// string value.
+	//   "PARTIAL_REGEXP" - Partial match for the regular expression with
+	// the string value.
+	MatchType string `json:"matchType,omitempty"`
+
+	// Value: The string value used for the matching.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CaseSensitive") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CaseSensitive") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1betaAccessStringFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1betaAccessStringFilter
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAnalyticsAdminV1betaAccount: A resource message representing a
 // Google Analytics account.
 type GoogleAnalyticsAdminV1betaAccount struct {
@@ -1619,6 +2339,51 @@ func (s *GoogleAnalyticsAdminV1betaMeasurementProtocolSecret) MarshalJSON() ([]b
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAnalyticsAdminV1betaNumericValue: To represent a number.
+type GoogleAnalyticsAdminV1betaNumericValue struct {
+	// DoubleValue: Double value
+	DoubleValue float64 `json:"doubleValue,omitempty"`
+
+	// Int64Value: Integer value
+	Int64Value int64 `json:"int64Value,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "DoubleValue") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DoubleValue") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1betaNumericValue) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1betaNumericValue
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleAnalyticsAdminV1betaNumericValue) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleAnalyticsAdminV1betaNumericValue
+	var s1 struct {
+		DoubleValue gensupport.JSONFloat64 `json:"doubleValue"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.DoubleValue = float64(s1.DoubleValue)
+	return nil
+}
+
 // GoogleAnalyticsAdminV1betaProperty: A resource message representing a
 // Google Analytics GA4 property.
 type GoogleAnalyticsAdminV1betaProperty struct {
@@ -1868,6 +2633,155 @@ type GoogleAnalyticsAdminV1betaProvisionAccountTicketResponse struct {
 
 func (s *GoogleAnalyticsAdminV1betaProvisionAccountTicketResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1betaProvisionAccountTicketResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1betaRunAccessReportRequest: The request for a
+// Data Access Record Report.
+type GoogleAnalyticsAdminV1betaRunAccessReportRequest struct {
+	// DateRanges: Date ranges of access records to read. If multiple date
+	// ranges are requested, each response row will contain a zero based
+	// date range index. If two date ranges overlap, the access records for
+	// the overlapping days is included in the response rows for both date
+	// ranges. Requests are allowed up to 2 date ranges.
+	DateRanges []*GoogleAnalyticsAdminV1betaAccessDateRange `json:"dateRanges,omitempty"`
+
+	// DimensionFilter: Dimension filters let you restrict report response
+	// to specific dimension values which match the filter. For example,
+	// filtering on access records of a single user. To learn more, see
+	// Fundamentals of Dimension Filters
+	// (https://developers.google.com/analytics/devguides/reporting/data/v1/basics#dimension_filters)
+	// for examples. Metrics cannot be used in this filter.
+	DimensionFilter *GoogleAnalyticsAdminV1betaAccessFilterExpression `json:"dimensionFilter,omitempty"`
+
+	// Dimensions: The dimensions requested and displayed in the response.
+	// Requests are allowed up to 9 dimensions.
+	Dimensions []*GoogleAnalyticsAdminV1betaAccessDimension `json:"dimensions,omitempty"`
+
+	// Limit: The number of rows to return. If unspecified, 10,000 rows are
+	// returned. The API returns a maximum of 100,000 rows per request, no
+	// matter how many you ask for. `limit` must be positive. The API may
+	// return fewer rows than the requested `limit`, if there aren't as many
+	// remaining rows as the `limit`. For instance, there are fewer than 300
+	// possible values for the dimension `country`, so when reporting on
+	// only `country`, you can't get more than 300 rows, even if you set
+	// `limit` to a higher value. To learn more about this pagination
+	// parameter, see Pagination
+	// (https://developers.google.com/analytics/devguides/reporting/data/v1/basics#pagination).
+	Limit int64 `json:"limit,omitempty,string"`
+
+	// MetricFilter: Metric filters allow you to restrict report response to
+	// specific metric values which match the filter. Metric filters are
+	// applied after aggregating the report's rows, similar to SQL
+	// having-clause. Dimensions cannot be used in this filter.
+	MetricFilter *GoogleAnalyticsAdminV1betaAccessFilterExpression `json:"metricFilter,omitempty"`
+
+	// Metrics: The metrics requested and displayed in the response.
+	// Requests are allowed up to 10 metrics.
+	Metrics []*GoogleAnalyticsAdminV1betaAccessMetric `json:"metrics,omitempty"`
+
+	// Offset: The row count of the start row. The first row is counted as
+	// row 0. If offset is unspecified, it is treated as 0. If offset is
+	// zero, then this method will return the first page of results with
+	// `limit` entries. To learn more about this pagination parameter, see
+	// Pagination
+	// (https://developers.google.com/analytics/devguides/reporting/data/v1/basics#pagination).
+	Offset int64 `json:"offset,omitempty,string"`
+
+	// OrderBys: Specifies how rows are ordered in the response.
+	OrderBys []*GoogleAnalyticsAdminV1betaAccessOrderBy `json:"orderBys,omitempty"`
+
+	// ReturnEntityQuota: Toggles whether to return the current state of
+	// this Analytics Property's quota. Quota is returned in AccessQuota
+	// (#AccessQuota). For account-level requests, this field must be false.
+	ReturnEntityQuota bool `json:"returnEntityQuota,omitempty"`
+
+	// TimeZone: This request's time zone if specified. If unspecified, the
+	// property's time zone is used. The request's time zone is used to
+	// interpret the start & end dates of the report. Formatted as strings
+	// from the IANA Time Zone database (https://www.iana.org/time-zones);
+	// for example "America/New_York" or "Asia/Tokyo".
+	TimeZone string `json:"timeZone,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DateRanges") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DateRanges") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1betaRunAccessReportRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1betaRunAccessReportRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1betaRunAccessReportResponse: The customized
+// Data Access Record Report response.
+type GoogleAnalyticsAdminV1betaRunAccessReportResponse struct {
+	// DimensionHeaders: The header for a column in the report that
+	// corresponds to a specific dimension. The number of DimensionHeaders
+	// and ordering of DimensionHeaders matches the dimensions present in
+	// rows.
+	DimensionHeaders []*GoogleAnalyticsAdminV1betaAccessDimensionHeader `json:"dimensionHeaders,omitempty"`
+
+	// MetricHeaders: The header for a column in the report that corresponds
+	// to a specific metric. The number of MetricHeaders and ordering of
+	// MetricHeaders matches the metrics present in rows.
+	MetricHeaders []*GoogleAnalyticsAdminV1betaAccessMetricHeader `json:"metricHeaders,omitempty"`
+
+	// Quota: The quota state for this Analytics property including this
+	// request. This field doesn't work with account-level requests.
+	Quota *GoogleAnalyticsAdminV1betaAccessQuota `json:"quota,omitempty"`
+
+	// RowCount: The total number of rows in the query result. `rowCount` is
+	// independent of the number of rows returned in the response, the
+	// `limit` request parameter, and the `offset` request parameter. For
+	// example if a query returns 175 rows and includes `limit` of 50 in the
+	// API request, the response will contain `rowCount` of 175 but only 50
+	// rows. To learn more about this pagination parameter, see Pagination
+	// (https://developers.google.com/analytics/devguides/reporting/data/v1/basics#pagination).
+	RowCount int64 `json:"rowCount,omitempty"`
+
+	// Rows: Rows of dimension value combinations and metric values in the
+	// report.
+	Rows []*GoogleAnalyticsAdminV1betaAccessRow `json:"rows,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "DimensionHeaders") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DimensionHeaders") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1betaRunAccessReportResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1betaRunAccessReportResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3125,6 +4039,168 @@ func (c *AccountsProvisionAccountTicketCall) Do(opts ...googleapi.CallOption) (*
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/analytics.edit"
+	//   ]
+	// }
+
+}
+
+// method id "analyticsadmin.accounts.runAccessReport":
+
+type AccountsRunAccessReportCall struct {
+	s                                                *Service
+	entity                                           string
+	googleanalyticsadminv1betarunaccessreportrequest *GoogleAnalyticsAdminV1betaRunAccessReportRequest
+	urlParams_                                       gensupport.URLParams
+	ctx_                                             context.Context
+	header_                                          http.Header
+}
+
+// RunAccessReport: Returns a customized report of data access records.
+// The report provides records of each time a user reads Google
+// Analytics reporting data. Access records are retained for up to 2
+// years. Data Access Reports can be requested for a property. The
+// property must be in Google Analytics 360. This method is only
+// available to Administrators. These data access records include GA4 UI
+// Reporting, GA4 UI Explorations, GA4 Data API, and other products like
+// Firebase & Admob that can retrieve data from Google Analytics through
+// a linkage. These records don't include property configuration changes
+// like adding a stream or changing a property's time zone. For
+// configuration change history, see searchChangeHistoryEvents
+// (https://developers.google.com/analytics/devguides/config/admin/v1/rest/v1alpha/accounts/searchChangeHistoryEvents).
+//
+//   - entity: The Data Access Report supports requesting at the property
+//     level or account level. If requested at the account level, Data
+//     Access Reports include all access for all properties under that
+//     account. To request at the property level, entity should be for
+//     example 'properties/123' if "123" is your GA4 property ID. To
+//     request at the account level, entity should be for example
+//     'accounts/1234' if "1234" is your GA4 Account ID.
+func (r *AccountsService) RunAccessReport(entity string, googleanalyticsadminv1betarunaccessreportrequest *GoogleAnalyticsAdminV1betaRunAccessReportRequest) *AccountsRunAccessReportCall {
+	c := &AccountsRunAccessReportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.entity = entity
+	c.googleanalyticsadminv1betarunaccessreportrequest = googleanalyticsadminv1betarunaccessreportrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsRunAccessReportCall) Fields(s ...googleapi.Field) *AccountsRunAccessReportCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsRunAccessReportCall) Context(ctx context.Context) *AccountsRunAccessReportCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsRunAccessReportCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsRunAccessReportCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleanalyticsadminv1betarunaccessreportrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+entity}:runAccessReport")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"entity": c.entity,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.accounts.runAccessReport" call.
+// Exactly one of *GoogleAnalyticsAdminV1betaRunAccessReportResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleAnalyticsAdminV1betaRunAccessReportResponse.ServerResponse.Head
+// er or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *AccountsRunAccessReportCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1betaRunAccessReportResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAnalyticsAdminV1betaRunAccessReportResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns a customized report of data access records. The report provides records of each time a user reads Google Analytics reporting data. Access records are retained for up to 2 years. Data Access Reports can be requested for a property. The property must be in Google Analytics 360. This method is only available to Administrators. These data access records include GA4 UI Reporting, GA4 UI Explorations, GA4 Data API, and other products like Firebase \u0026 Admob that can retrieve data from Google Analytics through a linkage. These records don't include property configuration changes like adding a stream or changing a property's time zone. For configuration change history, see [searchChangeHistoryEvents](https://developers.google.com/analytics/devguides/config/admin/v1/rest/v1alpha/accounts/searchChangeHistoryEvents).",
+	//   "flatPath": "v1beta/accounts/{accountsId}:runAccessReport",
+	//   "httpMethod": "POST",
+	//   "id": "analyticsadmin.accounts.runAccessReport",
+	//   "parameterOrder": [
+	//     "entity"
+	//   ],
+	//   "parameters": {
+	//     "entity": {
+	//       "description": "The Data Access Report supports requesting at the property level or account level. If requested at the account level, Data Access Reports include all access for all properties under that account. To request at the property level, entity should be for example 'properties/123' if \"123\" is your GA4 property ID. To request at the account level, entity should be for example 'accounts/1234' if \"1234\" is your GA4 Account ID.",
+	//       "location": "path",
+	//       "pattern": "^accounts/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta/{+entity}:runAccessReport",
+	//   "request": {
+	//     "$ref": "GoogleAnalyticsAdminV1betaRunAccessReportRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleAnalyticsAdminV1betaRunAccessReportResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit",
+	//     "https://www.googleapis.com/auth/analytics.readonly"
 	//   ]
 	// }
 
@@ -4400,6 +5476,168 @@ func (c *PropertiesPatchCall) Do(opts ...googleapi.CallOption) (*GoogleAnalytics
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/analytics.edit"
+	//   ]
+	// }
+
+}
+
+// method id "analyticsadmin.properties.runAccessReport":
+
+type PropertiesRunAccessReportCall struct {
+	s                                                *Service
+	entity                                           string
+	googleanalyticsadminv1betarunaccessreportrequest *GoogleAnalyticsAdminV1betaRunAccessReportRequest
+	urlParams_                                       gensupport.URLParams
+	ctx_                                             context.Context
+	header_                                          http.Header
+}
+
+// RunAccessReport: Returns a customized report of data access records.
+// The report provides records of each time a user reads Google
+// Analytics reporting data. Access records are retained for up to 2
+// years. Data Access Reports can be requested for a property. The
+// property must be in Google Analytics 360. This method is only
+// available to Administrators. These data access records include GA4 UI
+// Reporting, GA4 UI Explorations, GA4 Data API, and other products like
+// Firebase & Admob that can retrieve data from Google Analytics through
+// a linkage. These records don't include property configuration changes
+// like adding a stream or changing a property's time zone. For
+// configuration change history, see searchChangeHistoryEvents
+// (https://developers.google.com/analytics/devguides/config/admin/v1/rest/v1alpha/accounts/searchChangeHistoryEvents).
+//
+//   - entity: The Data Access Report supports requesting at the property
+//     level or account level. If requested at the account level, Data
+//     Access Reports include all access for all properties under that
+//     account. To request at the property level, entity should be for
+//     example 'properties/123' if "123" is your GA4 property ID. To
+//     request at the account level, entity should be for example
+//     'accounts/1234' if "1234" is your GA4 Account ID.
+func (r *PropertiesService) RunAccessReport(entity string, googleanalyticsadminv1betarunaccessreportrequest *GoogleAnalyticsAdminV1betaRunAccessReportRequest) *PropertiesRunAccessReportCall {
+	c := &PropertiesRunAccessReportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.entity = entity
+	c.googleanalyticsadminv1betarunaccessreportrequest = googleanalyticsadminv1betarunaccessreportrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PropertiesRunAccessReportCall) Fields(s ...googleapi.Field) *PropertiesRunAccessReportCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PropertiesRunAccessReportCall) Context(ctx context.Context) *PropertiesRunAccessReportCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PropertiesRunAccessReportCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesRunAccessReportCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleanalyticsadminv1betarunaccessreportrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+entity}:runAccessReport")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"entity": c.entity,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.runAccessReport" call.
+// Exactly one of *GoogleAnalyticsAdminV1betaRunAccessReportResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleAnalyticsAdminV1betaRunAccessReportResponse.ServerResponse.Head
+// er or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *PropertiesRunAccessReportCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1betaRunAccessReportResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAnalyticsAdminV1betaRunAccessReportResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns a customized report of data access records. The report provides records of each time a user reads Google Analytics reporting data. Access records are retained for up to 2 years. Data Access Reports can be requested for a property. The property must be in Google Analytics 360. This method is only available to Administrators. These data access records include GA4 UI Reporting, GA4 UI Explorations, GA4 Data API, and other products like Firebase \u0026 Admob that can retrieve data from Google Analytics through a linkage. These records don't include property configuration changes like adding a stream or changing a property's time zone. For configuration change history, see [searchChangeHistoryEvents](https://developers.google.com/analytics/devguides/config/admin/v1/rest/v1alpha/accounts/searchChangeHistoryEvents).",
+	//   "flatPath": "v1beta/properties/{propertiesId}:runAccessReport",
+	//   "httpMethod": "POST",
+	//   "id": "analyticsadmin.properties.runAccessReport",
+	//   "parameterOrder": [
+	//     "entity"
+	//   ],
+	//   "parameters": {
+	//     "entity": {
+	//       "description": "The Data Access Report supports requesting at the property level or account level. If requested at the account level, Data Access Reports include all access for all properties under that account. To request at the property level, entity should be for example 'properties/123' if \"123\" is your GA4 property ID. To request at the account level, entity should be for example 'accounts/1234' if \"1234\" is your GA4 Account ID.",
+	//       "location": "path",
+	//       "pattern": "^properties/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta/{+entity}:runAccessReport",
+	//   "request": {
+	//     "$ref": "GoogleAnalyticsAdminV1betaRunAccessReportRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleAnalyticsAdminV1betaRunAccessReportResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit",
+	//     "https://www.googleapis.com/auth/analytics.readonly"
 	//   ]
 	// }
 

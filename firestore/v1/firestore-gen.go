@@ -1357,8 +1357,9 @@ type GoogleFirestoreAdminV1Database struct {
 	// as this database, App Engine configuration will impact this database.
 	// This includes disabling of the application & database, as well as
 	// disabling writes to the database.
-	//   "DISABLED" - Appengine has no affect on the ability of this
-	// database to serve requests.
+	//   "DISABLED" - App Engine has no effect on the ability of this
+	// database to serve requests. This is the default setting for databases
+	// created with the Firestore API.
 	AppEngineIntegrationMode string `json:"appEngineIntegrationMode,omitempty"`
 
 	// ConcurrencyMode: The concurrency control mode to use for this
@@ -9698,14 +9699,7 @@ type ProjectsDatabasesOperationsListCall struct {
 
 // List: Lists operations that match the specified filter in the
 // request. If the server doesn't support this method, it returns
-// `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to
-// override the binding to use different resource name schemes, such as
-// `users/*/operations`. To override the binding, API services can add a
-// binding such as "/v1/{name=users/*}/operations" to their service
-// configuration. For backwards compatibility, the default name includes
-// the operations collection id, however overriding users must ensure
-// the name binding is the parent resource, without the operations
-// collection id.
+// `UNIMPLEMENTED`.
 //
 // - name: The name of the operation's parent resource.
 func (r *ProjectsDatabasesOperationsService) List(name string) *ProjectsDatabasesOperationsListCall {
@@ -9835,7 +9829,7 @@ func (c *ProjectsDatabasesOperationsListCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.",
 	//   "flatPath": "v1/projects/{projectsId}/databases/{databasesId}/operations",
 	//   "httpMethod": "GET",
 	//   "id": "firestore.projects.databases.operations.list",

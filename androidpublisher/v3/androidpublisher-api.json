@@ -3920,7 +3920,7 @@
       }
     }
   },
-  "revision": "20230209",
+  "revision": "20230308",
   "rootUrl": "https://androidpublisher.googleapis.com/",
   "schemas": {
     "AcquisitionTargetingRule": {
@@ -4437,7 +4437,7 @@
       "type": "object"
     },
     "DeviceGroup": {
-      "description": "LINT.IfChange A group of devices. A group is defined by a set of device selectors. A device belongs to the group if it matches any selector (logical OR).",
+      "description": "A group of devices. A group is defined by a set of device selectors. A device belongs to the group if it matches any selector (logical OR).",
       "id": "DeviceGroup",
       "properties": {
         "deviceSelectors": {
@@ -4627,7 +4627,7 @@
       "type": "object"
     },
     "DeviceTierConfig": {
-      "description": "LINT.IfChange Configuration describing device targeting criteria for the content of an app.",
+      "description": "Configuration describing device targeting criteria for the content of an app.",
       "id": "DeviceTierConfig",
       "properties": {
         "deviceGroups": {

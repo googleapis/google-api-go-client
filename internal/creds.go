@@ -13,6 +13,7 @@ import (
 	"io/ioutil"
 	"net"
 	"net/http"
+	"os"
 	"time"
 
 	"golang.org/x/oauth2"
@@ -20,6 +21,8 @@ import (
 
 	"golang.org/x/oauth2/google"
 )
+
+const quotaProjectEnvVar = "GOOGLE_CLOUD_QUOTA_PROJECT"
 
 // Creds returns credential information obtained from DialSettings, or if none, then
 // it returns default credential information.
@@ -152,14 +155,22 @@ func selfSignedJWTTokenSource(data []byte, ds *DialSettings) (oauth2.TokenSource
 	}
 }
 
-// QuotaProjectFromCreds returns the quota project from the JSON blob in the provided credentials.
-//
-// NOTE(cbro): consider promoting this to a field on google.Credentials.
-func QuotaProjectFromCreds(cred *google.Credentials) string {
+// GetQuotaProject retrieves quota project with precedence being: client option,
+// environment variable, creds file.
+func GetQuotaProject(creds *google.Credentials, clientOpt string) string {
+	if clientOpt != "" {
+		return clientOpt
+	}
+	if env := os.Getenv(quotaProjectEnvVar); env != "" {
+		return env
+	}
+	if creds == nil {
+		return ""
+	}
 	var v struct {
 		QuotaProject string `json:"quota_project_id"`
 	}
-	if err := json.Unmarshal(cred.JSON, &v); err != nil {
+	if err := json.Unmarshal(creds.JSON, &v); err != nil {
 		return ""
 	}
 	return v.QuotaProject

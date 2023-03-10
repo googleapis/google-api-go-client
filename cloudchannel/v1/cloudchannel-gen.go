@@ -1561,6 +1561,141 @@ func (s *GoogleCloudChannelV1Entitlement) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudChannelV1EntitlementChange: Change event entry for
+// Entitlement order history
+type GoogleCloudChannelV1EntitlementChange struct {
+	// ActivationReason: The Entitlement's activation reason
+	//
+	// Possible values:
+	//   "ACTIVATION_REASON_UNSPECIFIED" - Not used.
+	//   "RESELLER_REVOKED_SUSPENSION" - Reseller reactivated a suspended
+	// Entitlement.
+	//   "CUSTOMER_ACCEPTED_PENDING_TOS" - Customer accepted pending terms
+	// of service.
+	//   "RENEWAL_SETTINGS_CHANGED" - Reseller updated the renewal settings
+	// on an entitlement that was suspended due to cancellation, and this
+	// update reactivated the entitlement.
+	//   "OTHER_ACTIVATION_REASON" - Other reasons (Activated temporarily
+	// for cancellation, added a payment plan to a trial entitlement, etc.)
+	ActivationReason string `json:"activationReason,omitempty"`
+
+	// CancellationReason: Cancellation reason for the Entitlement.
+	//
+	// Possible values:
+	//   "CANCELLATION_REASON_UNSPECIFIED" - Not used.
+	//   "SERVICE_TERMINATED" - Reseller triggered a cancellation of the
+	// service.
+	//   "RELATIONSHIP_ENDED" - Relationship between the reseller and
+	// customer has ended due to a transfer.
+	//   "PARTIAL_TRANSFER" - Entitlement transferred away from reseller
+	// while still keeping other entitlement(s) with the reseller.
+	CancellationReason string `json:"cancellationReason,omitempty"`
+
+	// ChangeType: The change action type.
+	//
+	// Possible values:
+	//   "CHANGE_TYPE_UNSPECIFIED" - Not used.
+	//   "CREATED" - New Entitlement was created.
+	//   "PRICE_PLAN_SWITCHED" - Price plan associated with an Entitlement
+	// was changed.
+	//   "COMMITMENT_CHANGED" - Number of seats committed for a commitment
+	// Entitlement was changed.
+	//   "RENEWED" - An annual Entitlement was renewed.
+	//   "SUSPENDED" - Entitlement was suspended.
+	//   "ACTIVATED" - Entitlement was activated.
+	//   "CANCELLED" - Entitlement was cancelled.
+	//   "SKU_CHANGED" - Entitlement was upgraded or downgraded for ex. from
+	// Google Workspace Business Standard to Google Workspace Business Plus.
+	//   "RENEWAL_SETTING_CHANGED" - The settings for renewal of an
+	// Entitlement have changed.
+	//   "PAID_SUBSCRIPTION_STARTED" - Use for Google Workspace
+	// subscription. Either a trial was converted to a paid subscription or
+	// a new subscription with no trial is created.
+	//   "LICENSE_CAP_CHANGED" - License cap was changed for the
+	// entitlement.
+	//   "SUSPENSION_DETAILS_CHANGED" - The suspension details have changed
+	// (but it is still suspended).
+	//   "TRIAL_END_DATE_EXTENDED" - The trial end date was extended.
+	//   "TRIAL_STARTED" - Entitlement started trial.
+	ChangeType string `json:"changeType,omitempty"`
+
+	// CreateTime: The submitted time of the change.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// Entitlement: Required. Resource name of an entitlement in the form:
+	// accounts/{account_id}/customers/{customer_id}/entitlements/{entitlemen
+	// t_id}
+	Entitlement string `json:"entitlement,omitempty"`
+
+	// Offer: Required. Resource name of the Offer at the time of change.
+	// Takes the form: accounts/{account_id}/offers/{offer_id}.
+	Offer string `json:"offer,omitempty"`
+
+	// Operator: Human-readable identifier that shows what operator made a
+	// change. When the operator_type is RESELLER, this is the user's email
+	// address. For all other operator types, this is empty.
+	Operator string `json:"operator,omitempty"`
+
+	// OperatorType: Operator type responsible for the change.
+	//
+	// Possible values:
+	//   "OPERATOR_TYPE_UNSPECIFIED" - Not used.
+	//   "CUSTOMER_SERVICE_REPRESENTATIVE" - Customer service
+	// representative.
+	//   "SYSTEM" - System auto job.
+	//   "CUSTOMER" - Customer user.
+	//   "RESELLER" - Reseller user.
+	OperatorType string `json:"operatorType,omitempty"`
+
+	// OtherChangeReason: e.g. purchase_number change reason, entered by
+	// CRS.
+	OtherChangeReason string `json:"otherChangeReason,omitempty"`
+
+	// Parameters: Extended parameters, such as: purchase_order_number,
+	// gcp_details; internal_correlation_id, long_running_operation_id,
+	// order_id; etc.
+	Parameters []*GoogleCloudChannelV1Parameter `json:"parameters,omitempty"`
+
+	// ProvisionedService: Service provisioned for an Entitlement.
+	ProvisionedService *GoogleCloudChannelV1ProvisionedService `json:"provisionedService,omitempty"`
+
+	// SuspensionReason: Suspension reason for the Entitlement.
+	//
+	// Possible values:
+	//   "SUSPENSION_REASON_UNSPECIFIED" - Not used.
+	//   "RESELLER_INITIATED" - Entitlement was manually suspended by the
+	// Reseller.
+	//   "TRIAL_ENDED" - Trial ended.
+	//   "RENEWAL_WITH_TYPE_CANCEL" - Entitlement renewal was canceled.
+	//   "PENDING_TOS_ACCEPTANCE" - Entitlement was automatically suspended
+	// on creation for pending ToS acceptance on customer.
+	//   "OTHER" - Other reasons (internal reasons, abuse, etc.).
+	SuspensionReason string `json:"suspensionReason,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ActivationReason") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ActivationReason") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudChannelV1EntitlementChange) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudChannelV1EntitlementChange
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudChannelV1EntitlementEvent: Represents Pub/Sub message
 // content describing entitlement update.
 type GoogleCloudChannelV1EntitlementEvent struct {
@@ -1911,6 +2046,43 @@ type GoogleCloudChannelV1ListCustomersResponse struct {
 
 func (s *GoogleCloudChannelV1ListCustomersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1ListCustomersResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudChannelV1ListEntitlementChangesResponse: Response message
+// for CloudChannelService.ListEntitlementChanges
+type GoogleCloudChannelV1ListEntitlementChangesResponse struct {
+	// EntitlementChanges: The list of entitlement changes.
+	EntitlementChanges []*GoogleCloudChannelV1EntitlementChange `json:"entitlementChanges,omitempty"`
+
+	// NextPageToken: A token to list the next page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "EntitlementChanges")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EntitlementChanges") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudChannelV1ListEntitlementChangesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudChannelV1ListEntitlementChangesResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -13736,6 +13908,232 @@ func (c *AccountsCustomersEntitlementsListCall) Pages(ctx context.Context, f fun
 	}
 }
 
+// method id "cloudchannel.accounts.customers.entitlements.listEntitlementChanges":
+
+type AccountsCustomersEntitlementsListEntitlementChangesCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// ListEntitlementChanges: List entitlement history. Possible error
+// codes: * PERMISSION_DENIED: The reseller account making the request
+// and the provided reseller account are different. * INVALID_ARGUMENT:
+// Missing or invalid required fields in the request. * NOT_FOUND: The
+// parent resource doesn't exist. Usually the result of an invalid name
+// parameter. * INTERNAL: Any non-user error related to a technical
+// issue in the backend. In this case, contact CloudChannel support. *
+// UNKNOWN: Any non-user error related to a technical issue in the
+// backend. In this case, contact Cloud Channel support. Return value:
+// List of EntitlementChanges.
+//
+//   - parent: The resource name of the entitlement for which to list
+//     entitlement changes. The `-` wildcard may be used to match
+//     entitlements across a customer. Formats: *
+//     accounts/{account_id}/customers/{customer_id}/entitlements/{entitlem
+//     ent_id} *
+//     accounts/{account_id}/customers/{customer_id}/entitlements/-.
+func (r *AccountsCustomersEntitlementsService) ListEntitlementChanges(parent string) *AccountsCustomersEntitlementsListEntitlementChangesCall {
+	c := &AccountsCustomersEntitlementsListEntitlementChangesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filters applied to the
+// list results.
+func (c *AccountsCustomersEntitlementsListEntitlementChangesCall) Filter(filter string) *AccountsCustomersEntitlementsListEntitlementChangesCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of entitlement changes to return. The service may return fewer than
+// this value. If unspecified, returns at most 10 entitlement changes.
+// The maximum value is 50; the server will coerce values above 50.
+func (c *AccountsCustomersEntitlementsListEntitlementChangesCall) PageSize(pageSize int64) *AccountsCustomersEntitlementsListEntitlementChangesCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous CloudChannelService.ListEntitlementChanges
+// call. Provide this to retrieve the subsequent page. When paginating,
+// all other parameters provided to
+// CloudChannelService.ListEntitlementChanges must match the call that
+// provided the page token.
+func (c *AccountsCustomersEntitlementsListEntitlementChangesCall) PageToken(pageToken string) *AccountsCustomersEntitlementsListEntitlementChangesCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsCustomersEntitlementsListEntitlementChangesCall) Fields(s ...googleapi.Field) *AccountsCustomersEntitlementsListEntitlementChangesCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AccountsCustomersEntitlementsListEntitlementChangesCall) IfNoneMatch(entityTag string) *AccountsCustomersEntitlementsListEntitlementChangesCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsCustomersEntitlementsListEntitlementChangesCall) Context(ctx context.Context) *AccountsCustomersEntitlementsListEntitlementChangesCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsCustomersEntitlementsListEntitlementChangesCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsCustomersEntitlementsListEntitlementChangesCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}:listEntitlementChanges")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudchannel.accounts.customers.entitlements.listEntitlementChanges" call.
+// Exactly one of *GoogleCloudChannelV1ListEntitlementChangesResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudChannelV1ListEntitlementChangesResponse.ServerResponse.Hea
+// der or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *AccountsCustomersEntitlementsListEntitlementChangesCall) Do(opts ...googleapi.CallOption) (*GoogleCloudChannelV1ListEntitlementChangesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudChannelV1ListEntitlementChangesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List entitlement history. Possible error codes: * PERMISSION_DENIED: The reseller account making the request and the provided reseller account are different. * INVALID_ARGUMENT: Missing or invalid required fields in the request. * NOT_FOUND: The parent resource doesn't exist. Usually the result of an invalid name parameter. * INTERNAL: Any non-user error related to a technical issue in the backend. In this case, contact CloudChannel support. * UNKNOWN: Any non-user error related to a technical issue in the backend. In this case, contact Cloud Channel support. Return value: List of EntitlementChanges.",
+	//   "flatPath": "v1/accounts/{accountsId}/customers/{customersId}/entitlements/{entitlementsId}:listEntitlementChanges",
+	//   "httpMethod": "GET",
+	//   "id": "cloudchannel.accounts.customers.entitlements.listEntitlementChanges",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. Filters applied to the list results.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. The maximum number of entitlement changes to return. The service may return fewer than this value. If unspecified, returns at most 10 entitlement changes. The maximum value is 50; the server will coerce values above 50.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. A page token, received from a previous CloudChannelService.ListEntitlementChanges call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to CloudChannelService.ListEntitlementChanges must match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The resource name of the entitlement for which to list entitlement changes. The `-` wildcard may be used to match entitlements across a customer. Formats: * accounts/{account_id}/customers/{customer_id}/entitlements/{entitlement_id} * accounts/{account_id}/customers/{customer_id}/entitlements/-",
+	//       "location": "path",
+	//       "pattern": "^accounts/[^/]+/customers/[^/]+/entitlements/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}:listEntitlementChanges",
+	//   "response": {
+	//     "$ref": "GoogleCloudChannelV1ListEntitlementChangesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/apps.order"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *AccountsCustomersEntitlementsListEntitlementChangesCall) Pages(ctx context.Context, f func(*GoogleCloudChannelV1ListEntitlementChangesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "cloudchannel.accounts.customers.entitlements.lookupOffer":
 
 type AccountsCustomersEntitlementsLookupOfferCall struct {
@@ -14261,6 +14659,16 @@ func (c *AccountsOffersListCall) PageToken(pageToken string) *AccountsOffersList
 	return c
 }
 
+// ShowFutureOffers sets the optional parameter "showFutureOffers": A
+// boolean flag that determines if a response returns future offers 30
+// days from now. If the show_future_offers is true, the response will
+// only contain offers that are scheduled to be available 30 days from
+// now.
+func (c *AccountsOffersListCall) ShowFutureOffers(showFutureOffers bool) *AccountsOffersListCall {
+	c.urlParams_.Set("showFutureOffers", fmt.Sprint(showFutureOffers))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -14396,6 +14804,11 @@ func (c *AccountsOffersListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudC
 	//       "pattern": "^accounts/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "showFutureOffers": {
+	//       "description": "Optional. A boolean flag that determines if a response returns future offers 30 days from now. If the show_future_offers is true, the response will only contain offers that are scheduled to be available 30 days from now.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     }
 	//   },
 	//   "path": "v1/{+parent}/offers",

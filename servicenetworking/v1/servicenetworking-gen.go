@@ -323,7 +323,8 @@ type AddDnsZoneRequest struct {
 	ConsumerNetwork string `json:"consumerNetwork,omitempty"`
 
 	// DnsSuffix: Required. The DNS name suffix for the zones e.g.
-	// `example.com`.
+	// `example.com.`. Cloud DNS requires that a DNS suffix ends with a
+	// trailing dot.
 	DnsSuffix string `json:"dnsSuffix,omitempty"`
 
 	// Name: Required. The name for both the private zone in the shared
@@ -1835,7 +1836,8 @@ type DnsRecordSet struct {
 	Data []string `json:"data,omitempty"`
 
 	// Domain: Required. The DNS or domain name of the record set, e.g.
-	// `test.example.com`.
+	// `test.example.com`. Cloud DNS requires that a DNS suffix ends with a
+	// trailing dot.
 	Domain string `json:"domain,omitempty"`
 
 	// Ttl: Required. The period of time for which this RecordSet can be
@@ -1871,6 +1873,7 @@ func (s *DnsRecordSet) MarshalJSON() ([]byte, error) {
 // DnsZone: Represents a DNS zone resource.
 type DnsZone struct {
 	// DnsSuffix: The DNS name suffix of this zone e.g. `example.com.`.
+	// Cloud DNS requires that a DNS suffix ends with a trailing dot.
 	DnsSuffix string `json:"dnsSuffix,omitempty"`
 
 	// Name: User assigned name for this resource. Must be unique within the

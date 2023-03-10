@@ -350,6 +350,14 @@ type Assessment struct {
 	// (CVE) tracking number for the vulnerability.
 	Cve string `json:"cve,omitempty"`
 
+	// Impacts: Contains information about the impact of this vulnerability,
+	// this will change with time.
+	Impacts []string `json:"impacts,omitempty"`
+
+	// Justification: Justification provides the justification when the
+	// state of the assessment if NOT_AFFECTED.
+	Justification *Justification `json:"justification,omitempty"`
+
 	// LongDescription: A detailed description of this Vex.
 	LongDescription string `json:"longDescription,omitempty"`
 
@@ -380,10 +388,6 @@ type Assessment struct {
 	// are or are not affected by the vulnerability. However, it is still
 	// under investigation.
 	State string `json:"state,omitempty"`
-
-	// Threats: Contains information about this vulnerability, this will
-	// change with time.
-	Threats []*Threat `json:"threats,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Cve") to
 	// unconditionally include in API requests. By default, fields with
@@ -4734,6 +4738,58 @@ func (s *Installation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Justification: Justification provides the justification when the
+// state of the assessment if NOT_AFFECTED.
+type Justification struct {
+	// Details: Additional details on why this justification was chosen.
+	Details string `json:"details,omitempty"`
+
+	// JustificationType: The justification type for this vulnerability.
+	//
+	// Possible values:
+	//   "JUSTIFICATION_TYPE_UNSPECIFIED" - JUSTIFICATION_TYPE_UNSPECIFIED.
+	//   "COMPONENT_NOT_PRESENT" - The vulnerable component is not present
+	// in the product.
+	//   "VULNERABLE_CODE_NOT_PRESENT" - The vulnerable code is not present.
+	// Typically this case occurs when source code is configured or built in
+	// a way that excludes the vulnerable code.
+	//   "VULNERABLE_CODE_NOT_IN_EXECUTE_PATH" - The vulnerable code can not
+	// be executed. Typically this case occurs when the product includes the
+	// vulnerable code but does not call or use the vulnerable code.
+	//   "VULNERABLE_CODE_CANNOT_BE_CONTROLLED_BY_ADVERSARY" - The
+	// vulnerable code cannot be controlled by an attacker to exploit the
+	// vulnerability.
+	//   "INLINE_MITIGATIONS_ALREADY_EXIST" - The product includes built-in
+	// protections or features that prevent exploitation of the
+	// vulnerability. These built-in protections cannot be subverted by the
+	// attacker and cannot be configured or disabled by the user. These
+	// mitigations completely prevent exploitation based on known attack
+	// vectors.
+	JustificationType string `json:"justificationType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Details") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Details") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Justification) MarshalJSON() ([]byte, error) {
+	type NoMethod Justification
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type KnowledgeBase struct {
 	// Name: The KB name (generally of the form KB[0-9]+ i.e. KB123456).
 	Name string `json:"name,omitempty"`
@@ -6626,45 +6682,6 @@ func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Threat: Contains the vulnerability kinetic information. This
-// information can change as the vulnerability ages and new information
-// becomes available.
-type Threat struct {
-	// Details: Represents a thorough human-readable discussion of the
-	// threat.
-	Details string `json:"details,omitempty"`
-
-	// ThreatType: The type of threat.
-	//
-	// Possible values:
-	//   "THREAT_TYPE_UNSPECIFIED" - No threat type specified.
-	//   "IMPACT" - IMPACT
-	//   "EXPLOIT_STATUS" - EXPLOIT_STATUS
-	ThreatType string `json:"threatType,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Details") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Details") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *Threat) MarshalJSON() ([]byte, error) {
-	type NoMethod Threat
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // TimeSpan: Start and end times for a build execution phase. Next ID: 3
 type TimeSpan struct {
 	// EndTime: End of time span.
@@ -6758,6 +6775,14 @@ type VexAssessment struct {
 	// (CVE) tracking number for the vulnerability.
 	Cve string `json:"cve,omitempty"`
 
+	// Impacts: Contains information about the impact of this vulnerability,
+	// this will change with time.
+	Impacts []string `json:"impacts,omitempty"`
+
+	// Justification: Justification provides the justification when the
+	// state of the assessment if NOT_AFFECTED.
+	Justification *Justification `json:"justification,omitempty"`
+
 	// NoteName: The VulnerabilityAssessment note from which this
 	// VexAssessment was generated. This will be of the form:
 	// `projects/[PROJECT_ID]/notes/[NOTE_ID]`.
@@ -6784,10 +6809,6 @@ type VexAssessment struct {
 	// are or are not affected by the vulnerability. However, it is still
 	// under investigation.
 	State string `json:"state,omitempty"`
-
-	// Threats: Contains information about this vulnerability, this will
-	// change with time.
-	Threats []*Threat `json:"threats,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Cve") to
 	// unconditionally include in API requests. By default, fields with

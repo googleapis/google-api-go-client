@@ -34,7 +34,7 @@ const (
 	unknownCredType credentialsType = iota
 	serviceAccount
 	impersonatedServiceAccount
-	external_account
+	externalAccount
 )
 
 // NewClient creates a HTTP Client that automatically adds an ID token to each
@@ -140,7 +140,7 @@ func tokenSourceFromBytes(ctx context.Context, data []byte, audience string, ds 
 			return nil, err
 		}
 		return oauth2.ReuseTokenSource(tok, ts), nil
-	case impersonatedServiceAccount, external_account:
+	case impersonatedServiceAccount, externalAccount:
 		type url struct {
 			ServiceAccountImpersonationURL string `json:"service_account_impersonation_url"`
 		}
@@ -190,7 +190,7 @@ func parseCredType(typeString string) credentialsType {
 	case "impersonated_service_account":
 		return impersonatedServiceAccount
 	case "external_account":
-		return external_account
+		return externalAccount
 	default:
 		return unknownCredType
 	}

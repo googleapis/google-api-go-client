@@ -11676,6 +11676,12 @@ type LineItem struct {
 	// item is paused. The line item will not run.
 	//   "PARENT_INSERTION_ORDER_EXPIRED" - The insertion order of this line
 	// item has its end date set in the past. The line item will not run.
+	//   "DEPRECATED_FIRST_PARTY_AUDIENCE_EXCLUSION" - This line item uses
+	// the exclude_first_party_audience setting, which is deprecated and
+	// scheduled to sunset after **March 25, 2023**. Update your API
+	// integration to directly exclude any first-party audiences using
+	// audience targeting before **March 25, 2023** to account for the
+	// sunset of the exclude_first_party_audience field.
 	WarningMessages []string `json:"warningMessages,omitempty"`
 
 	// YoutubeAndPartnersSettings: Output only. Settings specific to YouTube

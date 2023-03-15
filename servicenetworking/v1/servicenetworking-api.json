@@ -865,7 +865,7 @@
       }
     }
   },
-  "revision": "20230308",
+  "revision": "20230309",
   "rootUrl": "https://servicenetworking.googleapis.com/",
   "schemas": {
     "AddDnsRecordSetMetadata": {
@@ -908,7 +908,7 @@
           "type": "string"
         },
         "dnsSuffix": {
-          "description": "Required. The DNS name suffix for the zones e.g. `example.com`.",
+          "description": "Required. The DNS name suffix for the zones e.g. `example.com.`. Cloud DNS requires that a DNS suffix ends with a trailing dot.",
           "type": "string"
         },
         "name": {
@@ -1734,7 +1734,7 @@
           "type": "array"
         },
         "domain": {
-          "description": "Required. The DNS or domain name of the record set, e.g. `test.example.com`.",
+          "description": "Required. The DNS or domain name of the record set, e.g. `test.example.com`. Cloud DNS requires that a DNS suffix ends with a trailing dot.",
           "type": "string"
         },
         "ttl": {
@@ -1754,7 +1754,7 @@
       "id": "DnsZone",
       "properties": {
         "dnsSuffix": {
-          "description": "The DNS name suffix of this zone e.g. `example.com.`.",
+          "description": "The DNS name suffix of this zone e.g. `example.com.`. Cloud DNS requires that a DNS suffix ends with a trailing dot.",
           "type": "string"
         },
         "name": {

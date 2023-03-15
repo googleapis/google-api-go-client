@@ -1291,7 +1291,7 @@ func (s *RecognizeResponse) MarshalJSON() ([]byte, error) {
 type SpeakerDiarizationConfig struct {
 	// EnableSpeakerDiarization: If 'true', enables speaker detection for
 	// each recognized word in the top alternative of the recognition result
-	// using a speaker_tag provided in the WordInfo.
+	// using a speaker_label provided in the WordInfo.
 	EnableSpeakerDiarization bool `json:"enableSpeakerDiarization,omitempty"`
 
 	// MaxSpeakerCount: Maximum number of speakers in the conversation. This
@@ -1681,11 +1681,21 @@ type WordInfo struct {
 	// can vary.
 	EndTime string `json:"endTime,omitempty"`
 
+	// SpeakerLabel: Output only. A label value assigned for every unique
+	// speaker within the audio. This field specifies which speaker was
+	// detected to have spoken this word. For some models, like
+	// medical_conversation this can be actual speaker role, for example
+	// "patient" or "provider", but generally this would be a number
+	// identifying a speaker. This field is only set if
+	// enable_speaker_diarization = 'true' and only for the top alternative.
+	SpeakerLabel string `json:"speakerLabel,omitempty"`
+
 	// SpeakerTag: Output only. A distinct integer value is assigned for
 	// every speaker within the audio. This field specifies which one of
 	// those speakers was detected to have spoken this word. Value ranges
 	// from '1' to diarization_speaker_count. speaker_tag is set if
-	// enable_speaker_diarization = 'true' and only in the top alternative.
+	// enable_speaker_diarization = 'true' and only for the top alternative.
+	// Note: Use speaker_label instead.
 	SpeakerTag int64 `json:"speakerTag,omitempty"`
 
 	// StartTime: Time offset relative to the beginning of the audio, and

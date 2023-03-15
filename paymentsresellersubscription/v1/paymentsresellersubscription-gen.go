@@ -1130,9 +1130,13 @@ type GoogleCloudPaymentsResellerSubscriptionV1Subscription struct {
 	//   "STATE_CREATED" - The subscription is created, a state before it is
 	// moved to STATE_ACTIVE.
 	//   "STATE_ACTIVE" - The subscription is active.
-	//   "STATE_CANCELLED" - The subscription is cancelled.
-	//   "STATE_IN_GRACE_PERIOD" - The subscription has not been extended by
-	// the partner after the end of current cycle.
+	//   "STATE_CANCELLED" - The subscription is cancelled. This is the
+	// final state of the subscription, as it can no longer be modified or
+	// reactivated.
+	//   "STATE_IN_GRACE_PERIOD" - The subscription is in grace period. It
+	// can happen: 1) in manual extend mode, the subscription is not
+	// extended by the partner at the end of current cycle. 2) for outbound
+	// authorization enabled partners, a renewal purchase order is rejected.
 	//   "STATE_CANCEL_AT_END_OF_CYCLE" - The subscription is waiting to be
 	// cancelled by the next recurrence cycle.
 	//   "STATE_SUSPENDED" - The subscription is suspended.
@@ -1271,7 +1275,9 @@ type GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItem struct {
 	//
 	// Possible values:
 	//   "LINE_ITEM_STATE_UNSPECIFIED" - Unspecified state.
-	//   "LINE_ITEM_STATE_ACTIVE" - The line item is in ACTIVE state.
+	//   "LINE_ITEM_STATE_ACTIVE" - The line item is in ACTIVE state. If the
+	// subscription is cancelled or suspended, the line item will not be
+	// charged even if the line item is active.
 	//   "LINE_ITEM_STATE_INACTIVE" - The line item is in INACTIVE state.
 	//   "LINE_ITEM_STATE_NEW" - The line item is new, and is not activated
 	// or charged yet.

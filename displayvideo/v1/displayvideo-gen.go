@@ -10773,6 +10773,12 @@ type LineItem struct {
 	// any creative for the targeted deals.
 	//   "TARGETING_DEPRECATED_GEO_TARGET" - This line item targets a geo
 	// target that is deprecated.
+	//   "DEPRECATED_FIRST_PARTY_AUDIENCE_EXCLUSION" - This line item uses
+	// the exclude_first_party_audience setting, which is deprecated and
+	// scheduled to sunset after **March 25, 2023**. Update your API
+	// integration to directly exclude any first-party audiences using
+	// audience targeting before **March 25, 2023** to account for the
+	// sunset of the exclude_first_party_audience field.
 	WarningMessages []string `json:"warningMessages,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

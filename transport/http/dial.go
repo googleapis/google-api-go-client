@@ -65,7 +65,6 @@ func newTransport(ctx context.Context, base http.RoundTripper, settings *interna
 	paramTransport := &parameterTransport{
 		base:          base,
 		userAgent:     settings.UserAgent,
-		quotaProject:  settings.QuotaProject,
 		requestReason: settings.RequestReason,
 	}
 	var trans http.RoundTripper = paramTransport
@@ -74,6 +73,7 @@ func newTransport(ctx context.Context, base http.RoundTripper, settings *interna
 	case settings.NoAuth:
 		// Do nothing.
 	case settings.APIKey != "":
+		paramTransport.quotaProject = internal.GetQuotaProject(nil, settings.QuotaProject)
 		trans = &transport.APIKey{
 			Transport: trans,
 			Key:       settings.APIKey,
@@ -83,10 +83,7 @@ func newTransport(ctx context.Context, base http.RoundTripper, settings *interna
 		if err != nil {
 			return nil, err
 		}
-		if paramTransport.quotaProject == "" {
-			paramTransport.quotaProject = internal.QuotaProjectFromCreds(creds)
-		}
-
+		paramTransport.quotaProject = internal.GetQuotaProject(creds, settings.QuotaProject)
 		ts := creds.TokenSource
 		if settings.ImpersonationConfig == nil && settings.TokenSource != nil {
 			ts = settings.TokenSource

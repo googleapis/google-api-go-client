@@ -1369,6 +1369,17 @@ func (s *BuildOperationMetadata) MarshalJSON() ([]byte, error) {
 // BuildOptions: Optional arguments to enable specific features of
 // builds.
 type BuildOptions struct {
+	// DefaultLogsBucketBehavior: Optional. Option to specify how default
+	// logs buckets are setup.
+	//
+	// Possible values:
+	//   "DEFAULT_LOGS_BUCKET_BEHAVIOR_UNSPECIFIED" - Unspecified.
+	//   "REGIONAL_USER_OWNED_BUCKET" - Bucket is located in user-owned
+	// project in the same region as the build. The builder service account
+	// must have access to create and write to GCS buckets in the build
+	// project.
+	DefaultLogsBucketBehavior string `json:"defaultLogsBucketBehavior,omitempty"`
+
 	// DiskSizeGb: Requested disk size for the VM that runs the build. Note
 	// that this is *NOT* "disk free"; some of the space will be used by the
 	// operating system and build utilities. Also note that this is the
@@ -1481,20 +1492,22 @@ type BuildOptions struct {
 	// WorkerPool: This field deprecated; please use `pool.name` instead.
 	WorkerPool string `json:"workerPool,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "DiskSizeGb") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "DefaultLogsBucketBehavior") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DiskSizeGb") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g.
+	// "DefaultLogsBucketBehavior") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 

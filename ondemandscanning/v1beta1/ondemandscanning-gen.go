@@ -1778,6 +1778,58 @@ func (s *InTotoStatement) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Justification: Justification provides the justification when the
+// state of the assessment if NOT_AFFECTED.
+type Justification struct {
+	// Details: Additional details on why this justification was chosen.
+	Details string `json:"details,omitempty"`
+
+	// JustificationType: The justification type for this vulnerability.
+	//
+	// Possible values:
+	//   "JUSTIFICATION_TYPE_UNSPECIFIED" - JUSTIFICATION_TYPE_UNSPECIFIED.
+	//   "COMPONENT_NOT_PRESENT" - The vulnerable component is not present
+	// in the product.
+	//   "VULNERABLE_CODE_NOT_PRESENT" - The vulnerable code is not present.
+	// Typically this case occurs when source code is configured or built in
+	// a way that excludes the vulnerable code.
+	//   "VULNERABLE_CODE_NOT_IN_EXECUTE_PATH" - The vulnerable code can not
+	// be executed. Typically this case occurs when the product includes the
+	// vulnerable code but does not call or use the vulnerable code.
+	//   "VULNERABLE_CODE_CANNOT_BE_CONTROLLED_BY_ADVERSARY" - The
+	// vulnerable code cannot be controlled by an attacker to exploit the
+	// vulnerability.
+	//   "INLINE_MITIGATIONS_ALREADY_EXIST" - The product includes built-in
+	// protections or features that prevent exploitation of the
+	// vulnerability. These built-in protections cannot be subverted by the
+	// attacker and cannot be configured or disabled by the user. These
+	// mitigations completely prevent exploitation based on known attack
+	// vectors.
+	JustificationType string `json:"justificationType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Details") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Details") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Justification) MarshalJSON() ([]byte, error) {
+	type NoMethod Justification
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type Jwt struct {
 	// CompactJwt: The compact encoding of a JWS, which is always three
 	// base64 encoded strings joined by periods. For details, see:
@@ -2209,6 +2261,8 @@ type Occurrence struct {
 	//   "UPGRADE" - This represents an available package upgrade.
 	//   "COMPLIANCE" - This represents a Compliance Note
 	//   "DSSE_ATTESTATION" - This represents a DSSE attestation Note
+	//   "VULNERABILITY_ASSESSMENT" - This represents a Vulnerability
+	// Assessment.
 	Kind string `json:"kind,omitempty"`
 
 	// Name: Output only. The name of the occurrence in the form of
@@ -2668,6 +2722,50 @@ type RelatedUrl struct {
 
 func (s *RelatedUrl) MarshalJSON() ([]byte, error) {
 	type NoMethod RelatedUrl
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Remediation: Specifies details on how to handle (and presumably, fix)
+// a vulnerability.
+type Remediation struct {
+	// Details: Contains a comprehensive human-readable discussion of the
+	// remediation.
+	Details string `json:"details,omitempty"`
+
+	// RemediationType: The type of remediation that can be applied.
+	//
+	// Possible values:
+	//   "REMEDIATION_TYPE_UNSPECIFIED" - No remediation type specified.
+	//   "MITIGATION" - A MITIGATION is available.
+	//   "NO_FIX_PLANNED" - No fix is planned.
+	//   "NONE_AVAILABLE" - Not available.
+	//   "VENDOR_FIX" - A vendor fix is available.
+	//   "WORKAROUND" - A workaround is available.
+	RemediationType string `json:"remediationType,omitempty"`
+
+	// RemediationUri: Contains the URL where to obtain the remediation.
+	RemediationUri *RelatedUrl `json:"remediationUri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Details") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Details") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Remediation) MarshalJSON() ([]byte, error) {
+	type NoMethod Remediation
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3336,6 +3434,71 @@ func (s *Version) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// VexAssessment: VexAssessment provides all publisher provided Vex
+// information that is related to this vulnerability.
+type VexAssessment struct {
+	// Cve: Holds the MITRE standard Common Vulnerabilities and Exposures
+	// (CVE) tracking number for the vulnerability.
+	Cve string `json:"cve,omitempty"`
+
+	// Impacts: Contains information about the impact of this vulnerability,
+	// this will change with time.
+	Impacts []string `json:"impacts,omitempty"`
+
+	// Justification: Justification provides the justification when the
+	// state of the assessment if NOT_AFFECTED.
+	Justification *Justification `json:"justification,omitempty"`
+
+	// NoteName: The VulnerabilityAssessment note from which this
+	// VexAssessment was generated. This will be of the form:
+	// `projects/[PROJECT_ID]/notes/[NOTE_ID]`.
+	NoteName string `json:"noteName,omitempty"`
+
+	// RelatedUris: Holds a list of references associated with this
+	// vulnerability item and assessment.
+	RelatedUris []*RelatedUrl `json:"relatedUris,omitempty"`
+
+	// Remediations: Specifies details on how to handle (and presumably,
+	// fix) a vulnerability.
+	Remediations []*Remediation `json:"remediations,omitempty"`
+
+	// State: Provides the state of this Vulnerability assessment.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - No state is specified.
+	//   "AFFECTED" - This product is known to be affected by this
+	// vulnerability.
+	//   "NOT_AFFECTED" - This product is known to be not affected by this
+	// vulnerability.
+	//   "FIXED" - This product contains a fix for this vulnerability.
+	//   "UNDER_INVESTIGATION" - It is not known yet whether these versions
+	// are or are not affected by the vulnerability. However, it is still
+	// under investigation.
+	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Cve") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Cve") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *VexAssessment) MarshalJSON() ([]byte, error) {
+	type NoMethod VexAssessment
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // VulnerabilityOccurrence: An occurrence of a severity vulnerability on
 // a resource.
 type VulnerabilityOccurrence struct {
@@ -3413,6 +3576,8 @@ type VulnerabilityOccurrence struct {
 	// Type: The type of package; whether native or non native (e.g., ruby
 	// gems, node.js packages, etc.).
 	Type string `json:"type,omitempty"`
+
+	VexAssessment *VexAssessment `json:"vexAssessment,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CvssScore") to
 	// unconditionally include in API requests. By default, fields with

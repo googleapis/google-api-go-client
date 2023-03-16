@@ -1179,6 +1179,7 @@ type GoogleCloudDatacatalogV1DataplexExternalTable struct {
 	//   "CLOUD_PUBSUB" - Cloud Pub/Sub.
 	//   "DATAPROC_METASTORE" - Dataproc Metastore.
 	//   "DATAPLEX" - Dataplex.
+	//   "CLOUD_SPANNER" - Cloud Spanner
 	//   "CLOUD_SQL" - Cloud Sql
 	//   "LOOKER" - Looker
 	System string `json:"system,omitempty"`
@@ -1422,6 +1423,7 @@ type GoogleCloudDatacatalogV1Entry struct {
 	//   "CLOUD_PUBSUB" - Cloud Pub/Sub.
 	//   "DATAPROC_METASTORE" - Dataproc Metastore.
 	//   "DATAPLEX" - Dataplex.
+	//   "CLOUD_SPANNER" - Cloud Spanner
 	//   "CLOUD_SQL" - Cloud Sql
 	//   "LOOKER" - Looker
 	IntegratedSystem string `json:"integratedSystem,omitempty"`
@@ -2645,6 +2647,125 @@ func (s *GoogleCloudDatacatalogV1PolicyTag) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDatacatalogV1ReconcileTagsMetadata: Long-running operation
+// metadata message returned by the ReconcileTags.
+type GoogleCloudDatacatalogV1ReconcileTagsMetadata struct {
+	// Errors: Maps the name of each tagged column (or empty string for a
+	// sole entry) to tagging operation status.
+	Errors map[string]Status `json:"errors,omitempty"`
+
+	// State: State of the reconciliation operation.
+	//
+	// Possible values:
+	//   "RECONCILIATION_STATE_UNSPECIFIED" - Default value. This value is
+	// unused.
+	//   "RECONCILIATION_QUEUED" - The reconciliation has been queued and
+	// awaits for execution.
+	//   "RECONCILIATION_IN_PROGRESS" - The reconciliation is in progress.
+	//   "RECONCILIATION_DONE" - The reconciliation has been finished.
+	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Errors") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Errors") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDatacatalogV1ReconcileTagsMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatacatalogV1ReconcileTagsMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDatacatalogV1ReconcileTagsRequest: Request message for
+// ReconcileTags.
+type GoogleCloudDatacatalogV1ReconcileTagsRequest struct {
+	// ForceDeleteMissing: If set to `true`, deletes entry tags related to a
+	// tag template not listed in the tags source from an entry. If set to
+	// `false`, unlisted tags are retained.
+	ForceDeleteMissing bool `json:"forceDeleteMissing,omitempty"`
+
+	// TagTemplate: Required. The name of the tag template, which is used
+	// for reconciliation.
+	TagTemplate string `json:"tagTemplate,omitempty"`
+
+	// Tags: A list of tags to apply to an entry. A tag can specify a tag
+	// template, which must be the template specified in the
+	// `ReconcileTagsRequest`. The sole entry and each of its columns must
+	// be mentioned at most once.
+	Tags []*GoogleCloudDatacatalogV1Tag `json:"tags,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ForceDeleteMissing")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ForceDeleteMissing") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDatacatalogV1ReconcileTagsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatacatalogV1ReconcileTagsRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDatacatalogV1ReconcileTagsResponse: Long-running operation
+// response message returned by ReconcileTags.
+type GoogleCloudDatacatalogV1ReconcileTagsResponse struct {
+	// CreatedTagsCount: Number of tags created in the request.
+	CreatedTagsCount int64 `json:"createdTagsCount,omitempty,string"`
+
+	// DeletedTagsCount: Number of tags deleted in the request.
+	DeletedTagsCount int64 `json:"deletedTagsCount,omitempty,string"`
+
+	// UpdatedTagsCount: Number of tags updated in the request.
+	UpdatedTagsCount int64 `json:"updatedTagsCount,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "CreatedTagsCount") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreatedTagsCount") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDatacatalogV1ReconcileTagsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatacatalogV1ReconcileTagsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDatacatalogV1RenameTagTemplateFieldEnumValueRequest:
 // Request message for RenameTagTemplateFieldEnumValue.
 type GoogleCloudDatacatalogV1RenameTagTemplateFieldEnumValueRequest struct {
@@ -3062,6 +3183,7 @@ type GoogleCloudDatacatalogV1SearchCatalogResult struct {
 	//   "CLOUD_PUBSUB" - Cloud Pub/Sub.
 	//   "DATAPROC_METASTORE" - Dataproc Metastore.
 	//   "DATAPLEX" - Dataplex.
+	//   "CLOUD_SPANNER" - Cloud Spanner
 	//   "CLOUD_SQL" - Cloud Sql
 	//   "LOOKER" - Looker
 	IntegratedSystem string `json:"integratedSystem,omitempty"`
@@ -8486,6 +8608,153 @@ func (c *ProjectsLocationsEntryGroupsEntriesTagsPatchCall) Do(opts ...googleapi.
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleCloudDatacatalogV1Tag"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "datacatalog.projects.locations.entryGroups.entries.tags.reconcile":
+
+type ProjectsLocationsEntryGroupsEntriesTagsReconcileCall struct {
+	s                                            *Service
+	parent                                       string
+	googleclouddatacatalogv1reconciletagsrequest *GoogleCloudDatacatalogV1ReconcileTagsRequest
+	urlParams_                                   gensupport.URLParams
+	ctx_                                         context.Context
+	header_                                      http.Header
+}
+
+// Reconcile: `ReconcileTags` creates or updates a list of tags on the
+// entry. If the ReconcileTagsRequest.force_delete_missing parameter is
+// set, the operation deletes tags not included in the input tag list.
+// `ReconcileTags` returns a long-running operation resource that can be
+// queried with Operations.GetOperation to return ReconcileTagsMetadata
+// and a ReconcileTagsResponse message.
+//
+// - parent: Name of Entry to be tagged.
+func (r *ProjectsLocationsEntryGroupsEntriesTagsService) Reconcile(parent string, googleclouddatacatalogv1reconciletagsrequest *GoogleCloudDatacatalogV1ReconcileTagsRequest) *ProjectsLocationsEntryGroupsEntriesTagsReconcileCall {
+	c := &ProjectsLocationsEntryGroupsEntriesTagsReconcileCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleclouddatacatalogv1reconciletagsrequest = googleclouddatacatalogv1reconciletagsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsEntryGroupsEntriesTagsReconcileCall) Fields(s ...googleapi.Field) *ProjectsLocationsEntryGroupsEntriesTagsReconcileCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsEntryGroupsEntriesTagsReconcileCall) Context(ctx context.Context) *ProjectsLocationsEntryGroupsEntriesTagsReconcileCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsEntryGroupsEntriesTagsReconcileCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsEntryGroupsEntriesTagsReconcileCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddatacatalogv1reconciletagsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/tags:reconcile")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datacatalog.projects.locations.entryGroups.entries.tags.reconcile" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsEntryGroupsEntriesTagsReconcileCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "`ReconcileTags` creates or updates a list of tags on the entry. If the ReconcileTagsRequest.force_delete_missing parameter is set, the operation deletes tags not included in the input tag list. `ReconcileTags` returns a long-running operation resource that can be queried with Operations.GetOperation to return ReconcileTagsMetadata and a ReconcileTagsResponse message.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/entryGroups/{entryGroupsId}/entries/{entriesId}/tags:reconcile",
+	//   "httpMethod": "POST",
+	//   "id": "datacatalog.projects.locations.entryGroups.entries.tags.reconcile",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. Name of Entry to be tagged.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+/entries/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/tags:reconcile",
+	//   "request": {
+	//     "$ref": "GoogleCloudDatacatalogV1ReconcileTagsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

@@ -18246,6 +18246,134 @@ func (c *PurchasesProductsAcknowledgeCall) Do(opts ...googleapi.CallOption) erro
 
 }
 
+// method id "androidpublisher.purchases.products.consume":
+
+type PurchasesProductsConsumeCall struct {
+	s           *Service
+	packageName string
+	productId   string
+	token       string
+	urlParams_  gensupport.URLParams
+	ctx_        context.Context
+	header_     http.Header
+}
+
+// Consume: Consumes a purchase for an inapp item.
+//
+//   - packageName: The package name of the application the inapp product
+//     was sold in (for example, 'com.some.thing').
+//   - productId: The inapp product SKU (for example,
+//     'com.some.thing.inapp1').
+//   - token: The token provided to the user's device when the inapp
+//     product was purchased.
+func (r *PurchasesProductsService) Consume(packageName string, productId string, token string) *PurchasesProductsConsumeCall {
+	c := &PurchasesProductsConsumeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.packageName = packageName
+	c.productId = productId
+	c.token = token
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PurchasesProductsConsumeCall) Fields(s ...googleapi.Field) *PurchasesProductsConsumeCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PurchasesProductsConsumeCall) Context(ctx context.Context) *PurchasesProductsConsumeCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PurchasesProductsConsumeCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PurchasesProductsConsumeCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/applications/{packageName}/purchases/products/{productId}/tokens/{token}:consume")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"packageName": c.packageName,
+		"productId":   c.productId,
+		"token":       c.token,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidpublisher.purchases.products.consume" call.
+func (c *PurchasesProductsConsumeCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return gensupport.WrapError(err)
+	}
+	return nil
+	// {
+	//   "description": "Consumes a purchase for an inapp item.",
+	//   "flatPath": "androidpublisher/v3/applications/{packageName}/purchases/products/{productId}/tokens/{token}:consume",
+	//   "httpMethod": "POST",
+	//   "id": "androidpublisher.purchases.products.consume",
+	//   "parameterOrder": [
+	//     "packageName",
+	//     "productId",
+	//     "token"
+	//   ],
+	//   "parameters": {
+	//     "packageName": {
+	//       "description": "The package name of the application the inapp product was sold in (for example, 'com.some.thing').",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "productId": {
+	//       "description": "The inapp product SKU (for example, 'com.some.thing.inapp1').",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "token": {
+	//       "description": "The token provided to the user's device when the inapp product was purchased.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "androidpublisher/v3/applications/{packageName}/purchases/products/{productId}/tokens/{token}:consume",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidpublisher"
+	//   ]
+	// }
+
+}
+
 // method id "androidpublisher.purchases.products.get":
 
 type PurchasesProductsGetCall struct {

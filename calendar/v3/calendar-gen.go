@@ -7064,6 +7064,15 @@ func (c *EventsListCall) AlwaysIncludeEmail(alwaysIncludeEmail bool) *EventsList
 	return c
 }
 
+// EventTypes sets the optional parameter "eventTypes": Event types to
+// return.  The default is ["default", "outOfOffice", "focusTime"]. This
+// is used by the Working Location developer preview and only the
+// default value is allowed for non-opted-in users.
+func (c *EventsListCall) EventTypes(eventTypes ...string) *EventsListCall {
+	c.urlParams_.SetMulti("eventTypes", append([]string{}, eventTypes...))
+	return c
+}
+
 // ICalUID sets the optional parameter "iCalUID": Specifies an event ID
 // in the iCalendar format to be provided in the response.  Use this if
 // you want to search for an event by its iCalendar ID.
@@ -7356,6 +7365,12 @@ func (c *EventsListCall) Do(opts ...googleapi.CallOption) (*Events, error) {
 	//       "description": "Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you want to access the primary calendar of the currently logged in user, use the \"primary\" keyword.",
 	//       "location": "path",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "eventTypes": {
+	//       "description": "Event types to return. Optional. The default is [\"default\", \"outOfOffice\", \"focusTime\"]. This is used by the Working Location developer preview and only the default value is allowed for non-opted-in users.",
+	//       "location": "query",
+	//       "repeated": true,
 	//       "type": "string"
 	//     },
 	//     "iCalUID": {
@@ -8461,6 +8476,15 @@ func (c *EventsWatchCall) AlwaysIncludeEmail(alwaysIncludeEmail bool) *EventsWat
 	return c
 }
 
+// EventTypes sets the optional parameter "eventTypes": Event types to
+// return.  The default is ["default", "outOfOffice", "focusTime"]. This
+// is used by the Working Location developer preview and only the
+// default value is allowed for non-opted-in users.
+func (c *EventsWatchCall) EventTypes(eventTypes ...string) *EventsWatchCall {
+	c.urlParams_.SetMulti("eventTypes", append([]string{}, eventTypes...))
+	return c
+}
+
 // ICalUID sets the optional parameter "iCalUID": Specifies an event ID
 // in the iCalendar format to be provided in the response.  Use this if
 // you want to search for an event by its iCalendar ID.
@@ -8745,6 +8769,12 @@ func (c *EventsWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error) {
 	//       "description": "Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you want to access the primary calendar of the currently logged in user, use the \"primary\" keyword.",
 	//       "location": "path",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "eventTypes": {
+	//       "description": "Event types to return. Optional. The default is [\"default\", \"outOfOffice\", \"focusTime\"]. This is used by the Working Location developer preview and only the default value is allowed for non-opted-in users.",
+	//       "location": "query",
+	//       "repeated": true,
 	//       "type": "string"
 	//     },
 	//     "iCalUID": {

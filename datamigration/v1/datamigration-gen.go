@@ -878,8 +878,8 @@ type ColumnEntity struct {
 	// Scale: Column scale - when relevant.
 	Scale int64 `json:"scale,omitempty"`
 
-	// SetValues: Specifies the list of values allowed in the column. List
-	// is empty if setValues is not required.
+	// SetValues: Specifies the list of values allowed in the column. Only
+	// used for set data type.
 	SetValues []string `json:"setValues,omitempty"`
 
 	// Udt: Is the column a UDT.
@@ -1328,6 +1328,7 @@ type DatabaseEntity struct {
 	//   "DATABASE_ENTITY_TYPE_DATABASE_PACKAGE" - Package.
 	//   "DATABASE_ENTITY_TYPE_UDT" - UDT.
 	//   "DATABASE_ENTITY_TYPE_MATERIAL_VIEW" - Material View.
+	//   "DATABASE_ENTITY_TYPE_DATABASE" - Database.
 	EntityType string `json:"entityType,omitempty"`
 
 	// Mappings: Details about entity mappings. For source tree entities,
@@ -3799,6 +3800,7 @@ type SynonymEntity struct {
 	//   "DATABASE_ENTITY_TYPE_DATABASE_PACKAGE" - Package.
 	//   "DATABASE_ENTITY_TYPE_UDT" - UDT.
 	//   "DATABASE_ENTITY_TYPE_MATERIAL_VIEW" - Material View.
+	//   "DATABASE_ENTITY_TYPE_DATABASE" - Database.
 	SourceType string `json:"sourceType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CustomFeatures") to

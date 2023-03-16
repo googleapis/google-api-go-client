@@ -610,6 +610,11 @@ type GoogleCloudKmsV1CryptoKeyVersion struct {
 	// DESTROY_SCHEDULED.
 	DestroyTime string `json:"destroyTime,omitempty"`
 
+	// ExternalDestructionFailureReason: Output only. The root cause of the
+	// most recent external destruction failure. Only present if state is
+	// EXTERNAL_DESTRUCTION_FAILED.
+	ExternalDestructionFailureReason string `json:"externalDestructionFailureReason,omitempty"`
+
 	// ExternalProtectionLevelOptions: ExternalProtectionLevelOptions stores
 	// a group of additional fields for configuring a CryptoKeyVersion that
 	// are specific to the EXTERNAL protection level and EXTERNAL_VPC
@@ -619,6 +624,11 @@ type GoogleCloudKmsV1CryptoKeyVersion struct {
 	// GenerateTime: Output only. The time this CryptoKeyVersion's key
 	// material was generated.
 	GenerateTime string `json:"generateTime,omitempty"`
+
+	// GenerationFailureReason: Output only. The root cause of the most
+	// recent generation failure. Only present if state is
+	// GENERATION_FAILED.
+	GenerationFailureReason string `json:"generationFailureReason,omitempty"`
 
 	// ImportFailureReason: Output only. The root cause of the most recent
 	// import failure. Only present if state is IMPORT_FAILED.
@@ -685,6 +695,18 @@ type GoogleCloudKmsV1CryptoKeyVersion struct {
 	// may not be used, enabled, disabled, or destroyed. The submitted key
 	// material has been discarded. Additional details can be found in
 	// CryptoKeyVersion.import_failure_reason.
+	//   "GENERATION_FAILED" - This version was not generated successfully.
+	// It may not be used, enabled, disabled, or destroyed. Additional
+	// details can be found in CryptoKeyVersion.generation_failure_reason.
+	//   "PENDING_EXTERNAL_DESTRUCTION" - This version was destroyed, and it
+	// may not be used or enabled again. Cloud KMS is waiting for the
+	// corresponding key material residing in an external key manager to be
+	// destroyed.
+	//   "EXTERNAL_DESTRUCTION_FAILED" - This version was destroyed, and it
+	// may not be used or enabled again. However, Cloud KMS could not
+	// confirm that the corresponding key material residing in an external
+	// key manager was destroyed. Additional details can be found in
+	// CryptoKeyVersion.external_destruction_failure_reason.
 	State string `json:"state,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Algorithm") to

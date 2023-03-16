@@ -5291,7 +5291,8 @@ type User struct {
 	// ThumbnailPhotoEtag: Output only. ETag of the user's photo (Read-only)
 	ThumbnailPhotoEtag string `json:"thumbnailPhotoEtag,omitempty"`
 
-	// ThumbnailPhotoUrl: Output only. Photo Url of the user (Read-only)
+	// ThumbnailPhotoUrl: Output only. The URL of the user's profile photo.
+	// The URL might be temporary or private.
 	ThumbnailPhotoUrl string `json:"thumbnailPhotoUrl,omitempty"`
 
 	// Websites: The user's websites. The maximum allowed data size for this

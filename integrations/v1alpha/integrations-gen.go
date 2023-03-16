@@ -8691,6 +8691,12 @@ type GoogleCloudIntegrationsV1alphaIntegrationVersion struct {
 	// create this integration_version.
 	ParentTemplateId string `json:"parentTemplateId,omitempty"`
 
+	// RunAsServiceAccount: Optional. The run-as service account email, if
+	// set and auth config is not configured, that will be used to generate
+	// auth token to be used in Connector task, Rest caller task and Cloud
+	// function task.
+	RunAsServiceAccount string `json:"runAsServiceAccount,omitempty"`
+
 	// SnapshotNumber: Optional. An increasing sequence that is set when a
 	// new snapshot is created. The last created snapshot can be identified
 	// by [workflow_name, org_id latest(snapshot_number)]. However, last

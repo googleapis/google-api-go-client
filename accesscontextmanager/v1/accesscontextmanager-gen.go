@@ -1161,6 +1161,13 @@ type GcpUserAccessBinding struct {
 	// "accessPolicies/9522/accessLevels/device_trusted"
 	AccessLevels []string `json:"accessLevels,omitempty"`
 
+	// DryRunAccessLevels: Optional. Dry run access level that will be
+	// evaluated but will not be enforced. The access denial based on dry
+	// run policy will be logged. Only one access level is supported, not
+	// multiple. This list must have exactly one element. Example:
+	// "accessPolicies/9522/accessLevels/device_trusted"
+	DryRunAccessLevels []string `json:"dryRunAccessLevels,omitempty"`
+
 	// GroupKey: Required. Immutable. Google Group id whose members are
 	// subject to this binding's restrictions. See "id" in the [G Suite
 	// Directory API's Groups resource]
@@ -7273,14 +7280,7 @@ type OperationsListCall struct {
 
 // List: Lists operations that match the specified filter in the
 // request. If the server doesn't support this method, it returns
-// `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to
-// override the binding to use different resource name schemes, such as
-// `users/*/operations`. To override the binding, API services can add a
-// binding such as "/v1/{name=users/*}/operations" to their service
-// configuration. For backwards compatibility, the default name includes
-// the operations collection id, however overriding users must ensure
-// the name binding is the parent resource, without the operations
-// collection id.
+// `UNIMPLEMENTED`.
 //
 // - name: The name of the operation's parent resource.
 func (r *OperationsService) List(name string) *OperationsListCall {
@@ -7409,7 +7409,7 @@ func (c *OperationsListCall) Do(opts ...googleapi.CallOption) (*ListOperationsRe
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.",
 	//   "flatPath": "v1/operations",
 	//   "httpMethod": "GET",
 	//   "id": "accesscontextmanager.operations.list",

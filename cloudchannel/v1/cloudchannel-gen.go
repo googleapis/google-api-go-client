@@ -8392,7 +8392,7 @@ type AccountsChannelPartnerLinksChannelPartnerRepricingConfigsListCall struct {
 // related to technical issues in the backend. In this case, contact
 // Cloud Channel support. Return Value: If successful, the
 // ChannelPartnerRepricingConfig resources. The data for each resource
-// is displayed in the ascending order of: * channel partner ID *
+// is displayed in the ascending order of: * Channel Partner ID *
 // RepricingConfig.effective_invoice_month *
 // ChannelPartnerRepricingConfig.update_time If unsuccessful, returns an
 // error.
@@ -8541,7 +8541,7 @@ func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsListCall) Do(o
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists information about how a Reseller modifies their bill before sending it to a ChannelPartner. Possible Error Codes: * PERMISSION_DENIED: If the account making the request and the account being queried are different. * NOT_FOUND: The ChannelPartnerRepricingConfig specified does not exist or is not associated with the given account. * INTERNAL: Any non-user error related to technical issues in the backend. In this case, contact Cloud Channel support. Return Value: If successful, the ChannelPartnerRepricingConfig resources. The data for each resource is displayed in the ascending order of: * channel partner ID * RepricingConfig.effective_invoice_month * ChannelPartnerRepricingConfig.update_time If unsuccessful, returns an error.",
+	//   "description": "Lists information about how a Reseller modifies their bill before sending it to a ChannelPartner. Possible Error Codes: * PERMISSION_DENIED: If the account making the request and the account being queried are different. * NOT_FOUND: The ChannelPartnerRepricingConfig specified does not exist or is not associated with the given account. * INTERNAL: Any non-user error related to technical issues in the backend. In this case, contact Cloud Channel support. Return Value: If successful, the ChannelPartnerRepricingConfig resources. The data for each resource is displayed in the ascending order of: * Channel Partner ID * RepricingConfig.effective_invoice_month * ChannelPartnerRepricingConfig.update_time If unsuccessful, returns an error.",
 	//   "flatPath": "v1/accounts/{accountsId}/channelPartnerLinks/{channelPartnerLinksId}/channelPartnerRepricingConfigs",
 	//   "httpMethod": "GET",
 	//   "id": "cloudchannel.accounts.channelPartnerLinks.channelPartnerRepricingConfigs.list",
@@ -12212,7 +12212,7 @@ type AccountsCustomersCustomerRepricingConfigsListCall struct {
 // * INTERNAL: Any non-user error related to technical issues in the
 // backend. In this case, contact Cloud Channel support. Return Value:
 // If successful, the CustomerRepricingConfig resources. The data for
-// each resource is displayed in the ascending order of: * customer ID *
+// each resource is displayed in the ascending order of: * Customer ID *
 // RepricingConfig.EntitlementGranularity.entitlement *
 // RepricingConfig.effective_invoice_month *
 // CustomerRepricingConfig.update_time If unsuccessful, returns an
@@ -12360,7 +12360,7 @@ func (c *AccountsCustomersCustomerRepricingConfigsListCall) Do(opts ...googleapi
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists information about how a Reseller modifies their bill before sending it to a Customer. Possible Error Codes: * PERMISSION_DENIED: If the account making the request and the account being queried are different. * NOT_FOUND: The CustomerRepricingConfig specified does not exist or is not associated with the given account. * INTERNAL: Any non-user error related to technical issues in the backend. In this case, contact Cloud Channel support. Return Value: If successful, the CustomerRepricingConfig resources. The data for each resource is displayed in the ascending order of: * customer ID * RepricingConfig.EntitlementGranularity.entitlement * RepricingConfig.effective_invoice_month * CustomerRepricingConfig.update_time If unsuccessful, returns an error.",
+	//   "description": "Lists information about how a Reseller modifies their bill before sending it to a Customer. Possible Error Codes: * PERMISSION_DENIED: If the account making the request and the account being queried are different. * NOT_FOUND: The CustomerRepricingConfig specified does not exist or is not associated with the given account. * INTERNAL: Any non-user error related to technical issues in the backend. In this case, contact Cloud Channel support. Return Value: If successful, the CustomerRepricingConfig resources. The data for each resource is displayed in the ascending order of: * Customer ID * RepricingConfig.EntitlementGranularity.entitlement * RepricingConfig.effective_invoice_month * CustomerRepricingConfig.update_time If unsuccessful, returns an error.",
 	//   "flatPath": "v1/accounts/{accountsId}/customers/{customersId}/customerRepricingConfigs",
 	//   "httpMethod": "GET",
 	//   "id": "cloudchannel.accounts.customers.customerRepricingConfigs.list",

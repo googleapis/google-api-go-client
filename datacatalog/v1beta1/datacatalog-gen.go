@@ -1133,6 +1133,7 @@ type GoogleCloudDatacatalogV1DataplexExternalTable struct {
 	//   "CLOUD_PUBSUB" - Cloud Pub/Sub.
 	//   "DATAPROC_METASTORE" - Dataproc Metastore.
 	//   "DATAPLEX" - Dataplex.
+	//   "CLOUD_SPANNER" - Cloud Spanner
 	//   "CLOUD_SQL" - Cloud Sql
 	//   "LOOKER" - Looker
 	System string `json:"system,omitempty"`
@@ -1376,6 +1377,7 @@ type GoogleCloudDatacatalogV1Entry struct {
 	//   "CLOUD_PUBSUB" - Cloud Pub/Sub.
 	//   "DATAPROC_METASTORE" - Dataproc Metastore.
 	//   "DATAPLEX" - Dataplex.
+	//   "CLOUD_SPANNER" - Cloud Spanner
 	//   "CLOUD_SQL" - Cloud Sql
 	//   "LOOKER" - Looker
 	IntegratedSystem string `json:"integratedSystem,omitempty"`
@@ -1970,6 +1972,83 @@ type GoogleCloudDatacatalogV1PhysicalSchemaThriftSchema struct {
 
 func (s *GoogleCloudDatacatalogV1PhysicalSchemaThriftSchema) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1PhysicalSchemaThriftSchema
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDatacatalogV1ReconcileTagsMetadata: Long-running operation
+// metadata message returned by the ReconcileTags.
+type GoogleCloudDatacatalogV1ReconcileTagsMetadata struct {
+	// Errors: Maps the name of each tagged column (or empty string for a
+	// sole entry) to tagging operation status.
+	Errors map[string]Status `json:"errors,omitempty"`
+
+	// State: State of the reconciliation operation.
+	//
+	// Possible values:
+	//   "RECONCILIATION_STATE_UNSPECIFIED" - Default value. This value is
+	// unused.
+	//   "RECONCILIATION_QUEUED" - The reconciliation has been queued and
+	// awaits for execution.
+	//   "RECONCILIATION_IN_PROGRESS" - The reconciliation is in progress.
+	//   "RECONCILIATION_DONE" - The reconciliation has been finished.
+	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Errors") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Errors") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDatacatalogV1ReconcileTagsMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatacatalogV1ReconcileTagsMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDatacatalogV1ReconcileTagsResponse: Long-running operation
+// response message returned by ReconcileTags.
+type GoogleCloudDatacatalogV1ReconcileTagsResponse struct {
+	// CreatedTagsCount: Number of tags created in the request.
+	CreatedTagsCount int64 `json:"createdTagsCount,omitempty,string"`
+
+	// DeletedTagsCount: Number of tags deleted in the request.
+	DeletedTagsCount int64 `json:"deletedTagsCount,omitempty,string"`
+
+	// UpdatedTagsCount: Number of tags updated in the request.
+	UpdatedTagsCount int64 `json:"updatedTagsCount,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "CreatedTagsCount") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreatedTagsCount") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDatacatalogV1ReconcileTagsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatacatalogV1ReconcileTagsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

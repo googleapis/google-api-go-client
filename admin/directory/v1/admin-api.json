@@ -4630,7 +4630,7 @@
       }
     }
   },
-  "revision": "20230307",
+  "revision": "20230314",
   "rootUrl": "https://admin.googleapis.com/",
   "schemas": {
     "Alias": {
@@ -7699,7 +7699,7 @@
           "type": "string"
         },
         "thumbnailPhotoUrl": {
-          "description": "Output only. Photo Url of the user (Read-only)",
+          "description": "Output only. The URL of the user's profile photo. The URL might be temporary or private.",
           "readOnly": true,
           "type": "string"
         },

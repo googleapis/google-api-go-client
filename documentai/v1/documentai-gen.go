@@ -3550,9 +3550,9 @@ type GoogleCloudDocumentaiV1DocumentProvenance struct {
 	//   "ADD" - Add an element.
 	//   "REMOVE" - Remove an element identified by `parent`.
 	//   "UPDATE" - Updates any fields within the given provenance scope of
-	// the message. It 'overwrites' the fields rather than replacing them.
-	// This is especially relevant when we just want to update a field value
-	// of an entity without also affecting all the child properties.
+	// the message. It overwrites the fields rather than replacing them. Use
+	// this when you want to update a field value of an entity without also
+	// updating all the child properties.
 	//   "REPLACE" - Currently unused. Replace an element identified by
 	// `parent`.
 	//   "EVAL_REQUESTED" - Deprecated. Request human review for the element
@@ -7331,9 +7331,9 @@ type GoogleCloudDocumentaiV1beta1DocumentProvenance struct {
 	//   "ADD" - Add an element.
 	//   "REMOVE" - Remove an element identified by `parent`.
 	//   "UPDATE" - Updates any fields within the given provenance scope of
-	// the message. It 'overwrites' the fields rather than replacing them.
-	// This is especially relevant when we just want to update a field value
-	// of an entity without also affecting all the child properties.
+	// the message. It overwrites the fields rather than replacing them. Use
+	// this when you want to update a field value of an entity without also
+	// updating all the child properties.
 	//   "REPLACE" - Currently unused. Replace an element identified by
 	// `parent`.
 	//   "EVAL_REQUESTED" - Deprecated. Request human review for the element
@@ -9503,9 +9503,9 @@ type GoogleCloudDocumentaiV1beta2DocumentProvenance struct {
 	//   "ADD" - Add an element.
 	//   "REMOVE" - Remove an element identified by `parent`.
 	//   "UPDATE" - Updates any fields within the given provenance scope of
-	// the message. It 'overwrites' the fields rather than replacing them.
-	// This is especially relevant when we just want to update a field value
-	// of an entity without also affecting all the child properties.
+	// the message. It overwrites the fields rather than replacing them. Use
+	// this when you want to update a field value of an entity without also
+	// updating all the child properties.
 	//   "REPLACE" - Currently unused. Replace an element identified by
 	// `parent`.
 	//   "EVAL_REQUESTED" - Deprecated. Request human review for the element
@@ -10662,6 +10662,66 @@ type GoogleCloudDocumentaiV1beta3HumanReviewStatus struct {
 
 func (s *GoogleCloudDocumentaiV1beta3HumanReviewStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3HumanReviewStatus
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta3ImportProcessorVersionMetadata: The long
+// running operation metadata for the ImportProcessorVersion method.
+type GoogleCloudDocumentaiV1beta3ImportProcessorVersionMetadata struct {
+	// CommonMetadata: The basic metadata for the long running operation.
+	CommonMetadata *GoogleCloudDocumentaiV1beta3CommonOperationMetadata `json:"commonMetadata,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CommonMetadata") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CommonMetadata") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta3ImportProcessorVersionMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3ImportProcessorVersionMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta3ImportProcessorVersionResponse: The
+// response message for the ImportProcessorVersion method.
+type GoogleCloudDocumentaiV1beta3ImportProcessorVersionResponse struct {
+	// ProcessorVersion: The destination processor version name.
+	ProcessorVersion string `json:"processorVersion,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ProcessorVersion") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ProcessorVersion") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta3ImportProcessorVersionResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3ImportProcessorVersionResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -12577,14 +12637,7 @@ type ProjectsLocationsOperationsListCall struct {
 
 // List: Lists operations that match the specified filter in the
 // request. If the server doesn't support this method, it returns
-// `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to
-// override the binding to use different resource name schemes, such as
-// `users/*/operations`. To override the binding, API services can add a
-// binding such as "/v1/{name=users/*}/operations" to their service
-// configuration. For backwards compatibility, the default name includes
-// the operations collection id, however overriding users must ensure
-// the name binding is the parent resource, without the operations
-// collection id.
+// `UNIMPLEMENTED`.
 //
 // - name: The name of the operation's parent resource.
 func (r *ProjectsLocationsOperationsService) List(name string) *ProjectsLocationsOperationsListCall {
@@ -12714,7 +12767,7 @@ func (c *ProjectsLocationsOperationsListCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/operations",
 	//   "httpMethod": "GET",
 	//   "id": "documentai.projects.locations.operations.list",

@@ -732,6 +732,7 @@ func (a *API) GenerateCode() ([]byte, error) {
 	pn("var _ = strings.Replace")
 	pn("var _ = context.Canceled")
 	pn("var _ = internaloption.WithDefaultEndpoint")
+	pn("var _ = internal.Version")
 	pn("")
 	pn("const apiId = %q", a.doc.ID)
 	pn("const apiName = %q", a.doc.Name)

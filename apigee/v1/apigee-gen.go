@@ -3928,6 +3928,15 @@ func (s *GoogleCloudApigeeV1DeploymentConfig) MarshalJSON() ([]byte, error) {
 // represents a deployment group that should be present in a particular
 // environment.
 type GoogleCloudApigeeV1DeploymentGroupConfig struct {
+	// DeploymentGroupType: Type of the deployment group, which will be
+	// either Standard or Extensible.
+	//
+	// Possible values:
+	//   "DEPLOYMENT_GROUP_TYPE_UNSPECIFIED" - Unspecified type
+	//   "STANDARD" - Standard type
+	//   "EXTENSIBLE" - Extensible Type
+	DeploymentGroupType string `json:"deploymentGroupType,omitempty"`
+
 	// Name: Name of the deployment group in the following format:
 	// `organizations/{org}/environments/{env}/deploymentGroups/{group}`.
 	Name string `json:"name,omitempty"`
@@ -3940,20 +3949,21 @@ type GoogleCloudApigeeV1DeploymentGroupConfig struct {
 	// deleted and recreated.
 	Uid string `json:"uid,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Name") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "DeploymentGroupType")
+	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DeploymentGroupType") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -50964,14 +50974,7 @@ type OrganizationsOperationsListCall struct {
 
 // List: Lists operations that match the specified filter in the
 // request. If the server doesn't support this method, it returns
-// `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to
-// override the binding to use different resource name schemes, such as
-// `users/*/operations`. To override the binding, API services can add a
-// binding such as "/v1/{name=users/*}/operations" to their service
-// configuration. For backwards compatibility, the default name includes
-// the operations collection id, however overriding users must ensure
-// the name binding is the parent resource, without the operations
-// collection id.
+// `UNIMPLEMENTED`.
 //
 // - name: The name of the operation's parent resource.
 func (r *OrganizationsOperationsService) List(name string) *OrganizationsOperationsListCall {
@@ -51101,7 +51104,7 @@ func (c *OrganizationsOperationsListCall) Do(opts ...googleapi.CallOption) (*Goo
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.",
 	//   "flatPath": "v1/organizations/{organizationsId}/operations",
 	//   "httpMethod": "GET",
 	//   "id": "apigee.organizations.operations.list",

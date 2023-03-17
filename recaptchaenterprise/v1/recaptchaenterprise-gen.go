@@ -616,16 +616,33 @@ func (s *GoogleCloudRecaptchaenterpriseV1EndpointVerificationInfo) MarshalJSON()
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudRecaptchaenterpriseV1Event: The event being assessed.
 type GoogleCloudRecaptchaenterpriseV1Event struct {
 	// ExpectedAction: Optional. The expected action for this type of event.
 	// This should be the same action provided at token generation time on
 	// client-side platforms already integrated with recaptcha enterprise.
 	ExpectedAction string `json:"expectedAction,omitempty"`
 
+	// Express: Optional. Optional flag for a reCAPTCHA express request for
+	// an assessment without a token. If enabled, `site_key` must reference
+	// a SCORE key with WAF feature set to EXPRESS.
+	Express bool `json:"express,omitempty"`
+
 	// HashedAccountId: Optional. Unique stable hashed user identifier for
 	// the request. The identifier must be hashed using hmac-sha256 with
 	// stable secret.
 	HashedAccountId string `json:"hashedAccountId,omitempty"`
+
+	// Headers: Optional. Optional HTTP header information about the
+	// request.
+	Headers []string `json:"headers,omitempty"`
+
+	// Ja3: Optional. Optional JA3 fingerprint for SSL clients.
+	Ja3 string `json:"ja3,omitempty"`
+
+	// RequestedUri: Optional. The URI resource the user requested that
+	// triggered an assessment.
+	RequestedUri string `json:"requestedUri,omitempty"`
 
 	// SiteKey: Optional. The site key that was used to invoke reCAPTCHA
 	// Enterprise on your site and generate the token.
@@ -859,7 +876,8 @@ type GoogleCloudRecaptchaenterpriseV1Key struct {
 	// AndroidSettings: Settings for keys that can be used by Android apps.
 	AndroidSettings *GoogleCloudRecaptchaenterpriseV1AndroidKeySettings `json:"androidSettings,omitempty"`
 
-	// CreateTime: The timestamp corresponding to the creation of this Key.
+	// CreateTime: Output only. The timestamp corresponding to the creation
+	// of this Key.
 	CreateTime string `json:"createTime,omitempty"`
 
 	// DisplayName: Human-readable display name of this key. Modifiable by
@@ -1544,6 +1562,8 @@ func (s *GoogleCloudRecaptchaenterpriseV1TestingOptions) UnmarshalJSON(data []by
 	return nil
 }
 
+// GoogleCloudRecaptchaenterpriseV1TokenProperties: Properties of the
+// provided event token.
 type GoogleCloudRecaptchaenterpriseV1TokenProperties struct {
 	// Action: Action name provided at token generation.
 	Action string `json:"action,omitempty"`
@@ -2040,6 +2060,8 @@ type GoogleCloudRecaptchaenterpriseV1WafSettings struct {
 	// user session on the site's domain.
 	//   "ACTION_TOKEN" - Use reCAPTCHA action-tokens to protect user
 	// actions.
+	//   "EXPRESS" - Use reCAPTCHA WAF express protection to protect any
+	// context other than web pages, like APIs and IoT devices.
 	WafFeature string `json:"wafFeature,omitempty"`
 
 	// WafService: Required. The WAF service that uses this key.

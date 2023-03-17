@@ -1804,7 +1804,7 @@ func (s *Restore) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// RestoreConfig: Configuration of a restore. Next id: 11
+// RestoreConfig: Configuration of a restore. Next id: 12
 type RestoreConfig struct {
 	// AllNamespaces: Restore all namespaced resources in the Backup if set
 	// to "True". Specifying this field to "False" is an error.
@@ -1919,7 +1919,7 @@ func (s *RestoreConfig) MarshalJSON() ([]byte, error) {
 
 // RestorePlan: The configuration of a potential series of Restore
 // operations to be performed against Backups belong to a particular
-// BackupPlan. Next id: 11
+// BackupPlan. Next id: 13
 type RestorePlan struct {
 	// BackupPlan: Required. Immutable. A reference to the BackupPlan from
 	// which Backups may be used as the source for Restores created via this

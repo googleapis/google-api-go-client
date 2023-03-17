@@ -761,7 +761,8 @@ type Disk struct {
 	// honor this field.
 	SizeGb int64 `json:"sizeGb,omitempty,string"`
 
-	// Snapshot: Name of a snapshot used as the data source.
+	// Snapshot: Name of a snapshot used as the data source. Snapshot is not
+	// supported as boot disk now.
 	Snapshot string `json:"snapshot,omitempty"`
 
 	// Type: Disk type as shown in `gcloud compute disk-types list`. For
@@ -879,6 +880,7 @@ type InstancePolicy struct {
 
 	// BootDisk: Boot disk to be created and attached to each VM by this
 	// InstancePolicy. Boot disk will be deleted when the VM is deleted.
+	// Batch API now only supports booting from image.
 	BootDisk *Disk `json:"bootDisk,omitempty"`
 
 	// Disks: Non-boot disks to be attached for each VM created by this

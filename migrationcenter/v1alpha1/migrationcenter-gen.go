@@ -679,6 +679,68 @@ func (s *AssetFrame) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// BatchUpdateAssetsRequest: A request to update a list of assets.
+type BatchUpdateAssetsRequest struct {
+	// Requests: Required. The request message specifying the resources to
+	// update. A maximum of 1000 assets can be modified in a batch.
+	Requests []*UpdateAssetRequest `json:"requests,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Requests") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Requests") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BatchUpdateAssetsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchUpdateAssetsRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BatchUpdateAssetsResponse: Response for updating a list of assets.
+type BatchUpdateAssetsResponse struct {
+	// Assets: Update asset content. The content only includes values after
+	// field mask being applied.
+	Assets []*Asset `json:"assets,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Assets") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Assets") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BatchUpdateAssetsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchUpdateAssetsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // BiosDetails: Details about the bios.
 type BiosDetails struct {
 	// BiosManufacturer: Bios manufacturer.
@@ -3046,6 +3108,55 @@ func (s *TimeZone) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// UpdateAssetRequest: A request to update an asset.
+type UpdateAssetRequest struct {
+	// Asset: Required. The resource being updated.
+	Asset *Asset `json:"asset,omitempty"`
+
+	// RequestId: Optional. An optional request ID to identify requests.
+	// Specify a unique request ID so that if you must retry your request,
+	// the server will know to ignore the request if it has already been
+	// completed. The server will guarantee that for at least 60 minutes
+	// since the first request. For example, consider a situation where you
+	// make an initial request and the request times out. If you make the
+	// request again with the same request ID, the server can check if
+	// original operation with the same request ID was received, and if so,
+	// will ignore the second request. This prevents clients from
+	// accidentally creating duplicate commitments. The request ID must be a
+	// valid UUID with the exception that zero UUID is not supported
+	// (00000000-0000-0000-0000-000000000000).
+	RequestId string `json:"requestId,omitempty"`
+
+	// UpdateMask: Required. Field mask is used to specify the fields to be
+	// overwritten in the `Asset` resource by the update. The values
+	// specified in the `update_mask` field are relative to the resource,
+	// not the full request. A field will be overwritten if it is in the
+	// mask. A single * value in the mask lets you to overwrite all fields.
+	UpdateMask string `json:"updateMask,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Asset") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Asset") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UpdateAssetRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod UpdateAssetRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ValidateImportJobRequest: A request to validate an import job.
 type ValidateImportJobRequest struct {
 	// RequestId: Optional. An optional request ID to identify requests.
@@ -3907,6 +4018,148 @@ func (c *ProjectsLocationsAssetsAggregateValuesCall) Do(opts ...googleapi.CallOp
 	//   },
 	//   "response": {
 	//     "$ref": "AggregateAssetsValuesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "migrationcenter.projects.locations.assets.batchUpdate":
+
+type ProjectsLocationsAssetsBatchUpdateCall struct {
+	s                        *Service
+	parent                   string
+	batchupdateassetsrequest *BatchUpdateAssetsRequest
+	urlParams_               gensupport.URLParams
+	ctx_                     context.Context
+	header_                  http.Header
+}
+
+// BatchUpdate: Updates the parameters of a list of assets.
+//
+// - parent: Parent value for batch asset update.
+func (r *ProjectsLocationsAssetsService) BatchUpdate(parent string, batchupdateassetsrequest *BatchUpdateAssetsRequest) *ProjectsLocationsAssetsBatchUpdateCall {
+	c := &ProjectsLocationsAssetsBatchUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.batchupdateassetsrequest = batchupdateassetsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsAssetsBatchUpdateCall) Fields(s ...googleapi.Field) *ProjectsLocationsAssetsBatchUpdateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsAssetsBatchUpdateCall) Context(ctx context.Context) *ProjectsLocationsAssetsBatchUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsAssetsBatchUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAssetsBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.batchupdateassetsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/{+parent}/assets:batchUpdate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "migrationcenter.projects.locations.assets.batchUpdate" call.
+// Exactly one of *BatchUpdateAssetsResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *BatchUpdateAssetsResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsAssetsBatchUpdateCall) Do(opts ...googleapi.CallOption) (*BatchUpdateAssetsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &BatchUpdateAssetsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates the parameters of a list of assets.",
+	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/assets:batchUpdate",
+	//   "httpMethod": "POST",
+	//   "id": "migrationcenter.projects.locations.assets.batchUpdate",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. Parent value for batch asset update.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha1/{+parent}/assets:batchUpdate",
+	//   "request": {
+	//     "$ref": "BatchUpdateAssetsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "BatchUpdateAssetsResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

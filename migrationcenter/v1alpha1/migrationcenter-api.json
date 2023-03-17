@@ -207,6 +207,34 @@
                     "https://www.googleapis.com/auth/cloud-platform"
                   ]
                 },
+                "batchUpdate": {
+                  "description": "Updates the parameters of a list of assets.",
+                  "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/assets:batchUpdate",
+                  "httpMethod": "POST",
+                  "id": "migrationcenter.projects.locations.assets.batchUpdate",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "parent": {
+                      "description": "Required. Parent value for batch asset update.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1alpha1/{+parent}/assets:batchUpdate",
+                  "request": {
+                    "$ref": "BatchUpdateAssetsRequest"
+                  },
+                  "response": {
+                    "$ref": "BatchUpdateAssetsResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
                 "create": {
                   "description": "Creates a new asset in a given project and location. Deprecated: Use ReportAssetFrames instead.",
                   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/assets",
@@ -1031,7 +1059,7 @@
       }
     }
   },
-  "revision": "20230224",
+  "revision": "20230301",
   "rootUrl": "https://migrationcenter.googleapis.com/",
   "schemas": {
     "AggregateAssetsValuesRequest": {
@@ -1308,6 +1336,34 @@
         "virtualMachineDetails": {
           "$ref": "VirtualMachineDetails",
           "description": "Asset information specific for virtual machines."
+        }
+      },
+      "type": "object"
+    },
+    "BatchUpdateAssetsRequest": {
+      "description": "A request to update a list of assets.",
+      "id": "BatchUpdateAssetsRequest",
+      "properties": {
+        "requests": {
+          "description": "Required. The request message specifying the resources to update. A maximum of 1000 assets can be modified in a batch.",
+          "items": {
+            "$ref": "UpdateAssetRequest"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "BatchUpdateAssetsResponse": {
+      "description": "Response for updating a list of assets.",
+      "id": "BatchUpdateAssetsResponse",
+      "properties": {
+        "assets": {
+          "description": "Update asset content. The content only includes values after field mask being applied.",
+          "items": {
+            "$ref": "Asset"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -2786,6 +2842,26 @@
         },
         "version": {
           "description": "Optional. IANA Time Zone Database version number, e.g. \"2019a\".",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "UpdateAssetRequest": {
+      "description": "A request to update an asset.",
+      "id": "UpdateAssetRequest",
+      "properties": {
+        "asset": {
+          "$ref": "Asset",
+          "description": "Required. The resource being updated."
+        },
+        "requestId": {
+          "description": "Optional. An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+          "type": "string"
+        },
+        "updateMask": {
+          "description": "Required. Field mask is used to specify the fields to be overwritten in the `Asset` resource by the update. The values specified in the `update_mask` field are relative to the resource, not the full request. A field will be overwritten if it is in the mask. A single * value in the mask lets you to overwrite all fields.",
+          "format": "google-fieldmask",
           "type": "string"
         }
       },

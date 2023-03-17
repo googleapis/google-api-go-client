@@ -3785,9 +3785,9 @@ type GoogleCloudDocumentaiV1beta1DocumentProvenance struct {
 	//   "ADD" - Add an element.
 	//   "REMOVE" - Remove an element identified by `parent`.
 	//   "UPDATE" - Updates any fields within the given provenance scope of
-	// the message. It 'overwrites' the fields rather than replacing them.
-	// This is especially relevant when we just want to update a field value
-	// of an entity without also affecting all the child properties.
+	// the message. It overwrites the fields rather than replacing them. Use
+	// this when you want to update a field value of an entity without also
+	// updating all the child properties.
 	//   "REPLACE" - Currently unused. Replace an element identified by
 	// `parent`.
 	//   "EVAL_REQUESTED" - Deprecated. Request human review for the element
@@ -5957,9 +5957,9 @@ type GoogleCloudDocumentaiV1beta2DocumentProvenance struct {
 	//   "ADD" - Add an element.
 	//   "REMOVE" - Remove an element identified by `parent`.
 	//   "UPDATE" - Updates any fields within the given provenance scope of
-	// the message. It 'overwrites' the fields rather than replacing them.
-	// This is especially relevant when we just want to update a field value
-	// of an entity without also affecting all the child properties.
+	// the message. It overwrites the fields rather than replacing them. Use
+	// this when you want to update a field value of an entity without also
+	// updating all the child properties.
 	//   "REPLACE" - Currently unused. Replace an element identified by
 	// `parent`.
 	//   "EVAL_REQUESTED" - Deprecated. Request human review for the element
@@ -8600,9 +8600,9 @@ type GoogleCloudDocumentaiV1beta3DocumentProvenance struct {
 	//   "ADD" - Add an element.
 	//   "REMOVE" - Remove an element identified by `parent`.
 	//   "UPDATE" - Updates any fields within the given provenance scope of
-	// the message. It 'overwrites' the fields rather than replacing them.
-	// This is especially relevant when we just want to update a field value
-	// of an entity without also affecting all the child properties.
+	// the message. It overwrites the fields rather than replacing them. Use
+	// this when you want to update a field value of an entity without also
+	// updating all the child properties.
 	//   "REPLACE" - Currently unused. Replace an element identified by
 	// `parent`.
 	//   "EVAL_REQUESTED" - Deprecated. Request human review for the element
@@ -9895,6 +9895,105 @@ func (s *GoogleCloudDocumentaiV1beta3HumanReviewStatus) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDocumentaiV1beta3ImportProcessorVersionMetadata: The long
+// running operation metadata for the ImportProcessorVersion method.
+type GoogleCloudDocumentaiV1beta3ImportProcessorVersionMetadata struct {
+	// CommonMetadata: The basic metadata for the long running operation.
+	CommonMetadata *GoogleCloudDocumentaiV1beta3CommonOperationMetadata `json:"commonMetadata,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CommonMetadata") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CommonMetadata") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta3ImportProcessorVersionMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3ImportProcessorVersionMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta3ImportProcessorVersionRequest: The
+// request message for the ImportProcessorVersion method. This method
+// requires Document AI Service Agent of the destination project in the
+// source project's IAM with Document AI Editor role
+// (https://cloud.google.com/document-ai/docs/access-control/iam-roles).
+// The destination project is specified as part of the `parent` field.
+// The source project is specified as part of `source` field. The
+// Service Agent for Document AI can be found in
+// https://cloud.google.com/iam/docs/service-agents.
+type GoogleCloudDocumentaiV1beta3ImportProcessorVersionRequest struct {
+	// ProcessorVersionSource: Required. The source processor version to
+	// import from.
+	ProcessorVersionSource string `json:"processorVersionSource,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ProcessorVersionSource") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ProcessorVersionSource")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta3ImportProcessorVersionRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3ImportProcessorVersionRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta3ImportProcessorVersionResponse: The
+// response message for the ImportProcessorVersion method.
+type GoogleCloudDocumentaiV1beta3ImportProcessorVersionResponse struct {
+	// ProcessorVersion: The destination processor version name.
+	ProcessorVersion string `json:"processorVersion,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ProcessorVersion") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ProcessorVersion") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta3ImportProcessorVersionResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3ImportProcessorVersionResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDocumentaiV1beta3ListEvaluationsResponse: The response
 // from ListEvaluations.
 type GoogleCloudDocumentaiV1beta3ListEvaluationsResponse struct {
@@ -10096,10 +10195,22 @@ type GoogleCloudDocumentaiV1beta3OcrConfig struct {
 	// fine-tune OCR behavior.
 	AdvancedOcrOptions []string `json:"advancedOcrOptions,omitempty"`
 
+	// EnableImageQualityScores: Enables intelligent document quality scores
+	// after OCR. Can help with diagnosing why OCR responses are of poor
+	// quality for a given input. Adds additional latency comparable to
+	// regular OCR to the process call.
+	EnableImageQualityScores bool `json:"enableImageQualityScores,omitempty"`
+
 	// EnableNativePdfParsing: Enables special handling for PDFs with
 	// existing text information. Results in better text extraction quality
 	// in such PDF inputs.
 	EnableNativePdfParsing bool `json:"enableNativePdfParsing,omitempty"`
+
+	// EnableSymbol: Includes symbol level OCR information if set to true.
+	EnableSymbol bool `json:"enableSymbol,omitempty"`
+
+	// Hints: Hints for the OCR model.
+	Hints *GoogleCloudDocumentaiV1beta3OcrConfigHints `json:"hints,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AdvancedOcrOptions")
 	// to unconditionally include in API requests. By default, fields with
@@ -10121,6 +10232,40 @@ type GoogleCloudDocumentaiV1beta3OcrConfig struct {
 
 func (s *GoogleCloudDocumentaiV1beta3OcrConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3OcrConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta3OcrConfigHints: Hints for OCR Engine
+type GoogleCloudDocumentaiV1beta3OcrConfigHints struct {
+	// LanguageHints: List of BCP-47 language codes to use for OCR. In most
+	// cases, not specifying it yields the best results since it enables
+	// automatic language detection. For languages based on the Latin
+	// alphabet, setting hints is not needed. In rare cases, when the
+	// language of the text in the image is known, setting a hint will help
+	// get better results (although it will be a significant hindrance if
+	// the hint is wrong).
+	LanguageHints []string `json:"languageHints,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "LanguageHints") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LanguageHints") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta3OcrConfigHints) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3OcrConfigHints
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -12578,14 +12723,7 @@ type ProjectsLocationsOperationsListCall struct {
 
 // List: Lists operations that match the specified filter in the
 // request. If the server doesn't support this method, it returns
-// `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to
-// override the binding to use different resource name schemes, such as
-// `users/*/operations`. To override the binding, API services can add a
-// binding such as "/v1/{name=users/*}/operations" to their service
-// configuration. For backwards compatibility, the default name includes
-// the operations collection id, however overriding users must ensure
-// the name binding is the parent resource, without the operations
-// collection id.
+// `UNIMPLEMENTED`.
 //
 // - name: The name of the operation's parent resource.
 func (r *ProjectsLocationsOperationsService) List(name string) *ProjectsLocationsOperationsListCall {
@@ -12715,7 +12853,7 @@ func (c *ProjectsLocationsOperationsListCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.",
 	//   "flatPath": "v1beta3/projects/{projectsId}/locations/{locationsId}/operations",
 	//   "httpMethod": "GET",
 	//   "id": "documentai.projects.locations.operations.list",
@@ -15330,6 +15468,151 @@ func (c *ProjectsLocationsProcessorsProcessorVersionsGetCall) Do(opts ...googlea
 	//   "path": "v1beta3/{+name}",
 	//   "response": {
 	//     "$ref": "GoogleCloudDocumentaiV1beta3ProcessorVersion"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "documentai.projects.locations.processors.processorVersions.importProcessorVersion":
+
+type ProjectsLocationsProcessorsProcessorVersionsImportProcessorVersionCall struct {
+	s                                                         *Service
+	parent                                                    string
+	googleclouddocumentaiv1beta3importprocessorversionrequest *GoogleCloudDocumentaiV1beta3ImportProcessorVersionRequest
+	urlParams_                                                gensupport.URLParams
+	ctx_                                                      context.Context
+	header_                                                   http.Header
+}
+
+// ImportProcessorVersion: Imports a processor version from source
+// processor version.
+//
+//   - parent: The destination processor name to create the processor
+//     version in. Format:
+//     `projects/{project}/locations/{location}/processors/{processor}`.
+func (r *ProjectsLocationsProcessorsProcessorVersionsService) ImportProcessorVersion(parent string, googleclouddocumentaiv1beta3importprocessorversionrequest *GoogleCloudDocumentaiV1beta3ImportProcessorVersionRequest) *ProjectsLocationsProcessorsProcessorVersionsImportProcessorVersionCall {
+	c := &ProjectsLocationsProcessorsProcessorVersionsImportProcessorVersionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleclouddocumentaiv1beta3importprocessorversionrequest = googleclouddocumentaiv1beta3importprocessorversionrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsProcessorsProcessorVersionsImportProcessorVersionCall) Fields(s ...googleapi.Field) *ProjectsLocationsProcessorsProcessorVersionsImportProcessorVersionCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsProcessorsProcessorVersionsImportProcessorVersionCall) Context(ctx context.Context) *ProjectsLocationsProcessorsProcessorVersionsImportProcessorVersionCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsProcessorsProcessorVersionsImportProcessorVersionCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsProcessorsProcessorVersionsImportProcessorVersionCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddocumentaiv1beta3importprocessorversionrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta3/{+parent}/processorVersions:importProcessorVersion")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "documentai.projects.locations.processors.processorVersions.importProcessorVersion" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsProcessorsProcessorVersionsImportProcessorVersionCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Imports a processor version from source processor version.",
+	//   "flatPath": "v1beta3/projects/{projectsId}/locations/{locationsId}/processors/{processorsId}/processorVersions:importProcessorVersion",
+	//   "httpMethod": "POST",
+	//   "id": "documentai.projects.locations.processors.processorVersions.importProcessorVersion",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The destination processor name to create the processor version in. Format: `projects/{project}/locations/{location}/processors/{processor}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/processors/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta3/{+parent}/processorVersions:importProcessorVersion",
+	//   "request": {
+	//     "$ref": "GoogleCloudDocumentaiV1beta3ImportProcessorVersionRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

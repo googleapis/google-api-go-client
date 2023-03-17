@@ -957,7 +957,7 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 // Repository: A Repository for storing artifacts with a specific
 // format.
 type Repository struct {
-	// CreateTime: The time when the repository was created.
+	// CreateTime: Output only. The time when the repository was created.
 	CreateTime string `json:"createTime,omitempty"`
 
 	// Description: The user-provided description of the repository.
@@ -1003,7 +1003,8 @@ type Repository struct {
 	// public preview use this to calculate storage costs.
 	SizeBytes int64 `json:"sizeBytes,omitempty,string"`
 
-	// UpdateTime: The time when the repository was last updated.
+	// UpdateTime: Output only. The time when the repository was last
+	// updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

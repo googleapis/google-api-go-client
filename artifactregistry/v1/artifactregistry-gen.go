@@ -592,6 +592,38 @@ func (s *DockerRepository) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// DockerRepositoryConfig: DockerRepositoryConfig is docker related
+// repository details. Provides additional configuration details for
+// repositories of the docker format type.
+type DockerRepositoryConfig struct {
+	// ImmutableTags: The repository which enabled this flag prevents all
+	// tags from being modified, moved or deleted. This does not prevent
+	// tags from being created.
+	ImmutableTags bool `json:"immutableTags,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ImmutableTags") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ImmutableTags") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DockerRepositoryConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod DockerRepositoryConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
@@ -2088,11 +2120,15 @@ func (s *RemoteRepositoryConfig) MarshalJSON() ([]byte, error) {
 // Repository: A Repository for storing artifacts with a specific
 // format.
 type Repository struct {
-	// CreateTime: The time when the repository was created.
+	// CreateTime: Output only. The time when the repository was created.
 	CreateTime string `json:"createTime,omitempty"`
 
 	// Description: The user-provided description of the repository.
 	Description string `json:"description,omitempty"`
+
+	// DockerConfig: Docker repository config contains repository level
+	// configuration for the repositories of docker type.
+	DockerConfig *DockerRepositoryConfig `json:"dockerConfig,omitempty"`
 
 	// Format: The format of packages that are stored in the repository.
 	//
@@ -2154,7 +2190,8 @@ type Repository struct {
 	// public preview use this to calculate storage costs.
 	SizeBytes int64 `json:"sizeBytes,omitempty,string"`
 
-	// UpdateTime: The time when the repository was last updated.
+	// UpdateTime: Output only. The time when the repository was last
+	// updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// VirtualRepositoryConfig: Configuration specific for a Virtual

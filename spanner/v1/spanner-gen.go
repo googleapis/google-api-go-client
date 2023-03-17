@@ -1824,6 +1824,13 @@ func (s *ExecuteBatchDmlResponse) MarshalJSON() ([]byte, error) {
 // ExecuteSqlRequest: The request for ExecuteSql and
 // ExecuteStreamingSql.
 type ExecuteSqlRequest struct {
+	// DataBoostEnabled: If this is for a partitioned query and this field
+	// is set to `true`, the request will be executed via Spanner
+	// independent compute resources. If the field is set to `true` but the
+	// request does not set `partition_token`, the API will return an
+	// `INVALID_ARGUMENT` error.
+	DataBoostEnabled bool `json:"dataBoostEnabled,omitempty"`
+
 	// ParamTypes: It is not always possible for Cloud Spanner to infer the
 	// right SQL type from a JSON value. For example, values of type `BYTES`
 	// and values of type `STRING` both appear in params as JSON strings. In
@@ -1901,7 +1908,7 @@ type ExecuteSqlRequest struct {
 	// Partitioned DML transaction ID.
 	Transaction *TransactionSelector `json:"transaction,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "ParamTypes") to
+	// ForceSendFields is a list of field names (e.g. "DataBoostEnabled") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1909,12 +1916,13 @@ type ExecuteSqlRequest struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ParamTypes") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DataBoostEnabled") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -2306,16 +2314,20 @@ type Instance struct {
 
 	// NodeCount: The number of nodes allocated to this instance. At most
 	// one of either node_count or processing_units should be present in the
-	// message. This may be zero in API responses for instances that are not
-	// yet in state `READY`. See the documentation
+	// message. Users can set the node_count field to specify the target
+	// number of nodes allocated to the instance. This may be zero in API
+	// responses for instances that are not yet in state `READY`. See the
+	// documentation
 	// (https://cloud.google.com/spanner/docs/compute-capacity) for more
 	// information about nodes and processing units.
 	NodeCount int64 `json:"nodeCount,omitempty"`
 
 	// ProcessingUnits: The number of processing units allocated to this
 	// instance. At most one of processing_units or node_count should be
-	// present in the message. This may be zero in API responses for
-	// instances that are not yet in state `READY`. See the documentation
+	// present in the message. Users can set the processing_units field to
+	// specify the target number of processing units allocated to the
+	// instance. This may be zero in API responses for instances that are
+	// not yet in state `READY`. See the documentation
 	// (https://cloud.google.com/spanner/docs/compute-capacity) for more
 	// information about nodes and processing units.
 	ProcessingUnits int64 `json:"processingUnits,omitempty"`
@@ -4281,6 +4293,13 @@ type ReadRequest struct {
 	// Columns: Required. The columns of table to be returned for each row
 	// matching this request.
 	Columns []string `json:"columns,omitempty"`
+
+	// DataBoostEnabled: If this is for a partitioned read and this field is
+	// set to `true`, the request will be executed via Spanner independent
+	// compute resources. If the field is set to `true` but the request does
+	// not set `partition_token`, the API will return an `INVALID_ARGUMENT`
+	// error.
+	DataBoostEnabled bool `json:"dataBoostEnabled,omitempty"`
 
 	// Index: If non-empty, the name of an index on table. This index is
 	// used instead of the table primary key when interpreting key_set and
@@ -7610,14 +7629,7 @@ type ProjectsInstanceConfigsOperationsListCall struct {
 
 // List: Lists operations that match the specified filter in the
 // request. If the server doesn't support this method, it returns
-// `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to
-// override the binding to use different resource name schemes, such as
-// `users/*/operations`. To override the binding, API services can add a
-// binding such as "/v1/{name=users/*}/operations" to their service
-// configuration. For backwards compatibility, the default name includes
-// the operations collection id, however overriding users must ensure
-// the name binding is the parent resource, without the operations
-// collection id.
+// `UNIMPLEMENTED`.
 //
 // - name: The name of the operation's parent resource.
 func (r *ProjectsInstanceConfigsOperationsService) List(name string) *ProjectsInstanceConfigsOperationsListCall {
@@ -7746,7 +7758,7 @@ func (c *ProjectsInstanceConfigsOperationsListCall) Do(opts ...googleapi.CallOpt
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.",
 	//   "flatPath": "v1/projects/{projectsId}/instanceConfigs/{instanceConfigsId}/operations",
 	//   "httpMethod": "GET",
 	//   "id": "spanner.projects.instanceConfigs.operations.list",
@@ -11335,14 +11347,7 @@ type ProjectsInstancesBackupsOperationsListCall struct {
 
 // List: Lists operations that match the specified filter in the
 // request. If the server doesn't support this method, it returns
-// `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to
-// override the binding to use different resource name schemes, such as
-// `users/*/operations`. To override the binding, API services can add a
-// binding such as "/v1/{name=users/*}/operations" to their service
-// configuration. For backwards compatibility, the default name includes
-// the operations collection id, however overriding users must ensure
-// the name binding is the parent resource, without the operations
-// collection id.
+// `UNIMPLEMENTED`.
 //
 // - name: The name of the operation's parent resource.
 func (r *ProjectsInstancesBackupsOperationsService) List(name string) *ProjectsInstancesBackupsOperationsListCall {
@@ -11471,7 +11476,7 @@ func (c *ProjectsInstancesBackupsOperationsListCall) Do(opts ...googleapi.CallOp
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.",
 	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/backups/{backupsId}/operations",
 	//   "httpMethod": "GET",
 	//   "id": "spanner.projects.instances.backups.operations.list",
@@ -14322,14 +14327,7 @@ type ProjectsInstancesDatabasesOperationsListCall struct {
 
 // List: Lists operations that match the specified filter in the
 // request. If the server doesn't support this method, it returns
-// `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to
-// override the binding to use different resource name schemes, such as
-// `users/*/operations`. To override the binding, API services can add a
-// binding such as "/v1/{name=users/*}/operations" to their service
-// configuration. For backwards compatibility, the default name includes
-// the operations collection id, however overriding users must ensure
-// the name binding is the parent resource, without the operations
-// collection id.
+// `UNIMPLEMENTED`.
 //
 // - name: The name of the operation's parent resource.
 func (r *ProjectsInstancesDatabasesOperationsService) List(name string) *ProjectsInstancesDatabasesOperationsListCall {
@@ -14458,7 +14456,7 @@ func (c *ProjectsInstancesDatabasesOperationsListCall) Do(opts ...googleapi.Call
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.",
 	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}/operations",
 	//   "httpMethod": "GET",
 	//   "id": "spanner.projects.instances.databases.operations.list",
@@ -17261,14 +17259,7 @@ type ProjectsInstancesOperationsListCall struct {
 
 // List: Lists operations that match the specified filter in the
 // request. If the server doesn't support this method, it returns
-// `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to
-// override the binding to use different resource name schemes, such as
-// `users/*/operations`. To override the binding, API services can add a
-// binding such as "/v1/{name=users/*}/operations" to their service
-// configuration. For backwards compatibility, the default name includes
-// the operations collection id, however overriding users must ensure
-// the name binding is the parent resource, without the operations
-// collection id.
+// `UNIMPLEMENTED`.
 //
 // - name: The name of the operation's parent resource.
 func (r *ProjectsInstancesOperationsService) List(name string) *ProjectsInstancesOperationsListCall {
@@ -17397,7 +17388,7 @@ func (c *ProjectsInstancesOperationsListCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.",
 	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/operations",
 	//   "httpMethod": "GET",
 	//   "id": "spanner.projects.instances.operations.list",

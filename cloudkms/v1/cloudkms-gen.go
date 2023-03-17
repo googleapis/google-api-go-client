@@ -976,6 +976,11 @@ type CryptoKeyVersion struct {
 	// DESTROY_SCHEDULED.
 	DestroyTime string `json:"destroyTime,omitempty"`
 
+	// ExternalDestructionFailureReason: Output only. The root cause of the
+	// most recent external destruction failure. Only present if state is
+	// EXTERNAL_DESTRUCTION_FAILED.
+	ExternalDestructionFailureReason string `json:"externalDestructionFailureReason,omitempty"`
+
 	// ExternalProtectionLevelOptions: ExternalProtectionLevelOptions stores
 	// a group of additional fields for configuring a CryptoKeyVersion that
 	// are specific to the EXTERNAL protection level and EXTERNAL_VPC
@@ -985,6 +990,11 @@ type CryptoKeyVersion struct {
 	// GenerateTime: Output only. The time this CryptoKeyVersion's key
 	// material was generated.
 	GenerateTime string `json:"generateTime,omitempty"`
+
+	// GenerationFailureReason: Output only. The root cause of the most
+	// recent generation failure. Only present if state is
+	// GENERATION_FAILED.
+	GenerationFailureReason string `json:"generationFailureReason,omitempty"`
 
 	// ImportFailureReason: Output only. The root cause of the most recent
 	// import failure. Only present if state is IMPORT_FAILED.
@@ -1051,6 +1061,18 @@ type CryptoKeyVersion struct {
 	// may not be used, enabled, disabled, or destroyed. The submitted key
 	// material has been discarded. Additional details can be found in
 	// CryptoKeyVersion.import_failure_reason.
+	//   "GENERATION_FAILED" - This version was not generated successfully.
+	// It may not be used, enabled, disabled, or destroyed. Additional
+	// details can be found in CryptoKeyVersion.generation_failure_reason.
+	//   "PENDING_EXTERNAL_DESTRUCTION" - This version was destroyed, and it
+	// may not be used or enabled again. Cloud KMS is waiting for the
+	// corresponding key material residing in an external key manager to be
+	// destroyed.
+	//   "EXTERNAL_DESTRUCTION_FAILED" - This version was destroyed, and it
+	// may not be used or enabled again. However, Cloud KMS could not
+	// confirm that the corresponding key material residing in an external
+	// key manager was destroyed. Additional details can be found in
+	// CryptoKeyVersion.external_destruction_failure_reason.
 	State string `json:"state,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1355,6 +1377,49 @@ func (s *Digest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// EkmConfig: An EkmConfig is a singleton resource that represents
+// configuration parameters that apply to all CryptoKeys and
+// CryptoKeyVersions with a ProtectionLevel of EXTERNAL_VPC in a given
+// project and location.
+type EkmConfig struct {
+	// DefaultEkmConnection: Optional. Resource name of the default
+	// EkmConnection. Setting this field to the empty string removes the
+	// default.
+	DefaultEkmConnection string `json:"defaultEkmConnection,omitempty"`
+
+	// Name: Output only. The resource name for the EkmConfig in the format
+	// `projects/*/locations/*/ekmConfig`.
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "DefaultEkmConnection") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DefaultEkmConnection") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EkmConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod EkmConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // EkmConnection: An EkmConnection represents an individual EKM
 // connection. It can be used for creating CryptoKeys and
 // CryptoKeyVersions with a ProtectionLevel of EXTERNAL_VPC, as well as
@@ -1365,8 +1430,38 @@ type EkmConnection struct {
 	// created.
 	CreateTime string `json:"createTime,omitempty"`
 
+	// CryptoSpacePath: Optional. Identifies the EKM Crypto Space that this
+	// EkmConnection maps to. Note: This field is required if
+	// KeyManagementMode is CLOUD_KMS.
+	CryptoSpacePath string `json:"cryptoSpacePath,omitempty"`
+
 	// Etag: Optional. Etag of the currently stored EkmConnection.
 	Etag string `json:"etag,omitempty"`
+
+	// KeyManagementMode: Optional. Describes who can perform control plane
+	// operations on the EKM. If unset, this defaults to MANUAL.
+	//
+	// Possible values:
+	//   "KEY_MANAGEMENT_MODE_UNSPECIFIED" - Not specified.
+	//   "MANUAL" - EKM-side key management operations on CryptoKeys created
+	// with this EkmConnection must be initiated from the EKM directly and
+	// cannot be performed from Cloud KMS. This means that: * When creating
+	// a CryptoKeyVersion associated with this EkmConnection, the caller
+	// must supply the key path of pre-existing external key material that
+	// will be linked to the CryptoKeyVersion. * Destruction of external key
+	// material cannot be requested via the Cloud KMS API and must be
+	// performed directly in the EKM. * Automatic rotation of key material
+	// is not supported.
+	//   "CLOUD_KMS" - All CryptoKeys created with this EkmConnection use
+	// EKM-side key management operations initiated from Cloud KMS. This
+	// means that: * When a CryptoKeyVersion associated with this
+	// EkmConnection is created, the EKM automatically generates new key
+	// material and a new key path. The caller cannot supply the key path of
+	// pre-existing external key material. * Destruction of external key
+	// material associated with this EkmConnection can be requested by
+	// calling DestroyCryptoKeyVersion. * Automatic rotation of key material
+	// is supported.
+	KeyManagementMode string `json:"keyManagementMode,omitempty"`
 
 	// Name: Output only. The resource name for the EkmConnection in the
 	// format `projects/*/locations/*/ekmConnections/*`.
@@ -3454,6 +3549,154 @@ func (c *ProjectsLocationsGetCall) Do(opts ...googleapi.CallOption) (*Location, 
 
 }
 
+// method id "cloudkms.projects.locations.getEkmConfig":
+
+type ProjectsLocationsGetEkmConfigCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetEkmConfig: Returns the EkmConfig singleton resource for a given
+// project and location.
+//
+// - name: The name of the EkmConfig to get.
+func (r *ProjectsLocationsService) GetEkmConfig(name string) *ProjectsLocationsGetEkmConfigCall {
+	c := &ProjectsLocationsGetEkmConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsGetEkmConfigCall) Fields(s ...googleapi.Field) *ProjectsLocationsGetEkmConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsGetEkmConfigCall) IfNoneMatch(entityTag string) *ProjectsLocationsGetEkmConfigCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsGetEkmConfigCall) Context(ctx context.Context) *ProjectsLocationsGetEkmConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsGetEkmConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGetEkmConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudkms.projects.locations.getEkmConfig" call.
+// Exactly one of *EkmConfig or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *EkmConfig.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsGetEkmConfigCall) Do(opts ...googleapi.CallOption) (*EkmConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &EkmConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns the EkmConfig singleton resource for a given project and location.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/ekmConfig",
+	//   "httpMethod": "GET",
+	//   "id": "cloudkms.projects.locations.getEkmConfig",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the EkmConfig to get.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/ekmConfig$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "EkmConfig"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloudkms"
+	//   ]
+	// }
+
+}
+
 // method id "cloudkms.projects.locations.list":
 
 type ProjectsLocationsListCall struct {
@@ -3662,6 +3905,164 @@ func (c *ProjectsLocationsListCall) Pages(ctx context.Context, f func(*ListLocat
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "cloudkms.projects.locations.updateEkmConfig":
+
+type ProjectsLocationsUpdateEkmConfigCall struct {
+	s          *Service
+	name       string
+	ekmconfig  *EkmConfig
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// UpdateEkmConfig: Updates the EkmConfig singleton resource for a given
+// project and location.
+//
+//   - name: Output only. The resource name for the EkmConfig in the
+//     format `projects/*/locations/*/ekmConfig`.
+func (r *ProjectsLocationsService) UpdateEkmConfig(name string, ekmconfig *EkmConfig) *ProjectsLocationsUpdateEkmConfigCall {
+	c := &ProjectsLocationsUpdateEkmConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.ekmconfig = ekmconfig
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. List
+// of fields to be updated in this request.
+func (c *ProjectsLocationsUpdateEkmConfigCall) UpdateMask(updateMask string) *ProjectsLocationsUpdateEkmConfigCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsUpdateEkmConfigCall) Fields(s ...googleapi.Field) *ProjectsLocationsUpdateEkmConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsUpdateEkmConfigCall) Context(ctx context.Context) *ProjectsLocationsUpdateEkmConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsUpdateEkmConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsUpdateEkmConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.ekmconfig)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudkms.projects.locations.updateEkmConfig" call.
+// Exactly one of *EkmConfig or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *EkmConfig.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsUpdateEkmConfigCall) Do(opts ...googleapi.CallOption) (*EkmConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &EkmConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates the EkmConfig singleton resource for a given project and location.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/ekmConfig",
+	//   "httpMethod": "PATCH",
+	//   "id": "cloudkms.projects.locations.updateEkmConfig",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Output only. The resource name for the EkmConfig in the format `projects/*/locations/*/ekmConfig`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/ekmConfig$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Required. List of fields to be updated in this request.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "EkmConfig"
+	//   },
+	//   "response": {
+	//     "$ref": "EkmConfig"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloudkms"
+	//   ]
+	// }
+
 }
 
 // method id "cloudkms.projects.locations.ekmConfig.getIamPolicy":

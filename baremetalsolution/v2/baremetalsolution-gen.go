@@ -155,6 +155,7 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs.Instances = NewProjectsLocationsInstancesService(s)
 	rs.Networks = NewProjectsLocationsNetworksService(s)
 	rs.NfsShares = NewProjectsLocationsNfsSharesService(s)
+	rs.Nfsshares = NewProjectsLocationsNfssharesService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
 	rs.ProvisioningConfigs = NewProjectsLocationsProvisioningConfigsService(s)
 	rs.ProvisioningQuotas = NewProjectsLocationsProvisioningQuotasService(s)
@@ -173,6 +174,8 @@ type ProjectsLocationsService struct {
 	Networks *ProjectsLocationsNetworksService
 
 	NfsShares *ProjectsLocationsNfsSharesService
+
+	Nfsshares *ProjectsLocationsNfssharesService
 
 	Operations *ProjectsLocationsOperationsService
 
@@ -218,6 +221,15 @@ func NewProjectsLocationsNfsSharesService(s *Service) *ProjectsLocationsNfsShare
 }
 
 type ProjectsLocationsNfsSharesService struct {
+	s *Service
+}
+
+func NewProjectsLocationsNfssharesService(s *Service) *ProjectsLocationsNfssharesService {
+	rs := &ProjectsLocationsNfssharesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsNfssharesService struct {
 	s *Service
 }
 
@@ -534,6 +546,9 @@ func (s *GoogleCloudBaremetalsolutionV2ServerNetworkTemplateLogicalInterface) Ma
 type Instance struct {
 	// CreateTime: Output only. Create a time stamp.
 	CreateTime string `json:"createTime,omitempty"`
+
+	// FirmwareVersion: Output only. The firmware version for the instance.
+	FirmwareVersion string `json:"firmwareVersion,omitempty"`
 
 	// HyperthreadingEnabled: True if you enable hyperthreading for the
 	// server, otherwise false. The default value is false.
@@ -2157,11 +2172,10 @@ func (s *QosPolicy) UnmarshalJSON(data []byte) error {
 
 // RenameInstanceRequest: Message requesting rename of a server.
 type RenameInstanceRequest struct {
-	// NewName: Required. The new `name` of the instance. Format:
-	// {instancename}
-	NewName string `json:"newName,omitempty"`
+	// NewInstanceId: Required. The new `id` of the instance.
+	NewInstanceId string `json:"newInstanceId,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "NewName") to
+	// ForceSendFields is a list of field names (e.g. "NewInstanceId") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2169,10 +2183,10 @@ type RenameInstanceRequest struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "NewName") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "NewInstanceId") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -2180,6 +2194,90 @@ type RenameInstanceRequest struct {
 
 func (s *RenameInstanceRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RenameInstanceRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RenameNetworkRequest: Message requesting rename of a server.
+type RenameNetworkRequest struct {
+	// NewNetworkId: Required. The new `id` of the network.
+	NewNetworkId string `json:"newNetworkId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "NewNetworkId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NewNetworkId") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RenameNetworkRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod RenameNetworkRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RenameNfsShareRequest: Message requesting rename of a server.
+type RenameNfsShareRequest struct {
+	// NewNfsshareId: Required. The new `id` of the nfsshare.
+	NewNfsshareId string `json:"newNfsshareId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "NewNfsshareId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NewNfsshareId") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RenameNfsShareRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod RenameNfsShareRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RenameVolumeRequest: Message requesting rename of a server.
+type RenameVolumeRequest struct {
+	// NewVolumeId: Required. The new `id` of the volume.
+	NewVolumeId string `json:"newVolumeId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "NewVolumeId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NewVolumeId") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RenameVolumeRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod RenameVolumeRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4461,7 +4559,8 @@ type ProjectsLocationsInstancesRenameCall struct {
 	header_               http.Header
 }
 
-// Rename: RenameInstance sets a new name for an instance.
+// Rename: RenameInstance sets a new name for an instance. Use with
+// caution, previous names become immediately invalidated.
 //
 //   - name: The `name` field is used to identify the instance. Format:
 //     projects/{project}/locations/{location}/instances/{instance}.
@@ -4563,7 +4662,7 @@ func (c *ProjectsLocationsInstancesRenameCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "RenameInstance sets a new name for an instance.",
+	//   "description": "RenameInstance sets a new name for an instance. Use with caution, previous names become immediately invalidated.",
 	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}:rename",
 	//   "httpMethod": "POST",
 	//   "id": "baremetalsolution.projects.locations.instances.rename",
@@ -5676,6 +5775,150 @@ func (c *ProjectsLocationsNetworksPatchCall) Do(opts ...googleapi.CallOption) (*
 
 }
 
+// method id "baremetalsolution.projects.locations.networks.rename":
+
+type ProjectsLocationsNetworksRenameCall struct {
+	s                    *Service
+	name                 string
+	renamenetworkrequest *RenameNetworkRequest
+	urlParams_           gensupport.URLParams
+	ctx_                 context.Context
+	header_              http.Header
+}
+
+// Rename: RenameNetwork sets a new name for a network. Use with
+// caution, previous names become immediately invalidated.
+//
+//   - name: The `name` field is used to identify the network. Format:
+//     projects/{project}/locations/{location}/networks/{network}.
+func (r *ProjectsLocationsNetworksService) Rename(name string, renamenetworkrequest *RenameNetworkRequest) *ProjectsLocationsNetworksRenameCall {
+	c := &ProjectsLocationsNetworksRenameCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.renamenetworkrequest = renamenetworkrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsNetworksRenameCall) Fields(s ...googleapi.Field) *ProjectsLocationsNetworksRenameCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsNetworksRenameCall) Context(ctx context.Context) *ProjectsLocationsNetworksRenameCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsNetworksRenameCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsNetworksRenameCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.renamenetworkrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}:rename")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "baremetalsolution.projects.locations.networks.rename" call.
+// Exactly one of *Network or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Network.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsNetworksRenameCall) Do(opts ...googleapi.CallOption) (*Network, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Network{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "RenameNetwork sets a new name for a network. Use with caution, previous names become immediately invalidated.",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/networks/{networksId}:rename",
+	//   "httpMethod": "POST",
+	//   "id": "baremetalsolution.projects.locations.networks.rename",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The `name` field is used to identify the network. Format: projects/{project}/locations/{location}/networks/{network}",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/networks/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}:rename",
+	//   "request": {
+	//     "$ref": "RenameNetworkRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Network"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "baremetalsolution.projects.locations.nfsShares.create":
 
 type ProjectsLocationsNfsSharesCreateCall struct {
@@ -6457,6 +6700,150 @@ func (c *ProjectsLocationsNfsSharesPatchCall) Do(opts ...googleapi.CallOption) (
 
 }
 
+// method id "baremetalsolution.projects.locations.nfsshares.rename":
+
+type ProjectsLocationsNfssharesRenameCall struct {
+	s                     *Service
+	name                  string
+	renamenfssharerequest *RenameNfsShareRequest
+	urlParams_            gensupport.URLParams
+	ctx_                  context.Context
+	header_               http.Header
+}
+
+// Rename: RenameNfsShare sets a new name for an nfsshare. Use with
+// caution, previous names become immediately invalidated.
+//
+//   - name: The `name` field is used to identify the nfsshare. Format:
+//     projects/{project}/locations/{location}/nfsshares/{nfsshare}.
+func (r *ProjectsLocationsNfssharesService) Rename(name string, renamenfssharerequest *RenameNfsShareRequest) *ProjectsLocationsNfssharesRenameCall {
+	c := &ProjectsLocationsNfssharesRenameCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.renamenfssharerequest = renamenfssharerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsNfssharesRenameCall) Fields(s ...googleapi.Field) *ProjectsLocationsNfssharesRenameCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsNfssharesRenameCall) Context(ctx context.Context) *ProjectsLocationsNfssharesRenameCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsNfssharesRenameCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsNfssharesRenameCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.renamenfssharerequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}:rename")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "baremetalsolution.projects.locations.nfsshares.rename" call.
+// Exactly one of *NfsShare or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *NfsShare.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsNfssharesRenameCall) Do(opts ...googleapi.CallOption) (*NfsShare, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &NfsShare{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "RenameNfsShare sets a new name for an nfsshare. Use with caution, previous names become immediately invalidated.",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/nfsshares/{nfssharesId}:rename",
+	//   "httpMethod": "POST",
+	//   "id": "baremetalsolution.projects.locations.nfsshares.rename",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The `name` field is used to identify the nfsshare. Format: projects/{project}/locations/{location}/nfsshares/{nfsshare}",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/nfsshares/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}:rename",
+	//   "request": {
+	//     "$ref": "RenameNfsShareRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "NfsShare"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "baremetalsolution.projects.locations.operations.get":
 
 type ProjectsLocationsOperationsGetCall struct {
@@ -6468,8 +6855,7 @@ type ProjectsLocationsOperationsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Get details about an operation. This method used only to work
-// around CCFE lack of passthrough LRO support (b/221498758).
+// Get: Get details about an operation.
 //
 // - name: The name of the operation resource.
 func (r *ProjectsLocationsOperationsService) Get(name string) *ProjectsLocationsOperationsGetCall {
@@ -6577,7 +6963,7 @@ func (c *ProjectsLocationsOperationsGetCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "Get details about an operation. This method used only to work around CCFE lack of passthrough LRO support (b/221498758).",
+	//   "description": "Get details about an operation.",
 	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/operations/{operationsId}",
 	//   "httpMethod": "GET",
 	//   "id": "baremetalsolution.projects.locations.operations.get",
@@ -8540,6 +8926,150 @@ func (c *ProjectsLocationsVolumesPatchCall) Do(opts ...googleapi.CallOption) (*O
 	//   },
 	//   "response": {
 	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "baremetalsolution.projects.locations.volumes.rename":
+
+type ProjectsLocationsVolumesRenameCall struct {
+	s                   *Service
+	name                string
+	renamevolumerequest *RenameVolumeRequest
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// Rename: RenameVolume sets a new name for a volume. Use with caution,
+// previous names become immediately invalidated.
+//
+//   - name: The `name` field is used to identify the volume. Format:
+//     projects/{project}/locations/{location}/volumes/{volume}.
+func (r *ProjectsLocationsVolumesService) Rename(name string, renamevolumerequest *RenameVolumeRequest) *ProjectsLocationsVolumesRenameCall {
+	c := &ProjectsLocationsVolumesRenameCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.renamevolumerequest = renamevolumerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsVolumesRenameCall) Fields(s ...googleapi.Field) *ProjectsLocationsVolumesRenameCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsVolumesRenameCall) Context(ctx context.Context) *ProjectsLocationsVolumesRenameCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsVolumesRenameCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsVolumesRenameCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.renamevolumerequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}:rename")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "baremetalsolution.projects.locations.volumes.rename" call.
+// Exactly one of *Volume or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Volume.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsVolumesRenameCall) Do(opts ...googleapi.CallOption) (*Volume, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Volume{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "RenameVolume sets a new name for a volume. Use with caution, previous names become immediately invalidated.",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/volumes/{volumesId}:rename",
+	//   "httpMethod": "POST",
+	//   "id": "baremetalsolution.projects.locations.volumes.rename",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The `name` field is used to identify the volume. Format: projects/{project}/locations/{location}/volumes/{volume}",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/volumes/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}:rename",
+	//   "request": {
+	//     "$ref": "RenameVolumeRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Volume"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

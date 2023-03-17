@@ -339,6 +339,7 @@ func (s *BackfillJob) MarshalJSON() ([]byte, error) {
 type BackfillNoneStrategy struct {
 }
 
+// BigQueryDestinationConfig: BigQuery destination configuration
 type BigQueryDestinationConfig struct {
 	// DataFreshness: The guaranteed data freshness (in seconds) when
 	// querying tables created by the stream. Editing this field will only
@@ -2407,6 +2408,8 @@ func (s *SourceConfig) MarshalJSON() ([]byte, error) {
 // hierarchy of the destination data objects matches the source
 // hierarchy.
 type SourceHierarchyDatasets struct {
+	// DatasetTemplate: The dataset template to use for dynamic dataset
+	// creation.
 	DatasetTemplate *DatasetTemplate `json:"datasetTemplate,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DatasetTemplate") to
@@ -2507,7 +2510,10 @@ func (s *StartBackfillJobResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// StaticServiceIpConnectivity: Static IP address connectivity.
+// StaticServiceIpConnectivity: Static IP address connectivity. Used
+// when the source database is configured to allow incoming connections
+// from the Datastream public IP addresses for the region specified in
+// the connection profile.
 type StaticServiceIpConnectivity struct {
 }
 

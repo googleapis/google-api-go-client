@@ -1285,6 +1285,9 @@ type GmailMessageInfo struct {
 	// Recipient: The recipient of this email.
 	Recipient string `json:"recipient,omitempty"`
 
+	// SentTime: The sent time of the email.
+	SentTime string `json:"sentTime,omitempty"`
+
 	// SubjectText: The email subject text (only available for reported
 	// emails).
 	SubjectText string `json:"subjectText,omitempty"`

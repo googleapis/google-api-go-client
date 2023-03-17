@@ -1688,7 +1688,7 @@
       }
     }
   },
-  "revision": "20230220",
+  "revision": "20230301",
   "rootUrl": "https://gkebackup.googleapis.com/",
   "schemas": {
     "AuditConfig": {
@@ -2632,7 +2632,7 @@
       "type": "object"
     },
     "RestoreConfig": {
-      "description": "Configuration of a restore. Next id: 11",
+      "description": "Configuration of a restore. Next id: 12",
       "id": "RestoreConfig",
       "properties": {
         "allNamespaces": {
@@ -2706,7 +2706,7 @@
       "type": "object"
     },
     "RestorePlan": {
-      "description": "The configuration of a potential series of Restore operations to be performed against Backups belong to a particular BackupPlan. Next id: 11",
+      "description": "The configuration of a potential series of Restore operations to be performed against Backups belong to a particular BackupPlan. Next id: 13",
       "id": "RestorePlan",
       "properties": {
         "backupPlan": {

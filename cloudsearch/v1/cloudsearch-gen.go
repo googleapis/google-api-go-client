@@ -4166,6 +4166,13 @@ type AppsDynamiteStorageIcon struct {
 	// icons
 	KnownIcon string `json:"knownIcon,omitempty"`
 
+	// MaterialIcon: Display one of the Google Material Icons
+	// (https://fonts.google.com/icons). For example, to display a check box
+	// icon
+	// (https://fonts.google.com/icons?selected=Material%20Symbols%20Outlined%3Acheck_box%3AFILL%400%3Bwght%40400%3BGRAD%400%3Bopsz%4048),
+	// use "material_icon": { "name": "check_box" }
+	MaterialIcon *AppsDynamiteStorageMaterialIcon `json:"materialIcon,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "AltText") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -4313,6 +4320,62 @@ func (s *AppsDynamiteStorageImageCropStyle) UnmarshalJSON(data []byte) error {
 	}
 	s.AspectRatio = float64(s1.AspectRatio)
 	return nil
+}
+
+// AppsDynamiteStorageMaterialIcon: A Google Font Icon
+// (https://fonts.google.com/icons), which includes over 2500+ options.
+// For example, to display a check box icon
+// (https://fonts.google.com/icons?selected=Material%20Symbols%20Outlined%3Acheck_box%3AFILL%400%3Bwght%40400%3BGRAD%400%3Bopsz%4048)
+// with customized weight and grade, write { "name": "check_box",
+// "fill": true, "weight": 300, "grade": -25 }
+type AppsDynamiteStorageMaterialIcon struct {
+	// Fill: Whether it renders a filled icon. Default value is false. See
+	// Customization in Google Font Icon (https://fonts.google.com/icons)
+	// for details.
+	Fill bool `json:"fill,omitempty"`
+
+	// Grade: Weight and grade affect a symbol’s thickness. Adjustments to
+	// grade are more granular than adjustments to weight and have a small
+	// impact on the size of the symbol. Choose from {-25, 0, 200}. If
+	// absent, default value is 0. If any other value is specified, a broken
+	// image icon will be displayed. See Customization in Google Font Icon
+	// (https://fonts.google.com/icons) for details.
+	Grade int64 `json:"grade,omitempty"`
+
+	// Name: The icon name defined in the Google Material Icon
+	// (https://fonts.google.com/icons) in snake_case. e.g. "check_box". Any
+	// invalid name will be trimmed as empty string result in the icon
+	// falied to render.
+	Name string `json:"name,omitempty"`
+
+	// Weight: The stroke weight of the icon. Choose from {100, 200, 300,
+	// 400, 500, 600, 700}. If absent, default value is 400. If any other
+	// value is specified, a broken image icon will be displayed. See
+	// Customization in Google Font Icon (https://fonts.google.com/icons)
+	// for details.
+	Weight int64 `json:"weight,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Fill") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Fill") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppsDynamiteStorageMaterialIcon) MarshalJSON() ([]byte, error) {
+	type NoMethod AppsDynamiteStorageMaterialIcon
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 type AppsDynamiteStorageOnClick struct {
@@ -28952,14 +29015,7 @@ type OperationsLroListCall struct {
 
 // List: Lists operations that match the specified filter in the
 // request. If the server doesn't support this method, it returns
-// `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to
-// override the binding to use different resource name schemes, such as
-// `users/*/operations`. To override the binding, API services can add a
-// binding such as "/v1/{name=users/*}/operations" to their service
-// configuration. For backwards compatibility, the default name includes
-// the operations collection id, however overriding users must ensure
-// the name binding is the parent resource, without the operations
-// collection id.
+// `UNIMPLEMENTED`.
 //
 // - name: The name of the operation's parent resource.
 func (r *OperationsLroService) List(name string) *OperationsLroListCall {
@@ -29088,7 +29144,7 @@ func (c *OperationsLroListCall) Do(opts ...googleapi.CallOption) (*ListOperation
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.",
 	//   "flatPath": "v1/operations/{operationsId}/lro",
 	//   "httpMethod": "GET",
 	//   "id": "cloudsearch.operations.lro.list",

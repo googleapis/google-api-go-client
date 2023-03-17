@@ -328,6 +328,14 @@ type Assessment struct {
 	// (CVE) tracking number for the vulnerability.
 	Cve string `json:"cve,omitempty"`
 
+	// Impacts: Contains information about the impact of this vulnerability,
+	// this will change with time.
+	Impacts []string `json:"impacts,omitempty"`
+
+	// Justification: Justification provides the justification when the
+	// state of the assessment if NOT_AFFECTED.
+	Justification *Justification `json:"justification,omitempty"`
+
 	// LongDescription: A detailed description of this Vex.
 	LongDescription string `json:"longDescription,omitempty"`
 
@@ -358,10 +366,6 @@ type Assessment struct {
 	// are or are not affected by the vulnerability. However, it is still
 	// under investigation.
 	State string `json:"state,omitempty"`
-
-	// Threats: Contains information about this vulnerability, this will
-	// change with time.
-	Threats []*Threat `json:"threats,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Cve") to
 	// unconditionally include in API requests. By default, fields with
@@ -1930,6 +1934,17 @@ func (s *ContaineranalysisGoogleDevtoolsCloudbuildV1BuildFailureInfo) MarshalJSO
 // ContaineranalysisGoogleDevtoolsCloudbuildV1BuildOptions: Optional
 // arguments to enable specific features of builds.
 type ContaineranalysisGoogleDevtoolsCloudbuildV1BuildOptions struct {
+	// DefaultLogsBucketBehavior: Optional. Option to specify how default
+	// logs buckets are setup.
+	//
+	// Possible values:
+	//   "DEFAULT_LOGS_BUCKET_BEHAVIOR_UNSPECIFIED" - Unspecified.
+	//   "REGIONAL_USER_OWNED_BUCKET" - Bucket is located in user-owned
+	// project in the same region as the build. The builder service account
+	// must have access to create and write to GCS buckets in the build
+	// project.
+	DefaultLogsBucketBehavior string `json:"defaultLogsBucketBehavior,omitempty"`
+
 	// DiskSizeGb: Requested disk size for the VM that runs the build. Note
 	// that this is *NOT* "disk free"; some of the space will be used by the
 	// operating system and build utilities. Also note that this is the
@@ -2042,20 +2057,22 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1BuildOptions struct {
 	// WorkerPool: This field deprecated; please use `pool.name` instead.
 	WorkerPool string `json:"workerPool,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "DiskSizeGb") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "DefaultLogsBucketBehavior") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DiskSizeGb") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g.
+	// "DefaultLogsBucketBehavior") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -4864,6 +4881,58 @@ func (s *Installation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Justification: Justification provides the justification when the
+// state of the assessment if NOT_AFFECTED.
+type Justification struct {
+	// Details: Additional details on why this justification was chosen.
+	Details string `json:"details,omitempty"`
+
+	// JustificationType: The justification type for this vulnerability.
+	//
+	// Possible values:
+	//   "JUSTIFICATION_TYPE_UNSPECIFIED" - JUSTIFICATION_TYPE_UNSPECIFIED.
+	//   "COMPONENT_NOT_PRESENT" - The vulnerable component is not present
+	// in the product.
+	//   "VULNERABLE_CODE_NOT_PRESENT" - The vulnerable code is not present.
+	// Typically this case occurs when source code is configured or built in
+	// a way that excludes the vulnerable code.
+	//   "VULNERABLE_CODE_NOT_IN_EXECUTE_PATH" - The vulnerable code can not
+	// be executed. Typically this case occurs when the product includes the
+	// vulnerable code but does not call or use the vulnerable code.
+	//   "VULNERABLE_CODE_CANNOT_BE_CONTROLLED_BY_ADVERSARY" - The
+	// vulnerable code cannot be controlled by an attacker to exploit the
+	// vulnerability.
+	//   "INLINE_MITIGATIONS_ALREADY_EXIST" - The product includes built-in
+	// protections or features that prevent exploitation of the
+	// vulnerability. These built-in protections cannot be subverted by the
+	// attacker and cannot be configured or disabled by the user. These
+	// mitigations completely prevent exploitation based on known attack
+	// vectors.
+	JustificationType string `json:"justificationType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Details") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Details") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Justification) MarshalJSON() ([]byte, error) {
+	type NoMethod Justification
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Layer: Layer holds metadata specific to a layer of a Docker image.
 type Layer struct {
 	// Arguments: The recovered arguments to the Dockerfile directive.
@@ -6094,11 +6163,6 @@ func (s *Product) MarshalJSON() ([]byte, error) {
 // Publisher: Publisher contains information about the publisher of this
 // Note.
 type Publisher struct {
-	// Context: The context or namespace. Contains a URL which is under
-	// control of the issuing party and can be used as a globally unique
-	// identifier for that issuing party. Example: https://csaf.io
-	Context string `json:"context,omitempty"`
-
 	// IssuingAuthority: Provides information about the authority of the
 	// issuing party to release the document, in particular, the party's
 	// constituency and responsibilities or other obligations.
@@ -6108,7 +6172,12 @@ type Publisher struct {
 	// Platform'.
 	Name string `json:"name,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Context") to
+	// PublisherNamespace: The context or namespace. Contains a URL which is
+	// under control of the issuing party and can be used as a globally
+	// unique identifier for that issuing party. Example: https://csaf.io
+	PublisherNamespace string `json:"publisherNamespace,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IssuingAuthority") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -6116,12 +6185,13 @@ type Publisher struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Context") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "IssuingAuthority") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -6477,10 +6547,6 @@ type Remediation struct {
 	// Details: Contains a comprehensive human-readable discussion of the
 	// remediation.
 	Details string `json:"details,omitempty"`
-
-	// RemediationTime: Contains the date from which the remediation is
-	// available.
-	RemediationTime string `json:"remediationTime,omitempty"`
 
 	// RemediationType: The type of remediation that can be applied.
 	//
@@ -7219,45 +7285,6 @@ func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Threat: Contains the vulnerability kinetic information. This
-// information can change as the vulnerability ages and new information
-// becomes available.
-type Threat struct {
-	// Details: Represents a thorough human-readable discussion of the
-	// threat.
-	Details string `json:"details,omitempty"`
-
-	// ThreatType: The type of threat.
-	//
-	// Possible values:
-	//   "THREAT_TYPE_UNSPECIFIED" - No threat type specified.
-	//   "IMPACT" - IMPACT
-	//   "EXPLOIT_STATUS" - EXPLOIT_STATUS
-	ThreatType string `json:"threatType,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Details") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Details") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *Threat) MarshalJSON() ([]byte, error) {
-	type NoMethod Threat
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // TimeSpan: Start and end times for a build execution phase. Next ID: 3
 type TimeSpan struct {
 	// EndTime: End of time span.
@@ -7534,6 +7561,14 @@ type VexAssessment struct {
 	// (CVE) tracking number for the vulnerability.
 	Cve string `json:"cve,omitempty"`
 
+	// Impacts: Contains information about the impact of this vulnerability,
+	// this will change with time.
+	Impacts []string `json:"impacts,omitempty"`
+
+	// Justification: Justification provides the justification when the
+	// state of the assessment if NOT_AFFECTED.
+	Justification *Justification `json:"justification,omitempty"`
+
 	// NoteName: The VulnerabilityAssessment note from which this
 	// VexAssessment was generated. This will be of the form:
 	// `projects/[PROJECT_ID]/notes/[NOTE_ID]`.
@@ -7563,10 +7598,6 @@ type VexAssessment struct {
 	// are or are not affected by the vulnerability. However, it is still
 	// under investigation.
 	State string `json:"state,omitempty"`
-
-	// Threats: Contains information about this vulnerability, this will
-	// change with time.
-	Threats []*Threat `json:"threats,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Cve") to
 	// unconditionally include in API requests. By default, fields with

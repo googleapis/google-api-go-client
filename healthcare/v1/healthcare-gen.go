@@ -71,6 +71,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "healthcare:v1"
 const apiName = "healthcare"
@@ -20273,7 +20274,10 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirPatientEverythingCall) Since(Sin
 
 // Type sets the optional parameter "_type": String of comma-delimited
 // FHIR resource types. If provided, only resources of the specified
-// resource type(s) are returned.
+// resource type(s) are returned. Specifying multiple `_type` parameters
+// isn't supported. For example, the result of
+// `_type=Observation&_type=Encounter` is undefined. Use
+// `_type=Observation,Encounter` instead.
 func (c *ProjectsLocationsDatasetsFhirStoresFhirPatientEverythingCall) Type(Type string) *ProjectsLocationsDatasetsFhirStoresFhirPatientEverythingCall {
 	c.urlParams_.Set("_type", Type)
 	return c
@@ -20388,7 +20392,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirPatientEverythingCall) Do(opts .
 	//       "type": "string"
 	//     },
 	//     "_type": {
-	//       "description": "String of comma-delimited FHIR resource types. If provided, only resources of the specified resource type(s) are returned.",
+	//       "description": "String of comma-delimited FHIR resource types. If provided, only resources of the specified resource type(s) are returned. Specifying multiple `_type` parameters isn't supported. For example, the result of `_type=Observation\u0026_type=Encounter` is undefined. Use `_type=Observation,Encounter` instead.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

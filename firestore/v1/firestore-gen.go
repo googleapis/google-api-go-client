@@ -77,6 +77,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "firestore:v1"
 const apiName = "firestore"
@@ -240,16 +241,16 @@ type ProjectsLocationsService struct {
 	s *Service
 }
 
-// Aggregation: Defines a aggregation that produces a single result.
+// Aggregation: Defines an aggregation that produces a single result.
 type Aggregation struct {
 	// Alias: Optional. Optional name of the field to store the result of
 	// the aggregation into. If not provided, Firestore will pick a default
 	// name following the format `field_`. For example: ``` AGGREGATE
 	// COUNT_UP_TO(1) AS count_up_to_1, COUNT_UP_TO(2), COUNT_UP_TO(3) AS
-	// count_up_to_3, COUNT_UP_TO(4) OVER ( ... ); ``` becomes: ```
-	// AGGREGATE COUNT_UP_TO(1) AS count_up_to_1, COUNT_UP_TO(2) AS field_1,
-	// COUNT_UP_TO(3) AS count_up_to_3, COUNT_UP_TO(4) AS field_2 OVER ( ...
-	// ); ``` Requires: * Must be unique across all aggregation aliases. *
+	// count_up_to_3, COUNT(*) OVER ( ... ); ``` becomes: ``` AGGREGATE
+	// COUNT_UP_TO(1) AS count_up_to_1, COUNT_UP_TO(2) AS field_1,
+	// COUNT_UP_TO(3) AS count_up_to_3, COUNT(*) AS field_2 OVER ( ... );
+	// ``` Requires: * Must be unique across all aggregation aliases. *
 	// Conform to document field name limitations.
 	Alias string `json:"alias,omitempty"`
 
@@ -726,7 +727,7 @@ func (s *CompositeFilter) MarshalJSON() ([]byte, error) {
 type Count struct {
 	// UpTo: Optional. Optional constraint on the maximum number of
 	// documents to count. This provides a way to set an upper bound on the
-	// number of documents to scan, limiting latency and cost. Unspecified
+	// number of documents to scan, limiting latency, and cost. Unspecified
 	// is interpreted as no bound. High-Level Example: ``` AGGREGATE
 	// COUNT_UP_TO(1000) OVER ( SELECT * FROM k ); ``` Requires: * Must be
 	// greater than zero when present.

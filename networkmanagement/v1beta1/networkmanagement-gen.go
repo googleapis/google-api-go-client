@@ -71,6 +71,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "networkmanagement:v1beta1"
 const apiName = "networkmanagement"
@@ -1061,6 +1062,25 @@ type Endpoint struct {
 	// URI.
 	CloudSqlInstance string `json:"cloudSqlInstance,omitempty"`
 
+	// ForwardingRule: Forwarding rule URI. Forwarding rules are frontends
+	// for load balancers, PSC endpoints and Protocol Forwarding. Format:
+	// projects/{project}/global/forwardingRules/{id} or
+	// projects/{project}/regions/{region}/forwardingRules/{id}
+	ForwardingRule string `json:"forwardingRule,omitempty"`
+
+	// ForwardingRuleTarget: Output only. Specifies the type of the target
+	// of the forwarding rule.
+	//
+	// Possible values:
+	//   "FORWARDING_RULE_TARGET_UNSPECIFIED" - Forwarding rule target is
+	// unknown.
+	//   "INSTANCE" - Compute Engine instance for protocol forwarding.
+	//   "LOAD_BALANCER" - Load Balancer. The specific type can be found
+	// from load_balancer_type.
+	//   "VPN_GATEWAY" - Classic Cloud VPN Gateway.
+	//   "PSC" - Forwarding Rule is a Private Service Connect endpoint.
+	ForwardingRuleTarget string `json:"forwardingRuleTarget,omitempty"`
+
 	// GkeMasterCluster: A cluster URI for Google Kubernetes Engine master
 	// (https://cloud.google.com/kubernetes-engine/docs/concepts/cluster-architecture).
 	GkeMasterCluster string `json:"gkeMasterCluster,omitempty"`
@@ -1073,6 +1093,35 @@ type Endpoint struct {
 	// destination is a global load balancer VIP
 	// (https://cloud.google.com/load-balancing/docs/load-balancing-overview).
 	IpAddress string `json:"ipAddress,omitempty"`
+
+	// LoadBalancerId: Output only. ID of the load balancer the forwarding
+	// rule points to. Empty for forwarding rules not related to load
+	// balancers.
+	LoadBalancerId string `json:"loadBalancerId,omitempty"`
+
+	// LoadBalancerType: Output only. Type of the load balancer the
+	// forwarding rule points to.
+	//
+	// Possible values:
+	//   "LOAD_BALANCER_TYPE_UNSPECIFIED" - Forwarding rule points to a
+	// different target than a load balancer or a load balancer type is
+	// unknown.
+	//   "HTTPS_ADVANCED_LOAD_BALANCER" - Global external HTTP(S) load
+	// balancer.
+	//   "HTTPS_LOAD_BALANCER" - Global external HTTP(S) load balancer
+	// (classic)
+	//   "REGIONAL_HTTPS_LOAD_BALANCER" - Regional external HTTP(S) load
+	// balancer.
+	//   "INTERNAL_HTTPS_LOAD_BALANCER" - Internal HTTP(S) load balancer.
+	//   "SSL_PROXY_LOAD_BALANCER" - External SSL proxy load balancer.
+	//   "TCP_PROXY_LOAD_BALANCER" - External TCP proxy load balancer.
+	//   "INTERNAL_TCP_PROXY_LOAD_BALANCER" - Internal regional TCP proxy
+	// load balancer.
+	//   "NETWORK_LOAD_BALANCER" - External TCP/UDP Network load balancer.
+	//   "LEGACY_NETWORK_LOAD_BALANCER" - Target-pool based external TCP/UDP
+	// Network load balancer.
+	//   "TCP_UDP_INTERNAL_LOAD_BALANCER" - Internal TCP/UDP load balancer.
+	LoadBalancerType string `json:"loadBalancerType,omitempty"`
 
 	// Network: A Compute Engine network URI.
 	Network string `json:"network,omitempty"`
@@ -5124,14 +5173,7 @@ type ProjectsLocationsGlobalOperationsListCall struct {
 
 // List: Lists operations that match the specified filter in the
 // request. If the server doesn't support this method, it returns
-// `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to
-// override the binding to use different resource name schemes, such as
-// `users/*/operations`. To override the binding, API services can add a
-// binding such as "/v1/{name=users/*}/operations" to their service
-// configuration. For backwards compatibility, the default name includes
-// the operations collection id, however overriding users must ensure
-// the name binding is the parent resource, without the operations
-// collection id.
+// `UNIMPLEMENTED`.
 //
 // - name: The name of the operation's parent resource.
 func (r *ProjectsLocationsGlobalOperationsService) List(name string) *ProjectsLocationsGlobalOperationsListCall {
@@ -5260,7 +5302,7 @@ func (c *ProjectsLocationsGlobalOperationsListCall) Do(opts ...googleapi.CallOpt
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/global/operations",
 	//   "httpMethod": "GET",
 	//   "id": "networkmanagement.projects.locations.global.operations.list",

@@ -71,6 +71,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "transcoder:v1"
 const apiName = "transcoder"
@@ -507,12 +508,13 @@ type AudioStream struct {
 	Codec string `json:"codec,omitempty"`
 
 	// DisplayName: The name for this particular audio stream that will be
-	// added to the HLS/DASH manifest.
+	// added to the HLS/DASH manifest. Not supported in MP4 files.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// LanguageCode: The BCP-47 language code, such as `en-US` or `sr-Latn`.
 	// For more information, see
-	// https://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
+	// https://www.unicode.org/reports/tr35/#Unicode_locale_identifier. Not
+	// supported in MP4 files.
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// Mapping: The mapping for the `Job.edit_list` atoms with audio
@@ -1382,9 +1384,8 @@ type Job struct {
 	State string `json:"state,omitempty"`
 
 	// TemplateId: Input only. Specify the `template_id` to use for
-	// populating `Job.config`. The default is `preset/web-hd`. Preset
-	// Transcoder templates: - `preset/{preset_id}` - User defined
-	// JobTemplate: `{job_template_id}`
+	// populating `Job.config`. The default is `preset/web-hd`, which is the
+	// only supported preset. User defined JobTemplate: `{job_template_id}`
 	TemplateId string `json:"templateId,omitempty"`
 
 	// TtlAfterCompletionDays: Job time to live value in days, which will be
@@ -2136,12 +2137,13 @@ type TextStream struct {
 	Codec string `json:"codec,omitempty"`
 
 	// DisplayName: The name for this particular text stream that will be
-	// added to the HLS/DASH manifest.
+	// added to the HLS/DASH manifest. Not supported in MP4 files.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// LanguageCode: The BCP-47 language code, such as `en-US` or `sr-Latn`.
 	// For more information, see
-	// https://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
+	// https://www.unicode.org/reports/tr35/#Unicode_locale_identifier. Not
+	// supported in MP4 files.
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// Mapping: The mapping for the `Job.edit_list` atoms with text

@@ -75,6 +75,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "admin:directory_v1"
 const apiName = "admin"
@@ -4630,6 +4631,14 @@ type RoleAssignment struct {
 	// account, as defined in Identity and Access Management (IAM)
 	// (https://cloud.google.com/iam/docs/reference/rest/v1/projects.serviceAccounts).
 	AssignedTo string `json:"assignedTo,omitempty"`
+
+	// AssigneeType: Output only. The type of the assignee (`USER` or
+	// `GROUP`).
+	//
+	// Possible values:
+	//   "user" - An individual user within the domain.
+	//   "group" - A group within the domain.
+	AssigneeType string `json:"assigneeType,omitempty"`
 
 	// Etag: ETag of the resource.
 	Etag string `json:"etag,omitempty"`
@@ -20202,6 +20211,16 @@ func (r *RoleAssignmentsService) List(customer string) *RoleAssignmentsListCall 
 	return c
 }
 
+// IncludeIndirectRoleAssignments sets the optional parameter
+// "includeIndirectRoleAssignments": When set to `true`, fetches
+// indirect role assignments (i.e. role assignment via a group) as well
+// as direct ones. Defaults to `false`. You must specify `user_key` or
+// the indirect role assignments will not be included.
+func (c *RoleAssignmentsListCall) IncludeIndirectRoleAssignments(includeIndirectRoleAssignments bool) *RoleAssignmentsListCall {
+	c.urlParams_.Set("includeIndirectRoleAssignments", fmt.Sprint(includeIndirectRoleAssignments))
+	return c
+}
+
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of results to return.
 func (c *RoleAssignmentsListCall) MaxResults(maxResults int64) *RoleAssignmentsListCall {
@@ -20344,6 +20363,11 @@ func (c *RoleAssignmentsListCall) Do(opts ...googleapi.CallOption) (*RoleAssignm
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "includeIndirectRoleAssignments": {
+	//       "description": "When set to `true`, fetches indirect role assignments (i.e. role assignment via a group) as well as direct ones. Defaults to `false`. You must specify `user_key` or the indirect role assignments will not be included.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     },
 	//     "maxResults": {
 	//       "description": "Maximum number of results to return.",

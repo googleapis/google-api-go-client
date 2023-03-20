@@ -140,6 +140,8 @@ func sendAndRetry(ctx context.Context, client *http.Client, req *http.Request, r
 		}
 
 		// Set retry metrics and idempotency headers for GCS.
+		// TODO(b/274504690): Consider dropping gccl-invocation-id key since it
+		// duplicates the X-Goog-Gcs-Idempotency-Token header (added in v0.115.0).
 		invocationHeader := fmt.Sprintf("gccl-invocation-id/%s gccl-attempt-count/%d", invocationID, attempts)
 		xGoogHeader := strings.Join([]string{invocationHeader, baseXGoogHeader}, " ")
 		req.Header.Set("X-Goog-Api-Client", xGoogHeader)

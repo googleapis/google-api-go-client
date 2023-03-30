@@ -71,6 +71,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "metastore:v1alpha"
 const apiName = "metastore"
@@ -429,6 +430,7 @@ type BackendMetastore struct {
 	//
 	// Possible values:
 	//   "METASTORE_TYPE_UNSPECIFIED" - The metastore type is not set.
+	//   "DATAPLEX" - The backend metastore is Dataplex.
 	//   "BIGQUERY" - The backend metastore is BigQuery.
 	//   "DATAPROC_METASTORE" - The backend metastore is Dataproc Metastore.
 	MetastoreType string `json:"metastoreType,omitempty"`

@@ -71,6 +71,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "networkconnectivity:v1"
 const apiName = "networkconnectivity"
@@ -1004,9 +1005,9 @@ type ListHubsResponse struct {
 	// Hubs: The requested hubs.
 	Hubs []*Hub `json:"hubs,omitempty"`
 
-	// NextPageToken: The next pagination token in the List response. It
-	// should be used as page_token for the following request. An empty
-	// value means no more result.
+	// NextPageToken: The token for the next page of the response. To see
+	// more results, use this value as the page_token for your next request.
+	// If this value is empty, there are no more results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// Unreachable: Locations that could not be reached.
@@ -1120,9 +1121,9 @@ func (s *ListLocationsResponse) MarshalJSON() ([]byte, error) {
 
 // ListSpokesResponse: The response for HubService.ListSpokes.
 type ListSpokesResponse struct {
-	// NextPageToken: The next pagination token in the List response. It
-	// should be used as page_token for the following request. An empty
-	// value means no more result.
+	// NextPageToken: The token for the next page of the response. To see
+	// more results, use this value as the page_token for your next request.
+	// If this value is empty, there are no more results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// Spokes: The requested spokes.
@@ -2696,7 +2697,7 @@ func (r *ProjectsLocationsGlobalHubsService) List(parent string) *ProjectsLocati
 }
 
 // Filter sets the optional parameter "filter": An expression that
-// filters the results listed in the response.
+// filters the list of results.
 func (c *ProjectsLocationsGlobalHubsListCall) Filter(filter string) *ProjectsLocationsGlobalHubsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -2830,7 +2831,7 @@ func (c *ProjectsLocationsGlobalHubsListCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "An expression that filters the results listed in the response.",
+	//       "description": "An expression that filters the list of results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3879,7 +3880,7 @@ func (c *ProjectsLocationsInternalRangesCreateCall) InternalRangeId(internalRang
 // if you must retry your request, the server will know to ignore the
 // request if it has already been completed. The server will guarantee
 // that for at least 60 minutes since the first request. For example,
-// consider a situation where you make an initial request and t he
+// consider a situation where you make an initial request and the
 // request times out. If you make the request again with the same
 // request ID, the server can check if original operation with the same
 // request ID was received, and if so, will ignore the second request.
@@ -4004,7 +4005,7 @@ func (c *ProjectsLocationsInternalRangesCreateCall) Do(opts ...googleapi.CallOpt
 	//       "type": "string"
 	//     },
 	//     "requestId": {
-	//       "description": "Optional. An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and t he request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "description": "Optional. An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -4047,7 +4048,7 @@ func (r *ProjectsLocationsInternalRangesService) Delete(name string) *ProjectsLo
 // if you must retry your request, the server will know to ignore the
 // request if it has already been completed. The server will guarantee
 // that for at least 60 minutes after the first request. For example,
-// consider a situation where you make an initial request and t he
+// consider a situation where you make an initial request and the
 // request times out. If you make the request again with the same
 // request ID, the server can check if original operation with the same
 // request ID was received, and if so, will ignore the second request.
@@ -4162,7 +4163,7 @@ func (c *ProjectsLocationsInternalRangesDeleteCall) Do(opts ...googleapi.CallOpt
 	//       "type": "string"
 	//     },
 	//     "requestId": {
-	//       "description": "Optional. An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes after the first request. For example, consider a situation where you make an initial request and t he request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "description": "Optional. An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes after the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -4568,7 +4569,7 @@ func (r *ProjectsLocationsInternalRangesService) Patch(name string, internalrang
 // if you must retry your request, the server will know to ignore the
 // request if it has already been completed. The server will guarantee
 // that for at least 60 minutes since the first request. For example,
-// consider a situation where you make an initial request and t he
+// consider a situation where you make an initial request and the
 // request times out. If you make the request again with the same
 // request ID, the server can check if original operation with the same
 // request ID was received, and if so, will ignore the second request.
@@ -4699,7 +4700,7 @@ func (c *ProjectsLocationsInternalRangesPatchCall) Do(opts ...googleapi.CallOpti
 	//       "type": "string"
 	//     },
 	//     "requestId": {
-	//       "description": "Optional. An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and t he request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "description": "Optional. An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5171,14 +5172,7 @@ type ProjectsLocationsOperationsListCall struct {
 
 // List: Lists operations that match the specified filter in the
 // request. If the server doesn't support this method, it returns
-// `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to
-// override the binding to use different resource name schemes, such as
-// `users/*/operations`. To override the binding, API services can add a
-// binding such as "/v1/{name=users/*}/operations" to their service
-// configuration. For backwards compatibility, the default name includes
-// the operations collection id, however overriding users must ensure
-// the name binding is the parent resource, without the operations
-// collection id.
+// `UNIMPLEMENTED`.
 //
 // - name: The name of the operation's parent resource.
 func (r *ProjectsLocationsOperationsService) List(name string) *ProjectsLocationsOperationsListCall {
@@ -5308,7 +5302,7 @@ func (c *ProjectsLocationsOperationsListCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/operations",
 	//   "httpMethod": "GET",
 	//   "id": "networkconnectivity.projects.locations.operations.list",
@@ -7463,7 +7457,7 @@ func (r *ProjectsLocationsSpokesService) List(parent string) *ProjectsLocationsS
 }
 
 // Filter sets the optional parameter "filter": An expression that
-// filters the results listed in the response.
+// filters the list of results.
 func (c *ProjectsLocationsSpokesListCall) Filter(filter string) *ProjectsLocationsSpokesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -7597,7 +7591,7 @@ func (c *ProjectsLocationsSpokesListCall) Do(opts ...googleapi.CallOption) (*Lis
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "An expression that filters the results listed in the response.",
+	//       "description": "An expression that filters the list of results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

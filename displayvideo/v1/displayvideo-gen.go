@@ -75,6 +75,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "displayvideo:v1"
 const apiName = "displayvideo"
@@ -7598,6 +7599,8 @@ type ExchangeConfigEnabledExchange struct {
 	//   "EXCHANGE_PLACE_EXCHANGE" - Place Exchange.
 	//   "EXCHANGE_APPLOVIN" - AppLovin.
 	//   "EXCHANGE_CONNATIX" - Connatix.
+	//   "EXCHANGE_RESET_DIGITAL" - Reset Digital.
+	//   "EXCHANGE_HIVESTACK" - Hivestack.
 	Exchange string `json:"exchange,omitempty"`
 
 	// GoogleAdManagerAgencyId: Output only. Agency ID of Google Ad Manager.
@@ -7716,6 +7719,8 @@ type ExchangeReviewStatus struct {
 	//   "EXCHANGE_PLACE_EXCHANGE" - Place Exchange.
 	//   "EXCHANGE_APPLOVIN" - AppLovin.
 	//   "EXCHANGE_CONNATIX" - Connatix.
+	//   "EXCHANGE_RESET_DIGITAL" - Reset Digital.
+	//   "EXCHANGE_HIVESTACK" - Hivestack.
 	Exchange string `json:"exchange,omitempty"`
 
 	// Status: Status of the exchange review.
@@ -7833,6 +7838,8 @@ type ExchangeTargetingOptionDetails struct {
 	//   "EXCHANGE_PLACE_EXCHANGE" - Place Exchange.
 	//   "EXCHANGE_APPLOVIN" - AppLovin.
 	//   "EXCHANGE_CONNATIX" - Connatix.
+	//   "EXCHANGE_RESET_DIGITAL" - Reset Digital.
+	//   "EXCHANGE_HIVESTACK" - Hivestack.
 	Exchange string `json:"exchange,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Exchange") to
@@ -8952,6 +8959,8 @@ type GuaranteedOrder struct {
 	//   "EXCHANGE_PLACE_EXCHANGE" - Place Exchange.
 	//   "EXCHANGE_APPLOVIN" - AppLovin.
 	//   "EXCHANGE_CONNATIX" - Connatix.
+	//   "EXCHANGE_RESET_DIGITAL" - Reset Digital.
+	//   "EXCHANGE_HIVESTACK" - Hivestack.
 	Exchange string `json:"exchange,omitempty"`
 
 	// GuaranteedOrderId: Output only. The unique identifier of the
@@ -9827,6 +9836,8 @@ type InventorySource struct {
 	//   "EXCHANGE_PLACE_EXCHANGE" - Place Exchange.
 	//   "EXCHANGE_APPLOVIN" - AppLovin.
 	//   "EXCHANGE_CONNATIX" - Connatix.
+	//   "EXCHANGE_RESET_DIGITAL" - Reset Digital.
+	//   "EXCHANGE_HIVESTACK" - Hivestack.
 	Exchange string `json:"exchange,omitempty"`
 
 	// GuaranteedOrderId: Immutable. The ID of the guaranteed order that
@@ -10719,7 +10730,11 @@ type LineItem struct {
 	// TargetingExpansion: The targeting expansion
 	// (//support.google.com/displayvideo/answer/10191558) settings of the
 	// line item. This config is only applicable when eligible audience list
-	// targeting is assigned to the line item.
+	// targeting is assigned to the line item. Beginning **March 25, 2023**,
+	// these settings may represent the optimized targeting feature
+	// (//support.google.com/displayvideo/answer/12060859) in place of
+	// targeting expansion. This feature will be rolled out to all partners
+	// by mid-April 2023.
 	TargetingExpansion *TargetingExpansionConfig `json:"targetingExpansion,omitempty"`
 
 	// UpdateTime: Output only. The timestamp when the line item was last
@@ -15171,18 +15186,42 @@ func (s *SubExchangeTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 // TargetingExpansionConfig: Settings that control the targeting
 // expansion of the line item. Targeting expansion allows the line item
 // to reach a larger audience based on the original audience list and
-// the targeting expansion level.
+// the targeting expansion level. Beginning **March 25, 2023**, these
+// settings may represent the optimized targeting feature
+// (//support.google.com/displayvideo/answer/12060859) in place of
+// targeting expansion. This feature will be rolled out to all partners
+// by mid-April 2023.
 type TargetingExpansionConfig struct {
 	// ExcludeFirstPartyAudience: Required. Whether to exclude first-party
 	// audiences from use in targeting expansion or optimized targeting.
 	// Similar audiences of the excluded first-party lists will not be
 	// excluded. Only applicable when a first-party audience is positively
 	// targeted (directly or included in a combined audience), otherwise
-	// this selection will be ignored.
+	// this selection will be ignored. Beginning **March 25, 2023**, this
+	// field may be deprecated with the replacement of targeting expansion
+	// with optimized targeting
+	// (//support.google.com/displayvideo/answer/12060859). Upon
+	// deprecation, this field will be set to `false`. If this field is set
+	// to `true` when deprecated, all positive first-party audience
+	// targeting assigned to this line item will be replaced with negative
+	// targeting of the same first-party audiences to ensure the continued
+	// exclusion of those audiences. This field will be deprecated for all
+	// partners by mid-April 2023.
 	ExcludeFirstPartyAudience bool `json:"excludeFirstPartyAudience,omitempty"`
 
 	// TargetingExpansionLevel: Required. Magnitude of expansion for
-	// applicable targeting under this line item.
+	// applicable targeting under this line item. Beginning **March 25,
+	// 2023**, the behavior of this field may change in the following ways
+	// with the replacement of targeting expansion with optimized targeting
+	// (//support.google.com/displayvideo/answer/12060859): * This field
+	// will represent the optimized targeting checkbox, with a
+	// `NO_EXPANSION` value representing optimized targeting turned off and
+	// a `LEAST_EXPANSION` value representing optimized targeting turned on.
+	// * `NO_EXPANSION` will be the default value for the field and will be
+	// automatically assigned if you do not set the field. * If you set the
+	// field to any value other than `NO_EXPANSION`, it will automatically
+	// be set to `LEAST_EXPANSION`. This behavior will be rolled out to all
+	// partners by mid-April 2023.
 	//
 	// Possible values:
 	//   "TARGETING_EXPANSION_LEVEL_UNSPECIFIED" - Targeting expansion level

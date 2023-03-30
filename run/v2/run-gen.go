@@ -71,6 +71,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "run:v2"
 const apiName = "run"
@@ -316,6 +317,7 @@ type GoogleCloudRunV2Condition struct {
 	// attempt failed due to the user container exiting with a non-zero exit
 	// code.
 	//   "CANCELLED" - The execution was cancelled by users.
+	//   "CANCELLING" - The execution is in the process of being cancelled.
 	ExecutionReason string `json:"executionReason,omitempty"`
 
 	// LastTransitionTime: Last time the condition transitioned from one
@@ -697,11 +699,13 @@ type GoogleCloudRunV2Execution struct {
 	// or https://cloud.google.com/run/docs/configuring/labels
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// LaunchStage: Set the launch stage to a preview stage on write to
-	// allow use of preview features in that stage. On read, describes
-	// whether the resource uses preview features. Launch Stages are defined
-	// at Google Cloud Platform Launch Stages
-	// (https://cloud.google.com/terms/launch-stages).
+	// LaunchStage: The least stable launch stage needed to create this
+	// resource, as defined by Google Cloud Platform Launch Stages
+	// (https://cloud.google.com/terms/launch-stages). Cloud Run supports
+	// `ALPHA`, `BETA`, and `GA`. Note that this value might not be what was
+	// used as input. For example, if ALPHA was provided as input in the
+	// parent resource, but only BETA and GA-level features are were, this
+	// field will be BETA.
 	//
 	// Possible values:
 	//   "LAUNCH_STAGE_UNSPECIFIED" - Do not use this default value.
@@ -1114,7 +1118,11 @@ type GoogleCloudRunV2Job struct {
 	// LaunchStage: The launch stage as defined by Google Cloud Platform
 	// Launch Stages (https://cloud.google.com/terms/launch-stages). Cloud
 	// Run supports `ALPHA`, `BETA`, and `GA`. If no value is specified, GA
-	// is assumed.
+	// is assumed. Set the launch stage to a preview stage on input to allow
+	// use of preview features in that stage. On read (or output), describes
+	// whether the resource uses preview features. For example, if ALPHA is
+	// provided as input, but only BETA and GA-level features are used, this
+	// field will be BETA on output.
 	//
 	// Possible values:
 	//   "LAUNCH_STAGE_UNSPECIFIED" - Do not use this default value.
@@ -1589,11 +1597,13 @@ type GoogleCloudRunV2Revision struct {
 	// or https://cloud.google.com/run/docs/configuring/labels
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// LaunchStage: Set the launch stage to a preview stage on write to
-	// allow use of preview features in that stage. On read, describes
-	// whether the resource uses preview features. Launch Stages are defined
-	// at Google Cloud Platform Launch Stages
-	// (https://cloud.google.com/terms/launch-stages).
+	// LaunchStage: The least stable launch stage needed to create this
+	// resource, as defined by Google Cloud Platform Launch Stages
+	// (https://cloud.google.com/terms/launch-stages). Cloud Run supports
+	// `ALPHA`, `BETA`, and `GA`. Note that this value might not be what was
+	// used as input. For example, if ALPHA was provided as input in the
+	// parent resource, but only BETA and GA-level features are were, this
+	// field will be BETA.
 	//
 	// Possible values:
 	//   "LAUNCH_STAGE_UNSPECIFIED" - Do not use this default value.
@@ -2068,7 +2078,11 @@ type GoogleCloudRunV2Service struct {
 	// LaunchStage: The launch stage as defined by Google Cloud Platform
 	// Launch Stages (https://cloud.google.com/terms/launch-stages). Cloud
 	// Run supports `ALPHA`, `BETA`, and `GA`. If no value is specified, GA
-	// is assumed.
+	// is assumed. Set the launch stage to a preview stage on input to allow
+	// use of preview features in that stage. On read (or output), describes
+	// whether the resource uses preview features. For example, if ALPHA is
+	// provided as input, but only BETA and GA-level features are used, this
+	// field will be BETA on output.
 	//
 	// Possible values:
 	//   "LAUNCH_STAGE_UNSPECIFIED" - Do not use this default value.
@@ -7295,10 +7309,9 @@ func (r *ProjectsLocationsServicesService) Patch(name string, googlecloudrunv2se
 	return c
 }
 
-// AllowMissing sets the optional parameter "allowMissing": If set to
-// true, and if the Service does not exist, it will create a new one.
-// Caller must have both create and update permissions for this call if
-// this is set to true.
+// AllowMissing sets the optional parameter "allowMissing": This field
+// is currently not used by Cloud Run; setting it does not have any
+// effect.
 func (c *ProjectsLocationsServicesPatchCall) AllowMissing(allowMissing bool) *ProjectsLocationsServicesPatchCall {
 	c.urlParams_.Set("allowMissing", fmt.Sprint(allowMissing))
 	return c
@@ -7412,7 +7425,7 @@ func (c *ProjectsLocationsServicesPatchCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "allowMissing": {
-	//       "description": "If set to true, and if the Service does not exist, it will create a new one. Caller must have both create and update permissions for this call if this is set to true.",
+	//       "description": "This field is currently not used by Cloud Run; setting it does not have any effect.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },

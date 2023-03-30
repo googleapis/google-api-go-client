@@ -77,6 +77,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "datastore:v1"
 const apiName = "datastore"
@@ -180,17 +181,17 @@ type ProjectsOperationsService struct {
 	s *Service
 }
 
-// Aggregation: Defines a aggregation that produces a single result.
+// Aggregation: Defines an aggregation that produces a single result.
 type Aggregation struct {
 	// Alias: Optional. Optional name of the property to store the result of
 	// the aggregation. If not provided, Datastore will pick a default name
 	// following the format `property_`. For example: ``` AGGREGATE
 	// COUNT_UP_TO(1) AS count_up_to_1, COUNT_UP_TO(2), COUNT_UP_TO(3) AS
-	// count_up_to_3, COUNT_UP_TO(4) OVER ( ... ); ``` becomes: ```
-	// AGGREGATE COUNT_UP_TO(1) AS count_up_to_1, COUNT_UP_TO(2) AS
-	// property_1, COUNT_UP_TO(3) AS count_up_to_3, COUNT_UP_TO(4) AS
-	// property_2 OVER ( ... ); ``` Requires: * Must be unique across all
-	// aggregation aliases. * Conform to entity property name limitations.
+	// count_up_to_3, COUNT(*) OVER ( ... ); ``` becomes: ``` AGGREGATE
+	// COUNT_UP_TO(1) AS count_up_to_1, COUNT_UP_TO(2) AS property_1,
+	// COUNT_UP_TO(3) AS count_up_to_3, COUNT(*) AS property_2 OVER ( ... );
+	// ``` Requires: * Must be unique across all aggregation aliases. *
+	// Conform to entity property name limitations.
 	Alias string `json:"alias,omitempty"`
 
 	// Count: Count aggregator.
@@ -652,7 +653,7 @@ func (s *CompositeFilter) MarshalJSON() ([]byte, error) {
 type Count struct {
 	// UpTo: Optional. Optional constraint on the maximum number of entities
 	// to count. This provides a way to set an upper bound on the number of
-	// entities to scan, limiting latency and cost. Unspecified is
+	// entities to scan, limiting latency, and cost. Unspecified is
 	// interpreted as no bound. If a zero value is provided, a count result
 	// of zero should always be expected. High-Level Example: ``` AGGREGATE
 	// COUNT_UP_TO(1000) OVER ( SELECT * FROM k ); ``` Requires: * Must be
@@ -2608,7 +2609,9 @@ func (s *PropertyReference) MarshalJSON() ([]byte, error) {
 type Query struct {
 	// DistinctOn: The properties to make distinct. The query results will
 	// contain the first result for each distinct combination of values for
-	// the given properties (if empty, all results are returned).
+	// the given properties (if empty, all results are returned). Requires:
+	// * If `order` is specified, the set of distinct on properties must
+	// appear before the non-distinct on properties in `order`.
 	DistinctOn []*PropertyReference `json:"distinctOn,omitempty"`
 
 	// EndCursor: An ending point for the query results. Query cursors are

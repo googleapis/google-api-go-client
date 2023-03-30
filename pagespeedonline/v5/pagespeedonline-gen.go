@@ -71,6 +71,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "pagespeedonline:v5"
 const apiName = "pagespeedonline"
@@ -379,6 +380,10 @@ type Environment struct {
 	// device class.
 	BenchmarkIndex float64 `json:"benchmarkIndex,omitempty"`
 
+	// Credits: The version of libraries with which these results were
+	// generated. Ex: axe-core.
+	Credits map[string]string `json:"credits,omitempty"`
+
 	// HostUserAgent: The user agent string of the version of Chrome used.
 	HostUserAgent string `json:"hostUserAgent,omitempty"`
 
@@ -451,6 +456,52 @@ type I18n struct {
 
 func (s *I18n) MarshalJSON() ([]byte, error) {
 	type NoMethod I18n
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// LhrEntity: Message containing an Entity.
+type LhrEntity struct {
+	// Category: Optional. An optional category name for the entity.
+	Category string `json:"category,omitempty"`
+
+	// Homepage: Optional. An optional homepage URL of the entity.
+	Homepage string `json:"homepage,omitempty"`
+
+	// IsFirstParty: Optional. An optional flag indicating if the entity is
+	// the first party.
+	IsFirstParty bool `json:"isFirstParty,omitempty"`
+
+	// IsUnrecognized: Optional. An optional flag indicating if the entity
+	// is not recognized.
+	IsUnrecognized bool `json:"isUnrecognized,omitempty"`
+
+	// Name: Required. Name of the entity.
+	Name string `json:"name,omitempty"`
+
+	// Origins: Required. A list of URL origin strings that belong to this
+	// entity.
+	Origins []string `json:"origins,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Category") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Category") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LhrEntity) MarshalJSON() ([]byte, error) {
+	type NoMethod LhrEntity
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -597,6 +648,9 @@ type LighthouseResultV5 struct {
 	// ConfigSettings: The configuration settings for this LHR.
 	ConfigSettings *ConfigSettings `json:"configSettings,omitempty"`
 
+	// Entities: Entity classification data.
+	Entities []*LhrEntity `json:"entities,omitempty"`
+
 	// Environment: Environment settings that were used when making this
 	// LHR.
 	Environment *Environment `json:"environment,omitempty"`
@@ -604,8 +658,16 @@ type LighthouseResultV5 struct {
 	// FetchTime: The time that this run was fetched.
 	FetchTime string `json:"fetchTime,omitempty"`
 
+	// FinalDisplayedUrl: URL displayed on the page after Lighthouse
+	// finishes.
+	FinalDisplayedUrl string `json:"finalDisplayedUrl,omitempty"`
+
 	// FinalUrl: The final resolved url that was audited.
 	FinalUrl string `json:"finalUrl,omitempty"`
+
+	// FullPageScreenshot: Screenshot data of the full page, along with node
+	// rects relevant to the audit results.
+	FullPageScreenshot interface{} `json:"fullPageScreenshot,omitempty"`
 
 	// I18n: The internationalization strings that are required to render
 	// the LHR.
@@ -614,6 +676,10 @@ type LighthouseResultV5 struct {
 	// LighthouseVersion: The lighthouse version that was used to generate
 	// this LHR.
 	LighthouseVersion string `json:"lighthouseVersion,omitempty"`
+
+	// MainDocumentUrl: URL of the main document request of the final
+	// navigation.
+	MainDocumentUrl string `json:"mainDocumentUrl,omitempty"`
 
 	// RequestedUrl: The original requested url.
 	RequestedUrl string `json:"requestedUrl,omitempty"`

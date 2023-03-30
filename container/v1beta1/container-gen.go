@@ -71,6 +71,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "container:v1beta1"
 const apiName = "container"
@@ -1083,6 +1084,9 @@ type Cluster struct {
 	// deleted in RFC3339 (https://www.ietf.org/rfc/rfc3339.txt) text
 	// format.
 	ExpireTime string `json:"expireTime,omitempty"`
+
+	// Fleet: Fleet information for the cluster.
+	Fleet *Fleet `json:"fleet,omitempty"`
 
 	// Id: Output only. Unique id for the cluster.
 	Id string `json:"id,omitempty"`
@@ -2383,6 +2387,45 @@ type Filter struct {
 
 func (s *Filter) MarshalJSON() ([]byte, error) {
 	type NoMethod Filter
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Fleet: Fleet is the fleet configuration for the cluster.
+type Fleet struct {
+	// Membership: [Output only] The full resource name of the registered
+	// fleet membership of the cluster, in the format
+	// `//gkehub.googleapis.com/projects/*/locations/*/memberships/*`.
+	Membership string `json:"membership,omitempty"`
+
+	// PreRegistered: [Output only] Whether the cluster has been registered
+	// through the fleet API.
+	PreRegistered bool `json:"preRegistered,omitempty"`
+
+	// Project: The Fleet host project(project ID or project number) where
+	// this cluster will be registered to. This field cannot be changed
+	// after the cluster has been registered.
+	Project string `json:"project,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Membership") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Membership") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Fleet) MarshalJSON() ([]byte, error) {
+	type NoMethod Fleet
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

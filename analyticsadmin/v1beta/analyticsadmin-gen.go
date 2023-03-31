@@ -2848,11 +2848,8 @@ type GoogleAnalyticsAdminV1betaSearchChangeHistoryEventsRequest struct {
 	// resource
 	//   "DISPLAY_VIDEO_360_ADVERTISER_LINK_PROPOSAL" -
 	// DisplayVideo360AdvertiserLinkProposal resource
-	//   "SEARCH_ADS_360_LINK" - SearchAds360Link resource
 	//   "DATA_STREAM" - DataStream resource
 	//   "ATTRIBUTION_SETTINGS" - AttributionSettings resource
-	//   "EXPANDED_DATA_SET" - ExpandedDataSet resource
-	//   "CHANNEL_GROUP" - ChannelGroup resource
 	ResourceType []string `json:"resourceType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Action") to

@@ -5195,6 +5195,11 @@ type GoogleCloudChannelV1alpha1RenewalSettings struct {
 	// at renewal time.
 	ResizeUnitCount bool `json:"resizeUnitCount,omitempty"`
 
+	// ScheduledRenewalOffer: Output only. The offer resource name that the
+	// entitlement will renew on at the end date. Takes the form:
+	// accounts/{account_id}/offers/{offer_id}.
+	ScheduledRenewalOffer string `json:"scheduledRenewalOffer,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "DisableCommitment")
 	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any

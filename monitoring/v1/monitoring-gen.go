@@ -964,12 +964,12 @@ type DataSet struct {
 	//   "STACKED_AREA" - The data is plotted as a set of filled areas (one
 	// area per series), with the areas stacked vertically (the base of each
 	// area is the top of its predecessor, and the base of the first area is
-	// the X axis). Since the areas do not overlap, each is filled with a
+	// the x-axis). Since the areas do not overlap, each is filled with a
 	// different opaque color.
 	//   "STACKED_BAR" - The data is plotted as a set of rectangular boxes
 	// (one box per series), with the boxes stacked vertically (the base of
 	// each box is the top of its predecessor, and the base of the first box
-	// is the X axis). Since the boxes do not overlap, each is filled with a
+	// is the x-axis). Since the boxes do not overlap, each is filled with a
 	// different opaque color.
 	//   "HEATMAP" - The data is plotted as a heatmap. The series being
 	// plotted must have a DISTRIBUTION value type. The value of each bucket
@@ -2807,6 +2807,10 @@ func (s *TimeSeriesTable) MarshalJSON() ([]byte, error) {
 
 // Type: A protocol buffer message type.
 type Type struct {
+	// Edition: The source edition string, only valid when syntax is
+	// SYNTAX_EDITIONS.
+	Edition string `json:"edition,omitempty"`
+
 	// Fields: The list of fields.
 	Fields []*Field `json:"fields,omitempty"`
 
@@ -2828,9 +2832,10 @@ type Type struct {
 	// Possible values:
 	//   "SYNTAX_PROTO2" - Syntax proto2.
 	//   "SYNTAX_PROTO3" - Syntax proto3.
+	//   "SYNTAX_EDITIONS" - Syntax editions.
 	Syntax string `json:"syntax,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Fields") to
+	// ForceSendFields is a list of field names (e.g. "Edition") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2838,8 +2843,8 @@ type Type struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Fields") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "Edition") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -2930,13 +2935,13 @@ type XyChart struct {
 	// plot type.
 	TimeshiftDuration string `json:"timeshiftDuration,omitempty"`
 
-	// XAxis: The properties applied to the X axis.
+	// XAxis: The properties applied to the x-axis.
 	XAxis *Axis `json:"xAxis,omitempty"`
 
-	// Y2Axis: The properties applied to the Y2 axis.
+	// Y2Axis: The properties applied to the y2-axis.
 	Y2Axis *Axis `json:"y2Axis,omitempty"`
 
-	// YAxis: The properties applied to the Y axis.
+	// YAxis: The properties applied to the y-axis.
 	YAxis *Axis `json:"yAxis,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ChartOptions") to

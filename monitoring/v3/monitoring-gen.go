@@ -789,6 +789,10 @@ type AlertStrategy struct {
 	// long, any open incidents will close
 	AutoClose string `json:"autoClose,omitempty"`
 
+	// NotificationChannelStrategy: Control how notifications will be sent
+	// out, on a per-channel basis.
+	NotificationChannelStrategy []*NotificationChannelStrategy `json:"notificationChannelStrategy,omitempty"`
+
 	// NotificationRateLimit: Required for alert policies with a LogMatch
 	// condition.This limit is not implemented for alert policies that are
 	// not log-based.
@@ -2010,7 +2014,7 @@ func (s *Explicit) MarshalJSON() ([]byte, error) {
 // bucket represents a constant relative uncertainty on a specific value
 // in the bucket.There are num_finite_buckets + 2 (= N) buckets. Bucket
 // i has the following boundaries:Upper bound (0 <= i < N-1): scale *
-// (growth_factor ^ i). Lower bound (1 <= i < N): scale * (growth_factor
+// (growth_factor ^ i).Lower bound (1 <= i < N): scale * (growth_factor
 // ^ (i - 1)).
 type Exponential struct {
 	// GrowthFactor: Must be greater than 1.
@@ -2923,7 +2927,7 @@ func (s *LatencyCriteria) MarshalJSON() ([]byte, error) {
 // constant absolute uncertainty on the specific value in the
 // bucket.There are num_finite_buckets + 2 (= N) buckets. Bucket i has
 // the following boundaries:Upper bound (0 <= i < N-1): offset + (width
-// * i). Lower bound (1 <= i < N): offset + (width * (i - 1)).
+// * i).Lower bound (1 <= i < N): offset + (width * (i - 1)).
 type Linear struct {
 	// NumFiniteBuckets: Must be greater than 0.
 	NumFiniteBuckets int64 `json:"numFiniteBuckets,omitempty"`
@@ -4680,6 +4684,47 @@ func (s *NotificationChannelDescriptor) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// NotificationChannelStrategy: Control over how the notification
+// channels in notification_channels are notified when this alert fires,
+// on a per-channel basis.
+type NotificationChannelStrategy struct {
+	// NotificationChannelNames: The full REST resource name for the
+	// notification channels that these settings apply to. Each of these
+	// correspond to the name field in one of the NotificationChannel
+	// objects referenced in the notification_channels field of this
+	// AlertPolicy. The format is:
+	// projects/[PROJECT_ID_OR_NUMBER]/notificationChannels/[CHANNEL_ID]
+	NotificationChannelNames []string `json:"notificationChannelNames,omitempty"`
+
+	// RenotifyInterval: The frequency at which to send reminder
+	// notifications for open incidents.
+	RenotifyInterval string `json:"renotifyInterval,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "NotificationChannelNames") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NotificationChannelNames")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *NotificationChannelStrategy) MarshalJSON() ([]byte, error) {
+	type NoMethod NotificationChannelStrategy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // NotificationRateLimit: Control over the rate of notifications sent to
 // this alert policy's notification channels.
 type NotificationRateLimit struct {
@@ -6004,6 +6049,10 @@ func (s *Trigger) UnmarshalJSON(data []byte) error {
 
 // Type: A protocol buffer message type.
 type Type struct {
+	// Edition: The source edition string, only valid when syntax is
+	// SYNTAX_EDITIONS.
+	Edition string `json:"edition,omitempty"`
+
 	// Fields: The list of fields.
 	Fields []*Field `json:"fields,omitempty"`
 
@@ -6025,9 +6074,10 @@ type Type struct {
 	// Possible values:
 	//   "SYNTAX_PROTO2" - Syntax proto2.
 	//   "SYNTAX_PROTO3" - Syntax proto3.
+	//   "SYNTAX_EDITIONS" - Syntax editions.
 	Syntax string `json:"syntax,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Fields") to
+	// ForceSendFields is a list of field names (e.g. "Edition") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -6035,8 +6085,8 @@ type Type struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Fields") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "Edition") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.

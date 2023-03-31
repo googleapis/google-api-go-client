@@ -3385,11 +3385,11 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 // specification configuration for a single managed bundle.
 type PolicyControllerBundleInstallSpec struct {
 	// ExemptedNamespaces: the set of namespaces to be exempted from the
-	// bundle
+	// bundle TODO (b/271878194): Decrement this
 	ExemptedNamespaces []string `json:"exemptedNamespaces,omitempty"`
 
 	// Management: Management specifies how the bundle will be managed by
-	// the controller.
+	// the controller. TODO (b/271878194): Remove this
 	//
 	// Possible values:
 	//   "MANAGEMENT_UNSPECIFIED" - No Management strategy has been
@@ -3478,7 +3478,7 @@ type PolicyControllerHubConfig struct {
 	ReferentialRulesEnabled bool `json:"referentialRulesEnabled,omitempty"`
 
 	// TemplateLibraryConfig: Configures the library templates to install
-	// along with Policy Controller.
+	// along with Policy Controller. TODO (b/271878194): Remove this
 	TemplateLibraryConfig *PolicyControllerTemplateLibraryConfig `json:"templateLibraryConfig,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -3549,8 +3549,13 @@ type PolicyControllerMembershipState struct {
 	ComponentStates map[string]PolicyControllerOnClusterState `json:"componentStates,omitempty"`
 
 	// ContentStates: The state of the template library and any bundles
-	// included in the chosen version of the manifest
+	// included in the chosen version of the manifest TODO (b/271878194):
+	// Remove this
 	ContentStates map[string]PolicyControllerOnClusterState `json:"contentStates,omitempty"`
+
+	// PolicyContentState: The overall content state observed by the Hub
+	// Feature controller. TODO (b/271878194): Decrement this
+	PolicyContentState *PolicyControllerPolicyContentState `json:"policyContentState,omitempty"`
 
 	// State: The overall Policy Controller lifecycle state observed by the
 	// Hub Feature controller.
@@ -3734,6 +3739,9 @@ type PolicyControllerPolicyContentSpec struct {
 	// `policycontroller.gke.io/constraintData` annotation on a constraint.
 	Bundles map[string]PolicyControllerBundleInstallSpec `json:"bundles,omitempty"`
 
+	// TemplateLibrary: Configures the installation of the Template Library.
+	TemplateLibrary *PolicyControllerTemplateLibraryConfig `json:"templateLibrary,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Bundles") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -3753,6 +3761,39 @@ type PolicyControllerPolicyContentSpec struct {
 
 func (s *PolicyControllerPolicyContentSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod PolicyControllerPolicyContentSpec
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PolicyControllerPolicyContentState: The state of the policy
+// controller policy content
+type PolicyControllerPolicyContentState struct {
+	// BundleStates: The state of the any bundles included in the chosen
+	// version of the manifest
+	BundleStates map[string]PolicyControllerOnClusterState `json:"bundleStates,omitempty"`
+
+	// TemplateLibraryState: The state of the template library
+	TemplateLibraryState *PolicyControllerOnClusterState `json:"templateLibraryState,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BundleStates") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BundleStates") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PolicyControllerPolicyContentState) MarshalJSON() ([]byte, error) {
+	type NoMethod PolicyControllerPolicyContentState
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3866,8 +3907,18 @@ func (s *PolicyControllerResourceRequirements) MarshalJSON() ([]byte, error) {
 // default library templates to install.
 type PolicyControllerTemplateLibraryConfig struct {
 	// Included: Whether the standard template library should be installed
-	// or not.
+	// or not. TODO (b/271878194): Remove this
 	Included bool `json:"included,omitempty"`
+
+	// Installation: Configures the manner in which the template library is
+	// installed on the cluster. TODO (b/271878194): Decrement this
+	//
+	// Possible values:
+	//   "INSTALLATION_UNSPECIFIED" - No installation strategy has been
+	// specified.
+	//   "NOT_INSTALLED" - Do not install the template library.
+	//   "ALL" - Install the entire template library.
+	Installation string `json:"installation,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Included") to
 	// unconditionally include in API requests. By default, fields with

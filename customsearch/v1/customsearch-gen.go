@@ -342,7 +342,7 @@ func (s *Result) MarshalJSON() ([]byte, error) {
 
 // ResultImage: Image belonging to a custom search result.
 type ResultImage struct {
-	// ByteSize: The size of the image, in pixels.
+	// ByteSize: The size of the image, in bytes.
 	ByteSize int64 `json:"byteSize,omitempty"`
 
 	// ContextLink: A URL pointing to the webpage hosting the image.

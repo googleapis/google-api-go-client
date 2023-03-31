@@ -348,7 +348,7 @@ type Backup struct {
 	// Possible values:
 	//   "DATABASE_DIALECT_UNSPECIFIED" - Default value. This value will
 	// create a database with the GOOGLE_STANDARD_SQL dialect.
-	//   "GOOGLE_STANDARD_SQL" - Google standard SQL.
+	//   "GOOGLE_STANDARD_SQL" - GoogleSQL supported SQL.
 	//   "POSTGRESQL" - PostgreSQL supported SQL.
 	DatabaseDialect string `json:"databaseDialect,omitempty"`
 
@@ -1129,7 +1129,7 @@ type CreateDatabaseRequest struct {
 	// Possible values:
 	//   "DATABASE_DIALECT_UNSPECIFIED" - Default value. This value will
 	// create a database with the GOOGLE_STANDARD_SQL dialect.
-	//   "GOOGLE_STANDARD_SQL" - Google standard SQL.
+	//   "GOOGLE_STANDARD_SQL" - GoogleSQL supported SQL.
 	//   "POSTGRESQL" - PostgreSQL supported SQL.
 	DatabaseDialect string `json:"databaseDialect,omitempty"`
 
@@ -1377,7 +1377,7 @@ type Database struct {
 	// Possible values:
 	//   "DATABASE_DIALECT_UNSPECIFIED" - Default value. This value will
 	// create a database with the GOOGLE_STANDARD_SQL dialect.
-	//   "GOOGLE_STANDARD_SQL" - Google standard SQL.
+	//   "GOOGLE_STANDARD_SQL" - GoogleSQL supported SQL.
 	//   "POSTGRESQL" - PostgreSQL supported SQL.
 	DatabaseDialect string `json:"databaseDialect,omitempty"`
 
@@ -5746,7 +5746,7 @@ type UpdateDatabaseDdlMetadata struct {
 	Statements []string `json:"statements,omitempty"`
 
 	// Throttled: Output only. When true, indicates that the operation is
-	// throttled e.g due to resource constraints. When resources become
+	// throttled e.g. due to resource constraints. When resources become
 	// available the operation will resume and this field will be false
 	// again.
 	Throttled bool `json:"throttled,omitempty"`

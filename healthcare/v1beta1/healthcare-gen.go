@@ -2816,7 +2816,7 @@ type ExportMessagesRequest struct {
 	// (inclusive) to `end_time` (exclusive) are exported.
 	EndTime string `json:"endTime,omitempty"`
 
-	// GcsDestination: Export to a Cloud Storage destination.
+	// GcsDestination: Exports to a Cloud Storage destination.
 	GcsDestination *GcsDestination `json:"gcsDestination,omitempty"`
 
 	// StartTime: The start of the range in `send_time` (MSH.7,
@@ -6753,6 +6753,7 @@ type SchemaConfig struct {
 	// unsupported.
 	//   "LOSSLESS" - A data-driven schema generated from the fields present
 	// in the FHIR data being exported, with no additional simplification.
+	// This type cannot be used for streaming to BigQuery.
 	//   "ANALYTICS" - Analytics schema defined by the FHIR community. See
 	// https://github.com/FHIR/sql-on-fhir/blob/master/sql-on-fhir.md.
 	// BigQuery only allows a maximum of 10,000 columns per table. Due to
@@ -25459,6 +25460,201 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirPatientEverythingCall) Do(opts .
 
 }
 
+// method id "healthcare.projects.locations.datasets.fhirStores.fhir.Resource-incoming-references":
+
+type ProjectsLocationsDatasetsFhirStoresFhirResourceIncomingReferencesCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// ResourceIncomingReferences: Gets all incoming references to a given
+// target FHIR resource. Can also get all incoming references when the
+// target resource does not exist, for example, if the target has been
+// deleted. On success, the response body contains a Bundle with type
+// `searchset`, where each entry in the Bundle contains the full content
+// of the resource. If the operation fails, an `OperationOutcome` is
+// returned describing the failure. If the request cannot be mapped to a
+// valid API method on a FHIR store, a generic Google Cloud error might
+// be returned instead.
+//
+// - parent: The name of the FHIR store that holds the target resource.
+func (r *ProjectsLocationsDatasetsFhirStoresFhirService) ResourceIncomingReferences(parent string) *ProjectsLocationsDatasetsFhirStoresFhirResourceIncomingReferencesCall {
+	c := &ProjectsLocationsDatasetsFhirStoresFhirResourceIncomingReferencesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Count sets the optional parameter "_count": Maximum number of
+// resources in a page. If not specified, 100 is used. May not be larger
+// than 1000.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirResourceIncomingReferencesCall) Count(Count int64) *ProjectsLocationsDatasetsFhirStoresFhirResourceIncomingReferencesCall {
+	c.urlParams_.Set("_count", fmt.Sprint(Count))
+	return c
+}
+
+// PageToken sets the optional parameter "_page_token": Used to retrieve
+// the next page of results when using pagination. Set `_page_token` to
+// the value of _page_token set in next page links' url. Next page are
+// returned in the response bundle's links field, where `link.relation`
+// is "next". Omit `_page_token` if no previous request has been made.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirResourceIncomingReferencesCall) PageToken(PageToken string) *ProjectsLocationsDatasetsFhirStoresFhirResourceIncomingReferencesCall {
+	c.urlParams_.Set("_page_token", PageToken)
+	return c
+}
+
+// Summary sets the optional parameter "_summary": Used to simplify the
+// representation of the returned resources. `_summary=text` returns
+// only the `text`, `id`, and `meta` top-level fields. `_summary=data`
+// removes the `text` field and returns all other fields.
+// `_summary=false` returns all parts of the resource(s). Either not
+// providing this parameter or providing an empty value to this
+// parameter also returns all parts of the resource(s).
+func (c *ProjectsLocationsDatasetsFhirStoresFhirResourceIncomingReferencesCall) Summary(Summary string) *ProjectsLocationsDatasetsFhirStoresFhirResourceIncomingReferencesCall {
+	c.urlParams_.Set("_summary", Summary)
+	return c
+}
+
+// Type sets the optional parameter "_type": String of comma-delimited
+// FHIR resource types. If provided, only resources of the specified
+// resource type(s) are returned. If not provided or an empty value is
+// provided, no filter on the returned resource type(s) is applied.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirResourceIncomingReferencesCall) Type(Type string) *ProjectsLocationsDatasetsFhirStoresFhirResourceIncomingReferencesCall {
+	c.urlParams_.Set("_type", Type)
+	return c
+}
+
+// Target sets the optional parameter "target": Required. The target
+// whose incoming references are requested. This param is required and
+// must not be empty. It uses the format "ResourceType/ResourceID", for
+// example, target=ResourceType/ResourceID.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirResourceIncomingReferencesCall) Target(target string) *ProjectsLocationsDatasetsFhirStoresFhirResourceIncomingReferencesCall {
+	c.urlParams_.Set("target", target)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirResourceIncomingReferencesCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsFhirStoresFhirResourceIncomingReferencesCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirResourceIncomingReferencesCall) IfNoneMatch(entityTag string) *ProjectsLocationsDatasetsFhirStoresFhirResourceIncomingReferencesCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirResourceIncomingReferencesCall) Context(ctx context.Context) *ProjectsLocationsDatasetsFhirStoresFhirResourceIncomingReferencesCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirResourceIncomingReferencesCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsFhirStoresFhirResourceIncomingReferencesCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/fhir/$references")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.fhirStores.fhir.Resource-incoming-references" call.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirResourceIncomingReferencesCall) Do(opts ...googleapi.CallOption) (*http.Response, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	return c.doRequest("")
+	// {
+	//   "description": "Gets all incoming references to a given target FHIR resource. Can also get all incoming references when the target resource does not exist, for example, if the target has been deleted. On success, the response body contains a Bundle with type `searchset`, where each entry in the Bundle contains the full content of the resource. If the operation fails, an `OperationOutcome` is returned describing the failure. If the request cannot be mapped to a valid API method on a FHIR store, a generic Google Cloud error might be returned instead.",
+	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}/fhir/$references",
+	//   "httpMethod": "GET",
+	//   "id": "healthcare.projects.locations.datasets.fhirStores.fhir.Resource-incoming-references",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "_count": {
+	//       "description": "Maximum number of resources in a page. If not specified, 100 is used. May not be larger than 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "_page_token": {
+	//       "description": "Used to retrieve the next page of results when using pagination. Set `_page_token` to the value of _page_token set in next page links' url. Next page are returned in the response bundle's links field, where `link.relation` is \"next\". Omit `_page_token` if no previous request has been made.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "_summary": {
+	//       "description": "Used to simplify the representation of the returned resources. `_summary=text` returns only the `text`, `id`, and `meta` top-level fields. `_summary=data` removes the `text` field and returns all other fields. `_summary=false` returns all parts of the resource(s). Either not providing this parameter or providing an empty value to this parameter also returns all parts of the resource(s).",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "_type": {
+	//       "description": "String of comma-delimited FHIR resource types. If provided, only resources of the specified resource type(s) are returned. If not provided or an empty value is provided, no filter on the returned resource type(s) is applied.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The name of the FHIR store that holds the target resource.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "target": {
+	//       "description": "Required. The target whose incoming references are requested. This param is required and must not be empty. It uses the format \"ResourceType/ResourceID\", for example, target=ResourceType/ResourceID.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+parent}/fhir/$references",
+	//   "response": {
+	//     "$ref": "HttpBody"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "healthcare.projects.locations.datasets.fhirStores.fhir.Resource-purge":
 
 type ProjectsLocationsDatasetsFhirStoresFhirResourcePurgeCall struct {
@@ -27257,16 +27453,17 @@ type ProjectsLocationsDatasetsFhirStoresFhirSearchCall struct {
 // `_revinclude`, `_summary=text`, `_summary=data`, and `_elements`. The
 // maximum number of search results returned defaults to 100, which can
 // be overridden by the `_count` parameter up to a maximum limit of
-// 1000. If there are additional results, the returned `Bundle` contains
-// a link of `relation` "next", which has a `_page_token` parameter for
-// an opaque pagination token that can be used to retrieve the next
-// page. Resources with a total size larger than 5MB or a field count
-// larger than 50,000 might not be fully searchable as the server might
-// trim its generated search index in those cases. Note: FHIR resources
-// are indexed asynchronously, so there might be a slight delay between
-// the time a resource is created or changes and when the change is
-// reflected in search results. For samples and detailed information,
-// see Searching for FHIR resources
+// 1000. The server might return fewer resources than requested to
+// prevent excessively large responses. If there are additional results,
+// the returned `Bundle` contains a link of `relation` "next", which has
+// a `_page_token` parameter for an opaque pagination token that can be
+// used to retrieve the next page. Resources with a total size larger
+// than 5MB or a field count larger than 50,000 might not be fully
+// searchable as the server might trim its generated search index in
+// those cases. Note: FHIR resources are indexed asynchronously, so
+// there might be a slight delay between the time a resource is created
+// or changes and when the change is reflected in search results. For
+// samples and detailed information, see Searching for FHIR resources
 // (https://cloud.google.com/healthcare/docs/how-tos/fhir-search) and
 // Advanced FHIR search features
 // (https://cloud.google.com/healthcare/docs/how-tos/fhir-advanced-search).
@@ -27337,7 +27534,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirSearchCall) Do(opts ...googleapi
 	gensupport.SetOptions(c.urlParams_, opts...)
 	return c.doRequest("")
 	// {
-	//   "description": "Searches for resources in the given FHIR store according to criteria specified as query parameters. Implements the FHIR standard search interaction ([DSTU2](https://hl7.org/implement/standards/fhir/DSTU2/http.html#search), [STU3](https://hl7.org/implement/standards/fhir/STU3/http.html#search), [R4](https://hl7.org/implement/standards/fhir/R4/http.html#search)) using the search semantics described in the FHIR Search specification ([DSTU2](https://hl7.org/implement/standards/fhir/DSTU2/search.html), [STU3](https://hl7.org/implement/standards/fhir/STU3/search.html), [R4](https://hl7.org/implement/standards/fhir/R4/search.html)). Supports four methods of search defined by the specification: * `GET [base]?[parameters]` to search across all resources. * `GET [base]/[type]?[parameters]` to search resources of a specified type. * `POST [base]/_search?[parameters]` as an alternate form having the same semantics as the `GET` method across all resources. * `POST [base]/[type]/_search?[parameters]` as an alternate form having the same semantics as the `GET` method for the specified type. The `GET` and `POST` methods do not support compartment searches. The `POST` method does not support `application/x-www-form-urlencoded` search parameters. On success, the response body contains a JSON-encoded representation of a `Bundle` resource of type `searchset`, containing the results of the search. Errors generated by the FHIR store contain a JSON-encoded `OperationOutcome` resource describing the reason for the error. If the request cannot be mapped to a valid API method on a FHIR store, a generic GCP error might be returned instead. The server's capability statement, retrieved through capabilities, indicates what search parameters are supported on each FHIR resource. A list of all search parameters defined by the specification can be found in the FHIR Search Parameter Registry ([STU3](https://hl7.org/implement/standards/fhir/STU3/searchparameter-registry.html), [R4](https://hl7.org/implement/standards/fhir/R4/searchparameter-registry.html)). FHIR search parameters for DSTU2 can be found on each resource's definition page. Supported search modifiers: `:missing`, `:exact`, `:contains`, `:text`, `:in`, `:not-in`, `:above`, `:below`, `:[type]`, `:not`, and `recurse` (DSTU2 and STU3) or `:iterate` (R4). Supported search result parameters: `_sort`, `_count`, `_include`, `_revinclude`, `_summary=text`, `_summary=data`, and `_elements`. The maximum number of search results returned defaults to 100, which can be overridden by the `_count` parameter up to a maximum limit of 1000. If there are additional results, the returned `Bundle` contains a link of `relation` \"next\", which has a `_page_token` parameter for an opaque pagination token that can be used to retrieve the next page. Resources with a total size larger than 5MB or a field count larger than 50,000 might not be fully searchable as the server might trim its generated search index in those cases. Note: FHIR resources are indexed asynchronously, so there might be a slight delay between the time a resource is created or changes and when the change is reflected in search results. For samples and detailed information, see [Searching for FHIR resources](https://cloud.google.com/healthcare/docs/how-tos/fhir-search) and [Advanced FHIR search features](https://cloud.google.com/healthcare/docs/how-tos/fhir-advanced-search).",
+	//   "description": "Searches for resources in the given FHIR store according to criteria specified as query parameters. Implements the FHIR standard search interaction ([DSTU2](https://hl7.org/implement/standards/fhir/DSTU2/http.html#search), [STU3](https://hl7.org/implement/standards/fhir/STU3/http.html#search), [R4](https://hl7.org/implement/standards/fhir/R4/http.html#search)) using the search semantics described in the FHIR Search specification ([DSTU2](https://hl7.org/implement/standards/fhir/DSTU2/search.html), [STU3](https://hl7.org/implement/standards/fhir/STU3/search.html), [R4](https://hl7.org/implement/standards/fhir/R4/search.html)). Supports four methods of search defined by the specification: * `GET [base]?[parameters]` to search across all resources. * `GET [base]/[type]?[parameters]` to search resources of a specified type. * `POST [base]/_search?[parameters]` as an alternate form having the same semantics as the `GET` method across all resources. * `POST [base]/[type]/_search?[parameters]` as an alternate form having the same semantics as the `GET` method for the specified type. The `GET` and `POST` methods do not support compartment searches. The `POST` method does not support `application/x-www-form-urlencoded` search parameters. On success, the response body contains a JSON-encoded representation of a `Bundle` resource of type `searchset`, containing the results of the search. Errors generated by the FHIR store contain a JSON-encoded `OperationOutcome` resource describing the reason for the error. If the request cannot be mapped to a valid API method on a FHIR store, a generic GCP error might be returned instead. The server's capability statement, retrieved through capabilities, indicates what search parameters are supported on each FHIR resource. A list of all search parameters defined by the specification can be found in the FHIR Search Parameter Registry ([STU3](https://hl7.org/implement/standards/fhir/STU3/searchparameter-registry.html), [R4](https://hl7.org/implement/standards/fhir/R4/searchparameter-registry.html)). FHIR search parameters for DSTU2 can be found on each resource's definition page. Supported search modifiers: `:missing`, `:exact`, `:contains`, `:text`, `:in`, `:not-in`, `:above`, `:below`, `:[type]`, `:not`, and `recurse` (DSTU2 and STU3) or `:iterate` (R4). Supported search result parameters: `_sort`, `_count`, `_include`, `_revinclude`, `_summary=text`, `_summary=data`, and `_elements`. The maximum number of search results returned defaults to 100, which can be overridden by the `_count` parameter up to a maximum limit of 1000. The server might return fewer resources than requested to prevent excessively large responses. If there are additional results, the returned `Bundle` contains a link of `relation` \"next\", which has a `_page_token` parameter for an opaque pagination token that can be used to retrieve the next page. Resources with a total size larger than 5MB or a field count larger than 50,000 might not be fully searchable as the server might trim its generated search index in those cases. Note: FHIR resources are indexed asynchronously, so there might be a slight delay between the time a resource is created or changes and when the change is reflected in search results. For samples and detailed information, see [Searching for FHIR resources](https://cloud.google.com/healthcare/docs/how-tos/fhir-search) and [Advanced FHIR search features](https://cloud.google.com/healthcare/docs/how-tos/fhir-advanced-search).",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}/fhir/_search",
 	//   "httpMethod": "POST",
 	//   "id": "healthcare.projects.locations.datasets.fhirStores.fhir.search",
@@ -27420,16 +27617,17 @@ type ProjectsLocationsDatasetsFhirStoresFhirSearchTypeCall struct {
 // `_revinclude`, `_summary=text`, `_summary=data`, and `_elements`. The
 // maximum number of search results returned defaults to 100, which can
 // be overridden by the `_count` parameter up to a maximum limit of
-// 1000. If there are additional results, the returned `Bundle` contains
-// a link of `relation` "next", which has a `_page_token` parameter for
-// an opaque pagination token that can be used to retrieve the next
-// page. Resources with a total size larger than 5MB or a field count
-// larger than 50,000 might not be fully searchable as the server might
-// trim its generated search index in those cases. Note: FHIR resources
-// are indexed asynchronously, so there might be a slight delay between
-// the time a resource is created or changes and when the change is
-// reflected in search results. For samples and detailed information,
-// see Searching for FHIR resources
+// 1000. The server might return fewer resources than requested to
+// prevent excessively large responses. If there are additional results,
+// the returned `Bundle` contains a link of `relation` "next", which has
+// a `_page_token` parameter for an opaque pagination token that can be
+// used to retrieve the next page. Resources with a total size larger
+// than 5MB or a field count larger than 50,000 might not be fully
+// searchable as the server might trim its generated search index in
+// those cases. Note: FHIR resources are indexed asynchronously, so
+// there might be a slight delay between the time a resource is created
+// or changes and when the change is reflected in search results. For
+// samples and detailed information, see Searching for FHIR resources
 // (https://cloud.google.com/healthcare/docs/how-tos/fhir-search) and
 // Advanced FHIR search features
 // (https://cloud.google.com/healthcare/docs/how-tos/fhir-advanced-search).
@@ -27510,7 +27708,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirSearchTypeCall) Do(opts ...googl
 	gensupport.SetOptions(c.urlParams_, opts...)
 	return c.doRequest("")
 	// {
-	//   "description": "Searches for resources in the given FHIR store according to criteria specified as query parameters. Implements the FHIR standard search interaction ([DSTU2](https://hl7.org/implement/standards/fhir/DSTU2/http.html#search), [STU3](https://hl7.org/implement/standards/fhir/STU3/http.html#search), [R4](https://hl7.org/implement/standards/fhir/R4/http.html#search)) using the search semantics described in the FHIR Search specification ([DSTU2](https://hl7.org/implement/standards/fhir/DSTU2/search.html), [STU3](https://hl7.org/implement/standards/fhir/STU3/search.html), [R4](https://hl7.org/implement/standards/fhir/R4/search.html)). Supports four methods of search defined by the specification: * `GET [base]?[parameters]` to search across all resources. * `GET [base]/[type]?[parameters]` to search resources of a specified type. * `POST [base]/_search?[parameters]` as an alternate form having the same semantics as the `GET` method across all resources. * `POST [base]/[type]/_search?[parameters]` as an alternate form having the same semantics as the `GET` method for the specified type. The `GET` and `POST` methods do not support compartment searches. The `POST` method does not support `application/x-www-form-urlencoded` search parameters. On success, the response body contains a JSON-encoded representation of a `Bundle` resource of type `searchset`, containing the results of the search. Errors generated by the FHIR store contain a JSON-encoded `OperationOutcome` resource describing the reason for the error. If the request cannot be mapped to a valid API method on a FHIR store, a generic GCP error might be returned instead. The server's capability statement, retrieved through capabilities, indicates what search parameters are supported on each FHIR resource. A list of all search parameters defined by the specification can be found in the FHIR Search Parameter Registry ([STU3](https://hl7.org/implement/standards/fhir/STU3/searchparameter-registry.html), [R4](https://hl7.org/implement/standards/fhir/R4/searchparameter-registry.html)). FHIR search parameters for DSTU2 can be found on each resource's definition page. Supported search modifiers: `:missing`, `:exact`, `:contains`, `:text`, `:in`, `:not-in`, `:above`, `:below`, `:[type]`, `:not`, and `recurse` (DSTU2 and STU3) or `:iterate` (R4). Supported search result parameters: `_sort`, `_count`, `_include`, `_revinclude`, `_summary=text`, `_summary=data`, and `_elements`. The maximum number of search results returned defaults to 100, which can be overridden by the `_count` parameter up to a maximum limit of 1000. If there are additional results, the returned `Bundle` contains a link of `relation` \"next\", which has a `_page_token` parameter for an opaque pagination token that can be used to retrieve the next page. Resources with a total size larger than 5MB or a field count larger than 50,000 might not be fully searchable as the server might trim its generated search index in those cases. Note: FHIR resources are indexed asynchronously, so there might be a slight delay between the time a resource is created or changes and when the change is reflected in search results. For samples and detailed information, see [Searching for FHIR resources](https://cloud.google.com/healthcare/docs/how-tos/fhir-search) and [Advanced FHIR search features](https://cloud.google.com/healthcare/docs/how-tos/fhir-advanced-search).",
+	//   "description": "Searches for resources in the given FHIR store according to criteria specified as query parameters. Implements the FHIR standard search interaction ([DSTU2](https://hl7.org/implement/standards/fhir/DSTU2/http.html#search), [STU3](https://hl7.org/implement/standards/fhir/STU3/http.html#search), [R4](https://hl7.org/implement/standards/fhir/R4/http.html#search)) using the search semantics described in the FHIR Search specification ([DSTU2](https://hl7.org/implement/standards/fhir/DSTU2/search.html), [STU3](https://hl7.org/implement/standards/fhir/STU3/search.html), [R4](https://hl7.org/implement/standards/fhir/R4/search.html)). Supports four methods of search defined by the specification: * `GET [base]?[parameters]` to search across all resources. * `GET [base]/[type]?[parameters]` to search resources of a specified type. * `POST [base]/_search?[parameters]` as an alternate form having the same semantics as the `GET` method across all resources. * `POST [base]/[type]/_search?[parameters]` as an alternate form having the same semantics as the `GET` method for the specified type. The `GET` and `POST` methods do not support compartment searches. The `POST` method does not support `application/x-www-form-urlencoded` search parameters. On success, the response body contains a JSON-encoded representation of a `Bundle` resource of type `searchset`, containing the results of the search. Errors generated by the FHIR store contain a JSON-encoded `OperationOutcome` resource describing the reason for the error. If the request cannot be mapped to a valid API method on a FHIR store, a generic GCP error might be returned instead. The server's capability statement, retrieved through capabilities, indicates what search parameters are supported on each FHIR resource. A list of all search parameters defined by the specification can be found in the FHIR Search Parameter Registry ([STU3](https://hl7.org/implement/standards/fhir/STU3/searchparameter-registry.html), [R4](https://hl7.org/implement/standards/fhir/R4/searchparameter-registry.html)). FHIR search parameters for DSTU2 can be found on each resource's definition page. Supported search modifiers: `:missing`, `:exact`, `:contains`, `:text`, `:in`, `:not-in`, `:above`, `:below`, `:[type]`, `:not`, and `recurse` (DSTU2 and STU3) or `:iterate` (R4). Supported search result parameters: `_sort`, `_count`, `_include`, `_revinclude`, `_summary=text`, `_summary=data`, and `_elements`. The maximum number of search results returned defaults to 100, which can be overridden by the `_count` parameter up to a maximum limit of 1000. The server might return fewer resources than requested to prevent excessively large responses. If there are additional results, the returned `Bundle` contains a link of `relation` \"next\", which has a `_page_token` parameter for an opaque pagination token that can be used to retrieve the next page. Resources with a total size larger than 5MB or a field count larger than 50,000 might not be fully searchable as the server might trim its generated search index in those cases. Note: FHIR resources are indexed asynchronously, so there might be a slight delay between the time a resource is created or changes and when the change is reflected in search results. For samples and detailed information, see [Searching for FHIR resources](https://cloud.google.com/healthcare/docs/how-tos/fhir-search) and [Advanced FHIR search features](https://cloud.google.com/healthcare/docs/how-tos/fhir-advanced-search).",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}/fhir/{resourceType}/_search",
 	//   "httpMethod": "POST",
 	//   "id": "healthcare.projects.locations.datasets.fhirStores.fhir.search-type",
@@ -29648,7 +29846,7 @@ type ProjectsLocationsDatasetsHl7V2StoresMessagesCreateCall struct {
 // topic, the adapter transmits the message when a notification is
 // received.
 //
-// - parent: The name of the dataset this message belongs to.
+// - parent: The name of the HL7v2 store this message belongs to.
 func (r *ProjectsLocationsDatasetsHl7V2StoresMessagesService) Create(parent string, createmessagerequest *CreateMessageRequest) *ProjectsLocationsDatasetsHl7V2StoresMessagesCreateCall {
 	c := &ProjectsLocationsDatasetsHl7V2StoresMessagesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -29756,7 +29954,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesCreateCall) Do(opts ...goog
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "The name of the dataset this message belongs to.",
+	//       "description": "The name of the HL7v2 store this message belongs to.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/hl7V2Stores/[^/]+$",
 	//       "required": true,
@@ -31048,14 +31246,7 @@ type ProjectsLocationsDatasetsOperationsListCall struct {
 
 // List: Lists operations that match the specified filter in the
 // request. If the server doesn't support this method, it returns
-// `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to
-// override the binding to use different resource name schemes, such as
-// `users/*/operations`. To override the binding, API services can add a
-// binding such as "/v1/{name=users/*}/operations" to their service
-// configuration. For backwards compatibility, the default name includes
-// the operations collection id, however overriding users must ensure
-// the name binding is the parent resource, without the operations
-// collection id.
+// `UNIMPLEMENTED`.
 //
 // - name: The name of the operation's parent resource.
 func (r *ProjectsLocationsDatasetsOperationsService) List(name string) *ProjectsLocationsDatasetsOperationsListCall {
@@ -31184,7 +31375,7 @@ func (c *ProjectsLocationsDatasetsOperationsListCall) Do(opts ...googleapi.CallO
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/operations",
 	//   "httpMethod": "GET",
 	//   "id": "healthcare.projects.locations.datasets.operations.list",

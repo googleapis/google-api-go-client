@@ -3229,6 +3229,10 @@ type JobMetadata struct {
 	// Dataflow job.
 	SpannerDetails []*SpannerIODetails `json:"spannerDetails,omitempty"`
 
+	// UserDisplayProperties: List of display properties to help UI filter
+	// jobs.
+	UserDisplayProperties map[string]string `json:"userDisplayProperties,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "BigTableDetails") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -4322,6 +4326,12 @@ type ParameterMetadata struct {
 	// parameter.
 	CustomMetadata map[string]string `json:"customMetadata,omitempty"`
 
+	// GroupName: Optional. Specifies a group name for this parameter to be
+	// rendered under. Group header text will be rendered exactly as
+	// specified in this field. Only considered when parent_name is NOT
+	// provided.
+	GroupName string `json:"groupName,omitempty"`
+
 	// HelpText: Required. The help text to display for the parameter.
 	HelpText string `json:"helpText,omitempty"`
 
@@ -4360,6 +4370,19 @@ type ParameterMetadata struct {
 	//   "JAVASCRIPT_UDF_FILE" - The parameter specifies a JavaScript UDF in
 	// Cloud Storage.
 	ParamType string `json:"paramType,omitempty"`
+
+	// ParentName: Optional. Specifies the name of the parent parameter.
+	// Used in conjunction with 'parent_trigger_values' to make this
+	// parameter conditional (will only be rendered conditionally). Should
+	// be mappable to a ParameterMetadata.name field.
+	ParentName string `json:"parentName,omitempty"`
+
+	// ParentTriggerValues: Optional. The value(s) of the 'parent_name'
+	// parameter which will trigger this parameter to be shown. If left
+	// empty, ANY non-empty value in parent_name will trigger this parameter
+	// to be shown. Only considered when this parameter is conditional (when
+	// 'parent_name' has been provided).
+	ParentTriggerValues []string `json:"parentTriggerValues,omitempty"`
 
 	// Regexes: Optional. Regexes that the parameter must match.
 	Regexes []string `json:"regexes,omitempty"`
@@ -10025,6 +10048,18 @@ func (c *ProjectsJobsUpdateCall) Location(location string) *ProjectsJobsUpdateCa
 	return c
 }
 
+// UpdateMask sets the optional parameter "updateMask": The list of
+// fields to update relative to Job. If empty, only RequestedJobState
+// will be considered for update. If the FieldMask is not empty and
+// RequestedJobState is none/empty, The fields specified in the update
+// mask will be the only ones considered for update. If both
+// RequestedJobState and update_mask are specified, we will first handle
+// RequestedJobState and then the update_mask fields.
+func (c *ProjectsJobsUpdateCall) UpdateMask(updateMask string) *ProjectsJobsUpdateCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -10141,6 +10176,12 @@ func (c *ProjectsJobsUpdateCall) Do(opts ...googleapi.CallOption) (*Job, error) 
 	//       "description": "The ID of the Cloud Platform project that the job belongs to.",
 	//       "location": "path",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "The list of fields to update relative to Job. If empty, only RequestedJobState will be considered for update. If the FieldMask is not empty and RequestedJobState is none/empty, The fields specified in the update mask will be the only ones considered for update. If both RequestedJobState and update_mask are specified, we will first handle RequestedJobState and then the update_mask fields.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -12784,6 +12825,18 @@ func (r *ProjectsLocationsJobsService) Update(projectId string, location string,
 	return c
 }
 
+// UpdateMask sets the optional parameter "updateMask": The list of
+// fields to update relative to Job. If empty, only RequestedJobState
+// will be considered for update. If the FieldMask is not empty and
+// RequestedJobState is none/empty, The fields specified in the update
+// mask will be the only ones considered for update. If both
+// RequestedJobState and update_mask are specified, we will first handle
+// RequestedJobState and then the update_mask fields.
+func (c *ProjectsLocationsJobsUpdateCall) UpdateMask(updateMask string) *ProjectsLocationsJobsUpdateCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -12903,6 +12956,12 @@ func (c *ProjectsLocationsJobsUpdateCall) Do(opts ...googleapi.CallOption) (*Job
 	//       "description": "The ID of the Cloud Platform project that the job belongs to.",
 	//       "location": "path",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "The list of fields to update relative to Job. If empty, only RequestedJobState will be considered for update. If the FieldMask is not empty and RequestedJobState is none/empty, The fields specified in the update mask will be the only ones considered for update. If both RequestedJobState and update_mask are specified, we will first handle RequestedJobState and then the update_mask fields.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },

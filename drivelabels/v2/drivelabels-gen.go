@@ -2225,6 +2225,10 @@ type GoogleAppsDriveLabelsV2Label struct {
 	// Creator: Output only. The user who created this label.
 	Creator *GoogleAppsDriveLabelsV2UserInfo `json:"creator,omitempty"`
 
+	// Customer: Output only. The customer this label belongs to. For
+	// example: "customers/123abc789."
+	Customer string `json:"customer,omitempty"`
+
 	// DisableTime: Output only. The time this label was disabled. This
 	// value has no meaning when the label is not disabled.
 	DisableTime string `json:"disableTime,omitempty"`
@@ -4529,6 +4533,14 @@ func (r *LabelsService) List() *LabelsListCall {
 	return c
 }
 
+// Customer sets the optional parameter "customer": The customer to
+// scope this list request to. For example: "customers/abcd1234". If
+// unset, will return all labels within the current customer.
+func (c *LabelsListCall) Customer(customer string) *LabelsListCall {
+	c.urlParams_.Set("customer", customer)
+	return c
+}
+
 // LanguageCode sets the optional parameter "languageCode": The BCP-47
 // language code to use for evaluating localized field labels. When not
 // specified, values in the default configured language are used.
@@ -4719,6 +4731,11 @@ func (c *LabelsListCall) Do(opts ...googleapi.CallOption) (*GoogleAppsDriveLabel
 	//   "id": "drivelabels.labels.list",
 	//   "parameterOrder": [],
 	//   "parameters": {
+	//     "customer": {
+	//       "description": "The customer to scope this list request to. For example: \"customers/abcd1234\". If unset, will return all labels within the current customer.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "languageCode": {
 	//       "description": "The BCP-47 language code to use for evaluating localized field labels. When not specified, values in the default configured language are used.",
 	//       "location": "query",
@@ -7559,6 +7576,14 @@ func (r *UsersService) GetCapabilities(name string) *UsersGetCapabilitiesCall {
 	return c
 }
 
+// Customer sets the optional parameter "customer": The customer to
+// scope this request to. For example: "customers/abcd1234". If unset,
+// will return settings within the current customer.
+func (c *UsersGetCapabilitiesCall) Customer(customer string) *UsersGetCapabilitiesCall {
+	c.urlParams_.Set("customer", customer)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -7667,6 +7692,11 @@ func (c *UsersGetCapabilitiesCall) Do(opts ...googleapi.CallOption) (*GoogleApps
 	//     "name"
 	//   ],
 	//   "parameters": {
+	//     "customer": {
+	//       "description": "The customer to scope this request to. For example: \"customers/abcd1234\". If unset, will return settings within the current customer.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "name": {
 	//       "description": "Required. The resource name of the user. Only \"users/me/capabilities\" is supported.",
 	//       "location": "path",

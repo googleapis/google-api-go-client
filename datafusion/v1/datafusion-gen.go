@@ -220,6 +220,9 @@ type Accelerator struct {
 	//   "CCAI_INSIGHTS" - Contact Center AI Insights This accelerator is
 	// used to enable import and export pipelines custom built to streamline
 	// CCAI Insights processing.
+	//   "CLOUDSEARCH" - Cloud search accelerator for CDF. This accelerator
+	// is to enable Cloud search specific CDF plugins developed by
+	// Cloudsearch team.
 	AcceleratorType string `json:"acceleratorType,omitempty"`
 
 	// State: The state of the accelerator.
@@ -384,7 +387,9 @@ type Binding struct {
 	// (https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts).
 	// For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`.
 	// * `group:{emailid}`: An email address that represents a Google group.
-	// For example, `admins@example.com`. *
+	// For example, `admins@example.com`. * `domain:{domain}`: The G Suite
+	// domain (primary) that represents all the users of that domain. For
+	// example, `google.com` or `example.com`. *
 	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
 	// unique identifier) representing a user that has been recently
 	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
@@ -401,9 +406,7 @@ type Binding struct {
 	// that has been recently deleted. For example,
 	// `admins@example.com?uid=123456789012345678901`. If the group is
 	// recovered, this value reverts to `group:{emailid}` and the recovered
-	// group retains the role in the binding. * `domain:{domain}`: The G
-	// Suite domain (primary) that represents all the users of that domain.
-	// For example, `google.com` or `example.com`.
+	// group retains the role in the binding.
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of `members`, or principals.
@@ -623,15 +626,16 @@ func (s *Expr) MarshalJSON() ([]byte, error) {
 
 // Instance: Represents a Data Fusion instance.
 type Instance struct {
-	// Accelerators: List of accelerators enabled for this CDF instance.
+	// Accelerators: Output only. List of accelerators enabled for this CDF
+	// instance.
 	Accelerators []*Accelerator `json:"accelerators,omitempty"`
 
 	// ApiEndpoint: Output only. Endpoint on which the REST APIs is
 	// accessible.
 	ApiEndpoint string `json:"apiEndpoint,omitempty"`
 
-	// AvailableVersion: Available versions that the instance can be
-	// upgraded to using UpdateInstanceRequest.
+	// AvailableVersion: Output only. Available versions that the instance
+	// can be upgraded to using UpdateInstanceRequest.
 	AvailableVersion []*Version `json:"availableVersion,omitempty"`
 
 	// CreateTime: Output only. The time the instance was created.
@@ -4245,14 +4249,7 @@ type ProjectsLocationsOperationsListCall struct {
 
 // List: Lists operations that match the specified filter in the
 // request. If the server doesn't support this method, it returns
-// `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to
-// override the binding to use different resource name schemes, such as
-// `users/*/operations`. To override the binding, API services can add a
-// binding such as "/v1/{name=users/*}/operations" to their service
-// configuration. For backwards compatibility, the default name includes
-// the operations collection id, however overriding users must ensure
-// the name binding is the parent resource, without the operations
-// collection id.
+// `UNIMPLEMENTED`.
 //
 // - name: The name of the operation's parent resource.
 func (r *ProjectsLocationsOperationsService) List(name string) *ProjectsLocationsOperationsListCall {
@@ -4381,7 +4378,7 @@ func (c *ProjectsLocationsOperationsListCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/operations",
 	//   "httpMethod": "GET",
 	//   "id": "datafusion.projects.locations.operations.list",

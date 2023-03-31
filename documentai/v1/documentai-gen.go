@@ -5379,6 +5379,7 @@ type GoogleCloudDocumentaiV1ProcessorVersion struct {
 	//   "DELETING" - The processor version is being deleted.
 	//   "FAILED" - The processor version failed and is in an indeterminate
 	// state.
+	//   "IMPORTING" - The processor version is being imported.
 	State string `json:"state,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

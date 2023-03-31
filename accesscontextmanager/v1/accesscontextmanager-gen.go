@@ -1156,7 +1156,7 @@ func (s *Expr) MarshalJSON() ([]byte, error) {
 // GcpUserAccessBinding: Restricts access to Cloud Console and Google
 // Cloud APIs for a set of users using Context-Aware Access.
 type GcpUserAccessBinding struct {
-	// AccessLevels: Required. Access level that a user must have to be
+	// AccessLevels: Optional. Access level that a user must have to be
 	// granted access. Only one access level is supported, not multiple.
 	// This repeated field must have exactly one element. Example:
 	// "accessPolicies/9522/accessLevels/device_trusted"
@@ -8130,8 +8130,9 @@ func (r *OrganizationsGcpUserAccessBindingsService) Patch(name string, gcpuserac
 
 // UpdateMask sets the optional parameter "updateMask": Required. Only
 // the fields specified in this mask are updated. Because name and
-// group_key cannot be changed, update_mask is required and must always
-// be: update_mask { paths: "access_levels" }
+// group_key cannot be changed, update_mask is required and may only
+// contain the following fields: `access_levels`,
+// `dry_run_access_levels`. update_mask { paths: "access_levels" }
 func (c *OrganizationsGcpUserAccessBindingsPatchCall) UpdateMask(updateMask string) *OrganizationsGcpUserAccessBindingsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -8244,7 +8245,7 @@ func (c *OrganizationsGcpUserAccessBindingsPatchCall) Do(opts ...googleapi.CallO
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. Only the fields specified in this mask are updated. Because name and group_key cannot be changed, update_mask is required and must always be: update_mask { paths: \"access_levels\" }",
+	//       "description": "Required. Only the fields specified in this mask are updated. Because name and group_key cannot be changed, update_mask is required and may only contain the following fields: `access_levels`, `dry_run_access_levels`. update_mask { paths: \"access_levels\" }",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"

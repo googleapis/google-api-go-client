@@ -1444,7 +1444,7 @@ type Form struct {
 	FormUrl string `json:"formUrl,omitempty"`
 
 	// ResponseUrl: URL of the form responses document. Only set if
-	// respsonses have been recorded and only when the requesting user is an
+	// responses have been recorded and only when the requesting user is an
 	// editor of the form. Read-only.
 	ResponseUrl string `json:"responseUrl,omitempty"`
 

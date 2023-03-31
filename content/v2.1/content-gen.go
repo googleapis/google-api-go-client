@@ -12865,8 +12865,8 @@ type Product struct {
 	// string "content#product"
 	Kind string `json:"kind,omitempty"`
 
-	// LifestyleImageLinks: Additional URLs of lifestyle images of the item,
-	// used to explicitly identify images that showcase your item in a
+	// LifestyleImageLinks: Additional URLs of lifestyle images of the item.
+	// Used to explicitly identify images that showcase your item in a
 	// real-world context. See the Help Center article for more information.
 	LifestyleImageLinks []string `json:"lifestyleImageLinks,omitempty"`
 

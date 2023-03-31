@@ -2281,6 +2281,13 @@ type PolicyTopicEntry struct {
 	// topic.
 	HelpCenterUrl string `json:"helpCenterUrl,omitempty"`
 
+	// MissingCertificate: Whether or not the policy topic is missing a
+	// certificate. Some policy topics require a certificate to unblock
+	// serving in some regions. For more information about creative
+	// certification, refer to:
+	// https://support.google.com/authorizedbuyers/answer/7450776
+	MissingCertificate bool `json:"missingCertificate,omitempty"`
+
 	// PolicyTopic: Policy topic this entry refers to. For example,
 	// "ALCOHOL", "TRADEMARKS_IN_AD_TEXT", or "DESTINATION_NOT_WORKING". The
 	// set of possible policy topics is not fixed for a particular API

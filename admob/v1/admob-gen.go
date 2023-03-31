@@ -851,23 +851,13 @@ type MediationReportSpec struct {
 	//   "PLATFORM" - Mobile OS platform of the app (for example, "Android"
 	// or "iOS").
 	//   "MOBILE_OS_VERSION" - Mobile operating system version, e.g. "iOS
-	// 13.5.1". **Warning:** The dimension is incompatible with
-	// [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS),
-	// [OBSERVED_ECPM](#Metric.ENUM_VALUES.OBSERVED_ECPM) metrics.
+	// 13.5.1".
 	//   "GMA_SDK_VERSION" - GMA SDK version, e.g. "iOS 7.62.0".
-	// **Warning:** The dimension is incompatible with
-	// [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS),
-	// [OBSERVED_ECPM](#Metric.ENUM_VALUES.OBSERVED_ECPM) metrics.
 	//   "APP_VERSION_NAME" - For Android, the app version name can be found
 	// in versionName in PackageInfo. For iOS, the app version name can be
-	// found in CFBundleShortVersionString. **Warning:** The dimension is
-	// incompatible with
-	// [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS),
-	// [OBSERVED_ECPM](#Metric.ENUM_VALUES.OBSERVED_ECPM) metrics.
+	// found in CFBundleShortVersionString.
 	//   "SERVING_RESTRICTION" - Restriction mode for ads serving (e.g.
-	// "Non-personalized ads"). **Warning:** The dimension is incompatible
-	// with [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS)
-	// metric.
+	// "Non-personalized ads").
 	Dimensions []string `json:"dimensions,omitempty"`
 
 	// LocalizationSettings: Localization settings of the report.
@@ -988,23 +978,13 @@ type MediationReportSpecDimensionFilter struct {
 	//   "PLATFORM" - Mobile OS platform of the app (for example, "Android"
 	// or "iOS").
 	//   "MOBILE_OS_VERSION" - Mobile operating system version, e.g. "iOS
-	// 13.5.1". **Warning:** The dimension is incompatible with
-	// [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS),
-	// [OBSERVED_ECPM](#Metric.ENUM_VALUES.OBSERVED_ECPM) metrics.
+	// 13.5.1".
 	//   "GMA_SDK_VERSION" - GMA SDK version, e.g. "iOS 7.62.0".
-	// **Warning:** The dimension is incompatible with
-	// [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS),
-	// [OBSERVED_ECPM](#Metric.ENUM_VALUES.OBSERVED_ECPM) metrics.
 	//   "APP_VERSION_NAME" - For Android, the app version name can be found
 	// in versionName in PackageInfo. For iOS, the app version name can be
-	// found in CFBundleShortVersionString. **Warning:** The dimension is
-	// incompatible with
-	// [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS),
-	// [OBSERVED_ECPM](#Metric.ENUM_VALUES.OBSERVED_ECPM) metrics.
+	// found in CFBundleShortVersionString.
 	//   "SERVING_RESTRICTION" - Restriction mode for ads serving (e.g.
-	// "Non-personalized ads"). **Warning:** The dimension is incompatible
-	// with [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS)
-	// metric.
+	// "Non-personalized ads").
 	Dimension string `json:"dimension,omitempty"`
 
 	// MatchesAny: Matches a row if its value for the specified dimension is
@@ -1071,23 +1051,13 @@ type MediationReportSpecSortCondition struct {
 	//   "PLATFORM" - Mobile OS platform of the app (for example, "Android"
 	// or "iOS").
 	//   "MOBILE_OS_VERSION" - Mobile operating system version, e.g. "iOS
-	// 13.5.1". **Warning:** The dimension is incompatible with
-	// [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS),
-	// [OBSERVED_ECPM](#Metric.ENUM_VALUES.OBSERVED_ECPM) metrics.
+	// 13.5.1".
 	//   "GMA_SDK_VERSION" - GMA SDK version, e.g. "iOS 7.62.0".
-	// **Warning:** The dimension is incompatible with
-	// [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS),
-	// [OBSERVED_ECPM](#Metric.ENUM_VALUES.OBSERVED_ECPM) metrics.
 	//   "APP_VERSION_NAME" - For Android, the app version name can be found
 	// in versionName in PackageInfo. For iOS, the app version name can be
-	// found in CFBundleShortVersionString. **Warning:** The dimension is
-	// incompatible with
-	// [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS),
-	// [OBSERVED_ECPM](#Metric.ENUM_VALUES.OBSERVED_ECPM) metrics.
+	// found in CFBundleShortVersionString.
 	//   "SERVING_RESTRICTION" - Restriction mode for ads serving (e.g.
-	// "Non-personalized ads"). **Warning:** The dimension is incompatible
-	// with [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS)
-	// metric.
+	// "Non-personalized ads").
 	Dimension string `json:"dimension,omitempty"`
 
 	// Metric: Sort by the specified metric.

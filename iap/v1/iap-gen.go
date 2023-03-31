@@ -4143,9 +4143,11 @@ func (r *V1Service) UpdateIapSettings(name string, iapsettings *IapSettings) *V1
 }
 
 // UpdateMask sets the optional parameter "updateMask": The field mask
-// specifying which IAP settings should be updated. If omitted, the all
+// specifying which IAP settings should be updated. If omitted, then all
 // of the settings are updated. See
-// https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
+// https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask.
+// Note: All IAP reauth settings must always be set together, using the
+// field mask: `iapSettings.accessSettings.reauthSettings`.
 func (c *V1UpdateIapSettingsCall) UpdateMask(updateMask string) *V1UpdateIapSettingsCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -4258,7 +4260,7 @@ func (c *V1UpdateIapSettingsCall) Do(opts ...googleapi.CallOption) (*IapSettings
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "The field mask specifying which IAP settings should be updated. If omitted, the all of the settings are updated. See https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask",
+	//       "description": "The field mask specifying which IAP settings should be updated. If omitted, then all of the settings are updated. See https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask. Note: All IAP reauth settings must always be set together, using the field mask: `iapSettings.accessSettings.reauthSettings`.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"

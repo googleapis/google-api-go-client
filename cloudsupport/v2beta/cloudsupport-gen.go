@@ -119,7 +119,6 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client, BasePath: basePath}
-	s.Attachments = NewAttachmentsService(s)
 	s.CaseClassifications = NewCaseClassificationsService(s)
 	s.Cases = NewCasesService(s)
 	s.Media = NewMediaService(s)
@@ -130,8 +129,6 @@ type Service struct {
 	client    *http.Client
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
-
-	Attachments *AttachmentsService
 
 	CaseClassifications *CaseClassificationsService
 
@@ -145,15 +142,6 @@ func (s *Service) userAgent() string {
 		return googleapi.UserAgent
 	}
 	return googleapi.UserAgent + " " + s.UserAgent
-}
-
-func NewAttachmentsService(s *Service) *AttachmentsService {
-	rs := &AttachmentsService{s: s}
-	return rs
-}
-
-type AttachmentsService struct {
-	s *Service
 }
 
 func NewCaseClassificationsService(s *Service) *CaseClassificationsService {
@@ -514,7 +502,7 @@ type CloseCaseRequest struct {
 
 // Comment: A comment associated with a support case.
 type Comment struct {
-	// Body: The full comment body. Maximum of 120000 characters. This can
+	// Body: The full comment body. Maximum of 12800 characters. This can
 	// contain rich text syntax.
 	Body string `json:"body,omitempty"`
 
@@ -1422,150 +1410,6 @@ func (s *WorkflowOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod WorkflowOperationMetadata
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// method id "cloudsupport.attachments.create":
-
-type AttachmentsCreateCall struct {
-	s                       *Service
-	parent                  string
-	createattachmentrequest *CreateAttachmentRequest
-	urlParams_              gensupport.URLParams
-	ctx_                    context.Context
-	header_                 http.Header
-}
-
-// Create: Create a file attachment on a case or Cloud resource. The
-// attachment object must have the following fields set: filename.
-//
-//   - parent: The resource name of the case (or case parent) to which the
-//     attachment should be attached.
-func (r *AttachmentsService) Create(parent string, createattachmentrequest *CreateAttachmentRequest) *AttachmentsCreateCall {
-	c := &AttachmentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	c.createattachmentrequest = createattachmentrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *AttachmentsCreateCall) Fields(s ...googleapi.Field) *AttachmentsCreateCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *AttachmentsCreateCall) Context(ctx context.Context) *AttachmentsCreateCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *AttachmentsCreateCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *AttachmentsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.createattachmentrequest)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta/{+parent}/attachments")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "cloudsupport.attachments.create" call.
-// Exactly one of *Attachment or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Attachment.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *AttachmentsCreateCall) Do(opts ...googleapi.CallOption) (*Attachment, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &Attachment{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Create a file attachment on a case or Cloud resource. The attachment object must have the following fields set: filename.",
-	//   "flatPath": "v2beta/{v2betaId}/{v2betaId1}/attachments",
-	//   "httpMethod": "POST",
-	//   "id": "cloudsupport.attachments.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The resource name of the case (or case parent) to which the attachment should be attached.",
-	//       "location": "path",
-	//       "pattern": "^[^/]+/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2beta/{+parent}/attachments",
-	//   "request": {
-	//     "$ref": "CreateAttachmentRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Attachment"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // method id "cloudsupport.caseClassifications.search":

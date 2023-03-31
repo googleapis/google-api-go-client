@@ -432,10 +432,10 @@ type Application struct {
 	// Google Account.
 	AuthDomain string `json:"authDomain,omitempty"`
 
-	// CodeBucket: Google Cloud Storage bucket that can be used for storing
-	// files associated with this application. This bucket is associated
-	// with the application and can be used by the gcloud deployment
-	// commands.@OutputOnly
+	// CodeBucket: Output only. Google Cloud Storage bucket that can be used
+	// for storing files associated with this application. This bucket is
+	// associated with the application and can be used by the gcloud
+	// deployment commands.@OutputOnly
 	CodeBucket string `json:"codeBucket,omitempty"`
 
 	// DatabaseType: The type of the Cloud Firestore or Cloud Datastore
@@ -448,16 +448,16 @@ type Application struct {
 	//   "CLOUD_DATASTORE_COMPATIBILITY" - Cloud Firestore in Datastore Mode
 	DatabaseType string `json:"databaseType,omitempty"`
 
-	// DefaultBucket: Google Cloud Storage bucket that can be used by this
-	// application to store content.@OutputOnly
+	// DefaultBucket: Output only. Google Cloud Storage bucket that can be
+	// used by this application to store content.@OutputOnly
 	DefaultBucket string `json:"defaultBucket,omitempty"`
 
 	// DefaultCookieExpiration: Cookie expiration policy for this
 	// application.
 	DefaultCookieExpiration string `json:"defaultCookieExpiration,omitempty"`
 
-	// DefaultHostname: Hostname used to reach this application, as resolved
-	// by App Engine.@OutputOnly
+	// DefaultHostname: Output only. Hostname used to reach this
+	// application, as resolved by App Engine.@OutputOnly
 	DefaultHostname string `json:"defaultHostname,omitempty"`
 
 	// DispatchRules: HTTP path dispatch rules for requests to the
@@ -469,8 +469,8 @@ type Application struct {
 	// application.
 	FeatureSettings *FeatureSettings `json:"featureSettings,omitempty"`
 
-	// GcrDomain: The Google Container Registry domain used for storing
-	// managed build docker images for this application.
+	// GcrDomain: Output only. The Google Container Registry domain used for
+	// storing managed build docker images for this application.
 	GcrDomain string `json:"gcrDomain,omitempty"`
 
 	Iap *IdentityAwareProxy `json:"iap,omitempty"`
@@ -487,8 +487,8 @@ type Application struct {
 	// (https://cloud.google.com/appengine/docs/locations).
 	LocationId string `json:"locationId,omitempty"`
 
-	// Name: Full path to the Application resource in the API. Example:
-	// apps/myapp.@OutputOnly
+	// Name: Output only. Full path to the Application resource in the API.
+	// Example: apps/myapp.@OutputOnly
 	Name string `json:"name,omitempty"`
 
 	// ServiceAccount: The service account associated with the application.
@@ -1684,8 +1684,8 @@ type IdentityAwareProxy struct {
 	// returned in the oauth2_client_secret_sha256 field.@InputOnly
 	Oauth2ClientSecret string `json:"oauth2ClientSecret,omitempty"`
 
-	// Oauth2ClientSecretSha256: Hex-encoded SHA-256 hash of the client
-	// secret.@OutputOnly
+	// Oauth2ClientSecretSha256: Output only. Hex-encoded SHA-256 hash of
+	// the client secret.@OutputOnly
 	Oauth2ClientSecretSha256 string `json:"oauth2ClientSecretSha256,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Enabled") to
@@ -4234,6 +4234,14 @@ func (r *AppsService) Create(application *Application) *AppsCreateCall {
 	return c
 }
 
+// Parent sets the optional parameter "parent": The project and location
+// in which the application should be created, specified in the format
+// projects/*/locations/*
+func (c *AppsCreateCall) Parent(parent string) *AppsCreateCall {
+	c.urlParams_.Set("parent", parent)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -4327,7 +4335,13 @@ func (c *AppsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	//   "httpMethod": "POST",
 	//   "id": "appengine.apps.create",
 	//   "parameterOrder": [],
-	//   "parameters": {},
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "The project and location in which the application should be created, specified in the format projects/*/locations/*",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
 	//   "path": "v1/apps",
 	//   "request": {
 	//     "$ref": "Application"
@@ -10823,6 +10837,166 @@ func (c *AppsServicesVersionsInstancesListCall) Pages(ctx context.Context, f fun
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "appengine.projects.locations.applications.create":
+
+type ProjectsLocationsApplicationsCreateCall struct {
+	s           *APIService
+	projectsId  string
+	locationsId string
+	application *Application
+	urlParams_  gensupport.URLParams
+	ctx_        context.Context
+	header_     http.Header
+}
+
+// Create: Creates an App Engine application for a Google Cloud Platform
+// project. Required fields: id - The ID of the target Cloud Platform
+// project. location - The region
+// (https://cloud.google.com/appengine/docs/locations) where you want
+// the App Engine application located.For more information about App
+// Engine applications, see Managing Projects, Applications, and Billing
+// (https://cloud.google.com/appengine/docs/standard/python/console/).
+//
+//   - locationsId: Part of `parent`. See documentation of `projectsId`.
+//   - projectsId: Part of `parent`. The project and location in which the
+//     application should be created, specified in the format
+//     projects/*/locations/*.
+func (r *ProjectsLocationsApplicationsService) Create(projectsId string, locationsId string, application *Application) *ProjectsLocationsApplicationsCreateCall {
+	c := &ProjectsLocationsApplicationsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.projectsId = projectsId
+	c.locationsId = locationsId
+	c.application = application
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsApplicationsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsApplicationsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsApplicationsCreateCall) Context(ctx context.Context) *ProjectsLocationsApplicationsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsApplicationsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsApplicationsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.application)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/projects/{projectsId}/locations/{locationsId}/applications")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"projectsId":  c.projectsId,
+		"locationsId": c.locationsId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "appengine.projects.locations.applications.create" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsApplicationsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates an App Engine application for a Google Cloud Platform project. Required fields: id - The ID of the target Cloud Platform project. location - The region (https://cloud.google.com/appengine/docs/locations) where you want the App Engine application located.For more information about App Engine applications, see Managing Projects, Applications, and Billing (https://cloud.google.com/appengine/docs/standard/python/console/).",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/applications",
+	//   "httpMethod": "POST",
+	//   "id": "appengine.projects.locations.applications.create",
+	//   "parameterOrder": [
+	//     "projectsId",
+	//     "locationsId"
+	//   ],
+	//   "parameters": {
+	//     "locationsId": {
+	//       "description": "Part of `parent`. See documentation of `projectsId`.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "projectsId": {
+	//       "description": "Part of `parent`. The project and location in which the application should be created, specified in the format projects/*/locations/*",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/projects/{projectsId}/locations/{locationsId}/applications",
+	//   "request": {
+	//     "$ref": "Application"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
 }
 
 // method id "appengine.projects.locations.applications.get":

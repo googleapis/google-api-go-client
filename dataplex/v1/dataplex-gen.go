@@ -1494,7 +1494,8 @@ type GoogleCloudDataplexV1DataAttributeBinding struct {
 	Name string `json:"name,omitempty"`
 
 	// Paths: Optional. The list of paths for items within the associated
-	// resource (eg. columns within a table) along with attribute bindings.
+	// resource (eg. columns and partitions within a table) along with
+	// attribute bindings.
 	Paths []*GoogleCloudDataplexV1DataAttributeBindingPath `json:"paths,omitempty"`
 
 	// Resource: Optional. Immutable. The resource name of the resource that
@@ -1543,7 +1544,9 @@ func (s *GoogleCloudDataplexV1DataAttributeBinding) MarshalJSON() ([]byte, error
 }
 
 // GoogleCloudDataplexV1DataAttributeBindingPath: Represents a
-// subresource of a given resource, and associated bindings with it.
+// subresource of the given resource, and associated bindings with it.
+// Currently supported subresources are column and partition schema
+// fields within a table.
 type GoogleCloudDataplexV1DataAttributeBindingPath struct {
 	// Attributes: Optional. List of attributes to be associated with the
 	// path of the resource, provided in the form:
@@ -1552,7 +1555,7 @@ type GoogleCloudDataplexV1DataAttributeBindingPath struct {
 	Attributes []string `json:"attributes,omitempty"`
 
 	// Name: Required. The name identifier of the path. Nested columns
-	// should be of the form: 'country.state.city'.
+	// should be of the form: 'address.city'.
 	Name string `json:"name,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Attributes") to
@@ -2898,6 +2901,14 @@ type GoogleCloudDataplexV1DataSource struct {
 	// projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zone
 	// s/{zone_id}/entities/{entity_id}.
 	Entity string `json:"entity,omitempty"`
+
+	// Resource: Immutable. The service-qualified full resource name of the
+	// cloud resource for a DataScan job to scan against. The field could
+	// be: BigQuery table of type "TABLE" for
+	// DataProfileScan/DataQualityScan Format:
+	// //bigquery.googleapis.com/projects/PROJECT_ID/datasets/DATASET_ID/tabl
+	// es/TABLE_ID
+	Resource string `json:"resource,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Entity") to
 	// unconditionally include in API requests. By default, fields with
@@ -25985,14 +25996,7 @@ type ProjectsLocationsOperationsListCall struct {
 
 // List: Lists operations that match the specified filter in the
 // request. If the server doesn't support this method, it returns
-// UNIMPLEMENTED.NOTE: the name binding allows API services to override
-// the binding to use different resource name schemes, such as
-// users/*/operations. To override the binding, API services can add a
-// binding such as "/v1/{name=users/*}/operations" to their service
-// configuration. For backwards compatibility, the default name includes
-// the operations collection id, however overriding users must ensure
-// the name binding is the parent resource, without the operations
-// collection id.
+// UNIMPLEMENTED.
 //
 // - name: The name of the operation's parent resource.
 func (r *ProjectsLocationsOperationsService) List(name string) *ProjectsLocationsOperationsListCall {
@@ -26122,7 +26126,7 @@ func (c *ProjectsLocationsOperationsListCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns UNIMPLEMENTED.NOTE: the name binding allows API services to override the binding to use different resource name schemes, such as users/*/operations. To override the binding, API services can add a binding such as \"/v1/{name=users/*}/operations\" to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns UNIMPLEMENTED.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/operations",
 	//   "httpMethod": "GET",
 	//   "id": "dataplex.projects.locations.operations.list",

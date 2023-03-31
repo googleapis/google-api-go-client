@@ -174,6 +174,7 @@ func NewProjectsLocationsCatalogsService(s *Service) *ProjectsLocationsCatalogsS
 	rs.Branches = NewProjectsLocationsCatalogsBranchesService(s)
 	rs.CompletionData = NewProjectsLocationsCatalogsCompletionDataService(s)
 	rs.Controls = NewProjectsLocationsCatalogsControlsService(s)
+	rs.MerchantCenterAccountLinks = NewProjectsLocationsCatalogsMerchantCenterAccountLinksService(s)
 	rs.Models = NewProjectsLocationsCatalogsModelsService(s)
 	rs.Operations = NewProjectsLocationsCatalogsOperationsService(s)
 	rs.Placements = NewProjectsLocationsCatalogsPlacementsService(s)
@@ -192,6 +193,8 @@ type ProjectsLocationsCatalogsService struct {
 	CompletionData *ProjectsLocationsCatalogsCompletionDataService
 
 	Controls *ProjectsLocationsCatalogsControlsService
+
+	MerchantCenterAccountLinks *ProjectsLocationsCatalogsMerchantCenterAccountLinksService
 
 	Models *ProjectsLocationsCatalogsModelsService
 
@@ -285,6 +288,15 @@ func NewProjectsLocationsCatalogsControlsService(s *Service) *ProjectsLocationsC
 }
 
 type ProjectsLocationsCatalogsControlsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsCatalogsMerchantCenterAccountLinksService(s *Service) *ProjectsLocationsCatalogsMerchantCenterAccountLinksService {
+	rs := &ProjectsLocationsCatalogsMerchantCenterAccountLinksService{s: s}
+	return rs
+}
+
+type ProjectsLocationsCatalogsMerchantCenterAccountLinksService struct {
 	s *Service
 }
 
@@ -2520,6 +2532,39 @@ func (s *GoogleCloudRetailV2alphaControl) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudRetailV2alphaCreateMerchantCenterAccountLinkMetadata:
+// Common metadata related to the progress of the operations.
+type GoogleCloudRetailV2alphaCreateMerchantCenterAccountLinkMetadata struct {
+	// CreateTime: Operation create time.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// UpdateTime: Operation last update time. If the operation is done,
+	// this is also the finish time.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2alphaCreateMerchantCenterAccountLinkMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2alphaCreateMerchantCenterAccountLinkMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRetailV2alphaCreateModelMetadata: Metadata associated with
 // a create operation.
 type GoogleCloudRetailV2alphaCreateModelMetadata struct {
@@ -3512,6 +3557,43 @@ func (s *GoogleCloudRetailV2alphaListControlsResponse) MarshalJSON() ([]byte, er
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudRetailV2alphaListMerchantCenterAccountLinksResponse:
+// Response for
+// MerchantCenterAccountLinkService.ListMerchantCenterAccountLinks
+// method.
+type GoogleCloudRetailV2alphaListMerchantCenterAccountLinksResponse struct {
+	// MerchantCenterAccountLinks: The links.
+	MerchantCenterAccountLinks []*GoogleCloudRetailV2alphaMerchantCenterAccountLink `json:"merchantCenterAccountLinks,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "MerchantCenterAccountLinks") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "MerchantCenterAccountLinks") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2alphaListMerchantCenterAccountLinksResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2alphaListMerchantCenterAccountLinksResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRetailV2alphaListModelsResponse: Response to a
 // ListModelRequest.
 type GoogleCloudRetailV2alphaListModelsResponse struct {
@@ -3686,6 +3768,126 @@ type GoogleCloudRetailV2alphaLocalInventory struct {
 
 func (s *GoogleCloudRetailV2alphaLocalInventory) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2alphaLocalInventory
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2alphaMerchantCenterAccountLink: Represents a link
+// between a Merchant Center account and a branch. Once a link is
+// established, products from the linked merchant center account will be
+// streamed to the linked branch.
+// LINT.IfChange(MerchantCenterAccountLink)
+type GoogleCloudRetailV2alphaMerchantCenterAccountLink struct {
+	// BranchId: Required. The branch id (e.g. 0/1/2) within the catalog
+	// that products from merchant_center_account_id are streamed to. When
+	// updating this field, an empty value will use the currently configured
+	// default branch. However, changing the default branch later on won't
+	// change the linked branch here. A single branch id can only have one
+	// linked merchant center account id.
+	BranchId string `json:"branchId,omitempty"`
+
+	// FeedFilters: Criteria for the Merchant Center feeds to be ingested
+	// via the link. All offers will be ingested if the list is empty.
+	// Otherwise the offers will be ingested from selected feeds.
+	FeedFilters []*GoogleCloudRetailV2alphaMerchantCenterAccountLinkMerchantCenterFeedFilter `json:"feedFilters,omitempty"`
+
+	// FeedLabel: The FeedLabel used to perform filtering. Note: this
+	// replaces region_id
+	// (https://developers.google.com/shopping-content/reference/rest/v2.1/products#Product.FIELDS.feed_label).
+	// Example value: `US`. Example value: `FeedLabel1`.
+	FeedLabel string `json:"feedLabel,omitempty"`
+
+	// Id: Output only. Immutable. MerchantCenterAccountLink identifier,
+	// which is the final component of name. This field is auto generated
+	// and follows the convention: `BranchId_MerchantCenterAccountId`.
+	// `projects/*/locations/global/catalogs/default_catalog/merchantCenterAc
+	// countLinks/id_1`.
+	Id string `json:"id,omitempty"`
+
+	// LanguageCode: Language of the title/description and other string
+	// attributes. Use language tags defined by BCP 47
+	// (https://www.rfc-editor.org/rfc/bcp/bcp47.txt). ISO 639-1. This
+	// specifies the language of offers in Merchant Center that will be
+	// accepted. If empty, no language filtering will be performed. Example
+	// value: `en`.
+	LanguageCode string `json:"languageCode,omitempty"`
+
+	// MerchantCenterAccountId: Required. The linked Merchant center account
+	// id
+	// (https://developers.google.com/shopping-content/guides/accountstatuses).
+	// The account must be a standalone account or a sub-account of a MCA.
+	MerchantCenterAccountId int64 `json:"merchantCenterAccountId,omitempty,string"`
+
+	// Name: Output only. Immutable. Full resource name of the Merchant
+	// Center Account Link, such as
+	// `projects/*/locations/global/catalogs/default_catalog/merchantCenterAc
+	// countLinks/merchant_center_account_link`.
+	Name string `json:"name,omitempty"`
+
+	// ProjectId: Output only. GCP project ID.
+	ProjectId string `json:"projectId,omitempty"`
+
+	// State: Output only. Represents the state of the link.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Default value.
+	//   "PENDING" - Link is created and LRO is not complete.
+	//   "ACTIVE" - Link is active.
+	//   "FAILED" - Link creation failed.
+	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BranchId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BranchId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2alphaMerchantCenterAccountLink) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2alphaMerchantCenterAccountLink
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2alphaMerchantCenterAccountLinkMerchantCenterFeedFil
+// ter: Merchant Center Feed filter criterion.
+type GoogleCloudRetailV2alphaMerchantCenterAccountLinkMerchantCenterFeedFilter struct {
+	// PrimaryFeedId: Merchant Center primary feed ID.
+	PrimaryFeedId int64 `json:"primaryFeedId,omitempty,string"`
+
+	// PrimaryFeedName: Merchant Center primary feed name. The name is used
+	// for the display purposes only.
+	PrimaryFeedName string `json:"primaryFeedName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PrimaryFeedId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PrimaryFeedId") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2alphaMerchantCenterAccountLinkMerchantCenterFeedFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2alphaMerchantCenterAccountLinkMerchantCenterFeedFilter
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4269,9 +4471,9 @@ type GoogleCloudRetailV2alphaPredictRequest struct {
 	// true under the `params` field, then attribute-based expressions are
 	// expected instead of the above described tag-based syntax. Examples: *
 	// (colors: ANY("Red", "Blue")) AND NOT (categories: ANY("Phones")) *
-	// (brands: ANY("Pixel")) AND (colors: ANY("Red") OR categories:
-	// ANY("Phones")) For more information, see Filter recommendations
-	// (https://cloud.google.com/retail/docs/filter-recs).
+	// (availability: ANY("IN_STOCK")) AND (colors: ANY("Red") OR
+	// categories: ANY("Phones")) For more information, see Filter
+	// recommendations (https://cloud.google.com/retail/docs/filter-recs).
 	Filter string `json:"filter,omitempty"`
 
 	// Labels: The labels applied to a resource must meet the following
@@ -6156,6 +6358,12 @@ func (s *GoogleCloudRetailV2alphaRuleTwowaySynonymsAction) MarshalJSON() ([]byte
 // GoogleCloudRetailV2alphaSearchRequest: Request message for
 // SearchService.Search method.
 type GoogleCloudRetailV2alphaSearchRequest struct {
+	// Banner: Represents the banner in request, for projects that combine
+	// banners. For example: a retailer can sell products under different
+	// banners like retailer-main, retailer-baby, retailer-meds, etc. under
+	// one project.
+	Banner string `json:"banner,omitempty"`
+
 	// BoostSpec: Boost specification to boost certain products. See more
 	// details at this user guide
 	// (https://cloud.google.com/retail/docs/boosting). Notice that if both
@@ -6361,7 +6569,7 @@ type GoogleCloudRetailV2alphaSearchRequest struct {
 	// is returned.
 	VisitorId string `json:"visitorId,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "BoostSpec") to
+	// ForceSendFields is a list of field names (e.g. "Banner") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -6369,8 +6577,8 @@ type GoogleCloudRetailV2alphaSearchRequest struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "BoostSpec") to include in
-	// API requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "Banner") to include in API
+	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -7552,6 +7760,12 @@ type GoogleCloudRetailV2alphaUserEvent struct {
 	// PredictResponse.attribution_token to this field.
 	AttributionToken string `json:"attributionToken,omitempty"`
 
+	// Banner: Represents the banner of the user event, for projects that
+	// combine banners. For example: retailer can have events from multiple
+	// banners like retailer-main, retailer-baby, retailer-meds, etc. under
+	// one project.
+	Banner string `json:"banner,omitempty"`
+
 	// CartId: The ID or name of the associated shopping cart. This ID is
 	// used to associate multiple items added or present in the cart before
 	// purchase. This can only be set for `add-to-cart`,
@@ -7562,12 +7776,6 @@ type GoogleCloudRetailV2alphaUserEvent struct {
 	// event. This field should be set for `search` event when autocomplete
 	// function is enabled and the user clicks a suggestion for search.
 	CompletionDetail *GoogleCloudRetailV2alphaCompletionDetail `json:"completionDetail,omitempty"`
-
-	// Domain: Represents the domain of the user event, for projects that
-	// combine domains. For example: retailer can have events from multiple
-	// domains like retailer-main, retailer-baby, retailer-meds, etc. under
-	// one project.
-	Domain string `json:"domain,omitempty"`
 
 	// EventTime: Only required for UserEventService.ImportUserEvents
 	// method. Timestamp of when the user event happened.
@@ -7943,6 +8151,39 @@ type GoogleCloudRetailV2betaBigQueryOutputResult struct {
 
 func (s *GoogleCloudRetailV2betaBigQueryOutputResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2betaBigQueryOutputResult
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2betaCreateMerchantCenterAccountLinkMetadata:
+// Common metadata related to the progress of the operations.
+type GoogleCloudRetailV2betaCreateMerchantCenterAccountLinkMetadata struct {
+	// CreateTime: Operation create time.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// UpdateTime: Operation last update time. If the operation is done,
+	// this is also the finish time.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2betaCreateMerchantCenterAccountLinkMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2betaCreateMerchantCenterAccountLinkMetadata
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -8342,6 +8583,126 @@ type GoogleCloudRetailV2betaImportUserEventsResponse struct {
 
 func (s *GoogleCloudRetailV2betaImportUserEventsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2betaImportUserEventsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2betaMerchantCenterAccountLink: Represents a link
+// between a Merchant Center account and a branch. Once a link is
+// established, products from the linked merchant center account will be
+// streamed to the linked branch.
+// LINT.IfChange(MerchantCenterAccountLink)
+type GoogleCloudRetailV2betaMerchantCenterAccountLink struct {
+	// BranchId: Required. The branch id (e.g. 0/1/2) within the catalog
+	// that products from merchant_center_account_id are streamed to. When
+	// updating this field, an empty value will use the currently configured
+	// default branch. However, changing the default branch later on won't
+	// change the linked branch here. A single branch id can only have one
+	// linked merchant center account id.
+	BranchId string `json:"branchId,omitempty"`
+
+	// FeedFilters: Criteria for the Merchant Center feeds to be ingested
+	// via the link. All offers will be ingested if the list is empty.
+	// Otherwise the offers will be ingested from selected feeds.
+	FeedFilters []*GoogleCloudRetailV2betaMerchantCenterAccountLinkMerchantCenterFeedFilter `json:"feedFilters,omitempty"`
+
+	// FeedLabel: The FeedLabel used to perform filtering. Note: this
+	// replaces region_id
+	// (https://developers.google.com/shopping-content/reference/rest/v2.1/products#Product.FIELDS.feed_label).
+	// Example value: `US`. Example value: `FeedLabel1`.
+	FeedLabel string `json:"feedLabel,omitempty"`
+
+	// Id: Output only. Immutable. MerchantCenterAccountLink identifier,
+	// which is the final component of name. This field is auto generated
+	// and follows the convention: `BranchId_MerchantCenterAccountId`.
+	// `projects/*/locations/global/catalogs/default_catalog/merchantCenterAc
+	// countLinks/id_1`.
+	Id string `json:"id,omitempty"`
+
+	// LanguageCode: Language of the title/description and other string
+	// attributes. Use language tags defined by BCP 47
+	// (https://www.rfc-editor.org/rfc/bcp/bcp47.txt). ISO 639-1. This
+	// specifies the language of offers in Merchant Center that will be
+	// accepted. If empty, no language filtering will be performed. Example
+	// value: `en`.
+	LanguageCode string `json:"languageCode,omitempty"`
+
+	// MerchantCenterAccountId: Required. The linked Merchant center account
+	// id
+	// (https://developers.google.com/shopping-content/guides/accountstatuses).
+	// The account must be a standalone account or a sub-account of a MCA.
+	MerchantCenterAccountId int64 `json:"merchantCenterAccountId,omitempty,string"`
+
+	// Name: Output only. Immutable. Full resource name of the Merchant
+	// Center Account Link, such as
+	// `projects/*/locations/global/catalogs/default_catalog/merchantCenterAc
+	// countLinks/merchant_center_account_link`.
+	Name string `json:"name,omitempty"`
+
+	// ProjectId: Output only. GCP project ID.
+	ProjectId string `json:"projectId,omitempty"`
+
+	// State: Output only. Represents the state of the link.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Default value.
+	//   "PENDING" - Link is created and LRO is not complete.
+	//   "ACTIVE" - Link is active.
+	//   "FAILED" - Link creation failed.
+	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BranchId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BranchId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2betaMerchantCenterAccountLink) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2betaMerchantCenterAccountLink
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2betaMerchantCenterAccountLinkMerchantCenterFeedFilt
+// er: Merchant Center Feed filter criterion.
+type GoogleCloudRetailV2betaMerchantCenterAccountLinkMerchantCenterFeedFilter struct {
+	// PrimaryFeedId: Merchant Center primary feed ID.
+	PrimaryFeedId int64 `json:"primaryFeedId,omitempty,string"`
+
+	// PrimaryFeedName: Merchant Center primary feed name. The name is used
+	// for the display purposes only.
+	PrimaryFeedName string `json:"primaryFeedName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PrimaryFeedId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PrimaryFeedId") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2betaMerchantCenterAccountLinkMerchantCenterFeedFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2betaMerchantCenterAccountLinkMerchantCenterFeedFilter
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -8991,6 +9352,13 @@ func (r *ProjectsLocationsCatalogsService) CompleteQuery(catalog string) *Projec
 	return c
 }
 
+// Banner sets the optional parameter "banner": The banner context for
+// completion suggestions.
+func (c *ProjectsLocationsCatalogsCompleteQueryCall) Banner(banner string) *ProjectsLocationsCatalogsCompleteQueryCall {
+	c.urlParams_.Set("banner", banner)
+	return c
+}
+
 // Dataset sets the optional parameter "dataset": Determines which
 // dataset to use for fetching completion. "user-data" will use the
 // imported dataset through CompletionService.ImportCompletionData.
@@ -9179,6 +9547,11 @@ func (c *ProjectsLocationsCatalogsCompleteQueryCall) Do(opts ...googleapi.CallOp
 	//     "catalog"
 	//   ],
 	//   "parameters": {
+	//     "banner": {
+	//       "description": "The banner context for completion suggestions.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "catalog": {
 	//       "description": "Required. Catalog for which the completion is performed. Full resource name of catalog, such as `projects/*/locations/global/catalogs/default_catalog`.",
 	//       "location": "path",
@@ -14397,6 +14770,455 @@ func (c *ProjectsLocationsCatalogsControlsPatchCall) Do(opts ...googleapi.CallOp
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleCloudRetailV2alphaControl"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "retail.projects.locations.catalogs.merchantCenterAccountLinks.createMerchantCenterAccountLink":
+
+type ProjectsLocationsCatalogsMerchantCenterAccountLinksCreateMerchantCenterAccountLinkCall struct {
+	s                                                 *Service
+	name                                              string
+	googlecloudretailv2alphamerchantcenteraccountlink *GoogleCloudRetailV2alphaMerchantCenterAccountLink
+	urlParams_                                        gensupport.URLParams
+	ctx_                                              context.Context
+	header_                                           http.Header
+}
+
+// CreateMerchantCenterAccountLink: Creates a MerchantCenterAccountLink.
+// MerchantCenterAccountLink cannot be set to a different oneof field,
+// if so an INVALID_ARGUMENT is returned.
+//
+//   - name: Output only. Immutable. Full resource name of the Merchant
+//     Center Account Link, such as
+//     `projects/*/locations/global/catalogs/default_catalog/merchantCenter
+//     AccountLinks/merchant_center_account_link`.
+func (r *ProjectsLocationsCatalogsMerchantCenterAccountLinksService) CreateMerchantCenterAccountLink(name string, googlecloudretailv2alphamerchantcenteraccountlink *GoogleCloudRetailV2alphaMerchantCenterAccountLink) *ProjectsLocationsCatalogsMerchantCenterAccountLinksCreateMerchantCenterAccountLinkCall {
+	c := &ProjectsLocationsCatalogsMerchantCenterAccountLinksCreateMerchantCenterAccountLinkCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudretailv2alphamerchantcenteraccountlink = googlecloudretailv2alphamerchantcenteraccountlink
+	return c
+}
+
+// Parent sets the optional parameter "parent": Required. The branch
+// resource where this MerchantCenterAccountLink will be created.
+// Format:
+// projects/{PROJECT_NUMBER}/locations/global/catalogs/{CATALOG_ID}}
+func (c *ProjectsLocationsCatalogsMerchantCenterAccountLinksCreateMerchantCenterAccountLinkCall) Parent(parent string) *ProjectsLocationsCatalogsMerchantCenterAccountLinksCreateMerchantCenterAccountLinkCall {
+	c.urlParams_.Set("parent", parent)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsCatalogsMerchantCenterAccountLinksCreateMerchantCenterAccountLinkCall) Fields(s ...googleapi.Field) *ProjectsLocationsCatalogsMerchantCenterAccountLinksCreateMerchantCenterAccountLinkCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsCatalogsMerchantCenterAccountLinksCreateMerchantCenterAccountLinkCall) Context(ctx context.Context) *ProjectsLocationsCatalogsMerchantCenterAccountLinksCreateMerchantCenterAccountLinkCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsCatalogsMerchantCenterAccountLinksCreateMerchantCenterAccountLinkCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCatalogsMerchantCenterAccountLinksCreateMerchantCenterAccountLinkCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudretailv2alphamerchantcenteraccountlink)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "retail.projects.locations.catalogs.merchantCenterAccountLinks.createMerchantCenterAccountLink" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsCatalogsMerchantCenterAccountLinksCreateMerchantCenterAccountLinkCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a MerchantCenterAccountLink. MerchantCenterAccountLink cannot be set to a different oneof field, if so an INVALID_ARGUMENT is returned.",
+	//   "flatPath": "v2alpha/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/merchantCenterAccountLinks/{merchantCenterAccountLinksId}",
+	//   "httpMethod": "POST",
+	//   "id": "retail.projects.locations.catalogs.merchantCenterAccountLinks.createMerchantCenterAccountLink",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Output only. Immutable. Full resource name of the Merchant Center Account Link, such as `projects/*/locations/global/catalogs/default_catalog/merchantCenterAccountLinks/merchant_center_account_link`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+/merchantCenterAccountLinks/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The branch resource where this MerchantCenterAccountLink will be created. Format: projects/{PROJECT_NUMBER}/locations/global/catalogs/{CATALOG_ID}}",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2alpha/{+name}",
+	//   "request": {
+	//     "$ref": "GoogleCloudRetailV2alphaMerchantCenterAccountLink"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "retail.projects.locations.catalogs.merchantCenterAccountLinks.delete":
+
+type ProjectsLocationsCatalogsMerchantCenterAccountLinksDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a MerchantCenterAccountLink. If the
+// MerchantCenterAccountLink to delete does not exist, a NOT_FOUND error
+// is returned.
+//
+//   - name: Full resource name. Format:
+//     projects/{project_number}/locations/{location_id}/catalogs/{catalog_
+//     id}/merchantCenterAccountLinks/{merchant_center_account_link_id}.
+func (r *ProjectsLocationsCatalogsMerchantCenterAccountLinksService) Delete(name string) *ProjectsLocationsCatalogsMerchantCenterAccountLinksDeleteCall {
+	c := &ProjectsLocationsCatalogsMerchantCenterAccountLinksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsCatalogsMerchantCenterAccountLinksDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsCatalogsMerchantCenterAccountLinksDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsCatalogsMerchantCenterAccountLinksDeleteCall) Context(ctx context.Context) *ProjectsLocationsCatalogsMerchantCenterAccountLinksDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsCatalogsMerchantCenterAccountLinksDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCatalogsMerchantCenterAccountLinksDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "retail.projects.locations.catalogs.merchantCenterAccountLinks.delete" call.
+// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsCatalogsMerchantCenterAccountLinksDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a MerchantCenterAccountLink. If the MerchantCenterAccountLink to delete does not exist, a NOT_FOUND error is returned.",
+	//   "flatPath": "v2alpha/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/merchantCenterAccountLinks/{merchantCenterAccountLinksId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "retail.projects.locations.catalogs.merchantCenterAccountLinks.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Full resource name. Format: projects/{project_number}/locations/{location_id}/catalogs/{catalog_id}/merchantCenterAccountLinks/{merchant_center_account_link_id}",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+/merchantCenterAccountLinks/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2alpha/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleProtobufEmpty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "retail.projects.locations.catalogs.merchantCenterAccountLinks.list":
+
+type ProjectsLocationsCatalogsMerchantCenterAccountLinksListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all MerchantCenterAccountLinks under the specified parent
+// Catalog.
+//
+//   - parent: The parent Catalog of the resource. It must match this
+//     format:
+//     projects/{PROJECT_NUMBER}/locations/global/catalogs/{CATALOG_ID}.
+func (r *ProjectsLocationsCatalogsMerchantCenterAccountLinksService) List(parent string) *ProjectsLocationsCatalogsMerchantCenterAccountLinksListCall {
+	c := &ProjectsLocationsCatalogsMerchantCenterAccountLinksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsCatalogsMerchantCenterAccountLinksListCall) Fields(s ...googleapi.Field) *ProjectsLocationsCatalogsMerchantCenterAccountLinksListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsCatalogsMerchantCenterAccountLinksListCall) IfNoneMatch(entityTag string) *ProjectsLocationsCatalogsMerchantCenterAccountLinksListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsCatalogsMerchantCenterAccountLinksListCall) Context(ctx context.Context) *ProjectsLocationsCatalogsMerchantCenterAccountLinksListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsCatalogsMerchantCenterAccountLinksListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCatalogsMerchantCenterAccountLinksListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2alpha/{+parent}/merchantCenterAccountLinks")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "retail.projects.locations.catalogs.merchantCenterAccountLinks.list" call.
+// Exactly one of
+// *GoogleCloudRetailV2alphaListMerchantCenterAccountLinksResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudRetailV2alphaListMerchantCenterAccountLinksResponse.Server
+// Response.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsCatalogsMerchantCenterAccountLinksListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRetailV2alphaListMerchantCenterAccountLinksResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudRetailV2alphaListMerchantCenterAccountLinksResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all MerchantCenterAccountLinks under the specified parent Catalog.",
+	//   "flatPath": "v2alpha/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/merchantCenterAccountLinks",
+	//   "httpMethod": "GET",
+	//   "id": "retail.projects.locations.catalogs.merchantCenterAccountLinks.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The parent Catalog of the resource. It must match this format: projects/{PROJECT_NUMBER}/locations/global/catalogs/{CATALOG_ID}",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2alpha/{+parent}/merchantCenterAccountLinks",
+	//   "response": {
+	//     "$ref": "GoogleCloudRetailV2alphaListMerchantCenterAccountLinksResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

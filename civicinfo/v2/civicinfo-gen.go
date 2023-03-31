@@ -432,11 +432,6 @@ type Contest struct {
 	// party/parties it is for.
 	PrimaryParties []string `json:"primaryParties,omitempty"`
 
-	// PrimaryParty: [DEPRECATED] If this is a partisan election, the name
-	// of the party it is for. This field as deprecated in favor of the
-	// array "primaryParties", as contests may contain more than one party.
-	PrimaryParty string `json:"primaryParty,omitempty"`
-
 	// ReferendumBallotResponses: The set of ballot responses for the
 	// referendum. A ballot response represents a line on the ballot. Common
 	// examples might include "yes" or "no" for referenda. This field is

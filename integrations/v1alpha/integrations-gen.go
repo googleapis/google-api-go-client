@@ -3717,6 +3717,7 @@ type EnterpriseCrmEventbusProtoSuspensionResolutionInfo struct {
 	//   "PENDING_UNSPECIFIED"
 	//   "REJECTED"
 	//   "LIFTED"
+	//   "CANCELED"
 	Status string `json:"status,omitempty"`
 
 	SuspensionConfig *EnterpriseCrmEventbusProtoSuspensionConfig `json:"suspensionConfig,omitempty"`

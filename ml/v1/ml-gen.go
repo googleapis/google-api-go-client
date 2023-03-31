@@ -896,9 +896,9 @@ type GoogleCloudMlV1__AcceleratorConfig struct {
 	//   "NVIDIA_TESLA_A100" - Nvidia A100 GPU.
 	//   "TPU_V2" - TPU v2.
 	//   "TPU_V3" - TPU v3.
-	//   "TPU_V4" - TPU v4.
 	//   "TPU_V2_POD" - TPU v2 POD.
 	//   "TPU_V3_POD" - TPU v3 POD.
+	//   "TPU_V4_POD" - TPU v4 POD.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Count") to
@@ -1109,9 +1109,9 @@ type GoogleCloudMlV1__Capability struct {
 	//   "NVIDIA_TESLA_A100" - Nvidia A100 GPU.
 	//   "TPU_V2" - TPU v2.
 	//   "TPU_V3" - TPU v3.
-	//   "TPU_V4" - TPU v4.
 	//   "TPU_V2_POD" - TPU v2 POD.
 	//   "TPU_V3_POD" - TPU v3 POD.
+	//   "TPU_V4_POD" - TPU v4 POD.
 	AvailableAccelerators []string `json:"availableAccelerators,omitempty"`
 
 	// Possible values:

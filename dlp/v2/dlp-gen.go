@@ -73,6 +73,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "dlp:v2"
 const apiName = "dlp"
@@ -532,6 +533,35 @@ type GooglePrivacyDlpV2Action struct {
 
 func (s *GooglePrivacyDlpV2Action) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2Action
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2ActionDetails: The results of an Action.
+type GooglePrivacyDlpV2ActionDetails struct {
+	// DeidentifyDetails: Outcome of a de-identification action.
+	DeidentifyDetails *GooglePrivacyDlpV2DeidentifyDataSourceDetails `json:"deidentifyDetails,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DeidentifyDetails")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DeidentifyDetails") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2ActionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2ActionDetails
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2931,6 +2961,77 @@ func (s *GooglePrivacyDlpV2DeidentifyContentResponse) MarshalJSON() ([]byte, err
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GooglePrivacyDlpV2DeidentifyDataSourceDetails: The results of a
+// Deidentify action from an Inspect job.
+type GooglePrivacyDlpV2DeidentifyDataSourceDetails struct {
+	// DeidentifyStats: Stats about de-identification.
+	DeidentifyStats *GooglePrivacyDlpV2DeidentifyDataSourceStats `json:"deidentifyStats,omitempty"`
+
+	// RequestedOptions: De-identification config used for the request.
+	RequestedOptions *GooglePrivacyDlpV2RequestedDeidentifyOptions `json:"requestedOptions,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DeidentifyStats") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DeidentifyStats") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2DeidentifyDataSourceDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2DeidentifyDataSourceDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2DeidentifyDataSourceStats: Summary of what was
+// modified during a transformation.
+type GooglePrivacyDlpV2DeidentifyDataSourceStats struct {
+	// TransformationCount: Number of successfully applied transformations.
+	TransformationCount int64 `json:"transformationCount,omitempty,string"`
+
+	// TransformationErrorCount: Number of errors encountered while trying
+	// to apply transformations.
+	TransformationErrorCount int64 `json:"transformationErrorCount,omitempty,string"`
+
+	// TransformedBytes: Total size in bytes that were transformed in some
+	// way.
+	TransformedBytes int64 `json:"transformedBytes,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "TransformationCount")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "TransformationCount") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2DeidentifyDataSourceStats) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2DeidentifyDataSourceStats
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GooglePrivacyDlpV2DeidentifyTemplate: DeidentifyTemplates contains
 // instructions on how to de-identify content. See
 // https://cloud.google.com/dlp/docs/concepts-templates to learn more.
@@ -3275,6 +3376,9 @@ func (s *GooglePrivacyDlpV2Dictionary) MarshalJSON() ([]byte, error) {
 // GooglePrivacyDlpV2DlpJob: Combines all of the information about a DLP
 // job.
 type GooglePrivacyDlpV2DlpJob struct {
+	// ActionDetails: Events that should occur after the job has completed.
+	ActionDetails []*GooglePrivacyDlpV2ActionDetails `json:"actionDetails,omitempty"`
+
 	// CreateTime: Time when the job was created.
 	CreateTime string `json:"createTime,omitempty"`
 
@@ -3329,7 +3433,7 @@ type GooglePrivacyDlpV2DlpJob struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// ForceSendFields is a list of field names (e.g. "ActionDetails") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -3337,10 +3441,10 @@ type GooglePrivacyDlpV2DlpJob struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "ActionDetails") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -7619,6 +7723,48 @@ func (s *GooglePrivacyDlpV2ReplaceValueConfig) MarshalJSON() ([]byte, error) {
 // GooglePrivacyDlpV2ReplaceWithInfoTypeConfig: Replace each matching
 // finding with the name of the info_type.
 type GooglePrivacyDlpV2ReplaceWithInfoTypeConfig struct {
+}
+
+// GooglePrivacyDlpV2RequestedDeidentifyOptions: De-id options.
+type GooglePrivacyDlpV2RequestedDeidentifyOptions struct {
+	// SnapshotDeidentifyTemplate: Snapshot of the state of the
+	// DeidentifyTemplate from the Deidentify action at the time this job
+	// was run.
+	SnapshotDeidentifyTemplate *GooglePrivacyDlpV2DeidentifyTemplate `json:"snapshotDeidentifyTemplate,omitempty"`
+
+	// SnapshotImageRedactTemplate: Snapshot of the state of the image
+	// redact DeidentifyTemplate from the Deidentify action at the time this
+	// job was run.
+	SnapshotImageRedactTemplate *GooglePrivacyDlpV2DeidentifyTemplate `json:"snapshotImageRedactTemplate,omitempty"`
+
+	// SnapshotStructuredDeidentifyTemplate: Snapshot of the state of the
+	// structured DeidentifyTemplate from the Deidentify action at the time
+	// this job was run.
+	SnapshotStructuredDeidentifyTemplate *GooglePrivacyDlpV2DeidentifyTemplate `json:"snapshotStructuredDeidentifyTemplate,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "SnapshotDeidentifyTemplate") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "SnapshotDeidentifyTemplate") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2RequestedDeidentifyOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2RequestedDeidentifyOptions
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2RequestedOptions: Snapshot of the inspection

@@ -1454,6 +1454,11 @@ type GoogleCloudIdentitytoolkitAdminV2MultiFactorAuthConfig struct {
 	//   "PHONE_SMS" - SMS is enabled as a second factor for this project.
 	EnabledProviders []string `json:"enabledProviders,omitempty"`
 
+	// ProviderConfigs: A list of usable second factors for this project
+	// along with their configurations. This field does not support phone
+	// based MFA, for that use the 'enabled_providers' field.
+	ProviderConfigs []*GoogleCloudIdentitytoolkitAdminV2ProviderConfig `json:"providerConfigs,omitempty"`
+
 	// State: Whether MultiFactor Authentication has been enabled for this
 	// project.
 	//
@@ -1728,6 +1733,49 @@ type GoogleCloudIdentitytoolkitAdminV2PhoneNumber struct {
 
 func (s *GoogleCloudIdentitytoolkitAdminV2PhoneNumber) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitAdminV2PhoneNumber
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudIdentitytoolkitAdminV2ProviderConfig: ProviderConfig
+// describes the supported MFA providers along with their
+// configurations.
+type GoogleCloudIdentitytoolkitAdminV2ProviderConfig struct {
+	// State: Describes the state of the MultiFactor Authentication type.
+	//
+	// Possible values:
+	//   "MFA_STATE_UNSPECIFIED" - Illegal State, should not be used.
+	//   "DISABLED" - Multi-factor authentication cannot be used for this
+	// project.
+	//   "ENABLED" - Multi-factor authentication can be used for this
+	// project.
+	//   "MANDATORY" - Multi-factor authentication is required for this
+	// project. Users from this project must authenticate with the second
+	// factor.
+	State string `json:"state,omitempty"`
+
+	// TotpProviderConfig: TOTP MFA provider config for this project.
+	TotpProviderConfig *GoogleCloudIdentitytoolkitAdminV2TotpMfaProviderConfig `json:"totpProviderConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "State") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "State") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudIdentitytoolkitAdminV2ProviderConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudIdentitytoolkitAdminV2ProviderConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2249,6 +2297,37 @@ func (s *GoogleCloudIdentitytoolkitAdminV2Tenant) MarshalJSON() ([]byte, error) 
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudIdentitytoolkitAdminV2TotpMfaProviderConfig:
+// TotpMFAProviderConfig represents the TOTP based MFA provider.
+type GoogleCloudIdentitytoolkitAdminV2TotpMfaProviderConfig struct {
+	// AdjacentIntervals: The allowed number of adjacent intervals that will
+	// be used for verification to avoid clock skew.
+	AdjacentIntervals int64 `json:"adjacentIntervals,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AdjacentIntervals")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdjacentIntervals") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudIdentitytoolkitAdminV2TotpMfaProviderConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudIdentitytoolkitAdminV2TotpMfaProviderConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudIdentitytoolkitAdminV2Trigger: Synchronous Cloud Function
 // with HTTP Trigger
 type GoogleCloudIdentitytoolkitAdminV2Trigger struct {
@@ -2331,6 +2410,9 @@ type GoogleCloudIdentitytoolkitV2FinalizeMfaEnrollmentRequest struct {
 	// Identity Platform project.
 	TenantId string `json:"tenantId,omitempty"`
 
+	// TotpVerificationInfo: Verification information for TOTP.
+	TotpVerificationInfo *GoogleCloudIdentitytoolkitV2FinalizeMfaTotpEnrollmentRequestInfo `json:"totpVerificationInfo,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -2365,6 +2447,9 @@ type GoogleCloudIdentitytoolkitV2FinalizeMfaEnrollmentResponse struct {
 
 	// RefreshToken: Refresh token updated to reflect MFA enrollment.
 	RefreshToken string `json:"refreshToken,omitempty"`
+
+	// TotpAuthInfo: Auxiliary auth info specific to TOTP auth.
+	TotpAuthInfo *GoogleCloudIdentitytoolkitV2FinalizeMfaTotpEnrollmentResponseInfo `json:"totpAuthInfo,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -2476,6 +2561,10 @@ func (s *GoogleCloudIdentitytoolkitV2FinalizeMfaPhoneResponseInfo) MarshalJSON()
 // GoogleCloudIdentitytoolkitV2FinalizeMfaSignInRequest: Finalizes
 // sign-in by verifying MFA challenge.
 type GoogleCloudIdentitytoolkitV2FinalizeMfaSignInRequest struct {
+	// MfaEnrollmentId: The MFA enrollment ID from the user's list of
+	// current MFA enrollments.
+	MfaEnrollmentId string `json:"mfaEnrollmentId,omitempty"`
+
 	// MfaPendingCredential: Required. Pending credential from first factor
 	// sign-in.
 	MfaPendingCredential string `json:"mfaPendingCredential,omitempty"`
@@ -2489,16 +2578,19 @@ type GoogleCloudIdentitytoolkitV2FinalizeMfaSignInRequest struct {
 	// Platform project.
 	TenantId string `json:"tenantId,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g.
-	// "MfaPendingCredential") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// TotpVerificationInfo: Proof of completion of the TOTP based MFA
+	// challenge.
+	TotpVerificationInfo *GoogleCloudIdentitytoolkitV2MfaTotpSignInRequestInfo `json:"totpVerificationInfo,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MfaEnrollmentId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "MfaPendingCredential") to
+	// NullFields is a list of field names (e.g. "MfaEnrollmentId") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -2554,6 +2646,73 @@ func (s *GoogleCloudIdentitytoolkitV2FinalizeMfaSignInResponse) MarshalJSON() ([
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudIdentitytoolkitV2FinalizeMfaTotpEnrollmentRequestInfo: Mfa
+// request info specific to TOTP auth for FinalizeMfa.
+type GoogleCloudIdentitytoolkitV2FinalizeMfaTotpEnrollmentRequestInfo struct {
+	// SessionInfo: An opaque string that represents the enrollment session.
+	SessionInfo string `json:"sessionInfo,omitempty"`
+
+	// VerificationCode: User-entered verification code.
+	VerificationCode string `json:"verificationCode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SessionInfo") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SessionInfo") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudIdentitytoolkitV2FinalizeMfaTotpEnrollmentRequestInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudIdentitytoolkitV2FinalizeMfaTotpEnrollmentRequestInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudIdentitytoolkitV2FinalizeMfaTotpEnrollmentResponseInfo:
+// Mfa response info specific to TOTP auth for FinalizeMfa.
+type GoogleCloudIdentitytoolkitV2FinalizeMfaTotpEnrollmentResponseInfo struct {
+}
+
+// GoogleCloudIdentitytoolkitV2MfaTotpSignInRequestInfo: TOTP
+// verification info for FinalizeMfaSignInRequest.
+type GoogleCloudIdentitytoolkitV2MfaTotpSignInRequestInfo struct {
+	// VerificationCode: User-entered verification code.
+	VerificationCode string `json:"verificationCode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "VerificationCode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "VerificationCode") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudIdentitytoolkitV2MfaTotpSignInRequestInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudIdentitytoolkitV2MfaTotpSignInRequestInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudIdentitytoolkitV2StartMfaEnrollmentRequest: Sends MFA
 // enrollment verification SMS for a user.
 type GoogleCloudIdentitytoolkitV2StartMfaEnrollmentRequest struct {
@@ -2568,6 +2727,9 @@ type GoogleCloudIdentitytoolkitV2StartMfaEnrollmentRequest struct {
 	// enrolling MFA belongs to. If not set, the user belongs to the default
 	// Identity Platform project.
 	TenantId string `json:"tenantId,omitempty"`
+
+	// TotpEnrollmentInfo: Sign-in info specific to TOTP auth.
+	TotpEnrollmentInfo *GoogleCloudIdentitytoolkitV2StartMfaTotpEnrollmentRequestInfo `json:"totpEnrollmentInfo,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "IdToken") to
 	// unconditionally include in API requests. By default, fields with
@@ -2598,6 +2760,9 @@ type GoogleCloudIdentitytoolkitV2StartMfaEnrollmentResponse struct {
 	// PhoneSessionInfo: Verification info to authorize sending an SMS for
 	// phone verification.
 	PhoneSessionInfo *GoogleCloudIdentitytoolkitV2StartMfaPhoneResponseInfo `json:"phoneSessionInfo,omitempty"`
+
+	// TotpSessionInfo: Enrollment response info specific to TOTP auth.
+	TotpSessionInfo *GoogleCloudIdentitytoolkitV2StartMfaTotpEnrollmentResponseInfo `json:"totpSessionInfo,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -2792,6 +2957,66 @@ type GoogleCloudIdentitytoolkitV2StartMfaSignInResponse struct {
 
 func (s *GoogleCloudIdentitytoolkitV2StartMfaSignInResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV2StartMfaSignInResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudIdentitytoolkitV2StartMfaTotpEnrollmentRequestInfo: Mfa
+// request info specific to TOTP auth for StartMfa.
+type GoogleCloudIdentitytoolkitV2StartMfaTotpEnrollmentRequestInfo struct {
+}
+
+// GoogleCloudIdentitytoolkitV2StartMfaTotpEnrollmentResponseInfo: Mfa
+// response info specific to TOTP auth for StartMfa.
+type GoogleCloudIdentitytoolkitV2StartMfaTotpEnrollmentResponseInfo struct {
+	// FinalizeEnrollmentTime: The time by which the enrollment must finish.
+	FinalizeEnrollmentTime string `json:"finalizeEnrollmentTime,omitempty"`
+
+	// HashingAlgorithm: The hashing algorithm used to generate the
+	// verification code.
+	HashingAlgorithm string `json:"hashingAlgorithm,omitempty"`
+
+	// PeriodSec: Duration in seconds at which the verification code will
+	// change.
+	PeriodSec int64 `json:"periodSec,omitempty"`
+
+	// SessionInfo: An encoded string that represents the enrollment
+	// session.
+	SessionInfo string `json:"sessionInfo,omitempty"`
+
+	// SharedSecretKey: A base 32 encoded string that represents the shared
+	// TOTP secret. The base 32 encoding is the one specified by
+	// RFC4648#section-6
+	// (https://datatracker.ietf.org/doc/html/rfc4648#section-6). (This is
+	// the same as the base 32 encoding from RFC3548#section-5
+	// (https://datatracker.ietf.org/doc/html/rfc3548#section-5).)
+	SharedSecretKey string `json:"sharedSecretKey,omitempty"`
+
+	// VerificationCodeLength: The length of the verification code that
+	// needs to be generated.
+	VerificationCodeLength int64 `json:"verificationCodeLength,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "FinalizeEnrollmentTime") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FinalizeEnrollmentTime")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudIdentitytoolkitV2StartMfaTotpEnrollmentResponseInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudIdentitytoolkitV2StartMfaTotpEnrollmentResponseInfo
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

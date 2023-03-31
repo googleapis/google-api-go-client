@@ -1547,6 +1547,9 @@ type GoogleCloudIdentitytoolkitV1MfaEnrollment struct {
 	// phone number.
 	PhoneInfo string `json:"phoneInfo,omitempty"`
 
+	// TotpInfo: Contains information specific to TOTP MFA.
+	TotpInfo *GoogleCloudIdentitytoolkitV1TotpInfo `json:"totpInfo,omitempty"`
+
 	// UnobfuscatedPhoneInfo: Output only. Unobfuscated phone_info.
 	UnobfuscatedPhoneInfo string `json:"unobfuscatedPhoneInfo,omitempty"`
 
@@ -2652,7 +2655,9 @@ type GoogleCloudIdentitytoolkitV1SignInWithIdpRequest struct {
 
 	// PendingToken: An opaque string from a previous SignInWithIdp
 	// response. If set, it can be used to repeat the sign-in operation from
-	// the previous SignInWithIdp operation.
+	// the previous SignInWithIdp operation. This may be present if the user
+	// needs to confirm their account information as part of a previous
+	// federated login attempt, or perform account linking.
 	PendingToken string `json:"pendingToken,omitempty"`
 
 	// PostBody: If the user is signing in with an authorization response
@@ -3397,6 +3402,10 @@ func (s *GoogleCloudIdentitytoolkitV1SqlExpression) MarshalJSON() ([]byte, error
 	type NoMethod GoogleCloudIdentitytoolkitV1SqlExpression
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudIdentitytoolkitV1TotpInfo: Information about TOTP MFA.
+type GoogleCloudIdentitytoolkitV1TotpInfo struct {
 }
 
 // GoogleCloudIdentitytoolkitV1UploadAccountRequest: Request message for

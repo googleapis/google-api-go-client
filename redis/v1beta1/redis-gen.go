@@ -1220,9 +1220,7 @@ type ReconciliationOperationMetadata struct {
 	//   "UNKNOWN_REPAIR_ACTION" - Unknown repair action.
 	//   "DELETE" - The resource has to be deleted. When using this bit, the
 	// CLH should fail the operation. DEPRECATED. Instead use
-	// DELETE_RESOURCE OperationSignal in SideChannel. For more information
-	// - go/ccfe-delete-on-upsert,
-	// go/ccfe-reconciliation-protocol-ug#apply_delete
+	// DELETE_RESOURCE OperationSignal in SideChannel.
 	//   "RETRY" - This resource could not be repaired but the repair should
 	// be tried again at a later time. This can happen if there is a
 	// dependency that needs to be resolved first- e.g. if a parent resource

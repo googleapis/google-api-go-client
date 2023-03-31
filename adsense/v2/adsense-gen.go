@@ -5606,6 +5606,16 @@ func (c *AccountsReportsGenerateCall) DateRange(dateRange string) *AccountsRepor
 //
 // dimension match the values from Site.reporting_dimension_id.
 //
+//	"PAGE_URL" - URL of the page upon which the ad was served. This is
+//
+// a complete URL including scheme and query parameters. Note that the
+// URL that appears in this dimension may be a canonicalized version of
+// the one that was used in the original request, and so may not exactly
+// match the URL that a user might have seen. Note that there are also
+// some caveats to be aware of when using this dimension. For more
+// information, see [Page URL
+// breakdown](https://support.google.com/adsense/answer/11988478).
+//
 //	"URL_CHANNEL_NAME" - Name of a URL channel. The members of this
 //
 // dimension match the values from UrlChannel.uri_pattern.
@@ -6124,6 +6134,7 @@ func (c *AccountsReportsGenerateCall) Do(opts ...googleapi.CallOption) (*ReportR
 	//         "CUSTOM_CHANNEL_ID",
 	//         "OWNED_SITE_DOMAIN_NAME",
 	//         "OWNED_SITE_ID",
+	//         "PAGE_URL",
 	//         "URL_CHANNEL_NAME",
 	//         "URL_CHANNEL_ID",
 	//         "BUYER_NETWORK_NAME",
@@ -6173,6 +6184,7 @@ func (c *AccountsReportsGenerateCall) Do(opts ...googleapi.CallOption) (*ReportR
 	//         "Unique ID of a custom channel. The members of this dimension match the values from CustomChannel.reporting_dimension_id.",
 	//         "Domain name of a verified site (e.g. \"example.com\"). The members of this dimension match the values from Site.domain.",
 	//         "Unique ID of a verified site. The members of this dimension match the values from Site.reporting_dimension_id.",
+	//         "URL of the page upon which the ad was served. This is a complete URL including scheme and query parameters. Note that the URL that appears in this dimension may be a canonicalized version of the one that was used in the original request, and so may not exactly match the URL that a user might have seen. Note that there are also some caveats to be aware of when using this dimension. For more information, see [Page URL breakdown](https://support.google.com/adsense/answer/11988478).",
 	//         "Name of a URL channel. The members of this dimension match the values from UrlChannel.uri_pattern.",
 	//         "Unique ID of a URL channel. The members of this dimension match the values from UrlChannel.reporting_dimension_id.",
 	//         "Name of an ad network that returned the winning ads for an ad request (e.g. \"Google AdWords\"). Note that unlike other \"NAME\" dimensions, the members of this dimensions are not localized.",
@@ -6501,6 +6513,16 @@ func (c *AccountsReportsGenerateCsvCall) DateRange(dateRange string) *AccountsRe
 //	"OWNED_SITE_ID" - Unique ID of a verified site. The members of this
 //
 // dimension match the values from Site.reporting_dimension_id.
+//
+//	"PAGE_URL" - URL of the page upon which the ad was served. This is
+//
+// a complete URL including scheme and query parameters. Note that the
+// URL that appears in this dimension may be a canonicalized version of
+// the one that was used in the original request, and so may not exactly
+// match the URL that a user might have seen. Note that there are also
+// some caveats to be aware of when using this dimension. For more
+// information, see [Page URL
+// breakdown](https://support.google.com/adsense/answer/11988478).
 //
 //	"URL_CHANNEL_NAME" - Name of a URL channel. The members of this
 //
@@ -7020,6 +7042,7 @@ func (c *AccountsReportsGenerateCsvCall) Do(opts ...googleapi.CallOption) (*Http
 	//         "CUSTOM_CHANNEL_ID",
 	//         "OWNED_SITE_DOMAIN_NAME",
 	//         "OWNED_SITE_ID",
+	//         "PAGE_URL",
 	//         "URL_CHANNEL_NAME",
 	//         "URL_CHANNEL_ID",
 	//         "BUYER_NETWORK_NAME",
@@ -7069,6 +7092,7 @@ func (c *AccountsReportsGenerateCsvCall) Do(opts ...googleapi.CallOption) (*Http
 	//         "Unique ID of a custom channel. The members of this dimension match the values from CustomChannel.reporting_dimension_id.",
 	//         "Domain name of a verified site (e.g. \"example.com\"). The members of this dimension match the values from Site.domain.",
 	//         "Unique ID of a verified site. The members of this dimension match the values from Site.reporting_dimension_id.",
+	//         "URL of the page upon which the ad was served. This is a complete URL including scheme and query parameters. Note that the URL that appears in this dimension may be a canonicalized version of the one that was used in the original request, and so may not exactly match the URL that a user might have seen. Note that there are also some caveats to be aware of when using this dimension. For more information, see [Page URL breakdown](https://support.google.com/adsense/answer/11988478).",
 	//         "Name of a URL channel. The members of this dimension match the values from UrlChannel.uri_pattern.",
 	//         "Unique ID of a URL channel. The members of this dimension match the values from UrlChannel.reporting_dimension_id.",
 	//         "Name of an ad network that returned the winning ads for an ad request (e.g. \"Google AdWords\"). Note that unlike other \"NAME\" dimensions, the members of this dimensions are not localized.",

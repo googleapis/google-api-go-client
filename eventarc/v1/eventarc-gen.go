@@ -1850,6 +1850,12 @@ type Trigger struct {
 	// to ensure that the client has an up-to-date value before proceeding.
 	Etag string `json:"etag,omitempty"`
 
+	// EventDataContentType: Optional. EventDataContentType specifies the
+	// type of payload in MIME format that is expected from the CloudEvent
+	// data field. This will be set to `application/json` if the value is
+	// not defined.
+	EventDataContentType string `json:"eventDataContentType,omitempty"`
+
 	// EventFilters: Required. Unordered list. The list of filters that
 	// applies to event attributes. Only events that match all the provided
 	// filters are sent to the destination.

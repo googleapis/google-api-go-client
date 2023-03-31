@@ -1361,7 +1361,7 @@ type Event struct {
 	// - "default" - A regular event or not further specified.
 	// - "outOfOffice" - An out-of-office event.
 	// - "focusTime" - A focus-time event.
-	// - "workingLocation" - A working location event.
+	// - "workingLocation" - A working location event. Developer Preview.
 	EventType string `json:"eventType,omitempty"`
 
 	// ExtendedProperties: Extended properties of the event.
@@ -1548,7 +1548,8 @@ type Event struct {
 	// compatibility reasons.
 	Visibility string `json:"visibility,omitempty"`
 
-	// WorkingLocationProperties: Working Location event data. Read-only.
+	// WorkingLocationProperties: Developer Preview: Working Location event
+	// data. Read-only.
 	WorkingLocationProperties *EventWorkingLocationProperties `json:"workingLocationProperties,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -7066,9 +7067,9 @@ func (c *EventsListCall) AlwaysIncludeEmail(alwaysIncludeEmail bool) *EventsList
 }
 
 // EventTypes sets the optional parameter "eventTypes": Event types to
-// return.  The default is ["default", "outOfOffice", "focusTime"]. This
-// is used by the Working Location developer preview and only the
-// default value is allowed for non-opted-in users.
+// return.  The default is ["default", "outOfOffice", "focusTime"]. Only
+// the default value is available, unless you're enrolled in the Working
+// Locations developer preview. Developer Preview.
 func (c *EventsListCall) EventTypes(eventTypes ...string) *EventsListCall {
 	c.urlParams_.SetMulti("eventTypes", append([]string{}, eventTypes...))
 	return c
@@ -7369,7 +7370,7 @@ func (c *EventsListCall) Do(opts ...googleapi.CallOption) (*Events, error) {
 	//       "type": "string"
 	//     },
 	//     "eventTypes": {
-	//       "description": "Event types to return. Optional. The default is [\"default\", \"outOfOffice\", \"focusTime\"]. This is used by the Working Location developer preview and only the default value is allowed for non-opted-in users.",
+	//       "description": "Event types to return. Optional. The default is [\"default\", \"outOfOffice\", \"focusTime\"]. Only the default value is available, unless you're enrolled in the Working Locations developer preview. Developer Preview.",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
@@ -8478,9 +8479,9 @@ func (c *EventsWatchCall) AlwaysIncludeEmail(alwaysIncludeEmail bool) *EventsWat
 }
 
 // EventTypes sets the optional parameter "eventTypes": Event types to
-// return.  The default is ["default", "outOfOffice", "focusTime"]. This
-// is used by the Working Location developer preview and only the
-// default value is allowed for non-opted-in users.
+// return.  The default is ["default", "outOfOffice", "focusTime"]. Only
+// the default value is available, unless you're enrolled in the Working
+// Locations developer preview. Developer Preview.
 func (c *EventsWatchCall) EventTypes(eventTypes ...string) *EventsWatchCall {
 	c.urlParams_.SetMulti("eventTypes", append([]string{}, eventTypes...))
 	return c
@@ -8773,7 +8774,7 @@ func (c *EventsWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error) {
 	//       "type": "string"
 	//     },
 	//     "eventTypes": {
-	//       "description": "Event types to return. Optional. The default is [\"default\", \"outOfOffice\", \"focusTime\"]. This is used by the Working Location developer preview and only the default value is allowed for non-opted-in users.",
+	//       "description": "Event types to return. Optional. The default is [\"default\", \"outOfOffice\", \"focusTime\"]. Only the default value is available, unless you're enrolled in the Working Locations developer preview. Developer Preview.",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"

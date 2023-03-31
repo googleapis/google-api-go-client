@@ -1317,6 +1317,39 @@ func (s *GoogleCloudRetailV2alphaBigQueryOutputResult) MarshalJSON() ([]byte, er
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudRetailV2alphaCreateMerchantCenterAccountLinkMetadata:
+// Common metadata related to the progress of the operations.
+type GoogleCloudRetailV2alphaCreateMerchantCenterAccountLinkMetadata struct {
+	// CreateTime: Operation create time.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// UpdateTime: Operation last update time. If the operation is done,
+	// this is also the finish time.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2alphaCreateMerchantCenterAccountLinkMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2alphaCreateMerchantCenterAccountLinkMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRetailV2alphaCreateModelMetadata: Metadata associated with
 // a create operation.
 type GoogleCloudRetailV2alphaCreateModelMetadata struct {
@@ -1716,6 +1749,126 @@ type GoogleCloudRetailV2alphaImportUserEventsResponse struct {
 
 func (s *GoogleCloudRetailV2alphaImportUserEventsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2alphaImportUserEventsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2alphaMerchantCenterAccountLink: Represents a link
+// between a Merchant Center account and a branch. Once a link is
+// established, products from the linked merchant center account will be
+// streamed to the linked branch.
+// LINT.IfChange(MerchantCenterAccountLink)
+type GoogleCloudRetailV2alphaMerchantCenterAccountLink struct {
+	// BranchId: Required. The branch id (e.g. 0/1/2) within the catalog
+	// that products from merchant_center_account_id are streamed to. When
+	// updating this field, an empty value will use the currently configured
+	// default branch. However, changing the default branch later on won't
+	// change the linked branch here. A single branch id can only have one
+	// linked merchant center account id.
+	BranchId string `json:"branchId,omitempty"`
+
+	// FeedFilters: Criteria for the Merchant Center feeds to be ingested
+	// via the link. All offers will be ingested if the list is empty.
+	// Otherwise the offers will be ingested from selected feeds.
+	FeedFilters []*GoogleCloudRetailV2alphaMerchantCenterAccountLinkMerchantCenterFeedFilter `json:"feedFilters,omitempty"`
+
+	// FeedLabel: The FeedLabel used to perform filtering. Note: this
+	// replaces region_id
+	// (https://developers.google.com/shopping-content/reference/rest/v2.1/products#Product.FIELDS.feed_label).
+	// Example value: `US`. Example value: `FeedLabel1`.
+	FeedLabel string `json:"feedLabel,omitempty"`
+
+	// Id: Output only. Immutable. MerchantCenterAccountLink identifier,
+	// which is the final component of name. This field is auto generated
+	// and follows the convention: `BranchId_MerchantCenterAccountId`.
+	// `projects/*/locations/global/catalogs/default_catalog/merchantCenterAc
+	// countLinks/id_1`.
+	Id string `json:"id,omitempty"`
+
+	// LanguageCode: Language of the title/description and other string
+	// attributes. Use language tags defined by BCP 47
+	// (https://www.rfc-editor.org/rfc/bcp/bcp47.txt). ISO 639-1. This
+	// specifies the language of offers in Merchant Center that will be
+	// accepted. If empty, no language filtering will be performed. Example
+	// value: `en`.
+	LanguageCode string `json:"languageCode,omitempty"`
+
+	// MerchantCenterAccountId: Required. The linked Merchant center account
+	// id
+	// (https://developers.google.com/shopping-content/guides/accountstatuses).
+	// The account must be a standalone account or a sub-account of a MCA.
+	MerchantCenterAccountId int64 `json:"merchantCenterAccountId,omitempty,string"`
+
+	// Name: Output only. Immutable. Full resource name of the Merchant
+	// Center Account Link, such as
+	// `projects/*/locations/global/catalogs/default_catalog/merchantCenterAc
+	// countLinks/merchant_center_account_link`.
+	Name string `json:"name,omitempty"`
+
+	// ProjectId: Output only. GCP project ID.
+	ProjectId string `json:"projectId,omitempty"`
+
+	// State: Output only. Represents the state of the link.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Default value.
+	//   "PENDING" - Link is created and LRO is not complete.
+	//   "ACTIVE" - Link is active.
+	//   "FAILED" - Link creation failed.
+	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BranchId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BranchId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2alphaMerchantCenterAccountLink) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2alphaMerchantCenterAccountLink
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2alphaMerchantCenterAccountLinkMerchantCenterFeedFil
+// ter: Merchant Center Feed filter criterion.
+type GoogleCloudRetailV2alphaMerchantCenterAccountLinkMerchantCenterFeedFilter struct {
+	// PrimaryFeedId: Merchant Center primary feed ID.
+	PrimaryFeedId int64 `json:"primaryFeedId,omitempty,string"`
+
+	// PrimaryFeedName: Merchant Center primary feed name. The name is used
+	// for the display purposes only.
+	PrimaryFeedName string `json:"primaryFeedName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PrimaryFeedId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PrimaryFeedId") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2alphaMerchantCenterAccountLinkMerchantCenterFeedFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2alphaMerchantCenterAccountLinkMerchantCenterFeedFilter
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3639,6 +3792,39 @@ func (s *GoogleCloudRetailV2betaControl) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudRetailV2betaCreateMerchantCenterAccountLinkMetadata:
+// Common metadata related to the progress of the operations.
+type GoogleCloudRetailV2betaCreateMerchantCenterAccountLinkMetadata struct {
+	// CreateTime: Operation create time.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// UpdateTime: Operation last update time. If the operation is done,
+	// this is also the finish time.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2betaCreateMerchantCenterAccountLinkMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2betaCreateMerchantCenterAccountLinkMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRetailV2betaCreateModelMetadata: Metadata associated with
 // a create operation.
 type GoogleCloudRetailV2betaCreateModelMetadata struct {
@@ -4791,6 +4977,126 @@ func (s *GoogleCloudRetailV2betaLocalInventory) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudRetailV2betaMerchantCenterAccountLink: Represents a link
+// between a Merchant Center account and a branch. Once a link is
+// established, products from the linked merchant center account will be
+// streamed to the linked branch.
+// LINT.IfChange(MerchantCenterAccountLink)
+type GoogleCloudRetailV2betaMerchantCenterAccountLink struct {
+	// BranchId: Required. The branch id (e.g. 0/1/2) within the catalog
+	// that products from merchant_center_account_id are streamed to. When
+	// updating this field, an empty value will use the currently configured
+	// default branch. However, changing the default branch later on won't
+	// change the linked branch here. A single branch id can only have one
+	// linked merchant center account id.
+	BranchId string `json:"branchId,omitempty"`
+
+	// FeedFilters: Criteria for the Merchant Center feeds to be ingested
+	// via the link. All offers will be ingested if the list is empty.
+	// Otherwise the offers will be ingested from selected feeds.
+	FeedFilters []*GoogleCloudRetailV2betaMerchantCenterAccountLinkMerchantCenterFeedFilter `json:"feedFilters,omitempty"`
+
+	// FeedLabel: The FeedLabel used to perform filtering. Note: this
+	// replaces region_id
+	// (https://developers.google.com/shopping-content/reference/rest/v2.1/products#Product.FIELDS.feed_label).
+	// Example value: `US`. Example value: `FeedLabel1`.
+	FeedLabel string `json:"feedLabel,omitempty"`
+
+	// Id: Output only. Immutable. MerchantCenterAccountLink identifier,
+	// which is the final component of name. This field is auto generated
+	// and follows the convention: `BranchId_MerchantCenterAccountId`.
+	// `projects/*/locations/global/catalogs/default_catalog/merchantCenterAc
+	// countLinks/id_1`.
+	Id string `json:"id,omitempty"`
+
+	// LanguageCode: Language of the title/description and other string
+	// attributes. Use language tags defined by BCP 47
+	// (https://www.rfc-editor.org/rfc/bcp/bcp47.txt). ISO 639-1. This
+	// specifies the language of offers in Merchant Center that will be
+	// accepted. If empty, no language filtering will be performed. Example
+	// value: `en`.
+	LanguageCode string `json:"languageCode,omitempty"`
+
+	// MerchantCenterAccountId: Required. The linked Merchant center account
+	// id
+	// (https://developers.google.com/shopping-content/guides/accountstatuses).
+	// The account must be a standalone account or a sub-account of a MCA.
+	MerchantCenterAccountId int64 `json:"merchantCenterAccountId,omitempty,string"`
+
+	// Name: Output only. Immutable. Full resource name of the Merchant
+	// Center Account Link, such as
+	// `projects/*/locations/global/catalogs/default_catalog/merchantCenterAc
+	// countLinks/merchant_center_account_link`.
+	Name string `json:"name,omitempty"`
+
+	// ProjectId: Output only. GCP project ID.
+	ProjectId string `json:"projectId,omitempty"`
+
+	// State: Output only. Represents the state of the link.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Default value.
+	//   "PENDING" - Link is created and LRO is not complete.
+	//   "ACTIVE" - Link is active.
+	//   "FAILED" - Link creation failed.
+	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BranchId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BranchId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2betaMerchantCenterAccountLink) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2betaMerchantCenterAccountLink
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2betaMerchantCenterAccountLinkMerchantCenterFeedFilt
+// er: Merchant Center Feed filter criterion.
+type GoogleCloudRetailV2betaMerchantCenterAccountLinkMerchantCenterFeedFilter struct {
+	// PrimaryFeedId: Merchant Center primary feed ID.
+	PrimaryFeedId int64 `json:"primaryFeedId,omitempty,string"`
+
+	// PrimaryFeedName: Merchant Center primary feed name. The name is used
+	// for the display purposes only.
+	PrimaryFeedName string `json:"primaryFeedName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PrimaryFeedId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PrimaryFeedId") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2betaMerchantCenterAccountLinkMerchantCenterFeedFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2betaMerchantCenterAccountLinkMerchantCenterFeedFilter
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRetailV2betaMerchantCenterFeedFilter: Merchant Center Feed
 // filter criterion.
 type GoogleCloudRetailV2betaMerchantCenterFeedFilter struct {
@@ -5188,9 +5494,9 @@ type GoogleCloudRetailV2betaPredictRequest struct {
 	// true under the `params` field, then attribute-based expressions are
 	// expected instead of the above described tag-based syntax. Examples: *
 	// (colors: ANY("Red", "Blue")) AND NOT (categories: ANY("Phones")) *
-	// (brands: ANY("Pixel")) AND (colors: ANY("Red") OR categories:
-	// ANY("Phones")) For more information, see Filter recommendations
-	// (https://cloud.google.com/retail/docs/filter-recs).
+	// (availability: ANY("IN_STOCK")) AND (colors: ANY("Red") OR
+	// categories: ANY("Phones")) For more information, see Filter
+	// recommendations (https://cloud.google.com/retail/docs/filter-recs).
 	Filter string `json:"filter,omitempty"`
 
 	// Labels: The labels applied to a resource must meet the following
@@ -6946,6 +7252,12 @@ func (s *GoogleCloudRetailV2betaRuleTwowaySynonymsAction) MarshalJSON() ([]byte,
 // GoogleCloudRetailV2betaSearchRequest: Request message for
 // SearchService.Search method.
 type GoogleCloudRetailV2betaSearchRequest struct {
+	// Banner: Represents the banner in request, for projects that combine
+	// banners. For example: a retailer can sell products under different
+	// banners like retailer-main, retailer-baby, retailer-meds, etc. under
+	// one project.
+	Banner string `json:"banner,omitempty"`
+
 	// BoostSpec: Boost specification to boost certain products. See more
 	// details at this user guide
 	// (https://cloud.google.com/retail/docs/boosting). Notice that if both
@@ -7136,7 +7448,7 @@ type GoogleCloudRetailV2betaSearchRequest struct {
 	// is returned.
 	VisitorId string `json:"visitorId,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "BoostSpec") to
+	// ForceSendFields is a list of field names (e.g. "Banner") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -7144,8 +7456,8 @@ type GoogleCloudRetailV2betaSearchRequest struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "BoostSpec") to include in
-	// API requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "Banner") to include in API
+	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -8290,6 +8602,12 @@ type GoogleCloudRetailV2betaUserEvent struct {
 	// PredictResponse.attribution_token to this field.
 	AttributionToken string `json:"attributionToken,omitempty"`
 
+	// Banner: Represents the banner of the user event, for projects that
+	// combine banners. For example: retailer can have events from multiple
+	// banners like retailer-main, retailer-baby, retailer-meds, etc. under
+	// one project.
+	Banner string `json:"banner,omitempty"`
+
 	// CartId: The ID or name of the associated shopping cart. This ID is
 	// used to associate multiple items added or present in the cart before
 	// purchase. This can only be set for `add-to-cart`,
@@ -8300,12 +8618,6 @@ type GoogleCloudRetailV2betaUserEvent struct {
 	// event. This field should be set for `search` event when autocomplete
 	// function is enabled and the user clicks a suggestion for search.
 	CompletionDetail *GoogleCloudRetailV2betaCompletionDetail `json:"completionDetail,omitempty"`
-
-	// Domain: Represents the domain of the user event, for projects that
-	// combine domains. For example: retailer can have events from multiple
-	// domains like retailer-main, retailer-baby, retailer-meds, etc. under
-	// one project.
-	Domain string `json:"domain,omitempty"`
 
 	// EventTime: Only required for UserEventService.ImportUserEvents
 	// method. Timestamp of when the user event happened.
@@ -8851,6 +9163,13 @@ func (r *ProjectsLocationsCatalogsService) CompleteQuery(catalog string) *Projec
 	return c
 }
 
+// Banner sets the optional parameter "banner": The banner context for
+// completion suggestions.
+func (c *ProjectsLocationsCatalogsCompleteQueryCall) Banner(banner string) *ProjectsLocationsCatalogsCompleteQueryCall {
+	c.urlParams_.Set("banner", banner)
+	return c
+}
+
 // Dataset sets the optional parameter "dataset": Determines which
 // dataset to use for fetching completion. "user-data" will use the
 // imported dataset through CompletionService.ImportCompletionData.
@@ -9030,6 +9349,11 @@ func (c *ProjectsLocationsCatalogsCompleteQueryCall) Do(opts ...googleapi.CallOp
 	//     "catalog"
 	//   ],
 	//   "parameters": {
+	//     "banner": {
+	//       "description": "The banner context for completion suggestions.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "catalog": {
 	//       "description": "Required. Catalog for which the completion is performed. Full resource name of catalog, such as `projects/*/locations/global/catalogs/default_catalog`.",
 	//       "location": "path",

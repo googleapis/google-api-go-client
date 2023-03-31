@@ -464,7 +464,7 @@ type GoogleCloudOrgpolicyV2CustomConstraint struct {
 	Name string `json:"name,omitempty"`
 
 	// ResourceTypes: Immutable. The resource instance type on which this
-	// policy applies. Format will be of the form : "/" Example: *
+	// policy applies. Format will be of the form : `/` Example: *
 	// `compute.googleapis.com/Instance`.
 	ResourceTypes []string `json:"resourceTypes,omitempty"`
 

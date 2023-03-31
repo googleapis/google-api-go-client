@@ -178,11 +178,11 @@ type ProjectsProfilesService struct {
 // supported by the agent. The creation call will hang until a profile
 // of one of these types needs to be collected.
 type CreateProfileRequest struct {
-	// Deployment: Required. Deployment details.
+	// Deployment: Deployment details.
 	Deployment *Deployment `json:"deployment,omitempty"`
 
-	// ProfileType: Required. One or more profile types that the agent is
-	// capable of providing.
+	// ProfileType: One or more profile types that the agent is capable of
+	// providing.
 	//
 	// Possible values:
 	//   "PROFILE_TYPE_UNSPECIFIED" - Unspecified profile type.

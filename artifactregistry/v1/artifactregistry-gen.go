@@ -75,6 +75,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "artifactregistry:v1"
 const apiName = "artifactregistry"
@@ -1048,7 +1049,7 @@ func (s *ImportYumArtifactsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// KfpArtifact: A detailed representation of a GooGet artifact.
+// KfpArtifact: A detailed representation of a KFP artifact.
 type KfpArtifact struct {
 	// Name: Output only. Resource name of the KFP artifact. Since users
 	// don't directly interact with this resource, the name will be derived

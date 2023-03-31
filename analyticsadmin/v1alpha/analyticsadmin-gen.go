@@ -3942,7 +3942,7 @@ type GoogleAnalyticsAdminV1alphaExpandedDataSet struct {
 	// DimensionFilterExpression: Immutable. A logical expression of
 	// ExpandedDataSet filters applied to dimension included in the
 	// ExpandedDataSet. This filter is used to reduce the number of rows and
-	// thus the change of encountering `other row`.
+	// thus the chance of encountering `other` row.
 	DimensionFilterExpression *GoogleAnalyticsAdminV1alphaExpandedDataSetFilterExpression `json:"dimensionFilterExpression,omitempty"`
 
 	// DimensionNames: Immutable. The list of dimensions included in the
@@ -4045,7 +4045,7 @@ type GoogleAnalyticsAdminV1alphaExpandedDataSetFilterExpression struct {
 	// level ExpandedDataSetFilterExpression.
 	Filter *GoogleAnalyticsAdminV1alphaExpandedDataSetFilter `json:"filter,omitempty"`
 
-	// NotExpression: A filter expression to be NOT'ed (i.e., inverted,
+	// NotExpression: A filter expression to be NOT'ed (that is, inverted,
 	// complemented). It must include a dimension_filter. This cannot be set
 	// on the top level ExpandedDataSetFilterExpression.
 	NotExpression *GoogleAnalyticsAdminV1alphaExpandedDataSetFilterExpression `json:"notExpression,omitempty"`
@@ -5923,7 +5923,6 @@ type GoogleAnalyticsAdminV1alphaSearchChangeHistoryEventsRequest struct {
 	//   "DATA_STREAM" - DataStream resource
 	//   "ATTRIBUTION_SETTINGS" - AttributionSettings resource
 	//   "EXPANDED_DATA_SET" - ExpandedDataSet resource
-	//   "CHANNEL_GROUP" - ChannelGroup resource
 	//   "ENHANCED_MEASUREMENT_SETTINGS" - EnhancedMeasurementSettings
 	// resource
 	ResourceType []string `json:"resourceType,omitempty"`

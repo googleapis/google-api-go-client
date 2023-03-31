@@ -517,6 +517,34 @@ func (s *AttestationOccurrence) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type Binary struct {
+	Name string `json:"name,omitempty"`
+
+	Version string `json:"version,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Binary) MarshalJSON() ([]byte, error) {
+	type NoMethod Binary
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // BuildOccurrence: Details of a build occurrence.
 type BuildOccurrence struct {
 	// IntotoProvenance: Deprecated. See InTotoStatement for the
@@ -2392,6 +2420,14 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 type PackageData struct {
 	// Architecture: The architecture of the package.
 	Architecture string `json:"architecture,omitempty"`
+
+	// Binary: The binary package. This is significant when the source is
+	// different than the binary itself. Historically if they've differed,
+	// we've stored the name of the source and its version in the
+	// package/version fields, but we should also store the binary package
+	// info, as that's what's actually installed. See
+	// https://b.corp.google.com/issues/175908657#comment15
+	Binary *Binary `json:"binary,omitempty"`
 
 	// CpeUri: The cpe_uri in [cpe format]
 	// (https://cpe.mitre.org/specification/) in which the vulnerability may

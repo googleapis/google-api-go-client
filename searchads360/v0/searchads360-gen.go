@@ -1072,6 +1072,10 @@ type GoogleAdsSearchads360V0Common__Metrics struct {
 	// values in date column means the conversion date.
 	ValuePerConversionsByConversionDate float64 `json:"valuePerConversionsByConversionDate,omitempty"`
 
+	// Visits: Clicks that Search Ads 360 has successfully recorded and
+	// forwarded to an advertiser's landing page.
+	Visits float64 `json:"visits,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g.
 	// "AbsoluteTopImpressionPercentage") to unconditionally include in API
 	// requests. By default, fields with empty or default values are omitted
@@ -1155,6 +1159,7 @@ func (s *GoogleAdsSearchads360V0Common__Metrics) UnmarshalJSON(data []byte) erro
 		ValuePerAllConversionsByConversionDate            gensupport.JSONFloat64 `json:"valuePerAllConversionsByConversionDate"`
 		ValuePerConversion                                gensupport.JSONFloat64 `json:"valuePerConversion"`
 		ValuePerConversionsByConversionDate               gensupport.JSONFloat64 `json:"valuePerConversionsByConversionDate"`
+		Visits                                            gensupport.JSONFloat64 `json:"visits"`
 		*NoMethod
 	}
 	s1.NoMethod = (*NoMethod)(s)
@@ -1216,6 +1221,7 @@ func (s *GoogleAdsSearchads360V0Common__Metrics) UnmarshalJSON(data []byte) erro
 	s.ValuePerAllConversionsByConversionDate = float64(s1.ValuePerAllConversionsByConversionDate)
 	s.ValuePerConversion = float64(s1.ValuePerConversion)
 	s.ValuePerConversionsByConversionDate = float64(s1.ValuePerConversionsByConversionDate)
+	s.Visits = float64(s1.Visits)
 	return nil
 }
 
@@ -1284,6 +1290,50 @@ type GoogleAdsSearchads360V0Common__RealTimeBiddingSetting struct {
 
 func (s *GoogleAdsSearchads360V0Common__RealTimeBiddingSetting) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Common__RealTimeBiddingSetting
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V0Common__SearchAds360TextAdInfo: A Search Ads
+// 360 text ad.
+type GoogleAdsSearchads360V0Common__SearchAds360TextAdInfo struct {
+	// AdTrackId: The tracking id of the ad.
+	AdTrackId int64 `json:"adTrackId,omitempty,string"`
+
+	// Description1: The first line of the ad's description.
+	Description1 string `json:"description1,omitempty"`
+
+	// Description2: The second line of the ad's description.
+	Description2 string `json:"description2,omitempty"`
+
+	// DisplayMobileUrl: The displayed mobile URL of the ad.
+	DisplayMobileUrl string `json:"displayMobileUrl,omitempty"`
+
+	// DisplayUrl: The displayed URL of the ad.
+	DisplayUrl string `json:"displayUrl,omitempty"`
+
+	// Headline: The headline of the ad.
+	Headline string `json:"headline,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AdTrackId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdTrackId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAdsSearchads360V0Common__SearchAds360TextAdInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0Common__SearchAds360TextAdInfo
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1545,6 +1595,66 @@ func (s *GoogleAdsSearchads360V0Common__TargetOutrankShare) MarshalJSON() ([]byt
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAdsSearchads360V0Common__TargetRestriction: The list of
+// per-targeting-dimension targeting settings.
+type GoogleAdsSearchads360V0Common__TargetRestriction struct {
+	// BidOnly: Indicates whether to restrict your ads to show only for the
+	// criteria you have selected for this targeting_dimension, or to target
+	// all values for this targeting_dimension and show ads based on your
+	// targeting in other TargetingDimensions. A value of `true` means that
+	// these criteria will only apply bid modifiers, and not affect
+	// targeting. A value of `false` means that these criteria will restrict
+	// targeting as well as applying bid modifiers.
+	BidOnly bool `json:"bidOnly,omitempty"`
+
+	// TargetingDimension: The targeting dimension that these settings apply
+	// to.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Not specified.
+	//   "UNKNOWN" - Used for return value only. Represents value unknown in
+	// this version.
+	//   "KEYWORD" - Keyword criteria, for example, 'mars cruise'. KEYWORD
+	// may be used as a custom bid dimension. Keywords are always a
+	// targeting dimension, so may not be set as a target "ALL" dimension
+	// with TargetRestriction.
+	//   "AUDIENCE" - Audience criteria, which include user list, user
+	// interest, custom affinity, and custom in market.
+	//   "TOPIC" - Topic criteria for targeting categories of content, for
+	// example, 'category::Animals>Pets' Used for Display and Video
+	// targeting.
+	//   "GENDER" - Criteria for targeting gender.
+	//   "AGE_RANGE" - Criteria for targeting age ranges.
+	//   "PLACEMENT" - Placement criteria, which include websites like
+	// 'www.flowers4sale.com', as well as mobile applications, mobile app
+	// categories, YouTube videos, and YouTube channels.
+	//   "PARENTAL_STATUS" - Criteria for parental status targeting.
+	//   "INCOME_RANGE" - Criteria for income range targeting.
+	TargetingDimension string `json:"targetingDimension,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BidOnly") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BidOnly") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAdsSearchads360V0Common__TargetRestriction) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0Common__TargetRestriction
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAdsSearchads360V0Common__TargetRoas: An automated bidding
 // strategy that helps you maximize revenue while averaging a specific
 // target return on ad spend (ROAS).
@@ -1638,6 +1748,106 @@ type GoogleAdsSearchads360V0Common__TargetSpend struct {
 
 func (s *GoogleAdsSearchads360V0Common__TargetSpend) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Common__TargetSpend
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V0Common__TargetingSetting: Settings for the
+// targeting-related features, at the campaign and ad group levels. For
+// more details about the targeting setting, visit
+// https://support.google.com/google-ads/answer/7365594
+type GoogleAdsSearchads360V0Common__TargetingSetting struct {
+	// TargetRestrictions: The per-targeting-dimension setting to restrict
+	// the reach of your campaign or ad group.
+	TargetRestrictions []*GoogleAdsSearchads360V0Common__TargetRestriction `json:"targetRestrictions,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "TargetRestrictions")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "TargetRestrictions") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAdsSearchads360V0Common__TargetingSetting) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0Common__TargetingSetting
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V0Common__TextLabel: A type of label displaying
+// text on a colored background.
+type GoogleAdsSearchads360V0Common__TextLabel struct {
+	// BackgroundColor: Background color of the label in RGB format. This
+	// string must match the regular expression
+	// '^\#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$'. Note: The background color may
+	// not be visible for manager accounts.
+	BackgroundColor string `json:"backgroundColor,omitempty"`
+
+	// Description: A short description of the label. The length must be no
+	// more than 200 characters.
+	Description string `json:"description,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BackgroundColor") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BackgroundColor") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAdsSearchads360V0Common__TextLabel) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0Common__TextLabel
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V0Common__UserListInfo: A User List criterion.
+// Represents a user list that is defined by the advertiser to be
+// targeted.
+type GoogleAdsSearchads360V0Common__UserListInfo struct {
+	// UserList: The User List resource name.
+	UserList string `json:"userList,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "UserList") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "UserList") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAdsSearchads360V0Common__UserListInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0Common__UserListInfo
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2115,7 +2325,6 @@ type GoogleAdsSearchads360V0Errors__ErrorCode struct {
 	//   "UNSPECIFIED" - Enum unspecified.
 	//   "UNKNOWN" - The received error code is not known in this version.
 	//   "RESOURCE_EXHAUSTED" - Too many requests.
-	//   "ACCESS_PROHIBITED" - Access is prohibited.
 	//   "RESOURCE_TEMPORARILY_EXHAUSTED" - Too many requests in a short
 	// amount of time.
 	QuotaError string `json:"quotaError,omitempty"`
@@ -2911,6 +3120,100 @@ func (s *GoogleAdsSearchads360V0ResourcesConversionActionValueSettings) Unmarsha
 	return nil
 }
 
+// GoogleAdsSearchads360V0Resources__Ad: An ad.
+type GoogleAdsSearchads360V0Resources__Ad struct {
+	// DisplayUrl: The URL that appears in the ad description for some ad
+	// formats.
+	DisplayUrl string `json:"displayUrl,omitempty"`
+
+	// FinalUrls: The list of possible final URLs after all cross-domain
+	// redirects for the ad.
+	FinalUrls []string `json:"finalUrls,omitempty"`
+
+	// Id: Output only. The ID of the ad.
+	Id int64 `json:"id,omitempty,string"`
+
+	// Name: Immutable. The name of the ad. This is only used to be able to
+	// identify the ad. It does not need to be unique and does not affect
+	// the served ad. The name field is currently only supported for
+	// DisplayUploadAd, ImageAd, ShoppingComparisonListingAd and VideoAd.
+	Name string `json:"name,omitempty"`
+
+	// ResourceName: Immutable. The resource name of the ad. Ad resource
+	// names have the form: `customers/{customer_id}/ads/{ad_id}`
+	ResourceName string `json:"resourceName,omitempty"`
+
+	// TextAd: Immutable. Details pertaining to a text ad.
+	TextAd *GoogleAdsSearchads360V0Common__SearchAds360TextAdInfo `json:"textAd,omitempty"`
+
+	// Type: Output only. The type of ad.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - No value has been specified.
+	//   "UNKNOWN" - The received value is not known in this version. This
+	// is a response-only value.
+	//   "TEXT_AD" - The ad is a text ad.
+	//   "EXPANDED_TEXT_AD" - The ad is an expanded text ad.
+	//   "CALL_ONLY_AD" - The ad is a call only ad.
+	//   "EXPANDED_DYNAMIC_SEARCH_AD" - The ad is an expanded dynamic search
+	// ad.
+	//   "HOTEL_AD" - The ad is a hotel ad.
+	//   "SHOPPING_SMART_AD" - The ad is a Smart Shopping ad.
+	//   "SHOPPING_PRODUCT_AD" - The ad is a standard Shopping ad.
+	//   "VIDEO_AD" - The ad is a video ad.
+	//   "GMAIL_AD" - This ad is a Gmail ad.
+	//   "IMAGE_AD" - This ad is an Image ad.
+	//   "RESPONSIVE_SEARCH_AD" - The ad is a responsive search ad.
+	//   "LEGACY_RESPONSIVE_DISPLAY_AD" - The ad is a legacy responsive
+	// display ad.
+	//   "APP_AD" - The ad is an app ad.
+	//   "LEGACY_APP_INSTALL_AD" - The ad is a legacy app install ad.
+	//   "RESPONSIVE_DISPLAY_AD" - The ad is a responsive display ad.
+	//   "LOCAL_AD" - The ad is a local ad.
+	//   "HTML5_UPLOAD_AD" - The ad is a display upload ad with the
+	// HTML5_UPLOAD_AD product type.
+	//   "DYNAMIC_HTML5_AD" - The ad is a display upload ad with one of the
+	// DYNAMIC_HTML5_* product types.
+	//   "APP_ENGAGEMENT_AD" - The ad is an app engagement ad.
+	//   "SHOPPING_COMPARISON_LISTING_AD" - The ad is a Shopping Comparison
+	// Listing ad.
+	//   "VIDEO_BUMPER_AD" - Video bumper ad.
+	//   "VIDEO_NON_SKIPPABLE_IN_STREAM_AD" - Video non-skippable in-stream
+	// ad.
+	//   "VIDEO_OUTSTREAM_AD" - Video outstream ad.
+	//   "VIDEO_TRUEVIEW_DISCOVERY_AD" - Video TrueView in-display ad.
+	//   "VIDEO_TRUEVIEW_IN_STREAM_AD" - Video TrueView in-stream ad.
+	//   "VIDEO_RESPONSIVE_AD" - Video responsive ad.
+	//   "SMART_CAMPAIGN_AD" - Smart campaign ad.
+	//   "APP_PRE_REGISTRATION_AD" - Universal app pre-registration ad.
+	//   "DISCOVERY_MULTI_ASSET_AD" - Discovery multi asset ad.
+	//   "DISCOVERY_CAROUSEL_AD" - Discovery carousel ad.
+	//   "TRAVEL_AD" - Travel ad.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayUrl") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayUrl") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAdsSearchads360V0Resources__Ad) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0Resources__Ad
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAdsSearchads360V0Resources__AdGroup: An ad group.
 type GoogleAdsSearchads360V0Resources__AdGroup struct {
 	// AdRotationMode: The ad rotation mode of the ad group.
@@ -2926,8 +3229,65 @@ type GoogleAdsSearchads360V0Resources__AdGroup struct {
 	// CpcBidMicros: The maximum CPC (cost-per-click) bid.
 	CpcBidMicros int64 `json:"cpcBidMicros,omitempty,string"`
 
+	// CreationTime: Output only. The timestamp when this ad_group was
+	// created. The timestamp is in the customer's time zone and in
+	// "yyyy-MM-dd HH:mm:ss" format.
+	CreationTime string `json:"creationTime,omitempty"`
+
+	// EndDate: Output only. Date when the ad group ends serving ads. By
+	// default, the ad group ends on the ad group's end date. If this field
+	// is set, then the ad group ends at the end of the specified date in
+	// the customer's time zone. This field is only available for Microsoft
+	// Advertising and Facebook gateway accounts. Format: YYYY-MM-DD
+	// Example: 2019-03-14
+	EndDate string `json:"endDate,omitempty"`
+
+	// EngineId: Output only. ID of the ad group in the external engine
+	// account. This field is for non-Google Ads account only, for example,
+	// Yahoo Japan, Microsoft, Baidu etc. For Google Ads entity, use
+	// "ad_group.id" instead.
+	EngineId string `json:"engineId,omitempty"`
+
+	// EngineStatus: Output only. The Engine Status for ad group.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Not specified.
+	//   "UNKNOWN" - Used for return value only. Represents value unknown in
+	// this version.
+	//   "AD_GROUP_ELIGIBLE" - Deprecated. Do not use.
+	//   "AD_GROUP_EXPIRED" - No ads are running for this ad group, because
+	// the ad group's end date has passed.
+	//   "AD_GROUP_REMOVED" - The ad group has been deleted.
+	//   "AD_GROUP_DRAFT" - No ads are running for this ad group because the
+	// associated ad group is still in draft form.
+	//   "AD_GROUP_PAUSED" - The ad group has been paused.
+	//   "AD_GROUP_SERVING" - The ad group is active and currently serving
+	// ads.
+	//   "AD_GROUP_SUBMITTED" - The ad group has been submitted (Microsoft
+	// Bing Ads legacy status).
+	//   "CAMPAIGN_PAUSED" - No ads are running for this ad group, because
+	// the campaign has been paused.
+	//   "ACCOUNT_PAUSED" - No ads are running for this ad group, because
+	// the account has been paused.
+	EngineStatus string `json:"engineStatus,omitempty"`
+
 	// Id: Output only. The ID of the ad group.
 	Id int64 `json:"id,omitempty,string"`
+
+	// Labels: Output only. The resource names of labels attached to this ad
+	// group.
+	Labels []string `json:"labels,omitempty"`
+
+	// LanguageCode: Output only. The language of the ads and keywords in an
+	// ad group. This field is only available for Microsoft Advertising
+	// accounts. More details:
+	// https://docs.microsoft.com/en-us/advertising/guides/ad-languages?view=bingads-13#adlanguage
+	LanguageCode string `json:"languageCode,omitempty"`
+
+	// LastModifiedTime: Output only. The datetime when this ad group was
+	// last modified. The datetime is in the customer's time zone and in
+	// "yyyy-MM-dd HH:mm:ss.ssssss" format.
+	LastModifiedTime string `json:"lastModifiedTime,omitempty"`
 
 	// Name: The name of the ad group. This field is required and should not
 	// be empty when creating new ad groups. It must contain fewer than 255
@@ -2941,6 +3301,14 @@ type GoogleAdsSearchads360V0Resources__AdGroup struct {
 	// `customers/{customer_id}/adGroups/{ad_group_id}`
 	ResourceName string `json:"resourceName,omitempty"`
 
+	// StartDate: Output only. Date when this ad group starts serving ads.
+	// By default, the ad group starts now or the ad group's start date,
+	// whichever is later. If this field is set, then the ad group starts at
+	// the beginning of the specified date in the customer's time zone. This
+	// field is only available for Microsoft Advertising and Facebook
+	// gateway accounts. Format: YYYY-MM-DD Example: 2019-03-14
+	StartDate string `json:"startDate,omitempty"`
+
 	// Status: The status of the ad group.
 	//
 	// Possible values:
@@ -2951,6 +3319,9 @@ type GoogleAdsSearchads360V0Resources__AdGroup struct {
 	//   "PAUSED" - The ad group is paused.
 	//   "REMOVED" - The ad group is removed.
 	Status string `json:"status,omitempty"`
+
+	// TargetingSetting: Setting for targeting related features.
+	TargetingSetting *GoogleAdsSearchads360V0Common__TargetingSetting `json:"targetingSetting,omitempty"`
 
 	// Type: Immutable. The type of the ad group.
 	//
@@ -2983,6 +3354,7 @@ type GoogleAdsSearchads360V0Resources__AdGroup struct {
 	//   "VIDEO_RESPONSIVE" - Video responsive ad groups.
 	//   "VIDEO_EFFICIENT_REACH" - Video efficient reach ad groups.
 	//   "SMART_CAMPAIGN_ADS" - Ad group type for Smart campaigns.
+	//   "TRAVEL_ADS" - Ad group type for Travel campaigns.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AdRotationMode") to
@@ -3009,6 +3381,178 @@ func (s *GoogleAdsSearchads360V0Resources__AdGroup) MarshalJSON() ([]byte, error
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAdsSearchads360V0Resources__AdGroupAd: An ad group ad.
+type GoogleAdsSearchads360V0Resources__AdGroupAd struct {
+	// Ad: Immutable. The ad.
+	Ad *GoogleAdsSearchads360V0Resources__Ad `json:"ad,omitempty"`
+
+	// CreationTime: Output only. The timestamp when this ad_group_ad was
+	// created. The datetime is in the customer's time zone and in
+	// "yyyy-MM-dd HH:mm:ss.ssssss" format.
+	CreationTime string `json:"creationTime,omitempty"`
+
+	// EngineId: Output only. ID of the ad in the external engine account.
+	// This field is for SearchAds 360 account only, for example, Yahoo
+	// Japan, Microsoft, Baidu etc. For non-SearchAds 360 entity, use
+	// "ad_group_ad.ad.id" instead.
+	EngineId string `json:"engineId,omitempty"`
+
+	// EngineStatus: Output only. Additional status of the ad in the
+	// external engine account. Possible statuses (depending on the type of
+	// external account) include active, eligible, pending review, etc.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - No value has been specified.
+	//   "UNKNOWN" - Used for return value only. Represents value unknown in
+	// this version.
+	//   "AD_GROUP_AD_ELIGIBLE" - Deprecated. Do not use.
+	//   "AD_GROUP_AD_INAPPROPRIATE_FOR_CAMPAIGN" - Baidu: Creative was not
+	// approved.
+	//   "AD_GROUP_AD_MOBILE_URL_UNDER_REVIEW" - Baidu: Mobile URL in
+	// process to be reviewed.
+	//   "AD_GROUP_AD_PARTIALLY_INVALID" - Baidu: Creative is invalid on
+	// mobile device but valid on desktop.
+	//   "AD_GROUP_AD_TO_BE_ACTIVATED" - Baidu: Creative is ready for
+	// activation.
+	//   "AD_GROUP_AD_NOT_REVIEWED" - Baidu: Creative not reviewed.
+	//   "AD_GROUP_AD_ON_HOLD" - Deprecated. Do not use. Previously used by
+	// Gemini
+	//   "AD_GROUP_AD_PAUSED" - Creative has been paused.
+	//   "AD_GROUP_AD_REMOVED" - Creative has been removed.
+	//   "AD_GROUP_AD_PENDING_REVIEW" - Creative is pending review.
+	//   "AD_GROUP_AD_UNDER_REVIEW" - Creative is under review.
+	//   "AD_GROUP_AD_APPROVED" - Creative has been approved.
+	//   "AD_GROUP_AD_DISAPPROVED" - Creative has been disapproved.
+	//   "AD_GROUP_AD_SERVING" - Creative is serving.
+	//   "AD_GROUP_AD_ACCOUNT_PAUSED" - Creative has been paused because the
+	// account is paused.
+	//   "AD_GROUP_AD_CAMPAIGN_PAUSED" - Creative has been paused because
+	// the campaign is paused.
+	//   "AD_GROUP_AD_AD_GROUP_PAUSED" - Creative has been paused because
+	// the ad group is paused.
+	EngineStatus string `json:"engineStatus,omitempty"`
+
+	// Labels: Output only. The resource names of labels attached to this ad
+	// group ad.
+	Labels []string `json:"labels,omitempty"`
+
+	// LastModifiedTime: Output only. The datetime when this ad group ad was
+	// last modified. The datetime is in the customer's time zone and in
+	// "yyyy-MM-dd HH:mm:ss.ssssss" format.
+	LastModifiedTime string `json:"lastModifiedTime,omitempty"`
+
+	// ResourceName: Immutable. The resource name of the ad. Ad group ad
+	// resource names have the form:
+	// `customers/{customer_id}/adGroupAds/{ad_group_id}~{ad_id}`
+	ResourceName string `json:"resourceName,omitempty"`
+
+	// Status: The status of the ad.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - No value has been specified.
+	//   "UNKNOWN" - The received value is not known in this version. This
+	// is a response-only value.
+	//   "ENABLED" - The ad group ad is enabled.
+	//   "PAUSED" - The ad group ad is paused.
+	//   "REMOVED" - The ad group ad is removed.
+	Status string `json:"status,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Ad") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Ad") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAdsSearchads360V0Resources__AdGroupAd) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0Resources__AdGroupAd
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V0Resources__AdGroupAdLabel: A relationship
+// between an ad group ad and a label.
+type GoogleAdsSearchads360V0Resources__AdGroupAdLabel struct {
+	// AdGroupAd: Immutable. The ad group ad to which the label is attached.
+	AdGroupAd string `json:"adGroupAd,omitempty"`
+
+	// Label: Immutable. The label assigned to the ad group ad.
+	Label string `json:"label,omitempty"`
+
+	// ResourceName: Immutable. The resource name of the ad group ad label.
+	// Ad group ad label resource names have the form:
+	// `customers/{customer_id}/adGroupAdLabels/{ad_group_id}~{ad_id}~{label_
+	// id}`
+	ResourceName string `json:"resourceName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AdGroupAd") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdGroupAd") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAdsSearchads360V0Resources__AdGroupAdLabel) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0Resources__AdGroupAdLabel
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V0Resources__AdGroupAudienceView: An ad group
+// audience view. Includes performance data from interests and
+// remarketing lists for Display Network and YouTube Network ads, and
+// remarketing lists for search ads (RLSA), aggregated at the audience
+// level.
+type GoogleAdsSearchads360V0Resources__AdGroupAudienceView struct {
+	// ResourceName: Output only. The resource name of the ad group audience
+	// view. Ad group audience view resource names have the form:
+	// `customers/{customer_id}/adGroupAudienceViews/{ad_group_id}~{criterion
+	// _id}`
+	ResourceName string `json:"resourceName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ResourceName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ResourceName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAdsSearchads360V0Resources__AdGroupAudienceView) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0Resources__AdGroupAudienceView
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAdsSearchads360V0Resources__AdGroupBidModifier: Represents an
 // ad group bid modifier.
 type GoogleAdsSearchads360V0Resources__AdGroupBidModifier struct {
@@ -3016,6 +3560,9 @@ type GoogleAdsSearchads360V0Resources__AdGroupBidModifier struct {
 	// modifier must be in the range: 0.1 - 10.0. The range is 1.0 - 6.0 for
 	// PreferredContent. Use 0 to opt out of a Device type.
 	BidModifier float64 `json:"bidModifier,omitempty"`
+
+	// Device: Immutable. A device criterion.
+	Device *GoogleAdsSearchads360V0Common__DeviceInfo `json:"device,omitempty"`
 
 	// ResourceName: Immutable. The resource name of the ad group bid
 	// modifier. Ad group bid modifier resource names have the form:
@@ -3077,12 +3624,23 @@ type GoogleAdsSearchads360V0Resources__AdGroupCriterion struct {
 	// CpcBidMicros: The CPC (cost-per-click) bid.
 	CpcBidMicros int64 `json:"cpcBidMicros,omitempty,string"`
 
+	// CreationTime: Output only. The timestamp when this ad group criterion
+	// was created. The timestamp is in the customer's time zone and in
+	// "yyyy-MM-dd HH:mm:ss" format.
+	CreationTime string `json:"creationTime,omitempty"`
+
 	// CriterionId: Output only. The ID of the criterion.
 	CriterionId int64 `json:"criterionId,omitempty,string"`
 
 	// EffectiveCpcBidMicros: Output only. The effective CPC
 	// (cost-per-click) bid.
 	EffectiveCpcBidMicros int64 `json:"effectiveCpcBidMicros,omitempty,string"`
+
+	// EngineId: Output only. ID of the ad group criterion in the external
+	// engine account. This field is for non-Google Ads account only, for
+	// example, Yahoo Japan, Microsoft, Baidu etc. For Google Ads entity,
+	// use "ad_group_criterion.criterion_id" instead.
+	EngineId string `json:"engineId,omitempty"`
 
 	// EngineStatus: Output only. The Engine Status for ad group criterion.
 	//
@@ -3139,6 +3697,10 @@ type GoogleAdsSearchads360V0Resources__AdGroupCriterion struct {
 	// Keyword: Immutable. Keyword.
 	Keyword *GoogleAdsSearchads360V0Common__KeywordInfo `json:"keyword,omitempty"`
 
+	// Labels: Output only. The resource names of labels attached to this ad
+	// group criterion.
+	Labels []string `json:"labels,omitempty"`
+
 	// LastModifiedTime: Output only. The datetime when this ad group
 	// criterion was last modified. The datetime is in the customer's time
 	// zone and in "yyyy-MM-dd HH:mm:ss.ssssss" format.
@@ -3146,6 +3708,14 @@ type GoogleAdsSearchads360V0Resources__AdGroupCriterion struct {
 
 	// ListingGroup: Immutable. Listing group.
 	ListingGroup *GoogleAdsSearchads360V0Common__ListingGroupInfo `json:"listingGroup,omitempty"`
+
+	// Location: Immutable. Location.
+	Location *GoogleAdsSearchads360V0Common__LocationInfo `json:"location,omitempty"`
+
+	// Negative: Immutable. Whether to target (`false`) or exclude (`true`)
+	// the criterion. This field is immutable. To switch a criterion from
+	// positive to negative, remove then re-add it.
+	Negative bool `json:"negative,omitempty"`
 
 	// QualityInfo: Output only. Information regarding the quality of the
 	// criterion.
@@ -3221,8 +3791,14 @@ type GoogleAdsSearchads360V0Resources__AdGroupCriterion struct {
 	//   "COMBINED_AUDIENCE" - Combined audience
 	//   "KEYWORD_THEME" - Smart Campaign keyword theme
 	//   "AUDIENCE" - Audience
-	//   "LOCAL_SERVICE_ID" - Google Local Services (GLS) Service ID.
+	//   "LOCAL_SERVICE_ID" - Local Services Ads Service ID.
 	Type string `json:"type,omitempty"`
+
+	// UserList: Immutable. User List. The Similar Audiences sunset starts
+	// May 2023. Refer to
+	// https://ads-developers.googleblog.com/2022/11/announcing-deprecation-and-sunset-of.html
+	// for other options.
+	UserList *GoogleAdsSearchads360V0Common__UserListInfo `json:"userList,omitempty"`
 
 	// Webpage: Immutable. Webpage
 	Webpage *GoogleAdsSearchads360V0Common__WebpageInfo `json:"webpage,omitempty"`
@@ -3262,6 +3838,113 @@ func (s *GoogleAdsSearchads360V0Resources__AdGroupCriterion) UnmarshalJSON(data 
 	}
 	s.BidModifier = float64(s1.BidModifier)
 	return nil
+}
+
+// GoogleAdsSearchads360V0Resources__AdGroupCriterionLabel: A
+// relationship between an ad group criterion and a label.
+type GoogleAdsSearchads360V0Resources__AdGroupCriterionLabel struct {
+	// AdGroupCriterion: Immutable. The ad group criterion to which the
+	// label is attached.
+	AdGroupCriterion string `json:"adGroupCriterion,omitempty"`
+
+	// Label: Immutable. The label assigned to the ad group criterion.
+	Label string `json:"label,omitempty"`
+
+	// ResourceName: Immutable. The resource name of the ad group criterion
+	// label. Ad group criterion label resource names have the form:
+	// `customers/{customer_id}/adGroupCriterionLabels/{ad_group_id}~{criteri
+	// on_id}~{label_id}`
+	ResourceName string `json:"resourceName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AdGroupCriterion") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdGroupCriterion") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAdsSearchads360V0Resources__AdGroupCriterionLabel) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0Resources__AdGroupCriterionLabel
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V0Resources__AdGroupLabel: A relationship
+// between an ad group and a label.
+type GoogleAdsSearchads360V0Resources__AdGroupLabel struct {
+	// AdGroup: Immutable. The ad group to which the label is attached.
+	AdGroup string `json:"adGroup,omitempty"`
+
+	// Label: Immutable. The label assigned to the ad group.
+	Label string `json:"label,omitempty"`
+
+	// ResourceName: Immutable. The resource name of the ad group label. Ad
+	// group label resource names have the form:
+	// `customers/{customer_id}/adGroupLabels/{ad_group_id}~{label_id}`
+	ResourceName string `json:"resourceName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AdGroup") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdGroup") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAdsSearchads360V0Resources__AdGroupLabel) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0Resources__AdGroupLabel
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V0Resources__AgeRangeView: An age range view.
+type GoogleAdsSearchads360V0Resources__AgeRangeView struct {
+	// ResourceName: Output only. The resource name of the age range view.
+	// Age range view resource names have the form:
+	// `customers/{customer_id}/ageRangeViews/{ad_group_id}~{criterion_id}`
+	ResourceName string `json:"resourceName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ResourceName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ResourceName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAdsSearchads360V0Resources__AgeRangeView) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0Resources__AgeRangeView
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Resources__BiddingStrategy: A bidding
@@ -3471,7 +4154,8 @@ type GoogleAdsSearchads360V0Resources__Campaign struct {
 	//   "DISPLAY_EXPRESS" - AdWords Express campaigns for display.
 	//   "SHOPPING_SMART_ADS" - Smart Shopping campaigns.
 	//   "DISPLAY_GMAIL_AD" - Gmail Ad campaigns.
-	//   "DISPLAY_SMART_CAMPAIGN" - Smart display campaigns.
+	//   "DISPLAY_SMART_CAMPAIGN" - Smart display campaigns. New campaigns
+	// of this sub type cannot be created.
 	//   "VIDEO_OUTSTREAM" - Video Outstream campaigns.
 	//   "VIDEO_ACTION" - Video TrueView for Action campaigns.
 	//   "VIDEO_NON_SKIPPABLE" - Video campaigns with non-skippable video
@@ -3494,6 +4178,7 @@ type GoogleAdsSearchads360V0Resources__Campaign struct {
 	// Google Play, YouTube and Display Network.
 	//   "VIDEO_REACH_TARGET_FREQUENCY" - Video reach campaign with Target
 	// Frequency bidding strategy.
+	//   "TRAVEL_ACTIVITIES" - Travel Activities campaigns.
 	AdvertisingChannelSubType string `json:"advertisingChannelSubType,omitempty"`
 
 	// AdvertisingChannelType: Immutable. The primary serving target for ads
@@ -3520,6 +4205,7 @@ type GoogleAdsSearchads360V0Resources__Campaign struct {
 	//   "PERFORMANCE_MAX" - Performance Max campaigns.
 	//   "LOCAL_SERVICES" - Local services campaigns.
 	//   "DISCOVERY" - Discovery campaigns.
+	//   "TRAVEL" - Travel campaigns.
 	AdvertisingChannelType string `json:"advertisingChannelType,omitempty"`
 
 	// BiddingStrategy: Portfolio bidding strategy used by campaign.
@@ -3655,9 +4341,16 @@ type GoogleAdsSearchads360V0Resources__Campaign struct {
 	// CampaignBudget: The budget of the campaign.
 	CampaignBudget string `json:"campaignBudget,omitempty"`
 
-	// CreateTime: Output only. Timestamp of the campaign's creation time,
-	// formatted in ISO 8601.
+	// CreateTime: Output only. The timestamp when this campaign was
+	// created. The timestamp is in the customer's time zone and in
+	// "yyyy-MM-dd HH:mm:ss" format. create_time will be deprecated in v1.
+	// Use creation_time instead.
 	CreateTime string `json:"createTime,omitempty"`
+
+	// CreationTime: Output only. The timestamp when this campaign was
+	// created. The timestamp is in the customer's time zone and in
+	// "yyyy-MM-dd HH:mm:ss" format.
+	CreationTime string `json:"creationTime,omitempty"`
 
 	// DynamicSearchAdsSetting: The setting for controlling Dynamic Search
 	// Ads (DSA).
@@ -3717,6 +4410,9 @@ type GoogleAdsSearchads360V0Resources__Campaign struct {
 	//   "CALL_TO_ACTION_SELECTION" - The asset is linked for use to select
 	// a call-to-action.
 	//   "AD_IMAGE" - The asset is linked for use to select an ad image.
+	//   "BUSINESS_LOGO" - The asset is linked for use as a business logo.
+	//   "HOTEL_PROPERTY" - The asset is linked for use as a hotel property
+	// in a Performance Max for travel goals campaign.
 	ExcludedParentAssetFieldTypes []string `json:"excludedParentAssetFieldTypes,omitempty"`
 
 	// FinalUrlSuffix: Suffix used to append query parameters to landing
@@ -3899,6 +4595,42 @@ func (s *GoogleAdsSearchads360V0Resources__Campaign) MarshalJSON() ([]byte, erro
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAdsSearchads360V0Resources__CampaignAudienceView: A campaign
+// audience view. Includes performance data from interests and
+// remarketing lists for Display Network and YouTube Network ads, and
+// remarketing lists for search ads (RLSA), aggregated by campaign and
+// audience criterion. This view only includes audiences attached at the
+// campaign level.
+type GoogleAdsSearchads360V0Resources__CampaignAudienceView struct {
+	// ResourceName: Output only. The resource name of the campaign audience
+	// view. Campaign audience view resource names have the form:
+	// `customers/{customer_id}/campaignAudienceViews/{campaign_id}~{criterio
+	// n_id}`
+	ResourceName string `json:"resourceName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ResourceName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ResourceName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAdsSearchads360V0Resources__CampaignAudienceView) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0Resources__CampaignAudienceView
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAdsSearchads360V0Resources__CampaignBudget: A campaign budget.
 type GoogleAdsSearchads360V0Resources__CampaignBudget struct {
 	// AmountMicros: The amount of the budget, in the local currency for the
@@ -3965,6 +4697,9 @@ func (s *GoogleAdsSearchads360V0Resources__CampaignBudget) MarshalJSON() ([]byte
 // GoogleAdsSearchads360V0Resources__CampaignCriterion: A campaign
 // criterion.
 type GoogleAdsSearchads360V0Resources__CampaignCriterion struct {
+	// AgeRange: Immutable. Age range.
+	AgeRange *GoogleAdsSearchads360V0Common__AgeRangeInfo `json:"ageRange,omitempty"`
+
 	// BidModifier: The modifier for the bids when the criterion matches.
 	// The modifier must be in the range: 0.1 - 10.0. Most targetable
 	// criteria types support modifiers. Use 0 to opt out of a Device type.
@@ -3981,8 +4716,19 @@ type GoogleAdsSearchads360V0Resources__CampaignCriterion struct {
 	// field is ignored for mutates.
 	DisplayName string `json:"displayName,omitempty"`
 
+	// Gender: Immutable. Gender.
+	Gender *GoogleAdsSearchads360V0Common__GenderInfo `json:"gender,omitempty"`
+
+	// Keyword: Immutable. Keyword.
+	Keyword *GoogleAdsSearchads360V0Common__KeywordInfo `json:"keyword,omitempty"`
+
 	// Language: Immutable. Language.
 	Language *GoogleAdsSearchads360V0Common__LanguageInfo `json:"language,omitempty"`
+
+	// LastModifiedTime: Output only. The datetime when this campaign
+	// criterion was last modified. The datetime is in the customer's time
+	// zone and in "yyyy-MM-dd HH:mm:ss.ssssss" format.
+	LastModifiedTime string `json:"lastModifiedTime,omitempty"`
 
 	// Location: Immutable. Location.
 	Location *GoogleAdsSearchads360V0Common__LocationInfo `json:"location,omitempty"`
@@ -3999,6 +4745,17 @@ type GoogleAdsSearchads360V0Resources__CampaignCriterion struct {
 	// `customers/{customer_id}/campaignCriteria/{campaign_id}~{criterion_id}
 	// `
 	ResourceName string `json:"resourceName,omitempty"`
+
+	// Status: The status of the criterion.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - No value has been specified.
+	//   "UNKNOWN" - The received value is not known in this version. This
+	// is a response-only value.
+	//   "ENABLED" - The campaign criterion is enabled.
+	//   "PAUSED" - The campaign criterion is paused.
+	//   "REMOVED" - The campaign criterion is removed.
+	Status string `json:"status,omitempty"`
 
 	// Type: Output only. The type of the criterion.
 	//
@@ -4042,10 +4799,19 @@ type GoogleAdsSearchads360V0Resources__CampaignCriterion struct {
 	//   "COMBINED_AUDIENCE" - Combined audience
 	//   "KEYWORD_THEME" - Smart Campaign keyword theme
 	//   "AUDIENCE" - Audience
-	//   "LOCAL_SERVICE_ID" - Google Local Services (GLS) Service ID.
+	//   "LOCAL_SERVICE_ID" - Local Services Ads Service ID.
 	Type string `json:"type,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "BidModifier") to
+	// UserList: Immutable. User List. The Similar Audiences sunset starts
+	// May 2023. Refer to
+	// https://ads-developers.googleblog.com/2022/11/announcing-deprecation-and-sunset-of.html
+	// for other options.
+	UserList *GoogleAdsSearchads360V0Common__UserListInfo `json:"userList,omitempty"`
+
+	// Webpage: Immutable. Webpage.
+	Webpage *GoogleAdsSearchads360V0Common__WebpageInfo `json:"webpage,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AgeRange") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -4053,10 +4819,10 @@ type GoogleAdsSearchads360V0Resources__CampaignCriterion struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "BidModifier") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "AgeRange") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -4080,6 +4846,43 @@ func (s *GoogleAdsSearchads360V0Resources__CampaignCriterion) UnmarshalJSON(data
 	}
 	s.BidModifier = float64(s1.BidModifier)
 	return nil
+}
+
+// GoogleAdsSearchads360V0Resources__CampaignLabel: Represents a
+// relationship between a campaign and a label.
+type GoogleAdsSearchads360V0Resources__CampaignLabel struct {
+	// Campaign: Immutable. The campaign to which the label is attached.
+	Campaign string `json:"campaign,omitempty"`
+
+	// Label: Immutable. The label assigned to the campaign.
+	Label string `json:"label,omitempty"`
+
+	// ResourceName: Immutable. Name of the resource. Campaign label
+	// resource names have the form:
+	// `customers/{customer_id}/campaignLabels/{campaign_id}~{label_id}`
+	ResourceName string `json:"resourceName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Campaign") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Campaign") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAdsSearchads360V0Resources__CampaignLabel) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0Resources__CampaignLabel
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Resources__ConversionAction: A conversion
@@ -4288,6 +5091,9 @@ type GoogleAdsSearchads360V0Resources__ConversionAction struct {
 	// custom criteria. Read only.
 	//   "STORE_VISITS" - Conversions that occur when a user visits an
 	// advertiser's retail store. Read only.
+	//   "WEBPAGE_CODELESS" - Conversions created from website events (such
+	// as form submissions or page loads), that don't use individually coded
+	// event snippets.
 	Type string `json:"type,omitempty"`
 
 	// ValueSettings: Settings related to the value for conversion events
@@ -4523,6 +5329,11 @@ type GoogleAdsSearchads360V0Resources__Customer struct {
 	// for a customer.
 	ConversionTrackingSetting *GoogleAdsSearchads360V0Resources__ConversionTrackingSetting `json:"conversionTrackingSetting,omitempty"`
 
+	// CreationTime: Output only. The timestamp when this customer was
+	// created. The timestamp is in the customer's time zone and in
+	// "yyyy-MM-dd HH:mm:ss" format.
+	CreationTime string `json:"creationTime,omitempty"`
+
 	// CurrencyCode: Immutable. The currency in which the account operates.
 	// A subset of the currency codes from the ISO 4217 standard is
 	// supported.
@@ -4541,7 +5352,7 @@ type GoogleAdsSearchads360V0Resources__Customer struct {
 	EngineId string `json:"engineId,omitempty"`
 
 	// FinalUrlSuffix: The URL template for appending params to the final
-	// URL
+	// URL.
 	FinalUrlSuffix string `json:"finalUrlSuffix,omitempty"`
 
 	// Id: Output only. The ID of the customer.
@@ -4792,6 +5603,74 @@ func (s *GoogleAdsSearchads360V0Resources__DoubleClickCampaignManagerSetting) Ma
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAdsSearchads360V0Resources__DynamicSearchAdsSearchTermView: A
+// dynamic search ads search term view.
+type GoogleAdsSearchads360V0Resources__DynamicSearchAdsSearchTermView struct {
+	// LandingPage: Output only. The dynamically selected landing page URL
+	// of the impression. This field is read-only.
+	LandingPage string `json:"landingPage,omitempty"`
+
+	// ResourceName: Output only. The resource name of the dynamic search
+	// ads search term view. Dynamic search ads search term view resource
+	// names have the form:
+	// `customers/{customer_id}/dynamicSearchAdsSearchTermViews/{ad_group_id}
+	// ~{search_term_fingerprint}~{headline_fingerprint}~{landing_page_finger
+	// print}~{page_url_fingerprint}`
+	ResourceName string `json:"resourceName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "LandingPage") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LandingPage") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAdsSearchads360V0Resources__DynamicSearchAdsSearchTermView) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0Resources__DynamicSearchAdsSearchTermView
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V0Resources__GenderView: A gender view.
+type GoogleAdsSearchads360V0Resources__GenderView struct {
+	// ResourceName: Output only. The resource name of the gender view.
+	// Gender view resource names have the form:
+	// `customers/{customer_id}/genderViews/{ad_group_id}~{criterion_id}`
+	ResourceName string `json:"resourceName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ResourceName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ResourceName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAdsSearchads360V0Resources__GenderView) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0Resources__GenderView
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAdsSearchads360V0Resources__KeywordView: A keyword view.
 type GoogleAdsSearchads360V0Resources__KeywordView struct {
 	// ResourceName: Output only. The resource name of the keyword view.
@@ -4818,6 +5697,87 @@ type GoogleAdsSearchads360V0Resources__KeywordView struct {
 
 func (s *GoogleAdsSearchads360V0Resources__KeywordView) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Resources__KeywordView
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V0Resources__Label: A label.
+type GoogleAdsSearchads360V0Resources__Label struct {
+	// Id: Output only. ID of the label. Read only.
+	Id int64 `json:"id,omitempty,string"`
+
+	// Name: The name of the label. This field is required and should not be
+	// empty when creating a new label. The length of this string should be
+	// between 1 and 80, inclusive.
+	Name string `json:"name,omitempty"`
+
+	// ResourceName: Immutable. Name of the resource. Label resource names
+	// have the form: `customers/{customer_id}/labels/{label_id}`
+	ResourceName string `json:"resourceName,omitempty"`
+
+	// Status: Output only. Status of the label. Read only.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Not specified.
+	//   "UNKNOWN" - Used for return value only. Represents value unknown in
+	// this version.
+	//   "ENABLED" - Label is enabled.
+	//   "REMOVED" - Label is removed.
+	Status string `json:"status,omitempty"`
+
+	// TextLabel: A type of label displaying text on a colored background.
+	TextLabel *GoogleAdsSearchads360V0Common__TextLabel `json:"textLabel,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Id") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAdsSearchads360V0Resources__Label) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0Resources__Label
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V0Resources__LocationView: A location view
+// summarizes the performance of campaigns by Location criteria.
+type GoogleAdsSearchads360V0Resources__LocationView struct {
+	// ResourceName: Output only. The resource name of the location view.
+	// Location view resource names have the form:
+	// `customers/{customer_id}/locationViews/{campaign_id}~{criterion_id}`
+	ResourceName string `json:"resourceName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ResourceName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ResourceName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAdsSearchads360V0Resources__LocationView) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0Resources__LocationView
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4987,6 +5947,94 @@ func (s *GoogleAdsSearchads360V0Resources__SearchAds360Field) MarshalJSON() ([]b
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAdsSearchads360V0Resources__UserList: A user list. This is a
+// list of users a customer may target.
+type GoogleAdsSearchads360V0Resources__UserList struct {
+	// Id: Output only. Id of the user list.
+	Id int64 `json:"id,omitempty,string"`
+
+	// Name: Name of this user list. Depending on its access_reason, the
+	// user list name may not be unique (for example, if
+	// access_reason=SHARED)
+	Name string `json:"name,omitempty"`
+
+	// ResourceName: Immutable. The resource name of the user list. User
+	// list resource names have the form:
+	// `customers/{customer_id}/userLists/{user_list_id}`
+	ResourceName string `json:"resourceName,omitempty"`
+
+	// Type: Output only. Type of this list. This field is read-only.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Not specified.
+	//   "UNKNOWN" - Used for return value only. Represents value unknown in
+	// this version.
+	//   "REMARKETING" - UserList represented as a collection of conversion
+	// types.
+	//   "LOGICAL" - UserList represented as a combination of other user
+	// lists/interests.
+	//   "EXTERNAL_REMARKETING" - UserList created in the Google Ad Manager
+	// platform.
+	//   "RULE_BASED" - UserList associated with a rule.
+	//   "SIMILAR" - UserList with users similar to users of another
+	// UserList.
+	//   "CRM_BASED" - UserList of first-party CRM data provided by
+	// advertiser in the form of emails or other formats.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Id") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAdsSearchads360V0Resources__UserList) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0Resources__UserList
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V0Resources__WebpageView: A webpage view.
+type GoogleAdsSearchads360V0Resources__WebpageView struct {
+	// ResourceName: Output only. The resource name of the webpage view.
+	// Webpage view resource names have the form:
+	// `customers/{customer_id}/webpageViews/{ad_group_id}~{criterion_id}`
+	ResourceName string `json:"resourceName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ResourceName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ResourceName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAdsSearchads360V0Resources__WebpageView) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0Resources__WebpageView
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAdsSearchads360V0Services__CustomColumnHeader: Message for
 // custom column header.
 type GoogleAdsSearchads360V0Services__CustomColumnHeader struct {
@@ -5061,11 +6109,31 @@ type GoogleAdsSearchads360V0Services__SearchAds360Row struct {
 	// AdGroup: The ad group referenced in the query.
 	AdGroup *GoogleAdsSearchads360V0Resources__AdGroup `json:"adGroup,omitempty"`
 
+	// AdGroupAd: The ad referenced in the query.
+	AdGroupAd *GoogleAdsSearchads360V0Resources__AdGroupAd `json:"adGroupAd,omitempty"`
+
+	// AdGroupAdLabel: The ad group ad label referenced in the query.
+	AdGroupAdLabel *GoogleAdsSearchads360V0Resources__AdGroupAdLabel `json:"adGroupAdLabel,omitempty"`
+
+	// AdGroupAudienceView: The ad group audience view referenced in the
+	// query.
+	AdGroupAudienceView *GoogleAdsSearchads360V0Resources__AdGroupAudienceView `json:"adGroupAudienceView,omitempty"`
+
 	// AdGroupBidModifier: The bid modifier referenced in the query.
 	AdGroupBidModifier *GoogleAdsSearchads360V0Resources__AdGroupBidModifier `json:"adGroupBidModifier,omitempty"`
 
 	// AdGroupCriterion: The criterion referenced in the query.
 	AdGroupCriterion *GoogleAdsSearchads360V0Resources__AdGroupCriterion `json:"adGroupCriterion,omitempty"`
+
+	// AdGroupCriterionLabel: The ad group criterion label referenced in the
+	// query.
+	AdGroupCriterionLabel *GoogleAdsSearchads360V0Resources__AdGroupCriterionLabel `json:"adGroupCriterionLabel,omitempty"`
+
+	// AdGroupLabel: The ad group label referenced in the query.
+	AdGroupLabel *GoogleAdsSearchads360V0Resources__AdGroupLabel `json:"adGroupLabel,omitempty"`
+
+	// AgeRangeView: The age range view referenced in the query.
+	AgeRangeView *GoogleAdsSearchads360V0Resources__AgeRangeView `json:"ageRangeView,omitempty"`
 
 	// BiddingStrategy: The bidding strategy referenced in the query.
 	BiddingStrategy *GoogleAdsSearchads360V0Resources__BiddingStrategy `json:"biddingStrategy,omitempty"`
@@ -5073,11 +6141,18 @@ type GoogleAdsSearchads360V0Services__SearchAds360Row struct {
 	// Campaign: The campaign referenced in the query.
 	Campaign *GoogleAdsSearchads360V0Resources__Campaign `json:"campaign,omitempty"`
 
+	// CampaignAudienceView: The campaign audience view referenced in the
+	// query.
+	CampaignAudienceView *GoogleAdsSearchads360V0Resources__CampaignAudienceView `json:"campaignAudienceView,omitempty"`
+
 	// CampaignBudget: The campaign budget referenced in the query.
 	CampaignBudget *GoogleAdsSearchads360V0Resources__CampaignBudget `json:"campaignBudget,omitempty"`
 
 	// CampaignCriterion: The campaign criterion referenced in the query.
 	CampaignCriterion *GoogleAdsSearchads360V0Resources__CampaignCriterion `json:"campaignCriterion,omitempty"`
+
+	// CampaignLabel: The campaign label referenced in the query.
+	CampaignLabel *GoogleAdsSearchads360V0Resources__CampaignLabel `json:"campaignLabel,omitempty"`
 
 	// ConversionAction: The conversion action referenced in the query.
 	ConversionAction *GoogleAdsSearchads360V0Resources__ConversionAction `json:"conversionAction,omitempty"`
@@ -5094,8 +6169,21 @@ type GoogleAdsSearchads360V0Services__SearchAds360Row struct {
 	// CustomerManagerLink: The CustomerManagerLink referenced in the query.
 	CustomerManagerLink *GoogleAdsSearchads360V0Resources__CustomerManagerLink `json:"customerManagerLink,omitempty"`
 
+	// DynamicSearchAdsSearchTermView: The dynamic search ads search term
+	// view referenced in the query.
+	DynamicSearchAdsSearchTermView *GoogleAdsSearchads360V0Resources__DynamicSearchAdsSearchTermView `json:"dynamicSearchAdsSearchTermView,omitempty"`
+
+	// GenderView: The gender view referenced in the query.
+	GenderView *GoogleAdsSearchads360V0Resources__GenderView `json:"genderView,omitempty"`
+
 	// KeywordView: The keyword view referenced in the query.
 	KeywordView *GoogleAdsSearchads360V0Resources__KeywordView `json:"keywordView,omitempty"`
+
+	// Label: The label referenced in the query.
+	Label *GoogleAdsSearchads360V0Resources__Label `json:"label,omitempty"`
+
+	// LocationView: The location view referenced in the query.
+	LocationView *GoogleAdsSearchads360V0Resources__LocationView `json:"locationView,omitempty"`
 
 	// Metrics: The metrics.
 	Metrics *GoogleAdsSearchads360V0Common__Metrics `json:"metrics,omitempty"`
@@ -5105,6 +6193,12 @@ type GoogleAdsSearchads360V0Services__SearchAds360Row struct {
 
 	// Segments: The segments.
 	Segments *GoogleAdsSearchads360V0Common__Segments `json:"segments,omitempty"`
+
+	// UserList: The user list referenced in the query.
+	UserList *GoogleAdsSearchads360V0Resources__UserList `json:"userList,omitempty"`
+
+	// WebpageView: The webpage view referenced in the query.
+	WebpageView *GoogleAdsSearchads360V0Resources__WebpageView `json:"webpageView,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AdGroup") to
 	// unconditionally include in API requests. By default, fields with

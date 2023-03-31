@@ -359,11 +359,14 @@ type CapacityCommitment struct {
 	// period. It is applicable only for ACTIVE capacity commitments.
 	CommitmentStartTime string `json:"commitmentStartTime,omitempty"`
 
-	// Edition: Do not use.
+	// Edition: Edition of the capacity commitment.
 	//
 	// Possible values:
-	//   "EDITION_UNSPECIFIED" - Do not use.
-	//   "ENTERPRISE" - Do not use.
+	//   "EDITION_UNSPECIFIED" - Default value, which will be treated as
+	// ENTERPRISE.
+	//   "STANDARD" - Standard edition.
+	//   "ENTERPRISE" - Enterprise edition.
+	//   "ENTERPRISE_PLUS" - Enterprise plus edition.
 	Edition string `json:"edition,omitempty"`
 
 	// FailureStatus: Output only. For FAILED commitment plan, provides the
@@ -374,7 +377,9 @@ type CapacityCommitment struct {
 	// one of the BigQuery multi-regions (US or EU). If set to true, this
 	// commitment is placed in the organization's secondary region which is
 	// designated for disaster recovery purposes. If false, this commitment
-	// is placed in the organization's default region.
+	// is placed in the organization's default region. NOTE: this is a
+	// preview feature. Project must be allow-listed in order to set this
+	// field.
 	MultiRegionAuxiliary bool `json:"multiRegionAuxiliary,omitempty"`
 
 	// Name: Output only. The resource name of the capacity commitment,
@@ -393,6 +398,8 @@ type CapacityCommitment struct {
 	//   "FLEX" - Flex commitments have committed period of 1 minute after
 	// becoming ACTIVE. After that, they are not in a committed period
 	// anymore and can be removed any time.
+	//   "FLEX_FLAT_RATE" - Same as FLEX, should only be used if flat-rate
+	// commitments are still available.
 	//   "TRIAL" - Trial commitments have a committed period of 182 days
 	// after becoming ACTIVE. After that, they are converted to a new
 	// commitment based on the `renewal_plan`. Default `renewal_plan` for
@@ -401,10 +408,23 @@ type CapacityCommitment struct {
 	//   "MONTHLY" - Monthly commitments have a committed period of 30 days
 	// after becoming ACTIVE. After that, they are not in a committed period
 	// anymore and can be removed any time.
+	//   "MONTHLY_FLAT_RATE" - Same as MONTHLY, should only be used if
+	// flat-rate commitments are still available.
 	//   "ANNUAL" - Annual commitments have a committed period of 365 days
 	// after becoming ACTIVE. After that they are converted to a new
 	// commitment based on the renewal_plan.
-	//   "NONE" - Do not use.
+	//   "ANNUAL_FLAT_RATE" - Same as ANNUAL, should only be used if
+	// flat-rate commitments are still available.
+	//   "THREE_YEAR" - 3-year commitments have a committed period of 1095(3
+	// * 365) days after becoming ACTIVE. After that they are converted to a
+	// new commitment based on the renewal_plan.
+	//   "NONE" - Should only be used for `renewal_plan` and is only
+	// meaningful if edition is specified to values other than
+	// EDITION_UNSPECIFIED. Otherwise CreateCapacityCommitmentRequest or
+	// UpdateCapacityCommitmentRequest will be rejected with error code
+	// `google.rpc.Code.INVALID_ARGUMENT`. If the renewal_plan is NONE,
+	// capacity commitment will be removed at the end of its commitment
+	// period.
 	Plan string `json:"plan,omitempty"`
 
 	// RenewalPlan: The plan this capacity commitment is converted to after
@@ -419,6 +439,8 @@ type CapacityCommitment struct {
 	//   "FLEX" - Flex commitments have committed period of 1 minute after
 	// becoming ACTIVE. After that, they are not in a committed period
 	// anymore and can be removed any time.
+	//   "FLEX_FLAT_RATE" - Same as FLEX, should only be used if flat-rate
+	// commitments are still available.
 	//   "TRIAL" - Trial commitments have a committed period of 182 days
 	// after becoming ACTIVE. After that, they are converted to a new
 	// commitment based on the `renewal_plan`. Default `renewal_plan` for
@@ -427,10 +449,23 @@ type CapacityCommitment struct {
 	//   "MONTHLY" - Monthly commitments have a committed period of 30 days
 	// after becoming ACTIVE. After that, they are not in a committed period
 	// anymore and can be removed any time.
+	//   "MONTHLY_FLAT_RATE" - Same as MONTHLY, should only be used if
+	// flat-rate commitments are still available.
 	//   "ANNUAL" - Annual commitments have a committed period of 365 days
 	// after becoming ACTIVE. After that they are converted to a new
 	// commitment based on the renewal_plan.
-	//   "NONE" - Do not use.
+	//   "ANNUAL_FLAT_RATE" - Same as ANNUAL, should only be used if
+	// flat-rate commitments are still available.
+	//   "THREE_YEAR" - 3-year commitments have a committed period of 1095(3
+	// * 365) days after becoming ACTIVE. After that they are converted to a
+	// new commitment based on the renewal_plan.
+	//   "NONE" - Should only be used for `renewal_plan` and is only
+	// meaningful if edition is specified to values other than
+	// EDITION_UNSPECIFIED. Otherwise CreateCapacityCommitmentRequest or
+	// UpdateCapacityCommitmentRequest will be rejected with error code
+	// `google.rpc.Code.INVALID_ARGUMENT`. If the renewal_plan is NONE,
+	// capacity commitment will be removed at the end of its commitment
+	// period.
 	RenewalPlan string `json:"renewalPlan,omitempty"`
 
 	// SlotCount: Number of slots in this commitment.
@@ -644,11 +679,17 @@ func (s *MergeCapacityCommitmentsRequest) MarshalJSON() ([]byte, error) {
 // "bigquery.reservationAssignments.delete" permission are required on
 // the related assignee.
 type MoveAssignmentRequest struct {
+	// AssignmentId: The optional assignment ID. A new assignment name is
+	// generated if this field is empty. This field can contain only
+	// lowercase alphanumeric characters or dashes. Max length is 64
+	// characters.
+	AssignmentId string `json:"assignmentId,omitempty"`
+
 	// DestinationId: The new reservation ID, e.g.:
 	// `projects/myotherproject/locations/US/reservations/team2-prod`
 	DestinationId string `json:"destinationId,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "DestinationId") to
+	// ForceSendFields is a list of field names (e.g. "AssignmentId") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -656,7 +697,7 @@ type MoveAssignmentRequest struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DestinationId") to include
+	// NullFields is a list of field names (e.g. "AssignmentId") to include
 	// in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. However, any field with
 	// an empty value appearing in NullFields will be sent to the server as
@@ -690,11 +731,14 @@ type Reservation struct {
 	// CreationTime: Output only. Creation time of the reservation.
 	CreationTime string `json:"creationTime,omitempty"`
 
-	// Edition: Do not use.
+	// Edition: Edition of the reservation.
 	//
 	// Possible values:
-	//   "EDITION_UNSPECIFIED" - Do not use.
-	//   "ENTERPRISE" - Do not use.
+	//   "EDITION_UNSPECIFIED" - Default value, which will be treated as
+	// ENTERPRISE.
+	//   "STANDARD" - Standard edition.
+	//   "ENTERPRISE" - Enterprise edition.
+	//   "ENTERPRISE_PLUS" - Enterprise plus edition.
 	Edition string `json:"edition,omitempty"`
 
 	// IgnoreIdleSlots: If false, any query or pipeline job using this
@@ -708,7 +752,9 @@ type Reservation struct {
 	// one of the BigQuery multi-regions (US or EU). If set to true, this
 	// reservation is placed in the organization's secondary region which is
 	// designated for disaster recovery purposes. If false, this reservation
-	// is placed in the organization's default region.
+	// is placed in the organization's default region. NOTE: this is a
+	// preview feature. Project must be allow-listed in order to set this
+	// field.
 	MultiRegionAuxiliary bool `json:"multiRegionAuxiliary,omitempty"`
 
 	// Name: The resource name of the reservation, e.g.,

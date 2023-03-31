@@ -1771,6 +1771,10 @@ type NetworkConfig struct {
 	// Dataproc Metastore instance.
 	Consumers []*Consumer `json:"consumers,omitempty"`
 
+	// CustomRoutesEnabled: Enables custom routes to be imported and
+	// exported for the Dataproc Metastore service's peered VPC network.
+	CustomRoutesEnabled bool `json:"customRoutesEnabled,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Consumers") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any

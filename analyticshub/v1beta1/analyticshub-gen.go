@@ -1190,10 +1190,6 @@ type RestrictedExportConfig struct {
 	// Enabled: If true, enable restricted export.
 	Enabled bool `json:"enabled,omitempty"`
 
-	// RestrictDirectTableAccess: If true, restrict direct table access(read
-	// api/tabledata.list) on linked table.
-	RestrictDirectTableAccess bool `json:"restrictDirectTableAccess,omitempty"`
-
 	// RestrictQueryResult: If true, restrict export of query result derived
 	// from restricted linked dataset table.
 	RestrictQueryResult bool `json:"restrictQueryResult,omitempty"`

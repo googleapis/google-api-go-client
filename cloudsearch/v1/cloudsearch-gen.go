@@ -876,7 +876,7 @@ type AllAuthenticatedUsersProto struct {
 
 // Annotation: NOTE WHEN ADDING NEW PROTO FIELDS: Be sure to add datapol
 // annotations to new fields with potential PII, so they get scrubbed
-// when logging protos for errors. NEXT TAG: 31
+// when logging protos for errors. NEXT TAG: 32
 type Annotation struct {
 	BabelPlaceholderMetadata *BabelPlaceholderMetadata `json:"babelPlaceholderMetadata,omitempty"`
 
@@ -899,6 +899,17 @@ type Annotation struct {
 	//   "DO_NOT_RENDER" - Client should not render the annotation as a
 	// preview chip.
 	ChipRenderType string `json:"chipRenderType,omitempty"`
+
+	// ComponentSearchInfo: Contains additional metadata that further
+	// enhances the annotation when it is returned as part of search
+	// response. For example, this can be used to define how the annotation
+	// matches the search. Information can be used to highlight in rendering
+	// search results. The following are the different annotation text
+	// fields that can be highlighted by this field: 1. DriveMetadata.title
+	// 2. UploadMetadata.content_name 3.
+	// GsuiteIntegrationMetadata.TasksMessageIntegrationRenderData.title 4.
+	// GsuiteIntegrationMetadata.CalendarEventAnnotationData.title
+	ComponentSearchInfo *AppsDynamiteSharedMessageComponentSearchInfo `json:"componentSearchInfo,omitempty"`
 
 	ConsentedAppUnfurlMetadata *ConsentedAppUnfurlMetadata `json:"consentedAppUnfurlMetadata,omitempty"`
 
@@ -2683,6 +2694,41 @@ func (s *AppsDynamiteSharedMeetMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AppsDynamiteSharedMessageComponentSearchInfo: Metadata used to
+// describe search information in a specific component of a chat
+// message, for example an annotation or an attachment.
+type AppsDynamiteSharedMessageComponentSearchInfo struct {
+	// MatchedSearch: Whether the whole component matched the search.
+	MatchedSearch bool `json:"matchedSearch,omitempty"`
+
+	// TitleTextWithDescription: Backend should always set
+	// TextWithDescription.text_body based on the title (or its snippet) of
+	// the annotation or attachment.
+	TitleTextWithDescription *AppsDynamiteSharedTextWithDescription `json:"titleTextWithDescription,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MatchedSearch") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MatchedSearch") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppsDynamiteSharedMessageComponentSearchInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod AppsDynamiteSharedMessageComponentSearchInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // AppsDynamiteSharedMessageInfo: Information that references a Dynamite
 // chat message. This is only used for Activity Feed messages.
 type AppsDynamiteSharedMessageInfo struct {
@@ -3251,6 +3297,103 @@ type AppsDynamiteSharedTasksAnnotationDataUserDefinedMessage struct {
 // containing Tasks metadata for rendering a live card. Currently not
 // used by the Tasks integration.
 type AppsDynamiteSharedTasksMessageIntegrationPayload struct {
+}
+
+// AppsDynamiteSharedTextSegment: Defines a segment in a text.
+type AppsDynamiteSharedTextSegment struct {
+	// Length: Length of the segment in the text.
+	Length int64 `json:"length,omitempty"`
+
+	// StartIndex: Start index (0-indexed and inclusive) of the segment in
+	// the text.
+	StartIndex int64 `json:"startIndex,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Length") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Length") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppsDynamiteSharedTextSegment) MarshalJSON() ([]byte, error) {
+	type NoMethod AppsDynamiteSharedTextSegment
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AppsDynamiteSharedTextSegmentsWithDescription: Defines text segments
+// with description type associated.
+type AppsDynamiteSharedTextSegmentsWithDescription struct {
+	// Possible values:
+	//   "DESCRIPTION_TYPE_UNSPECIFIED"
+	//   "KEYWORD_MATCH" - Indicates the text segments contain matched
+	// keywords. Client can highlight them in search results page.
+	DescriptionType string `json:"descriptionType,omitempty"`
+
+	TextSegment []*AppsDynamiteSharedTextSegment `json:"textSegment,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DescriptionType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DescriptionType") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppsDynamiteSharedTextSegmentsWithDescription) MarshalJSON() ([]byte, error) {
+	type NoMethod AppsDynamiteSharedTextSegmentsWithDescription
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AppsDynamiteSharedTextWithDescription: Defines a text with
+// descriptive text segments associated.
+type AppsDynamiteSharedTextWithDescription struct {
+	TextBody string `json:"textBody,omitempty"`
+
+	TextSegmentsWithDescription []*AppsDynamiteSharedTextSegmentsWithDescription `json:"textSegmentsWithDescription,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "TextBody") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "TextBody") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppsDynamiteSharedTextWithDescription) MarshalJSON() ([]byte, error) {
+	type NoMethod AppsDynamiteSharedTextWithDescription
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // AppsDynamiteSharedUserBlockRelationship: User-block relationship
@@ -8741,11 +8884,50 @@ func (s *DisplayedProperty) MarshalJSON() ([]byte, error) {
 type Divider struct {
 }
 
+type DlpAction struct {
+	// Possible values:
+	//   "NO_ACTION" - LINT.IfChange
+	//   "BLOCK"
+	//   "AUDIT_ONLY"
+	//   "WARN" -
+	// LINT.ThenChange(//depot/google3/java/com/google/apps/dynamite/v1/exter
+	// nal/dlp/ApplicableDlpActionEvaluator.java)
+	ActionType string `json:"actionType,omitempty"`
+
+	// UnsafeHtmlMessageBody: The custom error message defined by the
+	// customer administrator.
+	UnsafeHtmlMessageBody string `json:"unsafeHtmlMessageBody,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ActionType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ActionType") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DlpAction) MarshalJSON() ([]byte, error) {
+	type NoMethod DlpAction
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // DlpScanSummary: A summary of a DLP scan event. This is a summary and
 // should contain the minimum amount of data required to identify and
 // process DLP scans. It is written to Starcast and encoded & returned
 // to the client on attachment upload.
 type DlpScanSummary struct {
+	DlpAction *DlpAction `json:"dlpAction,omitempty"`
+
 	// ScanId: The scan ID of the corresponding {@link
 	// DlpViolationScanRecord} in the {@link EphemeralDlpScans} Spanner
 	// table. This can be used to fetch additional details about the scan,
@@ -8844,7 +9026,7 @@ type DlpScanSummary struct {
 	// to BIP (no user-facing action performed).
 	ScanOutcome string `json:"scanOutcome,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "ScanId") to
+	// ForceSendFields is a list of field names (e.g. "DlpAction") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -8852,8 +9034,8 @@ type DlpScanSummary struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ScanId") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "DlpAction") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -9441,6 +9623,8 @@ type DynamiteSpacesScoringInfo struct {
 
 	LastReadTimestampSecs int64 `json:"lastReadTimestampSecs,omitempty,string"`
 
+	MemberCountScore float64 `json:"memberCountScore,omitempty"`
+
 	MemberMetadataCount float64 `json:"memberMetadataCount,omitempty"`
 
 	MessageScore float64 `json:"messageScore,omitempty"`
@@ -9489,6 +9673,7 @@ func (s *DynamiteSpacesScoringInfo) UnmarshalJSON(data []byte) error {
 		FinalScore                       gensupport.JSONFloat64 `json:"finalScore"`
 		FreshnessScore                   gensupport.JSONFloat64 `json:"freshnessScore"`
 		JoinedSpacesAffinityScore        gensupport.JSONFloat64 `json:"joinedSpacesAffinityScore"`
+		MemberCountScore                 gensupport.JSONFloat64 `json:"memberCountScore"`
 		MemberMetadataCount              gensupport.JSONFloat64 `json:"memberMetadataCount"`
 		MessageScore                     gensupport.JSONFloat64 `json:"messageScore"`
 		SmallContactListAffinityScore    gensupport.JSONFloat64 `json:"smallContactListAffinityScore"`
@@ -9507,6 +9692,7 @@ func (s *DynamiteSpacesScoringInfo) UnmarshalJSON(data []byte) error {
 	s.FinalScore = float64(s1.FinalScore)
 	s.FreshnessScore = float64(s1.FreshnessScore)
 	s.JoinedSpacesAffinityScore = float64(s1.JoinedSpacesAffinityScore)
+	s.MemberCountScore = float64(s1.MemberCountScore)
 	s.MemberMetadataCount = float64(s1.MemberMetadataCount)
 	s.MessageScore = float64(s1.MessageScore)
 	s.SmallContactListAffinityScore = float64(s1.SmallContactListAffinityScore)
@@ -12736,7 +12922,7 @@ func (s *GroupRetentionSettingsUpdatedMetaData) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GsuiteIntegrationMetadata: Annotation metadata for an
+// GsuiteIntegrationMetadata: Annotation metadata for a
 // GsuiteIntegration artifact.
 type GsuiteIntegrationMetadata struct {
 	ActivityFeedData *AppsDynamiteSharedActivityFeedAnnotationData `json:"activityFeedData,omitempty"`
@@ -13285,7 +13471,12 @@ func (s *IconImage) MarshalJSON() ([]byte, error) {
 type Id struct {
 	// CreatorUserId: The User account in which the DirEntry was originally
 	// created. If name_space==GAIA, then it's the gaia_id of the user this
-	// id is referring to.
+	// id is referring to. This field should really be called the "bucket
+	// ID", not the creator ID. In some circumstances, such as copying a
+	// Google Docs file, a user can create an item in a different user's
+	// bucket, so it should not be relied upon for anything other than
+	// bucket location. To look up the requesting user who initially created
+	// item, use the `creator_id` DirEntry field instead.
 	CreatorUserId uint64 `json:"creatorUserId,omitempty,string"`
 
 	// LocalId: The local identifier for the DirEntry (local to the

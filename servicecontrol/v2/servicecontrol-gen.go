@@ -1003,7 +1003,7 @@ type Resource struct {
 	// a resource that may be set by external tools to store and retrieve
 	// arbitrary metadata. They are not queryable and should be preserved
 	// when modifying objects. More info:
-	// https://kubernetes.io/docs/user-guide/annotations
+	// https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
 	Annotations map[string]string `json:"annotations,omitempty"`
 
 	// CreateTime: Output only. The timestamp when the resource was created.

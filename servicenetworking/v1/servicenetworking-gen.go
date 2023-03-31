@@ -2050,6 +2050,35 @@ type DotnetSettings struct {
 	// Common: Some settings.
 	Common *CommonLanguageSettings `json:"common,omitempty"`
 
+	// ForcedNamespaceAliases: Namespaces which must be aliased in snippets
+	// due to a known (but non-generator-predictable) naming collision
+	ForcedNamespaceAliases []string `json:"forcedNamespaceAliases,omitempty"`
+
+	// HandwrittenSignatures: Method signatures (in the form
+	// "service.method(signature)") which are provided separately, so
+	// shouldn't be generated. Snippets *calling* these methods are still
+	// generated, however.
+	HandwrittenSignatures []string `json:"handwrittenSignatures,omitempty"`
+
+	// IgnoredResources: List of full resource types to ignore during
+	// generation. This is typically used for API-specific Location
+	// resources, which should be handled by the generator as if they were
+	// actually the common Location resources. Example entry:
+	// "documentai.googleapis.com/Location"
+	IgnoredResources []string `json:"ignoredResources,omitempty"`
+
+	// RenamedResources: Map from full resource types to the effective short
+	// name for the resource. This is used when otherwise resource named
+	// from different services would cause naming collisions. Example entry:
+	// "datalabeling.googleapis.com/Dataset": "DataLabelingDataset"
+	RenamedResources map[string]string `json:"renamedResources,omitempty"`
+
+	// RenamedServices: Map from original service names to renamed versions.
+	// This is used when the default generated types would cause a naming
+	// conflict. (Neither name is fully-qualified.) Example: Subscriber to
+	// SubscriberServiceApi.
+	RenamedServices map[string]string `json:"renamedServices,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Common") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -3255,10 +3284,11 @@ type MethodSettings struct {
 	// LongRunning: Describes settings to use for long-running operations
 	// when generating API methods for RPCs. Complements RPCs that use the
 	// annotations in google/longrunning/operations.proto. Example of a YAML
-	// configuration:: publishing: method_behavior: - selector:
-	// CreateAdDomain long_running: initial_poll_delay: seconds: 60 # 1
-	// minute poll_delay_multiplier: 1.5 max_poll_delay: seconds: 360 # 6
-	// minutes total_poll_timeout: seconds: 54000 # 90 minutes
+	// configuration:: publishing: method_settings: - selector:
+	// google.cloud.speech.v2.Speech.BatchRecognize long_running:
+	// initial_poll_delay: seconds: 60 # 1 minute poll_delay_multiplier: 1.5
+	// max_poll_delay: seconds: 360 # 6 minutes total_poll_timeout: seconds:
+	// 54000 # 90 minutes
 	LongRunning *LongRunning `json:"longRunning,omitempty"`
 
 	// Selector: The fully qualified name of the method, for which the
@@ -3616,7 +3646,7 @@ func (s *MetricRule) MarshalJSON() ([]byte, error) {
 // The mixin construct implies that all methods in `AccessControl` are
 // also declared with same name and request/response types in `Storage`.
 // A documentation generator or annotation processor will see the
-// effective `Storage.GetAcl` method after inheriting documentation and
+// effective `Storage.GetAcl` method after inherting documentation and
 // annotations as follows: service Storage { // Get the underlying ACL
 // object. rpc GetAcl(GetAclRequest) returns (Acl) { option
 // (google.api.http).get = "/v2/{resource=**}:getAcl"; } ... } Note how

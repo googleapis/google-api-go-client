@@ -364,6 +364,10 @@ type Endpoint struct {
 	// 65535]`.
 	Port int64 `json:"port,omitempty"`
 
+	// Uid: Output only. A globally unique identifier (in UUID4 format) for
+	// this endpoint.
+	Uid string `json:"uid,omitempty"`
+
 	// UpdateTime: Output only. The timestamp when the endpoint was last
 	// updated.
 	UpdateTime string `json:"updateTime,omitempty"`
@@ -740,6 +744,10 @@ type Namespace struct {
 	// `projects/*/locations/*/namespaces/*`.
 	Name string `json:"name,omitempty"`
 
+	// Uid: Output only. A globally unique identifier (in UUID4 format) for
+	// this namespace.
+	Uid string `json:"uid,omitempty"`
+
 	// UpdateTime: Output only. The timestamp when the namespace was last
 	// updated.
 	UpdateTime string `json:"updateTime,omitempty"`
@@ -1002,6 +1010,10 @@ type Service struct {
 	// Name: Immutable. The resource name for the service in the format
 	// `projects/*/locations/*/namespaces/*/services/*`.
 	Name string `json:"name,omitempty"`
+
+	// Uid: Output only. A globally unique identifier (in UUID4 format) for
+	// this service.
+	Uid string `json:"uid,omitempty"`
 
 	// UpdateTime: Output only. The timestamp when the service was last
 	// updated. Note: endpoints being created/deleted/updated within the

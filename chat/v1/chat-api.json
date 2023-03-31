@@ -518,7 +518,7 @@
       }
     }
   },
-  "revision": "20230302",
+  "revision": "20230328",
   "rootUrl": "https://chat.googleapis.com/",
   "schemas": {
     "ActionParameter": {
@@ -1192,7 +1192,7 @@
       "type": "object"
     },
     "GoogleAppsCardV1BorderStyle": {
-      "description": "Represents the complete border style applied to items in a widget.",
+      "description": "The style options for the border of a card or widget, including the border type and color.",
       "id": "GoogleAppsCardV1BorderStyle",
       "properties": {
         "cornerRadius": {

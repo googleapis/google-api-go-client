@@ -704,6 +704,109 @@ func (s *GoogleCloudDatacatalogV1BusinessContext) MarshalJSON() ([]byte, error) 
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDatacatalogV1CloudBigtableInstanceSpec: Specification that
+// applies to Instance entries that are part of `CLOUD_BIGTABLE` system.
+// (user_specified_type)
+type GoogleCloudDatacatalogV1CloudBigtableInstanceSpec struct {
+	// CloudBigtableClusterSpecs: The list of clusters for the Instance.
+	CloudBigtableClusterSpecs []*GoogleCloudDatacatalogV1CloudBigtableInstanceSpecCloudBigtableClusterSpec `json:"cloudBigtableClusterSpecs,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CloudBigtableClusterSpecs") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "CloudBigtableClusterSpecs") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDatacatalogV1CloudBigtableInstanceSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatacatalogV1CloudBigtableInstanceSpec
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDatacatalogV1CloudBigtableInstanceSpecCloudBigtableClusterS
+// pec: Spec that applies to clusters of an Instance of Cloud Bigtable.
+type GoogleCloudDatacatalogV1CloudBigtableInstanceSpecCloudBigtableClusterSpec struct {
+	// DisplayName: Name of the cluster.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// LinkedResource: A link back to the parent resource, in this case
+	// Instance.
+	LinkedResource string `json:"linkedResource,omitempty"`
+
+	// Location: Location of the cluster, typically a Cloud zone.
+	Location string `json:"location,omitempty"`
+
+	// Type: Type of the resource. For a cluster this would be "CLUSTER".
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDatacatalogV1CloudBigtableInstanceSpecCloudBigtableClusterSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatacatalogV1CloudBigtableInstanceSpecCloudBigtableClusterSpec
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDatacatalogV1CloudBigtableSystemSpec: Specification that
+// applies to all entries that are part of `CLOUD_BIGTABLE` system
+// (user_specified_type)
+type GoogleCloudDatacatalogV1CloudBigtableSystemSpec struct {
+	// InstanceDisplayName: Display name of the Instance. This is user
+	// specified and different from the resource name.
+	InstanceDisplayName string `json:"instanceDisplayName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "InstanceDisplayName")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "InstanceDisplayName") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDatacatalogV1CloudBigtableSystemSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatacatalogV1CloudBigtableSystemSpec
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDatacatalogV1CloudSqlBigQueryConnectionSpec: Specification
 // for the BigQuery connection to a Cloud SQL instance.
 type GoogleCloudDatacatalogV1CloudSqlBigQueryConnectionSpec struct {
@@ -829,7 +932,7 @@ type GoogleCloudDatacatalogV1ColumnSchemaLookerColumnSpec struct {
 	//   "DIMENSION_GROUP" - Dimension group - parent for Dimension.
 	//   "FILTER" - Filter.
 	//   "MEASURE" - Measure.
-	//   "PAREMETER" - Parameter.
+	//   "PARAMETER" - Parameter.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Type") to
@@ -1135,6 +1238,7 @@ type GoogleCloudDatacatalogV1DataplexExternalTable struct {
 	//   "DATAPROC_METASTORE" - Dataproc Metastore.
 	//   "DATAPLEX" - Dataplex.
 	//   "CLOUD_SPANNER" - Cloud Spanner
+	//   "CLOUD_BIGTABLE" - Cloud Bigtable
 	//   "CLOUD_SQL" - Cloud Sql
 	//   "LOOKER" - Looker
 	System string `json:"system,omitempty"`
@@ -1323,6 +1427,11 @@ type GoogleCloudDatacatalogV1Entry struct {
 	// BigQuery datasets
 	BusinessContext *GoogleCloudDatacatalogV1BusinessContext `json:"businessContext,omitempty"`
 
+	// CloudBigtableSystemSpec: Specification that applies to Cloud Bigtable
+	// system. Only settable when `integrated_system` is equal to
+	// `CLOUD_BIGTABLE`
+	CloudBigtableSystemSpec *GoogleCloudDatacatalogV1CloudBigtableSystemSpec `json:"cloudBigtableSystemSpec,omitempty"`
+
 	// DataSource: Output only. Physical location of the entry.
 	DataSource *GoogleCloudDatacatalogV1DataSource `json:"dataSource,omitempty"`
 
@@ -1379,6 +1488,7 @@ type GoogleCloudDatacatalogV1Entry struct {
 	//   "DATAPROC_METASTORE" - Dataproc Metastore.
 	//   "DATAPLEX" - Dataplex.
 	//   "CLOUD_SPANNER" - Cloud Spanner
+	//   "CLOUD_BIGTABLE" - Cloud Bigtable
 	//   "CLOUD_SQL" - Cloud Sql
 	//   "LOOKER" - Looker
 	IntegratedSystem string `json:"integratedSystem,omitempty"`
@@ -1423,6 +1533,9 @@ type GoogleCloudDatacatalogV1Entry struct {
 	// Schema: Schema of the entry. An entry might not have any schema
 	// attached to it.
 	Schema *GoogleCloudDatacatalogV1Schema `json:"schema,omitempty"`
+
+	// ServiceSpec: Specification that applies to a Service resource.
+	ServiceSpec *GoogleCloudDatacatalogV1ServiceSpec `json:"serviceSpec,omitempty"`
 
 	// SourceSystemTimestamps: Timestamps from the underlying resource, not
 	// from the Data Catalog entry. Output only when the entry has a system
@@ -2177,6 +2290,38 @@ type GoogleCloudDatacatalogV1Schema struct {
 
 func (s *GoogleCloudDatacatalogV1Schema) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1Schema
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDatacatalogV1ServiceSpec: Specification that applies to a
+// Service resource. Valid only for entries with the `SERVICE` type.
+type GoogleCloudDatacatalogV1ServiceSpec struct {
+	// CloudBigtableInstanceSpec: Specification that applies to Instance
+	// entries of `CLOUD_BIGTABLE` system.
+	CloudBigtableInstanceSpec *GoogleCloudDatacatalogV1CloudBigtableInstanceSpec `json:"cloudBigtableInstanceSpec,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CloudBigtableInstanceSpec") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "CloudBigtableInstanceSpec") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDatacatalogV1ServiceSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatacatalogV1ServiceSpec
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

@@ -5525,7 +5525,7 @@ func (r *CustomersReportsService) CountPrintJobsByPrinter(customer string) *Cust
 // Filter sets the optional parameter "filter": Query string to filter
 // results, AND-separated fields in EBNF syntax. Note: OR operations are
 // not supported in this filter. Note: Only >= and <= comparators are
-// supported in this filter. Supported filter fields: * completion_time
+// supported in this filter. Supported filter fields: * complete_time
 func (c *CustomersReportsCountPrintJobsByPrinterCall) Filter(filter string) *CustomersReportsCountPrintJobsByPrinterCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -5682,7 +5682,7 @@ func (c *CustomersReportsCountPrintJobsByPrinterCall) Do(opts ...googleapi.CallO
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Query string to filter results, AND-separated fields in EBNF syntax. Note: OR operations are not supported in this filter. Note: Only \u003e= and \u003c= comparators are supported in this filter. Supported filter fields: * completion_time",
+	//       "description": "Query string to filter results, AND-separated fields in EBNF syntax. Note: OR operations are not supported in this filter. Note: Only \u003e= and \u003c= comparators are supported in this filter. Supported filter fields: * complete_time",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5765,7 +5765,7 @@ func (r *CustomersReportsService) CountPrintJobsByUser(customer string) *Custome
 // Filter sets the optional parameter "filter": Query string to filter
 // results, AND-separated fields in EBNF syntax. Note: OR operations are
 // not supported in this filter. Note: Only >= and <= comparators are
-// supported in this filter. Supported filter fields: * completion_time
+// supported in this filter. Supported filter fields: * complete_time
 func (c *CustomersReportsCountPrintJobsByUserCall) Filter(filter string) *CustomersReportsCountPrintJobsByUserCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -5920,7 +5920,7 @@ func (c *CustomersReportsCountPrintJobsByUserCall) Do(opts ...googleapi.CallOpti
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Query string to filter results, AND-separated fields in EBNF syntax. Note: OR operations are not supported in this filter. Note: Only \u003e= and \u003c= comparators are supported in this filter. Supported filter fields: * completion_time",
+	//       "description": "Query string to filter results, AND-separated fields in EBNF syntax. Note: OR operations are not supported in this filter. Note: Only \u003e= and \u003c= comparators are supported in this filter. Supported filter fields: * complete_time",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5989,8 +5989,8 @@ type CustomersReportsFindInstalledAppDevicesCall struct {
 	header_      http.Header
 }
 
-// FindInstalledAppDevices: Generate report of devices that have a
-// specified app installed.
+// FindInstalledAppDevices: Generate report of managed Chrome browser
+// devices that have a specified app installed.
 //
 //   - customer: Customer id or "my_customer" to use the customer
 //     associated to the account making the request.
@@ -6163,7 +6163,7 @@ func (c *CustomersReportsFindInstalledAppDevicesCall) Do(opts ...googleapi.CallO
 	}
 	return ret, nil
 	// {
-	//   "description": "Generate report of devices that have a specified app installed.",
+	//   "description": "Generate report of managed Chrome browser devices that have a specified app installed.",
 	//   "flatPath": "v1/customers/{customersId}/reports:findInstalledAppDevices",
 	//   "httpMethod": "GET",
 	//   "id": "chromemanagement.customers.reports.findInstalledAppDevices",
@@ -6446,7 +6446,12 @@ func (r *CustomersTelemetryDevicesService) List(parent string) *CustomersTelemet
 
 // Filter sets the optional parameter "filter": Only include resources
 // that match the filter. Supported filter fields: - org_unit_id -
-// serial_number - device_id
+// serial_number - device_id - reports_timestamp The "reports_timestamp"
+// filter accepts either the Unix Epoch milliseconds format or the
+// RFC3339 UTC "Zulu" format with nanosecond resolution and up to nine
+// fractional digits. Both formats should be surrounded by simple double
+// quotes. Examples: "2014-10-02T15:01:23Z",
+// "2014-10-02T15:01:23.045123456Z", "1679283943823".
 func (c *CustomersTelemetryDevicesListCall) Filter(filter string) *CustomersTelemetryDevicesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -6583,7 +6588,7 @@ func (c *CustomersTelemetryDevicesListCall) Do(opts ...googleapi.CallOption) (*G
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Only include resources that match the filter. Supported filter fields: - org_unit_id - serial_number - device_id ",
+	//       "description": "Optional. Only include resources that match the filter. Supported filter fields: - org_unit_id - serial_number - device_id - reports_timestamp The \"reports_timestamp\" filter accepts either the Unix Epoch milliseconds format or the RFC3339 UTC \"Zulu\" format with nanosecond resolution and up to nine fractional digits. Both formats should be surrounded by simple double quotes. Examples: \"2014-10-02T15:01:23Z\", \"2014-10-02T15:01:23.045123456Z\", \"1679283943823\".",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6668,8 +6673,11 @@ func (r *CustomersTelemetryEventsService) List(parent string) *CustomersTelemetr
 // Filter sets the optional parameter "filter": Only include resources
 // that match the filter. Supported filter fields: - device_id - user_id
 // - device_org_unit_id - user_org_unit_id - timestamp - event_type The
-// "timestamp" filter accepts either Epoch milliseconds or RFC 3339
-// formatted time surrounded by simple double quotes.
+// "timestamp" filter accepts either the Unix Epoch milliseconds format
+// or the RFC3339 UTC "Zulu" format with nanosecond resolution and up to
+// nine fractional digits. Both formats should be surrounded by simple
+// double quotes. Examples: "2014-10-02T15:01:23Z",
+// "2014-10-02T15:01:23.045123456Z", "1679283943823".
 func (c *CustomersTelemetryEventsListCall) Filter(filter string) *CustomersTelemetryEventsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -6806,7 +6814,7 @@ func (c *CustomersTelemetryEventsListCall) Do(opts ...googleapi.CallOption) (*Go
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Only include resources that match the filter. Supported filter fields: - device_id - user_id - device_org_unit_id - user_org_unit_id - timestamp - event_type The \"timestamp\" filter accepts either Epoch milliseconds or RFC 3339 formatted time surrounded by simple double quotes.",
+	//       "description": "Optional. Only include resources that match the filter. Supported filter fields: - device_id - user_id - device_org_unit_id - user_org_unit_id - timestamp - event_type The \"timestamp\" filter accepts either the Unix Epoch milliseconds format or the RFC3339 UTC \"Zulu\" format with nanosecond resolution and up to nine fractional digits. Both formats should be surrounded by simple double quotes. Examples: \"2014-10-02T15:01:23Z\", \"2014-10-02T15:01:23.045123456Z\", \"1679283943823\".",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

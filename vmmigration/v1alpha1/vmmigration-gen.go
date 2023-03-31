@@ -288,6 +288,11 @@ type AccessKeyCredentials struct {
 	// SecretAccessKey: Input only. AWS secret access key.
 	SecretAccessKey string `json:"secretAccessKey,omitempty"`
 
+	// SessionToken: Input only. AWS session token. Used only when AWS
+	// security token service (STS) is responsible for creating the
+	// temporary credentials.
+	SessionToken string `json:"sessionToken,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "AccessKeyId") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any

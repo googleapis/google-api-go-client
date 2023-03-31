@@ -141,6 +141,7 @@ func (s *Service) userAgent() string {
 func NewProjectsService(s *Service) *ProjectsService {
 	rs := &ProjectsService{s: s}
 	rs.Assessments = NewProjectsAssessmentsService(s)
+	rs.Firewallpolicies = NewProjectsFirewallpoliciesService(s)
 	rs.Keys = NewProjectsKeysService(s)
 	rs.Relatedaccountgroupmemberships = NewProjectsRelatedaccountgroupmembershipsService(s)
 	rs.Relatedaccountgroups = NewProjectsRelatedaccountgroupsService(s)
@@ -151,6 +152,8 @@ type ProjectsService struct {
 	s *Service
 
 	Assessments *ProjectsAssessmentsService
+
+	Firewallpolicies *ProjectsFirewallpoliciesService
 
 	Keys *ProjectsKeysService
 
@@ -165,6 +168,15 @@ func NewProjectsAssessmentsService(s *Service) *ProjectsAssessmentsService {
 }
 
 type ProjectsAssessmentsService struct {
+	s *Service
+}
+
+func NewProjectsFirewallpoliciesService(s *Service) *ProjectsFirewallpoliciesService {
+	rs := &ProjectsFirewallpoliciesService{s: s}
+	return rs
+}
+
+type ProjectsFirewallpoliciesService struct {
 	s *Service
 }
 
@@ -327,6 +339,11 @@ type GoogleCloudRecaptchaenterpriseV1AndroidKeySettings struct {
 	// key. Example: 'com.companyname.appname'
 	AllowedPackageNames []string `json:"allowedPackageNames,omitempty"`
 
+	// SupportNonGoogleAppStoreDistribution: Set to true for keys that are
+	// used in an Android application that is available for download in app
+	// stores in addition to the Google Play Store.
+	SupportNonGoogleAppStoreDistribution bool `json:"supportNonGoogleAppStoreDistribution,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g.
 	// "AllowAllPackageNames") to unconditionally include in API requests.
 	// By default, fields with empty or default values are omitted from API
@@ -481,6 +498,11 @@ type GoogleCloudRecaptchaenterpriseV1Assessment struct {
 	// Event: The event being assessed.
 	Event *GoogleCloudRecaptchaenterpriseV1Event `json:"event,omitempty"`
 
+	// FirewallPolicyAssessment: Assessment returned when firewall policies
+	// belonging to the project are evaluated using the field
+	// firewall_policy_evaluation.
+	FirewallPolicyAssessment *GoogleCloudRecaptchaenterpriseV1FirewallPolicyAssessment `json:"firewallPolicyAssessment,omitempty"`
+
 	// FraudPreventionAssessment: Assessment returned by Fraud Prevention
 	// when TransactionData is provided.
 	FraudPreventionAssessment *GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessment `json:"fraudPreventionAssessment,omitempty"`
@@ -624,18 +646,23 @@ type GoogleCloudRecaptchaenterpriseV1Event struct {
 	// client-side platforms already integrated with recaptcha enterprise.
 	ExpectedAction string `json:"expectedAction,omitempty"`
 
-	// Express: Optional. Optional flag for a reCAPTCHA express request for
-	// an assessment without a token. If enabled, `site_key` must reference
-	// a SCORE key with WAF feature set to EXPRESS.
+	// Express: Optional. Flag for a reCAPTCHA express request for an
+	// assessment without a token. If enabled, `site_key` must reference a
+	// SCORE key with WAF feature set to EXPRESS.
 	Express bool `json:"express,omitempty"`
+
+	// FirewallPolicyEvaluation: Optional. Flag for enabling firewall policy
+	// config assessment. If this flag is enabled, the firewall policy will
+	// be evaluated and a suggested firewall action will be returned in the
+	// response.
+	FirewallPolicyEvaluation bool `json:"firewallPolicyEvaluation,omitempty"`
 
 	// HashedAccountId: Optional. Unique stable hashed user identifier for
 	// the request. The identifier must be hashed using hmac-sha256 with
 	// stable secret.
 	HashedAccountId string `json:"hashedAccountId,omitempty"`
 
-	// Headers: Optional. Optional HTTP header information about the
-	// request.
+	// Headers: Optional. HTTP header information about the request.
 	Headers []string `json:"headers,omitempty"`
 
 	// Ja3: Optional. Optional JA3 fingerprint for SSL clients.
@@ -667,6 +694,11 @@ type GoogleCloudRecaptchaenterpriseV1Event struct {
 	// user's device related to this event.
 	UserIpAddress string `json:"userIpAddress,omitempty"`
 
+	// WafTokenAssessment: Optional. Flag for running WAF token assessment.
+	// If enabled, the token must be specified, and have been created by a
+	// WAF-enabled key.
+	WafTokenAssessment bool `json:"wafTokenAssessment,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "ExpectedAction") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -691,9 +723,240 @@ func (s *GoogleCloudRecaptchaenterpriseV1Event) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudRecaptchaenterpriseV1FirewallAction: An individual action.
+// Each action represents what to do if a policy matches.
+type GoogleCloudRecaptchaenterpriseV1FirewallAction struct {
+	// Allow: The user request did not match any policy and should be
+	// allowed access to the requested resource.
+	Allow *GoogleCloudRecaptchaenterpriseV1FirewallActionAllowAction `json:"allow,omitempty"`
+
+	// Block: This action will deny access to a given page. The user will
+	// get an HTTP error code.
+	Block *GoogleCloudRecaptchaenterpriseV1FirewallActionBlockAction `json:"block,omitempty"`
+
+	// Redirect: This action will redirect the request to a ReCaptcha
+	// interstitial to attach a token.
+	Redirect *GoogleCloudRecaptchaenterpriseV1FirewallActionRedirectAction `json:"redirect,omitempty"`
+
+	// SetHeader: This action will set a custom header but allow the request
+	// to continue to the customer backend.
+	SetHeader *GoogleCloudRecaptchaenterpriseV1FirewallActionSetHeaderAction `json:"setHeader,omitempty"`
+
+	// Substitute: This action will transparently serve a different page to
+	// an offending user.
+	Substitute *GoogleCloudRecaptchaenterpriseV1FirewallActionSubstituteAction `json:"substitute,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Allow") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Allow") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRecaptchaenterpriseV1FirewallAction) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecaptchaenterpriseV1FirewallAction
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRecaptchaenterpriseV1FirewallActionAllowAction: An allow
+// action continues processing a request unimpeded.
+type GoogleCloudRecaptchaenterpriseV1FirewallActionAllowAction struct {
+}
+
+// GoogleCloudRecaptchaenterpriseV1FirewallActionBlockAction: A block
+// action serves an HTTP error code a prevents the request from hitting
+// the backend.
+type GoogleCloudRecaptchaenterpriseV1FirewallActionBlockAction struct {
+}
+
+// GoogleCloudRecaptchaenterpriseV1FirewallActionRedirectAction: A
+// redirect action returns a 307 (temporary redirect) response, pointing
+// the user to a ReCaptcha interstitial page to attach a token.
+type GoogleCloudRecaptchaenterpriseV1FirewallActionRedirectAction struct {
+}
+
+// GoogleCloudRecaptchaenterpriseV1FirewallActionSetHeaderAction: A set
+// header action sets a header and forwards the request to the backend.
+// This can be used to trigger custom protection implemented on the
+// backend.
+type GoogleCloudRecaptchaenterpriseV1FirewallActionSetHeaderAction struct {
+	// Key: The header key to set in the request to the backend server.
+	Key string `json:"key,omitempty"`
+
+	// Value: The header value to set in the request to the backend server.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Key") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Key") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRecaptchaenterpriseV1FirewallActionSetHeaderAction) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecaptchaenterpriseV1FirewallActionSetHeaderAction
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRecaptchaenterpriseV1FirewallActionSubstituteAction: A
+// substitute action transparently serves a different page than the one
+// requested.
+type GoogleCloudRecaptchaenterpriseV1FirewallActionSubstituteAction struct {
+	// Path: The address to redirect to. The target is a relative path in
+	// the current host. Example: "/blog/404.html".
+	Path string `json:"path,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Path") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Path") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRecaptchaenterpriseV1FirewallActionSubstituteAction) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecaptchaenterpriseV1FirewallActionSubstituteAction
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRecaptchaenterpriseV1FirewallPolicy: A FirewallPolicy
+// represents a single matching pattern and resulting actions to take.
+type GoogleCloudRecaptchaenterpriseV1FirewallPolicy struct {
+	// Actions: The actions that the caller should take regarding user
+	// access. There should be at most one terminal action. A terminal
+	// action is any action that forces a response, such as AllowAction,
+	// BlockAction or SubstituteAction. Zero or more non-terminal actions
+	// such as SetHeader might be specified. A single policy can contain up
+	// to 16 actions.
+	Actions []*GoogleCloudRecaptchaenterpriseV1FirewallAction `json:"actions,omitempty"`
+
+	// Condition: A CEL (Common Expression Language) conditional expression
+	// that specifies if this policy applies to an incoming user request. If
+	// this condition evaluates to true and the requested path matched the
+	// path pattern, the associated actions should be executed by the
+	// caller. The condition string is checked for CEL syntax correctness on
+	// creation. For more information, see the CEL spec
+	// (https://github.com/google/cel-spec) and its language definition
+	// (https://github.com/google/cel-spec/blob/master/doc/langdef.md). A
+	// condition has a max length of 500 characters.
+	Condition string `json:"condition,omitempty"`
+
+	// Description: A description of what this policy aims to achieve, for
+	// convenience purposes. The description can at most include 256 UTF-8
+	// characters.
+	Description string `json:"description,omitempty"`
+
+	// Name: The resource name for the FirewallPolicy in the format
+	// "projects/{project}/firewallpolicies/{firewallpolicy}".
+	Name string `json:"name,omitempty"`
+
+	// Path: The path for which this policy applies, specified as a glob
+	// pattern. For more information on glob, see the manual page
+	// (https://man7.org/linux/man-pages/man7/glob.7.html). A path has a max
+	// length of 200 characters.
+	Path string `json:"path,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Actions") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Actions") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRecaptchaenterpriseV1FirewallPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecaptchaenterpriseV1FirewallPolicy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRecaptchaenterpriseV1FirewallPolicyAssessment: Policy
+// config assessment.
+type GoogleCloudRecaptchaenterpriseV1FirewallPolicyAssessment struct {
+	// Error: If the processing of a policy config fails, an error will be
+	// populated and the firewall_policy will be left empty.
+	Error *GoogleRpcStatus `json:"error,omitempty"`
+
+	// FirewallPolicy: Output only. The policy that matched the request. If
+	// more than one policy may match, this is the first match. If no policy
+	// matches the incoming request, the policy field will be left empty.
+	FirewallPolicy *GoogleCloudRecaptchaenterpriseV1FirewallPolicy `json:"firewallPolicy,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Error") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Error") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRecaptchaenterpriseV1FirewallPolicyAssessment) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecaptchaenterpriseV1FirewallPolicyAssessment
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessment: Assessment
 // for Fraud Prevention.
 type GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessment struct {
+	// BehavioralTrustVerdict: Assessment of this transaction for behavioral
+	// trust.
+	BehavioralTrustVerdict *GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessmentBehavioralTrustVerdict `json:"behavioralTrustVerdict,omitempty"`
+
 	// CardTestingVerdict: Assessment of this transaction for risk of being
 	// part of a card testing attack.
 	CardTestingVerdict *GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessmentCardTestingVerdict `json:"cardTestingVerdict,omitempty"`
@@ -706,18 +969,19 @@ type GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessment struct {
 	// fraudulent. Summarizes the combined risk of attack vectors below.
 	TransactionRisk float64 `json:"transactionRisk,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "CardTestingVerdict")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "BehavioralTrustVerdict") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CardTestingVerdict") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
+	// NullFields is a list of field names (e.g. "BehavioralTrustVerdict")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
 	// server as null. It is an error if a field in this list has a
 	// non-empty value. This may be used to include null fields in Patch
 	// requests.
@@ -741,6 +1005,50 @@ func (s *GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessment) UnmarshalJSO
 		return err
 	}
 	s.TransactionRisk = float64(s1.TransactionRisk)
+	return nil
+}
+
+// GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessmentBehavioralTru
+// stVerdict: Information about behavioral trust of the transaction.
+type GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessmentBehavioralTrustVerdict struct {
+	// Trust: Probability (0-1) of this transaction attempt being executed
+	// in a behaviorally trustworthy way.
+	Trust float64 `json:"trust,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Trust") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Trust") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessmentBehavioralTrustVerdict) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessmentBehavioralTrustVerdict
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessmentBehavioralTrustVerdict) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessmentBehavioralTrustVerdict
+	var s1 struct {
+		Trust gensupport.JSONFloat64 `json:"trust"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Trust = float64(s1.Trust)
 	return nil
 }
 
@@ -878,7 +1186,7 @@ type GoogleCloudRecaptchaenterpriseV1Key struct {
 	AndroidSettings *GoogleCloudRecaptchaenterpriseV1AndroidKeySettings `json:"androidSettings,omitempty"`
 
 	// CreateTime: Output only. The timestamp corresponding to the creation
-	// of this Key.
+	// of this key.
 	CreateTime string `json:"createTime,omitempty"`
 
 	// DisplayName: Human-readable display name of this key. Modifiable by
@@ -928,6 +1236,44 @@ type GoogleCloudRecaptchaenterpriseV1Key struct {
 
 func (s *GoogleCloudRecaptchaenterpriseV1Key) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecaptchaenterpriseV1Key
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRecaptchaenterpriseV1ListFirewallPoliciesResponse:
+// Response to request to list firewall policies belonging to a key.
+type GoogleCloudRecaptchaenterpriseV1ListFirewallPoliciesResponse struct {
+	// FirewallPolicies: Policy details.
+	FirewallPolicies []*GoogleCloudRecaptchaenterpriseV1FirewallPolicy `json:"firewallPolicies,omitempty"`
+
+	// NextPageToken: Token to retrieve the next page of results. It is set
+	// to empty if no policies remain in results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "FirewallPolicies") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FirewallPolicies") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRecaptchaenterpriseV1ListFirewallPoliciesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecaptchaenterpriseV1ListFirewallPoliciesResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2062,7 +2408,7 @@ type GoogleCloudRecaptchaenterpriseV1WafSettings struct {
 	//   "ACTION_TOKEN" - Use reCAPTCHA action-tokens to protect user
 	// actions.
 	//   "EXPRESS" - Use reCAPTCHA WAF express protection to protect any
-	// context other than web pages, like APIs and IoT devices.
+	// content other than web pages, like APIs and IoT devices.
 	WafFeature string `json:"wafFeature,omitempty"`
 
 	// WafService: Required. The WAF service that uses this key.
@@ -2175,6 +2521,50 @@ type GoogleProtobufEmpty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
+}
+
+// GoogleRpcStatus: The `Status` type defines a logical error model that
+// is suitable for different programming environments, including REST
+// APIs and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
+// `Status` message contains three pieces of data: error code, error
+// message, and error details. You can find out more about this error
+// model and how to work with it in the API Design Guide
+// (https://cloud.google.com/apis/design/errors).
+type GoogleRpcStatus struct {
+	// Code: The status code, which should be an enum value of
+	// google.rpc.Code.
+	Code int64 `json:"code,omitempty"`
+
+	// Details: A list of messages that carry the error details. There is a
+	// common set of message types for APIs to use.
+	Details []googleapi.RawMessage `json:"details,omitempty"`
+
+	// Message: A developer-facing error message, which should be in
+	// English. Any user-facing error message should be localized and sent
+	// in the google.rpc.Status.details field, or localized by the client.
+	Message string `json:"message,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Code") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Code") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleRpcStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleRpcStatus
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // method id "recaptchaenterprise.projects.assessments.annotate":
@@ -2463,6 +2853,792 @@ func (c *ProjectsAssessmentsCreateCall) Do(opts ...googleapi.CallOption) (*Googl
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleCloudRecaptchaenterpriseV1Assessment"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "recaptchaenterprise.projects.firewallpolicies.create":
+
+type ProjectsFirewallpoliciesCreateCall struct {
+	s                                              *Service
+	parent                                         string
+	googlecloudrecaptchaenterprisev1firewallpolicy *GoogleCloudRecaptchaenterpriseV1FirewallPolicy
+	urlParams_                                     gensupport.URLParams
+	ctx_                                           context.Context
+	header_                                        http.Header
+}
+
+// Create: Creates a new FirewallPolicy, specifying conditions at which
+// reCAPTCHA Enterprise actions can be executed. A project may have a
+// maximum of 1000 policies.
+//
+//   - parent: The name of the project this policy will apply to, in the
+//     format "projects/{project}".
+func (r *ProjectsFirewallpoliciesService) Create(parent string, googlecloudrecaptchaenterprisev1firewallpolicy *GoogleCloudRecaptchaenterpriseV1FirewallPolicy) *ProjectsFirewallpoliciesCreateCall {
+	c := &ProjectsFirewallpoliciesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudrecaptchaenterprisev1firewallpolicy = googlecloudrecaptchaenterprisev1firewallpolicy
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsFirewallpoliciesCreateCall) Fields(s ...googleapi.Field) *ProjectsFirewallpoliciesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsFirewallpoliciesCreateCall) Context(ctx context.Context) *ProjectsFirewallpoliciesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsFirewallpoliciesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsFirewallpoliciesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudrecaptchaenterprisev1firewallpolicy)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/firewallpolicies")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "recaptchaenterprise.projects.firewallpolicies.create" call.
+// Exactly one of *GoogleCloudRecaptchaenterpriseV1FirewallPolicy or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudRecaptchaenterpriseV1FirewallPolicy.ServerResponse.Header
+// or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsFirewallpoliciesCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRecaptchaenterpriseV1FirewallPolicy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudRecaptchaenterpriseV1FirewallPolicy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new FirewallPolicy, specifying conditions at which reCAPTCHA Enterprise actions can be executed. A project may have a maximum of 1000 policies.",
+	//   "flatPath": "v1/projects/{projectsId}/firewallpolicies",
+	//   "httpMethod": "POST",
+	//   "id": "recaptchaenterprise.projects.firewallpolicies.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The name of the project this policy will apply to, in the format \"projects/{project}\".",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/firewallpolicies",
+	//   "request": {
+	//     "$ref": "GoogleCloudRecaptchaenterpriseV1FirewallPolicy"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudRecaptchaenterpriseV1FirewallPolicy"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "recaptchaenterprise.projects.firewallpolicies.delete":
+
+type ProjectsFirewallpoliciesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes the specified firewall policy.
+//
+//   - name: The name of the policy to be deleted, in the format
+//     "projects/{project}/firewallpolicies/{firewallpolicy}".
+func (r *ProjectsFirewallpoliciesService) Delete(name string) *ProjectsFirewallpoliciesDeleteCall {
+	c := &ProjectsFirewallpoliciesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsFirewallpoliciesDeleteCall) Fields(s ...googleapi.Field) *ProjectsFirewallpoliciesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsFirewallpoliciesDeleteCall) Context(ctx context.Context) *ProjectsFirewallpoliciesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsFirewallpoliciesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsFirewallpoliciesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "recaptchaenterprise.projects.firewallpolicies.delete" call.
+// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsFirewallpoliciesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes the specified firewall policy.",
+	//   "flatPath": "v1/projects/{projectsId}/firewallpolicies/{firewallpoliciesId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "recaptchaenterprise.projects.firewallpolicies.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the policy to be deleted, in the format \"projects/{project}/firewallpolicies/{firewallpolicy}\".",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/firewallpolicies/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleProtobufEmpty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "recaptchaenterprise.projects.firewallpolicies.get":
+
+type ProjectsFirewallpoliciesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Returns the specified firewall policy.
+//
+//   - name: The name of the requested policy, in the format
+//     "projects/{project}/firewallpolicies/{firewallpolicy}".
+func (r *ProjectsFirewallpoliciesService) Get(name string) *ProjectsFirewallpoliciesGetCall {
+	c := &ProjectsFirewallpoliciesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsFirewallpoliciesGetCall) Fields(s ...googleapi.Field) *ProjectsFirewallpoliciesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsFirewallpoliciesGetCall) IfNoneMatch(entityTag string) *ProjectsFirewallpoliciesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsFirewallpoliciesGetCall) Context(ctx context.Context) *ProjectsFirewallpoliciesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsFirewallpoliciesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsFirewallpoliciesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "recaptchaenterprise.projects.firewallpolicies.get" call.
+// Exactly one of *GoogleCloudRecaptchaenterpriseV1FirewallPolicy or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudRecaptchaenterpriseV1FirewallPolicy.ServerResponse.Header
+// or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsFirewallpoliciesGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRecaptchaenterpriseV1FirewallPolicy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudRecaptchaenterpriseV1FirewallPolicy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns the specified firewall policy.",
+	//   "flatPath": "v1/projects/{projectsId}/firewallpolicies/{firewallpoliciesId}",
+	//   "httpMethod": "GET",
+	//   "id": "recaptchaenterprise.projects.firewallpolicies.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the requested policy, in the format \"projects/{project}/firewallpolicies/{firewallpolicy}\".",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/firewallpolicies/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudRecaptchaenterpriseV1FirewallPolicy"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "recaptchaenterprise.projects.firewallpolicies.list":
+
+type ProjectsFirewallpoliciesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Returns the list of all firewall policies that belong to a
+// project.
+//
+//   - parent: The name of the project to list the policies for, in the
+//     format "projects/{project}".
+func (r *ProjectsFirewallpoliciesService) List(parent string) *ProjectsFirewallpoliciesListCall {
+	c := &ProjectsFirewallpoliciesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of policies to return. Default is 10. Max limit is 1000.
+func (c *ProjectsFirewallpoliciesListCall) PageSize(pageSize int64) *ProjectsFirewallpoliciesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The
+// next_page_token value returned from a previous.
+// ListFirewallPoliciesRequest, if any.
+func (c *ProjectsFirewallpoliciesListCall) PageToken(pageToken string) *ProjectsFirewallpoliciesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsFirewallpoliciesListCall) Fields(s ...googleapi.Field) *ProjectsFirewallpoliciesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsFirewallpoliciesListCall) IfNoneMatch(entityTag string) *ProjectsFirewallpoliciesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsFirewallpoliciesListCall) Context(ctx context.Context) *ProjectsFirewallpoliciesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsFirewallpoliciesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsFirewallpoliciesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/firewallpolicies")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "recaptchaenterprise.projects.firewallpolicies.list" call.
+// Exactly one of
+// *GoogleCloudRecaptchaenterpriseV1ListFirewallPoliciesResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudRecaptchaenterpriseV1ListFirewallPoliciesResponse.ServerRe
+// sponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsFirewallpoliciesListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRecaptchaenterpriseV1ListFirewallPoliciesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudRecaptchaenterpriseV1ListFirewallPoliciesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns the list of all firewall policies that belong to a project.",
+	//   "flatPath": "v1/projects/{projectsId}/firewallpolicies",
+	//   "httpMethod": "GET",
+	//   "id": "recaptchaenterprise.projects.firewallpolicies.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Optional. The maximum number of policies to return. Default is 10. Max limit is 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. The next_page_token value returned from a previous. ListFirewallPoliciesRequest, if any.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The name of the project to list the policies for, in the format \"projects/{project}\".",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/firewallpolicies",
+	//   "response": {
+	//     "$ref": "GoogleCloudRecaptchaenterpriseV1ListFirewallPoliciesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsFirewallpoliciesListCall) Pages(ctx context.Context, f func(*GoogleCloudRecaptchaenterpriseV1ListFirewallPoliciesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "recaptchaenterprise.projects.firewallpolicies.patch":
+
+type ProjectsFirewallpoliciesPatchCall struct {
+	s                                              *Service
+	name                                           string
+	googlecloudrecaptchaenterprisev1firewallpolicy *GoogleCloudRecaptchaenterpriseV1FirewallPolicy
+	urlParams_                                     gensupport.URLParams
+	ctx_                                           context.Context
+	header_                                        http.Header
+}
+
+// Patch: Updates the specified firewall policy.
+//
+//   - name: The resource name for the FirewallPolicy in the format
+//     "projects/{project}/firewallpolicies/{firewallpolicy}".
+func (r *ProjectsFirewallpoliciesService) Patch(name string, googlecloudrecaptchaenterprisev1firewallpolicy *GoogleCloudRecaptchaenterpriseV1FirewallPolicy) *ProjectsFirewallpoliciesPatchCall {
+	c := &ProjectsFirewallpoliciesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudrecaptchaenterprisev1firewallpolicy = googlecloudrecaptchaenterprisev1firewallpolicy
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The mask to
+// control which fields of the policy get updated. If the mask is not
+// present, all fields will be updated.
+func (c *ProjectsFirewallpoliciesPatchCall) UpdateMask(updateMask string) *ProjectsFirewallpoliciesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsFirewallpoliciesPatchCall) Fields(s ...googleapi.Field) *ProjectsFirewallpoliciesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsFirewallpoliciesPatchCall) Context(ctx context.Context) *ProjectsFirewallpoliciesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsFirewallpoliciesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsFirewallpoliciesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudrecaptchaenterprisev1firewallpolicy)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "recaptchaenterprise.projects.firewallpolicies.patch" call.
+// Exactly one of *GoogleCloudRecaptchaenterpriseV1FirewallPolicy or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudRecaptchaenterpriseV1FirewallPolicy.ServerResponse.Header
+// or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsFirewallpoliciesPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRecaptchaenterpriseV1FirewallPolicy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudRecaptchaenterpriseV1FirewallPolicy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates the specified firewall policy.",
+	//   "flatPath": "v1/projects/{projectsId}/firewallpolicies/{firewallpoliciesId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "recaptchaenterprise.projects.firewallpolicies.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The resource name for the FirewallPolicy in the format \"projects/{project}/firewallpolicies/{firewallpolicy}\".",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/firewallpolicies/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Optional. The mask to control which fields of the policy get updated. If the mask is not present, all fields will be updated.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "GoogleCloudRecaptchaenterpriseV1FirewallPolicy"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudRecaptchaenterpriseV1FirewallPolicy"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

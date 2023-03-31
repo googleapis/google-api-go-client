@@ -1450,8 +1450,8 @@ func (s *GoogleAppsCardV1ActionParameter) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAppsCardV1BorderStyle: Represents the complete border style
-// applied to items in a widget.
+// GoogleAppsCardV1BorderStyle: The style options for the border of a
+// card or widget, including the border type and color.
 type GoogleAppsCardV1BorderStyle struct {
 	// CornerRadius: The corner radius for the border.
 	CornerRadius int64 `json:"cornerRadius,omitempty"`

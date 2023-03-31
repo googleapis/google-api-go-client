@@ -9936,8 +9936,7 @@ func (s *GoogleCloudDocumentaiV1beta3ImportProcessorVersionMetadata) MarshalJSON
 // Service Agent for Document AI can be found in
 // https://cloud.google.com/iam/docs/service-agents.
 type GoogleCloudDocumentaiV1beta3ImportProcessorVersionRequest struct {
-	// ProcessorVersionSource: Required. The source processor version to
-	// import from.
+	// ProcessorVersionSource: The source processor version to import from.
 	ProcessorVersionSource string `json:"processorVersionSource,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -10193,7 +10192,11 @@ func (s *GoogleCloudDocumentaiV1beta3NormalizedVertex) UnmarshalJSON(data []byte
 // GoogleCloudDocumentaiV1beta3OcrConfig: Config for Document OCR.
 type GoogleCloudDocumentaiV1beta3OcrConfig struct {
 	// AdvancedOcrOptions: A list of advanced OCR options to further
-	// fine-tune OCR behavior.
+	// fine-tune OCR behavior. Current valid values are: - "legacy_layout":
+	// a heuristics layout detection algorithm, which serves as an
+	// alternative to the current ML-based layout detection algorithm.
+	// Customers can choose the best suitable layout algorithm based on
+	// their situation.
 	AdvancedOcrOptions []string `json:"advancedOcrOptions,omitempty"`
 
 	// EnableImageQualityScores: Enables intelligent document quality scores
@@ -10652,6 +10655,7 @@ type GoogleCloudDocumentaiV1beta3ProcessorVersion struct {
 	//   "DELETING" - The processor version is being deleted.
 	//   "FAILED" - The processor version failed and is in an indeterminate
 	// state.
+	//   "IMPORTING" - The processor version is being imported.
 	State string `json:"state,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

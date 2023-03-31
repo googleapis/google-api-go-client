@@ -1996,7 +1996,6 @@ type GCSPayloadInfo struct {
 	//   "IMPORT_JOB_FORMAT_CMDB" - Configuration management DB format.
 	//   "IMPORT_JOB_FORMAT_RVTOOLS_XLSX" - RVTools format (XLSX).
 	//   "IMPORT_JOB_FORMAT_RVTOOLS_CSV" - RVTools format (CSV).
-	//   "IMPORT_JOB_FORMAT_JSON_FRAME" - `AssetFrame` list in JSON format.
 	//   "IMPORT_JOB_FORMAT_EXPORTED_AWS_CSV" - CSV format exported from AWS
 	// using the AWS collection script.
 	//   "IMPORT_JOB_FORMAT_EXPORTED_AZURE_CSV" - CSV format exported from
@@ -2158,7 +2157,7 @@ func (s *GuestConfigDetails) MarshalJSON() ([]byte, error) {
 
 // GuestInstalledApplication: Guest installed application information.
 type GuestInstalledApplication struct {
-	// Name: Installed application name .
+	// Name: Installed application name.
 	Name string `json:"name,omitempty"`
 
 	// Path: Source path.
@@ -2380,7 +2379,6 @@ type ImportDataFile struct {
 	//   "IMPORT_JOB_FORMAT_CMDB" - Configuration management DB format.
 	//   "IMPORT_JOB_FORMAT_RVTOOLS_XLSX" - RVTools format (XLSX).
 	//   "IMPORT_JOB_FORMAT_RVTOOLS_CSV" - RVTools format (CSV).
-	//   "IMPORT_JOB_FORMAT_JSON_FRAME" - `AssetFrame` list in JSON format.
 	//   "IMPORT_JOB_FORMAT_EXPORTED_AWS_CSV" - CSV format exported from AWS
 	// using the AWS collection script.
 	//   "IMPORT_JOB_FORMAT_EXPORTED_AZURE_CSV" - CSV format exported from
@@ -2604,7 +2602,6 @@ type InlinePayloadInfo struct {
 	//   "IMPORT_JOB_FORMAT_CMDB" - Configuration management DB format.
 	//   "IMPORT_JOB_FORMAT_RVTOOLS_XLSX" - RVTools format (XLSX).
 	//   "IMPORT_JOB_FORMAT_RVTOOLS_CSV" - RVTools format (CSV).
-	//   "IMPORT_JOB_FORMAT_JSON_FRAME" - `AssetFrame` list in JSON format.
 	//   "IMPORT_JOB_FORMAT_EXPORTED_AWS_CSV" - CSV format exported from AWS
 	// using the AWS collection script.
 	//   "IMPORT_JOB_FORMAT_EXPORTED_AZURE_CSV" - CSV format exported from
@@ -4475,13 +4472,19 @@ func (s *UpdateAssetRequest) MarshalJSON() ([]byte, error) {
 // UploadFileInfo: A resource that contains a URI to which a data file
 // can be uploaded.
 type UploadFileInfo struct {
+	// Headers: Output only. The headers that were used to sign the URL.
+	Headers map[string]string `json:"headers,omitempty"`
+
+	// SignedUri: Output only. Upload URI for the file.
+	SignedUri string `json:"signedUri,omitempty"`
+
 	// Uri: Output only. Upload URI for the file.
 	Uri string `json:"uri,omitempty"`
 
 	// UriExpirationTime: Output only. Expiration time of the upload URI.
 	UriExpirationTime string `json:"uriExpirationTime,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Uri") to
+	// ForceSendFields is a list of field names (e.g. "Headers") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -4489,8 +4492,8 @@ type UploadFileInfo struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Uri") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "Headers") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.

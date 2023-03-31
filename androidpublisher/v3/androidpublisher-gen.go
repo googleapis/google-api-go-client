@@ -5335,7 +5335,10 @@ type Track struct {
 	// track. In an update request, represents desired changes.
 	Releases []*TrackRelease `json:"releases,omitempty"`
 
-	// Track: Identifier of the track.
+	// Track: Identifier of the track. Form factor tracks have a special
+	// prefix as an identifier, for example `wear:production`,
+	// `automotive:production`. More on track name
+	// (https://developers.google.com/android-publisher/tracks#ff-track-name)
 	Track string `json:"track,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -12146,9 +12149,10 @@ type EditsTracksGetCall struct {
 
 // Get: Gets a track.
 //
-// - editId: Identifier of the edit.
-// - packageName: Package name of the app.
-// - track: Identifier of the track.
+//   - editId: Identifier of the edit.
+//   - packageName: Package name of the app.
+//   - track: Identifier of the track. More on track name
+//     (https://developers.google.com/android-publisher/tracks#ff-track-name).
 func (r *EditsTracksService) Get(packageName string, editId string, track string) *EditsTracksGetCall {
 	c := &EditsTracksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -12281,7 +12285,7 @@ func (c *EditsTracksGetCall) Do(opts ...googleapi.CallOption) (*Track, error) {
 	//       "type": "string"
 	//     },
 	//     "track": {
-	//       "description": "Identifier of the track.",
+	//       "description": "Identifier of the track. [More on track name](https://developers.google.com/android-publisher/tracks#ff-track-name)",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -12469,9 +12473,10 @@ type EditsTracksPatchCall struct {
 
 // Patch: Patches a track.
 //
-// - editId: Identifier of the edit.
-// - packageName: Package name of the app.
-// - track: Identifier of the track.
+//   - editId: Identifier of the edit.
+//   - packageName: Package name of the app.
+//   - track: Identifier of the track. More on track name
+//     (https://developers.google.com/android-publisher/tracks#ff-track-name).
 func (r *EditsTracksService) Patch(packageName string, editId string, track string, track2 *Track) *EditsTracksPatchCall {
 	c := &EditsTracksPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -12597,7 +12602,7 @@ func (c *EditsTracksPatchCall) Do(opts ...googleapi.CallOption) (*Track, error) 
 	//       "type": "string"
 	//     },
 	//     "track": {
-	//       "description": "Identifier of the track.",
+	//       "description": "Identifier of the track. [More on track name](https://developers.google.com/android-publisher/tracks#ff-track-name)",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -12632,9 +12637,10 @@ type EditsTracksUpdateCall struct {
 
 // Update: Updates a track.
 //
-// - editId: Identifier of the edit.
-// - packageName: Package name of the app.
-// - track: Identifier of the track.
+//   - editId: Identifier of the edit.
+//   - packageName: Package name of the app.
+//   - track: Identifier of the track. More on track name
+//     (https://developers.google.com/android-publisher/tracks#ff-track-name).
 func (r *EditsTracksService) Update(packageName string, editId string, track string, track2 *Track) *EditsTracksUpdateCall {
 	c := &EditsTracksUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -12760,7 +12766,7 @@ func (c *EditsTracksUpdateCall) Do(opts ...googleapi.CallOption) (*Track, error)
 	//       "type": "string"
 	//     },
 	//     "track": {
-	//       "description": "Identifier of the track.",
+	//       "description": "Identifier of the track. [More on track name](https://developers.google.com/android-publisher/tracks#ff-track-name)",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"

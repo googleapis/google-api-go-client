@@ -8699,6 +8699,14 @@ func (c *ProjectsJobsAggregatedCall) PageToken(pageToken string) *ProjectsJobsAg
 // version details.
 //
 //	"JOB_VIEW_ALL" - Request all information available for this job.
+//
+// When the job is in `JOB_STATE_PENDING`, the job has been created but
+// is not yet running, and not all job information is available. For
+// complete job information, wait until the job in is
+// `JOB_STATE_RUNNING`. For more information, see
+// [JobState](https://cloud.google.com/dataflow/docs/reference/rest/v1b3/
+// projects.jobs#jobstate).
+//
 //	"JOB_VIEW_DESCRIPTION" - Request summary info and limited job
 //
 // description data for steps, labels and environment.
@@ -8869,7 +8877,7 @@ func (c *ProjectsJobsAggregatedCall) Do(opts ...googleapi.CallOption) (*ListJobs
 	//       "enumDescriptions": [
 	//         "The job view to return isn't specified, or is unknown. Responses will contain at least the `JOB_VIEW_SUMMARY` information, and may contain additional information.",
 	//         "Request summary information only: Project ID, Job ID, job name, job type, job status, start/end time, and Cloud SDK version details.",
-	//         "Request all information available for this job.",
+	//         "Request all information available for this job. When the job is in `JOB_STATE_PENDING`, the job has been created but is not yet running, and not all job information is available. For complete job information, wait until the job in is `JOB_STATE_RUNNING`. For more information, see [JobState](https://cloud.google.com/dataflow/docs/reference/rest/v1b3/projects.jobs#jobstate).",
 	//         "Request summary info and limited job description data for steps, labels and environment."
 	//       ],
 	//       "location": "query",
@@ -8970,6 +8978,14 @@ func (c *ProjectsJobsCreateCall) ReplaceJobId(replaceJobId string) *ProjectsJobs
 // version details.
 //
 //	"JOB_VIEW_ALL" - Request all information available for this job.
+//
+// When the job is in `JOB_STATE_PENDING`, the job has been created but
+// is not yet running, and not all job information is available. For
+// complete job information, wait until the job in is
+// `JOB_STATE_RUNNING`. For more information, see
+// [JobState](https://cloud.google.com/dataflow/docs/reference/rest/v1b3/
+// projects.jobs#jobstate).
+//
 //	"JOB_VIEW_DESCRIPTION" - Request summary info and limited job
 //
 // description data for steps, labels and environment.
@@ -9104,7 +9120,7 @@ func (c *ProjectsJobsCreateCall) Do(opts ...googleapi.CallOption) (*Job, error) 
 	//       "enumDescriptions": [
 	//         "The job view to return isn't specified, or is unknown. Responses will contain at least the `JOB_VIEW_SUMMARY` information, and may contain additional information.",
 	//         "Request summary information only: Project ID, Job ID, job name, job type, job status, start/end time, and Cloud SDK version details.",
-	//         "Request all information available for this job.",
+	//         "Request all information available for this job. When the job is in `JOB_STATE_PENDING`, the job has been created but is not yet running, and not all job information is available. For complete job information, wait until the job in is `JOB_STATE_RUNNING`. For more information, see [JobState](https://cloud.google.com/dataflow/docs/reference/rest/v1b3/projects.jobs#jobstate).",
 	//         "Request summary info and limited job description data for steps, labels and environment."
 	//       ],
 	//       "location": "query",
@@ -9182,6 +9198,14 @@ func (c *ProjectsJobsGetCall) Location(location string) *ProjectsJobsGetCall {
 // version details.
 //
 //	"JOB_VIEW_ALL" - Request all information available for this job.
+//
+// When the job is in `JOB_STATE_PENDING`, the job has been created but
+// is not yet running, and not all job information is available. For
+// complete job information, wait until the job in is
+// `JOB_STATE_RUNNING`. For more information, see
+// [JobState](https://cloud.google.com/dataflow/docs/reference/rest/v1b3/
+// projects.jobs#jobstate).
+//
 //	"JOB_VIEW_DESCRIPTION" - Request summary info and limited job
 //
 // description data for steps, labels and environment.
@@ -9327,7 +9351,7 @@ func (c *ProjectsJobsGetCall) Do(opts ...googleapi.CallOption) (*Job, error) {
 	//       "enumDescriptions": [
 	//         "The job view to return isn't specified, or is unknown. Responses will contain at least the `JOB_VIEW_SUMMARY` information, and may contain additional information.",
 	//         "Request summary information only: Project ID, Job ID, job name, job type, job status, start/end time, and Cloud SDK version details.",
-	//         "Request all information available for this job.",
+	//         "Request all information available for this job. When the job is in `JOB_STATE_PENDING`, the job has been created but is not yet running, and not all job information is available. For complete job information, wait until the job in is `JOB_STATE_RUNNING`. For more information, see [JobState](https://cloud.google.com/dataflow/docs/reference/rest/v1b3/projects.jobs#jobstate).",
 	//         "Request summary info and limited job description data for steps, labels and environment."
 	//       ],
 	//       "location": "query",
@@ -9642,6 +9666,14 @@ func (c *ProjectsJobsListCall) PageToken(pageToken string) *ProjectsJobsListCall
 // version details.
 //
 //	"JOB_VIEW_ALL" - Request all information available for this job.
+//
+// When the job is in `JOB_STATE_PENDING`, the job has been created but
+// is not yet running, and not all job information is available. For
+// complete job information, wait until the job in is
+// `JOB_STATE_RUNNING`. For more information, see
+// [JobState](https://cloud.google.com/dataflow/docs/reference/rest/v1b3/
+// projects.jobs#jobstate).
+//
 //	"JOB_VIEW_DESCRIPTION" - Request summary info and limited job
 //
 // description data for steps, labels and environment.
@@ -9812,7 +9844,7 @@ func (c *ProjectsJobsListCall) Do(opts ...googleapi.CallOption) (*ListJobsRespon
 	//       "enumDescriptions": [
 	//         "The job view to return isn't specified, or is unknown. Responses will contain at least the `JOB_VIEW_SUMMARY` information, and may contain additional information.",
 	//         "Request summary information only: Project ID, Job ID, job name, job type, job status, start/end time, and Cloud SDK version details.",
-	//         "Request all information available for this job.",
+	//         "Request all information available for this job. When the job is in `JOB_STATE_PENDING`, the job has been created but is not yet running, and not all job information is available. For complete job information, wait until the job in is `JOB_STATE_RUNNING`. For more information, see [JobState](https://cloud.google.com/dataflow/docs/reference/rest/v1b3/projects.jobs#jobstate).",
 	//         "Request summary info and limited job description data for steps, labels and environment."
 	//       ],
 	//       "location": "query",
@@ -11517,6 +11549,14 @@ func (c *ProjectsLocationsJobsCreateCall) ReplaceJobId(replaceJobId string) *Pro
 // version details.
 //
 //	"JOB_VIEW_ALL" - Request all information available for this job.
+//
+// When the job is in `JOB_STATE_PENDING`, the job has been created but
+// is not yet running, and not all job information is available. For
+// complete job information, wait until the job in is
+// `JOB_STATE_RUNNING`. For more information, see
+// [JobState](https://cloud.google.com/dataflow/docs/reference/rest/v1b3/
+// projects.jobs#jobstate).
+//
 //	"JOB_VIEW_DESCRIPTION" - Request summary info and limited job
 //
 // description data for steps, labels and environment.
@@ -11654,7 +11694,7 @@ func (c *ProjectsLocationsJobsCreateCall) Do(opts ...googleapi.CallOption) (*Job
 	//       "enumDescriptions": [
 	//         "The job view to return isn't specified, or is unknown. Responses will contain at least the `JOB_VIEW_SUMMARY` information, and may contain additional information.",
 	//         "Request summary information only: Project ID, Job ID, job name, job type, job status, start/end time, and Cloud SDK version details.",
-	//         "Request all information available for this job.",
+	//         "Request all information available for this job. When the job is in `JOB_STATE_PENDING`, the job has been created but is not yet running, and not all job information is available. For complete job information, wait until the job in is `JOB_STATE_RUNNING`. For more information, see [JobState](https://cloud.google.com/dataflow/docs/reference/rest/v1b3/projects.jobs#jobstate).",
 	//         "Request summary info and limited job description data for steps, labels and environment."
 	//       ],
 	//       "location": "query",
@@ -11728,6 +11768,14 @@ func (r *ProjectsLocationsJobsService) Get(projectId string, location string, jo
 // version details.
 //
 //	"JOB_VIEW_ALL" - Request all information available for this job.
+//
+// When the job is in `JOB_STATE_PENDING`, the job has been created but
+// is not yet running, and not all job information is available. For
+// complete job information, wait until the job in is
+// `JOB_STATE_RUNNING`. For more information, see
+// [JobState](https://cloud.google.com/dataflow/docs/reference/rest/v1b3/
+// projects.jobs#jobstate).
+//
 //	"JOB_VIEW_DESCRIPTION" - Request summary info and limited job
 //
 // description data for steps, labels and environment.
@@ -11876,7 +11924,7 @@ func (c *ProjectsLocationsJobsGetCall) Do(opts ...googleapi.CallOption) (*Job, e
 	//       "enumDescriptions": [
 	//         "The job view to return isn't specified, or is unknown. Responses will contain at least the `JOB_VIEW_SUMMARY` information, and may contain additional information.",
 	//         "Request summary information only: Project ID, Job ID, job name, job type, job status, start/end time, and Cloud SDK version details.",
-	//         "Request all information available for this job.",
+	//         "Request all information available for this job. When the job is in `JOB_STATE_PENDING`, the job has been created but is not yet running, and not all job information is available. For complete job information, wait until the job in is `JOB_STATE_RUNNING`. For more information, see [JobState](https://cloud.google.com/dataflow/docs/reference/rest/v1b3/projects.jobs#jobstate).",
 	//         "Request summary info and limited job description data for steps, labels and environment."
 	//       ],
 	//       "location": "query",
@@ -12409,6 +12457,14 @@ func (c *ProjectsLocationsJobsListCall) PageToken(pageToken string) *ProjectsLoc
 // version details.
 //
 //	"JOB_VIEW_ALL" - Request all information available for this job.
+//
+// When the job is in `JOB_STATE_PENDING`, the job has been created but
+// is not yet running, and not all job information is available. For
+// complete job information, wait until the job in is
+// `JOB_STATE_RUNNING`. For more information, see
+// [JobState](https://cloud.google.com/dataflow/docs/reference/rest/v1b3/
+// projects.jobs#jobstate).
+//
 //	"JOB_VIEW_DESCRIPTION" - Request summary info and limited job
 //
 // description data for steps, labels and environment.
@@ -12582,7 +12638,7 @@ func (c *ProjectsLocationsJobsListCall) Do(opts ...googleapi.CallOption) (*ListJ
 	//       "enumDescriptions": [
 	//         "The job view to return isn't specified, or is unknown. Responses will contain at least the `JOB_VIEW_SUMMARY` information, and may contain additional information.",
 	//         "Request summary information only: Project ID, Job ID, job name, job type, job status, start/end time, and Cloud SDK version details.",
-	//         "Request all information available for this job.",
+	//         "Request all information available for this job. When the job is in `JOB_STATE_PENDING`, the job has been created but is not yet running, and not all job information is available. For complete job information, wait until the job in is `JOB_STATE_RUNNING`. For more information, see [JobState](https://cloud.google.com/dataflow/docs/reference/rest/v1b3/projects.jobs#jobstate).",
 	//         "Request summary info and limited job description data for steps, labels and environment."
 	//       ],
 	//       "location": "query",

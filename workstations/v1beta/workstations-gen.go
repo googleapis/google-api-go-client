@@ -566,7 +566,7 @@ func (s *GceConfidentialInstanceConfig) MarshalJSON() ([]byte, error) {
 
 // GceInstance: A runtime using a Compute Engine instance.
 type GceInstance struct {
-	// BootDiskSizeGb: Size of the boot disk in GB.
+	// BootDiskSizeGb: Size of the boot disk in GB. Defaults to 50.
 	BootDiskSizeGb int64 `json:"bootDiskSizeGb,omitempty"`
 
 	// ConfidentialInstanceConfig: A set of Compute Engine Confidential VM
@@ -584,10 +584,10 @@ type GceInstance struct {
 	PoolSize int64 `json:"poolSize,omitempty"`
 
 	// ServiceAccount: Email address of the service account that will be
-	// used on VM instances used to support this config. This service
-	// account must have permission to pull the specified container image.
-	// If not set, VMs will run without a service account, in which case the
-	// image must be publicly accessible.
+	// used on VM instances used to support this config. If not set, VMs
+	// will run with a Google-managed service account. This service account
+	// must have permission to pull the specified container image, otherwise
+	// the image must be publicly accessible.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
 
 	// ShieldedInstanceConfig: A set of Compute Engine Shielded instance
@@ -625,12 +625,12 @@ func (s *GceInstance) MarshalJSON() ([]byte, error) {
 // GceRegionalPersistentDisk: A PersistentDirectory backed by a Compute
 // Engine regional persistent disk.
 type GceRegionalPersistentDisk struct {
-	// DiskType: Type of the disk to use.
+	// DiskType: Type of the disk to use. Defaults to pd-standard.
 	DiskType string `json:"diskType,omitempty"`
 
 	// FsType: Type of file system that the disk should be formatted with.
 	// The workstation image must support this file system type. Must be
-	// empty if source_snapshot is set.
+	// empty if source_snapshot is set. Defaults to ext4.
 	FsType string `json:"fsType,omitempty"`
 
 	// ReclaimPolicy: What should happen to the disk after the workstation
@@ -645,7 +645,7 @@ type GceRegionalPersistentDisk struct {
 	ReclaimPolicy string `json:"reclaimPolicy,omitempty"`
 
 	// SizeGb: Size of the disk in GB. Must be empty if source_snapshot is
-	// set.
+	// set. Defaults to 200.
 	SizeGb int64 `json:"sizeGb,omitempty"`
 
 	// SourceSnapshot: Name of the snapshot to use as the source for the

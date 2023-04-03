@@ -3010,11 +3010,11 @@ type ProjectsLocationsPhraseSetsCreateCall struct {
 // the PhraseSet.
 //
 //   - parent: The parent resource where this phrase set will be created.
-//     Format: `projects/{project}/locations/{location}/phraseSets`
-//     Speech-to-Text supports three locations: `global`, `us` (US North
-//     America), and `eu` (Europe). If you are calling the
-//     `speech.googleapis.com` endpoint, use the `global` location. To
-//     specify a region, use a regional endpoint
+//     Format: `projects/{project}/locations/{location}` Speech-to-Text
+//     supports three locations: `global`, `us` (US North America), and
+//     `eu` (Europe). If you are calling the `speech.googleapis.com`
+//     endpoint, use the `global` location. To specify a region, use a
+//     regional endpoint
 //     (https://cloud.google.com/speech-to-text/docs/endpoints) with
 //     matching `us` or `eu` location value.
 func (r *ProjectsLocationsPhraseSetsService) Create(parent string, createphrasesetrequest *CreatePhraseSetRequest) *ProjectsLocationsPhraseSetsCreateCall {
@@ -3124,7 +3124,7 @@ func (c *ProjectsLocationsPhraseSetsCreateCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The parent resource where this phrase set will be created. Format: `projects/{project}/locations/{location}/phraseSets` Speech-to-Text supports three locations: `global`, `us` (US North America), and `eu` (Europe). If you are calling the `speech.googleapis.com` endpoint, use the `global` location. To specify a region, use a [regional endpoint](https://cloud.google.com/speech-to-text/docs/endpoints) with matching `us` or `eu` location value.",
+	//       "description": "Required. The parent resource where this phrase set will be created. Format: `projects/{project}/locations/{location}` Speech-to-Text supports three locations: `global`, `us` (US North America), and `eu` (Europe). If you are calling the `speech.googleapis.com` endpoint, use the `global` location. To specify a region, use a [regional endpoint](https://cloud.google.com/speech-to-text/docs/endpoints) with matching `us` or `eu` location value.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,

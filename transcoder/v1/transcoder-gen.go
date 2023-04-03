@@ -1356,6 +1356,19 @@ type Job struct {
 	// organize and group your jobs.
 	Labels map[string]string `json:"labels,omitempty"`
 
+	// Mode: The processing mode of the job. The default is
+	// `PROCESSING_MODE_INTERACTIVE`.
+	//
+	// Possible values:
+	//   "PROCESSING_MODE_UNSPECIFIED" - The job processing mode is not
+	// specified.
+	//   "PROCESSING_MODE_INTERACTIVE" - The job processing mode is
+	// interactive mode. Interactive job will either be ran or rejected if
+	// quota does not allow for it.
+	//   "PROCESSING_MODE_BATCH" - The job processing mode is batch mode.
+	// Batch mode allows queuing of jobs.
+	Mode string `json:"mode,omitempty"`
+
 	// Name: The resource name of the job. Format:
 	// `projects/{project_number}/locations/{location}/jobs/{job}`
 	Name string `json:"name,omitempty"`

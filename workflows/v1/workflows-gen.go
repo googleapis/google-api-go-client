@@ -507,6 +507,20 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 
 // Workflow: Workflow program to be executed by Workflows.
 type Workflow struct {
+	// CallLogLevel: Optional. Describes the level of platform logging to
+	// apply to calls and call responses during executions of this workflow.
+	// If both the workflow and the execution specify a logging level, the
+	// execution level takes precedence.
+	//
+	// Possible values:
+	//   "CALL_LOG_LEVEL_UNSPECIFIED" - No call logging level specified.
+	//   "LOG_ALL_CALLS" - Log all call steps within workflows, all call
+	// returns, and all exceptions raised.
+	//   "LOG_ERRORS_ONLY" - Log only exceptions that are raised from call
+	// steps within workflows.
+	//   "LOG_NONE" - Explicitly log nothing.
+	CallLogLevel string `json:"callLogLevel,omitempty"`
+
 	// CreateTime: Output only. The timestamp for when the workflow was
 	// created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -570,7 +584,7 @@ type Workflow struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// ForceSendFields is a list of field names (e.g. "CallLogLevel") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -578,10 +592,10 @@ type Workflow struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "CallLogLevel") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`

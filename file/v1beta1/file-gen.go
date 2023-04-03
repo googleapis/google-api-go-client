@@ -1020,7 +1020,7 @@ type Instance struct {
 	// MaxCapacityGb: Output only. The max capacity of the instance.
 	MaxCapacityGb int64 `json:"maxCapacityGb,omitempty,string"`
 
-	// MaxShareCount: Output only. The max number of shares allowed.
+	// MaxShareCount: The max number of shares allowed.
 	MaxShareCount int64 `json:"maxShareCount,omitempty,string"`
 
 	// MultiShareEnabled: Indicates whether this instance uses a multi-share

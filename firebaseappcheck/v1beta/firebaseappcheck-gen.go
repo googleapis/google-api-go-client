@@ -8368,8 +8368,8 @@ func (r *ProjectsServicesService) List(parent string) *ProjectsServicesListCall 
 // PageSize sets the optional parameter "pageSize": The maximum number
 // of Services to return in the response. Only explicitly configured
 // services are returned. The server may return fewer than this at its
-// own discretion. If no value is specified (or too large a value is
-// specified), the server will impose its own limit.
+// own discretion. If no value is specified or set to zero (or too large
+// a value is specified), the server will impose its own limit.
 func (c *ProjectsServicesListCall) PageSize(pageSize int64) *ProjectsServicesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -8496,7 +8496,7 @@ func (c *ProjectsServicesListCall) Do(opts ...googleapi.CallOption) (*GoogleFire
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "The maximum number of Services to return in the response. Only explicitly configured services are returned. The server may return fewer than this at its own discretion. If no value is specified (or too large a value is specified), the server will impose its own limit.",
+	//       "description": "The maximum number of Services to return in the response. Only explicitly configured services are returned. The server may return fewer than this at its own discretion. If no value is specified or set to zero (or too large a value is specified), the server will impose its own limit.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"

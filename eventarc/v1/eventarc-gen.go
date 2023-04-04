@@ -408,9 +408,9 @@ type Channel struct {
 	// CreateTime: Output only. The creation time.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// CryptoKeyName: Optional. Resource name of a KMS crypto key (managed
-	// by the user) used to encrypt/decrypt their event data. It must match
-	// the pattern `projects/*/locations/*/keyRings/*/cryptoKeys/*`.
+	// CryptoKeyName: Resource name of a KMS crypto key (managed by the
+	// user) used to encrypt/decrypt their event data. It must match the
+	// pattern `projects/*/locations/*/keyRings/*/cryptoKeys/*`.
 	CryptoKeyName string `json:"cryptoKeyName,omitempty"`
 
 	// Name: Required. The resource name of the channel. Must be unique
@@ -1852,8 +1852,8 @@ type Trigger struct {
 
 	// EventDataContentType: Optional. EventDataContentType specifies the
 	// type of payload in MIME format that is expected from the CloudEvent
-	// data field. This will be set to `application/json` if the value is
-	// not defined.
+	// data field. This is set to `application/json` if the value is not
+	// defined.
 	EventDataContentType string `json:"eventDataContentType,omitempty"`
 
 	// EventFilters: Required. Unordered list. The list of filters that

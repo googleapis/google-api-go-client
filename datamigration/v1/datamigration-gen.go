@@ -267,6 +267,13 @@ func (s *AlloyDbConnectionProfile) MarshalJSON() ([]byte, error) {
 
 // AlloyDbSettings: Settings for creating an AlloyDB cluster.
 type AlloyDbSettings struct {
+	// EncryptionConfig: Optional. The encryption config can be specified to
+	// encrypt the data disks and other persistent data resources of a
+	// cluster with a customer-managed encryption key (CMEK). When this
+	// field is not specified, the cluster will then use default encryption
+	// scheme to protect the user data.
+	EncryptionConfig *EncryptionConfig `json:"encryptionConfig,omitempty"`
+
 	// InitialUser: Required. Input only. Initial user to setup during
 	// cluster creation. Required.
 	InitialUser *UserPassword `json:"initialUser,omitempty"`
@@ -285,7 +292,7 @@ type AlloyDbSettings struct {
 	// required to create a cluster.
 	VpcNetwork string `json:"vpcNetwork,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "InitialUser") to
+	// ForceSendFields is a list of field names (e.g. "EncryptionConfig") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -293,12 +300,13 @@ type AlloyDbSettings struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "InitialUser") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "EncryptionConfig") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1584,6 +1592,39 @@ type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
+}
+
+// EncryptionConfig: EncryptionConfig describes the encryption config of
+// a cluster that is encrypted with a CMEK (customer-managed encryption
+// key).
+type EncryptionConfig struct {
+	// KmsKeyName: The fully-qualified resource name of the KMS key. Each
+	// Cloud KMS key is regionalized and has the following format:
+	// projects/[PROJECT]/locations/[REGION]/keyRings/[RING]/cryptoKeys/[KEY_
+	// NAME]
+	KmsKeyName string `json:"kmsKeyName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "KmsKeyName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "KmsKeyName") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EncryptionConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod EncryptionConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // EntityMapping: Details of the mappings of a database entity.

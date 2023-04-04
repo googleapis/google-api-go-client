@@ -512,7 +512,7 @@ type CloudStorageWorkload struct {
 
 	// StorageClass: The storage class
 	// (https://cloud.google.com/storage/docs/storage-classes#classes) of
-	// the data and operation. For example: "standard" or "nearline".
+	// the data and operation. For example: "standard" and "nearline".
 	StorageClass string `json:"storageClass,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DataRetrieval") to

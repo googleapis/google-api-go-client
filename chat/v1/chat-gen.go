@@ -2665,8 +2665,7 @@ type GoogleAppsCardV1TextInput struct {
 	// If unspecified, the suggestions are set by `initialSuggestions` and
 	// are processed by the client. If specified, the app takes the action
 	// specified here, such as running a custom function. Supported by
-	// Google Workspace Add-ons, but not Chat apps. Support by Chat apps
-	// coming soon.
+	// Google Workspace Add-ons, but not Chat apps.
 	AutoCompleteAction *GoogleAppsCardV1Action `json:"autoCompleteAction,omitempty"`
 
 	// HintText: Text that appears below the text input field meant to

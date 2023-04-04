@@ -3375,11 +3375,11 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 // time if some operations are done in parallel). Here is an example,
 // let's consider that we have a continuous build is executing a test
 // runner for each iteration. The workflow would look like: - user
-// creates a Execution with id 1 - user creates an TestExecutionStep
-// with id 100 for Execution 1 - user update TestExecutionStep with id
-// 100 to add a raw xml log + the service parses the xml logs and
-// returns a TestExecutionStep with updated TestResult(s). - user update
-// the status of TestExecutionStep with id 100 to COMPLETE A Step can be
+// creates a Execution with id 1 - user creates a TestExecutionStep with
+// id 100 for Execution 1 - user update TestExecutionStep with id 100 to
+// add a raw xml log + the service parses the xml logs and returns a
+// TestExecutionStep with updated TestResult(s). - user update the
+// status of TestExecutionStep with id 100 to COMPLETE A Step can be
 // updated until its state is set to COMPLETE at which points it becomes
 // immutable. Next tag: 27
 type Step struct {
@@ -7992,7 +7992,7 @@ type ProjectsHistoriesExecutionsStepsPublishXunitXmlFilesCall struct {
 // return any of the following canonical error codes: -
 // PERMISSION_DENIED - if the user is not authorized to write project -
 // INVALID_ARGUMENT - if the request is malformed - FAILED_PRECONDITION
-// - if the requested state transition is illegal, e.g try to upload a
+// - if the requested state transition is illegal, e.g. try to upload a
 // duplicate xml file or a file too large. - NOT_FOUND - if the
 // containing Execution does not exist
 //
@@ -8105,7 +8105,7 @@ func (c *ProjectsHistoriesExecutionsStepsPublishXunitXmlFilesCall) Do(opts ...go
 	}
 	return ret, nil
 	// {
-	//   "description": "Publish xml files to an existing Step. May return any of the following canonical error codes: - PERMISSION_DENIED - if the user is not authorized to write project - INVALID_ARGUMENT - if the request is malformed - FAILED_PRECONDITION - if the requested state transition is illegal, e.g try to upload a duplicate xml file or a file too large. - NOT_FOUND - if the containing Execution does not exist",
+	//   "description": "Publish xml files to an existing Step. May return any of the following canonical error codes: - PERMISSION_DENIED - if the user is not authorized to write project - INVALID_ARGUMENT - if the request is malformed - FAILED_PRECONDITION - if the requested state transition is illegal, e.g. try to upload a duplicate xml file or a file too large. - NOT_FOUND - if the containing Execution does not exist",
 	//   "flatPath": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}:publishXunitXmlFiles",
 	//   "httpMethod": "POST",
 	//   "id": "toolresults.projects.histories.executions.steps.publishXunitXmlFiles",

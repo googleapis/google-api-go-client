@@ -142,6 +142,7 @@ func NewProjectsService(s *Service) *ProjectsService {
 	rs := &ProjectsService{s: s}
 	rs.Notes = NewProjectsNotesService(s)
 	rs.Occurrences = NewProjectsOccurrencesService(s)
+	rs.Resources = NewProjectsResourcesService(s)
 	return rs
 }
 
@@ -151,6 +152,8 @@ type ProjectsService struct {
 	Notes *ProjectsNotesService
 
 	Occurrences *ProjectsOccurrencesService
+
+	Resources *ProjectsResourcesService
 }
 
 func NewProjectsNotesService(s *Service) *ProjectsNotesService {
@@ -180,6 +183,15 @@ func NewProjectsOccurrencesService(s *Service) *ProjectsOccurrencesService {
 }
 
 type ProjectsOccurrencesService struct {
+	s *Service
+}
+
+func NewProjectsResourcesService(s *Service) *ProjectsResourcesService {
+	rs := &ProjectsResourcesService{s: s}
+	return rs
+}
+
+type ProjectsResourcesService struct {
 	s *Service
 }
 
@@ -285,6 +297,75 @@ type Artifact struct {
 
 func (s *Artifact) MarshalJSON() ([]byte, error) {
 	type NoMethod Artifact
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Assessment: Assessment provides all information that is related to a
+// single vulnerability for this product.
+type Assessment struct {
+	// Cve: Holds the MITRE standard Common Vulnerabilities and Exposures
+	// (CVE) tracking number for the vulnerability.
+	Cve string `json:"cve,omitempty"`
+
+	// Impacts: Contains information about the impact of this vulnerability,
+	// this will change with time.
+	Impacts []string `json:"impacts,omitempty"`
+
+	// Justification: Justification provides the justification when the
+	// state of the assessment if NOT_AFFECTED.
+	Justification *Justification `json:"justification,omitempty"`
+
+	// LongDescription: A detailed description of this Vex.
+	LongDescription string `json:"longDescription,omitempty"`
+
+	// RelatedUris: Holds a list of references associated with this
+	// vulnerability item and assessment. These uris have additional
+	// information about the vulnerability and the assessment itself. E.g.
+	// Link to a document which details how this assessment concluded the
+	// state of this vulnerability.
+	RelatedUris []*RelatedUrl `json:"relatedUris,omitempty"`
+
+	// Remediations: Specifies details on how to handle (and presumably,
+	// fix) a vulnerability.
+	Remediations []*Remediation `json:"remediations,omitempty"`
+
+	// ShortDescription: A one sentence description of this Vex.
+	ShortDescription string `json:"shortDescription,omitempty"`
+
+	// State: Provides the state of this Vulnerability assessment.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - No state is specified.
+	//   "AFFECTED" - This product is known to be affected by this
+	// vulnerability.
+	//   "NOT_AFFECTED" - This product is known to be not affected by this
+	// vulnerability.
+	//   "FIXED" - This product contains a fix for this vulnerability.
+	//   "UNDER_INVESTIGATION" - It is not known yet whether these versions
+	// are or are not affected by the vulnerability. However, it is still
+	// under investigation.
+	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Cve") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Cve") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Assessment) MarshalJSON() ([]byte, error) {
+	type NoMethod Assessment
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3364,6 +3445,8 @@ type DiscoveryNote struct {
 	//   "UPGRADE" - This represents an available package upgrade.
 	//   "COMPLIANCE" - This represents a Compliance Note
 	//   "DSSE_ATTESTATION" - This represents a DSSE attestation Note
+	//   "VULNERABILITY_ASSESSMENT" - This represents a Vulnerability
+	// Assessment.
 	AnalysisKind string `json:"analysisKind,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AnalysisKind") to
@@ -3761,6 +3844,12 @@ func (s *FixableTotalByDigest) MarshalJSON() ([]byte, error) {
 	type NoMethod FixableTotalByDigest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GeneratePackagesSummaryRequest: GeneratePackagesSummaryRequest is the
+// request body for the GeneratePackagesSummary API method. It just
+// takes a single name argument, referring to the resource.
+type GeneratePackagesSummaryRequest struct {
 }
 
 // GerritSourceContext: A SourceContext referring to a Gerrit project.
@@ -4424,6 +4513,58 @@ func (s *InTotoStatement) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Justification: Justification provides the justification when the
+// state of the assessment if NOT_AFFECTED.
+type Justification struct {
+	// Details: Additional details on why this justification was chosen.
+	Details string `json:"details,omitempty"`
+
+	// JustificationType: The justification type for this vulnerability.
+	//
+	// Possible values:
+	//   "JUSTIFICATION_TYPE_UNSPECIFIED" - JUSTIFICATION_TYPE_UNSPECIFIED.
+	//   "COMPONENT_NOT_PRESENT" - The vulnerable component is not present
+	// in the product.
+	//   "VULNERABLE_CODE_NOT_PRESENT" - The vulnerable code is not present.
+	// Typically this case occurs when source code is configured or built in
+	// a way that excludes the vulnerable code.
+	//   "VULNERABLE_CODE_NOT_IN_EXECUTE_PATH" - The vulnerable code can not
+	// be executed. Typically this case occurs when the product includes the
+	// vulnerable code but does not call or use the vulnerable code.
+	//   "VULNERABLE_CODE_CANNOT_BE_CONTROLLED_BY_ADVERSARY" - The
+	// vulnerable code cannot be controlled by an attacker to exploit the
+	// vulnerability.
+	//   "INLINE_MITIGATIONS_ALREADY_EXIST" - The product includes built-in
+	// protections or features that prevent exploitation of the
+	// vulnerability. These built-in protections cannot be subverted by the
+	// attacker and cannot be configured or disabled by the user. These
+	// mitigations completely prevent exploitation based on known attack
+	// vectors.
+	JustificationType string `json:"justificationType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Details") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Details") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Justification) MarshalJSON() ([]byte, error) {
+	type NoMethod Justification
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type Jwt struct {
 	// CompactJwt: The compact encoding of a JWS, which is always three
 	// base64 encoded strings joined by periods. For details, see:
@@ -4549,6 +4690,40 @@ type License struct {
 
 func (s *License) MarshalJSON() ([]byte, error) {
 	type NoMethod License
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// LicensesSummary: Per license count
+type LicensesSummary struct {
+	// Count: The number of fixable vulnerabilities associated with this
+	// resource.
+	Count int64 `json:"count,omitempty,string"`
+
+	// License: The license of the package. Note that the format of this
+	// value is not guaranteed. It may be nil, an empty string, a boolean
+	// value (A | B), a differently formed boolean value (A OR B), etc...
+	License string `json:"license,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Count") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Count") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LicensesSummary) MarshalJSON() ([]byte, error) {
+	type NoMethod LicensesSummary
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4863,6 +5038,8 @@ type Note struct {
 	//   "UPGRADE" - This represents an available package upgrade.
 	//   "COMPLIANCE" - This represents a Compliance Note
 	//   "DSSE_ATTESTATION" - This represents a DSSE attestation Note
+	//   "VULNERABILITY_ASSESSMENT" - This represents a Vulnerability
+	// Assessment.
 	Kind string `json:"kind,omitempty"`
 
 	// LongDescription: A detailed description of this note.
@@ -4894,6 +5071,10 @@ type Note struct {
 
 	// Vulnerability: A note describing a package vulnerability.
 	Vulnerability *VulnerabilityNote `json:"vulnerability,omitempty"`
+
+	// VulnerabilityAssessment: A note describing a vulnerability
+	// assessment.
+	VulnerabilityAssessment *VulnerabilityAssessmentNote `json:"vulnerabilityAssessment,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -4973,6 +5154,8 @@ type Occurrence struct {
 	//   "UPGRADE" - This represents an available package upgrade.
 	//   "COMPLIANCE" - This represents a Compliance Note
 	//   "DSSE_ATTESTATION" - This represents a DSSE attestation Note
+	//   "VULNERABILITY_ASSESSMENT" - This represents a Vulnerability
+	// Assessment.
 	Kind string `json:"kind,omitempty"`
 
 	// Name: Output only. The name of the occurrence in the form of
@@ -5243,6 +5426,45 @@ func (s *PackageOccurrence) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// PackagesSummaryResponse: A summary of the packages found within the
+// given resource.
+type PackagesSummaryResponse struct {
+	// LicensesSummary: A listing by license name of each of the licenses
+	// and their counts.
+	LicensesSummary []*LicensesSummary `json:"licensesSummary,omitempty"`
+
+	// ResourceUrl: The unique URL of the image or the container for which
+	// this summary applies.
+	ResourceUrl string `json:"resourceUrl,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "LicensesSummary") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LicensesSummary") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PackagesSummaryResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod PackagesSummaryResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Policy: An Identity and Access Management (IAM) policy, which
 // specifies access controls for Google Cloud resources. A `Policy` is a
 // collection of `bindings`. A `binding` binds one or more `members`, or
@@ -5349,6 +5571,45 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Product: Product contains information about a product and how to
+// uniquely identify it.
+type Product struct {
+	// GenericUri: Contains a URI which is vendor-specific. Example: The
+	// artifact repository URL of an image.
+	GenericUri string `json:"genericUri,omitempty"`
+
+	// Id: Token that identifies a product so that it can be referred to
+	// from other parts in the document. There is no predefined format as
+	// long as it uniquely identifies a group in the context of the current
+	// document.
+	Id string `json:"id,omitempty"`
+
+	// Name: Name of the product.
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "GenericUri") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "GenericUri") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Product) MarshalJSON() ([]byte, error) {
+	type NoMethod Product
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ProjectRepoId: Selects a repo using a Google Cloud Platform project
 // ID (e.g., winged-cargo-31) and a repo name within that project.
 type ProjectRepoId struct {
@@ -5377,6 +5638,47 @@ type ProjectRepoId struct {
 
 func (s *ProjectRepoId) MarshalJSON() ([]byte, error) {
 	type NoMethod ProjectRepoId
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Publisher: Publisher contains information about the publisher of this
+// Note.
+type Publisher struct {
+	// IssuingAuthority: Provides information about the authority of the
+	// issuing party to release the document, in particular, the party's
+	// constituency and responsibilities or other obligations.
+	IssuingAuthority string `json:"issuingAuthority,omitempty"`
+
+	// Name: Name of the publisher. Examples: 'Google', 'Google Cloud
+	// Platform'.
+	Name string `json:"name,omitempty"`
+
+	// PublisherNamespace: The context or namespace. Contains a URL which is
+	// under control of the issuing party and can be used as a globally
+	// unique identifier for that issuing party. Example: https://csaf.io
+	PublisherNamespace string `json:"publisherNamespace,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IssuingAuthority") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IssuingAuthority") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Publisher) MarshalJSON() ([]byte, error) {
+	type NoMethod Publisher
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5470,6 +5772,50 @@ type RelatedUrl struct {
 
 func (s *RelatedUrl) MarshalJSON() ([]byte, error) {
 	type NoMethod RelatedUrl
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Remediation: Specifies details on how to handle (and presumably, fix)
+// a vulnerability.
+type Remediation struct {
+	// Details: Contains a comprehensive human-readable discussion of the
+	// remediation.
+	Details string `json:"details,omitempty"`
+
+	// RemediationType: The type of remediation that can be applied.
+	//
+	// Possible values:
+	//   "REMEDIATION_TYPE_UNSPECIFIED" - No remediation type specified.
+	//   "MITIGATION" - A MITIGATION is available.
+	//   "NO_FIX_PLANNED" - No fix is planned.
+	//   "NONE_AVAILABLE" - Not available.
+	//   "VENDOR_FIX" - A vendor fix is available.
+	//   "WORKAROUND" - A workaround is available.
+	RemediationType string `json:"remediationType,omitempty"`
+
+	// RemediationUri: Contains the URL where to obtain the remediation.
+	RemediationUri *RelatedUrl `json:"remediationUri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Details") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Details") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Remediation) MarshalJSON() ([]byte, error) {
+	type NoMethod Remediation
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -6311,6 +6657,71 @@ func (s *Version) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// VexAssessment: VexAssessment provides all publisher provided Vex
+// information that is related to this vulnerability.
+type VexAssessment struct {
+	// Cve: Holds the MITRE standard Common Vulnerabilities and Exposures
+	// (CVE) tracking number for the vulnerability.
+	Cve string `json:"cve,omitempty"`
+
+	// Impacts: Contains information about the impact of this vulnerability,
+	// this will change with time.
+	Impacts []string `json:"impacts,omitempty"`
+
+	// Justification: Justification provides the justification when the
+	// state of the assessment if NOT_AFFECTED.
+	Justification *Justification `json:"justification,omitempty"`
+
+	// NoteName: The VulnerabilityAssessment note from which this
+	// VexAssessment was generated. This will be of the form:
+	// `projects/[PROJECT_ID]/notes/[NOTE_ID]`.
+	NoteName string `json:"noteName,omitempty"`
+
+	// RelatedUris: Holds a list of references associated with this
+	// vulnerability item and assessment.
+	RelatedUris []*RelatedUrl `json:"relatedUris,omitempty"`
+
+	// Remediations: Specifies details on how to handle (and presumably,
+	// fix) a vulnerability.
+	Remediations []*Remediation `json:"remediations,omitempty"`
+
+	// State: Provides the state of this Vulnerability assessment.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - No state is specified.
+	//   "AFFECTED" - This product is known to be affected by this
+	// vulnerability.
+	//   "NOT_AFFECTED" - This product is known to be not affected by this
+	// vulnerability.
+	//   "FIXED" - This product contains a fix for this vulnerability.
+	//   "UNDER_INVESTIGATION" - It is not known yet whether these versions
+	// are or are not affected by the vulnerability. However, it is still
+	// under investigation.
+	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Cve") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Cve") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *VexAssessment) MarshalJSON() ([]byte, error) {
+	type NoMethod VexAssessment
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Volume: Volume describes a Docker container volume which is mounted
 // into build steps in order to persist files across build step
 // execution. Next ID: 3
@@ -6344,6 +6755,55 @@ type Volume struct {
 
 func (s *Volume) MarshalJSON() ([]byte, error) {
 	type NoMethod Volume
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// VulnerabilityAssessmentNote: A single VulnerabilityAssessmentNote
+// represents one particular product's vulnerability assessment for one
+// CVE.
+type VulnerabilityAssessmentNote struct {
+	// Assessment: Represents a vulnerability assessment for the product.
+	Assessment *Assessment `json:"assessment,omitempty"`
+
+	// LanguageCode: Identifies the language used by this document,
+	// corresponding to IETF BCP 47 / RFC 5646.
+	LanguageCode string `json:"languageCode,omitempty"`
+
+	// LongDescription: A detailed description of this Vex.
+	LongDescription string `json:"longDescription,omitempty"`
+
+	// Product: The product affected by this vex.
+	Product *Product `json:"product,omitempty"`
+
+	// Publisher: Publisher details of this Note.
+	Publisher *Publisher `json:"publisher,omitempty"`
+
+	// ShortDescription: A one sentence description of this Vex.
+	ShortDescription string `json:"shortDescription,omitempty"`
+
+	// Title: The title of the note. E.g. `Vex-Debian-11.4`
+	Title string `json:"title,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Assessment") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Assessment") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *VulnerabilityAssessmentNote) MarshalJSON() ([]byte, error) {
+	type NoMethod VulnerabilityAssessmentNote
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -6511,6 +6971,8 @@ type VulnerabilityOccurrence struct {
 	// Type: The type of package; whether native or non native (e.g., ruby
 	// gems, node.js packages, etc.).
 	Type string `json:"type,omitempty"`
+
+	VexAssessment *VexAssessment `json:"vexAssessment,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CvssScore") to
 	// unconditionally include in API requests. By default, fields with
@@ -9947,6 +10409,150 @@ func (c *ProjectsOccurrencesTestIamPermissionsCall) Do(opts ...googleapi.CallOpt
 	//   },
 	//   "response": {
 	//     "$ref": "TestIamPermissionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "containeranalysis.projects.resources.generatePackagesSummary":
+
+type ProjectsResourcesGeneratePackagesSummaryCall struct {
+	s                              *Service
+	name                           string
+	generatepackagessummaryrequest *GeneratePackagesSummaryRequest
+	urlParams_                     gensupport.URLParams
+	ctx_                           context.Context
+	header_                        http.Header
+}
+
+// GeneratePackagesSummary: Gets a summary of the packages within a
+// given resource.
+//
+//   - name: The name of the resource to get a packages summary for in the
+//     form of `projects/[PROJECT_ID]/resources/[RESOURCE_URL]`.
+func (r *ProjectsResourcesService) GeneratePackagesSummary(name string, generatepackagessummaryrequest *GeneratePackagesSummaryRequest) *ProjectsResourcesGeneratePackagesSummaryCall {
+	c := &ProjectsResourcesGeneratePackagesSummaryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.generatepackagessummaryrequest = generatepackagessummaryrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsResourcesGeneratePackagesSummaryCall) Fields(s ...googleapi.Field) *ProjectsResourcesGeneratePackagesSummaryCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsResourcesGeneratePackagesSummaryCall) Context(ctx context.Context) *ProjectsResourcesGeneratePackagesSummaryCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsResourcesGeneratePackagesSummaryCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsResourcesGeneratePackagesSummaryCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.generatepackagessummaryrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:generatePackagesSummary")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "containeranalysis.projects.resources.generatePackagesSummary" call.
+// Exactly one of *PackagesSummaryResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *PackagesSummaryResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsResourcesGeneratePackagesSummaryCall) Do(opts ...googleapi.CallOption) (*PackagesSummaryResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &PackagesSummaryResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a summary of the packages within a given resource.",
+	//   "flatPath": "v1/projects/{projectsId}/resources/{resourcesId}:generatePackagesSummary",
+	//   "httpMethod": "POST",
+	//   "id": "containeranalysis.projects.resources.generatePackagesSummary",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the resource to get a packages summary for in the form of `projects/[PROJECT_ID]/resources/[RESOURCE_URL]`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/resources/.*$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:generatePackagesSummary",
+	//   "request": {
+	//     "$ref": "GeneratePackagesSummaryRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "PackagesSummaryResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

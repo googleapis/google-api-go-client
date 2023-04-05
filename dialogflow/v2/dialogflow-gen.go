@@ -2353,7 +2353,7 @@ func (s *GoogleCloudDialogflowCxV3InputAudioConfig) MarshalJSON() ([]byte, error
 // to interact with a conversational agent. You can provide information
 // for the Dialogflow API to use to match user input to an intent by
 // adding training phrases (i.e., examples of user input) to your
-// intent.
+// intent. Next ID: 15
 type GoogleCloudDialogflowCxV3Intent struct {
 	// Description: Human readable description for better understanding an
 	// intent like its scope, content, result etc. Maximum character limit:
@@ -3967,6 +3967,10 @@ type GoogleCloudDialogflowCxV3WebhookRequest struct {
 	// DetectIntentResponseId: Always present. The unique identifier of the
 	// DetectIntentResponse that will be returned to the API caller.
 	DetectIntentResponseId string `json:"detectIntentResponseId,omitempty"`
+
+	// DtmfDigits: If DTMF was provided as input, this field will contain
+	// the DTMF digits.
+	DtmfDigits string `json:"dtmfDigits,omitempty"`
 
 	// FulfillmentInfo: Always present. Information about the fulfillment
 	// that triggered this webhook call.
@@ -6013,7 +6017,8 @@ func (s *GoogleCloudDialogflowCxV3beta1IntentParameter) MarshalJSON() ([]byte, e
 }
 
 // GoogleCloudDialogflowCxV3beta1IntentTrainingPhrase: Represents an
-// example that the agent is trained on to identify the intent.
+// example that the agent is trained on to identify the intent. Next ID:
+// 15
 type GoogleCloudDialogflowCxV3beta1IntentTrainingPhrase struct {
 	// Id: Output only. The unique identifier of the training phrase.
 	Id string `json:"id,omitempty"`
@@ -7478,6 +7483,10 @@ type GoogleCloudDialogflowCxV3beta1WebhookRequest struct {
 	// DetectIntentResponseId: Always present. The unique identifier of the
 	// DetectIntentResponse that will be returned to the API caller.
 	DetectIntentResponseId string `json:"detectIntentResponseId,omitempty"`
+
+	// DtmfDigits: If DTMF was provided as input, this field will contain
+	// the DTMF digits.
+	DtmfDigits string `json:"dtmfDigits,omitempty"`
 
 	// FulfillmentInfo: Always present. Information about the fulfillment
 	// that triggered this webhook call.

@@ -2151,10 +2151,10 @@ func (c *AccountsListChildAccountsCall) PageSize(pageSize int64) *AccountsListCh
 }
 
 // PageToken sets the optional parameter "pageToken": A page token,
-// received from a previous `ListAccounts` call. Provide this to
+// received from a previous `ListChildAccounts` call. Provide this to
 // retrieve the subsequent page. When paginating, all other parameters
-// provided to `ListAccounts` must match the call that provided the page
-// token.
+// provided to `ListChildAccounts` must match the call that provided the
+// page token.
 func (c *AccountsListChildAccountsCall) PageToken(pageToken string) *AccountsListChildAccountsCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -2274,7 +2274,7 @@ func (c *AccountsListChildAccountsCall) Do(opts ...googleapi.CallOption) (*ListC
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A page token, received from a previous `ListAccounts` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListAccounts` must match the call that provided the page token.",
+	//       "description": "A page token, received from a previous `ListChildAccounts` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListChildAccounts` must match the call that provided the page token.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -8172,10 +8172,10 @@ func (c *AccountsReportsSavedListCall) PageSize(pageSize int64) *AccountsReports
 }
 
 // PageToken sets the optional parameter "pageToken": A page token,
-// received from a previous `ListPayments` call. Provide this to
+// received from a previous `ListSavedReports` call. Provide this to
 // retrieve the subsequent page. When paginating, all other parameters
-// provided to `ListPayments` must match the call that provided the page
-// token.
+// provided to `ListSavedReports` must match the call that provided the
+// page token.
 func (c *AccountsReportsSavedListCall) PageToken(pageToken string) *AccountsReportsSavedListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -8295,7 +8295,7 @@ func (c *AccountsReportsSavedListCall) Do(opts ...googleapi.CallOption) (*ListSa
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A page token, received from a previous `ListPayments` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListPayments` must match the call that provided the page token.",
+	//       "description": "A page token, received from a previous `ListSavedReports` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListSavedReports` must match the call that provided the page token.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

@@ -1373,6 +1373,11 @@ type QueuedResource struct {
 	// QueueingPolicy: The queueing policy of the QueuedRequest.
 	QueueingPolicy *QueueingPolicy `json:"queueingPolicy,omitempty"`
 
+	// ReservationName: Name of the reservation in which the resource should
+	// be provisioned. Format:
+	// projects/{project}/locations/{zone}/reservations/{reservation}
+	ReservationName string `json:"reservationName,omitempty"`
+
 	// State: Output only. State of the QueuedResource request.
 	State *QueuedResourceState `json:"state,omitempty"`
 
@@ -4744,7 +4749,7 @@ func (r *ProjectsLocationsQueuedResourcesService) Create(parent string, queuedre
 }
 
 // QueuedResourceId sets the optional parameter "queuedResourceId": The
-// unqualified resource name. Should follow the ^[A-Za-z0-9_.~+%-]+$
+// unqualified resource name. Should follow the `^[A-Za-z0-9_.~+%-]+$`
 // regex format.
 func (c *ProjectsLocationsQueuedResourcesCreateCall) QueuedResourceId(queuedResourceId string) *ProjectsLocationsQueuedResourcesCreateCall {
 	c.urlParams_.Set("queuedResourceId", queuedResourceId)
@@ -4865,7 +4870,7 @@ func (c *ProjectsLocationsQueuedResourcesCreateCall) Do(opts ...googleapi.CallOp
 	//       "type": "string"
 	//     },
 	//     "queuedResourceId": {
-	//       "description": "The unqualified resource name. Should follow the ^[A-Za-z0-9_.~+%-]+$ regex format.",
+	//       "description": "The unqualified resource name. Should follow the `^[A-Za-z0-9_.~+%-]+$` regex format.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

@@ -10192,7 +10192,7 @@ func (s *GoogleCloudDocumentaiV1beta3NormalizedVertex) UnmarshalJSON(data []byte
 // GoogleCloudDocumentaiV1beta3OcrConfig: Config for Document OCR.
 type GoogleCloudDocumentaiV1beta3OcrConfig struct {
 	// AdvancedOcrOptions: A list of advanced OCR options to further
-	// fine-tune OCR behavior. Current valid values are: - "legacy_layout":
+	// fine-tune OCR behavior. Current valid values are: - `legacy_layout`:
 	// a heuristics layout detection algorithm, which serves as an
 	// alternative to the current ML-based layout detection algorithm.
 	// Customers can choose the best suitable layout algorithm based on

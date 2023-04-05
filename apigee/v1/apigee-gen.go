@@ -8074,10 +8074,16 @@ type GoogleCloudApigeeV1ProvisionOrganizationRequest struct {
 	// Defaults to `us-west1`.
 	AnalyticsRegion string `json:"analyticsRegion,omitempty"`
 
-	// AuthorizedNetwork: Name of the customer project's VPC network. If
-	// provided, the network needs to be peered through Service Networking.
-	// If none is provided, the organization will have access only to the
-	// public internet.
+	// AuthorizedNetwork: Compute Engine network used for Service Networking
+	// to be peered with Apigee runtime instances. See Getting started with
+	// the Service Networking API
+	// (https://cloud.google.com/service-infrastructure/docs/service-networking/getting-started).
+	// Apigee also supports shared VPC (that is, the host network project is
+	// not the same as the one that is peering with Apigee). See Shared VPC
+	// overview (https://cloud.google.com/vpc/docs/shared-vpc). To use a
+	// shared VPC network, use the following format:
+	// `projects/{host-project-id}/{region}/networks/{network-name}`. For
+	// example: `projects/my-sharedvpc-host/global/networks/mynetwork`
 	AuthorizedNetwork string `json:"authorizedNetwork,omitempty"`
 
 	// RuntimeLocation: Cloud Platform location for the runtime instance.

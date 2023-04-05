@@ -3347,6 +3347,7 @@ type Discovery struct {
 	//   "SPDX_RELATIONSHIP" - This represents an SPDX Relationship.
 	//   "VULNERABILITY_ASSESSMENT" - This represents a Vulnerability
 	// Assessment.
+	//   "SBOM_REFERENCE" - This represents an SBOM Reference.
 	AnalysisKind string `json:"analysisKind,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AnalysisKind") to
@@ -5180,6 +5181,7 @@ type Note struct {
 	//   "SPDX_RELATIONSHIP" - This represents an SPDX Relationship.
 	//   "VULNERABILITY_ASSESSMENT" - This represents a Vulnerability
 	// Assessment.
+	//   "SBOM_REFERENCE" - This represents an SBOM Reference.
 	Kind string `json:"kind,omitempty"`
 
 	// LongDescription: A detailed description of this note.
@@ -5201,6 +5203,9 @@ type Note struct {
 
 	// Sbom: A note describing a software bill of materials.
 	Sbom *DocumentNote `json:"sbom,omitempty"`
+
+	// SbomReference: A note describing an SBOM reference.
+	SbomReference *SBOMReferenceNote `json:"sbomReference,omitempty"`
 
 	// ShortDescription: A one sentence description of this note.
 	ShortDescription string `json:"shortDescription,omitempty"`
@@ -5310,6 +5315,7 @@ type Occurrence struct {
 	//   "SPDX_RELATIONSHIP" - This represents an SPDX Relationship.
 	//   "VULNERABILITY_ASSESSMENT" - This represents a Vulnerability
 	// Assessment.
+	//   "SBOM_REFERENCE" - This represents an SBOM Reference.
 	Kind string `json:"kind,omitempty"`
 
 	// Name: Output only. The name of the occurrence in the form of
@@ -5331,6 +5337,9 @@ type Occurrence struct {
 
 	// Sbom: Describes a specific software bill of materials document.
 	Sbom *DocumentOccurrence `json:"sbom,omitempty"`
+
+	// SbomReference: Describes a specific SBOM reference occurrences.
+	SbomReference *SBOMReferenceOccurrence `json:"sbomReference,omitempty"`
 
 	// SpdxFile: Describes a specific SPDX File.
 	SpdxFile *FileOccurrence `json:"spdxFile,omitempty"`
@@ -6348,6 +6357,161 @@ func (s *Resource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// SBOMReferenceNote: The note representing an SBOM reference.
+type SBOMReferenceNote struct {
+	// Format: The format that SBOM takes. E.g. may be spdx, cyclonedx,
+	// etc...
+	Format string `json:"format,omitempty"`
+
+	// Version: The version of the format that the SBOM takes. E.g. if the
+	// format is spdx, the version may be 2.3.
+	Version string `json:"version,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Format") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Format") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SBOMReferenceNote) MarshalJSON() ([]byte, error) {
+	type NoMethod SBOMReferenceNote
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SBOMReferenceOccurrence: The occurrence representing an SBOM
+// reference as applied to a specific resource. The occurrence follows
+// the DSSE specification. See
+// https://github.com/secure-systems-lab/dsse/blob/master/envelope.md
+// for more details.
+type SBOMReferenceOccurrence struct {
+	// Payload: The actual payload that contains the SBOM reference data.
+	Payload *SbomReferenceIntotoPayload `json:"payload,omitempty"`
+
+	// PayloadType: The kind of payload that SbomReferenceIntotoPayload
+	// takes. Since it's in the intoto format, this value is expected to be
+	// 'application/vnd.in-toto+json'.
+	PayloadType string `json:"payloadType,omitempty"`
+
+	// Signatures: The signatures over the payload.
+	Signatures []*EnvelopeSignature `json:"signatures,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Payload") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Payload") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SBOMReferenceOccurrence) MarshalJSON() ([]byte, error) {
+	type NoMethod SBOMReferenceOccurrence
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SbomReferenceIntotoPayload: The actual payload that contains the SBOM
+// Reference data. The payload follows the intoto statement
+// specification. See
+// https://github.com/in-toto/attestation/blob/main/spec/v1.0/statement.md
+// for more details.
+type SbomReferenceIntotoPayload struct {
+	// Type: Identifier for the schema of the Statement.
+	Type string `json:"_type,omitempty"`
+
+	// Predicate: Additional parameters of the Predicate. Includes the
+	// actual data about the SBOM.
+	Predicate *SbomReferenceIntotoPredicate `json:"predicate,omitempty"`
+
+	// PredicateType: URI identifying the type of the Predicate.
+	PredicateType string `json:"predicateType,omitempty"`
+
+	// Subject: Set of software artifacts that the attestation applies to.
+	// Each element represents a single software artifact.
+	Subject []*Subject `json:"subject,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Type") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Type") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SbomReferenceIntotoPayload) MarshalJSON() ([]byte, error) {
+	type NoMethod SbomReferenceIntotoPayload
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SbomReferenceIntotoPredicate: A predicate which describes the SBOM
+// being referenced.
+type SbomReferenceIntotoPredicate struct {
+	// Digest: A map of algorithm to digest of the contents of the SBOM.
+	Digest map[string]string `json:"digest,omitempty"`
+
+	// Location: The location of the SBOM.
+	Location string `json:"location,omitempty"`
+
+	// MimeType: The mime type of the SBOM.
+	MimeType string `json:"mimeType,omitempty"`
+
+	// ReferrerId: The person or system referring this predicate to the
+	// consumer.
+	ReferrerId string `json:"referrerId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Digest") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Digest") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SbomReferenceIntotoPredicate) MarshalJSON() ([]byte, error) {
+	type NoMethod SbomReferenceIntotoPredicate
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // SetIamPolicyRequest: Request message for `SetIamPolicy` method.
 type SetIamPolicyRequest struct {
 	// Policy: REQUIRED: The complete policy to be applied to the
@@ -6623,6 +6787,40 @@ type Status struct {
 
 func (s *Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Subject: Set of software artifacts that the attestation applies to.
+// Each element represents a single software artifact.
+type Subject struct {
+	// Digest: "": "" Algorithms can be e.g. sha256, sha512 See
+	// https://github.com/in-toto/attestation/blob/main/spec/field_types.md#DigestSet
+	Digest map[string]string `json:"digest,omitempty"`
+
+	// Name: Identifier to distinguish this artifact from others within the
+	// subject.
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Digest") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Digest") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Subject) MarshalJSON() ([]byte, error) {
+	type NoMethod Subject
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

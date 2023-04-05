@@ -339,6 +339,11 @@ type Case struct {
 	// Classification: The issue classification applicable to this case.
 	Classification *CaseClassification `json:"classification,omitempty"`
 
+	// ContactEmail: A user-supplied email address to send case update
+	// notifications for. This should only be used in BYOID flows, where we
+	// cannot infer the user's email address directly from their EUCs.
+	ContactEmail string `json:"contactEmail,omitempty"`
+
 	// CreateTime: Output only. The time this case was created.
 	CreateTime string `json:"createTime,omitempty"`
 

@@ -769,9 +769,11 @@ func (s *GoogleChromePolicyVersionsV1InheritOrgUnitPolicyRequest) MarshalJSON() 
 // GoogleChromePolicyVersionsV1ListGroupPriorityOrderingRequest: Request
 // message for listing the group priority ordering of an app.
 type GoogleChromePolicyVersionsV1ListGroupPriorityOrderingRequest struct {
-	// PolicyNamespace: Required. The namespace of the policy type for the
-	// request.
+	// PolicyNamespace: The namespace of the policy type for the request.
 	PolicyNamespace string `json:"policyNamespace,omitempty"`
+
+	// PolicySchema: The schema name of the policy for the request.
+	PolicySchema string `json:"policySchema,omitempty"`
 
 	// PolicyTargetKey: Required. The key of the target for which we want to
 	// retrieve the group priority ordering. The target resource must point
@@ -811,6 +813,10 @@ type GoogleChromePolicyVersionsV1ListGroupPriorityOrderingResponse struct {
 	// PolicyNamespace: Output only. The namespace of the policy type of the
 	// group IDs.
 	PolicyNamespace string `json:"policyNamespace,omitempty"`
+
+	// PolicySchema: Output only. The schema name of the policy for the
+	// group IDs.
+	PolicySchema string `json:"policySchema,omitempty"`
 
 	// PolicyTargetKey: Output only. The target resource for which the group
 	// priority ordering has been retrieved.
@@ -1775,9 +1781,11 @@ type GoogleChromePolicyVersionsV1UpdateGroupPriorityOrderingRequest struct {
 	// GroupIds: Required. The group IDs, in desired priority ordering.
 	GroupIds []string `json:"groupIds,omitempty"`
 
-	// PolicyNamespace: Required. The namespace of the policy type for the
-	// request.
+	// PolicyNamespace: The namespace of the policy type for the request.
 	PolicyNamespace string `json:"policyNamespace,omitempty"`
+
+	// PolicySchema: The schema name of the policy for the request.
+	PolicySchema string `json:"policySchema,omitempty"`
 
 	// PolicyTargetKey: Required. The key of the target for which we want to
 	// update the group priority ordering. The target resource must point to

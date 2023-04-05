@@ -388,6 +388,16 @@ type GoogleCloudAdvisorynotificationsV1Notification struct {
 	// ication}.
 	Name string `json:"name,omitempty"`
 
+	// NotificationType: Type of notification
+	//
+	// Possible values:
+	//   "NOTIFICATION_TYPE_UNSPECIFIED" - Default type
+	//   "NOTIFICATION_TYPE_SECURITY_PRIVACY_ADVISORY" - Security and
+	// privacy advisory notifications
+	//   "NOTIFICATION_TYPE_SENSITIVE_ACTIONS" - Sensitive action
+	// notifications
+	NotificationType string `json:"notificationType,omitempty"`
+
 	// Subject: The subject line of the notification.
 	Subject *GoogleCloudAdvisorynotificationsV1Subject `json:"subject,omitempty"`
 

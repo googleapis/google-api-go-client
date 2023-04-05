@@ -653,12 +653,32 @@ func (s *Expr) MarshalJSON() ([]byte, error) {
 // have reference to to Gateways to dictate how requests should be
 // routed by this Gateway.
 type Gateway struct {
+	// Addresses: Optional. Zero or one IPv4-address on which the Gateway
+	// will receive the traffic. When no address is provided, an IP from the
+	// subnetwork is allocated This field only applies to gateways of type
+	// 'SECURE_WEB_GATEWAY'. Gateways of type 'OPEN_MESH' listen on 0.0.0.0.
+	Addresses []string `json:"addresses,omitempty"`
+
+	// CertificateUrls: Optional. A fully-qualified Certificates URL
+	// reference. The proxy presents a Certificate (selected based on SNI)
+	// when establishing a TLS connection. This feature only applies to
+	// gateways of type 'SECURE_WEB_GATEWAY'.
+	CertificateUrls []string `json:"certificateUrls,omitempty"`
+
 	// CreateTime: Output only. The timestamp when the resource was created.
 	CreateTime string `json:"createTime,omitempty"`
 
 	// Description: Optional. A free-text description of the resource. Max
 	// length 1024 characters.
 	Description string `json:"description,omitempty"`
+
+	// GatewaySecurityPolicy: Optional. A fully-qualified
+	// GatewaySecurityPolicy URL reference. Defines how a server should
+	// apply security policy to inbound (VM to Proxy) initiated connections.
+	// For example:
+	// `projects/*/locations/*/gatewaySecurityPolicies/swg-policy`. This
+	// policy is specific to gateways of type 'SECURE_WEB_GATEWAY'.
+	GatewaySecurityPolicy string `json:"gatewaySecurityPolicy,omitempty"`
 
 	// Labels: Optional. Set of label tags associated with the Gateway
 	// resource.
@@ -667,6 +687,12 @@ type Gateway struct {
 	// Name: Required. Name of the Gateway resource. It matches pattern
 	// `projects/*/locations/*/gateways/`.
 	Name string `json:"name,omitempty"`
+
+	// Network: Optional. The relative resource name identifying the VPC
+	// network that is using this configuration. For example:
+	// `projects/*/global/networks/network-1`. Currently, this field is
+	// specific to gateways of type 'SECURE_WEB_GATEWAY'.
+	Network string `json:"network,omitempty"`
 
 	// Ports: Required. One or more port numbers (1-65535), on which the
 	// Gateway will receive traffic. The proxy binds to the specified ports.
@@ -690,6 +716,12 @@ type Gateway struct {
 	// termination is disabled.
 	ServerTlsPolicy string `json:"serverTlsPolicy,omitempty"`
 
+	// Subnetwork: Optional. The relative resource name identifying the
+	// subnetwork in which this SWG is allocated. For example:
+	// `projects/*/regions/us-central1/subnetworks/network-1` Currently,
+	// this field is specific to gateways of type 'SECURE_WEB_GATEWAY".
+	Subnetwork string `json:"subnetwork,omitempty"`
+
 	// Type: Immutable. The type of the customer managed gateway. This field
 	// is required. If unspecified, an error is returned.
 	//
@@ -709,7 +741,7 @@ type Gateway struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// ForceSendFields is a list of field names (e.g. "Addresses") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -717,7 +749,7 @@ type Gateway struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// NullFields is a list of field names (e.g. "Addresses") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -9697,14 +9729,7 @@ type ProjectsLocationsOperationsListCall struct {
 
 // List: Lists operations that match the specified filter in the
 // request. If the server doesn't support this method, it returns
-// `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to
-// override the binding to use different resource name schemes, such as
-// `users/*/operations`. To override the binding, API services can add a
-// binding such as "/v1/{name=users/*}/operations" to their service
-// configuration. For backwards compatibility, the default name includes
-// the operations collection id, however overriding users must ensure
-// the name binding is the parent resource, without the operations
-// collection id.
+// `UNIMPLEMENTED`.
 //
 // - name: The name of the operation's parent resource.
 func (r *ProjectsLocationsOperationsService) List(name string) *ProjectsLocationsOperationsListCall {
@@ -9833,7 +9858,7 @@ func (c *ProjectsLocationsOperationsListCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/operations",
 	//   "httpMethod": "GET",
 	//   "id": "networkservices.projects.locations.operations.list",

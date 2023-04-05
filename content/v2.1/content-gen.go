@@ -143,6 +143,7 @@ func New(client *http.Client) (*APIService, error) {
 	s.Promotions = NewPromotionsService(s)
 	s.Pubsubnotificationsettings = NewPubsubnotificationsettingsService(s)
 	s.Quotas = NewQuotasService(s)
+	s.Recommendations = NewRecommendationsService(s)
 	s.Regionalinventory = NewRegionalinventoryService(s)
 	s.Regions = NewRegionsService(s)
 	s.Reports = NewReportsService(s)
@@ -211,6 +212,8 @@ type APIService struct {
 	Pubsubnotificationsettings *PubsubnotificationsettingsService
 
 	Quotas *QuotasService
+
+	Recommendations *RecommendationsService
 
 	Regionalinventory *RegionalinventoryService
 
@@ -524,6 +527,15 @@ func NewQuotasService(s *APIService) *QuotasService {
 }
 
 type QuotasService struct {
+	s *APIService
+}
+
+func NewRecommendationsService(s *APIService) *RecommendationsService {
+	rs := &RecommendationsService{s: s}
+	return rs
+}
+
+type RecommendationsService struct {
 	s *APIService
 }
 
@@ -5160,6 +5172,46 @@ type FreeListingsProgramStatusReviewIneligibilityReasonDetails struct {
 
 func (s *FreeListingsProgramStatusReviewIneligibilityReasonDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod FreeListingsProgramStatusReviewIneligibilityReasonDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GenerateRecommendationsResponse: Response containing generated
+// recommendations.
+type GenerateRecommendationsResponse struct {
+	// Recommendations: Recommendations generated for a request.
+	Recommendations []*Recommendation `json:"recommendations,omitempty"`
+
+	// ResponseToken: Output only. Response token is a string created for
+	// each `GenerateRecommendationsResponse`. This token doesn't expire,
+	// and is globally unique. This token must be used when reporting
+	// interactions for recommendations.
+	ResponseToken string `json:"responseToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Recommendations") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Recommendations") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GenerateRecommendationsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GenerateRecommendationsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -15141,6 +15193,215 @@ func (s *RateGroup) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Recommendation: Recommendations are suggested ways to improve your
+// merchant account's performance. For example, to engage with a
+// feature, or start using a new Google product.
+type Recommendation struct {
+	// AdditionalCallToAction: Output only. CTAs of this recommendation.
+	// Repeated.
+	AdditionalCallToAction []*RecommendationCallToAction `json:"additionalCallToAction,omitempty"`
+
+	// AdditionalDescriptions: Output only. List of additional localized
+	// descriptions for a recommendation. Localication uses the
+	// `languageCode` field in `GenerateRecommendations` requests. Not all
+	// description types are guaranteed to be present and we recommend to
+	// rely on default description.
+	AdditionalDescriptions []*RecommendationDescription `json:"additionalDescriptions,omitempty"`
+
+	// Creative: Output only. Any creatives attached to the recommendation.
+	// Repeated.
+	Creative []*RecommendationCreative `json:"creative,omitempty"`
+
+	// DefaultCallToAction: Optional. Default CTA of the recommendation.
+	DefaultCallToAction *RecommendationCallToAction `json:"defaultCallToAction,omitempty"`
+
+	// DefaultDescription: Optional. Localized recommendation description.
+	// The localization the {@link
+	// `GenerateRecommendationsRequest.language_code`} field in {@link
+	// `GenerateRecommendationsRequest`} requests.
+	DefaultDescription string `json:"defaultDescription,omitempty"`
+
+	// NumericalImpact: Optional. A numerical score of the impact from the
+	// recommendation's description. For example, a recommendation might
+	// suggest an upward trend in sales for a certain product. Higher number
+	// means larger impact.
+	NumericalImpact int64 `json:"numericalImpact,omitempty"`
+
+	// Paid: Optional. Indicates whether a user needs to pay when they
+	// complete the user journey suggested by the recommendation.
+	Paid bool `json:"paid,omitempty"`
+
+	// RecommendationName: Optional. Localized recommendation name. The
+	// localization uses the {@link
+	// `GenerateRecommendationsRequest.language_code`} field in {@link
+	// `GenerateRecommendationsRequest`} requests.
+	RecommendationName string `json:"recommendationName,omitempty"`
+
+	// SubType: Optional. Subtype of the recommendations. Only applicable
+	// when multiple recommendations can be generated per type, and is used
+	// as an identifier of recommendation under the same recommendation
+	// type.
+	SubType string `json:"subType,omitempty"`
+
+	// Title: Optional. Localized Recommendation Title. Localization uses
+	// the {@link `GenerateRecommendationsRequest.language_code`} field in
+	// {@link `GenerateRecommendationsRequest`} requests.
+	Title string `json:"title,omitempty"`
+
+	// Type: Output only. Type of the recommendation. List of currently
+	// available recommendation types: - OPPORTUNITY_CREATE_NEW_COLLECTION -
+	// OPPORTUNITY_CREATE_EMAIL_CAMPAIGN
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AdditionalCallToAction") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdditionalCallToAction")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Recommendation) MarshalJSON() ([]byte, error) {
+	type NoMethod Recommendation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RecommendationCallToAction: Call to action (CTA) that explains how a
+// merchant can implement this recommendation
+type RecommendationCallToAction struct {
+	// Intent: Output only. Intent of the action. This value describes the
+	// intent (for example, `OPEN_CREATE_EMAIL_CAMPAIGN_FLOW`) and can vary
+	// from recommendation to recommendation. This value can change over
+	// time for the same recommendation. Currently available intent values:
+	// - OPEN_CREATE_EMAIL_CAMPAIGN_FLOW: Opens a user journey where they
+	// can create a marketing email campaign. (No default URL) -
+	// OPEN_CREATE_COLLECTION_TAB: Opens a user journey where they can
+	// create a collection
+	// (https://support.google.com/merchants/answer/9703228) for their
+	// Merchant account. (No default URL)
+	Intent string `json:"intent,omitempty"`
+
+	// LocalizedText: Output only. Localized text of the CTA. Optional.
+	LocalizedText string `json:"localizedText,omitempty"`
+
+	// Uri: Optional. URL of the CTA. This field will only be set for some
+	// recommendations where there is a suggested landing URL. Otherwise it
+	// will be set to an empty string. We recommend developers to use their
+	// own custom landing page according to the description of the intent
+	// field above when this uri field is empty.
+	Uri string `json:"uri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Intent") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Intent") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RecommendationCallToAction) MarshalJSON() ([]byte, error) {
+	type NoMethod RecommendationCallToAction
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RecommendationCreative: Creative is a multimedia attachment to
+// recommendation that can be used on the frontend.
+type RecommendationCreative struct {
+	// Type: Type of the creative.
+	//
+	// Possible values:
+	//   "CREATIVE_TYPE_UNSPECIFIED" - Default value. If provided, shall be
+	// considered invalid.
+	//   "VIDEO" - Video creatives.
+	//   "PHOTO" - Photo creatives.
+	Type string `json:"type,omitempty"`
+
+	// Uri: URL of the creative.
+	Uri string `json:"uri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Type") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Type") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RecommendationCreative) MarshalJSON() ([]byte, error) {
+	type NoMethod RecommendationCreative
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RecommendationDescription: Google-provided description for the
+// recommendation.
+type RecommendationDescription struct {
+	// Text: Output only. Text of the description.
+	Text string `json:"text,omitempty"`
+
+	// Type: Output only. Type of the description.
+	//
+	// Possible values:
+	//   "DESCRIPTION_TYPE_UNSPECIFIED" - Default value. Will never be
+	// provided by the API.
+	//   "SHORT" - Short description.
+	//   "LONG" - Long description.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Text") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Text") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RecommendationDescription) MarshalJSON() ([]byte, error) {
+	type NoMethod RecommendationDescription
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type RefundReason struct {
 	// Description: Description of the reason.
 	Description string `json:"description,omitempty"`
@@ -15555,6 +15816,58 @@ type RegionalinventoryCustomBatchResponseEntry struct {
 
 func (s *RegionalinventoryCustomBatchResponseEntry) MarshalJSON() ([]byte, error) {
 	type NoMethod RegionalinventoryCustomBatchResponseEntry
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ReportInteractionRequest: Request to report interactions on a
+// recommendation.
+type ReportInteractionRequest struct {
+	// InteractionType: Required. Type of the interaction that is reported,
+	// for example INTERACTION_CLICK.
+	//
+	// Possible values:
+	//   "INTERACTION_TYPE_UNSPECIFIED" - Default value. If provided, the
+	// service will throw ApiError with description "Required parameter:
+	// interactionType".
+	//   "INTERACTION_CLICK" - When a recommendation is clicked.
+	InteractionType string `json:"interactionType,omitempty"`
+
+	// ResponseToken: Required. Token of the response when recommendation
+	// was returned.
+	ResponseToken string `json:"responseToken,omitempty"`
+
+	// Subtype: Optional. Subtype of the recommendations this interaction
+	// happened on. This field must be set only to the value that is
+	// returned by {@link `RecommendationsService.GenerateRecommendations`}
+	// call.
+	Subtype string `json:"subtype,omitempty"`
+
+	// Type: Required. Type of the recommendations on which this interaction
+	// happened. This field must be set only to the value that is returned
+	// by {@link `GenerateRecommendationsResponse`} call.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "InteractionType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "InteractionType") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ReportInteractionRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ReportInteractionRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -40986,6 +41299,301 @@ func (c *QuotasListCall) Pages(ctx context.Context, f func(*ListMethodQuotasResp
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "content.recommendations.generate":
+
+type RecommendationsGenerateCall struct {
+	s            *APIService
+	merchantId   int64
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Generate: Generates recommendations for a merchant.
+//
+// - merchantId: The ID of the account to fetch recommendations for.
+func (r *RecommendationsService) Generate(merchantId int64) *RecommendationsGenerateCall {
+	c := &RecommendationsGenerateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.merchantId = merchantId
+	return c
+}
+
+// AllowedTag sets the optional parameter "allowedTag": List of allowed
+// tags. Tags are a set of predefined strings that describe the category
+// that individual recommendation types. User can specify zero or more
+// tags in this field to indicate what group of recommendations they
+// want to receive. Current list of supported tags: - TREND
+func (c *RecommendationsGenerateCall) AllowedTag(allowedTag ...string) *RecommendationsGenerateCall {
+	c.urlParams_.SetMulti("allowedTag", append([]string{}, allowedTag...))
+	return c
+}
+
+// LanguageCode sets the optional parameter "languageCode": Language
+// code of the client. If not set, the result will be in default
+// language (English). This language code affects all fields prefixed
+// with "localized". This should be set to ISO 639-1 country code. List
+// of currently verified supported language code: en, fr, cs, da, de,
+// es, it, nl, no, pl, pt, pt, fi, sv, vi, tr, th, ko, zh-CN, zh-TW, ja,
+// id, hi
+func (c *RecommendationsGenerateCall) LanguageCode(languageCode string) *RecommendationsGenerateCall {
+	c.urlParams_.Set("languageCode", languageCode)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RecommendationsGenerateCall) Fields(s ...googleapi.Field) *RecommendationsGenerateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *RecommendationsGenerateCall) IfNoneMatch(entityTag string) *RecommendationsGenerateCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *RecommendationsGenerateCall) Context(ctx context.Context) *RecommendationsGenerateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *RecommendationsGenerateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *RecommendationsGenerateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/recommendations/generate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"merchantId": strconv.FormatInt(c.merchantId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "content.recommendations.generate" call.
+// Exactly one of *GenerateRecommendationsResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GenerateRecommendationsResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *RecommendationsGenerateCall) Do(opts ...googleapi.CallOption) (*GenerateRecommendationsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GenerateRecommendationsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Generates recommendations for a merchant.",
+	//   "flatPath": "{merchantId}/recommendations/generate",
+	//   "httpMethod": "GET",
+	//   "id": "content.recommendations.generate",
+	//   "parameterOrder": [
+	//     "merchantId"
+	//   ],
+	//   "parameters": {
+	//     "allowedTag": {
+	//       "description": "Optional. List of allowed tags. Tags are a set of predefined strings that describe the category that individual recommendation types. User can specify zero or more tags in this field to indicate what group of recommendations they want to receive. Current list of supported tags: - TREND",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "languageCode": {
+	//       "description": "Optional. Language code of the client. If not set, the result will be in default language (English). This language code affects all fields prefixed with \"localized\". This should be set to ISO 639-1 country code. List of currently verified supported language code: en, fr, cs, da, de, es, it, nl, no, pl, pt, pt, fi, sv, vi, tr, th, ko, zh-CN, zh-TW, ja, id, hi",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "merchantId": {
+	//       "description": "Required. The ID of the account to fetch recommendations for.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{merchantId}/recommendations/generate",
+	//   "response": {
+	//     "$ref": "GenerateRecommendationsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/content"
+	//   ]
+	// }
+
+}
+
+// method id "content.recommendations.reportInteraction":
+
+type RecommendationsReportInteractionCall struct {
+	s                        *APIService
+	merchantId               int64
+	reportinteractionrequest *ReportInteractionRequest
+	urlParams_               gensupport.URLParams
+	ctx_                     context.Context
+	header_                  http.Header
+}
+
+// ReportInteraction: Reports an interaction on a recommendation for a
+// merchant.
+//
+//   - merchantId: The ID of the account that wants to report an
+//     interaction.
+func (r *RecommendationsService) ReportInteraction(merchantId int64, reportinteractionrequest *ReportInteractionRequest) *RecommendationsReportInteractionCall {
+	c := &RecommendationsReportInteractionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.merchantId = merchantId
+	c.reportinteractionrequest = reportinteractionrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RecommendationsReportInteractionCall) Fields(s ...googleapi.Field) *RecommendationsReportInteractionCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *RecommendationsReportInteractionCall) Context(ctx context.Context) *RecommendationsReportInteractionCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *RecommendationsReportInteractionCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *RecommendationsReportInteractionCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.reportinteractionrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/recommendations/reportInteraction")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"merchantId": strconv.FormatInt(c.merchantId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "content.recommendations.reportInteraction" call.
+func (c *RecommendationsReportInteractionCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return gensupport.WrapError(err)
+	}
+	return nil
+	// {
+	//   "description": "Reports an interaction on a recommendation for a merchant.",
+	//   "flatPath": "{merchantId}/recommendations/reportInteraction",
+	//   "httpMethod": "POST",
+	//   "id": "content.recommendations.reportInteraction",
+	//   "parameterOrder": [
+	//     "merchantId"
+	//   ],
+	//   "parameters": {
+	//     "merchantId": {
+	//       "description": "Required. The ID of the account that wants to report an interaction.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{merchantId}/recommendations/reportInteraction",
+	//   "request": {
+	//     "$ref": "ReportInteractionRequest"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/content"
+	//   ]
+	// }
+
 }
 
 // method id "content.regionalinventory.custombatch":

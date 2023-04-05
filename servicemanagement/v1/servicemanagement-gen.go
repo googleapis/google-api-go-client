@@ -1742,6 +1742,35 @@ type DotnetSettings struct {
 	// Common: Some settings.
 	Common *CommonLanguageSettings `json:"common,omitempty"`
 
+	// ForcedNamespaceAliases: Namespaces which must be aliased in snippets
+	// due to a known (but non-generator-predictable) naming collision
+	ForcedNamespaceAliases []string `json:"forcedNamespaceAliases,omitempty"`
+
+	// HandwrittenSignatures: Method signatures (in the form
+	// "service.method(signature)") which are provided separately, so
+	// shouldn't be generated. Snippets *calling* these methods are still
+	// generated, however.
+	HandwrittenSignatures []string `json:"handwrittenSignatures,omitempty"`
+
+	// IgnoredResources: List of full resource types to ignore during
+	// generation. This is typically used for API-specific Location
+	// resources, which should be handled by the generator as if they were
+	// actually the common Location resources. Example entry:
+	// "documentai.googleapis.com/Location"
+	IgnoredResources []string `json:"ignoredResources,omitempty"`
+
+	// RenamedResources: Map from full resource types to the effective short
+	// name for the resource. This is used when otherwise resource named
+	// from different services would cause naming collisions. Example entry:
+	// "datalabeling.googleapis.com/Dataset": "DataLabelingDataset"
+	RenamedResources map[string]string `json:"renamedResources,omitempty"`
+
+	// RenamedServices: Map from original service names to renamed versions.
+	// This is used when the default generated types would cause a naming
+	// conflict. (Neither name is fully-qualified.) Example: Subscriber to
+	// SubscriberServiceApi.
+	RenamedServices map[string]string `json:"renamedServices,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Common") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any

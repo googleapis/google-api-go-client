@@ -257,8 +257,8 @@ func GetHTTPTransportConfigAndEndpoint(settings *DialSettings) (cert.Source, fun
 
 	var fallbackOpts *s2a.FallbackOptions
 	// In case of S2A failure, fall back to the endpoint that would've been used without S2A.
-	if fallbackUrl, err := url.Parse(config.endpoint); err == nil {
-		if fallbackDialer, fallbackServerAddr, err := fallback.DefaultFallbackDialerAndAddress(fallbackUrl.Hostname()); err == nil {
+	if fallbackURL, err := url.Parse(config.endpoint); err == nil {
+		if fallbackDialer, fallbackServerAddr, err := fallback.DefaultFallbackDialerAndAddress(fallbackURL.Hostname()); err == nil {
 			fallbackOpts = &s2a.FallbackOptions{
 				FallbackDialer: &s2a.FallbackDialer{
 					Dialer:     fallbackDialer,

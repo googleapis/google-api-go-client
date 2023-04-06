@@ -396,7 +396,7 @@
       }
     }
   },
-  "revision": "20230309",
+  "revision": "20230404",
   "rootUrl": "https://paymentsresellersubscription.googleapis.com/",
   "schemas": {
     "GoogleCloudPaymentsResellerSubscriptionV1Amount": {
@@ -433,6 +433,7 @@
             "CANCELLATION_REASON_ACCOUNT_CLOSED",
             "CANCELLATION_REASON_UPGRADE_DOWNGRADE",
             "CANCELLATION_REASON_USER_DELINQUENCY",
+            "CANCELLATION_REASON_SYSTEM_ERROR",
             "CANCELLATION_REASON_OTHER"
           ],
           "enumDescriptions": [
@@ -444,6 +445,7 @@
             "User account closed.",
             "Used for notification only, do not use in Cancel API. Cancellation due to upgrade or downgrade.",
             "Cancellation due to user delinquency",
+            "Cancellation due to an unrecoverable system error.",
             "Other reason."
           ],
           "type": "string"
@@ -1046,6 +1048,7 @@
             "CANCELLATION_REASON_ACCOUNT_CLOSED",
             "CANCELLATION_REASON_UPGRADE_DOWNGRADE",
             "CANCELLATION_REASON_USER_DELINQUENCY",
+            "CANCELLATION_REASON_SYSTEM_ERROR",
             "CANCELLATION_REASON_OTHER"
           ],
           "enumDescriptions": [
@@ -1057,6 +1060,7 @@
             "User account closed.",
             "Used for notification only, do not use in Cancel API. Cancellation due to upgrade or downgrade.",
             "Cancellation due to user delinquency",
+            "Cancellation due to an unrecoverable system error.",
             "Other reason."
           ],
           "type": "string"

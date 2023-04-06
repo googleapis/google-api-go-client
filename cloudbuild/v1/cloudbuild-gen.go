@@ -2395,7 +2395,8 @@ type GitFileSource struct {
 	// RepoType: See RepoType above.
 	//
 	// Possible values:
-	//   "UNKNOWN" - The default, unknown repo type.
+	//   "UNKNOWN" - The default, unknown repo type. Don't use it, instead
+	// use one of the other repo types.
 	//   "CLOUD_SOURCE_REPOSITORIES" - A Google Cloud Source
 	// Repositories-hosted repo.
 	//   "GITHUB" - A GitHub-hosted repo not necessarily on "github.com"
@@ -2944,7 +2945,8 @@ type GitRepoSource struct {
 	// RepoType: See RepoType below.
 	//
 	// Possible values:
-	//   "UNKNOWN" - The default, unknown repo type.
+	//   "UNKNOWN" - The default, unknown repo type. Don't use it, instead
+	// use one of the other repo types.
 	//   "CLOUD_SOURCE_REPOSITORIES" - A Google Cloud Source
 	// Repositories-hosted repo.
 	//   "GITHUB" - A GitHub-hosted repo not necessarily on "github.com"

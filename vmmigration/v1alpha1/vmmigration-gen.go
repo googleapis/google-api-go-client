@@ -1165,6 +1165,38 @@ func (s *ComputeScheduling) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// CutoverForecast: CutoverForecast holds information about future
+// CutoverJobs of a MigratingVm.
+type CutoverForecast struct {
+	// EstimatedCutoverJobDuration: Output only. Estimation of the
+	// CutoverJob duration.
+	EstimatedCutoverJobDuration string `json:"estimatedCutoverJobDuration,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "EstimatedCutoverJobDuration") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "EstimatedCutoverJobDuration") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CutoverForecast) MarshalJSON() ([]byte, error) {
+	type NoMethod CutoverForecast
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // CutoverJob: CutoverJob message describes a cutover of a migrating VM.
 // The CutoverJob is the operation of shutting down the VM, creating a
 // snapshot and clonning the VM using the replicated snapshot.
@@ -2147,6 +2179,10 @@ type MigratingVm struct {
 	// CurrentSyncInfo: Output only. Details of the current running
 	// replication cycle.
 	CurrentSyncInfo *ReplicationCycle `json:"currentSyncInfo,omitempty"`
+
+	// CutoverForecast: Output only. Provides details of future CutoverJobs
+	// of a MigratingVm. Set to empty when cutover forecast is unavailable.
+	CutoverForecast *CutoverForecast `json:"cutoverForecast,omitempty"`
 
 	// Description: The description attached to the migrating VM by the
 	// user.

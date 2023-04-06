@@ -461,6 +461,42 @@ func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// StateError: Describes an error related to the current state of the
+// workflow.
+type StateError struct {
+	// Details: Provides specifics about the error.
+	Details string `json:"details,omitempty"`
+
+	// Type: The type of this state error.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - No type specified.
+	//   "KMS_ERROR" - Caused by an issue with KMS.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Details") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Details") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *StateError) MarshalJSON() ([]byte, error) {
+	type NoMethod StateError
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Status: The `Status` type defines a logical error model that is
 // suitable for different programming environments, including REST APIs
 // and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
@@ -525,6 +561,15 @@ type Workflow struct {
 	// created.
 	CreateTime string `json:"createTime,omitempty"`
 
+	// CryptoKeyName: Optional. The resource name of a KMS crypto key used
+	// to encrypt or decrypt the data associated with the workflow. Format:
+	// projects/{project}/locations/{location}/keyRings/{keyRing}/cryptoKeys/
+	// {cryptoKey} Using `-` as a wildcard for the `{project}` or not
+	// providing one at all will infer the project from the account. If not
+	// provided, data associated with the workflow will not be
+	// CMEK-encrypted.
+	CryptoKeyName string `json:"cryptoKeyName,omitempty"`
+
 	// Description: Description of the workflow provided by the user. Must
 	// be at most 1000 unicode characters long.
 	Description string `json:"description,omitempty"`
@@ -574,7 +619,14 @@ type Workflow struct {
 	//   "STATE_UNSPECIFIED" - Invalid state.
 	//   "ACTIVE" - The workflow has been deployed successfully and is
 	// serving.
+	//   "UNAVAILABLE" - Workflow data is unavailable. See the `state_error`
+	// field.
 	State string `json:"state,omitempty"`
+
+	// StateError: Output only. Error regarding the state of the workflow.
+	// For example, this field will have error details if the execution data
+	// is unavailable due to revoked KMS key permissions.
+	StateError *StateError `json:"stateError,omitempty"`
 
 	// UpdateTime: Output only. The timestamp for when the workflow was last
 	// updated.

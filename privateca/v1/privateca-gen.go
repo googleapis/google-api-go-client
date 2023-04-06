@@ -1302,6 +1302,13 @@ func (s *CertificateTemplate) MarshalJSON() ([]byte, error) {
 // DisableCertificateAuthorityRequest: Request message for
 // CertificateAuthorityService.DisableCertificateAuthority.
 type DisableCertificateAuthorityRequest struct {
+	// IgnoreDependentResources: Optional. This field allows this CA to be
+	// disabled even if it's being depended on by another resource. However,
+	// doing so may result in unintended and unrecoverable effects on any
+	// dependent resource(s) since the CA will no longer be able to issue
+	// certificates.
+	IgnoreDependentResources bool `json:"ignoreDependentResources,omitempty"`
+
 	// RequestId: Optional. An ID to identify requests. Specify a unique
 	// request ID so that if you must retry your request, the server will
 	// know to ignore the request if it has already been completed. The
@@ -1316,20 +1323,22 @@ type DisableCertificateAuthorityRequest struct {
 	// (00000000-0000-0000-0000-000000000000).
 	RequestId string `json:"requestId,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "RequestId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "IgnoreDependentResources") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "RequestId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "IgnoreDependentResources")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -2716,9 +2725,7 @@ type ReconciliationOperationMetadata struct {
 	//   "UNKNOWN_REPAIR_ACTION" - Unknown repair action.
 	//   "DELETE" - The resource has to be deleted. When using this bit, the
 	// CLH should fail the operation. DEPRECATED. Instead use
-	// DELETE_RESOURCE OperationSignal in SideChannel. For more information
-	// - go/ccfe-delete-on-upsert,
-	// go/ccfe-reconciliation-protocol-ug#apply_delete
+	// DELETE_RESOURCE OperationSignal in SideChannel.
 	//   "RETRY" - This resource could not be repaired but the repair should
 	// be tried again at a later time. This can happen if there is a
 	// dependency that needs to be resolved first- e.g. if a parent resource
@@ -4042,6 +4049,17 @@ func (r *ProjectsLocationsCaPoolsService) Delete(name string) *ProjectsLocations
 	return c
 }
 
+// IgnoreDependentResources sets the optional parameter
+// "ignoreDependentResources": This field allows this pool to be deleted
+// even if it's being depended on by another resource. However, doing so
+// may result in unintended and unrecoverable effects on any dependent
+// resource(s) since the pool will no longer be able to issue
+// certificates.
+func (c *ProjectsLocationsCaPoolsDeleteCall) IgnoreDependentResources(ignoreDependentResources bool) *ProjectsLocationsCaPoolsDeleteCall {
+	c.urlParams_.Set("ignoreDependentResources", fmt.Sprint(ignoreDependentResources))
+	return c
+}
+
 // RequestId sets the optional parameter "requestId": An ID to identify
 // requests. Specify a unique request ID so that if you must retry your
 // request, the server will know to ignore the request if it has already
@@ -4153,6 +4171,11 @@ func (c *ProjectsLocationsCaPoolsDeleteCall) Do(opts ...googleapi.CallOption) (*
 	//     "name"
 	//   ],
 	//   "parameters": {
+	//     "ignoreDependentResources": {
+	//       "description": "Optional. This field allows this pool to be deleted even if it's being depended on by another resource. However, doing so may result in unintended and unrecoverable effects on any dependent resource(s) since the pool will no longer be able to issue certificates.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "name": {
 	//       "description": "Required. The resource name for this CaPool in the format `projects/*/locations/*/caPools/*`.",
 	//       "location": "path",
@@ -5694,6 +5717,17 @@ func (c *ProjectsLocationsCaPoolsCertificateAuthoritiesDeleteCall) IgnoreActiveC
 	return c
 }
 
+// IgnoreDependentResources sets the optional parameter
+// "ignoreDependentResources": This field allows this ca to be deleted
+// even if it's being depended on by another resource. However, doing so
+// may result in unintended and unrecoverable effects on any dependent
+// resource(s) since the CA will no longer be able to issue
+// certificates.
+func (c *ProjectsLocationsCaPoolsCertificateAuthoritiesDeleteCall) IgnoreDependentResources(ignoreDependentResources bool) *ProjectsLocationsCaPoolsCertificateAuthoritiesDeleteCall {
+	c.urlParams_.Set("ignoreDependentResources", fmt.Sprint(ignoreDependentResources))
+	return c
+}
+
 // RequestId sets the optional parameter "requestId": An ID to identify
 // requests. Specify a unique request ID so that if you must retry your
 // request, the server will know to ignore the request if it has already
@@ -5817,6 +5851,11 @@ func (c *ProjectsLocationsCaPoolsCertificateAuthoritiesDeleteCall) Do(opts ...go
 	//   "parameters": {
 	//     "ignoreActiveCertificates": {
 	//       "description": "Optional. This field allows the CA to be deleted even if the CA has active certs. Active certs include both unrevoked and unexpired certs.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "ignoreDependentResources": {
+	//       "description": "Optional. This field allows this ca to be deleted even if it's being depended on by another resource. However, doing so may result in unintended and unrecoverable effects on any dependent resource(s) since the CA will no longer be able to issue certificates.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },

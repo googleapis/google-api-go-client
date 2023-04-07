@@ -970,7 +970,7 @@ type ProjectsLocationsSynthesizeLongAudioCall struct {
 // SynthesizeLongAudio: Synthesizes long form text asynchronously.
 //
 //   - parent: The resource states of the request in the form of
-//     `projects/*/locations/*/voices/*`.
+//     `projects/*/locations/*`.
 func (r *ProjectsLocationsService) SynthesizeLongAudio(parent string, synthesizelongaudiorequest *SynthesizeLongAudioRequest) *ProjectsLocationsSynthesizeLongAudioCall {
 	c := &ProjectsLocationsSynthesizeLongAudioCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1078,7 +1078,7 @@ func (c *ProjectsLocationsSynthesizeLongAudioCall) Do(opts ...googleapi.CallOpti
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "The resource states of the request in the form of `projects/*/locations/*/voices/*`.",
+	//       "description": "The resource states of the request in the form of `projects/*/locations/*`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,

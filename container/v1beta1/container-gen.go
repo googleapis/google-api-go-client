@@ -327,6 +327,12 @@ func (s *AcceleratorConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AdditionalPodRangesConfig: AdditionalPodRangesConfig is the
+// configuration for additional pod secondary ranges supporting the
+// ClusterUpdate message.
+type AdditionalPodRangesConfig struct {
+}
+
 // AddonsConfig: Configuration for the addons that can be automatically
 // spun up in the cluster, enabling additional functionality.
 type AddonsConfig struct {
@@ -1485,6 +1491,11 @@ func (s *ClusterTelemetry) MarshalJSON() ([]byte, error) {
 // Exactly one update can be applied to a cluster with each request, so
 // at most one field can be provided.
 type ClusterUpdate struct {
+	// AdditionalPodRangesConfig: The additional pod ranges to be added to
+	// the cluster. These pod ranges can be used by node pools to allocate
+	// pod IPs.
+	AdditionalPodRangesConfig *AdditionalPodRangesConfig `json:"additionalPodRangesConfig,omitempty"`
+
 	// DesiredAddonsConfig: Configurations for the various addons available
 	// to run in the cluster.
 	DesiredAddonsConfig *AddonsConfig `json:"desiredAddonsConfig,omitempty"`
@@ -1726,21 +1737,28 @@ type ClusterUpdate struct {
 	// blocked and an ABORTED error will be returned.
 	Etag string `json:"etag,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "DesiredAddonsConfig")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// RemovedAdditionalPodRangesConfig: The additional pod ranges that are
+	// to be removed from the cluster. The pod ranges specified here must
+	// have been specified earlier in the 'additional_pod_ranges_config'
+	// argument.
+	RemovedAdditionalPodRangesConfig *AdditionalPodRangesConfig `json:"removedAdditionalPodRangesConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AdditionalPodRangesConfig") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DesiredAddonsConfig") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g.
+	// "AdditionalPodRangesConfig") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -2851,6 +2869,12 @@ func (s *ILBSubsettingConfig) MarshalJSON() ([]byte, error) {
 // IPAllocationPolicy: Configuration for controlling how IPs are
 // allocated in the cluster.
 type IPAllocationPolicy struct {
+	// AdditionalPodRangesConfig: Output only. [Output only] The additional
+	// pod ranges that are added to the cluster. These pod ranges can be
+	// used by new node pools to allocate pod IPs automatically. Once the
+	// range is removed it will not show up in IPAllocationPolicy.
+	AdditionalPodRangesConfig *AdditionalPodRangesConfig `json:"additionalPodRangesConfig,omitempty"`
+
 	// AllowRouteOverlap: If true, allow allocation of cluster CIDR ranges
 	// that overlap with certain kinds of network routes. By default we do
 	// not allow cluster CIDR ranges to intersect with any user declared
@@ -2917,6 +2941,17 @@ type IPAllocationPolicy struct {
 	// (e.g. `10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`) to pick a
 	// specific range to use.
 	NodeIpv4CidrBlock string `json:"nodeIpv4CidrBlock,omitempty"`
+
+	// PodCidrOverprovisionConfig: [PRIVATE FIELD] Pod CIDR size
+	// overprovisioning config for the cluster. Pod CIDR size per node
+	// depends on max_pods_per_node. By default, the value of
+	// max_pods_per_node is doubled and then rounded off to next power of 2
+	// to get the size of pod CIDR block per node. Example:
+	// max_pods_per_node of 30 would result in 64 IPs (/26). This config can
+	// disable the doubling of IPs (we still round off to next power of 2)
+	// Example: max_pods_per_node of 30 will result in 32 IPs (/27) when
+	// overprovisioning is disabled.
+	PodCidrOverprovisionConfig *PodCIDROverprovisionConfig `json:"podCidrOverprovisionConfig,omitempty"`
 
 	// ServicesIpv4Cidr: This field is deprecated, use
 	// services_ipv4_cidr_block.
@@ -2988,21 +3023,22 @@ type IPAllocationPolicy struct {
 	// false, then the server picks the default IP allocation mode
 	UseRoutes bool `json:"useRoutes,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "AllowRouteOverlap")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "AdditionalPodRangesConfig") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "AllowRouteOverlap") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g.
+	// "AdditionalPodRangesConfig") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -4731,6 +4767,17 @@ type NodeNetworkConfig struct {
 	// NetworkPerformanceConfig: Network bandwidth tier configuration.
 	NetworkPerformanceConfig *NetworkPerformanceConfig `json:"networkPerformanceConfig,omitempty"`
 
+	// PodCidrOverprovisionConfig: [PRIVATE FIELD] Pod CIDR size
+	// overprovisioning config for the nodepool. Pod CIDR size per node
+	// depends on max_pods_per_node. By default, the value of
+	// max_pods_per_node is rounded off to next power of 2 and we then
+	// double that to get the size of pod CIDR block per node. Example:
+	// max_pods_per_node of 30 would result in 64 IPs (/26). This config can
+	// disable the doubling of IPs (we still round off to next power of 2)
+	// Example: max_pods_per_node of 30 will result in 32 IPs (/27) when
+	// overprovisioning is disabled.
+	PodCidrOverprovisionConfig *PodCIDROverprovisionConfig `json:"podCidrOverprovisionConfig,omitempty"`
+
 	// PodIpv4CidrBlock: The IP address range for pod IPs in this node pool.
 	// Only applicable if `create_pod_range` is true. Set to blank to have a
 	// range chosen with the default size. Set to /netmask (e.g. `/14`) to
@@ -5378,6 +5425,36 @@ type PlacementPolicy struct {
 
 func (s *PlacementPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod PlacementPolicy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PodCIDROverprovisionConfig: [PRIVATE FIELD] Config for pod CIDR size
+// overprovisioning.
+type PodCIDROverprovisionConfig struct {
+	// Disable: Whether Pod CIDR overprovisioning is disabled. Note: Pod
+	// CIDR overprovisioning is enabled by default.
+	Disable bool `json:"disable,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Disable") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Disable") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PodCIDROverprovisionConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod PodCIDROverprovisionConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

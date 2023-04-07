@@ -222,8 +222,8 @@ func (s *AccountSuspensionDetails) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// AccountSuspensionWarning: A warning that the customer's account is
-// about to be suspended.
+// AccountSuspensionWarning: LINT.IfChange A warning that the customer's
+// account is about to be suspended.
 type AccountSuspensionWarning struct {
 	// AppealWindow: The amount of time remaining to appeal an imminent
 	// suspension. After this window has elapsed, the account will be

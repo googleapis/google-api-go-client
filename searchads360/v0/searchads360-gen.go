@@ -1294,50 +1294,6 @@ func (s *GoogleAdsSearchads360V0Common__RealTimeBiddingSetting) MarshalJSON() ([
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAdsSearchads360V0Common__SearchAds360TextAdInfo: A Search Ads
-// 360 text ad.
-type GoogleAdsSearchads360V0Common__SearchAds360TextAdInfo struct {
-	// AdTrackId: The tracking id of the ad.
-	AdTrackId int64 `json:"adTrackId,omitempty,string"`
-
-	// Description1: The first line of the ad's description.
-	Description1 string `json:"description1,omitempty"`
-
-	// Description2: The second line of the ad's description.
-	Description2 string `json:"description2,omitempty"`
-
-	// DisplayMobileUrl: The displayed mobile URL of the ad.
-	DisplayMobileUrl string `json:"displayMobileUrl,omitempty"`
-
-	// DisplayUrl: The displayed URL of the ad.
-	DisplayUrl string `json:"displayUrl,omitempty"`
-
-	// Headline: The headline of the ad.
-	Headline string `json:"headline,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AdTrackId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AdTrackId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleAdsSearchads360V0Common__SearchAds360TextAdInfo) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleAdsSearchads360V0Common__SearchAds360TextAdInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // GoogleAdsSearchads360V0Common__Segments: Segment only fields.
 type GoogleAdsSearchads360V0Common__Segments struct {
 	// ConversionAction: Resource name of the conversion action.
@@ -3142,9 +3098,6 @@ type GoogleAdsSearchads360V0Resources__Ad struct {
 	// ResourceName: Immutable. The resource name of the ad. Ad resource
 	// names have the form: `customers/{customer_id}/ads/{ad_id}`
 	ResourceName string `json:"resourceName,omitempty"`
-
-	// TextAd: Immutable. Details pertaining to a text ad.
-	TextAd *GoogleAdsSearchads360V0Common__SearchAds360TextAdInfo `json:"textAd,omitempty"`
 
 	// Type: Output only. The type of ad.
 	//

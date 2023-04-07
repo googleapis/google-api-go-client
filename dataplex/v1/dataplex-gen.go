@@ -1661,9 +1661,12 @@ type GoogleCloudDataplexV1DataProfileResultProfileField struct {
 	// Profile: Profile information for the corresponding field.
 	Profile *GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfo `json:"profile,omitempty"`
 
-	// Type: The field data type. Possible values include: STRING BYTE INT64
-	// INT32 INT16 DOUBLE FLOAT DECIMAL BOOLEAN BINARY TIMESTAMP DATE TIME
-	// NULL RECORD
+	// Type: The data type retrieved from the schema of the data source. For
+	// instance, for a BigQuery native table, it is the BigQuery Table
+	// Schema
+	// (https://cloud.google.com/bigquery/docs/reference/rest/v2/tables#tablefieldschema).
+	// For a Dataplex Entity, it is the Entity Schema
+	// (https://cloud.google.com/dataplex/docs/reference/rpc/google.cloud.dataplex.v1#type_3).
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Mode") to
@@ -3275,8 +3278,8 @@ type GoogleCloudDataplexV1Entity struct {
 	// Id: Required. A user-provided entity ID. It is mutable, and will be
 	// used as the published table name. Specifying a new ID in an update
 	// entity request will override the existing value. The ID must contain
-	// only letters (a-z, A-Z), numbers (0-9), and underscores. Must begin
-	// with a letter and consist of 256 or fewer characters.
+	// only letters (a-z, A-Z), numbers (0-9), and underscores, and consist
+	// of 256 or fewer characters.
 	Id string `json:"id,omitempty"`
 
 	// Name: Output only. The resource name of the entity, of the form:
@@ -9402,7 +9405,7 @@ func (c *ProjectsLocationsDataScansListCall) OrderBy(orderBy string) *ProjectsLo
 
 // PageSize sets the optional parameter "pageSize": Maximum number of
 // dataScans to return. The service may return fewer than this value. If
-// unspecified, at most 10 scans will be returned. The maximum value is
+// unspecified, at most 500 scans will be returned. The maximum value is
 // 1000; values above 1000 will be coerced to 1000.
 func (c *ProjectsLocationsDataScansListCall) PageSize(pageSize int64) *ProjectsLocationsDataScansListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
@@ -9538,7 +9541,7 @@ func (c *ProjectsLocationsDataScansListCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Optional. Maximum number of dataScans to return. The service may return fewer than this value. If unspecified, at most 10 scans will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.",
+	//       "description": "Optional. Maximum number of dataScans to return. The service may return fewer than this value. If unspecified, at most 500 scans will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"

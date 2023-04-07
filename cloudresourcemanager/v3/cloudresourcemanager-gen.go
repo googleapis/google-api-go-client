@@ -2099,6 +2099,14 @@ type TagBinding struct {
 	// `tagValues/456`.
 	TagValue string `json:"tagValue,omitempty"`
 
+	// TagValueNamespacedName: The namespaced name for the TagValue of the
+	// TagBinding. Must be in the format
+	// `{parent_id}/{tag_key_short_name}/{short_name}`. For methods that
+	// support TagValue namespaced name, only one of
+	// tag_value_namespaced_name or tag_value may be filled. Requests with
+	// both fields will be rejected.
+	TagValueNamespacedName string `json:"tagValueNamespacedName,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Name") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -8863,6 +8871,154 @@ func (c *TagKeysGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, err
 
 }
 
+// method id "cloudresourcemanager.tagKeys.getNamespaced":
+
+type TagKeysGetNamespacedCall struct {
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetNamespaced: Retrieves a TagKey by its namespaced name. This method
+// will return `PERMISSION_DENIED` if the key does not exist or the user
+// does not have permission to view it.
+func (r *TagKeysService) GetNamespaced() *TagKeysGetNamespacedCall {
+	c := &TagKeysGetNamespacedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// Name sets the optional parameter "name": Required. A namespaced tag
+// key name in the format `{parentId}/{tagKeyShort}`, such as `42/foo`
+// for a key with short name "foo" under the organization with ID 42 or
+// `r2-d2/bar` for a key with short name "bar" under the project
+// `r2-d2`.
+func (c *TagKeysGetNamespacedCall) Name(name string) *TagKeysGetNamespacedCall {
+	c.urlParams_.Set("name", name)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *TagKeysGetNamespacedCall) Fields(s ...googleapi.Field) *TagKeysGetNamespacedCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *TagKeysGetNamespacedCall) IfNoneMatch(entityTag string) *TagKeysGetNamespacedCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *TagKeysGetNamespacedCall) Context(ctx context.Context) *TagKeysGetNamespacedCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *TagKeysGetNamespacedCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *TagKeysGetNamespacedCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/tagKeys/namespaced")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudresourcemanager.tagKeys.getNamespaced" call.
+// Exactly one of *TagKey or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *TagKey.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *TagKeysGetNamespacedCall) Do(opts ...googleapi.CallOption) (*TagKey, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &TagKey{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves a TagKey by its namespaced name. This method will return `PERMISSION_DENIED` if the key does not exist or the user does not have permission to view it.",
+	//   "flatPath": "v3/tagKeys/namespaced",
+	//   "httpMethod": "GET",
+	//   "id": "cloudresourcemanager.tagKeys.getNamespaced",
+	//   "parameterOrder": [],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. A namespaced tag key name in the format `{parentId}/{tagKeyShort}`, such as `42/foo` for a key with short name \"foo\" under the organization with ID 42 or `r2-d2/bar` for a key with short name \"bar\" under the project `r2-d2`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/tagKeys/namespaced",
+	//   "response": {
+	//     "$ref": "TagKey"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
+	//   ]
+	// }
+
+}
+
 // method id "cloudresourcemanager.tagKeys.list":
 
 type TagKeysListCall struct {
@@ -10120,6 +10276,156 @@ func (c *TagValuesGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, e
 	//   },
 	//   "response": {
 	//     "$ref": "Policy"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
+	//   ]
+	// }
+
+}
+
+// method id "cloudresourcemanager.tagValues.getNamespaced":
+
+type TagValuesGetNamespacedCall struct {
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetNamespaced: Retrieves a TagValue by its namespaced name. This
+// method will return `PERMISSION_DENIED` if the value does not exist or
+// the user does not have permission to view it.
+func (r *TagValuesService) GetNamespaced() *TagValuesGetNamespacedCall {
+	c := &TagValuesGetNamespacedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// Name sets the optional parameter "name": Required. A namespaced tag
+// value name in the following format:
+// `{parentId}/{tagKeyShort}/{tagValueShort}` Examples: - `42/foo/abc`
+// for a value with short name "abc" under the key with short name "foo"
+// under the organization with ID 42 - `r2-d2/bar/xyz` for a value with
+// short name "xyz" under the key with short name "bar" under the
+// project with ID "r2-d2"
+func (c *TagValuesGetNamespacedCall) Name(name string) *TagValuesGetNamespacedCall {
+	c.urlParams_.Set("name", name)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *TagValuesGetNamespacedCall) Fields(s ...googleapi.Field) *TagValuesGetNamespacedCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *TagValuesGetNamespacedCall) IfNoneMatch(entityTag string) *TagValuesGetNamespacedCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *TagValuesGetNamespacedCall) Context(ctx context.Context) *TagValuesGetNamespacedCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *TagValuesGetNamespacedCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *TagValuesGetNamespacedCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/tagValues/namespaced")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudresourcemanager.tagValues.getNamespaced" call.
+// Exactly one of *TagValue or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *TagValue.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *TagValuesGetNamespacedCall) Do(opts ...googleapi.CallOption) (*TagValue, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &TagValue{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves a TagValue by its namespaced name. This method will return `PERMISSION_DENIED` if the value does not exist or the user does not have permission to view it.",
+	//   "flatPath": "v3/tagValues/namespaced",
+	//   "httpMethod": "GET",
+	//   "id": "cloudresourcemanager.tagValues.getNamespaced",
+	//   "parameterOrder": [],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. A namespaced tag value name in the following format: `{parentId}/{tagKeyShort}/{tagValueShort}` Examples: - `42/foo/abc` for a value with short name \"abc\" under the key with short name \"foo\" under the organization with ID 42 - `r2-d2/bar/xyz` for a value with short name \"xyz\" under the key with short name \"bar\" under the project with ID \"r2-d2\"",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/tagValues/namespaced",
+	//   "response": {
+	//     "$ref": "TagValue"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",

@@ -671,8 +671,9 @@ type Function struct {
 	// that fires events in response to a condition in another service.
 	EventTrigger *EventTrigger `json:"eventTrigger,omitempty"`
 
-	// KmsKeyName: Resource name of a KMS crypto key (managed by the user)
-	// used to encrypt/decrypt function resources. It must match the pattern
+	// KmsKeyName: [Preview] Resource name of a KMS crypto key (managed by
+	// the user) used to encrypt/decrypt function resources. It must match
+	// the pattern
 	// `projects/{project}/locations/{location}/keyRings/{key_ring}/cryptoKey
 	// s/{crypto_key}`.
 	KmsKeyName string `json:"kmsKeyName,omitempty"`
@@ -778,13 +779,13 @@ func (s *GenerateDownloadUrlResponse) MarshalJSON() ([]byte, error) {
 // GenerateUploadUrlRequest: Request of `GenerateSourceUploadUrl`
 // method.
 type GenerateUploadUrlRequest struct {
-	// KmsKeyName: Resource name of a KMS crypto key (managed by the user)
-	// used to encrypt/decrypt function source code objects in intermediate
-	// Cloud Storage buckets. When you generate an upload url and upload
-	// your source code, it gets copied to an intermediate Cloud Storage
-	// bucket. The source code is then copied to a versioned directory in
-	// the sources bucket in the consumer project during the function
-	// deployment. It must match the pattern
+	// KmsKeyName: [Preview] Resource name of a KMS crypto key (managed by
+	// the user) used to encrypt/decrypt function source code objects in
+	// intermediate Cloud Storage buckets. When you generate an upload url
+	// and upload your source code, it gets copied to an intermediate Cloud
+	// Storage bucket. The source code is then copied to a versioned
+	// directory in the sources bucket in the consumer project during the
+	// function deployment. It must match the pattern
 	// `projects/{project}/locations/{location}/keyRings/{key_ring}/cryptoKey
 	// s/{crypto_key}`. The Google Cloud Functions service account
 	// (service-{project_number}@gcf-admin-robot.iam.gserviceaccount.com)

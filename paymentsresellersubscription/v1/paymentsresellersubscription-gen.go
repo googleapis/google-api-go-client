@@ -228,6 +228,8 @@ type GoogleCloudPaymentsResellerSubscriptionV1CancelSubscriptionRequest struct {
 	// downgrade.
 	//   "CANCELLATION_REASON_USER_DELINQUENCY" - Cancellation due to user
 	// delinquency
+	//   "CANCELLATION_REASON_SYSTEM_ERROR" - Cancellation due to an
+	// unrecoverable system error.
 	//   "CANCELLATION_REASON_OTHER" - Other reason.
 	CancellationReason string `json:"cancellationReason,omitempty"`
 
@@ -1198,6 +1200,8 @@ type GoogleCloudPaymentsResellerSubscriptionV1SubscriptionCancellationDetails st
 	// downgrade.
 	//   "CANCELLATION_REASON_USER_DELINQUENCY" - Cancellation due to user
 	// delinquency
+	//   "CANCELLATION_REASON_SYSTEM_ERROR" - Cancellation due to an
+	// unrecoverable system error.
 	//   "CANCELLATION_REASON_OTHER" - Other reason.
 	Reason string `json:"reason,omitempty"`
 

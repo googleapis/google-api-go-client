@@ -120,6 +120,7 @@ func New(client *http.Client) (*Service, error) {
 	s := &Service{client: client, BasePath: basePath}
 	s.Applications = NewApplicationsService(s)
 	s.Edits = NewEditsService(s)
+	s.Externaltransactions = NewExternaltransactionsService(s)
 	s.Generatedapks = NewGeneratedapksService(s)
 	s.Grants = NewGrantsService(s)
 	s.Inappproducts = NewInappproductsService(s)
@@ -141,6 +142,8 @@ type Service struct {
 	Applications *ApplicationsService
 
 	Edits *EditsService
+
+	Externaltransactions *ExternaltransactionsService
 
 	Generatedapks *GeneratedapksService
 
@@ -317,6 +320,15 @@ func NewEditsTracksService(s *Service) *EditsTracksService {
 }
 
 type EditsTracksService struct {
+	s *Service
+}
+
+func NewExternaltransactionsService(s *Service) *ExternaltransactionsService {
+	rs := &ExternaltransactionsService{s: s}
+	return rs
+}
+
+type ExternaltransactionsService struct {
 	s *Service
 }
 
@@ -1948,6 +1960,170 @@ func (s *ExternalAccountIdentifiers) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ExternalSubscription: Details of an external subscription.
+type ExternalSubscription struct {
+	// SubscriptionType: Required. The type of the external subscription.
+	//
+	// Possible values:
+	//   "SUBSCRIPTION_TYPE_UNSPECIFIED" - Unspecified, do not use.
+	//   "RECURRING" - This is a recurring subscription where the user is
+	// charged every billing cycle.
+	//   "PREPAID" - This is a prepaid subscription where the user pays up
+	// front.
+	SubscriptionType string `json:"subscriptionType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SubscriptionType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SubscriptionType") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ExternalSubscription) MarshalJSON() ([]byte, error) {
+	type NoMethod ExternalSubscription
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ExternalTransaction: The details of an external transaction.
+type ExternalTransaction struct {
+	// CreateTime: Output only. The time when this transaction was created.
+	// This is the time when Google was notified of the transaction.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// CurrentPreTaxAmount: Output only. The current transaction amount
+	// before tax. This represents the current pre-tax amount including any
+	// refunds that may have been applied to this transaction.
+	CurrentPreTaxAmount *Price `json:"currentPreTaxAmount,omitempty"`
+
+	// CurrentTaxAmount: Output only. The current tax amount. This
+	// represents the current tax amount including any refunds that may have
+	// been applied to this transaction.
+	CurrentTaxAmount *Price `json:"currentTaxAmount,omitempty"`
+
+	// ExternalTransactionId: Output only. The id of this transaction. All
+	// transaction ids under the same package name must be unique. Set when
+	// creating the external transaction.
+	ExternalTransactionId string `json:"externalTransactionId,omitempty"`
+
+	// OneTimeTransaction: This is a one-time transaction and not part of a
+	// subscription.
+	OneTimeTransaction *OneTimeExternalTransaction `json:"oneTimeTransaction,omitempty"`
+
+	// OriginalPreTaxAmount: Required. The original transaction amount
+	// before taxes. This represents the pre-tax amount originally notified
+	// to Google before any refunds were applied.
+	OriginalPreTaxAmount *Price `json:"originalPreTaxAmount,omitempty"`
+
+	// OriginalTaxAmount: Required. The original tax amount. This represents
+	// the tax amount originally notified to Google before any refunds were
+	// applied.
+	OriginalTaxAmount *Price `json:"originalTaxAmount,omitempty"`
+
+	// PackageName: Output only. The resource name of the external
+	// transaction. The package name of the application the inapp products
+	// were sold (for example, 'com.some.app').
+	PackageName string `json:"packageName,omitempty"`
+
+	// RecurringTransaction: This transaction is part of a recurring series
+	// of transactions.
+	RecurringTransaction *RecurringExternalTransaction `json:"recurringTransaction,omitempty"`
+
+	// TestPurchase: Output only. If set, this transaction was a test
+	// purchase. Google will not charge for a test transaction.
+	TestPurchase *ExternalTransactionTestPurchase `json:"testPurchase,omitempty"`
+
+	// TransactionState: Output only. The current state of the transaction.
+	//
+	// Possible values:
+	//   "TRANSACTION_STATE_UNSPECIFIED" - Unspecified transaction state.
+	// Not used.
+	//   "TRANSACTION_REPORTED" - The transaction has been successfully
+	// reported to Google.
+	//   "TRANSACTION_CANCELED" - The transaction has been fully refunded.
+	TransactionState string `json:"transactionState,omitempty"`
+
+	// TransactionTime: Required. The time when the transaction was
+	// completed.
+	TransactionTime string `json:"transactionTime,omitempty"`
+
+	// UserTaxAddress: Required. User address for tax computation.
+	UserTaxAddress *ExternalTransactionAddress `json:"userTaxAddress,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ExternalTransaction) MarshalJSON() ([]byte, error) {
+	type NoMethod ExternalTransaction
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ExternalTransactionAddress: User's address for the external
+// transaction.
+type ExternalTransactionAddress struct {
+	// RegionCode: Required. Two letter region code based on ISO-3166-1
+	// Alpha-2 (UN region codes).
+	RegionCode string `json:"regionCode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "RegionCode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "RegionCode") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ExternalTransactionAddress) MarshalJSON() ([]byte, error) {
+	type NoMethod ExternalTransactionAddress
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ExternalTransactionTestPurchase: Represents a transaction performed
+// using a test account. These transactions will not be charged by
+// Google.
+type ExternalTransactionTestPurchase struct {
+}
+
 // ExternallyHostedApk: Defines an APK available for this application
 // that is hosted externally and not uploaded to Google Play. This
 // function is only available to organizations using Managed Play whose
@@ -2028,6 +2204,10 @@ func (s *ExternallyHostedApk) MarshalJSON() ([]byte, error) {
 	type NoMethod ExternallyHostedApk
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// FullRefund: A full refund of the remaining amount of a transaction.
+type FullRefund struct {
 }
 
 // GeneratedApksListResponse: Response to list generated APKs.
@@ -3175,6 +3355,38 @@ func (s *OfferTag) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// OneTimeExternalTransaction: Represents a one-time transaction.
+type OneTimeExternalTransaction struct {
+	// ExternalTransactionToken: Input only. Provided during the call to
+	// Create. Retrieved from the client when the alternative billing flow
+	// is launched.
+	ExternalTransactionToken string `json:"externalTransactionToken,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ExternalTransactionToken") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ExternalTransactionToken")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OneTimeExternalTransaction) MarshalJSON() ([]byte, error) {
+	type NoMethod OneTimeExternalTransaction
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // OtherRegionsBasePlanConfig: Pricing information for any new locations
 // Play may launch in.
 type OtherRegionsBasePlanConfig struct {
@@ -3382,6 +3594,41 @@ type PageInfo struct {
 
 func (s *PageInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod PageInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PartialRefund: A partial refund of a transaction.
+type PartialRefund struct {
+	// RefundId: Required. A unique id distinguishing this partial refund.
+	// If the refund is successful, subsequent refunds with the same id will
+	// fail. Must be unique across refunds for one individual transaction.
+	RefundId string `json:"refundId,omitempty"`
+
+	// RefundPreTaxAmount: Required. The pre-tax amount of the partial
+	// refund. Should be less than the remaining pre-tax amount of the
+	// transaction.
+	RefundPreTaxAmount *Price `json:"refundPreTaxAmount,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "RefundId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "RefundId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PartialRefund) MarshalJSON() ([]byte, error) {
+	type NoMethod PartialRefund
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3650,6 +3897,85 @@ type ProductPurchasesAcknowledgeRequest struct {
 
 func (s *ProductPurchasesAcknowledgeRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ProductPurchasesAcknowledgeRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RecurringExternalTransaction: Represents a transaction that is part
+// of a recurring series of payments. This can be a subscription or a
+// one-time product with multiple payments (such as preorder).
+type RecurringExternalTransaction struct {
+	// ExternalSubscription: Details of an external subscription.
+	ExternalSubscription *ExternalSubscription `json:"externalSubscription,omitempty"`
+
+	// ExternalTransactionToken: Input only. Provided during the call to
+	// Create. Retrieved from the client when the alternative billing flow
+	// is launched. Required only for the initial purchase.
+	ExternalTransactionToken string `json:"externalTransactionToken,omitempty"`
+
+	// InitialExternalTransactionId: The external transaction id of the
+	// first transaction of this recurring series of transactions. For
+	// example, for a subscription this would be the transaction id of the
+	// first payment. Required when creating recurring external
+	// transactions.
+	InitialExternalTransactionId string `json:"initialExternalTransactionId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ExternalSubscription") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ExternalSubscription") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RecurringExternalTransaction) MarshalJSON() ([]byte, error) {
+	type NoMethod RecurringExternalTransaction
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RefundExternalTransactionRequest: A request to refund an existing
+// external transaction.
+type RefundExternalTransactionRequest struct {
+	// FullRefund: A full-amount refund.
+	FullRefund *FullRefund `json:"fullRefund,omitempty"`
+
+	// PartialRefund: A partial refund.
+	PartialRefund *PartialRefund `json:"partialRefund,omitempty"`
+
+	// RefundTime: Required. The time that the transaction was refunded.
+	RefundTime string `json:"refundTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FullRefund") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FullRefund") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RefundExternalTransactionRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod RefundExternalTransactionRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -12778,6 +13104,458 @@ func (c *EditsTracksUpdateCall) Do(opts ...googleapi.CallOption) (*Track, error)
 	//   },
 	//   "response": {
 	//     "$ref": "Track"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidpublisher"
+	//   ]
+	// }
+
+}
+
+// method id "androidpublisher.externaltransactions.createexternaltransaction":
+
+type ExternaltransactionsCreateexternaltransactionCall struct {
+	s                   *Service
+	parent              string
+	externaltransaction *ExternalTransaction
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// Createexternaltransaction: Creates a new external transaction.
+//
+//   - parent: The parent resource where this external transaction will be
+//     created. Format: applications/{package_name}.
+func (r *ExternaltransactionsService) Createexternaltransaction(parent string, externaltransaction *ExternalTransaction) *ExternaltransactionsCreateexternaltransactionCall {
+	c := &ExternaltransactionsCreateexternaltransactionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.externaltransaction = externaltransaction
+	return c
+}
+
+// ExternalTransactionId sets the optional parameter
+// "externalTransactionId": Required. The id to use for the external
+// transaction. Must be unique across all other transactions for the
+// app. This value should be 1-63 characters and valid characters are
+// /a-z0-9_-/.
+func (c *ExternaltransactionsCreateexternaltransactionCall) ExternalTransactionId(externalTransactionId string) *ExternaltransactionsCreateexternaltransactionCall {
+	c.urlParams_.Set("externalTransactionId", externalTransactionId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ExternaltransactionsCreateexternaltransactionCall) Fields(s ...googleapi.Field) *ExternaltransactionsCreateexternaltransactionCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ExternaltransactionsCreateexternaltransactionCall) Context(ctx context.Context) *ExternaltransactionsCreateexternaltransactionCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ExternaltransactionsCreateexternaltransactionCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ExternaltransactionsCreateexternaltransactionCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.externaltransaction)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/{+parent}/externalTransactions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidpublisher.externaltransactions.createexternaltransaction" call.
+// Exactly one of *ExternalTransaction or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ExternalTransaction.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ExternaltransactionsCreateexternaltransactionCall) Do(opts ...googleapi.CallOption) (*ExternalTransaction, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ExternalTransaction{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new external transaction.",
+	//   "flatPath": "androidpublisher/v3/applications/{applicationsId}/externalTransactions",
+	//   "httpMethod": "POST",
+	//   "id": "androidpublisher.externaltransactions.createexternaltransaction",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "externalTransactionId": {
+	//       "description": "Required. The id to use for the external transaction. Must be unique across all other transactions for the app. This value should be 1-63 characters and valid characters are /a-z0-9_-/.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The parent resource where this external transaction will be created. Format: applications/{package_name}",
+	//       "location": "path",
+	//       "pattern": "^applications/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "androidpublisher/v3/{+parent}/externalTransactions",
+	//   "request": {
+	//     "$ref": "ExternalTransaction"
+	//   },
+	//   "response": {
+	//     "$ref": "ExternalTransaction"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidpublisher"
+	//   ]
+	// }
+
+}
+
+// method id "androidpublisher.externaltransactions.getexternaltransaction":
+
+type ExternaltransactionsGetexternaltransactionCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Getexternaltransaction: Gets an existing external transaction.
+//
+//   - name: The name of the external transaction to retrieve. Format:
+//     applications/{package_name}/externalTransactions/{external_transacti
+//     on}.
+func (r *ExternaltransactionsService) Getexternaltransaction(name string) *ExternaltransactionsGetexternaltransactionCall {
+	c := &ExternaltransactionsGetexternaltransactionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ExternaltransactionsGetexternaltransactionCall) Fields(s ...googleapi.Field) *ExternaltransactionsGetexternaltransactionCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ExternaltransactionsGetexternaltransactionCall) IfNoneMatch(entityTag string) *ExternaltransactionsGetexternaltransactionCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ExternaltransactionsGetexternaltransactionCall) Context(ctx context.Context) *ExternaltransactionsGetexternaltransactionCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ExternaltransactionsGetexternaltransactionCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ExternaltransactionsGetexternaltransactionCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidpublisher.externaltransactions.getexternaltransaction" call.
+// Exactly one of *ExternalTransaction or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ExternalTransaction.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ExternaltransactionsGetexternaltransactionCall) Do(opts ...googleapi.CallOption) (*ExternalTransaction, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ExternalTransaction{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets an existing external transaction.",
+	//   "flatPath": "androidpublisher/v3/applications/{applicationsId}/externalTransactions/{externalTransactionsId}",
+	//   "httpMethod": "GET",
+	//   "id": "androidpublisher.externaltransactions.getexternaltransaction",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the external transaction to retrieve. Format: applications/{package_name}/externalTransactions/{external_transaction}",
+	//       "location": "path",
+	//       "pattern": "^applications/[^/]+/externalTransactions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "androidpublisher/v3/{+name}",
+	//   "response": {
+	//     "$ref": "ExternalTransaction"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidpublisher"
+	//   ]
+	// }
+
+}
+
+// method id "androidpublisher.externaltransactions.refundexternaltransaction":
+
+type ExternaltransactionsRefundexternaltransactionCall struct {
+	s                                *Service
+	name                             string
+	refundexternaltransactionrequest *RefundExternalTransactionRequest
+	urlParams_                       gensupport.URLParams
+	ctx_                             context.Context
+	header_                          http.Header
+}
+
+// Refundexternaltransaction: Refunds or partially refunds an existing
+// external transaction.
+//
+//   - name: The name of the external transaction that will be refunded.
+//     Format:
+//     applications/{package_name}/externalTransactions/{external_transacti
+//     on}.
+func (r *ExternaltransactionsService) Refundexternaltransaction(name string, refundexternaltransactionrequest *RefundExternalTransactionRequest) *ExternaltransactionsRefundexternaltransactionCall {
+	c := &ExternaltransactionsRefundexternaltransactionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.refundexternaltransactionrequest = refundexternaltransactionrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ExternaltransactionsRefundexternaltransactionCall) Fields(s ...googleapi.Field) *ExternaltransactionsRefundexternaltransactionCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ExternaltransactionsRefundexternaltransactionCall) Context(ctx context.Context) *ExternaltransactionsRefundexternaltransactionCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ExternaltransactionsRefundexternaltransactionCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ExternaltransactionsRefundexternaltransactionCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.refundexternaltransactionrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/{+name}:refund")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidpublisher.externaltransactions.refundexternaltransaction" call.
+// Exactly one of *ExternalTransaction or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ExternalTransaction.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ExternaltransactionsRefundexternaltransactionCall) Do(opts ...googleapi.CallOption) (*ExternalTransaction, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ExternalTransaction{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Refunds or partially refunds an existing external transaction.",
+	//   "flatPath": "androidpublisher/v3/applications/{applicationsId}/externalTransactions/{externalTransactionsId}:refund",
+	//   "httpMethod": "POST",
+	//   "id": "androidpublisher.externaltransactions.refundexternaltransaction",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the external transaction that will be refunded. Format: applications/{package_name}/externalTransactions/{external_transaction}",
+	//       "location": "path",
+	//       "pattern": "^applications/[^/]+/externalTransactions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "androidpublisher/v3/{+name}:refund",
+	//   "request": {
+	//     "$ref": "RefundExternalTransactionRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "ExternalTransaction"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/androidpublisher"

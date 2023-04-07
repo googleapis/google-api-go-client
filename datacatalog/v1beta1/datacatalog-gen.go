@@ -2645,12 +2645,12 @@ func (s *GoogleCloudDatacatalogV1TagFieldEnumValue) MarshalJSON() ([]byte, error
 // GoogleCloudDatacatalogV1TaggedEntry: Wrapper containing Entry and
 // information about Tags that should and should not be attached to it.
 type GoogleCloudDatacatalogV1TaggedEntry struct {
-	// AbsentTags: Tags that should be deleted from the Data Catalog. Caller
-	// should populate template name and column only.
+	// AbsentTags: Optional. Tags that should be deleted from the Data
+	// Catalog. Caller should populate template name and column only.
 	AbsentTags []*GoogleCloudDatacatalogV1Tag `json:"absentTags,omitempty"`
 
-	// PresentTags: Tags that should be ingested into the Data Catalog.
-	// Caller should populate template name, column and fields.
+	// PresentTags: Optional. Tags that should be ingested into the Data
+	// Catalog. Caller should populate template name, column and fields.
 	PresentTags []*GoogleCloudDatacatalogV1Tag `json:"presentTags,omitempty"`
 
 	// V1Entry: Non-encrypted Data Catalog v1 Entry.

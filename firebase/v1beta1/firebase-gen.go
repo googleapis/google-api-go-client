@@ -1836,7 +1836,8 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 // StatusProto: Wire-format for a Status object
 type StatusProto struct {
 	// CanonicalCode: The canonical error code (see codes.proto) that most
-	// closely corresponds to this status. May be missing.
+	// closely corresponds to this status. This may be missing, and in the
+	// common case of the generic space, it definitely will be.
 	CanonicalCode int64 `json:"canonicalCode,omitempty"`
 
 	// Code: Numeric code drawn from the space specified below. Often, this

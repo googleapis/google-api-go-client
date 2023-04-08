@@ -1396,6 +1396,10 @@ type Database struct {
 	// initiate the recovery.
 	EarliestVersionTime string `json:"earliestVersionTime,omitempty"`
 
+	// EnableDropProtection: Whether drop protection is enabled for this
+	// database. Defaults to false, if not set.
+	EnableDropProtection bool `json:"enableDropProtection,omitempty"`
+
 	// EncryptionConfig: Output only. For databases that are using customer
 	// managed encryption, this field contains the encryption configuration
 	// for the database. For databases that are using Google default or
@@ -1417,6 +1421,10 @@ type Database struct {
 	// `CREATE DATABASE` statement. This name can be passed to other API
 	// methods to identify the database.
 	Name string `json:"name,omitempty"`
+
+	// Reconciling: Output only. If true, the database is being updated. If
+	// false, there are no ongoing update operations for the database.
+	Reconciling bool `json:"reconciling,omitempty"`
 
 	// RestoreInfo: Output only. Applicable only for restored databases.
 	// Contains information about the restore source.
@@ -5837,6 +5845,76 @@ type UpdateDatabaseDdlRequest struct {
 
 func (s *UpdateDatabaseDdlRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateDatabaseDdlRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// UpdateDatabaseMetadata: Metadata type for the operation returned by
+// UpdateDatabase.
+type UpdateDatabaseMetadata struct {
+	// CancelTime: The time at which this operation was cancelled. If set,
+	// this operation is in the process of undoing itself (which is
+	// best-effort).
+	CancelTime string `json:"cancelTime,omitempty"`
+
+	// Progress: The progress of the UpdateDatabase operation.
+	Progress *OperationProgress `json:"progress,omitempty"`
+
+	// Request: The request for UpdateDatabase.
+	Request *UpdateDatabaseRequest `json:"request,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CancelTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CancelTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UpdateDatabaseMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod UpdateDatabaseMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// UpdateDatabaseRequest: The request for UpdateDatabase.
+type UpdateDatabaseRequest struct {
+	// Database: Required. The database to update. The `name` field of the
+	// database is of the form `projects//instances//databases/`.
+	Database *Database `json:"database,omitempty"`
+
+	// UpdateMask: Required. The list of fields to update. Currently, only
+	// `enable_drop_protection` field can be updated.
+	UpdateMask string `json:"updateMask,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Database") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Database") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UpdateDatabaseRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod UpdateDatabaseRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -12928,6 +13006,183 @@ func (c *ProjectsInstancesDatabasesListCall) Pages(ctx context.Context, f func(*
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "spanner.projects.instances.databases.patch":
+
+type ProjectsInstancesDatabasesPatchCall struct {
+	s          *Service
+	name       string
+	database   *Database
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Updates a Cloud Spanner database. The returned long-running
+// operation can be used to track the progress of updating the database.
+// If the named database does not exist, returns `NOT_FOUND`. While the
+// operation is pending: * The database's reconciling field is set to
+// true. * Cancelling the operation is best-effort. If the cancellation
+// succeeds, the operation metadata's cancel_time is set, the updates
+// are reverted, and the operation terminates with a `CANCELLED` status.
+// * New UpdateDatabase requests will return a `FAILED_PRECONDITION`
+// error until the pending operation is done (returns successfully or
+// with error). * Reading the database via the API continues to give the
+// pre-request values. Upon completion of the returned operation: * The
+// new values are in effect and readable via the API. * The database's
+// reconciling field becomes false. The returned long-running operation
+// will have a name of the format
+// `projects//instances//databases//operations/` and can be used to
+// track the database modification. The metadata field type is
+// UpdateDatabaseMetadata. The response field type is Database, if
+// successful.
+//
+//   - name: The name of the database. Values are of the form
+//     `projects//instances//databases/`, where “ is as specified in the
+//     `CREATE DATABASE` statement. This name can be passed to other API
+//     methods to identify the database.
+func (r *ProjectsInstancesDatabasesService) Patch(name string, database *Database) *ProjectsInstancesDatabasesPatchCall {
+	c := &ProjectsInstancesDatabasesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.database = database
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. The
+// list of fields to update. Currently, only `enable_drop_protection`
+// field can be updated.
+func (c *ProjectsInstancesDatabasesPatchCall) UpdateMask(updateMask string) *ProjectsInstancesDatabasesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsInstancesDatabasesPatchCall) Fields(s ...googleapi.Field) *ProjectsInstancesDatabasesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsInstancesDatabasesPatchCall) Context(ctx context.Context) *ProjectsInstancesDatabasesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsInstancesDatabasesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstancesDatabasesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.database)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "spanner.projects.instances.databases.patch" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsInstancesDatabasesPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a Cloud Spanner database. The returned long-running operation can be used to track the progress of updating the database. If the named database does not exist, returns `NOT_FOUND`. While the operation is pending: * The database's reconciling field is set to true. * Cancelling the operation is best-effort. If the cancellation succeeds, the operation metadata's cancel_time is set, the updates are reverted, and the operation terminates with a `CANCELLED` status. * New UpdateDatabase requests will return a `FAILED_PRECONDITION` error until the pending operation is done (returns successfully or with error). * Reading the database via the API continues to give the pre-request values. Upon completion of the returned operation: * The new values are in effect and readable via the API. * The database's reconciling field becomes false. The returned long-running operation will have a name of the format `projects//instances//databases//operations/` and can be used to track the database modification. The metadata field type is UpdateDatabaseMetadata. The response field type is Database, if successful.",
+	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "spanner.projects.instances.databases.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the database. Values are of the form `projects//instances//databases/`, where `` is as specified in the `CREATE DATABASE` statement. This name can be passed to other API methods to identify the database.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/instances/[^/]+/databases/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Required. The list of fields to update. Currently, only `enable_drop_protection` field can be updated.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "Database"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/spanner.admin"
+	//   ]
+	// }
+
 }
 
 // method id "spanner.projects.instances.databases.restore":

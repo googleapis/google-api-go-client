@@ -285,7 +285,14 @@ type Execution struct {
 	//   "SUCCEEDED" - The execution finished successfully.
 	//   "FAILED" - The execution failed with an error.
 	//   "CANCELLED" - The execution was stopped intentionally.
+	//   "UNAVAILABLE" - Execution data is unavailable. See the
+	// `state_error` field.
 	State string `json:"state,omitempty"`
+
+	// StateError: Output only. Error regarding the state of the Execution
+	// resource. For example, this field will have error details if the
+	// Execution data is unavailable due to revoked KMS key permissions.
+	StateError *StateError `json:"stateError,omitempty"`
 
 	// Status: Output only. Status tracks the current steps and progress
 	// data of this execution.
@@ -522,6 +529,42 @@ type StackTraceElement struct {
 
 func (s *StackTraceElement) MarshalJSON() ([]byte, error) {
 	type NoMethod StackTraceElement
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// StateError: Describes an error related to the current state of the
+// Execution resource.
+type StateError struct {
+	// Details: Provides specifics about the error.
+	Details string `json:"details,omitempty"`
+
+	// Type: The type of this state error.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - No type specified.
+	//   "KMS_ERROR" - Caused by an issue with KMS.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Details") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Details") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *StateError) MarshalJSON() ([]byte, error) {
+	type NoMethod StateError
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

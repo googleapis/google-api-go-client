@@ -1294,6 +1294,8 @@ type GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItem struct {
 	// deactivated, and a prorated refund in being processed.
 	//   "LINE_ITEM_STATE_WAITING_TO_DEACTIVATE" - The line item is
 	// scheduled to be deactivated at the end of the current cycle.
+	//   "LINE_ITEM_STATE_OFF_CYCLE_CHARGING" - Line item is being charged
+	// off-cycle.
 	State string `json:"state,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Amount") to

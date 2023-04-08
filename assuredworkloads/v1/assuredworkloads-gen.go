@@ -267,8 +267,8 @@ type GoogleCloudAssuredworkloadsV1CreateWorkloadOperationMetadata struct {
 	//   "AU_REGIONS_AND_US_SUPPORT" - Assured Workloads for Australia
 	// Regions and Support controls Available for public preview
 	// consumption. Don't create production workloads.
-	//   "ASSURED_WORKLOADS_FOR_PARTNERS" - Assured Workloads for Partners
-	//   "ISR_REGIONS" - Assured Workloads for Israel Regions
+	//   "ASSURED_WORKLOADS_FOR_PARTNERS" - Assured Workloads for Partners;
+	//   "ISR_REGIONS" - Assured Workloads for Israel
 	//   "ISR_REGIONS_AND_SUPPORT" - Assured Workloads for Israel Regions
 	//   "CA_PROTECTED_B" - Assured Workloads for Canada Protected B regime
 	ComplianceRegime string `json:"complianceRegime,omitempty"`
@@ -381,7 +381,7 @@ func (s *GoogleCloudAssuredworkloadsV1ListWorkloadsResponse) MarshalJSON() ([]by
 }
 
 // GoogleCloudAssuredworkloadsV1MutatePartnerPermissionsRequest: Request
-// of updating permission settings for a partner workload.
+// for updating permission settings for a partner workload.
 type GoogleCloudAssuredworkloadsV1MutatePartnerPermissionsRequest struct {
 	// Etag: Optional. The etag of the workload. If this is provided, it
 	// must match the server's etag.
@@ -434,8 +434,8 @@ type GoogleCloudAssuredworkloadsV1RestrictAllowedResourcesRequest struct {
 	// for the list of supported resources.
 	//   "APPEND_COMPLIANT_RESOURCES" - Similar to ALLOW_COMPLIANT_RESOURCES
 	// but adds the list of compliant resources to the existing list of
-	// resources. Effective org-policy of the Folder is considered to ensure
-	// there is no disruption to the existing customer workflows.
+	// compliant resources. Effective org-policy of the Folder is considered
+	// to ensure there is no disruption to the existing customer workflows.
 	RestrictionType string `json:"restrictionType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "RestrictionType") to
@@ -766,8 +766,8 @@ type GoogleCloudAssuredworkloadsV1Workload struct {
 	//   "AU_REGIONS_AND_US_SUPPORT" - Assured Workloads for Australia
 	// Regions and Support controls Available for public preview
 	// consumption. Don't create production workloads.
-	//   "ASSURED_WORKLOADS_FOR_PARTNERS" - Assured Workloads for Partners
-	//   "ISR_REGIONS" - Assured Workloads for Israel Regions
+	//   "ASSURED_WORKLOADS_FOR_PARTNERS" - Assured Workloads for Partners;
+	//   "ISR_REGIONS" - Assured Workloads for Israel
 	//   "ISR_REGIONS_AND_SUPPORT" - Assured Workloads for Israel Regions
 	//   "CA_PROTECTED_B" - Assured Workloads for Canada Protected B regime
 	ComplianceRegime string `json:"complianceRegime,omitempty"`
@@ -836,9 +836,9 @@ type GoogleCloudAssuredworkloadsV1Workload struct {
 	//
 	// Possible values:
 	//   "PARTNER_UNSPECIFIED"
-	//   "LOCAL_CONTROLS_BY_S3NS" - Enum representing S3NS partner.
+	//   "LOCAL_CONTROLS_BY_S3NS" - Enum representing S3NS (Thales) partner.
 	//   "SOVEREIGN_CONTROLS_BY_T_SYSTEMS" - Enum representing T_SYSTEM
-	// partner.
+	// (TSI) partner.
 	Partner string `json:"partner,omitempty"`
 
 	// ProvisionedResourcesParent: Input only. The parent resource for the
@@ -991,9 +991,7 @@ func (s *GoogleCloudAssuredworkloadsV1WorkloadEkmProvisioningResponse) MarshalJS
 }
 
 // GoogleCloudAssuredworkloadsV1WorkloadKMSSettings: Settings specific
-// to the Key Management Service. This message is deprecated. In order
-// to create a Keyring, callers should specify, ENCRYPTION_KEYS_PROJECT
-// or KEYRING in ResourceSettings.resource_type field.
+// to the Key Management Service.
 type GoogleCloudAssuredworkloadsV1WorkloadKMSSettings struct {
 	// NextRotationTime: Required. Input only. Immutable. The time at which
 	// the Key Management Service will automatically create a new version of
@@ -1080,10 +1078,9 @@ type GoogleCloudAssuredworkloadsV1WorkloadResourceInfo struct {
 	//
 	// Possible values:
 	//   "RESOURCE_TYPE_UNSPECIFIED" - Unknown resource type.
-	//   "CONSUMER_PROJECT" - Consumer project. AssuredWorkloads Projects
-	// are no longer supported. This field will be ignored only in
-	// CreateWorkload requests. ListWorkloads and GetWorkload will continue
-	// to provide projects information. Use CONSUMER_FOLDER instead.
+	//   "CONSUMER_PROJECT" - Deprecated. Existing workloads will continue
+	// to support this, but new CreateWorkloadRequests should not specify
+	// this as an input value.
 	//   "CONSUMER_FOLDER" - Consumer Folder.
 	//   "ENCRYPTION_KEYS_PROJECT" - Consumer project containing encryption
 	// keys.
@@ -1127,15 +1124,14 @@ type GoogleCloudAssuredworkloadsV1WorkloadResourceSettings struct {
 	ResourceId string `json:"resourceId,omitempty"`
 
 	// ResourceType: Indicates the type of resource. This field should be
-	// specified to correspond the id to the right resource type
-	// (CONSUMER_FOLDER or ENCRYPTION_KEYS_PROJECT)
+	// specified to correspond the id to the right project type
+	// (CONSUMER_PROJECT or ENCRYPTION_KEYS_PROJECT)
 	//
 	// Possible values:
 	//   "RESOURCE_TYPE_UNSPECIFIED" - Unknown resource type.
-	//   "CONSUMER_PROJECT" - Consumer project. AssuredWorkloads Projects
-	// are no longer supported. This field will be ignored only in
-	// CreateWorkload requests. ListWorkloads and GetWorkload will continue
-	// to provide projects information. Use CONSUMER_FOLDER instead.
+	//   "CONSUMER_PROJECT" - Deprecated. Existing workloads will continue
+	// to support this, but new CreateWorkloadRequests should not specify
+	// this as an input value.
 	//   "CONSUMER_FOLDER" - Consumer Folder.
 	//   "ENCRYPTION_KEYS_PROJECT" - Consumer project containing encryption
 	// keys.
@@ -1893,7 +1889,10 @@ type OrganizationsLocationsWorkloadsDeleteCall struct {
 
 // Delete: Deletes the workload. Make sure that workload's direct
 // children are already in a deleted state, otherwise the request will
-// fail with a FAILED_PRECONDITION error.
+// fail with a FAILED_PRECONDITION error. In addition to
+// assuredworkloads.workload.delete permission, the user should also
+// have orgpolicy.policy.set permission on the deleted folder to remove
+// Assured Workloads OrgPolicies.
 //
 //   - name: The `name` field is used to identify the workload. Format:
 //     organizations/{org_id}/locations/{location_id}/workloads/{workload_i
@@ -1997,7 +1996,7 @@ func (c *OrganizationsLocationsWorkloadsDeleteCall) Do(opts ...googleapi.CallOpt
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes the workload. Make sure that workload's direct children are already in a deleted state, otherwise the request will fail with a FAILED_PRECONDITION error.",
+	//   "description": "Deletes the workload. Make sure that workload's direct children are already in a deleted state, otherwise the request will fail with a FAILED_PRECONDITION error. In addition to assuredworkloads.workload.delete permission, the user should also have orgpolicy.policy.set permission on the deleted folder to remove Assured Workloads OrgPolicies.",
 	//   "flatPath": "v1/organizations/{organizationsId}/locations/{locationsId}/workloads/{workloadsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "assuredworkloads.organizations.locations.workloads.delete",
@@ -2043,7 +2042,7 @@ type OrganizationsLocationsWorkloadsGetCall struct {
 // Get: Gets Assured Workload associated with a CRM Node
 //
 //   - name: The resource name of the Workload to fetch. This is the
-//     workload's relative path in the API, formatted as
+//     workloads's relative path in the API, formatted as
 //     "organizations/{organization_id}/locations/{location_id}/workloads/{
 //     workload_id}". For example,
 //     "organizations/123/locations/us-east1/workloads/assured-workload-1".
@@ -2162,7 +2161,7 @@ func (c *OrganizationsLocationsWorkloadsGetCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the Workload to fetch. This is the workload's relative path in the API, formatted as \"organizations/{organization_id}/locations/{location_id}/workloads/{workload_id}\". For example, \"organizations/123/locations/us-east1/workloads/assured-workload-1\".",
+	//       "description": "Required. The resource name of the Workload to fetch. This is the workloads's relative path in the API, formatted as \"organizations/{organization_id}/locations/{location_id}/workloads/{workload_id}\". For example, \"organizations/123/locations/us-east1/workloads/assured-workload-1\".",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/locations/[^/]+/workloads/[^/]+$",
 	//       "required": true,

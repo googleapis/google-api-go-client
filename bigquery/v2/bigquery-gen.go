@@ -7610,7 +7610,8 @@ type SparkOptions struct {
 
 	// MainFileUri: The main file/jar URI of the Spark application. Exactly
 	// one of the definition_body field and the main_file_uri field must be
-	// set for Python.
+	// set for Python. Exactly one of main_class and main_file_uri field
+	// should be set for Java/Scala language type.
 	MainFileUri string `json:"mainFileUri,omitempty"`
 
 	// Properties: Configuration properties as a set of key/value pairs,

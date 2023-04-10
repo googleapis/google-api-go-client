@@ -565,7 +565,9 @@ type Channel struct {
 	// Optional.
 	Params map[string]string `json:"params,omitempty"`
 
-	// Payload: A Boolean value to indicate whether payload is wanted.
+	// Payload: A Boolean value to indicate whether payload is wanted. A
+	// payload is data that is sent in the body of an HTTP POST, PUT, or
+	// PATCH message and contains important information about the request.
 	// Optional.
 	Payload bool `json:"payload,omitempty"`
 

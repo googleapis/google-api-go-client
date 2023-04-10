@@ -944,11 +944,15 @@ type CryptoKeyVersion struct {
 	//   "RSA_DECRYPT_OAEP_4096_SHA1" - RSAES-OAEP 4096 bit key with a SHA1
 	// digest.
 	//   "EC_SIGN_P256_SHA256" - ECDSA on the NIST P-256 curve with a SHA256
-	// digest.
+	// digest. Other hash functions can also be used:
+	// https://cloud.google.com/kms/docs/create-validate-signatures#ecdsa_support_for_other_hash_algorithms
 	//   "EC_SIGN_P384_SHA384" - ECDSA on the NIST P-384 curve with a SHA384
-	// digest.
+	// digest. Other hash functions can also be used:
+	// https://cloud.google.com/kms/docs/create-validate-signatures#ecdsa_support_for_other_hash_algorithms
 	//   "EC_SIGN_SECP256K1_SHA256" - ECDSA on the non-NIST secp256k1 curve.
-	// This curve is only supported for HSM protection level.
+	// This curve is only supported for HSM protection level. Other hash
+	// functions can also be used:
+	// https://cloud.google.com/kms/docs/create-validate-signatures#ecdsa_support_for_other_hash_algorithms
 	//   "HMAC_SHA256" - HMAC-SHA256 signing with a 256 bit key.
 	//   "HMAC_SHA1" - HMAC-SHA1 signing with a 160 bit key.
 	//   "HMAC_SHA384" - HMAC-SHA384 signing with a 384 bit key.
@@ -1153,11 +1157,15 @@ type CryptoKeyVersionTemplate struct {
 	//   "RSA_DECRYPT_OAEP_4096_SHA1" - RSAES-OAEP 4096 bit key with a SHA1
 	// digest.
 	//   "EC_SIGN_P256_SHA256" - ECDSA on the NIST P-256 curve with a SHA256
-	// digest.
+	// digest. Other hash functions can also be used:
+	// https://cloud.google.com/kms/docs/create-validate-signatures#ecdsa_support_for_other_hash_algorithms
 	//   "EC_SIGN_P384_SHA384" - ECDSA on the NIST P-384 curve with a SHA384
-	// digest.
+	// digest. Other hash functions can also be used:
+	// https://cloud.google.com/kms/docs/create-validate-signatures#ecdsa_support_for_other_hash_algorithms
 	//   "EC_SIGN_SECP256K1_SHA256" - ECDSA on the non-NIST secp256k1 curve.
-	// This curve is only supported for HSM protection level.
+	// This curve is only supported for HSM protection level. Other hash
+	// functions can also be used:
+	// https://cloud.google.com/kms/docs/create-validate-signatures#ecdsa_support_for_other_hash_algorithms
 	//   "HMAC_SHA256" - HMAC-SHA256 signing with a 256 bit key.
 	//   "HMAC_SHA1" - HMAC-SHA1 signing with a 160 bit key.
 	//   "HMAC_SHA384" - HMAC-SHA384 signing with a 384 bit key.
@@ -1899,11 +1907,15 @@ type ImportCryptoKeyVersionRequest struct {
 	//   "RSA_DECRYPT_OAEP_4096_SHA1" - RSAES-OAEP 4096 bit key with a SHA1
 	// digest.
 	//   "EC_SIGN_P256_SHA256" - ECDSA on the NIST P-256 curve with a SHA256
-	// digest.
+	// digest. Other hash functions can also be used:
+	// https://cloud.google.com/kms/docs/create-validate-signatures#ecdsa_support_for_other_hash_algorithms
 	//   "EC_SIGN_P384_SHA384" - ECDSA on the NIST P-384 curve with a SHA384
-	// digest.
+	// digest. Other hash functions can also be used:
+	// https://cloud.google.com/kms/docs/create-validate-signatures#ecdsa_support_for_other_hash_algorithms
 	//   "EC_SIGN_SECP256K1_SHA256" - ECDSA on the non-NIST secp256k1 curve.
-	// This curve is only supported for HSM protection level.
+	// This curve is only supported for HSM protection level. Other hash
+	// functions can also be used:
+	// https://cloud.google.com/kms/docs/create-validate-signatures#ecdsa_support_for_other_hash_algorithms
 	//   "HMAC_SHA256" - HMAC-SHA256 signing with a 256 bit key.
 	//   "HMAC_SHA1" - HMAC-SHA1 signing with a 160 bit key.
 	//   "HMAC_SHA384" - HMAC-SHA384 signing with a 384 bit key.
@@ -2956,11 +2968,15 @@ type PublicKey struct {
 	//   "RSA_DECRYPT_OAEP_4096_SHA1" - RSAES-OAEP 4096 bit key with a SHA1
 	// digest.
 	//   "EC_SIGN_P256_SHA256" - ECDSA on the NIST P-256 curve with a SHA256
-	// digest.
+	// digest. Other hash functions can also be used:
+	// https://cloud.google.com/kms/docs/create-validate-signatures#ecdsa_support_for_other_hash_algorithms
 	//   "EC_SIGN_P384_SHA384" - ECDSA on the NIST P-384 curve with a SHA384
-	// digest.
+	// digest. Other hash functions can also be used:
+	// https://cloud.google.com/kms/docs/create-validate-signatures#ecdsa_support_for_other_hash_algorithms
 	//   "EC_SIGN_SECP256K1_SHA256" - ECDSA on the non-NIST secp256k1 curve.
-	// This curve is only supported for HSM protection level.
+	// This curve is only supported for HSM protection level. Other hash
+	// functions can also be used:
+	// https://cloud.google.com/kms/docs/create-validate-signatures#ecdsa_support_for_other_hash_algorithms
 	//   "HMAC_SHA256" - HMAC-SHA256 signing with a 256 bit key.
 	//   "HMAC_SHA1" - HMAC-SHA1 signing with a 160 bit key.
 	//   "HMAC_SHA384" - HMAC-SHA384 signing with a 384 bit key.

@@ -5554,7 +5554,8 @@ func (s *ServiceMeshFeatureState) MarshalJSON() ([]byte, error) {
 // ServiceMeshMembershipSpec: **Service Mesh**: Spec for a single
 // Membership for the servicemesh feature
 type ServiceMeshMembershipSpec struct {
-	// ControlPlane: Enables automatic control plane management.
+	// ControlPlane: Deprecated: use `management` instead Enables automatic
+	// control plane management.
 	//
 	// Possible values:
 	//   "CONTROL_PLANE_MANAGEMENT_UNSPECIFIED" - Unspecified

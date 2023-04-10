@@ -6579,7 +6579,10 @@ func (c *UsersMessagesListCall) IncludeSpamTrash(includeSpamTrash bool) *UsersMe
 }
 
 // LabelIds sets the optional parameter "labelIds": Only return messages
-// with labels that match all of the specified label IDs.
+// with labels that match all of the specified label IDs. Messages in a
+// thread might have labels that other messages in the same thread don't
+// have. To learn more, see Manage labels on messages and threads
+// (https://developers.google.com/gmail/api/guides/labels#manage_labels_on_messages_threads).
 func (c *UsersMessagesListCall) LabelIds(labelIds ...string) *UsersMessagesListCall {
 	c.urlParams_.SetMulti("labelIds", append([]string{}, labelIds...))
 	return c
@@ -6724,7 +6727,7 @@ func (c *UsersMessagesListCall) Do(opts ...googleapi.CallOption) (*ListMessagesR
 	//       "type": "boolean"
 	//     },
 	//     "labelIds": {
-	//       "description": "Only return messages with labels that match all of the specified label IDs.",
+	//       "description": "Only return messages with labels that match all of the specified label IDs. Messages in a thread might have labels that other messages in the same thread don't have. To learn more, see [Manage labels on messages and threads](https://developers.google.com/gmail/api/guides/labels#manage_labels_on_messages_threads).",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"

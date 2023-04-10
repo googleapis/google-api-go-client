@@ -1355,7 +1355,7 @@ func (s *Explicit) MarshalJSON() ([]byte, error) {
 // bucket represents a constant relative uncertainty on a specific value
 // in the bucket.There are num_finite_buckets + 2 (= N) buckets. Bucket
 // i has the following boundaries:Upper bound (0 <= i < N-1): scale *
-// (growth_factor ^ i). Lower bound (1 <= i < N): scale * (growth_factor
+// (growth_factor ^ i).Lower bound (1 <= i < N): scale * (growth_factor
 // ^ (i - 1)).
 type Exponential struct {
 	// GrowthFactor: Must be greater than 1.
@@ -1588,7 +1588,7 @@ func (s *LabelDescriptor) MarshalJSON() ([]byte, error) {
 // constant absolute uncertainty on the specific value in the
 // bucket.There are num_finite_buckets + 2 (= N) buckets. Bucket i has
 // the following boundaries:Upper bound (0 <= i < N-1): offset + (width
-// * i). Lower bound (1 <= i < N): offset + (width * (i - 1)).
+// * i).Lower bound (1 <= i < N): offset + (width * (i - 1)).
 type Linear struct {
 	// NumFiniteBuckets: Must be greater than 0.
 	NumFiniteBuckets int64 `json:"numFiniteBuckets,omitempty"`
@@ -7193,9 +7193,9 @@ type BillingAccountsLocationsBucketsLinksCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Asynchronously creates linked dataset in BigQuery which makes
-// it possible to use BugQuery to read the logs stored in the bucket. A
-// bucket may currently only contain one link.
+// Create: Asynchronously creates a linked dataset in BigQuery which
+// makes it possible to use BigQuery to read the logs stored in the log
+// bucket. A log bucket may currently only contain one link.
 //
 //   - parent: The full resource name of the bucket to create a link for.
 //     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
@@ -7311,7 +7311,7 @@ func (c *BillingAccountsLocationsBucketsLinksCreateCall) Do(opts ...googleapi.Ca
 	}
 	return ret, nil
 	// {
-	//   "description": "Asynchronously creates linked dataset in BigQuery which makes it possible to use BugQuery to read the logs stored in the bucket. A bucket may currently only contain one link.",
+	//   "description": "Asynchronously creates a linked dataset in BigQuery which makes it possible to use BigQuery to read the logs stored in the log bucket. A log bucket may currently only contain one link.",
 	//   "flatPath": "v2/billingAccounts/{billingAccountsId}/locations/{locationsId}/buckets/{bucketsId}/links",
 	//   "httpMethod": "POST",
 	//   "id": "logging.billingAccounts.locations.buckets.links.create",
@@ -8687,7 +8687,7 @@ type BillingAccountsLocationsBucketsViewsLogsListCall struct {
 // List: Lists the logs in projects, organizations, folders, or billing
 // accounts. Only logs that have entries are listed.
 //
-//   - parent: The resource name that owns the logs: projects/[PROJECT_ID]
+//   - parent: The resource name to list logs for: projects/[PROJECT_ID]
 //     organizations/[ORGANIZATION_ID]
 //     billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID].
 func (r *BillingAccountsLocationsBucketsViewsLogsService) List(parent string) *BillingAccountsLocationsBucketsViewsLogsListCall {
@@ -8715,8 +8715,8 @@ func (c *BillingAccountsLocationsBucketsViewsLogsListCall) PageToken(pageToken s
 	return c
 }
 
-// ResourceNames sets the optional parameter "resourceNames": The
-// resource name that owns the logs:
+// ResourceNames sets the optional parameter "resourceNames": List of
+// resource names to list logs for:
 // projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/view
 // s/[VIEW_ID]
 // organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKE
@@ -8726,7 +8726,8 @@ func (c *BillingAccountsLocationsBucketsViewsLogsListCall) PageToken(pageToken s
 // folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/
 // [VIEW_ID]To support legacy queries, it could also be:
 // projects/[PROJECT_ID] organizations/[ORGANIZATION_ID]
-// billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID]
+// billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID]The resource
+// name in the parent field is added to this list.
 func (c *BillingAccountsLocationsBucketsViewsLogsListCall) ResourceNames(resourceNames ...string) *BillingAccountsLocationsBucketsViewsLogsListCall {
 	c.urlParams_.SetMulti("resourceNames", append([]string{}, resourceNames...))
 	return c
@@ -8851,14 +8852,14 @@ func (c *BillingAccountsLocationsBucketsViewsLogsListCall) Do(opts ...googleapi.
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The resource name that owns the logs: projects/[PROJECT_ID] organizations/[ORGANIZATION_ID] billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID]",
+	//       "description": "Required. The resource name to list logs for: projects/[PROJECT_ID] organizations/[ORGANIZATION_ID] billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID]",
 	//       "location": "path",
 	//       "pattern": "^billingAccounts/[^/]+/locations/[^/]+/buckets/[^/]+/views/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "resourceNames": {
-	//       "description": "Optional. The resource name that owns the logs: projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID] organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID] billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID] folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]To support legacy queries, it could also be: projects/[PROJECT_ID] organizations/[ORGANIZATION_ID] billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID]",
+	//       "description": "Optional. List of resource names to list logs for: projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID] organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID] billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID] folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]To support legacy queries, it could also be: projects/[PROJECT_ID] organizations/[ORGANIZATION_ID] billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID]The resource name in the parent field is added to this list.",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
@@ -9569,7 +9570,7 @@ type BillingAccountsLogsListCall struct {
 // List: Lists the logs in projects, organizations, folders, or billing
 // accounts. Only logs that have entries are listed.
 //
-//   - parent: The resource name that owns the logs: projects/[PROJECT_ID]
+//   - parent: The resource name to list logs for: projects/[PROJECT_ID]
 //     organizations/[ORGANIZATION_ID]
 //     billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID].
 func (r *BillingAccountsLogsService) List(parent string) *BillingAccountsLogsListCall {
@@ -9597,8 +9598,8 @@ func (c *BillingAccountsLogsListCall) PageToken(pageToken string) *BillingAccoun
 	return c
 }
 
-// ResourceNames sets the optional parameter "resourceNames": The
-// resource name that owns the logs:
+// ResourceNames sets the optional parameter "resourceNames": List of
+// resource names to list logs for:
 // projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/view
 // s/[VIEW_ID]
 // organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKE
@@ -9608,7 +9609,8 @@ func (c *BillingAccountsLogsListCall) PageToken(pageToken string) *BillingAccoun
 // folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/
 // [VIEW_ID]To support legacy queries, it could also be:
 // projects/[PROJECT_ID] organizations/[ORGANIZATION_ID]
-// billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID]
+// billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID]The resource
+// name in the parent field is added to this list.
 func (c *BillingAccountsLogsListCall) ResourceNames(resourceNames ...string) *BillingAccountsLogsListCall {
 	c.urlParams_.SetMulti("resourceNames", append([]string{}, resourceNames...))
 	return c
@@ -9733,14 +9735,14 @@ func (c *BillingAccountsLogsListCall) Do(opts ...googleapi.CallOption) (*ListLog
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The resource name that owns the logs: projects/[PROJECT_ID] organizations/[ORGANIZATION_ID] billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID]",
+	//       "description": "Required. The resource name to list logs for: projects/[PROJECT_ID] organizations/[ORGANIZATION_ID] billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID]",
 	//       "location": "path",
 	//       "pattern": "^billingAccounts/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "resourceNames": {
-	//       "description": "Optional. The resource name that owns the logs: projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID] organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID] billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID] folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]To support legacy queries, it could also be: projects/[PROJECT_ID] organizations/[ORGANIZATION_ID] billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID]",
+	//       "description": "Optional. List of resource names to list logs for: projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID] organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID] billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID] folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]To support legacy queries, it could also be: projects/[PROJECT_ID] organizations/[ORGANIZATION_ID] billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID]The resource name in the parent field is added to this list.",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
@@ -15196,9 +15198,9 @@ type FoldersLocationsBucketsLinksCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Asynchronously creates linked dataset in BigQuery which makes
-// it possible to use BugQuery to read the logs stored in the bucket. A
-// bucket may currently only contain one link.
+// Create: Asynchronously creates a linked dataset in BigQuery which
+// makes it possible to use BigQuery to read the logs stored in the log
+// bucket. A log bucket may currently only contain one link.
 //
 //   - parent: The full resource name of the bucket to create a link for.
 //     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
@@ -15314,7 +15316,7 @@ func (c *FoldersLocationsBucketsLinksCreateCall) Do(opts ...googleapi.CallOption
 	}
 	return ret, nil
 	// {
-	//   "description": "Asynchronously creates linked dataset in BigQuery which makes it possible to use BugQuery to read the logs stored in the bucket. A bucket may currently only contain one link.",
+	//   "description": "Asynchronously creates a linked dataset in BigQuery which makes it possible to use BigQuery to read the logs stored in the log bucket. A log bucket may currently only contain one link.",
 	//   "flatPath": "v2/folders/{foldersId}/locations/{locationsId}/buckets/{bucketsId}/links",
 	//   "httpMethod": "POST",
 	//   "id": "logging.folders.locations.buckets.links.create",
@@ -16690,7 +16692,7 @@ type FoldersLocationsBucketsViewsLogsListCall struct {
 // List: Lists the logs in projects, organizations, folders, or billing
 // accounts. Only logs that have entries are listed.
 //
-//   - parent: The resource name that owns the logs: projects/[PROJECT_ID]
+//   - parent: The resource name to list logs for: projects/[PROJECT_ID]
 //     organizations/[ORGANIZATION_ID]
 //     billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID].
 func (r *FoldersLocationsBucketsViewsLogsService) List(parent string) *FoldersLocationsBucketsViewsLogsListCall {
@@ -16718,8 +16720,8 @@ func (c *FoldersLocationsBucketsViewsLogsListCall) PageToken(pageToken string) *
 	return c
 }
 
-// ResourceNames sets the optional parameter "resourceNames": The
-// resource name that owns the logs:
+// ResourceNames sets the optional parameter "resourceNames": List of
+// resource names to list logs for:
 // projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/view
 // s/[VIEW_ID]
 // organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKE
@@ -16729,7 +16731,8 @@ func (c *FoldersLocationsBucketsViewsLogsListCall) PageToken(pageToken string) *
 // folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/
 // [VIEW_ID]To support legacy queries, it could also be:
 // projects/[PROJECT_ID] organizations/[ORGANIZATION_ID]
-// billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID]
+// billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID]The resource
+// name in the parent field is added to this list.
 func (c *FoldersLocationsBucketsViewsLogsListCall) ResourceNames(resourceNames ...string) *FoldersLocationsBucketsViewsLogsListCall {
 	c.urlParams_.SetMulti("resourceNames", append([]string{}, resourceNames...))
 	return c
@@ -16854,14 +16857,14 @@ func (c *FoldersLocationsBucketsViewsLogsListCall) Do(opts ...googleapi.CallOpti
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The resource name that owns the logs: projects/[PROJECT_ID] organizations/[ORGANIZATION_ID] billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID]",
+	//       "description": "Required. The resource name to list logs for: projects/[PROJECT_ID] organizations/[ORGANIZATION_ID] billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID]",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+/locations/[^/]+/buckets/[^/]+/views/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "resourceNames": {
-	//       "description": "Optional. The resource name that owns the logs: projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID] organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID] billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID] folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]To support legacy queries, it could also be: projects/[PROJECT_ID] organizations/[ORGANIZATION_ID] billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID]",
+	//       "description": "Optional. List of resource names to list logs for: projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID] organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID] billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID] folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]To support legacy queries, it could also be: projects/[PROJECT_ID] organizations/[ORGANIZATION_ID] billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID]The resource name in the parent field is added to this list.",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
@@ -17572,7 +17575,7 @@ type FoldersLogsListCall struct {
 // List: Lists the logs in projects, organizations, folders, or billing
 // accounts. Only logs that have entries are listed.
 //
-//   - parent: The resource name that owns the logs: projects/[PROJECT_ID]
+//   - parent: The resource name to list logs for: projects/[PROJECT_ID]
 //     organizations/[ORGANIZATION_ID]
 //     billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID].
 func (r *FoldersLogsService) List(parent string) *FoldersLogsListCall {
@@ -17600,8 +17603,8 @@ func (c *FoldersLogsListCall) PageToken(pageToken string) *FoldersLogsListCall {
 	return c
 }
 
-// ResourceNames sets the optional parameter "resourceNames": The
-// resource name that owns the logs:
+// ResourceNames sets the optional parameter "resourceNames": List of
+// resource names to list logs for:
 // projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/view
 // s/[VIEW_ID]
 // organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKE
@@ -17611,7 +17614,8 @@ func (c *FoldersLogsListCall) PageToken(pageToken string) *FoldersLogsListCall {
 // folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/
 // [VIEW_ID]To support legacy queries, it could also be:
 // projects/[PROJECT_ID] organizations/[ORGANIZATION_ID]
-// billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID]
+// billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID]The resource
+// name in the parent field is added to this list.
 func (c *FoldersLogsListCall) ResourceNames(resourceNames ...string) *FoldersLogsListCall {
 	c.urlParams_.SetMulti("resourceNames", append([]string{}, resourceNames...))
 	return c
@@ -17736,14 +17740,14 @@ func (c *FoldersLogsListCall) Do(opts ...googleapi.CallOption) (*ListLogsRespons
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The resource name that owns the logs: projects/[PROJECT_ID] organizations/[ORGANIZATION_ID] billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID]",
+	//       "description": "Required. The resource name to list logs for: projects/[PROJECT_ID] organizations/[ORGANIZATION_ID] billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID]",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "resourceNames": {
-	//       "description": "Optional. The resource name that owns the logs: projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID] organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID] billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID] folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]To support legacy queries, it could also be: projects/[PROJECT_ID] organizations/[ORGANIZATION_ID] billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID]",
+	//       "description": "Optional. List of resource names to list logs for: projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID] organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID] billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID] folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]To support legacy queries, it could also be: projects/[PROJECT_ID] organizations/[ORGANIZATION_ID] billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID]The resource name in the parent field is added to this list.",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
@@ -20533,9 +20537,9 @@ type LocationsBucketsLinksCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Asynchronously creates linked dataset in BigQuery which makes
-// it possible to use BugQuery to read the logs stored in the bucket. A
-// bucket may currently only contain one link.
+// Create: Asynchronously creates a linked dataset in BigQuery which
+// makes it possible to use BigQuery to read the logs stored in the log
+// bucket. A log bucket may currently only contain one link.
 //
 //   - parent: The full resource name of the bucket to create a link for.
 //     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
@@ -20651,7 +20655,7 @@ func (c *LocationsBucketsLinksCreateCall) Do(opts ...googleapi.CallOption) (*Ope
 	}
 	return ret, nil
 	// {
-	//   "description": "Asynchronously creates linked dataset in BigQuery which makes it possible to use BugQuery to read the logs stored in the bucket. A bucket may currently only contain one link.",
+	//   "description": "Asynchronously creates a linked dataset in BigQuery which makes it possible to use BigQuery to read the logs stored in the log bucket. A log bucket may currently only contain one link.",
 	//   "flatPath": "v2/{v2Id}/{v2Id1}/locations/{locationsId}/buckets/{bucketsId}/links",
 	//   "httpMethod": "POST",
 	//   "id": "logging.locations.buckets.links.create",
@@ -22683,7 +22687,7 @@ type LogsListCall struct {
 // List: Lists the logs in projects, organizations, folders, or billing
 // accounts. Only logs that have entries are listed.
 //
-//   - parent: The resource name that owns the logs: projects/[PROJECT_ID]
+//   - parent: The resource name to list logs for: projects/[PROJECT_ID]
 //     organizations/[ORGANIZATION_ID]
 //     billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID].
 func (r *LogsService) List(parent string) *LogsListCall {
@@ -22711,8 +22715,8 @@ func (c *LogsListCall) PageToken(pageToken string) *LogsListCall {
 	return c
 }
 
-// ResourceNames sets the optional parameter "resourceNames": The
-// resource name that owns the logs:
+// ResourceNames sets the optional parameter "resourceNames": List of
+// resource names to list logs for:
 // projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/view
 // s/[VIEW_ID]
 // organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKE
@@ -22722,7 +22726,8 @@ func (c *LogsListCall) PageToken(pageToken string) *LogsListCall {
 // folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/
 // [VIEW_ID]To support legacy queries, it could also be:
 // projects/[PROJECT_ID] organizations/[ORGANIZATION_ID]
-// billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID]
+// billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID]The resource
+// name in the parent field is added to this list.
 func (c *LogsListCall) ResourceNames(resourceNames ...string) *LogsListCall {
 	c.urlParams_.SetMulti("resourceNames", append([]string{}, resourceNames...))
 	return c
@@ -22847,14 +22852,14 @@ func (c *LogsListCall) Do(opts ...googleapi.CallOption) (*ListLogsResponse, erro
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The resource name that owns the logs: projects/[PROJECT_ID] organizations/[ORGANIZATION_ID] billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID]",
+	//       "description": "Required. The resource name to list logs for: projects/[PROJECT_ID] organizations/[ORGANIZATION_ID] billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID]",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "resourceNames": {
-	//       "description": "Optional. The resource name that owns the logs: projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID] organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID] billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID] folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]To support legacy queries, it could also be: projects/[PROJECT_ID] organizations/[ORGANIZATION_ID] billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID]",
+	//       "description": "Optional. List of resource names to list logs for: projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID] organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID] billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID] folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]To support legacy queries, it could also be: projects/[PROJECT_ID] organizations/[ORGANIZATION_ID] billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID]The resource name in the parent field is added to this list.",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
@@ -26270,9 +26275,9 @@ type OrganizationsLocationsBucketsLinksCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Asynchronously creates linked dataset in BigQuery which makes
-// it possible to use BugQuery to read the logs stored in the bucket. A
-// bucket may currently only contain one link.
+// Create: Asynchronously creates a linked dataset in BigQuery which
+// makes it possible to use BigQuery to read the logs stored in the log
+// bucket. A log bucket may currently only contain one link.
 //
 //   - parent: The full resource name of the bucket to create a link for.
 //     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
@@ -26388,7 +26393,7 @@ func (c *OrganizationsLocationsBucketsLinksCreateCall) Do(opts ...googleapi.Call
 	}
 	return ret, nil
 	// {
-	//   "description": "Asynchronously creates linked dataset in BigQuery which makes it possible to use BugQuery to read the logs stored in the bucket. A bucket may currently only contain one link.",
+	//   "description": "Asynchronously creates a linked dataset in BigQuery which makes it possible to use BigQuery to read the logs stored in the log bucket. A log bucket may currently only contain one link.",
 	//   "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}/buckets/{bucketsId}/links",
 	//   "httpMethod": "POST",
 	//   "id": "logging.organizations.locations.buckets.links.create",
@@ -27764,7 +27769,7 @@ type OrganizationsLocationsBucketsViewsLogsListCall struct {
 // List: Lists the logs in projects, organizations, folders, or billing
 // accounts. Only logs that have entries are listed.
 //
-//   - parent: The resource name that owns the logs: projects/[PROJECT_ID]
+//   - parent: The resource name to list logs for: projects/[PROJECT_ID]
 //     organizations/[ORGANIZATION_ID]
 //     billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID].
 func (r *OrganizationsLocationsBucketsViewsLogsService) List(parent string) *OrganizationsLocationsBucketsViewsLogsListCall {
@@ -27792,8 +27797,8 @@ func (c *OrganizationsLocationsBucketsViewsLogsListCall) PageToken(pageToken str
 	return c
 }
 
-// ResourceNames sets the optional parameter "resourceNames": The
-// resource name that owns the logs:
+// ResourceNames sets the optional parameter "resourceNames": List of
+// resource names to list logs for:
 // projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/view
 // s/[VIEW_ID]
 // organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKE
@@ -27803,7 +27808,8 @@ func (c *OrganizationsLocationsBucketsViewsLogsListCall) PageToken(pageToken str
 // folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/
 // [VIEW_ID]To support legacy queries, it could also be:
 // projects/[PROJECT_ID] organizations/[ORGANIZATION_ID]
-// billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID]
+// billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID]The resource
+// name in the parent field is added to this list.
 func (c *OrganizationsLocationsBucketsViewsLogsListCall) ResourceNames(resourceNames ...string) *OrganizationsLocationsBucketsViewsLogsListCall {
 	c.urlParams_.SetMulti("resourceNames", append([]string{}, resourceNames...))
 	return c
@@ -27928,14 +27934,14 @@ func (c *OrganizationsLocationsBucketsViewsLogsListCall) Do(opts ...googleapi.Ca
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The resource name that owns the logs: projects/[PROJECT_ID] organizations/[ORGANIZATION_ID] billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID]",
+	//       "description": "Required. The resource name to list logs for: projects/[PROJECT_ID] organizations/[ORGANIZATION_ID] billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID]",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/locations/[^/]+/buckets/[^/]+/views/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "resourceNames": {
-	//       "description": "Optional. The resource name that owns the logs: projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID] organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID] billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID] folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]To support legacy queries, it could also be: projects/[PROJECT_ID] organizations/[ORGANIZATION_ID] billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID]",
+	//       "description": "Optional. List of resource names to list logs for: projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID] organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID] billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID] folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]To support legacy queries, it could also be: projects/[PROJECT_ID] organizations/[ORGANIZATION_ID] billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID]The resource name in the parent field is added to this list.",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
@@ -28646,7 +28652,7 @@ type OrganizationsLogsListCall struct {
 // List: Lists the logs in projects, organizations, folders, or billing
 // accounts. Only logs that have entries are listed.
 //
-//   - parent: The resource name that owns the logs: projects/[PROJECT_ID]
+//   - parent: The resource name to list logs for: projects/[PROJECT_ID]
 //     organizations/[ORGANIZATION_ID]
 //     billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID].
 func (r *OrganizationsLogsService) List(parent string) *OrganizationsLogsListCall {
@@ -28674,8 +28680,8 @@ func (c *OrganizationsLogsListCall) PageToken(pageToken string) *OrganizationsLo
 	return c
 }
 
-// ResourceNames sets the optional parameter "resourceNames": The
-// resource name that owns the logs:
+// ResourceNames sets the optional parameter "resourceNames": List of
+// resource names to list logs for:
 // projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/view
 // s/[VIEW_ID]
 // organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKE
@@ -28685,7 +28691,8 @@ func (c *OrganizationsLogsListCall) PageToken(pageToken string) *OrganizationsLo
 // folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/
 // [VIEW_ID]To support legacy queries, it could also be:
 // projects/[PROJECT_ID] organizations/[ORGANIZATION_ID]
-// billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID]
+// billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID]The resource
+// name in the parent field is added to this list.
 func (c *OrganizationsLogsListCall) ResourceNames(resourceNames ...string) *OrganizationsLogsListCall {
 	c.urlParams_.SetMulti("resourceNames", append([]string{}, resourceNames...))
 	return c
@@ -28810,14 +28817,14 @@ func (c *OrganizationsLogsListCall) Do(opts ...googleapi.CallOption) (*ListLogsR
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The resource name that owns the logs: projects/[PROJECT_ID] organizations/[ORGANIZATION_ID] billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID]",
+	//       "description": "Required. The resource name to list logs for: projects/[PROJECT_ID] organizations/[ORGANIZATION_ID] billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID]",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "resourceNames": {
-	//       "description": "Optional. The resource name that owns the logs: projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID] organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID] billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID] folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]To support legacy queries, it could also be: projects/[PROJECT_ID] organizations/[ORGANIZATION_ID] billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID]",
+	//       "description": "Optional. List of resource names to list logs for: projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID] organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID] billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID] folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]To support legacy queries, it could also be: projects/[PROJECT_ID] organizations/[ORGANIZATION_ID] billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID]The resource name in the parent field is added to this list.",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
@@ -32748,9 +32755,9 @@ type ProjectsLocationsBucketsLinksCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Asynchronously creates linked dataset in BigQuery which makes
-// it possible to use BugQuery to read the logs stored in the bucket. A
-// bucket may currently only contain one link.
+// Create: Asynchronously creates a linked dataset in BigQuery which
+// makes it possible to use BigQuery to read the logs stored in the log
+// bucket. A log bucket may currently only contain one link.
 //
 //   - parent: The full resource name of the bucket to create a link for.
 //     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
@@ -32866,7 +32873,7 @@ func (c *ProjectsLocationsBucketsLinksCreateCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
-	//   "description": "Asynchronously creates linked dataset in BigQuery which makes it possible to use BugQuery to read the logs stored in the bucket. A bucket may currently only contain one link.",
+	//   "description": "Asynchronously creates a linked dataset in BigQuery which makes it possible to use BigQuery to read the logs stored in the log bucket. A log bucket may currently only contain one link.",
 	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/buckets/{bucketsId}/links",
 	//   "httpMethod": "POST",
 	//   "id": "logging.projects.locations.buckets.links.create",
@@ -34242,7 +34249,7 @@ type ProjectsLocationsBucketsViewsLogsListCall struct {
 // List: Lists the logs in projects, organizations, folders, or billing
 // accounts. Only logs that have entries are listed.
 //
-//   - parent: The resource name that owns the logs: projects/[PROJECT_ID]
+//   - parent: The resource name to list logs for: projects/[PROJECT_ID]
 //     organizations/[ORGANIZATION_ID]
 //     billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID].
 func (r *ProjectsLocationsBucketsViewsLogsService) List(parent string) *ProjectsLocationsBucketsViewsLogsListCall {
@@ -34270,8 +34277,8 @@ func (c *ProjectsLocationsBucketsViewsLogsListCall) PageToken(pageToken string) 
 	return c
 }
 
-// ResourceNames sets the optional parameter "resourceNames": The
-// resource name that owns the logs:
+// ResourceNames sets the optional parameter "resourceNames": List of
+// resource names to list logs for:
 // projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/view
 // s/[VIEW_ID]
 // organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKE
@@ -34281,7 +34288,8 @@ func (c *ProjectsLocationsBucketsViewsLogsListCall) PageToken(pageToken string) 
 // folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/
 // [VIEW_ID]To support legacy queries, it could also be:
 // projects/[PROJECT_ID] organizations/[ORGANIZATION_ID]
-// billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID]
+// billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID]The resource
+// name in the parent field is added to this list.
 func (c *ProjectsLocationsBucketsViewsLogsListCall) ResourceNames(resourceNames ...string) *ProjectsLocationsBucketsViewsLogsListCall {
 	c.urlParams_.SetMulti("resourceNames", append([]string{}, resourceNames...))
 	return c
@@ -34406,14 +34414,14 @@ func (c *ProjectsLocationsBucketsViewsLogsListCall) Do(opts ...googleapi.CallOpt
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The resource name that owns the logs: projects/[PROJECT_ID] organizations/[ORGANIZATION_ID] billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID]",
+	//       "description": "Required. The resource name to list logs for: projects/[PROJECT_ID] organizations/[ORGANIZATION_ID] billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID]",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/buckets/[^/]+/views/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "resourceNames": {
-	//       "description": "Optional. The resource name that owns the logs: projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID] organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID] billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID] folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]To support legacy queries, it could also be: projects/[PROJECT_ID] organizations/[ORGANIZATION_ID] billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID]",
+	//       "description": "Optional. List of resource names to list logs for: projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID] organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID] billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID] folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]To support legacy queries, it could also be: projects/[PROJECT_ID] organizations/[ORGANIZATION_ID] billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID]The resource name in the parent field is added to this list.",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
@@ -35124,7 +35132,7 @@ type ProjectsLogsListCall struct {
 // List: Lists the logs in projects, organizations, folders, or billing
 // accounts. Only logs that have entries are listed.
 //
-//   - parent: The resource name that owns the logs: projects/[PROJECT_ID]
+//   - parent: The resource name to list logs for: projects/[PROJECT_ID]
 //     organizations/[ORGANIZATION_ID]
 //     billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID].
 func (r *ProjectsLogsService) List(parent string) *ProjectsLogsListCall {
@@ -35152,8 +35160,8 @@ func (c *ProjectsLogsListCall) PageToken(pageToken string) *ProjectsLogsListCall
 	return c
 }
 
-// ResourceNames sets the optional parameter "resourceNames": The
-// resource name that owns the logs:
+// ResourceNames sets the optional parameter "resourceNames": List of
+// resource names to list logs for:
 // projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/view
 // s/[VIEW_ID]
 // organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKE
@@ -35163,7 +35171,8 @@ func (c *ProjectsLogsListCall) PageToken(pageToken string) *ProjectsLogsListCall
 // folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/
 // [VIEW_ID]To support legacy queries, it could also be:
 // projects/[PROJECT_ID] organizations/[ORGANIZATION_ID]
-// billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID]
+// billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID]The resource
+// name in the parent field is added to this list.
 func (c *ProjectsLogsListCall) ResourceNames(resourceNames ...string) *ProjectsLogsListCall {
 	c.urlParams_.SetMulti("resourceNames", append([]string{}, resourceNames...))
 	return c
@@ -35288,14 +35297,14 @@ func (c *ProjectsLogsListCall) Do(opts ...googleapi.CallOption) (*ListLogsRespon
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The resource name that owns the logs: projects/[PROJECT_ID] organizations/[ORGANIZATION_ID] billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID]",
+	//       "description": "Required. The resource name to list logs for: projects/[PROJECT_ID] organizations/[ORGANIZATION_ID] billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID]",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "resourceNames": {
-	//       "description": "Optional. The resource name that owns the logs: projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID] organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID] billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID] folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]To support legacy queries, it could also be: projects/[PROJECT_ID] organizations/[ORGANIZATION_ID] billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID]",
+	//       "description": "Optional. List of resource names to list logs for: projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID] organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID] billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID] folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]To support legacy queries, it could also be: projects/[PROJECT_ID] organizations/[ORGANIZATION_ID] billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID]The resource name in the parent field is added to this list.",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"

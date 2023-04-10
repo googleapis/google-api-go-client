@@ -1,5 +1,15 @@
 # Changes
 
+## [0.117.0](https://github.com/googleapis/google-api-go-client/compare/v0.116.0...v0.117.0) (2023-04-10)
+
+
+### Features
+
+* Add experimental s2a-go integration ([#1874](https://github.com/googleapis/google-api-go-client/issues/1874)) ([3c61729](https://github.com/googleapis/google-api-go-client/commit/3c617292b3eb2fde43a906276522a15c66a43477))
+* **all:** Auto-regenerate discovery clients ([#1932](https://github.com/googleapis/google-api-go-client/issues/1932)) ([2efcb2e](https://github.com/googleapis/google-api-go-client/commit/2efcb2ef82ec93741b5a34f6ba89033c4c6ad829))
+* **all:** Auto-regenerate discovery clients ([#1935](https://github.com/googleapis/google-api-go-client/issues/1935)) ([2219681](https://github.com/googleapis/google-api-go-client/commit/2219681f2d350d49b722fa3ad4460000d3052b30))
+* **all:** Auto-regenerate discovery clients ([#1936](https://github.com/googleapis/google-api-go-client/issues/1936)) ([750c7c8](https://github.com/googleapis/google-api-go-client/commit/750c7c8bed8996cc39805590744f34201c8284e4))
+
 ## [0.116.0](https://github.com/googleapis/google-api-go-client/compare/v0.115.0...v0.116.0) (2023-04-05)
 
 

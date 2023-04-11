@@ -2422,6 +2422,7 @@ func (c *OrganizationsUpdateCall) Do(opts ...googleapi.CallOption) (*Organizatio
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Updates an Organization resource identified by the specified resource name.",
 	//   "flatPath": "v1beta1/organizations/{organizationsId}",
 	//   "httpMethod": "PUT",

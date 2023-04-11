@@ -1378,10 +1378,11 @@ type GoogleAnalyticsAdminV1betaCustomDimension struct {
 	// ParameterName: Required. Immutable. Tagging parameter name for this
 	// custom dimension. If this is a user-scoped dimension, then this is
 	// the user property name. If this is an event-scoped dimension, then
-	// this is the event parameter name. May only contain alphanumeric and
-	// underscore characters, starting with a letter. Max length of 24
-	// characters for user-scoped dimensions, 40 characters for event-scoped
-	// dimensions.
+	// this is the event parameter name. If this is an item-scoped
+	// dimension, then this is the parameter name found in the eCommerce
+	// items array. May only contain alphanumeric and underscore characters,
+	// starting with a letter. Max length of 24 characters for user-scoped
+	// dimensions, 40 characters for event-scoped dimensions.
 	ParameterName string `json:"parameterName,omitempty"`
 
 	// Scope: Required. Immutable. The scope of this dimension.
@@ -1390,6 +1391,7 @@ type GoogleAnalyticsAdminV1betaCustomDimension struct {
 	//   "DIMENSION_SCOPE_UNSPECIFIED" - Scope unknown or not specified.
 	//   "EVENT" - Dimension scoped to an event.
 	//   "USER" - Dimension scoped to a user.
+	//   "ITEM" - Dimension scoped to eCommerce items
 	Scope string `json:"scope,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

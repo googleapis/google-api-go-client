@@ -1081,6 +1081,55 @@ func (s *CommonLanguageSettings) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ConsumerPolicy: Consumer Policy is a set of rules that define what
+// services or service groups can be used for a cloud resource
+// hierarchy.
+type ConsumerPolicy struct {
+	// Annotations: Optional. Annotations is an unstructured key-value map
+	// stored with a policy that may be set by external tools to store and
+	// retrieve arbitrary metadata. They are not queryable and should be
+	// preserved when modifying objects. AIP-128
+	// (https://google.aip.dev/128#annotations)
+	Annotations map[string]string `json:"annotations,omitempty"`
+
+	// EnableRules: Enable rules define usable services and service groups.
+	EnableRules []*EnableRule `json:"enableRules,omitempty"`
+
+	// Etag: An opaque tag indicating the current version of the policy,
+	// used for concurrency control.
+	Etag string `json:"etag,omitempty"`
+
+	// Name: Output only. The resource name of the policy. For example,
+	// `projects/12345/consumerPolicy`, `folders/12345/consumerPolicy`,
+	// `organizations/12345/consumerPolicy`.
+	Name string `json:"name,omitempty"`
+
+	// UpdateTime: The last-modified time.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Annotations") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Annotations") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ConsumerPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod ConsumerPolicy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ConsumerQuotaLimit: Consumer quota settings for a quota limit.
 type ConsumerQuotaLimit struct {
 	// AllowsAdminOverrides: Whether admin overrides are allowed on this
@@ -1739,6 +1788,64 @@ type EnableFailure struct {
 
 func (s *EnableFailure) MarshalJSON() ([]byte, error) {
 	type NoMethod EnableFailure
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// EnableRule: The consumer policy rule that defines usable services and
+// service groups.
+type EnableRule struct {
+	// EnableType: Client and resource project enable type.
+	//
+	// Possible values:
+	//   "ENABLE_TYPE_UNSPECIFIED" - Unspecified enable type, which means
+	// enabled as both client and resource project.
+	//   "CLIENT" - Enable all clients under the CRM node specified by
+	// `ConsumerPolicy.name` to use the listed services. A client can be an
+	// API key, an OAuth client, or a service account.
+	//   "RESOURCE" - Enable resources in the list services to be created
+	// and used under the CRM node specified by the `ConsumerPolicy.name`.
+	//   "V1_COMPATIBLE" - Activation made by Service Usage v1 API. This
+	// will be how consumers differentiate between policy changes made by v1
+	// and v2 clients and understand what is actually possible based on
+	// those different policies.
+	EnableType string `json:"enableType,omitempty"`
+
+	// Groups: DEPRECATED: Please use field `values`. Service group should
+	// have prefix `groups/`. The names of the service groups that are
+	// enabled (Not Implemented). go/predefined-service-groups. Example:
+	// `groups/googleServices`.
+	Groups []string `json:"groups,omitempty"`
+
+	// Services: DEPRECATED: Please use field `values`. Service should have
+	// prefix `services/`. The names of the services that are enabled.
+	// Example: `storage.googleapis.com`.
+	Services []string `json:"services,omitempty"`
+
+	// Values: The names of the services or service groups that are enabled.
+	// Example: `services/storage.googleapis.com`, groups/googleServices`,
+	// groups/allServices`.
+	Values []string `json:"values,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EnableType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EnableType") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EnableRule) MarshalJSON() ([]byte, error) {
+	type NoMethod EnableRule
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5263,6 +5370,11 @@ func (s *Type) MarshalJSON() ([]byte, error) {
 // information on each GetOperation call of LRO returned by
 // UpdateAdminQuotaPolicy.
 type UpdateAdminQuotaPolicyMetadata struct {
+}
+
+// UpdateConsumerPolicyLROMetadata: Metadata for the
+// `UpdateConsumerPolicyLRO` method.
+type UpdateConsumerPolicyLROMetadata struct {
 }
 
 // Usage: Configuration controlling usage of a service.

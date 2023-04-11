@@ -3179,7 +3179,7 @@ func (s *GoogleCloudContactcenterinsightsV1PhraseMatchRuleConfig) MarshalJSON() 
 // GoogleCloudContactcenterinsightsV1PhraseMatchRuleGroup: A message
 // representing a rule in the phrase matcher.
 type GoogleCloudContactcenterinsightsV1PhraseMatchRuleGroup struct {
-	// PhraseMatchRules: A list of phase match rules that are included in
+	// PhraseMatchRules: A list of phrase match rules that are included in
 	// this group.
 	PhraseMatchRules []*GoogleCloudContactcenterinsightsV1PhraseMatchRule `json:"phraseMatchRules,omitempty"`
 

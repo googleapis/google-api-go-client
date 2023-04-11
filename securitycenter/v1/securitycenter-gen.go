@@ -151,6 +151,7 @@ func NewFoldersService(s *Service) *FoldersService {
 	rs.Findings = NewFoldersFindingsService(s)
 	rs.MuteConfigs = NewFoldersMuteConfigsService(s)
 	rs.NotificationConfigs = NewFoldersNotificationConfigsService(s)
+	rs.SecurityHealthAnalyticsSettings = NewFoldersSecurityHealthAnalyticsSettingsService(s)
 	rs.Sources = NewFoldersSourcesService(s)
 	return rs
 }
@@ -167,6 +168,8 @@ type FoldersService struct {
 	MuteConfigs *FoldersMuteConfigsService
 
 	NotificationConfigs *FoldersNotificationConfigsService
+
+	SecurityHealthAnalyticsSettings *FoldersSecurityHealthAnalyticsSettingsService
 
 	Sources *FoldersSourcesService
 }
@@ -216,6 +219,39 @@ type FoldersNotificationConfigsService struct {
 	s *Service
 }
 
+func NewFoldersSecurityHealthAnalyticsSettingsService(s *Service) *FoldersSecurityHealthAnalyticsSettingsService {
+	rs := &FoldersSecurityHealthAnalyticsSettingsService{s: s}
+	rs.CustomModules = NewFoldersSecurityHealthAnalyticsSettingsCustomModulesService(s)
+	rs.EffectiveCustomModules = NewFoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesService(s)
+	return rs
+}
+
+type FoldersSecurityHealthAnalyticsSettingsService struct {
+	s *Service
+
+	CustomModules *FoldersSecurityHealthAnalyticsSettingsCustomModulesService
+
+	EffectiveCustomModules *FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesService
+}
+
+func NewFoldersSecurityHealthAnalyticsSettingsCustomModulesService(s *Service) *FoldersSecurityHealthAnalyticsSettingsCustomModulesService {
+	rs := &FoldersSecurityHealthAnalyticsSettingsCustomModulesService{s: s}
+	return rs
+}
+
+type FoldersSecurityHealthAnalyticsSettingsCustomModulesService struct {
+	s *Service
+}
+
+func NewFoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesService(s *Service) *FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesService {
+	rs := &FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesService{s: s}
+	return rs
+}
+
+type FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesService struct {
+	s *Service
+}
+
 func NewFoldersSourcesService(s *Service) *FoldersSourcesService {
 	rs := &FoldersSourcesService{s: s}
 	rs.Findings = NewFoldersSourcesFindingsService(s)
@@ -257,6 +293,7 @@ func NewOrganizationsService(s *Service) *OrganizationsService {
 	rs.MuteConfigs = NewOrganizationsMuteConfigsService(s)
 	rs.NotificationConfigs = NewOrganizationsNotificationConfigsService(s)
 	rs.Operations = NewOrganizationsOperationsService(s)
+	rs.SecurityHealthAnalyticsSettings = NewOrganizationsSecurityHealthAnalyticsSettingsService(s)
 	rs.Sources = NewOrganizationsSourcesService(s)
 	return rs
 }
@@ -275,6 +312,8 @@ type OrganizationsService struct {
 	NotificationConfigs *OrganizationsNotificationConfigsService
 
 	Operations *OrganizationsOperationsService
+
+	SecurityHealthAnalyticsSettings *OrganizationsSecurityHealthAnalyticsSettingsService
 
 	Sources *OrganizationsSourcesService
 }
@@ -333,6 +372,39 @@ type OrganizationsOperationsService struct {
 	s *Service
 }
 
+func NewOrganizationsSecurityHealthAnalyticsSettingsService(s *Service) *OrganizationsSecurityHealthAnalyticsSettingsService {
+	rs := &OrganizationsSecurityHealthAnalyticsSettingsService{s: s}
+	rs.CustomModules = NewOrganizationsSecurityHealthAnalyticsSettingsCustomModulesService(s)
+	rs.EffectiveCustomModules = NewOrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesService(s)
+	return rs
+}
+
+type OrganizationsSecurityHealthAnalyticsSettingsService struct {
+	s *Service
+
+	CustomModules *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesService
+
+	EffectiveCustomModules *OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesService
+}
+
+func NewOrganizationsSecurityHealthAnalyticsSettingsCustomModulesService(s *Service) *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesService {
+	rs := &OrganizationsSecurityHealthAnalyticsSettingsCustomModulesService{s: s}
+	return rs
+}
+
+type OrganizationsSecurityHealthAnalyticsSettingsCustomModulesService struct {
+	s *Service
+}
+
+func NewOrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesService(s *Service) *OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesService {
+	rs := &OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesService{s: s}
+	return rs
+}
+
+type OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesService struct {
+	s *Service
+}
+
 func NewOrganizationsSourcesService(s *Service) *OrganizationsSourcesService {
 	rs := &OrganizationsSourcesService{s: s}
 	rs.Findings = NewOrganizationsSourcesFindingsService(s)
@@ -373,6 +445,7 @@ func NewProjectsService(s *Service) *ProjectsService {
 	rs.Findings = NewProjectsFindingsService(s)
 	rs.MuteConfigs = NewProjectsMuteConfigsService(s)
 	rs.NotificationConfigs = NewProjectsNotificationConfigsService(s)
+	rs.SecurityHealthAnalyticsSettings = NewProjectsSecurityHealthAnalyticsSettingsService(s)
 	rs.Sources = NewProjectsSourcesService(s)
 	return rs
 }
@@ -389,6 +462,8 @@ type ProjectsService struct {
 	MuteConfigs *ProjectsMuteConfigsService
 
 	NotificationConfigs *ProjectsNotificationConfigsService
+
+	SecurityHealthAnalyticsSettings *ProjectsSecurityHealthAnalyticsSettingsService
 
 	Sources *ProjectsSourcesService
 }
@@ -435,6 +510,39 @@ func NewProjectsNotificationConfigsService(s *Service) *ProjectsNotificationConf
 }
 
 type ProjectsNotificationConfigsService struct {
+	s *Service
+}
+
+func NewProjectsSecurityHealthAnalyticsSettingsService(s *Service) *ProjectsSecurityHealthAnalyticsSettingsService {
+	rs := &ProjectsSecurityHealthAnalyticsSettingsService{s: s}
+	rs.CustomModules = NewProjectsSecurityHealthAnalyticsSettingsCustomModulesService(s)
+	rs.EffectiveCustomModules = NewProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesService(s)
+	return rs
+}
+
+type ProjectsSecurityHealthAnalyticsSettingsService struct {
+	s *Service
+
+	CustomModules *ProjectsSecurityHealthAnalyticsSettingsCustomModulesService
+
+	EffectiveCustomModules *ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesService
+}
+
+func NewProjectsSecurityHealthAnalyticsSettingsCustomModulesService(s *Service) *ProjectsSecurityHealthAnalyticsSettingsCustomModulesService {
+	rs := &ProjectsSecurityHealthAnalyticsSettingsCustomModulesService{s: s}
+	return rs
+}
+
+type ProjectsSecurityHealthAnalyticsSettingsCustomModulesService struct {
+	s *Service
+}
+
+func NewProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesService(s *Service) *ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesService {
+	rs := &ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesService{s: s}
+	return rs
+}
+
+type ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesService struct {
 	s *Service
 }
 
@@ -2268,6 +2376,168 @@ func (s *GoogleCloudSecuritycenterV1Binding) MarshalJSON() ([]byte, error) {
 type GoogleCloudSecuritycenterV1BulkMuteFindingsResponse struct {
 }
 
+// GoogleCloudSecuritycenterV1CustomConfig: Defines the properties in a
+// custom module configuration for Security Health Analytics. Use the
+// custom module configuration to create custom detectors that generate
+// custom findings for resources that you specify.
+type GoogleCloudSecuritycenterV1CustomConfig struct {
+	// CustomOutput: Custom output properties.
+	CustomOutput *GoogleCloudSecuritycenterV1CustomOutputSpec `json:"customOutput,omitempty"`
+
+	// Description: Text that describes the vulnerability or
+	// misconfiguration that the custom module detects. This explanation is
+	// returned with each finding instance to help investigators understand
+	// the detected issue. The text must be enclosed in quotation marks.
+	Description string `json:"description,omitempty"`
+
+	// Predicate: The CEL expression to evaluate to produce findings. When
+	// the expression evaluates to true against a resource, a finding is
+	// generated.
+	Predicate *Expr `json:"predicate,omitempty"`
+
+	// Recommendation: An explanation of the recommended steps that security
+	// teams can take to resolve the detected issue. This explanation is
+	// returned with each finding generated by this module in the
+	// `nextSteps` property of the finding JSON.
+	Recommendation string `json:"recommendation,omitempty"`
+
+	// ResourceSelector: The resource types that the custom module operates
+	// on. Each custom module can specify up to 5 resource types.
+	ResourceSelector *GoogleCloudSecuritycenterV1ResourceSelector `json:"resourceSelector,omitempty"`
+
+	// Severity: The severity to assign to findings generated by the module.
+	//
+	// Possible values:
+	//   "SEVERITY_UNSPECIFIED" - Unspecified severity.
+	//   "CRITICAL" - Critical severity.
+	//   "HIGH" - High severity.
+	//   "MEDIUM" - Medium severity.
+	//   "LOW" - Low severity.
+	Severity string `json:"severity,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CustomOutput") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CustomOutput") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudSecuritycenterV1CustomConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV1CustomConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudSecuritycenterV1CustomOutputSpec: A set of optional
+// name-value pairs that define custom source properties to return with
+// each finding that is generated by the custom module. The custom
+// source properties that are defined here are included in the finding
+// JSON under `sourceProperties`.
+type GoogleCloudSecuritycenterV1CustomOutputSpec struct {
+	// Properties: A list of custom output properties to add to the finding.
+	Properties []*GoogleCloudSecuritycenterV1Property `json:"properties,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Properties") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Properties") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudSecuritycenterV1CustomOutputSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV1CustomOutputSpec
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudSecuritycenterV1EffectiveSecurityHealthAnalyticsCustomModul
+// e: An EffectiveSecurityHealthAnalyticsCustomModule is the
+// representation of a Security Health Analytics custom module at a
+// specified level of the resource hierarchy: organization, folder, or
+// project. If a custom module is inherited from a parent organization
+// or folder, the value of the `enablementState` property in
+// EffectiveSecurityHealthAnalyticsCustomModule is set to the value that
+// is effective in the parent, instead of `INHERITED`. For example, if
+// the module is enabled in a parent organization or folder, the
+// effective enablement_state for the module in all child folders or
+// projects is also `enabled`.
+// EffectiveSecurityHealthAnalyticsCustomModule is read-only.
+type GoogleCloudSecuritycenterV1EffectiveSecurityHealthAnalyticsCustomModule struct {
+	// CustomConfig: Output only. The user-specified configuration for the
+	// module.
+	CustomConfig *GoogleCloudSecuritycenterV1CustomConfig `json:"customConfig,omitempty"`
+
+	// DisplayName: Output only. The display name for the custom module. The
+	// name must be between 1 and 128 characters, start with a lowercase
+	// letter, and contain alphanumeric characters or underscores only.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// EnablementState: Output only. The effective state of enablement for
+	// the module at the given level of the hierarchy.
+	//
+	// Possible values:
+	//   "ENABLEMENT_STATE_UNSPECIFIED" - Unspecified enablement state.
+	//   "ENABLED" - The module is enabled at the given level.
+	//   "DISABLED" - The module is disabled at the given level.
+	EnablementState string `json:"enablementState,omitempty"`
+
+	// Name: Output only. The resource name of the custom module. Its format
+	// is
+	// "organizations/{organization}/securityHealthAnalyticsSettings/effectiv
+	// eCustomModules/{customModule}", or
+	// "folders/{folder}/securityHealthAnalyticsSettings/effectiveCustomModul
+	// es/{customModule}", or
+	// "projects/{project}/securityHealthAnalyticsSettings/effectiveCustomMod
+	// ules/{customModule}"
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CustomConfig") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CustomConfig") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudSecuritycenterV1EffectiveSecurityHealthAnalyticsCustomModule) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV1EffectiveSecurityHealthAnalyticsCustomModule
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudSecuritycenterV1ExternalSystem: Representation of third
 // party SIEM/SOAR fields within SCC.
 type GoogleCloudSecuritycenterV1ExternalSystem struct {
@@ -2430,6 +2700,40 @@ func (s *GoogleCloudSecuritycenterV1NotificationMessage) MarshalJSON() ([]byte, 
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudSecuritycenterV1Property: An individual name-value pair
+// that defines a custom source property.
+type GoogleCloudSecuritycenterV1Property struct {
+	// Name: Name of the property for the custom output.
+	Name string `json:"name,omitempty"`
+
+	// ValueExpression: The CEL expression for the custom output. A resource
+	// property can be specified to return the value of the property or a
+	// text string enclosed in quotation marks.
+	ValueExpression *Expr `json:"valueExpression,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudSecuritycenterV1Property) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV1Property
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudSecuritycenterV1Resource: Information related to the
 // Google Cloud resource.
 type GoogleCloudSecuritycenterV1Resource struct {
@@ -2484,6 +2788,35 @@ func (s *GoogleCloudSecuritycenterV1Resource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudSecuritycenterV1ResourceSelector: Resource for selecting
+// resource type.
+type GoogleCloudSecuritycenterV1ResourceSelector struct {
+	// ResourceTypes: The resource types to run the detector on.
+	ResourceTypes []string `json:"resourceTypes,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ResourceTypes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ResourceTypes") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudSecuritycenterV1ResourceSelector) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV1ResourceSelector
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudSecuritycenterV1RunAssetDiscoveryResponse: Response of
 // asset discovery run
 type GoogleCloudSecuritycenterV1RunAssetDiscoveryResponse struct {
@@ -2520,6 +2853,89 @@ type GoogleCloudSecuritycenterV1RunAssetDiscoveryResponse struct {
 
 func (s *GoogleCloudSecuritycenterV1RunAssetDiscoveryResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV1RunAssetDiscoveryResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule:
+// Represents an instance of a Security Health Analytics custom module,
+// including its full module name, display name, enablement state, and
+// last updated time. You can create a custom module at the
+// organization, folder, or project level. Custom modules that you
+// create at the organization or folder level are inherited by the child
+// folders and projects.
+type GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule struct {
+	// AncestorModule: Output only. If empty, indicates that the custom
+	// module was created in the organization, folder, or project in which
+	// you are viewing the custom module. Otherwise, `ancestor_module`
+	// specifies the organization or folder from which the custom module is
+	// inherited.
+	AncestorModule string `json:"ancestorModule,omitempty"`
+
+	// CustomConfig: The user specified custom configuration for the module.
+	CustomConfig *GoogleCloudSecuritycenterV1CustomConfig `json:"customConfig,omitempty"`
+
+	// DisplayName: The display name of the Security Health Analytics custom
+	// module. This display name becomes the finding category for all
+	// findings that are returned by this custom module. The display name
+	// must be between 1 and 128 characters, start with a lowercase letter,
+	// and contain alphanumeric characters or underscores only.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// EnablementState: The enablement state of the custom module.
+	//
+	// Possible values:
+	//   "ENABLEMENT_STATE_UNSPECIFIED" - Unspecified enablement state.
+	//   "ENABLED" - The module is enabled at the given CRM resource.
+	//   "DISABLED" - The module is disabled at the given CRM resource.
+	//   "INHERITED" - State is inherited from an ancestor module. The
+	// module will either be effectively ENABLED or DISABLED based on its
+	// closest non-inherited ancestor module in the CRM hierarchy.
+	EnablementState string `json:"enablementState,omitempty"`
+
+	// LastEditor: Output only. The editor that last updated the custom
+	// module.
+	LastEditor string `json:"lastEditor,omitempty"`
+
+	// Name: Immutable. The resource name of the custom module. Its format
+	// is
+	// "organizations/{organization}/securityHealthAnalyticsSettings/customMo
+	// dules/{customModule}", or
+	// "folders/{folder}/securityHealthAnalyticsSettings/customModules/{custo
+	// mModule}", or
+	// "projects/{project}/securityHealthAnalyticsSettings/customModules/{cus
+	// tomModule}" The id {customModule} is server-generated and is not user
+	// settable. It will be a numeric id containing 1-20 digits.
+	Name string `json:"name,omitempty"`
+
+	// UpdateTime: Output only. The time at which the custom module was last
+	// updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AncestorModule") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AncestorModule") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3625,6 +4041,86 @@ func (s *ListBigQueryExportsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ListDescendantSecurityHealthAnalyticsCustomModulesResponse: Response
+// message for listing descendant security health analytics custom
+// modules.
+type ListDescendantSecurityHealthAnalyticsCustomModulesResponse struct {
+	// NextPageToken: If not empty, indicates that there may be more custom
+	// modules to be returned.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// SecurityHealthAnalyticsCustomModules: Custom modules belonging to the
+	// requested parent and its descendants.
+	SecurityHealthAnalyticsCustomModules []*GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule `json:"securityHealthAnalyticsCustomModules,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListDescendantSecurityHealthAnalyticsCustomModulesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListDescendantSecurityHealthAnalyticsCustomModulesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListEffectiveSecurityHealthAnalyticsCustomModulesResponse: Response
+// message for listing effective security health analytics custom
+// modules.
+type ListEffectiveSecurityHealthAnalyticsCustomModulesResponse struct {
+	// EffectiveSecurityHealthAnalyticsCustomModules: Effective custom
+	// modules belonging to the requested parent.
+	EffectiveSecurityHealthAnalyticsCustomModules []*GoogleCloudSecuritycenterV1EffectiveSecurityHealthAnalyticsCustomModule `json:"effectiveSecurityHealthAnalyticsCustomModules,omitempty"`
+
+	// NextPageToken: If not empty, indicates that there may be more
+	// effective custom modules to be returned.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "EffectiveSecurityHealthAnalyticsCustomModules") to unconditionally
+	// include in API requests. By default, fields with empty or default
+	// values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "EffectiveSecurityHealthAnalyticsCustomModules") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListEffectiveSecurityHealthAnalyticsCustomModulesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListEffectiveSecurityHealthAnalyticsCustomModulesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ListFindingsResponse: Response message for listing findings.
 type ListFindingsResponse struct {
 	// ListFindingsResults: Findings matching the list request.
@@ -3822,6 +4318,44 @@ type ListOperationsResponse struct {
 
 func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListOperationsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListSecurityHealthAnalyticsCustomModulesResponse: Response message
+// for listing security health analytics custom modules.
+type ListSecurityHealthAnalyticsCustomModulesResponse struct {
+	// NextPageToken: If not empty, indicates that there may be more custom
+	// modules to be returned.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// SecurityHealthAnalyticsCustomModules: Custom modules belonging to the
+	// requested parent.
+	SecurityHealthAnalyticsCustomModules []*GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule `json:"securityHealthAnalyticsCustomModules,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListSecurityHealthAnalyticsCustomModulesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListSecurityHealthAnalyticsCustomModulesResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -8481,6 +9015,1382 @@ func (c *FoldersNotificationConfigsPatchCall) Do(opts ...googleapi.CallOption) (
 	//   ]
 	// }
 
+}
+
+// method id "securitycenter.folders.securityHealthAnalyticsSettings.customModules.create":
+
+type FoldersSecurityHealthAnalyticsSettingsCustomModulesCreateCall struct {
+	s                                                              *Service
+	parent                                                         string
+	googlecloudsecuritycenterv1securityhealthanalyticscustommodule *GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule
+	urlParams_                                                     gensupport.URLParams
+	ctx_                                                           context.Context
+	header_                                                        http.Header
+}
+
+// Create: Creates a resident SecurityHealthAnalyticsCustomModule at the
+// scope of the given CRM parent, and also creates inherited
+// SecurityHealthAnalyticsCustomModules for all CRM descendants of the
+// given parent. These modules are enabled by default.
+//
+//   - parent: Resource name of the new custom module's parent. Its format
+//     is "organizations/{organization}/securityHealthAnalyticsSettings",
+//     "folders/{folder}/securityHealthAnalyticsSettings", or
+//     "projects/{project}/securityHealthAnalyticsSettings".
+func (r *FoldersSecurityHealthAnalyticsSettingsCustomModulesService) Create(parent string, googlecloudsecuritycenterv1securityhealthanalyticscustommodule *GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule) *FoldersSecurityHealthAnalyticsSettingsCustomModulesCreateCall {
+	c := &FoldersSecurityHealthAnalyticsSettingsCustomModulesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudsecuritycenterv1securityhealthanalyticscustommodule = googlecloudsecuritycenterv1securityhealthanalyticscustommodule
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesCreateCall) Fields(s ...googleapi.Field) *FoldersSecurityHealthAnalyticsSettingsCustomModulesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesCreateCall) Context(ctx context.Context) *FoldersSecurityHealthAnalyticsSettingsCustomModulesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudsecuritycenterv1securityhealthanalyticscustommodule)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/customModules")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.folders.securityHealthAnalyticsSettings.customModules.create" call.
+// Exactly one of
+// *GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule.Server
+// Response.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a resident SecurityHealthAnalyticsCustomModule at the scope of the given CRM parent, and also creates inherited SecurityHealthAnalyticsCustomModules for all CRM descendants of the given parent. These modules are enabled by default.",
+	//   "flatPath": "v1/folders/{foldersId}/securityHealthAnalyticsSettings/customModules",
+	//   "httpMethod": "POST",
+	//   "id": "securitycenter.folders.securityHealthAnalyticsSettings.customModules.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. Resource name of the new custom module's parent. Its format is \"organizations/{organization}/securityHealthAnalyticsSettings\", \"folders/{folder}/securityHealthAnalyticsSettings\", or \"projects/{project}/securityHealthAnalyticsSettings\"",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+/securityHealthAnalyticsSettings$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/customModules",
+	//   "request": {
+	//     "$ref": "GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.folders.securityHealthAnalyticsSettings.customModules.delete":
+
+type FoldersSecurityHealthAnalyticsSettingsCustomModulesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes the specified SecurityHealthAnalyticsCustomModule and
+// all of its descendants in the CRM hierarchy. This method is only
+// supported for resident custom modules.
+//
+//   - name: Name of the custom module to delete. Its format is
+//     "organizations/{organization}/securityHealthAnalyticsSettings/custom
+//     Modules/{customModule}",
+//     "folders/{folder}/securityHealthAnalyticsSettings/customModules/{cus
+//     tomModule}", or
+//     "projects/{project}/securityHealthAnalyticsSettings/customModules/{c
+//     ustomModule}".
+func (r *FoldersSecurityHealthAnalyticsSettingsCustomModulesService) Delete(name string) *FoldersSecurityHealthAnalyticsSettingsCustomModulesDeleteCall {
+	c := &FoldersSecurityHealthAnalyticsSettingsCustomModulesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesDeleteCall) Fields(s ...googleapi.Field) *FoldersSecurityHealthAnalyticsSettingsCustomModulesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesDeleteCall) Context(ctx context.Context) *FoldersSecurityHealthAnalyticsSettingsCustomModulesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.folders.securityHealthAnalyticsSettings.customModules.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes the specified SecurityHealthAnalyticsCustomModule and all of its descendants in the CRM hierarchy. This method is only supported for resident custom modules.",
+	//   "flatPath": "v1/folders/{foldersId}/securityHealthAnalyticsSettings/customModules/{customModulesId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "securitycenter.folders.securityHealthAnalyticsSettings.customModules.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the custom module to delete. Its format is \"organizations/{organization}/securityHealthAnalyticsSettings/customModules/{customModule}\", \"folders/{folder}/securityHealthAnalyticsSettings/customModules/{customModule}\", or \"projects/{project}/securityHealthAnalyticsSettings/customModules/{customModule}\"",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+/securityHealthAnalyticsSettings/customModules/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.folders.securityHealthAnalyticsSettings.customModules.get":
+
+type FoldersSecurityHealthAnalyticsSettingsCustomModulesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Retrieves a SecurityHealthAnalyticsCustomModule.
+//
+//   - name: Name of the custom module to get. Its format is
+//     "organizations/{organization}/securityHealthAnalyticsSettings/custom
+//     Modules/{customModule}",
+//     "folders/{folder}/securityHealthAnalyticsSettings/customModules/{cus
+//     tomModule}", or
+//     "projects/{project}/securityHealthAnalyticsSettings/customModules/{c
+//     ustomModule}".
+func (r *FoldersSecurityHealthAnalyticsSettingsCustomModulesService) Get(name string) *FoldersSecurityHealthAnalyticsSettingsCustomModulesGetCall {
+	c := &FoldersSecurityHealthAnalyticsSettingsCustomModulesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesGetCall) Fields(s ...googleapi.Field) *FoldersSecurityHealthAnalyticsSettingsCustomModulesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesGetCall) IfNoneMatch(entityTag string) *FoldersSecurityHealthAnalyticsSettingsCustomModulesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesGetCall) Context(ctx context.Context) *FoldersSecurityHealthAnalyticsSettingsCustomModulesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.folders.securityHealthAnalyticsSettings.customModules.get" call.
+// Exactly one of
+// *GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule.Server
+// Response.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves a SecurityHealthAnalyticsCustomModule.",
+	//   "flatPath": "v1/folders/{foldersId}/securityHealthAnalyticsSettings/customModules/{customModulesId}",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.folders.securityHealthAnalyticsSettings.customModules.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the custom module to get. Its format is \"organizations/{organization}/securityHealthAnalyticsSettings/customModules/{customModule}\", \"folders/{folder}/securityHealthAnalyticsSettings/customModules/{customModule}\", or \"projects/{project}/securityHealthAnalyticsSettings/customModules/{customModule}\"",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+/securityHealthAnalyticsSettings/customModules/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.folders.securityHealthAnalyticsSettings.customModules.list":
+
+type FoldersSecurityHealthAnalyticsSettingsCustomModulesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Returns a list of all SecurityHealthAnalyticsCustomModules for
+// the given parent. This includes resident modules defined at the scope
+// of the parent, and inherited modules, inherited from CRM ancestors.
+//
+//   - parent: Name of parent to list custom modules. Its format is
+//     "organizations/{organization}/securityHealthAnalyticsSettings",
+//     "folders/{folder}/securityHealthAnalyticsSettings", or
+//     "projects/{project}/securityHealthAnalyticsSettings".
+func (r *FoldersSecurityHealthAnalyticsSettingsCustomModulesService) List(parent string) *FoldersSecurityHealthAnalyticsSettingsCustomModulesListCall {
+	c := &FoldersSecurityHealthAnalyticsSettingsCustomModulesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return in a single response. Default is 10, minimum is
+// 1, maximum is 1000.
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesListCall) PageSize(pageSize int64) *FoldersSecurityHealthAnalyticsSettingsCustomModulesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The value returned
+// by the last call indicating a continuation
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesListCall) PageToken(pageToken string) *FoldersSecurityHealthAnalyticsSettingsCustomModulesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesListCall) Fields(s ...googleapi.Field) *FoldersSecurityHealthAnalyticsSettingsCustomModulesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesListCall) IfNoneMatch(entityTag string) *FoldersSecurityHealthAnalyticsSettingsCustomModulesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesListCall) Context(ctx context.Context) *FoldersSecurityHealthAnalyticsSettingsCustomModulesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/customModules")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.folders.securityHealthAnalyticsSettings.customModules.list" call.
+// Exactly one of *ListSecurityHealthAnalyticsCustomModulesResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *ListSecurityHealthAnalyticsCustomModulesResponse.ServerResponse.Heade
+// r or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesListCall) Do(opts ...googleapi.CallOption) (*ListSecurityHealthAnalyticsCustomModulesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListSecurityHealthAnalyticsCustomModulesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns a list of all SecurityHealthAnalyticsCustomModules for the given parent. This includes resident modules defined at the scope of the parent, and inherited modules, inherited from CRM ancestors.",
+	//   "flatPath": "v1/folders/{foldersId}/securityHealthAnalyticsSettings/customModules",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.folders.securityHealthAnalyticsSettings.customModules.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The maximum number of results to return in a single response. Default is 10, minimum is 1, maximum is 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The value returned by the last call indicating a continuation",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Name of parent to list custom modules. Its format is \"organizations/{organization}/securityHealthAnalyticsSettings\", \"folders/{folder}/securityHealthAnalyticsSettings\", or \"projects/{project}/securityHealthAnalyticsSettings\"",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+/securityHealthAnalyticsSettings$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/customModules",
+	//   "response": {
+	//     "$ref": "ListSecurityHealthAnalyticsCustomModulesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesListCall) Pages(ctx context.Context, f func(*ListSecurityHealthAnalyticsCustomModulesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "securitycenter.folders.securityHealthAnalyticsSettings.customModules.listDescendant":
+
+type FoldersSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// ListDescendant: Returns a list of all resident
+// SecurityHealthAnalyticsCustomModules under the given CRM parent and
+// all of the parent’s CRM descendants.
+//
+//   - parent: Name of parent to list descendant custom modules. Its
+//     format is
+//     "organizations/{organization}/securityHealthAnalyticsSettings",
+//     "folders/{folder}/securityHealthAnalyticsSettings", or
+//     "projects/{project}/securityHealthAnalyticsSettings".
+func (r *FoldersSecurityHealthAnalyticsSettingsCustomModulesService) ListDescendant(parent string) *FoldersSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall {
+	c := &FoldersSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return in a single response. Default is 10, minimum is
+// 1, maximum is 1000.
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall) PageSize(pageSize int64) *FoldersSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The value returned
+// by the last call indicating a continuation
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall) PageToken(pageToken string) *FoldersSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall) Fields(s ...googleapi.Field) *FoldersSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall) IfNoneMatch(entityTag string) *FoldersSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall) Context(ctx context.Context) *FoldersSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/customModules:listDescendant")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.folders.securityHealthAnalyticsSettings.customModules.listDescendant" call.
+// Exactly one of
+// *ListDescendantSecurityHealthAnalyticsCustomModulesResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *ListDescendantSecurityHealthAnalyticsCustomModulesResponse.ServerResp
+// onse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall) Do(opts ...googleapi.CallOption) (*ListDescendantSecurityHealthAnalyticsCustomModulesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListDescendantSecurityHealthAnalyticsCustomModulesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns a list of all resident SecurityHealthAnalyticsCustomModules under the given CRM parent and all of the parent’s CRM descendants.",
+	//   "flatPath": "v1/folders/{foldersId}/securityHealthAnalyticsSettings/customModules:listDescendant",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.folders.securityHealthAnalyticsSettings.customModules.listDescendant",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The maximum number of results to return in a single response. Default is 10, minimum is 1, maximum is 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The value returned by the last call indicating a continuation",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Name of parent to list descendant custom modules. Its format is \"organizations/{organization}/securityHealthAnalyticsSettings\", \"folders/{folder}/securityHealthAnalyticsSettings\", or \"projects/{project}/securityHealthAnalyticsSettings\"",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+/securityHealthAnalyticsSettings$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/customModules:listDescendant",
+	//   "response": {
+	//     "$ref": "ListDescendantSecurityHealthAnalyticsCustomModulesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall) Pages(ctx context.Context, f func(*ListDescendantSecurityHealthAnalyticsCustomModulesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "securitycenter.folders.securityHealthAnalyticsSettings.customModules.patch":
+
+type FoldersSecurityHealthAnalyticsSettingsCustomModulesPatchCall struct {
+	s                                                              *Service
+	name                                                           string
+	googlecloudsecuritycenterv1securityhealthanalyticscustommodule *GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule
+	urlParams_                                                     gensupport.URLParams
+	ctx_                                                           context.Context
+	header_                                                        http.Header
+}
+
+// Patch: Updates the SecurityHealthAnalyticsCustomModule under the
+// given name based on the given update mask. Updating the enablement
+// state is supported on both resident and inherited modules (though
+// resident modules cannot have an enablement state of “inherited”).
+// Updating the display name and custom config of a module is supported
+// on resident modules only.
+//
+//   - name: Immutable. The resource name of the custom module. Its format
+//     is
+//     "organizations/{organization}/securityHealthAnalyticsSettings/custom
+//     Modules/{customModule}", or
+//     "folders/{folder}/securityHealthAnalyticsSettings/customModules/{cus
+//     tomModule}", or
+//     "projects/{project}/securityHealthAnalyticsSettings/customModules/{c
+//     ustomModule}" The id {customModule} is server-generated and is not
+//     user settable. It will be a numeric id containing 1-20 digits.
+func (r *FoldersSecurityHealthAnalyticsSettingsCustomModulesService) Patch(name string, googlecloudsecuritycenterv1securityhealthanalyticscustommodule *GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule) *FoldersSecurityHealthAnalyticsSettingsCustomModulesPatchCall {
+	c := &FoldersSecurityHealthAnalyticsSettingsCustomModulesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudsecuritycenterv1securityhealthanalyticscustommodule = googlecloudsecuritycenterv1securityhealthanalyticscustommodule
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of
+// fields to update.
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesPatchCall) UpdateMask(updateMask string) *FoldersSecurityHealthAnalyticsSettingsCustomModulesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesPatchCall) Fields(s ...googleapi.Field) *FoldersSecurityHealthAnalyticsSettingsCustomModulesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesPatchCall) Context(ctx context.Context) *FoldersSecurityHealthAnalyticsSettingsCustomModulesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudsecuritycenterv1securityhealthanalyticscustommodule)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.folders.securityHealthAnalyticsSettings.customModules.patch" call.
+// Exactly one of
+// *GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule.Server
+// Response.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates the SecurityHealthAnalyticsCustomModule under the given name based on the given update mask. Updating the enablement state is supported on both resident and inherited modules (though resident modules cannot have an enablement state of “inherited”). Updating the display name and custom config of a module is supported on resident modules only.",
+	//   "flatPath": "v1/folders/{foldersId}/securityHealthAnalyticsSettings/customModules/{customModulesId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "securitycenter.folders.securityHealthAnalyticsSettings.customModules.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Immutable. The resource name of the custom module. Its format is \"organizations/{organization}/securityHealthAnalyticsSettings/customModules/{customModule}\", or \"folders/{folder}/securityHealthAnalyticsSettings/customModules/{customModule}\", or \"projects/{project}/securityHealthAnalyticsSettings/customModules/{customModule}\" The id {customModule} is server-generated and is not user settable. It will be a numeric id containing 1-20 digits.",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+/securityHealthAnalyticsSettings/customModules/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "The list of fields to update.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.folders.securityHealthAnalyticsSettings.effectiveCustomModules.get":
+
+type FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Retrieves an EffectiveSecurityHealthAnalyticsCustomModule.
+//
+//   - name: Name of the effective custom module to get. Its format is
+//     "organizations/{organization}/securityHealthAnalyticsSettings/effect
+//     iveCustomModules/{customModule}",
+//     "folders/{folder}/securityHealthAnalyticsSettings/effectiveCustomMod
+//     ules/{customModule}", or
+//     "projects/{project}/securityHealthAnalyticsSettings/effectiveCustomM
+//     odules/{customModule}".
+func (r *FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesService) Get(name string) *FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall {
+	c := &FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall) Fields(s ...googleapi.Field) *FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall) IfNoneMatch(entityTag string) *FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall) Context(ctx context.Context) *FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.folders.securityHealthAnalyticsSettings.effectiveCustomModules.get" call.
+// Exactly one of
+// *GoogleCloudSecuritycenterV1EffectiveSecurityHealthAnalyticsCustomModu
+// le or error will be non-nil. Any non-2xx status code is an error.
+// Response headers are in either
+// *GoogleCloudSecuritycenterV1EffectiveSecurityHealthAnalyticsCustomModu
+// le.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudSecuritycenterV1EffectiveSecurityHealthAnalyticsCustomModule, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudSecuritycenterV1EffectiveSecurityHealthAnalyticsCustomModule{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves an EffectiveSecurityHealthAnalyticsCustomModule.",
+	//   "flatPath": "v1/folders/{foldersId}/securityHealthAnalyticsSettings/effectiveCustomModules/{effectiveCustomModulesId}",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.folders.securityHealthAnalyticsSettings.effectiveCustomModules.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the effective custom module to get. Its format is \"organizations/{organization}/securityHealthAnalyticsSettings/effectiveCustomModules/{customModule}\", \"folders/{folder}/securityHealthAnalyticsSettings/effectiveCustomModules/{customModule}\", or \"projects/{project}/securityHealthAnalyticsSettings/effectiveCustomModules/{customModule}\"",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+/securityHealthAnalyticsSettings/effectiveCustomModules/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudSecuritycenterV1EffectiveSecurityHealthAnalyticsCustomModule"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.folders.securityHealthAnalyticsSettings.effectiveCustomModules.list":
+
+type FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Returns a list of all
+// EffectiveSecurityHealthAnalyticsCustomModules for the given parent.
+// This includes resident modules defined at the scope of the parent,
+// and inherited modules, inherited from CRM ancestors.
+//
+//   - parent: Name of parent to list effective custom modules. Its format
+//     is "organizations/{organization}/securityHealthAnalyticsSettings",
+//     "folders/{folder}/securityHealthAnalyticsSettings", or
+//     "projects/{project}/securityHealthAnalyticsSettings".
+func (r *FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesService) List(parent string) *FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall {
+	c := &FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return in a single response. Default is 10, minimum is
+// 1, maximum is 1000.
+func (c *FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall) PageSize(pageSize int64) *FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The value returned
+// by the last call indicating a continuation
+func (c *FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall) PageToken(pageToken string) *FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall) Fields(s ...googleapi.Field) *FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall) IfNoneMatch(entityTag string) *FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall) Context(ctx context.Context) *FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/effectiveCustomModules")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.folders.securityHealthAnalyticsSettings.effectiveCustomModules.list" call.
+// Exactly one of
+// *ListEffectiveSecurityHealthAnalyticsCustomModulesResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *ListEffectiveSecurityHealthAnalyticsCustomModulesResponse.ServerRespo
+// nse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall) Do(opts ...googleapi.CallOption) (*ListEffectiveSecurityHealthAnalyticsCustomModulesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListEffectiveSecurityHealthAnalyticsCustomModulesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns a list of all EffectiveSecurityHealthAnalyticsCustomModules for the given parent. This includes resident modules defined at the scope of the parent, and inherited modules, inherited from CRM ancestors.",
+	//   "flatPath": "v1/folders/{foldersId}/securityHealthAnalyticsSettings/effectiveCustomModules",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.folders.securityHealthAnalyticsSettings.effectiveCustomModules.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The maximum number of results to return in a single response. Default is 10, minimum is 1, maximum is 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The value returned by the last call indicating a continuation",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Name of parent to list effective custom modules. Its format is \"organizations/{organization}/securityHealthAnalyticsSettings\", \"folders/{folder}/securityHealthAnalyticsSettings\", or \"projects/{project}/securityHealthAnalyticsSettings\"",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+/securityHealthAnalyticsSettings$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/effectiveCustomModules",
+	//   "response": {
+	//     "$ref": "ListEffectiveSecurityHealthAnalyticsCustomModulesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *FoldersSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall) Pages(ctx context.Context, f func(*ListEffectiveSecurityHealthAnalyticsCustomModulesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "securitycenter.folders.sources.list":
@@ -14307,6 +16217,1382 @@ func (c *OrganizationsOperationsListCall) Pages(ctx context.Context, f func(*Lis
 	}
 }
 
+// method id "securitycenter.organizations.securityHealthAnalyticsSettings.customModules.create":
+
+type OrganizationsSecurityHealthAnalyticsSettingsCustomModulesCreateCall struct {
+	s                                                              *Service
+	parent                                                         string
+	googlecloudsecuritycenterv1securityhealthanalyticscustommodule *GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule
+	urlParams_                                                     gensupport.URLParams
+	ctx_                                                           context.Context
+	header_                                                        http.Header
+}
+
+// Create: Creates a resident SecurityHealthAnalyticsCustomModule at the
+// scope of the given CRM parent, and also creates inherited
+// SecurityHealthAnalyticsCustomModules for all CRM descendants of the
+// given parent. These modules are enabled by default.
+//
+//   - parent: Resource name of the new custom module's parent. Its format
+//     is "organizations/{organization}/securityHealthAnalyticsSettings",
+//     "folders/{folder}/securityHealthAnalyticsSettings", or
+//     "projects/{project}/securityHealthAnalyticsSettings".
+func (r *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesService) Create(parent string, googlecloudsecuritycenterv1securityhealthanalyticscustommodule *GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule) *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesCreateCall {
+	c := &OrganizationsSecurityHealthAnalyticsSettingsCustomModulesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudsecuritycenterv1securityhealthanalyticscustommodule = googlecloudsecuritycenterv1securityhealthanalyticscustommodule
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesCreateCall) Fields(s ...googleapi.Field) *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesCreateCall) Context(ctx context.Context) *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudsecuritycenterv1securityhealthanalyticscustommodule)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/customModules")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.organizations.securityHealthAnalyticsSettings.customModules.create" call.
+// Exactly one of
+// *GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule.Server
+// Response.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a resident SecurityHealthAnalyticsCustomModule at the scope of the given CRM parent, and also creates inherited SecurityHealthAnalyticsCustomModules for all CRM descendants of the given parent. These modules are enabled by default.",
+	//   "flatPath": "v1/organizations/{organizationsId}/securityHealthAnalyticsSettings/customModules",
+	//   "httpMethod": "POST",
+	//   "id": "securitycenter.organizations.securityHealthAnalyticsSettings.customModules.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. Resource name of the new custom module's parent. Its format is \"organizations/{organization}/securityHealthAnalyticsSettings\", \"folders/{folder}/securityHealthAnalyticsSettings\", or \"projects/{project}/securityHealthAnalyticsSettings\"",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/securityHealthAnalyticsSettings$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/customModules",
+	//   "request": {
+	//     "$ref": "GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.organizations.securityHealthAnalyticsSettings.customModules.delete":
+
+type OrganizationsSecurityHealthAnalyticsSettingsCustomModulesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes the specified SecurityHealthAnalyticsCustomModule and
+// all of its descendants in the CRM hierarchy. This method is only
+// supported for resident custom modules.
+//
+//   - name: Name of the custom module to delete. Its format is
+//     "organizations/{organization}/securityHealthAnalyticsSettings/custom
+//     Modules/{customModule}",
+//     "folders/{folder}/securityHealthAnalyticsSettings/customModules/{cus
+//     tomModule}", or
+//     "projects/{project}/securityHealthAnalyticsSettings/customModules/{c
+//     ustomModule}".
+func (r *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesService) Delete(name string) *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesDeleteCall {
+	c := &OrganizationsSecurityHealthAnalyticsSettingsCustomModulesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesDeleteCall) Fields(s ...googleapi.Field) *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesDeleteCall) Context(ctx context.Context) *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.organizations.securityHealthAnalyticsSettings.customModules.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes the specified SecurityHealthAnalyticsCustomModule and all of its descendants in the CRM hierarchy. This method is only supported for resident custom modules.",
+	//   "flatPath": "v1/organizations/{organizationsId}/securityHealthAnalyticsSettings/customModules/{customModulesId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "securitycenter.organizations.securityHealthAnalyticsSettings.customModules.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the custom module to delete. Its format is \"organizations/{organization}/securityHealthAnalyticsSettings/customModules/{customModule}\", \"folders/{folder}/securityHealthAnalyticsSettings/customModules/{customModule}\", or \"projects/{project}/securityHealthAnalyticsSettings/customModules/{customModule}\"",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/securityHealthAnalyticsSettings/customModules/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.organizations.securityHealthAnalyticsSettings.customModules.get":
+
+type OrganizationsSecurityHealthAnalyticsSettingsCustomModulesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Retrieves a SecurityHealthAnalyticsCustomModule.
+//
+//   - name: Name of the custom module to get. Its format is
+//     "organizations/{organization}/securityHealthAnalyticsSettings/custom
+//     Modules/{customModule}",
+//     "folders/{folder}/securityHealthAnalyticsSettings/customModules/{cus
+//     tomModule}", or
+//     "projects/{project}/securityHealthAnalyticsSettings/customModules/{c
+//     ustomModule}".
+func (r *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesService) Get(name string) *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesGetCall {
+	c := &OrganizationsSecurityHealthAnalyticsSettingsCustomModulesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesGetCall) Fields(s ...googleapi.Field) *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesGetCall) IfNoneMatch(entityTag string) *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesGetCall) Context(ctx context.Context) *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.organizations.securityHealthAnalyticsSettings.customModules.get" call.
+// Exactly one of
+// *GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule.Server
+// Response.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves a SecurityHealthAnalyticsCustomModule.",
+	//   "flatPath": "v1/organizations/{organizationsId}/securityHealthAnalyticsSettings/customModules/{customModulesId}",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.organizations.securityHealthAnalyticsSettings.customModules.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the custom module to get. Its format is \"organizations/{organization}/securityHealthAnalyticsSettings/customModules/{customModule}\", \"folders/{folder}/securityHealthAnalyticsSettings/customModules/{customModule}\", or \"projects/{project}/securityHealthAnalyticsSettings/customModules/{customModule}\"",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/securityHealthAnalyticsSettings/customModules/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.organizations.securityHealthAnalyticsSettings.customModules.list":
+
+type OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Returns a list of all SecurityHealthAnalyticsCustomModules for
+// the given parent. This includes resident modules defined at the scope
+// of the parent, and inherited modules, inherited from CRM ancestors.
+//
+//   - parent: Name of parent to list custom modules. Its format is
+//     "organizations/{organization}/securityHealthAnalyticsSettings",
+//     "folders/{folder}/securityHealthAnalyticsSettings", or
+//     "projects/{project}/securityHealthAnalyticsSettings".
+func (r *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesService) List(parent string) *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListCall {
+	c := &OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return in a single response. Default is 10, minimum is
+// 1, maximum is 1000.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListCall) PageSize(pageSize int64) *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The value returned
+// by the last call indicating a continuation
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListCall) PageToken(pageToken string) *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListCall) Fields(s ...googleapi.Field) *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListCall) IfNoneMatch(entityTag string) *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListCall) Context(ctx context.Context) *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/customModules")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.organizations.securityHealthAnalyticsSettings.customModules.list" call.
+// Exactly one of *ListSecurityHealthAnalyticsCustomModulesResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *ListSecurityHealthAnalyticsCustomModulesResponse.ServerResponse.Heade
+// r or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListCall) Do(opts ...googleapi.CallOption) (*ListSecurityHealthAnalyticsCustomModulesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListSecurityHealthAnalyticsCustomModulesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns a list of all SecurityHealthAnalyticsCustomModules for the given parent. This includes resident modules defined at the scope of the parent, and inherited modules, inherited from CRM ancestors.",
+	//   "flatPath": "v1/organizations/{organizationsId}/securityHealthAnalyticsSettings/customModules",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.organizations.securityHealthAnalyticsSettings.customModules.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The maximum number of results to return in a single response. Default is 10, minimum is 1, maximum is 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The value returned by the last call indicating a continuation",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Name of parent to list custom modules. Its format is \"organizations/{organization}/securityHealthAnalyticsSettings\", \"folders/{folder}/securityHealthAnalyticsSettings\", or \"projects/{project}/securityHealthAnalyticsSettings\"",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/securityHealthAnalyticsSettings$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/customModules",
+	//   "response": {
+	//     "$ref": "ListSecurityHealthAnalyticsCustomModulesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListCall) Pages(ctx context.Context, f func(*ListSecurityHealthAnalyticsCustomModulesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "securitycenter.organizations.securityHealthAnalyticsSettings.customModules.listDescendant":
+
+type OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// ListDescendant: Returns a list of all resident
+// SecurityHealthAnalyticsCustomModules under the given CRM parent and
+// all of the parent’s CRM descendants.
+//
+//   - parent: Name of parent to list descendant custom modules. Its
+//     format is
+//     "organizations/{organization}/securityHealthAnalyticsSettings",
+//     "folders/{folder}/securityHealthAnalyticsSettings", or
+//     "projects/{project}/securityHealthAnalyticsSettings".
+func (r *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesService) ListDescendant(parent string) *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall {
+	c := &OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return in a single response. Default is 10, minimum is
+// 1, maximum is 1000.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall) PageSize(pageSize int64) *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The value returned
+// by the last call indicating a continuation
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall) PageToken(pageToken string) *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall) Fields(s ...googleapi.Field) *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall) IfNoneMatch(entityTag string) *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall) Context(ctx context.Context) *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/customModules:listDescendant")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.organizations.securityHealthAnalyticsSettings.customModules.listDescendant" call.
+// Exactly one of
+// *ListDescendantSecurityHealthAnalyticsCustomModulesResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *ListDescendantSecurityHealthAnalyticsCustomModulesResponse.ServerResp
+// onse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall) Do(opts ...googleapi.CallOption) (*ListDescendantSecurityHealthAnalyticsCustomModulesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListDescendantSecurityHealthAnalyticsCustomModulesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns a list of all resident SecurityHealthAnalyticsCustomModules under the given CRM parent and all of the parent’s CRM descendants.",
+	//   "flatPath": "v1/organizations/{organizationsId}/securityHealthAnalyticsSettings/customModules:listDescendant",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.organizations.securityHealthAnalyticsSettings.customModules.listDescendant",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The maximum number of results to return in a single response. Default is 10, minimum is 1, maximum is 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The value returned by the last call indicating a continuation",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Name of parent to list descendant custom modules. Its format is \"organizations/{organization}/securityHealthAnalyticsSettings\", \"folders/{folder}/securityHealthAnalyticsSettings\", or \"projects/{project}/securityHealthAnalyticsSettings\"",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/securityHealthAnalyticsSettings$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/customModules:listDescendant",
+	//   "response": {
+	//     "$ref": "ListDescendantSecurityHealthAnalyticsCustomModulesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall) Pages(ctx context.Context, f func(*ListDescendantSecurityHealthAnalyticsCustomModulesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "securitycenter.organizations.securityHealthAnalyticsSettings.customModules.patch":
+
+type OrganizationsSecurityHealthAnalyticsSettingsCustomModulesPatchCall struct {
+	s                                                              *Service
+	name                                                           string
+	googlecloudsecuritycenterv1securityhealthanalyticscustommodule *GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule
+	urlParams_                                                     gensupport.URLParams
+	ctx_                                                           context.Context
+	header_                                                        http.Header
+}
+
+// Patch: Updates the SecurityHealthAnalyticsCustomModule under the
+// given name based on the given update mask. Updating the enablement
+// state is supported on both resident and inherited modules (though
+// resident modules cannot have an enablement state of “inherited”).
+// Updating the display name and custom config of a module is supported
+// on resident modules only.
+//
+//   - name: Immutable. The resource name of the custom module. Its format
+//     is
+//     "organizations/{organization}/securityHealthAnalyticsSettings/custom
+//     Modules/{customModule}", or
+//     "folders/{folder}/securityHealthAnalyticsSettings/customModules/{cus
+//     tomModule}", or
+//     "projects/{project}/securityHealthAnalyticsSettings/customModules/{c
+//     ustomModule}" The id {customModule} is server-generated and is not
+//     user settable. It will be a numeric id containing 1-20 digits.
+func (r *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesService) Patch(name string, googlecloudsecuritycenterv1securityhealthanalyticscustommodule *GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule) *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesPatchCall {
+	c := &OrganizationsSecurityHealthAnalyticsSettingsCustomModulesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudsecuritycenterv1securityhealthanalyticscustommodule = googlecloudsecuritycenterv1securityhealthanalyticscustommodule
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of
+// fields to update.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesPatchCall) UpdateMask(updateMask string) *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesPatchCall) Fields(s ...googleapi.Field) *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesPatchCall) Context(ctx context.Context) *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudsecuritycenterv1securityhealthanalyticscustommodule)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.organizations.securityHealthAnalyticsSettings.customModules.patch" call.
+// Exactly one of
+// *GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule.Server
+// Response.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates the SecurityHealthAnalyticsCustomModule under the given name based on the given update mask. Updating the enablement state is supported on both resident and inherited modules (though resident modules cannot have an enablement state of “inherited”). Updating the display name and custom config of a module is supported on resident modules only.",
+	//   "flatPath": "v1/organizations/{organizationsId}/securityHealthAnalyticsSettings/customModules/{customModulesId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "securitycenter.organizations.securityHealthAnalyticsSettings.customModules.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Immutable. The resource name of the custom module. Its format is \"organizations/{organization}/securityHealthAnalyticsSettings/customModules/{customModule}\", or \"folders/{folder}/securityHealthAnalyticsSettings/customModules/{customModule}\", or \"projects/{project}/securityHealthAnalyticsSettings/customModules/{customModule}\" The id {customModule} is server-generated and is not user settable. It will be a numeric id containing 1-20 digits.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/securityHealthAnalyticsSettings/customModules/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "The list of fields to update.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.organizations.securityHealthAnalyticsSettings.effectiveCustomModules.get":
+
+type OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Retrieves an EffectiveSecurityHealthAnalyticsCustomModule.
+//
+//   - name: Name of the effective custom module to get. Its format is
+//     "organizations/{organization}/securityHealthAnalyticsSettings/effect
+//     iveCustomModules/{customModule}",
+//     "folders/{folder}/securityHealthAnalyticsSettings/effectiveCustomMod
+//     ules/{customModule}", or
+//     "projects/{project}/securityHealthAnalyticsSettings/effectiveCustomM
+//     odules/{customModule}".
+func (r *OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesService) Get(name string) *OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall {
+	c := &OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall) Fields(s ...googleapi.Field) *OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall) IfNoneMatch(entityTag string) *OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall) Context(ctx context.Context) *OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.organizations.securityHealthAnalyticsSettings.effectiveCustomModules.get" call.
+// Exactly one of
+// *GoogleCloudSecuritycenterV1EffectiveSecurityHealthAnalyticsCustomModu
+// le or error will be non-nil. Any non-2xx status code is an error.
+// Response headers are in either
+// *GoogleCloudSecuritycenterV1EffectiveSecurityHealthAnalyticsCustomModu
+// le.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudSecuritycenterV1EffectiveSecurityHealthAnalyticsCustomModule, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudSecuritycenterV1EffectiveSecurityHealthAnalyticsCustomModule{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves an EffectiveSecurityHealthAnalyticsCustomModule.",
+	//   "flatPath": "v1/organizations/{organizationsId}/securityHealthAnalyticsSettings/effectiveCustomModules/{effectiveCustomModulesId}",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.organizations.securityHealthAnalyticsSettings.effectiveCustomModules.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the effective custom module to get. Its format is \"organizations/{organization}/securityHealthAnalyticsSettings/effectiveCustomModules/{customModule}\", \"folders/{folder}/securityHealthAnalyticsSettings/effectiveCustomModules/{customModule}\", or \"projects/{project}/securityHealthAnalyticsSettings/effectiveCustomModules/{customModule}\"",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/securityHealthAnalyticsSettings/effectiveCustomModules/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudSecuritycenterV1EffectiveSecurityHealthAnalyticsCustomModule"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.organizations.securityHealthAnalyticsSettings.effectiveCustomModules.list":
+
+type OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Returns a list of all
+// EffectiveSecurityHealthAnalyticsCustomModules for the given parent.
+// This includes resident modules defined at the scope of the parent,
+// and inherited modules, inherited from CRM ancestors.
+//
+//   - parent: Name of parent to list effective custom modules. Its format
+//     is "organizations/{organization}/securityHealthAnalyticsSettings",
+//     "folders/{folder}/securityHealthAnalyticsSettings", or
+//     "projects/{project}/securityHealthAnalyticsSettings".
+func (r *OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesService) List(parent string) *OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall {
+	c := &OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return in a single response. Default is 10, minimum is
+// 1, maximum is 1000.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall) PageSize(pageSize int64) *OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The value returned
+// by the last call indicating a continuation
+func (c *OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall) PageToken(pageToken string) *OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall) Fields(s ...googleapi.Field) *OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall) IfNoneMatch(entityTag string) *OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall) Context(ctx context.Context) *OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/effectiveCustomModules")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.organizations.securityHealthAnalyticsSettings.effectiveCustomModules.list" call.
+// Exactly one of
+// *ListEffectiveSecurityHealthAnalyticsCustomModulesResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *ListEffectiveSecurityHealthAnalyticsCustomModulesResponse.ServerRespo
+// nse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall) Do(opts ...googleapi.CallOption) (*ListEffectiveSecurityHealthAnalyticsCustomModulesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListEffectiveSecurityHealthAnalyticsCustomModulesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns a list of all EffectiveSecurityHealthAnalyticsCustomModules for the given parent. This includes resident modules defined at the scope of the parent, and inherited modules, inherited from CRM ancestors.",
+	//   "flatPath": "v1/organizations/{organizationsId}/securityHealthAnalyticsSettings/effectiveCustomModules",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.organizations.securityHealthAnalyticsSettings.effectiveCustomModules.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The maximum number of results to return in a single response. Default is 10, minimum is 1, maximum is 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The value returned by the last call indicating a continuation",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Name of parent to list effective custom modules. Its format is \"organizations/{organization}/securityHealthAnalyticsSettings\", \"folders/{folder}/securityHealthAnalyticsSettings\", or \"projects/{project}/securityHealthAnalyticsSettings\"",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/securityHealthAnalyticsSettings$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/effectiveCustomModules",
+	//   "response": {
+	//     "$ref": "ListEffectiveSecurityHealthAnalyticsCustomModulesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall) Pages(ctx context.Context, f func(*ListEffectiveSecurityHealthAnalyticsCustomModulesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "securitycenter.organizations.sources.create":
 
 type OrganizationsSourcesCreateCall struct {
@@ -20089,6 +23375,1382 @@ func (c *ProjectsNotificationConfigsPatchCall) Do(opts ...googleapi.CallOption) 
 	//   ]
 	// }
 
+}
+
+// method id "securitycenter.projects.securityHealthAnalyticsSettings.customModules.create":
+
+type ProjectsSecurityHealthAnalyticsSettingsCustomModulesCreateCall struct {
+	s                                                              *Service
+	parent                                                         string
+	googlecloudsecuritycenterv1securityhealthanalyticscustommodule *GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule
+	urlParams_                                                     gensupport.URLParams
+	ctx_                                                           context.Context
+	header_                                                        http.Header
+}
+
+// Create: Creates a resident SecurityHealthAnalyticsCustomModule at the
+// scope of the given CRM parent, and also creates inherited
+// SecurityHealthAnalyticsCustomModules for all CRM descendants of the
+// given parent. These modules are enabled by default.
+//
+//   - parent: Resource name of the new custom module's parent. Its format
+//     is "organizations/{organization}/securityHealthAnalyticsSettings",
+//     "folders/{folder}/securityHealthAnalyticsSettings", or
+//     "projects/{project}/securityHealthAnalyticsSettings".
+func (r *ProjectsSecurityHealthAnalyticsSettingsCustomModulesService) Create(parent string, googlecloudsecuritycenterv1securityhealthanalyticscustommodule *GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule) *ProjectsSecurityHealthAnalyticsSettingsCustomModulesCreateCall {
+	c := &ProjectsSecurityHealthAnalyticsSettingsCustomModulesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudsecuritycenterv1securityhealthanalyticscustommodule = googlecloudsecuritycenterv1securityhealthanalyticscustommodule
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesCreateCall) Fields(s ...googleapi.Field) *ProjectsSecurityHealthAnalyticsSettingsCustomModulesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesCreateCall) Context(ctx context.Context) *ProjectsSecurityHealthAnalyticsSettingsCustomModulesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudsecuritycenterv1securityhealthanalyticscustommodule)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/customModules")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.projects.securityHealthAnalyticsSettings.customModules.create" call.
+// Exactly one of
+// *GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule.Server
+// Response.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a resident SecurityHealthAnalyticsCustomModule at the scope of the given CRM parent, and also creates inherited SecurityHealthAnalyticsCustomModules for all CRM descendants of the given parent. These modules are enabled by default.",
+	//   "flatPath": "v1/projects/{projectsId}/securityHealthAnalyticsSettings/customModules",
+	//   "httpMethod": "POST",
+	//   "id": "securitycenter.projects.securityHealthAnalyticsSettings.customModules.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. Resource name of the new custom module's parent. Its format is \"organizations/{organization}/securityHealthAnalyticsSettings\", \"folders/{folder}/securityHealthAnalyticsSettings\", or \"projects/{project}/securityHealthAnalyticsSettings\"",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/securityHealthAnalyticsSettings$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/customModules",
+	//   "request": {
+	//     "$ref": "GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.projects.securityHealthAnalyticsSettings.customModules.delete":
+
+type ProjectsSecurityHealthAnalyticsSettingsCustomModulesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes the specified SecurityHealthAnalyticsCustomModule and
+// all of its descendants in the CRM hierarchy. This method is only
+// supported for resident custom modules.
+//
+//   - name: Name of the custom module to delete. Its format is
+//     "organizations/{organization}/securityHealthAnalyticsSettings/custom
+//     Modules/{customModule}",
+//     "folders/{folder}/securityHealthAnalyticsSettings/customModules/{cus
+//     tomModule}", or
+//     "projects/{project}/securityHealthAnalyticsSettings/customModules/{c
+//     ustomModule}".
+func (r *ProjectsSecurityHealthAnalyticsSettingsCustomModulesService) Delete(name string) *ProjectsSecurityHealthAnalyticsSettingsCustomModulesDeleteCall {
+	c := &ProjectsSecurityHealthAnalyticsSettingsCustomModulesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesDeleteCall) Fields(s ...googleapi.Field) *ProjectsSecurityHealthAnalyticsSettingsCustomModulesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesDeleteCall) Context(ctx context.Context) *ProjectsSecurityHealthAnalyticsSettingsCustomModulesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.projects.securityHealthAnalyticsSettings.customModules.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes the specified SecurityHealthAnalyticsCustomModule and all of its descendants in the CRM hierarchy. This method is only supported for resident custom modules.",
+	//   "flatPath": "v1/projects/{projectsId}/securityHealthAnalyticsSettings/customModules/{customModulesId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "securitycenter.projects.securityHealthAnalyticsSettings.customModules.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the custom module to delete. Its format is \"organizations/{organization}/securityHealthAnalyticsSettings/customModules/{customModule}\", \"folders/{folder}/securityHealthAnalyticsSettings/customModules/{customModule}\", or \"projects/{project}/securityHealthAnalyticsSettings/customModules/{customModule}\"",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/securityHealthAnalyticsSettings/customModules/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.projects.securityHealthAnalyticsSettings.customModules.get":
+
+type ProjectsSecurityHealthAnalyticsSettingsCustomModulesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Retrieves a SecurityHealthAnalyticsCustomModule.
+//
+//   - name: Name of the custom module to get. Its format is
+//     "organizations/{organization}/securityHealthAnalyticsSettings/custom
+//     Modules/{customModule}",
+//     "folders/{folder}/securityHealthAnalyticsSettings/customModules/{cus
+//     tomModule}", or
+//     "projects/{project}/securityHealthAnalyticsSettings/customModules/{c
+//     ustomModule}".
+func (r *ProjectsSecurityHealthAnalyticsSettingsCustomModulesService) Get(name string) *ProjectsSecurityHealthAnalyticsSettingsCustomModulesGetCall {
+	c := &ProjectsSecurityHealthAnalyticsSettingsCustomModulesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesGetCall) Fields(s ...googleapi.Field) *ProjectsSecurityHealthAnalyticsSettingsCustomModulesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesGetCall) IfNoneMatch(entityTag string) *ProjectsSecurityHealthAnalyticsSettingsCustomModulesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesGetCall) Context(ctx context.Context) *ProjectsSecurityHealthAnalyticsSettingsCustomModulesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.projects.securityHealthAnalyticsSettings.customModules.get" call.
+// Exactly one of
+// *GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule.Server
+// Response.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves a SecurityHealthAnalyticsCustomModule.",
+	//   "flatPath": "v1/projects/{projectsId}/securityHealthAnalyticsSettings/customModules/{customModulesId}",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.projects.securityHealthAnalyticsSettings.customModules.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the custom module to get. Its format is \"organizations/{organization}/securityHealthAnalyticsSettings/customModules/{customModule}\", \"folders/{folder}/securityHealthAnalyticsSettings/customModules/{customModule}\", or \"projects/{project}/securityHealthAnalyticsSettings/customModules/{customModule}\"",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/securityHealthAnalyticsSettings/customModules/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.projects.securityHealthAnalyticsSettings.customModules.list":
+
+type ProjectsSecurityHealthAnalyticsSettingsCustomModulesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Returns a list of all SecurityHealthAnalyticsCustomModules for
+// the given parent. This includes resident modules defined at the scope
+// of the parent, and inherited modules, inherited from CRM ancestors.
+//
+//   - parent: Name of parent to list custom modules. Its format is
+//     "organizations/{organization}/securityHealthAnalyticsSettings",
+//     "folders/{folder}/securityHealthAnalyticsSettings", or
+//     "projects/{project}/securityHealthAnalyticsSettings".
+func (r *ProjectsSecurityHealthAnalyticsSettingsCustomModulesService) List(parent string) *ProjectsSecurityHealthAnalyticsSettingsCustomModulesListCall {
+	c := &ProjectsSecurityHealthAnalyticsSettingsCustomModulesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return in a single response. Default is 10, minimum is
+// 1, maximum is 1000.
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesListCall) PageSize(pageSize int64) *ProjectsSecurityHealthAnalyticsSettingsCustomModulesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The value returned
+// by the last call indicating a continuation
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesListCall) PageToken(pageToken string) *ProjectsSecurityHealthAnalyticsSettingsCustomModulesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesListCall) Fields(s ...googleapi.Field) *ProjectsSecurityHealthAnalyticsSettingsCustomModulesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesListCall) IfNoneMatch(entityTag string) *ProjectsSecurityHealthAnalyticsSettingsCustomModulesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesListCall) Context(ctx context.Context) *ProjectsSecurityHealthAnalyticsSettingsCustomModulesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/customModules")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.projects.securityHealthAnalyticsSettings.customModules.list" call.
+// Exactly one of *ListSecurityHealthAnalyticsCustomModulesResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *ListSecurityHealthAnalyticsCustomModulesResponse.ServerResponse.Heade
+// r or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesListCall) Do(opts ...googleapi.CallOption) (*ListSecurityHealthAnalyticsCustomModulesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListSecurityHealthAnalyticsCustomModulesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns a list of all SecurityHealthAnalyticsCustomModules for the given parent. This includes resident modules defined at the scope of the parent, and inherited modules, inherited from CRM ancestors.",
+	//   "flatPath": "v1/projects/{projectsId}/securityHealthAnalyticsSettings/customModules",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.projects.securityHealthAnalyticsSettings.customModules.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The maximum number of results to return in a single response. Default is 10, minimum is 1, maximum is 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The value returned by the last call indicating a continuation",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Name of parent to list custom modules. Its format is \"organizations/{organization}/securityHealthAnalyticsSettings\", \"folders/{folder}/securityHealthAnalyticsSettings\", or \"projects/{project}/securityHealthAnalyticsSettings\"",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/securityHealthAnalyticsSettings$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/customModules",
+	//   "response": {
+	//     "$ref": "ListSecurityHealthAnalyticsCustomModulesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesListCall) Pages(ctx context.Context, f func(*ListSecurityHealthAnalyticsCustomModulesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "securitycenter.projects.securityHealthAnalyticsSettings.customModules.listDescendant":
+
+type ProjectsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// ListDescendant: Returns a list of all resident
+// SecurityHealthAnalyticsCustomModules under the given CRM parent and
+// all of the parent’s CRM descendants.
+//
+//   - parent: Name of parent to list descendant custom modules. Its
+//     format is
+//     "organizations/{organization}/securityHealthAnalyticsSettings",
+//     "folders/{folder}/securityHealthAnalyticsSettings", or
+//     "projects/{project}/securityHealthAnalyticsSettings".
+func (r *ProjectsSecurityHealthAnalyticsSettingsCustomModulesService) ListDescendant(parent string) *ProjectsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall {
+	c := &ProjectsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return in a single response. Default is 10, minimum is
+// 1, maximum is 1000.
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall) PageSize(pageSize int64) *ProjectsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The value returned
+// by the last call indicating a continuation
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall) PageToken(pageToken string) *ProjectsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall) Fields(s ...googleapi.Field) *ProjectsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall) IfNoneMatch(entityTag string) *ProjectsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall) Context(ctx context.Context) *ProjectsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/customModules:listDescendant")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.projects.securityHealthAnalyticsSettings.customModules.listDescendant" call.
+// Exactly one of
+// *ListDescendantSecurityHealthAnalyticsCustomModulesResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *ListDescendantSecurityHealthAnalyticsCustomModulesResponse.ServerResp
+// onse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall) Do(opts ...googleapi.CallOption) (*ListDescendantSecurityHealthAnalyticsCustomModulesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListDescendantSecurityHealthAnalyticsCustomModulesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns a list of all resident SecurityHealthAnalyticsCustomModules under the given CRM parent and all of the parent’s CRM descendants.",
+	//   "flatPath": "v1/projects/{projectsId}/securityHealthAnalyticsSettings/customModules:listDescendant",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.projects.securityHealthAnalyticsSettings.customModules.listDescendant",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The maximum number of results to return in a single response. Default is 10, minimum is 1, maximum is 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The value returned by the last call indicating a continuation",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Name of parent to list descendant custom modules. Its format is \"organizations/{organization}/securityHealthAnalyticsSettings\", \"folders/{folder}/securityHealthAnalyticsSettings\", or \"projects/{project}/securityHealthAnalyticsSettings\"",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/securityHealthAnalyticsSettings$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/customModules:listDescendant",
+	//   "response": {
+	//     "$ref": "ListDescendantSecurityHealthAnalyticsCustomModulesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesListDescendantCall) Pages(ctx context.Context, f func(*ListDescendantSecurityHealthAnalyticsCustomModulesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "securitycenter.projects.securityHealthAnalyticsSettings.customModules.patch":
+
+type ProjectsSecurityHealthAnalyticsSettingsCustomModulesPatchCall struct {
+	s                                                              *Service
+	name                                                           string
+	googlecloudsecuritycenterv1securityhealthanalyticscustommodule *GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule
+	urlParams_                                                     gensupport.URLParams
+	ctx_                                                           context.Context
+	header_                                                        http.Header
+}
+
+// Patch: Updates the SecurityHealthAnalyticsCustomModule under the
+// given name based on the given update mask. Updating the enablement
+// state is supported on both resident and inherited modules (though
+// resident modules cannot have an enablement state of “inherited”).
+// Updating the display name and custom config of a module is supported
+// on resident modules only.
+//
+//   - name: Immutable. The resource name of the custom module. Its format
+//     is
+//     "organizations/{organization}/securityHealthAnalyticsSettings/custom
+//     Modules/{customModule}", or
+//     "folders/{folder}/securityHealthAnalyticsSettings/customModules/{cus
+//     tomModule}", or
+//     "projects/{project}/securityHealthAnalyticsSettings/customModules/{c
+//     ustomModule}" The id {customModule} is server-generated and is not
+//     user settable. It will be a numeric id containing 1-20 digits.
+func (r *ProjectsSecurityHealthAnalyticsSettingsCustomModulesService) Patch(name string, googlecloudsecuritycenterv1securityhealthanalyticscustommodule *GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule) *ProjectsSecurityHealthAnalyticsSettingsCustomModulesPatchCall {
+	c := &ProjectsSecurityHealthAnalyticsSettingsCustomModulesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudsecuritycenterv1securityhealthanalyticscustommodule = googlecloudsecuritycenterv1securityhealthanalyticscustommodule
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of
+// fields to update.
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesPatchCall) UpdateMask(updateMask string) *ProjectsSecurityHealthAnalyticsSettingsCustomModulesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesPatchCall) Fields(s ...googleapi.Field) *ProjectsSecurityHealthAnalyticsSettingsCustomModulesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesPatchCall) Context(ctx context.Context) *ProjectsSecurityHealthAnalyticsSettingsCustomModulesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudsecuritycenterv1securityhealthanalyticscustommodule)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.projects.securityHealthAnalyticsSettings.customModules.patch" call.
+// Exactly one of
+// *GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule.Server
+// Response.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates the SecurityHealthAnalyticsCustomModule under the given name based on the given update mask. Updating the enablement state is supported on both resident and inherited modules (though resident modules cannot have an enablement state of “inherited”). Updating the display name and custom config of a module is supported on resident modules only.",
+	//   "flatPath": "v1/projects/{projectsId}/securityHealthAnalyticsSettings/customModules/{customModulesId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "securitycenter.projects.securityHealthAnalyticsSettings.customModules.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Immutable. The resource name of the custom module. Its format is \"organizations/{organization}/securityHealthAnalyticsSettings/customModules/{customModule}\", or \"folders/{folder}/securityHealthAnalyticsSettings/customModules/{customModule}\", or \"projects/{project}/securityHealthAnalyticsSettings/customModules/{customModule}\" The id {customModule} is server-generated and is not user settable. It will be a numeric id containing 1-20 digits.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/securityHealthAnalyticsSettings/customModules/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "The list of fields to update.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.projects.securityHealthAnalyticsSettings.effectiveCustomModules.get":
+
+type ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Retrieves an EffectiveSecurityHealthAnalyticsCustomModule.
+//
+//   - name: Name of the effective custom module to get. Its format is
+//     "organizations/{organization}/securityHealthAnalyticsSettings/effect
+//     iveCustomModules/{customModule}",
+//     "folders/{folder}/securityHealthAnalyticsSettings/effectiveCustomMod
+//     ules/{customModule}", or
+//     "projects/{project}/securityHealthAnalyticsSettings/effectiveCustomM
+//     odules/{customModule}".
+func (r *ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesService) Get(name string) *ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall {
+	c := &ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall) Fields(s ...googleapi.Field) *ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall) IfNoneMatch(entityTag string) *ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall) Context(ctx context.Context) *ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.projects.securityHealthAnalyticsSettings.effectiveCustomModules.get" call.
+// Exactly one of
+// *GoogleCloudSecuritycenterV1EffectiveSecurityHealthAnalyticsCustomModu
+// le or error will be non-nil. Any non-2xx status code is an error.
+// Response headers are in either
+// *GoogleCloudSecuritycenterV1EffectiveSecurityHealthAnalyticsCustomModu
+// le.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudSecuritycenterV1EffectiveSecurityHealthAnalyticsCustomModule, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudSecuritycenterV1EffectiveSecurityHealthAnalyticsCustomModule{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves an EffectiveSecurityHealthAnalyticsCustomModule.",
+	//   "flatPath": "v1/projects/{projectsId}/securityHealthAnalyticsSettings/effectiveCustomModules/{effectiveCustomModulesId}",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.projects.securityHealthAnalyticsSettings.effectiveCustomModules.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the effective custom module to get. Its format is \"organizations/{organization}/securityHealthAnalyticsSettings/effectiveCustomModules/{customModule}\", \"folders/{folder}/securityHealthAnalyticsSettings/effectiveCustomModules/{customModule}\", or \"projects/{project}/securityHealthAnalyticsSettings/effectiveCustomModules/{customModule}\"",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/securityHealthAnalyticsSettings/effectiveCustomModules/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudSecuritycenterV1EffectiveSecurityHealthAnalyticsCustomModule"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.projects.securityHealthAnalyticsSettings.effectiveCustomModules.list":
+
+type ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Returns a list of all
+// EffectiveSecurityHealthAnalyticsCustomModules for the given parent.
+// This includes resident modules defined at the scope of the parent,
+// and inherited modules, inherited from CRM ancestors.
+//
+//   - parent: Name of parent to list effective custom modules. Its format
+//     is "organizations/{organization}/securityHealthAnalyticsSettings",
+//     "folders/{folder}/securityHealthAnalyticsSettings", or
+//     "projects/{project}/securityHealthAnalyticsSettings".
+func (r *ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesService) List(parent string) *ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall {
+	c := &ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return in a single response. Default is 10, minimum is
+// 1, maximum is 1000.
+func (c *ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall) PageSize(pageSize int64) *ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The value returned
+// by the last call indicating a continuation
+func (c *ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall) PageToken(pageToken string) *ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall) Fields(s ...googleapi.Field) *ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall) IfNoneMatch(entityTag string) *ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall) Context(ctx context.Context) *ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/effectiveCustomModules")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.projects.securityHealthAnalyticsSettings.effectiveCustomModules.list" call.
+// Exactly one of
+// *ListEffectiveSecurityHealthAnalyticsCustomModulesResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *ListEffectiveSecurityHealthAnalyticsCustomModulesResponse.ServerRespo
+// nse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall) Do(opts ...googleapi.CallOption) (*ListEffectiveSecurityHealthAnalyticsCustomModulesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListEffectiveSecurityHealthAnalyticsCustomModulesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns a list of all EffectiveSecurityHealthAnalyticsCustomModules for the given parent. This includes resident modules defined at the scope of the parent, and inherited modules, inherited from CRM ancestors.",
+	//   "flatPath": "v1/projects/{projectsId}/securityHealthAnalyticsSettings/effectiveCustomModules",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.projects.securityHealthAnalyticsSettings.effectiveCustomModules.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The maximum number of results to return in a single response. Default is 10, minimum is 1, maximum is 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The value returned by the last call indicating a continuation",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Name of parent to list effective custom modules. Its format is \"organizations/{organization}/securityHealthAnalyticsSettings\", \"folders/{folder}/securityHealthAnalyticsSettings\", or \"projects/{project}/securityHealthAnalyticsSettings\"",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/securityHealthAnalyticsSettings$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/effectiveCustomModules",
+	//   "response": {
+	//     "$ref": "ListEffectiveSecurityHealthAnalyticsCustomModulesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsSecurityHealthAnalyticsSettingsEffectiveCustomModulesListCall) Pages(ctx context.Context, f func(*ListEffectiveSecurityHealthAnalyticsCustomModulesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "securitycenter.projects.sources.list":

@@ -1336,7 +1336,7 @@ type DatabaseEntity struct {
 	//   "DATABASE_ENTITY_TYPE_SYNONYM" - Synonym.
 	//   "DATABASE_ENTITY_TYPE_DATABASE_PACKAGE" - Package.
 	//   "DATABASE_ENTITY_TYPE_UDT" - UDT.
-	//   "DATABASE_ENTITY_TYPE_MATERIAL_VIEW" - Material View.
+	//   "DATABASE_ENTITY_TYPE_MATERIALIZED_VIEW" - Materialized View.
 	//   "DATABASE_ENTITY_TYPE_DATABASE" - Database.
 	EntityType string `json:"entityType,omitempty"`
 
@@ -3841,7 +3841,7 @@ type SynonymEntity struct {
 	//   "DATABASE_ENTITY_TYPE_SYNONYM" - Synonym.
 	//   "DATABASE_ENTITY_TYPE_DATABASE_PACKAGE" - Package.
 	//   "DATABASE_ENTITY_TYPE_UDT" - UDT.
-	//   "DATABASE_ENTITY_TYPE_MATERIAL_VIEW" - Material View.
+	//   "DATABASE_ENTITY_TYPE_MATERIALIZED_VIEW" - Materialized View.
 	//   "DATABASE_ENTITY_TYPE_DATABASE" - Database.
 	SourceType string `json:"sourceType,omitempty"`
 

@@ -382,6 +382,9 @@ type AuthConfig struct {
 	//   "OAUTH2_AUTH_CODE_FLOW" - Oauth 2.0 Authorization Code Flow
 	AuthType string `json:"authType,omitempty"`
 
+	// Oauth2AuthCodeFlow: Oauth2AuthCodeFlow.
+	Oauth2AuthCodeFlow *Oauth2AuthCodeFlow `json:"oauth2AuthCodeFlow,omitempty"`
+
 	// Oauth2ClientCredentials: Oauth2ClientCredentials.
 	Oauth2ClientCredentials *Oauth2ClientCredentials `json:"oauth2ClientCredentials,omitempty"`
 
@@ -758,6 +761,9 @@ type Connection struct {
 	// Connection can be edited.
 	LockConfig *LockConfig `json:"lockConfig,omitempty"`
 
+	// LogConfig: Optional. Log configuration for the connection.
+	LogConfig *ConnectorsLogConfig `json:"logConfig,omitempty"`
+
 	// Name: Output only. Resource name of the Connection. Format:
 	// projects/{project}/locations/{location}/connections/{connection}
 	Name string `json:"name,omitempty"`
@@ -1008,6 +1014,10 @@ type ConnectorVersion struct {
 	// CreateTime: Output only. Created time.
 	CreateTime string `json:"createTime,omitempty"`
 
+	// DestinationConfigTemplates: Output only. List of destination configs
+	// needed to create a connection.
+	DestinationConfigTemplates []*DestinationConfigTemplate `json:"destinationConfigTemplates,omitempty"`
+
 	// DisplayName: Output only. Display name.
 	DisplayName string `json:"displayName,omitempty"`
 
@@ -1087,6 +1097,35 @@ func (s *ConnectorVersion) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ConnectorsLogConfig: Log configuration for the connection.
+type ConnectorsLogConfig struct {
+	// Enabled: Enabled represents whether logging is enabled or not for a
+	// connection.
+	Enabled bool `json:"enabled,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Enabled") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Enabled") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ConnectorsLogConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ConnectorsLogConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type Destination struct {
 	// Host: For publicly routable host.
 	Host string `json:"host,omitempty"`
@@ -1150,6 +1189,66 @@ type DestinationConfig struct {
 
 func (s *DestinationConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod DestinationConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DestinationConfigTemplate: DestinationConfigTemplate defines required
+// destinations supported by the Connector.
+type DestinationConfigTemplate struct {
+	// DefaultPort: The default port.
+	DefaultPort int64 `json:"defaultPort,omitempty"`
+
+	// Description: Description.
+	Description string `json:"description,omitempty"`
+
+	// DisplayName: Display name of the parameter.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// IsAdvanced: Whether the current destination tempalate is part of
+	// Advanced settings
+	IsAdvanced bool `json:"isAdvanced,omitempty"`
+
+	// Key: Key of the destination.
+	Key string `json:"key,omitempty"`
+
+	// Max: The maximum number of destinations supported for this key.
+	Max int64 `json:"max,omitempty"`
+
+	// Min: The minimum number of destinations supported for this key.
+	Min int64 `json:"min,omitempty"`
+
+	// PortFieldType: Whether port number should be provided by customers.
+	//
+	// Possible values:
+	//   "FIELD_TYPE_UNSPECIFIED"
+	//   "REQUIRED"
+	//   "OPTIONAL"
+	//   "NOT_USED"
+	PortFieldType string `json:"portFieldType,omitempty"`
+
+	// RegexPattern: Regex pattern for host.
+	RegexPattern string `json:"regexPattern,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DefaultPort") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DefaultPort") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DestinationConfigTemplate) MarshalJSON() ([]byte, error) {
+	type NoMethod DestinationConfigTemplate
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2001,6 +2100,59 @@ type NodeConfig struct {
 
 func (s *NodeConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod NodeConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Oauth2AuthCodeFlow: Parameters to support Oauth 2.0 Auth Code Grant
+// Authentication. See
+// https://www.rfc-editor.org/rfc/rfc6749#section-1.3.1 for more
+// details.
+type Oauth2AuthCodeFlow struct {
+	// AuthCode: Authorization code to be exchanged for access and refresh
+	// tokens.
+	AuthCode string `json:"authCode,omitempty"`
+
+	// ClientId: Client ID for user-provided OAuth app.
+	ClientId string `json:"clientId,omitempty"`
+
+	// ClientSecret: Client secret for user-provided OAuth app.
+	ClientSecret *Secret `json:"clientSecret,omitempty"`
+
+	// EnablePkce: Whether to enable PKCE when the user performs the auth
+	// code flow.
+	EnablePkce bool `json:"enablePkce,omitempty"`
+
+	// PkceVerifier: PKCE verifier to be used during the auth code exchange.
+	PkceVerifier string `json:"pkceVerifier,omitempty"`
+
+	// RedirectUri: Redirect URI to be provided during the auth code
+	// exchange.
+	RedirectUri string `json:"redirectUri,omitempty"`
+
+	// Scopes: Scopes the connection will request when the user performs the
+	// auth code flow.
+	Scopes []string `json:"scopes,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AuthCode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AuthCode") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Oauth2AuthCodeFlow) MarshalJSON() ([]byte, error) {
+	type NoMethod Oauth2AuthCodeFlow
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

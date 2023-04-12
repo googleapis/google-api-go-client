@@ -67,6 +67,21 @@ func (e enableDirectPath) Apply(o *internal.DialSettings) {
 	o.EnableDirectPath = bool(e)
 }
 
+// UseDirectPathXds returns a ClientOption that overrides the default
+// DirectPath type. It is only valid when DirectPath is enabled.
+//
+// It should only be used internally by generated clients.
+// This is an EXPERIMENTAL API and may be changed or removed in the future.
+func UseDirectPathXds(xds bool) option.ClientOption {
+	return useDirectPathXds(xds)
+}
+
+type useDirectPathXds bool
+
+func (x useDirectPathXds) Apply(o *internal.DialSettings) {
+	o.UseDirectPathXds = bool(x)
+}
+
 // AllowNonDefaultServiceAccount returns a ClientOption that overrides the default
 // requirement for using the default service account for DirectPath.
 //

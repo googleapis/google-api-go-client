@@ -2117,8 +2117,21 @@ type GoogleCloudRetailV2alphaCompleteQueryResponseCompletionResult struct {
 	// UserEvent.product_details is imported properly.
 	Attributes map[string]GoogleCloudRetailV2alphaCustomAttribute `json:"attributes,omitempty"`
 
+	// Facets: Facet information for the suggestion term. Gives the number
+	// of items resulting from a search with this suggestion term for each
+	// facet. This is an experimental feature for limited customers. Please
+	// reach out to the support team if you would like to receive this
+	// information.
+	Facets []*GoogleCloudRetailV2alphaSearchResponseFacet `json:"facets,omitempty"`
+
 	// Suggestion: The suggestion for the query.
 	Suggestion string `json:"suggestion,omitempty"`
+
+	// TotalProductCount: Total number of products associated with a search
+	// with this suggestion. This is an experimental feature for limited
+	// customers. Please reach out to the support team if you would like to
+	// receive this information.
+	TotalProductCount int64 `json:"totalProductCount,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Attributes") to
 	// unconditionally include in API requests. By default, fields with
@@ -6358,12 +6371,6 @@ func (s *GoogleCloudRetailV2alphaRuleTwowaySynonymsAction) MarshalJSON() ([]byte
 // GoogleCloudRetailV2alphaSearchRequest: Request message for
 // SearchService.Search method.
 type GoogleCloudRetailV2alphaSearchRequest struct {
-	// Banner: Represents the banner in request, for projects that combine
-	// banners. For example: a retailer can sell products under different
-	// banners like retailer-main, retailer-baby, retailer-meds, etc. under
-	// one project.
-	Banner string `json:"banner,omitempty"`
-
 	// BoostSpec: Boost specification to boost certain products. See more
 	// details at this user guide
 	// (https://cloud.google.com/retail/docs/boosting). Notice that if both
@@ -6398,8 +6405,15 @@ type GoogleCloudRetailV2alphaSearchRequest struct {
 	// dynamically generated.
 	DynamicFacetSpec *GoogleCloudRetailV2alphaSearchRequestDynamicFacetSpec `json:"dynamicFacetSpec,omitempty"`
 
+	// Entity: The entity for customers that may run multiple different
+	// entities, domains, sites or regions, for example, "Google US",
+	// "Google Ads", "Waymo", "google.com", "youtube.com", etc. If this is
+	// set, it should be exactly matched with UserEvent.entity to get search
+	// results boosted by entity.
+	Entity string `json:"entity,omitempty"`
+
 	// FacetSpecs: Facet specifications for faceted search. If empty, no
-	// facets are returned. A maximum of 100 values are allowed. Otherwise,
+	// facets are returned. A maximum of 200 values are allowed. Otherwise,
 	// an INVALID_ARGUMENT error is returned.
 	FacetSpecs []*GoogleCloudRetailV2alphaSearchRequestFacetSpec `json:"facetSpecs,omitempty"`
 
@@ -6569,7 +6583,7 @@ type GoogleCloudRetailV2alphaSearchRequest struct {
 	// is returned.
 	VisitorId string `json:"visitorId,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Banner") to
+	// ForceSendFields is a list of field names (e.g. "BoostSpec") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -6577,8 +6591,8 @@ type GoogleCloudRetailV2alphaSearchRequest struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Banner") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "BoostSpec") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -7760,12 +7774,6 @@ type GoogleCloudRetailV2alphaUserEvent struct {
 	// PredictResponse.attribution_token to this field.
 	AttributionToken string `json:"attributionToken,omitempty"`
 
-	// Banner: Represents the banner of the user event, for projects that
-	// combine banners. For example: retailer can have events from multiple
-	// banners like retailer-main, retailer-baby, retailer-meds, etc. under
-	// one project.
-	Banner string `json:"banner,omitempty"`
-
 	// CartId: The ID or name of the associated shopping cart. This ID is
 	// used to associate multiple items added or present in the cart before
 	// purchase. This can only be set for `add-to-cart`,
@@ -7776,6 +7784,13 @@ type GoogleCloudRetailV2alphaUserEvent struct {
 	// event. This field should be set for `search` event when autocomplete
 	// function is enabled and the user clicks a suggestion for search.
 	CompletionDetail *GoogleCloudRetailV2alphaCompletionDetail `json:"completionDetail,omitempty"`
+
+	// Entity: The entity for customers that may run multiple different
+	// entities, domains, sites or regions, for example, "Google US",
+	// "Google Ads", "Waymo", "google.com", "youtube.com", etc. It is
+	// recommended to set this field to get better per-entity search,
+	// completion and prediction results.
+	Entity string `json:"entity,omitempty"`
 
 	// EventTime: Only required for UserEventService.ImportUserEvents
 	// method. Timestamp of when the user event happened.
@@ -9352,13 +9367,6 @@ func (r *ProjectsLocationsCatalogsService) CompleteQuery(catalog string) *Projec
 	return c
 }
 
-// Banner sets the optional parameter "banner": The banner context for
-// completion suggestions.
-func (c *ProjectsLocationsCatalogsCompleteQueryCall) Banner(banner string) *ProjectsLocationsCatalogsCompleteQueryCall {
-	c.urlParams_.Set("banner", banner)
-	return c
-}
-
 // Dataset sets the optional parameter "dataset": Determines which
 // dataset to use for fetching completion. "user-data" will use the
 // imported dataset through CompletionService.ImportCompletionData.
@@ -9390,6 +9398,16 @@ func (c *ProjectsLocationsCatalogsCompleteQueryCall) DeviceType(deviceType strin
 // "cloud-retail" dataset.
 func (c *ProjectsLocationsCatalogsCompleteQueryCall) EnableAttributeSuggestions(enableAttributeSuggestions bool) *ProjectsLocationsCatalogsCompleteQueryCall {
 	c.urlParams_.Set("enableAttributeSuggestions", fmt.Sprint(enableAttributeSuggestions))
+	return c
+}
+
+// Entity sets the optional parameter "entity": The entity for customers
+// that may run multiple different entities, domains, sites or regions,
+// for example, "Google US", "Google Ads", "Waymo", "google.com",
+// "youtube.com", etc. If this is set, it should be exactly matched with
+// UserEvent.entity to get per-entity autocomplete results.
+func (c *ProjectsLocationsCatalogsCompleteQueryCall) Entity(entity string) *ProjectsLocationsCatalogsCompleteQueryCall {
+	c.urlParams_.Set("entity", entity)
 	return c
 }
 
@@ -9547,11 +9565,6 @@ func (c *ProjectsLocationsCatalogsCompleteQueryCall) Do(opts ...googleapi.CallOp
 	//     "catalog"
 	//   ],
 	//   "parameters": {
-	//     "banner": {
-	//       "description": "The banner context for completion suggestions.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "catalog": {
 	//       "description": "Required. Catalog for which the completion is performed. Full resource name of catalog, such as `projects/*/locations/global/catalogs/default_catalog`.",
 	//       "location": "path",
@@ -9573,6 +9586,11 @@ func (c *ProjectsLocationsCatalogsCompleteQueryCall) Do(opts ...googleapi.CallOp
 	//       "description": "If true, attribute suggestions are enabled and provided in response. This field is only available for \"cloud-retail\" dataset.",
 	//       "location": "query",
 	//       "type": "boolean"
+	//     },
+	//     "entity": {
+	//       "description": "The entity for customers that may run multiple different entities, domains, sites or regions, for example, \"Google US\", \"Google Ads\", \"Waymo\", \"google.com\", \"youtube.com\", etc. If this is set, it should be exactly matched with UserEvent.entity to get per-entity autocomplete results.",
+	//       "location": "query",
+	//       "type": "string"
 	//     },
 	//     "languageCodes": {
 	//       "description": "Note that this field applies for `user-data` dataset only. For requests with `cloud-retail` dataset, setting this field has no effect. The language filters applied to the output suggestions. If set, it should contain the language of the query. If not set, suggestions are returned without considering language restrictions. This is the BCP-47 language code, such as \"en-US\" or \"sr-Latn\". For more information, see [Tags for Identifying Languages](https://tools.ietf.org/html/bcp47). The maximum number of language codes is 3.",

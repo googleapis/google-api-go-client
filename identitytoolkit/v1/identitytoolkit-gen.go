@@ -1062,6 +1062,16 @@ type GoogleCloudIdentitytoolkitV1GetOobCodeRequest struct {
 
 	Challenge string `json:"challenge,omitempty"`
 
+	// ClientType: The client type: web, Android or iOS. Required when
+	// reCAPTCHA Enterprise protection is enabled.
+	//
+	// Possible values:
+	//   "CLIENT_TYPE_UNSPECIFIED" - Client type is not specified.
+	//   "CLIENT_TYPE_WEB" - Client type is web.
+	//   "CLIENT_TYPE_ANDROID" - Client type is android.
+	//   "CLIENT_TYPE_IOS" - Client type is ios.
+	ClientType string `json:"clientType,omitempty"`
+
 	// ContinueUrl: The Url to continue after user clicks the link sent in
 	// email. This is the url that will allow the web widget to handle the
 	// OOB code.
@@ -1100,6 +1110,15 @@ type GoogleCloudIdentitytoolkitV1GetOobCodeRequest struct {
 	// NewEmail: The email address the account is being updated to. Required
 	// only for VERIFY_AND_CHANGE_EMAIL requests.
 	NewEmail string `json:"newEmail,omitempty"`
+
+	// RecaptchaVersion: The reCAPTCHA version of the reCAPTCHA token in the
+	// captcha_response.
+	//
+	// Possible values:
+	//   "RECAPTCHA_VERSION_UNSPECIFIED" - The reCAPTCHA version is not
+	// specified.
+	//   "RECAPTCHA_ENTERPRISE" - The reCAPTCHA enterprise.
+	RecaptchaVersion string `json:"recaptchaVersion,omitempty"`
 
 	// RequestType: Required. The type of out-of-band (OOB) code to send.
 	// Depending on this value, other fields in this request will be
@@ -2933,6 +2952,16 @@ type GoogleCloudIdentitytoolkitV1SignInWithPasswordRequest struct {
 	// assessment. Required when reCAPTCHA Enterprise is enabled.
 	CaptchaResponse string `json:"captchaResponse,omitempty"`
 
+	// ClientType: The client type, web, android or ios. Required when
+	// reCAPTCHA Enterprise is enabled.
+	//
+	// Possible values:
+	//   "CLIENT_TYPE_UNSPECIFIED" - Client type is not specified.
+	//   "CLIENT_TYPE_WEB" - Client type is web.
+	//   "CLIENT_TYPE_ANDROID" - Client type is android.
+	//   "CLIENT_TYPE_IOS" - Client type is ios.
+	ClientType string `json:"clientType,omitempty"`
+
 	DelegatedProjectNumber int64 `json:"delegatedProjectNumber,omitempty,string"`
 
 	// Email: Required. The email the user is signing in with. The length of
@@ -2950,6 +2979,15 @@ type GoogleCloudIdentitytoolkitV1SignInWithPasswordRequest struct {
 	Password string `json:"password,omitempty"`
 
 	PendingIdToken string `json:"pendingIdToken,omitempty"`
+
+	// RecaptchaVersion: The reCAPTCHA version of the reCAPTCHA token in the
+	// captcha_response.
+	//
+	// Possible values:
+	//   "RECAPTCHA_VERSION_UNSPECIFIED" - The reCAPTCHA version is not
+	// specified.
+	//   "RECAPTCHA_ENTERPRISE" - The reCAPTCHA enterprise.
+	RecaptchaVersion string `json:"recaptchaVersion,omitempty"`
 
 	// ReturnSecureToken: Should always be true.
 	ReturnSecureToken bool `json:"returnSecureToken,omitempty"`
@@ -3215,6 +3253,16 @@ type GoogleCloudIdentitytoolkitV1SignUpRequest struct {
 	// Required when reCAPTCHA enterprise is enabled.
 	CaptchaResponse string `json:"captchaResponse,omitempty"`
 
+	// ClientType: The client type: web, Android or iOS. Required when
+	// enabling reCAPTCHA enterprise protection.
+	//
+	// Possible values:
+	//   "CLIENT_TYPE_UNSPECIFIED" - Client type is not specified.
+	//   "CLIENT_TYPE_WEB" - Client type is web.
+	//   "CLIENT_TYPE_ANDROID" - Client type is android.
+	//   "CLIENT_TYPE_IOS" - Client type is ios.
+	ClientType string `json:"clientType,omitempty"`
+
 	// Disabled: Whether the user will be disabled upon creation. Disabled
 	// accounts are inaccessible except for requests bearing a Google OAuth2
 	// credential with proper permissions
@@ -3270,6 +3318,15 @@ type GoogleCloudIdentitytoolkitV1SignUpRequest struct {
 
 	// PhotoUrl: The profile photo url of the user to create.
 	PhotoUrl string `json:"photoUrl,omitempty"`
+
+	// RecaptchaVersion: The reCAPTCHA version of the reCAPTCHA token in the
+	// captcha_response.
+	//
+	// Possible values:
+	//   "RECAPTCHA_VERSION_UNSPECIFIED" - The reCAPTCHA version is not
+	// specified.
+	//   "RECAPTCHA_ENTERPRISE" - The reCAPTCHA enterprise.
+	RecaptchaVersion string `json:"recaptchaVersion,omitempty"`
 
 	// TargetProjectId: The project ID of the project which the user should
 	// belong to. Specifying this field requires a Google OAuth 2.0

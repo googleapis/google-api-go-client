@@ -7252,12 +7252,6 @@ func (s *GoogleCloudRetailV2betaRuleTwowaySynonymsAction) MarshalJSON() ([]byte,
 // GoogleCloudRetailV2betaSearchRequest: Request message for
 // SearchService.Search method.
 type GoogleCloudRetailV2betaSearchRequest struct {
-	// Banner: Represents the banner in request, for projects that combine
-	// banners. For example: a retailer can sell products under different
-	// banners like retailer-main, retailer-baby, retailer-meds, etc. under
-	// one project.
-	Banner string `json:"banner,omitempty"`
-
 	// BoostSpec: Boost specification to boost certain products. See more
 	// details at this user guide
 	// (https://cloud.google.com/retail/docs/boosting). Notice that if both
@@ -7292,8 +7286,15 @@ type GoogleCloudRetailV2betaSearchRequest struct {
 	// dynamically generated.
 	DynamicFacetSpec *GoogleCloudRetailV2betaSearchRequestDynamicFacetSpec `json:"dynamicFacetSpec,omitempty"`
 
+	// Entity: The entity for customers that may run multiple different
+	// entities, domains, sites or regions, for example, "Google US",
+	// "Google Ads", "Waymo", "google.com", "youtube.com", etc. If this is
+	// set, it should be exactly matched with UserEvent.entity to get search
+	// results boosted by entity.
+	Entity string `json:"entity,omitempty"`
+
 	// FacetSpecs: Facet specifications for faceted search. If empty, no
-	// facets are returned. A maximum of 100 values are allowed. Otherwise,
+	// facets are returned. A maximum of 200 values are allowed. Otherwise,
 	// an INVALID_ARGUMENT error is returned.
 	FacetSpecs []*GoogleCloudRetailV2betaSearchRequestFacetSpec `json:"facetSpecs,omitempty"`
 
@@ -7448,7 +7449,7 @@ type GoogleCloudRetailV2betaSearchRequest struct {
 	// is returned.
 	VisitorId string `json:"visitorId,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Banner") to
+	// ForceSendFields is a list of field names (e.g. "BoostSpec") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -7456,8 +7457,8 @@ type GoogleCloudRetailV2betaSearchRequest struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Banner") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "BoostSpec") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -8602,12 +8603,6 @@ type GoogleCloudRetailV2betaUserEvent struct {
 	// PredictResponse.attribution_token to this field.
 	AttributionToken string `json:"attributionToken,omitempty"`
 
-	// Banner: Represents the banner of the user event, for projects that
-	// combine banners. For example: retailer can have events from multiple
-	// banners like retailer-main, retailer-baby, retailer-meds, etc. under
-	// one project.
-	Banner string `json:"banner,omitempty"`
-
 	// CartId: The ID or name of the associated shopping cart. This ID is
 	// used to associate multiple items added or present in the cart before
 	// purchase. This can only be set for `add-to-cart`,
@@ -8618,6 +8613,13 @@ type GoogleCloudRetailV2betaUserEvent struct {
 	// event. This field should be set for `search` event when autocomplete
 	// function is enabled and the user clicks a suggestion for search.
 	CompletionDetail *GoogleCloudRetailV2betaCompletionDetail `json:"completionDetail,omitempty"`
+
+	// Entity: The entity for customers that may run multiple different
+	// entities, domains, sites or regions, for example, "Google US",
+	// "Google Ads", "Waymo", "google.com", "youtube.com", etc. It is
+	// recommended to set this field to get better per-entity search,
+	// completion and prediction results.
+	Entity string `json:"entity,omitempty"`
 
 	// EventTime: Only required for UserEventService.ImportUserEvents
 	// method. Timestamp of when the user event happened.
@@ -9163,13 +9165,6 @@ func (r *ProjectsLocationsCatalogsService) CompleteQuery(catalog string) *Projec
 	return c
 }
 
-// Banner sets the optional parameter "banner": The banner context for
-// completion suggestions.
-func (c *ProjectsLocationsCatalogsCompleteQueryCall) Banner(banner string) *ProjectsLocationsCatalogsCompleteQueryCall {
-	c.urlParams_.Set("banner", banner)
-	return c
-}
-
 // Dataset sets the optional parameter "dataset": Determines which
 // dataset to use for fetching completion. "user-data" will use the
 // imported dataset through CompletionService.ImportCompletionData.
@@ -9192,6 +9187,16 @@ func (c *ProjectsLocationsCatalogsCompleteQueryCall) Dataset(dataset string) *Pr
 // `OTHER_IPHONE`.
 func (c *ProjectsLocationsCatalogsCompleteQueryCall) DeviceType(deviceType string) *ProjectsLocationsCatalogsCompleteQueryCall {
 	c.urlParams_.Set("deviceType", deviceType)
+	return c
+}
+
+// Entity sets the optional parameter "entity": The entity for customers
+// that may run multiple different entities, domains, sites or regions,
+// for example, "Google US", "Google Ads", "Waymo", "google.com",
+// "youtube.com", etc. If this is set, it should be exactly matched with
+// UserEvent.entity to get per-entity autocomplete results.
+func (c *ProjectsLocationsCatalogsCompleteQueryCall) Entity(entity string) *ProjectsLocationsCatalogsCompleteQueryCall {
+	c.urlParams_.Set("entity", entity)
 	return c
 }
 
@@ -9349,11 +9354,6 @@ func (c *ProjectsLocationsCatalogsCompleteQueryCall) Do(opts ...googleapi.CallOp
 	//     "catalog"
 	//   ],
 	//   "parameters": {
-	//     "banner": {
-	//       "description": "The banner context for completion suggestions.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "catalog": {
 	//       "description": "Required. Catalog for which the completion is performed. Full resource name of catalog, such as `projects/*/locations/global/catalogs/default_catalog`.",
 	//       "location": "path",
@@ -9368,6 +9368,11 @@ func (c *ProjectsLocationsCatalogsCompleteQueryCall) Do(opts ...googleapi.CallOp
 	//     },
 	//     "deviceType": {
 	//       "description": "The device type context for completion suggestions. We recommend that you leave this field empty. It can apply different suggestions on different device types, e.g. `DESKTOP`, `MOBILE`. If it is empty, the suggestions are across all device types. Supported formats: * `UNKNOWN_DEVICE_TYPE` * `DESKTOP` * `MOBILE` * A customized string starts with `OTHER_`, e.g. `OTHER_IPHONE`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "entity": {
+	//       "description": "The entity for customers that may run multiple different entities, domains, sites or regions, for example, \"Google US\", \"Google Ads\", \"Waymo\", \"google.com\", \"youtube.com\", etc. If this is set, it should be exactly matched with UserEvent.entity to get per-entity autocomplete results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

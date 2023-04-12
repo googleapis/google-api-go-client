@@ -804,7 +804,7 @@ func (s *AssetFrame) MarshalJSON() ([]byte, error) {
 
 // AssetList: Lists the asset IDs of all assets.
 type AssetList struct {
-	// AssetIds: A list of asset IDs
+	// AssetIds: Required. A list of asset IDs
 	AssetIds []string `json:"assetIds,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AssetIds") to
@@ -2396,7 +2396,7 @@ type ImportDataFile struct {
 	// characters.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Format: The payload format.
+	// Format: Required. The payload format.
 	//
 	// Possible values:
 	//   "IMPORT_JOB_FORMAT_UNSPECIFIED" - Default value.
@@ -4215,8 +4215,8 @@ type ReportConfig struct {
 	// characters.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// GroupPreferencesetAssignments: Collection of combinations of groups
-	// and preference sets.
+	// GroupPreferencesetAssignments: Required. Collection of combinations
+	// of groups and preference sets.
 	GroupPreferencesetAssignments []*ReportConfigGroupPreferenceSetAssignment `json:"groupPreferencesetAssignments,omitempty"`
 
 	// Name: Output only. Name of resource.
@@ -4256,10 +4256,10 @@ func (s *ReportConfig) MarshalJSON() ([]byte, error) {
 // ReportConfigGroupPreferenceSetAssignment: Represents a combination of
 // a group with a preference set.
 type ReportConfigGroupPreferenceSetAssignment struct {
-	// Group: Name of the group.
+	// Group: Required. Name of the group.
 	Group string `json:"group,omitempty"`
 
-	// PreferenceSet: Name of the Preference Set.
+	// PreferenceSet: Required. Name of the Preference Set.
 	PreferenceSet string `json:"preferenceSet,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Group") to

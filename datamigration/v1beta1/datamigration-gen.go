@@ -1188,6 +1188,11 @@ type MigrationJobVerificationError struct {
 	// the time of restart request.
 	//   "TABLES_WITH_LIMITED_SUPPORT" - The source has tables with limited
 	// support. E.g. PostgreSQL tables without primary keys.
+	//   "UNSUPPORTED_DATABASE_LOCALE" - The source uses an unsupported
+	// locale.
+	//   "UNSUPPORTED_DATABASE_FDW_CONFIG" - The source uses an unsupported
+	// Foreign Data Wrapper configuration.
+	//   "ERROR_RDBMS" - There was an underlying RDBMS error.
 	ErrorCode string `json:"errorCode,omitempty"`
 
 	// ErrorDetailMessage: Output only. A specific detailed error message,

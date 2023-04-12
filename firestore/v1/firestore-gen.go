@@ -1384,6 +1384,15 @@ type GoogleFirestoreAdminV1Database struct {
 	// created.
 	CreateTime string `json:"createTime,omitempty"`
 
+	// DeleteProtectionState: State of delete protection for the database.
+	//
+	// Possible values:
+	//   "DELETE_PROTECTION_STATE_UNSPECIFIED" - The default value. Delete
+	// protection type is not specified
+	//   "DELETE_PROTECTION_DISABLED" - Delete protection is disabled
+	//   "DELETE_PROTECTION_ENABLED" - Delete protection is enabled
+	DeleteProtectionState string `json:"deleteProtectionState,omitempty"`
+
 	// Etag: This checksum is computed by the server based on the value of
 	// other fields, and may be sent on update and delete requests to ensure
 	// the client has an up-to-date value before proceeding.

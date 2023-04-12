@@ -130,6 +130,7 @@ func New(client *http.Client) (*Service, error) {
 	s.Accounts = NewAccountsService(s)
 	s.DefaultSupportedIdps = NewDefaultSupportedIdpsService(s)
 	s.Projects = NewProjectsService(s)
+	s.V2 = NewV2Service(s)
 	return s, nil
 }
 
@@ -143,6 +144,8 @@ type Service struct {
 	DefaultSupportedIdps *DefaultSupportedIdpsService
 
 	Projects *ProjectsService
+
+	V2 *V2Service
 }
 
 func (s *Service) userAgent() string {
@@ -296,6 +299,15 @@ func NewProjectsTenantsOauthIdpConfigsService(s *Service) *ProjectsTenantsOauthI
 }
 
 type ProjectsTenantsOauthIdpConfigsService struct {
+	s *Service
+}
+
+func NewV2Service(s *Service) *V2Service {
+	rs := &V2Service{s: s}
+	return rs
+}
+
+type V2Service struct {
 	s *Service
 }
 
@@ -644,6 +656,9 @@ type GoogleCloudIdentitytoolkitAdminV2Config struct {
 
 	// Quota: Configuration related to quotas.
 	Quota *GoogleCloudIdentitytoolkitAdminV2QuotaConfig `json:"quota,omitempty"`
+
+	// RecaptchaConfig: The project-level reCAPTCHA config.
+	RecaptchaConfig *GoogleCloudIdentitytoolkitAdminV2RecaptchaConfig `json:"recaptchaConfig,omitempty"`
 
 	// SignIn: Configuration related to local sign in methods.
 	SignIn *GoogleCloudIdentitytoolkitAdminV2SignInConfig `json:"signIn,omitempty"`
@@ -1811,6 +1826,161 @@ func (s *GoogleCloudIdentitytoolkitAdminV2QuotaConfig) MarshalJSON() ([]byte, er
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudIdentitytoolkitAdminV2RecaptchaConfig: The reCAPTCHA
+// Enterprise integration config.
+type GoogleCloudIdentitytoolkitAdminV2RecaptchaConfig struct {
+	// EmailPasswordEnforcementState: The reCAPTCHA config for
+	// email/password provider, containing the enforcement status. The
+	// email/password provider contains all related user flows protected by
+	// reCAPTCHA.
+	//
+	// Possible values:
+	//   "RECAPTCHA_PROVIDER_ENFORCEMENT_STATE_UNSPECIFIED" - Enforcement
+	// state has not been set.
+	//   "OFF" - Unenforced.
+	//   "AUDIT" - reCAPTCHA assessment is created, result is not used to
+	// enforce.
+	//   "ENFORCE" - reCAPTCHA assessment is created, result is used to
+	// enforce.
+	EmailPasswordEnforcementState string `json:"emailPasswordEnforcementState,omitempty"`
+
+	// ManagedRules: The managed rules for authentication action based on
+	// reCAPTCHA scores. The rules are shared across providers for a given
+	// tenant project.
+	ManagedRules []*GoogleCloudIdentitytoolkitAdminV2RecaptchaManagedRule `json:"managedRules,omitempty"`
+
+	// RecaptchaKeys: Output only. The reCAPTCHA keys.
+	RecaptchaKeys []*GoogleCloudIdentitytoolkitAdminV2RecaptchaKey `json:"recaptchaKeys,omitempty"`
+
+	// UseAccountDefender: Whether to use the account defender for reCAPTCHA
+	// assessment. Defaults to `false`.
+	UseAccountDefender bool `json:"useAccountDefender,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "EmailPasswordEnforcementState") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "EmailPasswordEnforcementState") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudIdentitytoolkitAdminV2RecaptchaConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudIdentitytoolkitAdminV2RecaptchaConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudIdentitytoolkitAdminV2RecaptchaKey: The reCAPTCHA key
+// config. reCAPTCHA Enterprise offers different keys for different
+// client platforms.
+type GoogleCloudIdentitytoolkitAdminV2RecaptchaKey struct {
+	// Key: The reCAPTCHA Enterprise key resource name, e.g.
+	// "projects/{project}/keys/{key}"
+	Key string `json:"key,omitempty"`
+
+	// Type: The client's platform type.
+	//
+	// Possible values:
+	//   "CLIENT_TYPE_UNSPECIFIED" - Client type is not specified.
+	//   "WEB" - Client type is web.
+	//   "IOS" - Client type is iOS.
+	//   "ANDROID" - Client type is Android.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Key") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Key") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudIdentitytoolkitAdminV2RecaptchaKey) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudIdentitytoolkitAdminV2RecaptchaKey
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudIdentitytoolkitAdminV2RecaptchaManagedRule: The config for
+// a reCAPTCHA managed rule. Models a single interval [start_score,
+// end_score]. The start_score is implicit. It is either the closest
+// smaller end_score (if one is available) or 0. Intervals in aggregate
+// span [0, 1] without overlapping.
+type GoogleCloudIdentitytoolkitAdminV2RecaptchaManagedRule struct {
+	// Action: The action taken if the reCAPTCHA score of a request is
+	// within the interval [start_score, end_score].
+	//
+	// Possible values:
+	//   "RECAPTCHA_ACTION_UNSPECIFIED" - The reCAPTCHA action is not
+	// specified.
+	//   "BLOCK" - The reCAPTCHA-protected request will be blocked.
+	Action string `json:"action,omitempty"`
+
+	// EndScore: The end score (inclusive) of the score range for an action.
+	// Must be a value between 0.0 and 1.0, at 11 discrete values; e.g. 0,
+	// 0.1, 0.2, 0.3, ... 0.9, 1.0. A score of 0.0 indicates the riskiest
+	// request (likely a bot), whereas 1.0 indicates the safest request
+	// (likely a human). See
+	// https://cloud.google.com/recaptcha-enterprise/docs/interpret-assessment.
+	EndScore float64 `json:"endScore,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Action") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Action") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudIdentitytoolkitAdminV2RecaptchaManagedRule) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudIdentitytoolkitAdminV2RecaptchaManagedRule
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudIdentitytoolkitAdminV2RecaptchaManagedRule) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudIdentitytoolkitAdminV2RecaptchaManagedRule
+	var s1 struct {
+		EndScore gensupport.JSONFloat64 `json:"endScore"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.EndScore = float64(s1.EndScore)
+	return nil
+}
+
 // GoogleCloudIdentitytoolkitAdminV2RequestLogging: Configuration for
 // logging requests made to this project to Stackdriver Logging
 type GoogleCloudIdentitytoolkitAdminV2RequestLogging struct {
@@ -2258,6 +2428,9 @@ type GoogleCloudIdentitytoolkitAdminV2Tenant struct {
 	// Name: Output only. Resource name of a tenant. For example:
 	// "projects/{project-id}/tenants/{tenant-id}"
 	Name string `json:"name,omitempty"`
+
+	// RecaptchaConfig: The tenant-level reCAPTCHA config.
+	RecaptchaConfig *GoogleCloudIdentitytoolkitAdminV2RecaptchaConfig `json:"recaptchaConfig,omitempty"`
 
 	// SmsRegionConfig: Configures which regions are enabled for SMS
 	// verification code sending.
@@ -2711,6 +2884,161 @@ func (s *GoogleCloudIdentitytoolkitV2MfaTotpSignInRequestInfo) MarshalJSON() ([]
 	type NoMethod GoogleCloudIdentitytoolkitV2MfaTotpSignInRequestInfo
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudIdentitytoolkitV2RecaptchaConfig: Configuration for
+// reCAPTCHA
+type GoogleCloudIdentitytoolkitV2RecaptchaConfig struct {
+	// RecaptchaEnforcementState: The reCAPTCHA enforcement state for the
+	// providers that GCIP supports reCAPTCHA protection.
+	RecaptchaEnforcementState []*GoogleCloudIdentitytoolkitV2RecaptchaEnforcementState `json:"recaptchaEnforcementState,omitempty"`
+
+	// RecaptchaKey: The reCAPTCHA Enterprise key resource name, e.g.
+	// "projects/{project}/keys/{key}".
+	RecaptchaKey string `json:"recaptchaKey,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "RecaptchaEnforcementState") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "RecaptchaEnforcementState") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudIdentitytoolkitV2RecaptchaConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudIdentitytoolkitV2RecaptchaConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudIdentitytoolkitV2RecaptchaEnforcementState: Enforcement
+// states for reCAPTCHA protection.
+type GoogleCloudIdentitytoolkitV2RecaptchaEnforcementState struct {
+	// EnforcementState: The reCAPTCHA enforcement state for the provider.
+	//
+	// Possible values:
+	//   "ENFORCEMENT_STATE_UNSPECIFIED" - Enforcement state has not been
+	// set.
+	//   "OFF" - Unenforced.
+	//   "AUDIT" - reCAPTCHA assessment is created, result is not used to
+	// enforce.
+	//   "ENFORCE" - reCAPTCHA assessment is created, result is used to
+	// enforce.
+	EnforcementState string `json:"enforcementState,omitempty"`
+
+	// Provider: The provider that has reCAPTCHA protection.
+	//
+	// Possible values:
+	//   "RECAPTCHA_PROVIDER_UNSPECIFIED" - reCAPTCHA provider not specified
+	//   "EMAIL_PASSWORD_PROVIDER" - Email password provider
+	Provider string `json:"provider,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EnforcementState") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EnforcementState") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudIdentitytoolkitV2RecaptchaEnforcementState) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudIdentitytoolkitV2RecaptchaEnforcementState
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudIdentitytoolkitV2RevokeTokenRequest: Request message for
+// RevokeToken.
+type GoogleCloudIdentitytoolkitV2RevokeTokenRequest struct {
+	// IdToken: Required. A valid Identity Platform ID token to link the
+	// account. If there was a successful token revocation request on the
+	// account and no tokens are generated after the revocation, the
+	// duplicate requests will be ignored and returned immediately.
+	IdToken string `json:"idToken,omitempty"`
+
+	// ProviderId: Required. The idp provider for the token. Currently only
+	// supports Apple Idp. The format should be "apple.com".
+	ProviderId string `json:"providerId,omitempty"`
+
+	// RedirectUri: The redirect URI provided in the initial authorization
+	// request made by the client to the IDP. The URI must use the HTTPS
+	// protocol, include a domain name, and can’t contain an IP address or
+	// localhost. Required if token_type is CODE.
+	RedirectUri string `json:"redirectUri,omitempty"`
+
+	// TenantId: The ID of the Identity Platform tenant the user is signing
+	// in to. If not set, the user will sign in to the default Identity
+	// Platform project.
+	TenantId string `json:"tenantId,omitempty"`
+
+	// Token: Required. The token to be revoked. If an authorization_code is
+	// passed in, the API will first exchange the code for access token and
+	// then revoke the token exchanged.
+	Token string `json:"token,omitempty"`
+
+	// TokenType: Required. The type of the token to be revoked.
+	//
+	// Possible values:
+	//   "TOKEN_TYPE_UNSPECIFIED" - Default value, do not use.
+	//   "REFRESH_TOKEN" - Token type is refresh_token.
+	//   "ACCESS_TOKEN" - Token type is access_token.
+	//   "CODE" - Token type is authorization_code.
+	TokenType string `json:"tokenType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IdToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IdToken") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudIdentitytoolkitV2RevokeTokenRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudIdentitytoolkitV2RevokeTokenRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudIdentitytoolkitV2RevokeTokenResponse: Response message for
+// RevokeToken. Empty for now.
+type GoogleCloudIdentitytoolkitV2RevokeTokenResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 }
 
 // GoogleCloudIdentitytoolkitV2StartMfaEnrollmentRequest: Sends MFA
@@ -3626,6 +3954,139 @@ func (s *GoogleTypeExpr) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeExpr
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// method id "identitytoolkit.accounts.revokeToken":
+
+type AccountsRevokeTokenCall struct {
+	s                                              *Service
+	googlecloudidentitytoolkitv2revoketokenrequest *GoogleCloudIdentitytoolkitV2RevokeTokenRequest
+	urlParams_                                     gensupport.URLParams
+	ctx_                                           context.Context
+	header_                                        http.Header
+}
+
+// RevokeToken: Revokes a user's token from an Identity Provider (IdP).
+// This is done by manually providing an IdP credential, and the token
+// types for revocation. An API key
+// (https://cloud.google.com/docs/authentication/api-keys) is required
+// in the request in order to identify the Google Cloud project.
+func (r *AccountsService) RevokeToken(googlecloudidentitytoolkitv2revoketokenrequest *GoogleCloudIdentitytoolkitV2RevokeTokenRequest) *AccountsRevokeTokenCall {
+	c := &AccountsRevokeTokenCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.googlecloudidentitytoolkitv2revoketokenrequest = googlecloudidentitytoolkitv2revoketokenrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsRevokeTokenCall) Fields(s ...googleapi.Field) *AccountsRevokeTokenCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsRevokeTokenCall) Context(ctx context.Context) *AccountsRevokeTokenCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsRevokeTokenCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsRevokeTokenCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudidentitytoolkitv2revoketokenrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/accounts:revokeToken")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "identitytoolkit.accounts.revokeToken" call.
+// Exactly one of *GoogleCloudIdentitytoolkitV2RevokeTokenResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudIdentitytoolkitV2RevokeTokenResponse.ServerResponse.Header
+//
+//	or (if a response was returned at all) in
+//
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *AccountsRevokeTokenCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIdentitytoolkitV2RevokeTokenResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudIdentitytoolkitV2RevokeTokenResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Revokes a user's token from an Identity Provider (IdP). This is done by manually providing an IdP credential, and the token types for revocation. An [API key](https://cloud.google.com/docs/authentication/api-keys) is required in the request in order to identify the Google Cloud project.",
+	//   "flatPath": "v2/accounts:revokeToken",
+	//   "httpMethod": "POST",
+	//   "id": "identitytoolkit.accounts.revokeToken",
+	//   "parameterOrder": [],
+	//   "parameters": {},
+	//   "path": "v2/accounts:revokeToken",
+	//   "request": {
+	//     "$ref": "GoogleCloudIdentitytoolkitV2RevokeTokenRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudIdentitytoolkitV2RevokeTokenResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
 }
 
 // method id "identitytoolkit.accounts.mfaEnrollment.finalize":
@@ -10989,6 +11450,208 @@ func (c *ProjectsTenantsOauthIdpConfigsPatchCall) Do(opts ...googleapi.CallOptio
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/firebase"
+	//   ]
+	// }
+
+}
+
+// method id "identitytoolkit.getRecaptchaConfig":
+
+type V2GetRecaptchaConfigCall struct {
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetRecaptchaConfig: Gets parameters needed for reCAPTCHA analysis.
+func (r *V2Service) GetRecaptchaConfig() *V2GetRecaptchaConfigCall {
+	c := &V2GetRecaptchaConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// ClientType sets the optional parameter "clientType": reCAPTCHA
+// Enterprise uses separate site keys for different client types.
+// Specify the client type to get the corresponding key.
+//
+// Possible values:
+//
+//	"CLIENT_TYPE_UNSPECIFIED" - Client type is not specified.
+//	"CLIENT_TYPE_WEB" - Client type is web.
+//	"CLIENT_TYPE_ANDROID" - Client type is android.
+//	"CLIENT_TYPE_IOS" - Client type is ios.
+func (c *V2GetRecaptchaConfigCall) ClientType(clientType string) *V2GetRecaptchaConfigCall {
+	c.urlParams_.Set("clientType", clientType)
+	return c
+}
+
+// TenantId sets the optional parameter "tenantId": The id of a tenant.
+func (c *V2GetRecaptchaConfigCall) TenantId(tenantId string) *V2GetRecaptchaConfigCall {
+	c.urlParams_.Set("tenantId", tenantId)
+	return c
+}
+
+// Version sets the optional parameter "version": The reCAPTCHA version.
+//
+// Possible values:
+//
+//	"RECAPTCHA_VERSION_UNSPECIFIED" - The reCAPTCHA version is not
+//
+// specified.
+//
+//	"RECAPTCHA_ENTERPRISE" - Use reCAPTCHA Enterprise.
+func (c *V2GetRecaptchaConfigCall) Version(version string) *V2GetRecaptchaConfigCall {
+	c.urlParams_.Set("version", version)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *V2GetRecaptchaConfigCall) Fields(s ...googleapi.Field) *V2GetRecaptchaConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *V2GetRecaptchaConfigCall) IfNoneMatch(entityTag string) *V2GetRecaptchaConfigCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *V2GetRecaptchaConfigCall) Context(ctx context.Context) *V2GetRecaptchaConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *V2GetRecaptchaConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *V2GetRecaptchaConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/recaptchaConfig")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "identitytoolkit.getRecaptchaConfig" call.
+// Exactly one of *GoogleCloudIdentitytoolkitV2RecaptchaConfig or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudIdentitytoolkitV2RecaptchaConfig.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *V2GetRecaptchaConfigCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIdentitytoolkitV2RecaptchaConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudIdentitytoolkitV2RecaptchaConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets parameters needed for reCAPTCHA analysis.",
+	//   "flatPath": "v2/recaptchaConfig",
+	//   "httpMethod": "GET",
+	//   "id": "identitytoolkit.getRecaptchaConfig",
+	//   "parameterOrder": [],
+	//   "parameters": {
+	//     "clientType": {
+	//       "description": "reCAPTCHA Enterprise uses separate site keys for different client types. Specify the client type to get the corresponding key.",
+	//       "enum": [
+	//         "CLIENT_TYPE_UNSPECIFIED",
+	//         "CLIENT_TYPE_WEB",
+	//         "CLIENT_TYPE_ANDROID",
+	//         "CLIENT_TYPE_IOS"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Client type is not specified.",
+	//         "Client type is web.",
+	//         "Client type is android.",
+	//         "Client type is ios."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "tenantId": {
+	//       "description": "The id of a tenant.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "version": {
+	//       "description": "The reCAPTCHA version.",
+	//       "enum": [
+	//         "RECAPTCHA_VERSION_UNSPECIFIED",
+	//         "RECAPTCHA_ENTERPRISE"
+	//       ],
+	//       "enumDescriptions": [
+	//         "The reCAPTCHA version is not specified.",
+	//         "Use reCAPTCHA Enterprise."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/recaptchaConfig",
+	//   "response": {
+	//     "$ref": "GoogleCloudIdentitytoolkitV2RecaptchaConfig"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
 

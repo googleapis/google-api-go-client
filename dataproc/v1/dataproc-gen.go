@@ -4777,7 +4777,7 @@ func (s *ReservationAffinity) MarshalJSON() ([]byte, error) {
 // ResizeNodeGroupRequest: A request to resize a node group.
 type ResizeNodeGroupRequest struct {
 	// GracefulDecommissionTimeout: Optional. Timeout for graceful YARN
-	// decomissioning. Graceful decommissioning
+	// decommissioning. Graceful decommissioning
 	// (https://cloud.google.com/dataproc/docs/concepts/configuring-clusters/scaling-clusters#graceful_decommissioning)
 	// allows the removal of nodes from the Compute Engine node group
 	// without interrupting jobs in progress. This timeout specifies how
@@ -5485,9 +5485,9 @@ func (s *SparkSqlJob) MarshalJSON() ([]byte, error) {
 type SparkStandaloneAutoscalingConfig struct {
 	// GracefulDecommissionTimeout: Required. Timeout for Spark graceful
 	// decommissioning of spark workers. Specifies the duration to wait for
-	// spark worker to complete spark decomissioning tasks before forcefully
-	// removing workers. Only applicable to downscaling operations.Bounds:
-	// 0s, 1d.
+	// spark worker to complete spark decommissioning tasks before
+	// forcefully removing workers. Only applicable to downscaling
+	// operations.Bounds: 0s, 1d.
 	GracefulDecommissionTimeout string `json:"gracefulDecommissionTimeout,omitempty"`
 
 	// ScaleDownFactor: Required. Fraction of required executors to remove

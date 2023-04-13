@@ -527,6 +527,27 @@ type GoogleCloudDiscoveryengineLoggingErrorLog struct {
 	// Message: A message describing the error.
 	Message string `json:"message,omitempty"`
 
+	// RequestPayload: The API request payload, represented as a protocol
+	// buffer. Most API request types are supported—for example: *
+	// `type.googleapis.com/google.cloud.discoveryengine.v1alpha.DocumentServ
+	// ice.CreateDocumentRequest` *
+	// `type.googleapis.com/google.cloud.discoveryengine.v1alpha.UserEventSer
+	// vice.WriteUserEventRequest`
+	RequestPayload googleapi.RawMessage `json:"requestPayload,omitempty"`
+
+	// ResponsePayload: The API response payload, represented as a protocol
+	// buffer. This is used to log some "soft errors", where the response is
+	// valid but we consider there are some quality issues like unjoined
+	// events. The following API responses are supported, and no PII is
+	// included: *
+	// `google.cloud.discoveryengine.v1alpha.RecommendationService.Recommend`
+	//  *
+	// `google.cloud.discoveryengine.v1alpha.UserEventService.WriteUserEvent`
+	//  *
+	// `google.cloud.discoveryengine.v1alpha.UserEventService.CollectUserEven
+	// t`
+	ResponsePayload googleapi.RawMessage `json:"responsePayload,omitempty"`
+
 	// ServiceContext: The service context in which this error has occurred.
 	ServiceContext *GoogleCloudDiscoveryengineLoggingServiceContext `json:"serviceContext,omitempty"`
 

@@ -1013,6 +1013,42 @@ func (s *Container) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ContainerOverride: Per container override specification.
+type ContainerOverride struct {
+	// Args: Arguments to the entrypoint. Will replace existing args for
+	// override.
+	Args []string `json:"args,omitempty"`
+
+	// Env: List of environment variables to set in the container. Will be
+	// merged with existing env for override.
+	Env []*EnvVar `json:"env,omitempty"`
+
+	// Name: The name of the container specified as a DNS_LABEL.
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Args") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Args") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ContainerOverride) MarshalJSON() ([]byte, error) {
+	type NoMethod ContainerOverride
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ContainerPort: ContainerPort represents a network port in a single
 // container.
 type ContainerPort struct {
@@ -2619,6 +2655,7 @@ type ObjectMeta struct {
 	// `run.googleapis.com/binary-authorization`: Service, Job, Execution. *
 	// `run.googleapis.com/client-name`: All resources. *
 	// `run.googleapis.com/cloudsql-instances`: Revision, Execution. *
+	// `run.googleapis.com/container-dependencies`: Revision. *
 	// `run.googleapis.com/cpu-throttling`: Revision. *
 	// `run.googleapis.com/custom-audiences`: Service. *
 	// `run.googleapis.com/description`: Service. *
@@ -2723,6 +2760,45 @@ type ObjectMeta struct {
 
 func (s *ObjectMeta) MarshalJSON() ([]byte, error) {
 	type NoMethod ObjectMeta
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Overrides: RunJob Overrides that contains Execution fields to be
+// overridden on the go.
+type Overrides struct {
+	// ContainerOverrides: Per container override specification.
+	ContainerOverrides []*ContainerOverride `json:"containerOverrides,omitempty"`
+
+	// TaskCount: The desired number of tasks the execution should run. Will
+	// replace existing task_count value.
+	TaskCount int64 `json:"taskCount,omitempty"`
+
+	// TimeoutSeconds: Duration in seconds the task may be active before the
+	// system will actively try to mark it failed and kill associated
+	// containers. Will replace existing timeout_seconds value.
+	TimeoutSeconds int64 `json:"timeoutSeconds,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ContainerOverrides")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ContainerOverrides") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Overrides) MarshalJSON() ([]byte, error) {
+	type NoMethod Overrides
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3391,6 +3467,32 @@ func (s *RouteStatus) MarshalJSON() ([]byte, error) {
 
 // RunJobRequest: Request message for creating a new execution of a job.
 type RunJobRequest struct {
+	// Overrides: Optional. Overrides specification for a given execution of
+	// a job. If provided, overrides will be applied to update the execution
+	// or task spec.
+	Overrides *Overrides `json:"overrides,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Overrides") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Overrides") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RunJobRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod RunJobRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // SecretEnvSource: Not supported by Cloud Run. SecretEnvSource selects

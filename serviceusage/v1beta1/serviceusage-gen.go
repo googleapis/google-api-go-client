@@ -4573,6 +4573,7 @@ type Publishing struct {
 	//   "ADS" - Ads (Advertising) Org.
 	//   "PHOTOS" - Photos Org.
 	//   "STREET_VIEW" - Street View Org.
+	//   "SHOPPING" - Shopping Org.
 	Organization string `json:"organization,omitempty"`
 
 	// ProtoReferenceDocumentationUri: Optional link to proto reference

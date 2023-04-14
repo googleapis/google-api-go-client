@@ -1149,7 +1149,7 @@ type KeyData struct {
 	// by the format field.
 	Key string `json:"key,omitempty"`
 
-	// KeySpec: Immutable. The specifications for the key.
+	// KeySpec: Required. The specifications for the key.
 	//
 	// Possible values:
 	//   "KEY_SPEC_UNSPECIFIED" - No key specification specified.
@@ -3264,7 +3264,7 @@ type WorkforcePoolProviderKey struct {
 	// soft-deleted key using UndeleteWorkforcePoolProviderKey.
 	State string `json:"state,omitempty"`
 
-	// Use: Immutable. The purpose of the key.
+	// Use: Required. The purpose of the key.
 	//
 	// Possible values:
 	//   "KEY_USE_UNSPECIFIED" - KeyUse unspecified.
@@ -3525,7 +3525,7 @@ type WorkloadIdentityPoolProviderKey struct {
 	// a key is deleted, you cannot use it during the federation.
 	State string `json:"state,omitempty"`
 
-	// Use: Immutable. The purpose of the key.
+	// Use: Required. The purpose of the key.
 	//
 	// Possible values:
 	//   "KEY_USE_UNSPECIFIED" - The key use is not known.

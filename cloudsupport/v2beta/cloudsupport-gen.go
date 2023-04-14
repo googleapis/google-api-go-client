@@ -390,8 +390,7 @@ type Case struct {
 	// fully available.
 	Priority string `json:"priority,omitempty"`
 
-	// Severity: The severity of this case. Deprecated. Use priority
-	// instead.
+	// Severity: REMOVED. The severity of this case. Use priority instead.
 	//
 	// Possible values:
 	//   "SEVERITY_UNSPECIFIED" - Severity is undefined or has not been set
@@ -521,8 +520,8 @@ type Comment struct {
 	// Name: Output only. The resource name for the comment.
 	Name string `json:"name,omitempty"`
 
-	// PlainTextBody: Output only. An automatically generated plain text
-	// version of body with all rich text syntax stripped.
+	// PlainTextBody: Output only. DEPRECATED. An automatically generated
+	// plain text version of body with all rich text syntax stripped.
 	PlainTextBody string `json:"plainTextBody,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

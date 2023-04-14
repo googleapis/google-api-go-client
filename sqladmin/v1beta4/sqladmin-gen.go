@@ -840,6 +840,14 @@ type ConnectSettings struct {
 	// minor version is 31.
 	//   "MYSQL_8_0_32" - The database major version is MySQL 8.0 and the
 	// minor version is 32.
+	//   "MYSQL_8_0_33" - The database major version is MySQL 8.0 and the
+	// minor version is 33.
+	//   "MYSQL_8_0_34" - The database major version is MySQL 8.0 and the
+	// minor version is 34.
+	//   "MYSQL_8_0_35" - The database major version is MySQL 8.0 and the
+	// minor version is 35.
+	//   "MYSQL_8_0_36" - The database major version is MySQL 8.0 and the
+	// minor version is 36.
 	//   "SQLSERVER_2019_STANDARD" - The database version is SQL Server 2019
 	// Standard.
 	//   "SQLSERVER_2019_ENTERPRISE" - The database version is SQL Server
@@ -1067,6 +1075,14 @@ type DatabaseInstance struct {
 	// minor version is 31.
 	//   "MYSQL_8_0_32" - The database major version is MySQL 8.0 and the
 	// minor version is 32.
+	//   "MYSQL_8_0_33" - The database major version is MySQL 8.0 and the
+	// minor version is 33.
+	//   "MYSQL_8_0_34" - The database major version is MySQL 8.0 and the
+	// minor version is 34.
+	//   "MYSQL_8_0_35" - The database major version is MySQL 8.0 and the
+	// minor version is 35.
+	//   "MYSQL_8_0_36" - The database major version is MySQL 8.0 and the
+	// minor version is 36.
 	//   "SQLSERVER_2019_STANDARD" - The database version is SQL Server 2019
 	// Standard.
 	//   "SQLSERVER_2019_ENTERPRISE" - The database version is SQL Server
@@ -1885,6 +1901,14 @@ type Flag struct {
 	// minor version is 31.
 	//   "MYSQL_8_0_32" - The database major version is MySQL 8.0 and the
 	// minor version is 32.
+	//   "MYSQL_8_0_33" - The database major version is MySQL 8.0 and the
+	// minor version is 33.
+	//   "MYSQL_8_0_34" - The database major version is MySQL 8.0 and the
+	// minor version is 34.
+	//   "MYSQL_8_0_35" - The database major version is MySQL 8.0 and the
+	// minor version is 35.
+	//   "MYSQL_8_0_36" - The database major version is MySQL 8.0 and the
+	// minor version is 36.
 	//   "SQLSERVER_2019_STANDARD" - The database version is SQL Server 2019
 	// Standard.
 	//   "SQLSERVER_2019_ENTERPRISE" - The database version is SQL Server

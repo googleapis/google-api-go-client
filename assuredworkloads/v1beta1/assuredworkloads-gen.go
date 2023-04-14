@@ -361,75 +361,6 @@ func (s *GoogleCloudAssuredworkloadsV1beta1AnalyzeWorkloadMoveResponse) MarshalJ
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudAssuredworkloadsV1beta1CreateWorkloadOperationMetadata:
-// Operation metadata to give request details of CreateWorkload.
-type GoogleCloudAssuredworkloadsV1beta1CreateWorkloadOperationMetadata struct {
-	// ComplianceRegime: Optional. Compliance controls that should be
-	// applied to the resources managed by the workload.
-	//
-	// Possible values:
-	//   "COMPLIANCE_REGIME_UNSPECIFIED" - Unknown compliance regime.
-	//   "IL4" - Information protection as per DoD IL4 requirements.
-	//   "CJIS" - Criminal Justice Information Services (CJIS) Security
-	// policies.
-	//   "FEDRAMP_HIGH" - FedRAMP High data protection controls
-	//   "FEDRAMP_MODERATE" - FedRAMP Moderate data protection controls
-	//   "US_REGIONAL_ACCESS" - Assured Workloads For US Regions data
-	// protection controls
-	//   "HIPAA" - Health Insurance Portability and Accountability Act
-	// controls
-	//   "HITRUST" - Health Information Trust Alliance controls
-	//   "EU_REGIONS_AND_SUPPORT" - Assured Workloads For EU Regions and
-	// Support controls
-	//   "CA_REGIONS_AND_SUPPORT" - Assured Workloads For Canada Regions and
-	// Support controls
-	//   "ITAR" - International Traffic in Arms Regulations
-	//   "AU_REGIONS_AND_US_SUPPORT" - Assured Workloads for Australia
-	// Regions and Support controls Available for public preview
-	// consumption. Don't create production workloads.
-	//   "ASSURED_WORKLOADS_FOR_PARTNERS" - Assured Workloads for Partners;
-	//   "ISR_REGIONS" - Assured Workloads for Israel
-	//   "ISR_REGIONS_AND_SUPPORT" - Assured Workloads for Israel Regions
-	//   "CA_PROTECTED_B" - Assured Workloads for Canada Protected B regime
-	ComplianceRegime string `json:"complianceRegime,omitempty"`
-
-	// CreateTime: Optional. Time when the operation was created.
-	CreateTime string `json:"createTime,omitempty"`
-
-	// DisplayName: Optional. The display name of the workload.
-	DisplayName string `json:"displayName,omitempty"`
-
-	// Parent: Optional. The parent of the workload.
-	Parent string `json:"parent,omitempty"`
-
-	// ResourceSettings: Optional. Resource properties in the input that are
-	// used for creating/customizing workload resources.
-	ResourceSettings []*GoogleCloudAssuredworkloadsV1beta1WorkloadResourceSettings `json:"resourceSettings,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ComplianceRegime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ComplianceRegime") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudAssuredworkloadsV1beta1CreateWorkloadOperationMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudAssuredworkloadsV1beta1CreateWorkloadOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // GoogleCloudAssuredworkloadsV1beta1ListViolationsResponse: Response of
 // ListViolations endpoint.
 type GoogleCloudAssuredworkloadsV1beta1ListViolationsResponse struct {
@@ -566,7 +497,9 @@ type GoogleCloudAssuredworkloadsV1beta1Violation struct {
 	Acknowledged bool `json:"acknowledged,omitempty"`
 
 	// AcknowledgementTime: Optional. Timestamp when this violation was
-	// acknowledged last. This will be absent when acknowledged field is
+	// acknowledged first. Check exception_contexts to find the last time
+	// the violation was acknowledged when there are more than one
+	// violations. This field will be absent when acknowledged field is
 	// marked as false.
 	AcknowledgementTime string `json:"acknowledgementTime,omitempty"`
 
@@ -943,6 +876,9 @@ type GoogleCloudAssuredworkloadsV1beta1Workload struct {
 	//   "LOCAL_CONTROLS_BY_S3NS" - Enum representing S3NS (Thales) partner.
 	//   "SOVEREIGN_CONTROLS_BY_T_SYSTEMS" - Enum representing T_SYSTEM
 	// (TSI) partner.
+	//   "SOVEREIGN_CONTROLS_BY_SIA_MINSAIT" - Enum representing SIA_MINSAIT
+	// (Indra) partner.
+	//   "SOVEREIGN_CONTROLS_BY_PSN" - Enum representing PSN (TIM) partner.
 	Partner string `json:"partner,omitempty"`
 
 	// ProvisionedResourcesParent: Input only. The parent resource for the
@@ -1082,9 +1018,18 @@ type GoogleCloudAssuredworkloadsV1beta1WorkloadEkmProvisioningResponse struct {
 	// time period
 	EkmProvisioningErrorDomain string `json:"ekmProvisioningErrorDomain,omitempty"`
 
-	// EkmProvisioningErrorMessage: Detailed error message if Ekm
+	// EkmProvisioningErrorMapping: Detailed error message if Ekm
 	// provisioning fails
-	EkmProvisioningErrorMessage string `json:"ekmProvisioningErrorMessage,omitempty"`
+	//
+	// Possible values:
+	//   "EKM_PROVISIONING_ERROR_MAPPING_UNSPECIFIED" - Error is
+	// unspecified.
+	//   "INVALID_SERVICE_ACCOUNT" - Service account is used is invalid.
+	//   "MISSING_METRICS_SCOPE_ADMIN_PERMISSION" - Iam permission
+	// monitoring.MetricsScopeAdmin wasn't applied.
+	//   "MISSING_EKM_CONNECTION_ADMIN_PERMISSION" - Iam permission
+	// cloudkms.ekmConnectionsAdmin wasn't applied.
+	EkmProvisioningErrorMapping string `json:"ekmProvisioningErrorMapping,omitempty"`
 
 	// EkmProvisioningState: Indicates Ekm enrollment Provisioning of a
 	// given workload.

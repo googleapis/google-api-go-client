@@ -5861,9 +5861,10 @@ func (s *GoogleCloudApigeeV1KeyValueEntry) MarshalJSON() ([]byte, error) {
 
 // GoogleCloudApigeeV1KeyValueMap: Collection of key/value string pairs.
 type GoogleCloudApigeeV1KeyValueMap struct {
-	// Encrypted: Optional. Flag that specifies whether entry values will be
-	// encrypted. You must set this value to `true`. Apigee X and hybrid do
-	// not support unencrytped key value maps.
+	// Encrypted: Required. Flag that specifies whether entry values will be
+	// encrypted. This field is retained for backward compatibility and the
+	// value of encrypted will always be `true`. Apigee X and hybrid do not
+	// support unencrypted key value maps.
 	Encrypted bool `json:"encrypted,omitempty"`
 
 	// Name: Required. ID of the key value map.
@@ -7698,6 +7699,21 @@ type GoogleCloudApigeeV1Organization struct {
 	// (https://cloud.google.com/apigee/docs/api-platform/get-started/create-org).
 	AnalyticsRegion string `json:"analyticsRegion,omitempty"`
 
+	// ApiConsumerDataEncryptionKeyName: Cloud KMS key name used for
+	// encrypting API consumer data. Required for US/EU regions when
+	// BillingType (#BillingType) is `SUBSCRIPTION`. When BillingType
+	// (#BillingType) is `EVALUATION` or the region is not US/EU, a
+	// Google-Managed encryption key will be used. Format:
+	// `projects/*/locations/*/keyRings/*/cryptoKeys/*`
+	ApiConsumerDataEncryptionKeyName string `json:"apiConsumerDataEncryptionKeyName,omitempty"`
+
+	// ApiConsumerDataLocation: This field is needed only for customers with
+	// control plane in US or EU. Apigee stores some control plane data only
+	// in single region. This field determines which single region Apigee
+	// should use. For example: "us-west1" when control plane is in US or
+	// "europe-west2" when control plane is in EU.
+	ApiConsumerDataLocation string `json:"apiConsumerDataLocation,omitempty"`
+
 	// ApigeeProjectId: Output only. Apigee Project ID associated with the
 	// organization. Use this project to allowlist Apigee in the Service
 	// Attachment when using private service connect with Apigee.
@@ -7737,6 +7753,13 @@ type GoogleCloudApigeeV1Organization struct {
 	// root CA of the Apigee organization. Valid only when RuntimeType
 	// (#RuntimeType) is `CLOUD`.
 	CaCertificate string `json:"caCertificate,omitempty"`
+
+	// ControlPlaneEncryptionKeyName: Cloud KMS key name used for encrypting
+	// control plane data that is stored in a multi region. Required when
+	// BillingType (#BillingType) is `SUBSCRIPTION`. When BillingType
+	// (#BillingType) is `EVALUATION`, a Google-Managed encryption key will
+	// be used. Format: `projects/*/locations/*/keyRings/*/cryptoKeys/*`
+	ControlPlaneEncryptionKeyName string `json:"controlPlaneEncryptionKeyName,omitempty"`
 
 	// CreatedAt: Output only. Time that the Apigee organization was created
 	// in milliseconds since epoch.

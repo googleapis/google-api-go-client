@@ -290,6 +290,8 @@ type Backup struct {
 	// reflected in the backup.
 	//   "READY" - Backup is available for use.
 	//   "DELETING" - Backup is being deleted.
+	//   "INVALID" - Backup is not valid and cannot be used for creating new
+	// instances or restoring existing instances.
 	State string `json:"state,omitempty"`
 
 	// StorageBytes: Output only. The size of the storage used by the
@@ -1900,6 +1902,13 @@ func (s *Schedule) MarshalJSON() ([]byte, error) {
 
 // Share: A Filestore share.
 type Share struct {
+	// Backup: Immutable. Full name of the Cloud Filestore Backup resource
+	// that this Share is restored from, in the format of
+	// projects/{project_id}/locations/{location_id}/backups/{backup_id}.
+	// Empty, if the Share is created from scratch and not restored from a
+	// backup.
+	Backup string `json:"backup,omitempty"`
+
 	// CapacityGb: File share capacity in gigabytes (GB). Filestore defines
 	// 1 GB as 1024^3 bytes. Must be greater than 0.
 	CapacityGb int64 `json:"capacityGb,omitempty,string"`
@@ -1941,7 +1950,7 @@ type Share struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "CapacityGb") to
+	// ForceSendFields is a list of field names (e.g. "Backup") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1949,8 +1958,8 @@ type Share struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CapacityGb") to include in
-	// API requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "Backup") to include in API
+	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.

@@ -1634,6 +1634,28 @@ type EntityMapping struct {
 	// schema.table.column.
 	DraftEntity string `json:"draftEntity,omitempty"`
 
+	// DraftType: Type of draft entity.
+	//
+	// Possible values:
+	//   "DATABASE_ENTITY_TYPE_UNSPECIFIED" - Unspecified database entity
+	// type.
+	//   "DATABASE_ENTITY_TYPE_SCHEMA" - Schema.
+	//   "DATABASE_ENTITY_TYPE_TABLE" - Table.
+	//   "DATABASE_ENTITY_TYPE_COLUMN" - Column.
+	//   "DATABASE_ENTITY_TYPE_CONSTRAINT" - Constraint.
+	//   "DATABASE_ENTITY_TYPE_INDEX" - Index.
+	//   "DATABASE_ENTITY_TYPE_TRIGGER" - Trigger.
+	//   "DATABASE_ENTITY_TYPE_VIEW" - View.
+	//   "DATABASE_ENTITY_TYPE_SEQUENCE" - Sequence.
+	//   "DATABASE_ENTITY_TYPE_STORED_PROCEDURE" - Stored Procedure.
+	//   "DATABASE_ENTITY_TYPE_FUNCTION" - Function.
+	//   "DATABASE_ENTITY_TYPE_SYNONYM" - Synonym.
+	//   "DATABASE_ENTITY_TYPE_DATABASE_PACKAGE" - Package.
+	//   "DATABASE_ENTITY_TYPE_UDT" - UDT.
+	//   "DATABASE_ENTITY_TYPE_MATERIALIZED_VIEW" - Materialized View.
+	//   "DATABASE_ENTITY_TYPE_DATABASE" - Database.
+	DraftType string `json:"draftType,omitempty"`
+
 	// MappingLog: Entity mapping log entries. Multiple rules can be
 	// effective and contribute changes to a converted entity, such as a
 	// rule can handle the entity name, another rule can handle an entity
@@ -1645,6 +1667,28 @@ type EntityMapping struct {
 	// a column, index or constraint using the same naming notation
 	// schema.table.column.
 	SourceEntity string `json:"sourceEntity,omitempty"`
+
+	// SourceType: Type of source entity.
+	//
+	// Possible values:
+	//   "DATABASE_ENTITY_TYPE_UNSPECIFIED" - Unspecified database entity
+	// type.
+	//   "DATABASE_ENTITY_TYPE_SCHEMA" - Schema.
+	//   "DATABASE_ENTITY_TYPE_TABLE" - Table.
+	//   "DATABASE_ENTITY_TYPE_COLUMN" - Column.
+	//   "DATABASE_ENTITY_TYPE_CONSTRAINT" - Constraint.
+	//   "DATABASE_ENTITY_TYPE_INDEX" - Index.
+	//   "DATABASE_ENTITY_TYPE_TRIGGER" - Trigger.
+	//   "DATABASE_ENTITY_TYPE_VIEW" - View.
+	//   "DATABASE_ENTITY_TYPE_SEQUENCE" - Sequence.
+	//   "DATABASE_ENTITY_TYPE_STORED_PROCEDURE" - Stored Procedure.
+	//   "DATABASE_ENTITY_TYPE_FUNCTION" - Function.
+	//   "DATABASE_ENTITY_TYPE_SYNONYM" - Synonym.
+	//   "DATABASE_ENTITY_TYPE_DATABASE_PACKAGE" - Package.
+	//   "DATABASE_ENTITY_TYPE_UDT" - UDT.
+	//   "DATABASE_ENTITY_TYPE_MATERIALIZED_VIEW" - Materialized View.
+	//   "DATABASE_ENTITY_TYPE_DATABASE" - Database.
+	SourceType string `json:"sourceType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DraftEntity") to
 	// unconditionally include in API requests. By default, fields with
@@ -2612,6 +2656,11 @@ type MigrationJobVerificationError struct {
 	// the time of restart request.
 	//   "TABLES_WITH_LIMITED_SUPPORT" - The source has tables with limited
 	// support. E.g. PostgreSQL tables without primary keys.
+	//   "UNSUPPORTED_DATABASE_LOCALE" - The source uses an unsupported
+	// locale.
+	//   "UNSUPPORTED_DATABASE_FDW_CONFIG" - The source uses an unsupported
+	// Foreign Data Wrapper configuration.
+	//   "ERROR_RDBMS" - There was an underlying RDBMS error.
 	ErrorCode string `json:"errorCode,omitempty"`
 
 	// ErrorDetailMessage: Output only. A specific detailed error message,

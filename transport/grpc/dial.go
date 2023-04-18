@@ -257,7 +257,7 @@ func isDirectPathXdsUsed(o *internal.DialSettings) bool {
 		return true
 	}
 	// Method 2: Enable DirectPath xDS by option;
-	if o.UseDirectPathXds {
+	if o.EnableDirectPathXds {
 		return true
 	}
 	return false

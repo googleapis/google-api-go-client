@@ -1981,7 +1981,7 @@
       }
     }
   },
-  "revision": "20230410",
+  "revision": "20230414",
   "rootUrl": "https://securitycenter.googleapis.com/",
   "schemas": {
     "Access": {
@@ -2001,22 +2001,22 @@
           "type": "string"
         },
         "principalEmail": {
-          "description": "Associated email, such as \"foo@google.com\". The email address of the authenticated user (or service account on behalf of third party principal) making the request. For third party identity callers, the `principal_subject` field is populated instead of this field. For privacy reasons, the principal email address is sometimes redacted. For more information, see [Caller identities in audit logs](https://cloud.google.com/logging/docs/audit#user-id).",
+          "description": "Associated email, such as \"foo@google.com\". The email address of the authenticated user or a service account acting on behalf of a third party principal making the request. For third party identity callers, the `principal_subject` field is populated instead of this field. For privacy reasons, the principal email address is sometimes redacted. For more information, see [Caller identities in audit logs](https://cloud.google.com/logging/docs/audit#user-id).",
           "type": "string"
         },
         "principalSubject": {
-          "description": "A string representing the principal_subject associated with the identity. As compared to `principal_email`, supports principals that aren't associated with email addresses, such as third party principals. For most identities, the format will be `principal://iam.googleapis.com/{identity pool name}/subjects/{subject}` except for some GKE identities (GKE_WORKLOAD, FREEFORM, GKE_HUB_WORKLOAD) that are still in the legacy format `serviceAccount:{identity pool name}[{subject}]`",
+          "description": "A string that represents the principal_subject that is associated with the identity. Unlike `principal_email`, `principal_subject` supports principals that aren't associated with email addresses, such as third party principals. For most identities, the format is `principal://iam.googleapis.com/{identity pool name}/subject/{subject}`. Some GKE identities, such as GKE_WORKLOAD, FREEFORM, and GKE_HUB_WORKLOAD, still use the legacy format `serviceAccount:{identity pool name}[{subject}]`.",
           "type": "string"
         },
         "serviceAccountDelegationInfo": {
-          "description": "Identity delegation history of an authenticated service account that makes the request. It contains information on the real authorities that try to access GCP resources by delegating on a service account. When multiple authorities are present, they are guaranteed to be sorted based on the original ordering of the identity delegation events.",
+          "description": "The identity delegation history of an authenticated service account that made the request. The `serviceAccountDelegationInfo[]` object contains information about the real authorities that try to access Google Cloud resources by delegating on a service account. When multiple authorities are present, they are guaranteed to be sorted based on the original ordering of the identity delegation events.",
           "items": {
             "$ref": "ServiceAccountDelegationInfo"
           },
           "type": "array"
         },
         "serviceAccountKeyName": {
-          "description": "The name of the service account key used to create or exchange credentials for authenticating the service account making the request. This is a scheme-less URI full resource name. For example: \"//iam.googleapis.com/projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}/keys/{key}\" ",
+          "description": "The name of the service account key that was used to create or exchange credentials when authenticating the service account that made the request. This is a scheme-less URI full resource name. For example: \"//iam.googleapis.com/projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}/keys/{key}\". ",
           "type": "string"
         },
         "serviceName": {
@@ -2024,11 +2024,11 @@
           "type": "string"
         },
         "userAgentFamily": {
-          "description": "What kind of user agent is associated, for example operating system shells, embedded or stand-alone applications, etc.",
+          "description": "Type of user agent associated with the finding. For example, an operating system shell or an embedded or standalone application.",
           "type": "string"
         },
         "userName": {
-          "description": "A string that represents the username of a user, user account, or other entity involved in the access event. What the entity is and what its role in the access event is depends on the finding that this field appears in. The entity is likely not an IAM principal, but could be a user that is logged into an operating system, if the finding is VM-related, or a user that is logged into some type of application that is involved in the access event.",
+          "description": "A string that represents a username. The username provided depends on the type of the finding and is likely not an IAM principal. For example, this can be a system username if the finding is related to a virtual machine, or it can be an application login username.",
           "type": "string"
         }
       },
@@ -2699,7 +2699,7 @@
       "properties": {
         "access": {
           "$ref": "Access",
-          "description": "Access details associated to the Finding, such as more information on the caller, which method was accessed, from where, etc."
+          "description": "Access details associated with the finding, such as more information on the caller, which method was accessed, and from where."
         },
         "canonicalName": {
           "description": "The canonical name of the finding. It's either \"organizations/{organization_id}/sources/{source_id}/findings/{finding_id}\", \"folders/{folder_id}/sources/{source_id}/findings/{finding_id}\" or \"projects/{project_number}/sources/{source_id}/findings/{finding_id}\", depending on the closest CRM ancestor of the resource associated with the finding.",
@@ -2711,11 +2711,11 @@
         },
         "cloudDlpDataProfile": {
           "$ref": "CloudDlpDataProfile",
-          "description": "Cloud DLP data profile associated with the finding."
+          "description": "Cloud DLP data profile that is associated with the finding."
         },
         "cloudDlpInspection": {
           "$ref": "CloudDlpInspection",
-          "description": "Cloud DLP inspection associated with the finding."
+          "description": "Cloud Data Loss Prevention (Cloud DLP) inspection results that are associated with the finding."
         },
         "compliances": {
           "description": "Contains compliance information for security standards associated to the finding.",
@@ -2740,7 +2740,7 @@
           "type": "object"
         },
         "containers": {
-          "description": "Containers associated with the finding. containers provides information for both Kubernetes and non-Kubernetes containers.",
+          "description": "Containers associated with the finding. This field provides information for both Kubernetes and non-Kubernetes containers.",
           "items": {
             "$ref": "Container"
           },
@@ -2756,7 +2756,7 @@
           "description": "Database associated with the finding."
         },
         "description": {
-          "description": "Contains more detail about the finding.",
+          "description": "Contains more details about the finding.",
           "type": "string"
         },
         "eventTime": {
@@ -2766,7 +2766,7 @@
         },
         "exfiltration": {
           "$ref": "Exfiltration",
-          "description": "Represents exfiltration associated with the Finding."
+          "description": "Represents exfiltrations associated with the finding."
         },
         "externalSystems": {
           "additionalProperties": {
@@ -2808,7 +2808,7 @@
           "type": "string"
         },
         "iamBindings": {
-          "description": "Represents IAM bindings associated with the Finding.",
+          "description": "Represents IAM bindings associated with the finding.",
           "items": {
             "$ref": "IamBinding"
           },
@@ -2816,11 +2816,11 @@
         },
         "indicator": {
           "$ref": "Indicator",
-          "description": "Represents what's commonly known as an Indicator of compromise (IoC) in computer forensics. This is an artifact observed on a network or in an operating system that, with high confidence, indicates a computer intrusion. Reference: https://en.wikipedia.org/wiki/Indicator_of_compromise"
+          "description": "Represents what's commonly known as an *indicator of compromise* (IoC) in computer forensics. This is an artifact observed on a network or in an operating system that, with high confidence, indicates a computer intrusion. For more information, see [Indicator of compromise](https://en.wikipedia.org/wiki/Indicator_of_compromise)."
         },
         "kernelRootkit": {
           "$ref": "KernelRootkit",
-          "description": "Kernel Rootkit signature."
+          "description": "Signature of the kernel rootkit."
         },
         "kubernetes": {
           "$ref": "Kubernetes",
@@ -2851,7 +2851,7 @@
           "type": "string"
         },
         "muteInitiator": {
-          "description": "First known as mute_annotation. Records additional information about the mute operation e.g. mute config that muted the finding, user who muted the finding, etc. Unlike other attributes of a finding, a finding provider shouldn't set the value of mute.",
+          "description": "Records additional information about the mute operation, for example, the [mute configuration](/security-command-center/docs/how-to-mute-findings) that muted the finding and the user who muted the finding.",
           "type": "string"
         },
         "muteUpdateTime": {
@@ -2861,11 +2861,11 @@
           "type": "string"
         },
         "name": {
-          "description": "The relative resource name of this finding. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Example: \"organizations/{organization_id}/sources/{source_id}/findings/{finding_id}\"",
+          "description": "The [relative resource name](https://cloud.google.com/apis/design/resource_names#relative_resource_name) of the finding. Example: \"organizations/{organization_id}/sources/{source_id}/findings/{finding_id}\", \"folders/{folder_id}/sources/{source_id}/findings/{finding_id}\", \"projects/{project_id}/sources/{source_id}/findings/{finding_id}\".",
           "type": "string"
         },
         "nextSteps": {
-          "description": "Next steps associate to the finding.",
+          "description": "Steps to address the finding.",
           "type": "string"
         },
         "parent": {
@@ -2904,7 +2904,7 @@
           ],
           "enumDescriptions": [
             "This value is used for findings when a source doesn't write a severity value.",
-            "Vulnerability: A critical vulnerability is easily discoverable by an external actor, exploitable, and results in the direct ability to execute arbitrary code, exfiltrate data, and otherwise gain additional access and privileges to cloud resources and workloads. Examples include publicly accessible unprotected user data, public SSH access with weak or no passwords, etc. Threat: Indicates a threat that is able to access, modify, or delete data or execute unauthorized code within existing resources.",
+            "Vulnerability: A critical vulnerability is easily discoverable by an external actor, exploitable, and results in the direct ability to execute arbitrary code, exfiltrate data, and otherwise gain additional access and privileges to cloud resources and workloads. Examples include publicly accessible unprotected user data and public SSH access with weak or no passwords. Threat: Indicates a threat that is able to access, modify, or delete data or execute unauthorized code within existing resources.",
             "Vulnerability: A high risk vulnerability can be easily discovered and exploited in combination with other vulnerabilities in order to gain direct access and the ability to execute arbitrary code, exfiltrate data, and otherwise gain additional access and privileges to cloud resources and workloads. An example is a database with weak or no passwords that is only accessible internally. This database could easily be compromised by an actor that had access to the internal network. Threat: Indicates a threat that is able to create new computational resources in an environment but not able to access data or execute code in existing resources.",
             "Vulnerability: A medium risk vulnerability could be used by an actor to gain access to resources or privileges that enable them to eventually (through multiple steps or a complex exploit) gain access and the ability to execute arbitrary code or exfiltrate data. An example is a service account with access to more projects than it should have. If an actor gains access to the service account, they could potentially use that access to manipulate a project the service account was not intended to. Threat: Indicates a threat that is able to cause operational impact but may not access data or execute unauthorized code.",
             "Vulnerability: A low risk vulnerability hampers a security organization's ability to detect vulnerabilities or active threats in their deployment, or prevents the root cause investigation of security issues. An example is monitoring and logs being disabled for resource configurations and access. Threat: Indicates a threat that has obtained minimal access to an environment but is not able to access data, execute code, or create resources."

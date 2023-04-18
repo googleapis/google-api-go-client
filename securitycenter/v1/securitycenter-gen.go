@@ -593,55 +593,55 @@ type Access struct {
 	MethodName string `json:"methodName,omitempty"`
 
 	// PrincipalEmail: Associated email, such as "foo@google.com". The email
-	// address of the authenticated user (or service account on behalf of
-	// third party principal) making the request. For third party identity
-	// callers, the `principal_subject` field is populated instead of this
-	// field. For privacy reasons, the principal email address is sometimes
-	// redacted. For more information, see Caller identities in audit logs
-	// (https://cloud.google.com/logging/docs/audit#user-id).
+	// address of the authenticated user or a service account acting on
+	// behalf of a third party principal making the request. For third party
+	// identity callers, the `principal_subject` field is populated instead
+	// of this field. For privacy reasons, the principal email address is
+	// sometimes redacted. For more information, see Caller identities in
+	// audit logs (https://cloud.google.com/logging/docs/audit#user-id).
 	PrincipalEmail string `json:"principalEmail,omitempty"`
 
-	// PrincipalSubject: A string representing the principal_subject
-	// associated with the identity. As compared to `principal_email`,
-	// supports principals that aren't associated with email addresses, such
-	// as third party principals. For most identities, the format will be
-	// `principal://iam.googleapis.com/{identity pool
-	// name}/subjects/{subject}` except for some GKE identities
-	// (GKE_WORKLOAD, FREEFORM, GKE_HUB_WORKLOAD) that are still in the
-	// legacy format `serviceAccount:{identity pool name}[{subject}]`
+	// PrincipalSubject: A string that represents the principal_subject that
+	// is associated with the identity. Unlike `principal_email`,
+	// `principal_subject` supports principals that aren't associated with
+	// email addresses, such as third party principals. For most identities,
+	// the format is `principal://iam.googleapis.com/{identity pool
+	// name}/subject/{subject}`. Some GKE identities, such as GKE_WORKLOAD,
+	// FREEFORM, and GKE_HUB_WORKLOAD, still use the legacy format
+	// `serviceAccount:{identity pool name}[{subject}]`.
 	PrincipalSubject string `json:"principalSubject,omitempty"`
 
-	// ServiceAccountDelegationInfo: Identity delegation history of an
-	// authenticated service account that makes the request. It contains
-	// information on the real authorities that try to access GCP resources
-	// by delegating on a service account. When multiple authorities are
+	// ServiceAccountDelegationInfo: The identity delegation history of an
+	// authenticated service account that made the request. The
+	// `serviceAccountDelegationInfo[]` object contains information about
+	// the real authorities that try to access Google Cloud resources by
+	// delegating on a service account. When multiple authorities are
 	// present, they are guaranteed to be sorted based on the original
 	// ordering of the identity delegation events.
 	ServiceAccountDelegationInfo []*ServiceAccountDelegationInfo `json:"serviceAccountDelegationInfo,omitempty"`
 
-	// ServiceAccountKeyName: The name of the service account key used to
-	// create or exchange credentials for authenticating the service account
-	// making the request. This is a scheme-less URI full resource name. For
-	// example:
+	// ServiceAccountKeyName: The name of the service account key that was
+	// used to create or exchange credentials when authenticating the
+	// service account that made the request. This is a scheme-less URI full
+	// resource name. For example:
 	// "//iam.googleapis.com/projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}/
-	// keys/{key}"
+	// keys/{key}".
 	ServiceAccountKeyName string `json:"serviceAccountKeyName,omitempty"`
 
 	// ServiceName: This is the API service that the service account made a
 	// call to, e.g. "iam.googleapis.com"
 	ServiceName string `json:"serviceName,omitempty"`
 
-	// UserAgentFamily: What kind of user agent is associated, for example
-	// operating system shells, embedded or stand-alone applications, etc.
+	// UserAgentFamily: Type of user agent associated with the finding. For
+	// example, an operating system shell or an embedded or standalone
+	// application.
 	UserAgentFamily string `json:"userAgentFamily,omitempty"`
 
-	// UserName: A string that represents the username of a user, user
-	// account, or other entity involved in the access event. What the
-	// entity is and what its role in the access event is depends on the
-	// finding that this field appears in. The entity is likely not an IAM
-	// principal, but could be a user that is logged into an operating
-	// system, if the finding is VM-related, or a user that is logged into
-	// some type of application that is involved in the access event.
+	// UserName: A string that represents a username. The username provided
+	// depends on the type of the finding and is likely not an IAM
+	// principal. For example, this can be a system username if the finding
+	// is related to a virtual machine, or it can be an application login
+	// username.
 	UserName string `json:"userName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CallerIp") to
@@ -1841,9 +1841,8 @@ func (s *File) MarshalJSON() ([]byte, error) {
 // scripting (XSS) vulnerability in an App Engine application is a
 // finding.
 type Finding struct {
-	// Access: Access details associated to the Finding, such as more
-	// information on the caller, which method was accessed, from where,
-	// etc.
+	// Access: Access details associated with the finding, such as more
+	// information on the caller, which method was accessed, and from where.
 	Access *Access `json:"access,omitempty"`
 
 	// CanonicalName: The canonical name of the finding. It's either
@@ -1860,11 +1859,12 @@ type Finding struct {
 	// "XSS_FLASH_INJECTION"
 	Category string `json:"category,omitempty"`
 
-	// CloudDlpDataProfile: Cloud DLP data profile associated with the
-	// finding.
+	// CloudDlpDataProfile: Cloud DLP data profile that is associated with
+	// the finding.
 	CloudDlpDataProfile *CloudDlpDataProfile `json:"cloudDlpDataProfile,omitempty"`
 
-	// CloudDlpInspection: Cloud DLP inspection associated with the finding.
+	// CloudDlpInspection: Cloud Data Loss Prevention (Cloud DLP) inspection
+	// results that are associated with the finding.
 	CloudDlpInspection *CloudDlpInspection `json:"cloudDlpInspection,omitempty"`
 
 	// Compliances: Contains compliance information for security standards
@@ -1884,7 +1884,7 @@ type Finding struct {
 	// "email": "person2@company.com" } ] } }
 	Contacts map[string]ContactDetails `json:"contacts,omitempty"`
 
-	// Containers: Containers associated with the finding. containers
+	// Containers: Containers associated with the finding. This field
 	// provides information for both Kubernetes and non-Kubernetes
 	// containers.
 	Containers []*Container `json:"containers,omitempty"`
@@ -1896,7 +1896,7 @@ type Finding struct {
 	// Database: Database associated with the finding.
 	Database *Database `json:"database,omitempty"`
 
-	// Description: Contains more detail about the finding.
+	// Description: Contains more details about the finding.
 	Description string `json:"description,omitempty"`
 
 	// EventTime: The time the finding was first detected. If an existing
@@ -1908,7 +1908,7 @@ type Finding struct {
 	// must not be set to a value greater than the current timestamp.
 	EventTime string `json:"eventTime,omitempty"`
 
-	// Exfiltration: Represents exfiltration associated with the Finding.
+	// Exfiltration: Represents exfiltrations associated with the finding.
 	Exfiltration *Exfiltration `json:"exfiltration,omitempty"`
 
 	// ExternalSystems: Output only. Third party SIEM/SOAR fields within
@@ -1940,17 +1940,18 @@ type Finding struct {
 	// functionality.
 	FindingClass string `json:"findingClass,omitempty"`
 
-	// IamBindings: Represents IAM bindings associated with the Finding.
+	// IamBindings: Represents IAM bindings associated with the finding.
 	IamBindings []*IamBinding `json:"iamBindings,omitempty"`
 
-	// Indicator: Represents what's commonly known as an Indicator of
-	// compromise (IoC) in computer forensics. This is an artifact observed
+	// Indicator: Represents what's commonly known as an *indicator of
+	// compromise* (IoC) in computer forensics. This is an artifact observed
 	// on a network or in an operating system that, with high confidence,
-	// indicates a computer intrusion. Reference:
-	// https://en.wikipedia.org/wiki/Indicator_of_compromise
+	// indicates a computer intrusion. For more information, see Indicator
+	// of compromise
+	// (https://en.wikipedia.org/wiki/Indicator_of_compromise).
 	Indicator *Indicator `json:"indicator,omitempty"`
 
-	// KernelRootkit: Kernel Rootkit signature.
+	// KernelRootkit: Signature of the kernel rootkit.
 	KernelRootkit *KernelRootkit `json:"kernelRootkit,omitempty"`
 
 	// Kubernetes: Kubernetes resources associated with the finding.
@@ -1977,24 +1978,26 @@ type Finding struct {
 	//   "UNDEFINED" - Finding has never been muted/unmuted.
 	Mute string `json:"mute,omitempty"`
 
-	// MuteInitiator: First known as mute_annotation. Records additional
-	// information about the mute operation e.g. mute config that muted the
-	// finding, user who muted the finding, etc. Unlike other attributes of
-	// a finding, a finding provider shouldn't set the value of mute.
+	// MuteInitiator: Records additional information about the mute
+	// operation, for example, the mute configuration
+	// (/security-command-center/docs/how-to-mute-findings) that muted the
+	// finding and the user who muted the finding.
 	MuteInitiator string `json:"muteInitiator,omitempty"`
 
 	// MuteUpdateTime: Output only. The most recent time this finding was
 	// muted or unmuted.
 	MuteUpdateTime string `json:"muteUpdateTime,omitempty"`
 
-	// Name: The relative resource name of this finding. See:
-	// https://cloud.google.com/apis/design/resource_names#relative_resource_name
-	// Example:
+	// Name: The relative resource name
+	// (https://cloud.google.com/apis/design/resource_names#relative_resource_name)
+	// of the finding. Example:
 	// "organizations/{organization_id}/sources/{source_id}/findings/{finding
-	// _id}"
+	// _id}",
+	// "folders/{folder_id}/sources/{source_id}/findings/{finding_id}",
+	// "projects/{project_id}/sources/{source_id}/findings/{finding_id}".
 	Name string `json:"name,omitempty"`
 
-	// NextSteps: Next steps associate to the finding.
+	// NextSteps: Steps to address the finding.
 	NextSteps string `json:"nextSteps,omitempty"`
 
 	// Parent: The relative resource name of the source the finding belongs
@@ -2037,7 +2040,7 @@ type Finding struct {
 	// direct ability to execute arbitrary code, exfiltrate data, and
 	// otherwise gain additional access and privileges to cloud resources
 	// and workloads. Examples include publicly accessible unprotected user
-	// data, public SSH access with weak or no passwords, etc. Threat:
+	// data and public SSH access with weak or no passwords. Threat:
 	// Indicates a threat that is able to access, modify, or delete data or
 	// execute unauthorized code within existing resources.
 	//   "HIGH" - Vulnerability: A high risk vulnerability can be easily
@@ -4042,7 +4045,7 @@ func (s *ListBigQueryExportsResponse) MarshalJSON() ([]byte, error) {
 }
 
 // ListDescendantSecurityHealthAnalyticsCustomModulesResponse: Response
-// message for listing descendant security health analytics custom
+// message for listing descendant Security Health Analytics custom
 // modules.
 type ListDescendantSecurityHealthAnalyticsCustomModulesResponse struct {
 	// NextPageToken: If not empty, indicates that there may be more custom
@@ -4081,7 +4084,7 @@ func (s *ListDescendantSecurityHealthAnalyticsCustomModulesResponse) MarshalJSON
 }
 
 // ListEffectiveSecurityHealthAnalyticsCustomModulesResponse: Response
-// message for listing effective security health analytics custom
+// message for listing effective Security Health Analytics custom
 // modules.
 type ListEffectiveSecurityHealthAnalyticsCustomModulesResponse struct {
 	// EffectiveSecurityHealthAnalyticsCustomModules: Effective custom
@@ -4323,7 +4326,7 @@ func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 }
 
 // ListSecurityHealthAnalyticsCustomModulesResponse: Response message
-// for listing security health analytics custom modules.
+// for listing Security Health Analytics custom modules.
 type ListSecurityHealthAnalyticsCustomModulesResponse struct {
 	// NextPageToken: If not empty, indicates that there may be more custom
 	// modules to be returned.
@@ -9879,7 +9882,7 @@ type FoldersSecurityHealthAnalyticsSettingsCustomModulesPatchCall struct {
 // Patch: Updates the SecurityHealthAnalyticsCustomModule under the
 // given name based on the given update mask. Updating the enablement
 // state is supported on both resident and inherited modules (though
-// resident modules cannot have an enablement state of “inherited”).
+// resident modules cannot have an enablement state of "inherited").
 // Updating the display name and custom config of a module is supported
 // on resident modules only.
 //
@@ -10000,7 +10003,7 @@ func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesPatchCall) Do(opts .
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the SecurityHealthAnalyticsCustomModule under the given name based on the given update mask. Updating the enablement state is supported on both resident and inherited modules (though resident modules cannot have an enablement state of “inherited”). Updating the display name and custom config of a module is supported on resident modules only.",
+	//   "description": "Updates the SecurityHealthAnalyticsCustomModule under the given name based on the given update mask. Updating the enablement state is supported on both resident and inherited modules (though resident modules cannot have an enablement state of \"inherited\"). Updating the display name and custom config of a module is supported on resident modules only.",
 	//   "flatPath": "v1/folders/{foldersId}/securityHealthAnalyticsSettings/customModules/{customModulesId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "securitycenter.folders.securityHealthAnalyticsSettings.customModules.patch",
@@ -11106,11 +11109,13 @@ type FoldersSourcesFindingsPatchCall struct {
 // Patch: Creates or updates a finding. The corresponding source must
 // exist for a finding creation to succeed.
 //
-//   - name: The relative resource name of this finding. See:
-//     https://cloud.google.com/apis/design/resource_names#relative_resource_name
-//     Example:
+//   - name: The relative resource name
+//     (https://cloud.google.com/apis/design/resource_names#relative_resource_name)
+//     of the finding. Example:
 //     "organizations/{organization_id}/sources/{source_id}/findings/{findi
-//     ng_id}".
+//     ng_id}",
+//     "folders/{folder_id}/sources/{source_id}/findings/{finding_id}",
+//     "projects/{project_id}/sources/{source_id}/findings/{finding_id}".
 func (r *FoldersSourcesFindingsService) Patch(name string, finding *Finding) *FoldersSourcesFindingsPatchCall {
 	c := &FoldersSourcesFindingsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11229,7 +11234,7 @@ func (c *FoldersSourcesFindingsPatchCall) Do(opts ...googleapi.CallOption) (*Fin
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The relative resource name of this finding. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Example: \"organizations/{organization_id}/sources/{source_id}/findings/{finding_id}\"",
+	//       "description": "The [relative resource name](https://cloud.google.com/apis/design/resource_names#relative_resource_name) of the finding. Example: \"organizations/{organization_id}/sources/{source_id}/findings/{finding_id}\", \"folders/{folder_id}/sources/{source_id}/findings/{finding_id}\", \"projects/{project_id}/sources/{source_id}/findings/{finding_id}\".",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+/sources/[^/]+/findings/[^/]+$",
 	//       "required": true,
@@ -17079,7 +17084,7 @@ type OrganizationsSecurityHealthAnalyticsSettingsCustomModulesPatchCall struct {
 // Patch: Updates the SecurityHealthAnalyticsCustomModule under the
 // given name based on the given update mask. Updating the enablement
 // state is supported on both resident and inherited modules (though
-// resident modules cannot have an enablement state of “inherited”).
+// resident modules cannot have an enablement state of "inherited").
 // Updating the display name and custom config of a module is supported
 // on resident modules only.
 //
@@ -17200,7 +17205,7 @@ func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesPatchCall) Do(
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the SecurityHealthAnalyticsCustomModule under the given name based on the given update mask. Updating the enablement state is supported on both resident and inherited modules (though resident modules cannot have an enablement state of “inherited”). Updating the display name and custom config of a module is supported on resident modules only.",
+	//   "description": "Updates the SecurityHealthAnalyticsCustomModule under the given name based on the given update mask. Updating the enablement state is supported on both resident and inherited modules (though resident modules cannot have an enablement state of \"inherited\"). Updating the display name and custom config of a module is supported on resident modules only.",
 	//   "flatPath": "v1/organizations/{organizationsId}/securityHealthAnalyticsSettings/customModules/{customModulesId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "securitycenter.organizations.securityHealthAnalyticsSettings.customModules.patch",
@@ -19348,11 +19353,13 @@ type OrganizationsSourcesFindingsPatchCall struct {
 // Patch: Creates or updates a finding. The corresponding source must
 // exist for a finding creation to succeed.
 //
-//   - name: The relative resource name of this finding. See:
-//     https://cloud.google.com/apis/design/resource_names#relative_resource_name
-//     Example:
+//   - name: The relative resource name
+//     (https://cloud.google.com/apis/design/resource_names#relative_resource_name)
+//     of the finding. Example:
 //     "organizations/{organization_id}/sources/{source_id}/findings/{findi
-//     ng_id}".
+//     ng_id}",
+//     "folders/{folder_id}/sources/{source_id}/findings/{finding_id}",
+//     "projects/{project_id}/sources/{source_id}/findings/{finding_id}".
 func (r *OrganizationsSourcesFindingsService) Patch(name string, finding *Finding) *OrganizationsSourcesFindingsPatchCall {
 	c := &OrganizationsSourcesFindingsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -19471,7 +19478,7 @@ func (c *OrganizationsSourcesFindingsPatchCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The relative resource name of this finding. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Example: \"organizations/{organization_id}/sources/{source_id}/findings/{finding_id}\"",
+	//       "description": "The [relative resource name](https://cloud.google.com/apis/design/resource_names#relative_resource_name) of the finding. Example: \"organizations/{organization_id}/sources/{source_id}/findings/{finding_id}\", \"folders/{folder_id}/sources/{source_id}/findings/{finding_id}\", \"projects/{project_id}/sources/{source_id}/findings/{finding_id}\".",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/sources/[^/]+/findings/[^/]+$",
 	//       "required": true,
@@ -24239,7 +24246,7 @@ type ProjectsSecurityHealthAnalyticsSettingsCustomModulesPatchCall struct {
 // Patch: Updates the SecurityHealthAnalyticsCustomModule under the
 // given name based on the given update mask. Updating the enablement
 // state is supported on both resident and inherited modules (though
-// resident modules cannot have an enablement state of “inherited”).
+// resident modules cannot have an enablement state of "inherited").
 // Updating the display name and custom config of a module is supported
 // on resident modules only.
 //
@@ -24360,7 +24367,7 @@ func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesPatchCall) Do(opts 
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the SecurityHealthAnalyticsCustomModule under the given name based on the given update mask. Updating the enablement state is supported on both resident and inherited modules (though resident modules cannot have an enablement state of “inherited”). Updating the display name and custom config of a module is supported on resident modules only.",
+	//   "description": "Updates the SecurityHealthAnalyticsCustomModule under the given name based on the given update mask. Updating the enablement state is supported on both resident and inherited modules (though resident modules cannot have an enablement state of \"inherited\"). Updating the display name and custom config of a module is supported on resident modules only.",
 	//   "flatPath": "v1/projects/{projectsId}/securityHealthAnalyticsSettings/customModules/{customModulesId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "securitycenter.projects.securityHealthAnalyticsSettings.customModules.patch",
@@ -25466,11 +25473,13 @@ type ProjectsSourcesFindingsPatchCall struct {
 // Patch: Creates or updates a finding. The corresponding source must
 // exist for a finding creation to succeed.
 //
-//   - name: The relative resource name of this finding. See:
-//     https://cloud.google.com/apis/design/resource_names#relative_resource_name
-//     Example:
+//   - name: The relative resource name
+//     (https://cloud.google.com/apis/design/resource_names#relative_resource_name)
+//     of the finding. Example:
 //     "organizations/{organization_id}/sources/{source_id}/findings/{findi
-//     ng_id}".
+//     ng_id}",
+//     "folders/{folder_id}/sources/{source_id}/findings/{finding_id}",
+//     "projects/{project_id}/sources/{source_id}/findings/{finding_id}".
 func (r *ProjectsSourcesFindingsService) Patch(name string, finding *Finding) *ProjectsSourcesFindingsPatchCall {
 	c := &ProjectsSourcesFindingsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -25589,7 +25598,7 @@ func (c *ProjectsSourcesFindingsPatchCall) Do(opts ...googleapi.CallOption) (*Fi
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The relative resource name of this finding. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Example: \"organizations/{organization_id}/sources/{source_id}/findings/{finding_id}\"",
+	//       "description": "The [relative resource name](https://cloud.google.com/apis/design/resource_names#relative_resource_name) of the finding. Example: \"organizations/{organization_id}/sources/{source_id}/findings/{finding_id}\", \"folders/{folder_id}/sources/{source_id}/findings/{finding_id}\", \"projects/{project_id}/sources/{source_id}/findings/{finding_id}\".",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/sources/[^/]+/findings/[^/]+$",
 	//       "required": true,

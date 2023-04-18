@@ -7067,9 +7067,21 @@ func (c *EventsListCall) AlwaysIncludeEmail(alwaysIncludeEmail bool) *EventsList
 }
 
 // EventTypes sets the optional parameter "eventTypes": Event types to
-// return.  The default is ["default", "outOfOffice", "focusTime"]. Only
-// the default value is available, unless you're enrolled in the Working
-// Locations developer preview. Developer Preview.
+// return.  Possible values are:
+// - "default"
+// - "focusTime"
+// - "outOfOffice"This parameter can be repeated multiple times to
+// return events of different types. Currently, this is the only allowed
+// value for this field:
+// - ["default", "focusTime", "outOfOffice"] This value will be the
+// default.
+//
+// If you're enrolled in the Working Location developer preview program,
+// in addition to the default value above you can also set the
+// "workingLocation" event type:
+// - ["default", "focusTime", "outOfOffice", "workingLocation"]
+// - ["workingLocation"] Additional combinations of these 4 event types
+// will be made available in later releases. Developer Preview.
 func (c *EventsListCall) EventTypes(eventTypes ...string) *EventsListCall {
 	c.urlParams_.SetMulti("eventTypes", append([]string{}, eventTypes...))
 	return c
@@ -7370,7 +7382,7 @@ func (c *EventsListCall) Do(opts ...googleapi.CallOption) (*Events, error) {
 	//       "type": "string"
 	//     },
 	//     "eventTypes": {
-	//       "description": "Event types to return. Optional. The default is [\"default\", \"outOfOffice\", \"focusTime\"]. Only the default value is available, unless you're enrolled in the Working Locations developer preview. Developer Preview.",
+	//       "description": "Event types to return. Optional. Possible values are: \n- \"default\" \n- \"focusTime\" \n- \"outOfOffice\"This parameter can be repeated multiple times to return events of different types. Currently, this is the only allowed value for this field: \n- [\"default\", \"focusTime\", \"outOfOffice\"] This value will be the default.\n\nIf you're enrolled in the Working Location developer preview program, in addition to the default value above you can also set the \"workingLocation\" event type: \n- [\"default\", \"focusTime\", \"outOfOffice\", \"workingLocation\"] \n- [\"workingLocation\"] Additional combinations of these 4 event types will be made available in later releases. Developer Preview.",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
@@ -8479,9 +8491,21 @@ func (c *EventsWatchCall) AlwaysIncludeEmail(alwaysIncludeEmail bool) *EventsWat
 }
 
 // EventTypes sets the optional parameter "eventTypes": Event types to
-// return.  The default is ["default", "outOfOffice", "focusTime"]. Only
-// the default value is available, unless you're enrolled in the Working
-// Locations developer preview. Developer Preview.
+// return.  Possible values are:
+// - "default"
+// - "focusTime"
+// - "outOfOffice"This parameter can be repeated multiple times to
+// return events of different types. Currently, this is the only allowed
+// value for this field:
+// - ["default", "focusTime", "outOfOffice"] This value will be the
+// default.
+//
+// If you're enrolled in the Working Location developer preview program,
+// in addition to the default value above you can also set the
+// "workingLocation" event type:
+// - ["default", "focusTime", "outOfOffice", "workingLocation"]
+// - ["workingLocation"] Additional combinations of these 4 event types
+// will be made available in later releases. Developer Preview.
 func (c *EventsWatchCall) EventTypes(eventTypes ...string) *EventsWatchCall {
 	c.urlParams_.SetMulti("eventTypes", append([]string{}, eventTypes...))
 	return c
@@ -8774,7 +8798,7 @@ func (c *EventsWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error) {
 	//       "type": "string"
 	//     },
 	//     "eventTypes": {
-	//       "description": "Event types to return. Optional. The default is [\"default\", \"outOfOffice\", \"focusTime\"]. Only the default value is available, unless you're enrolled in the Working Locations developer preview. Developer Preview.",
+	//       "description": "Event types to return. Optional. Possible values are: \n- \"default\" \n- \"focusTime\" \n- \"outOfOffice\"This parameter can be repeated multiple times to return events of different types. Currently, this is the only allowed value for this field: \n- [\"default\", \"focusTime\", \"outOfOffice\"] This value will be the default.\n\nIf you're enrolled in the Working Location developer preview program, in addition to the default value above you can also set the \"workingLocation\" event type: \n- [\"default\", \"focusTime\", \"outOfOffice\", \"workingLocation\"] \n- [\"workingLocation\"] Additional combinations of these 4 event types will be made available in later releases. Developer Preview.",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"

@@ -662,15 +662,17 @@ type EffectiveTag struct {
 	// value is directly attached to the resource, inherited will be false.
 	Inherited bool `json:"inherited,omitempty"`
 
-	// NamespacedTagKey: The namespaced_name of the TagKey. Now only
-	// supported in the format of `{organization_id}/{tag_key_short_name}`.
-	// Other formats will be supported when we add non-org parented tags.
+	// NamespacedTagKey: The namespaced name of the TagKey. Can be in the
+	// form `{organization_id}/{tag_key_short_name}` or
+	// `{project_id}/{tag_key_short_name}` or
+	// `{project_number}/{tag_key_short_name}`.
 	NamespacedTagKey string `json:"namespacedTagKey,omitempty"`
 
-	// NamespacedTagValue: Namespaced name of the TagValue. Now only
-	// supported in the format
-	// `{organization_id}/{tag_key_short_name}/{tag_value_short_name}`.
-	// Other formats will be supported when we add non-org parented tags.
+	// NamespacedTagValue: The namespaced name of the TagValue. Can be in
+	// the form
+	// `{organization_id}/{tag_key_short_name}/{tag_value_short_name}` or
+	// `{project_id}/{tag_key_short_name}/{tag_value_short_name}` or
+	// `{project_number}/{tag_key_short_name}/{tag_value_short_name}`.
 	NamespacedTagValue string `json:"namespacedTagValue,omitempty"`
 
 	// TagKey: The name of the TagKey, in the format `tagKeys/{id}`, such as
@@ -2208,8 +2210,12 @@ type TagKey struct {
 	// TagKey.
 	NamespacedName string `json:"namespacedName,omitempty"`
 
-	// Parent: Immutable. The resource name of the new TagKey's parent. Must
-	// be of the form `organizations/{org_id}`.
+	// Parent: Immutable. The resource name of the TagKey's parent. A TagKey
+	// can be parented by an Organization or a Project. For a TagKey
+	// parented by an Organization, its parent must be in the form
+	// `organizations/{org_id}`. For a TagKey parented by a Project, its
+	// parent can be in the form `projects/{project_id}` or
+	// `projects/{project_number}`.
 	Parent string `json:"parent,omitempty"`
 
 	// Purpose: Optional. A purpose denotes that this Tag is intended for
@@ -2295,10 +2301,11 @@ type TagValue struct {
 	// `tagValues/456`.
 	Name string `json:"name,omitempty"`
 
-	// NamespacedName: Output only. Namespaced name of the TagValue. Now
-	// only supported in the format
-	// `{organization_id}/{tag_key_short_name}/{short_name}`. Other formats
-	// will be supported when we add non-org parented tags.
+	// NamespacedName: Output only. The namespaced name of the TagValue. Can
+	// be in the form
+	// `{organization_id}/{tag_key_short_name}/{tag_value_short_name}` or
+	// `{project_id}/{tag_key_short_name}/{tag_value_short_name}` or
+	// `{project_number}/{tag_key_short_name}/{tag_value_short_name}`.
 	NamespacedName string `json:"namespacedName,omitempty"`
 
 	// Parent: Immutable. The resource name of the new TagValue's parent
@@ -9053,8 +9060,9 @@ func (c *TagKeysListCall) PageToken(pageToken string) *TagKeysListCall {
 }
 
 // Parent sets the optional parameter "parent": Required. The resource
-// name of the new TagKey's parent. Must be of the form
-// `folders/{folder_id}` or `organizations/{org_id}`.
+// name of the TagKey's parent. Must be of the form
+// `organizations/{org_id}` or `projects/{project_id}` or
+// `projects/{project_number}`
 func (c *TagKeysListCall) Parent(parent string) *TagKeysListCall {
 	c.urlParams_.Set("parent", parent)
 	return c
@@ -9174,7 +9182,7 @@ func (c *TagKeysListCall) Do(opts ...googleapi.CallOption) (*ListTagKeysResponse
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The resource name of the new TagKey's parent. Must be of the form `folders/{folder_id}` or `organizations/{org_id}`.",
+	//       "description": "Required. The resource name of the TagKey's parent. Must be of the form `organizations/{org_id}` or `projects/{project_id}` or `projects/{project_number}`",
 	//       "location": "query",
 	//       "type": "string"
 	//     }

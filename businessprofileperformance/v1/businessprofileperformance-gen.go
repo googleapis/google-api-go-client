@@ -241,7 +241,8 @@ func (s *DailyMetricTimeSeries) MarshalJSON() ([]byte, error) {
 // DailySubEntityType: Represents all possible subentity types that are
 // associated with DailyMetrics.
 type DailySubEntityType struct {
-	// DayOfWeek: Represents the day of the week. Eg: MONDAY.
+	// DayOfWeek: Represents the day of the week. Eg: MONDAY. Currently
+	// supported DailyMetrics = NONE.
 	//
 	// Possible values:
 	//   "DAY_OF_WEEK_UNSPECIFIED" - The day of the week is unspecified.
@@ -255,7 +256,7 @@ type DailySubEntityType struct {
 	DayOfWeek string `json:"dayOfWeek,omitempty"`
 
 	// TimeOfDay: Represents the time of the day in 24 hour format. Eg:
-	// 13:34:20
+	// 13:34:20 Currently supported DailyMetrics = NONE.
 	TimeOfDay *TimeOfDay `json:"timeOfDay,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DayOfWeek") to
@@ -1106,7 +1107,7 @@ func (c *LocationsGetDailyMetricsTimeSeriesCall) DailyRangeStartDateYear(dailyRa
 
 // DailySubEntityTypeDayOfWeek sets the optional parameter
 // "dailySubEntityType.dayOfWeek": Represents the day of the week. Eg:
-// MONDAY.
+// MONDAY. Currently supported DailyMetrics = NONE.
 //
 // Possible values:
 //
@@ -1335,7 +1336,7 @@ func (c *LocationsGetDailyMetricsTimeSeriesCall) Do(opts ...googleapi.CallOption
 	//       "type": "integer"
 	//     },
 	//     "dailySubEntityType.dayOfWeek": {
-	//       "description": "Represents the day of the week. Eg: MONDAY.",
+	//       "description": "Represents the day of the week. Eg: MONDAY. Currently supported DailyMetrics = NONE.",
 	//       "enum": [
 	//         "DAY_OF_WEEK_UNSPECIFIED",
 	//         "MONDAY",

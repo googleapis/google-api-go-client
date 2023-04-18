@@ -3632,6 +3632,7 @@ func (c *ProjectsLocationsInstanceOSPoliciesCompliancesGetCall) Do(opts ...googl
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Get OS policies compliance data for the specified Compute Engine VM instance.",
 	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/instanceOSPoliciesCompliances/{instanceOSPoliciesCompliancesId}",
 	//   "httpMethod": "GET",
@@ -3807,6 +3808,7 @@ func (c *ProjectsLocationsInstanceOSPoliciesCompliancesListCall) Do(opts ...goog
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "List OS policies compliance data for all Compute Engine VM instances in the specified zone.",
 	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/instanceOSPoliciesCompliances",
 	//   "httpMethod": "GET",

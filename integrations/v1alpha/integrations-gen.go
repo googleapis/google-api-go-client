@@ -1747,6 +1747,10 @@ type EnterpriseCrmEventbusProtoEventExecutionSnapshotEventExecutionSnapshotMetad
 	// Could be empty.
 	TaskAttemptNum int64 `json:"taskAttemptNum,omitempty"`
 
+	// TaskLabel: the task label associated with this snapshot. Could be
+	// empty.
+	TaskLabel string `json:"taskLabel,omitempty"`
+
 	// TaskName: the task name associated with this snapshot. Could be
 	// empty.
 	TaskName string `json:"taskName,omitempty"`
@@ -3450,6 +3454,7 @@ type EnterpriseCrmEventbusProtoStringFunction struct {
 	//   "REPLACE_ALL"
 	//   "SUBSTRING"
 	//   "RESOLVE_TEMPLATE"
+	//   "DECODE_BASE64_STRING"
 	FunctionName string `json:"functionName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FunctionName") to
@@ -6251,6 +6256,9 @@ type GoogleCloudConnectorsV1AuthConfig struct {
 	//   "OAUTH2_AUTH_CODE_FLOW" - Oauth 2.0 Authorization Code Flow
 	AuthType string `json:"authType,omitempty"`
 
+	// Oauth2AuthCodeFlow: Oauth2AuthCodeFlow.
+	Oauth2AuthCodeFlow *GoogleCloudConnectorsV1AuthConfigOauth2AuthCodeFlow `json:"oauth2AuthCodeFlow,omitempty"`
+
 	// Oauth2ClientCredentials: Oauth2ClientCredentials.
 	Oauth2ClientCredentials *GoogleCloudConnectorsV1AuthConfigOauth2ClientCredentials `json:"oauth2ClientCredentials,omitempty"`
 
@@ -6283,6 +6291,59 @@ type GoogleCloudConnectorsV1AuthConfig struct {
 
 func (s *GoogleCloudConnectorsV1AuthConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudConnectorsV1AuthConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudConnectorsV1AuthConfigOauth2AuthCodeFlow: Parameters to
+// support Oauth 2.0 Auth Code Grant Authentication. See
+// https://www.rfc-editor.org/rfc/rfc6749#section-1.3.1 for more
+// details.
+type GoogleCloudConnectorsV1AuthConfigOauth2AuthCodeFlow struct {
+	// AuthCode: Authorization code to be exchanged for access and refresh
+	// tokens.
+	AuthCode string `json:"authCode,omitempty"`
+
+	// ClientId: Client ID for user-provided OAuth app.
+	ClientId string `json:"clientId,omitempty"`
+
+	// ClientSecret: Client secret for user-provided OAuth app.
+	ClientSecret *GoogleCloudConnectorsV1Secret `json:"clientSecret,omitempty"`
+
+	// EnablePkce: Whether to enable PKCE when the user performs the auth
+	// code flow.
+	EnablePkce bool `json:"enablePkce,omitempty"`
+
+	// PkceVerifier: PKCE verifier to be used during the auth code exchange.
+	PkceVerifier string `json:"pkceVerifier,omitempty"`
+
+	// RedirectUri: Redirect URI to be provided during the auth code
+	// exchange.
+	RedirectUri string `json:"redirectUri,omitempty"`
+
+	// Scopes: Scopes the connection will request when the user performs the
+	// auth code flow.
+	Scopes []string `json:"scopes,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AuthCode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AuthCode") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudConnectorsV1AuthConfigOauth2AuthCodeFlow) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudConnectorsV1AuthConfigOauth2AuthCodeFlow
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -6550,6 +6611,9 @@ type GoogleCloudConnectorsV1Connection struct {
 	// Connection can be edited.
 	LockConfig *GoogleCloudConnectorsV1LockConfig `json:"lockConfig,omitempty"`
 
+	// LogConfig: Optional. Log configuration for the connection.
+	LogConfig *GoogleCloudConnectorsV1LogConfig `json:"logConfig,omitempty"`
+
 	// Name: Output only. Resource name of the Connection. Format:
 	// projects/{project}/locations/{location}/connections/{connection}
 	Name string `json:"name,omitempty"`
@@ -6746,6 +6810,36 @@ type GoogleCloudConnectorsV1LockConfig struct {
 
 func (s *GoogleCloudConnectorsV1LockConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudConnectorsV1LockConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudConnectorsV1LogConfig: Log configuration for the
+// connection.
+type GoogleCloudConnectorsV1LogConfig struct {
+	// Enabled: Enabled represents whether logging is enabled or not for a
+	// connection.
+	Enabled bool `json:"enabled,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Enabled") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Enabled") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudConnectorsV1LogConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudConnectorsV1LogConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -8058,6 +8152,10 @@ type GoogleCloudIntegrationsV1alphaExecutionSnapshotExecutionSnapshotMetadata st
 
 	// TaskAttempt: the task attempt number this snapshot belongs to.
 	TaskAttempt int64 `json:"taskAttempt,omitempty"`
+
+	// TaskLabel: the task label associated with this snapshot. Could be
+	// empty.
+	TaskLabel string `json:"taskLabel,omitempty"`
 
 	// TaskNumber: The task number associated with this snapshot.
 	TaskNumber string `json:"taskNumber,omitempty"`

@@ -8870,8 +8870,11 @@ type TrainingOptions struct {
 	// AutoArima: Whether to enable auto ARIMA or not.
 	AutoArima bool `json:"autoArima,omitempty"`
 
-	// AutoArimaMaxOrder: The max value of non-seasonal p and q.
+	// AutoArimaMaxOrder: The max value of the sum of non-seasonal p and q.
 	AutoArimaMaxOrder int64 `json:"autoArimaMaxOrder,omitempty,string"`
+
+	// AutoArimaMinOrder: The min value of the sum of non-seasonal p and q.
+	AutoArimaMinOrder int64 `json:"autoArimaMinOrder,omitempty,string"`
 
 	// BatchSize: Batch size for dnn models.
 	BatchSize int64 `json:"batchSize,omitempty,string"`

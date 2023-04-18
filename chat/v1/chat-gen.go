@@ -5585,7 +5585,10 @@ type SpacesMessagesPatchCall struct {
 	header_    http.Header
 }
 
-// Patch: Updates a message. For example usage, see Update a message
+// Patch: Updates a message. There's a difference between `patch` and
+// `update` methods. The `patch` method uses a `patch` request while the
+// `update` method uses a `put` request. We recommend using the `patch`
+// method. For example usage, see Update a message
 // (https://developers.google.com/chat/api/guides/crudl/messages#update_a_message).
 // Requires authentication
 // (https://developers.google.com/chat/api/guides/auth/). Fully supports
@@ -5720,7 +5723,7 @@ func (c *SpacesMessagesPatchCall) Do(opts ...googleapi.CallOption) (*Message, er
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a message. For example usage, see [Update a message](https://developers.google.com/chat/api/guides/crudl/messages#update_a_message). Requires [authentication](https://developers.google.com/chat/api/guides/auth/). Fully supports [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts). Supports [user authentication](https://developers.google.com/chat/api/guides/auth/users) as part of the [Google Workspace Developer Preview Program](https://developers.google.com/workspace/preview), which grants early access to certain features. [User authentication](https://developers.google.com/chat/api/guides/auth/users) requires the `chat.messages` authorization scope.",
+	//   "description": "Updates a message. There's a difference between `patch` and `update` methods. The `patch` method uses a `patch` request while the `update` method uses a `put` request. We recommend using the `patch` method. For example usage, see [Update a message](https://developers.google.com/chat/api/guides/crudl/messages#update_a_message). Requires [authentication](https://developers.google.com/chat/api/guides/auth/). Fully supports [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts). Supports [user authentication](https://developers.google.com/chat/api/guides/auth/users) as part of the [Google Workspace Developer Preview Program](https://developers.google.com/workspace/preview), which grants early access to certain features. [User authentication](https://developers.google.com/chat/api/guides/auth/users) requires the `chat.messages` authorization scope.",
 	//   "flatPath": "v1/spaces/{spacesId}/messages/{messagesId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "chat.spaces.messages.patch",
@@ -5773,7 +5776,10 @@ type SpacesMessagesUpdateCall struct {
 	header_    http.Header
 }
 
-// Update: Updates a message. For example usage, see Update a message
+// Update: Updates a message. There's a difference between `patch` and
+// `update` methods. The `patch` method uses a `patch` request while the
+// `update` method uses a `put` request. We recommend using the `patch`
+// method. For example usage, see Update a message
 // (https://developers.google.com/chat/api/guides/crudl/messages#update_a_message).
 // Requires authentication
 // (https://developers.google.com/chat/api/guides/auth/). Fully supports
@@ -5908,7 +5914,7 @@ func (c *SpacesMessagesUpdateCall) Do(opts ...googleapi.CallOption) (*Message, e
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a message. For example usage, see [Update a message](https://developers.google.com/chat/api/guides/crudl/messages#update_a_message). Requires [authentication](https://developers.google.com/chat/api/guides/auth/). Fully supports [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts). Supports [user authentication](https://developers.google.com/chat/api/guides/auth/users) as part of the [Google Workspace Developer Preview Program](https://developers.google.com/workspace/preview), which grants early access to certain features. [User authentication](https://developers.google.com/chat/api/guides/auth/users) requires the `chat.messages` authorization scope.",
+	//   "description": "Updates a message. There's a difference between `patch` and `update` methods. The `patch` method uses a `patch` request while the `update` method uses a `put` request. We recommend using the `patch` method. For example usage, see [Update a message](https://developers.google.com/chat/api/guides/crudl/messages#update_a_message). Requires [authentication](https://developers.google.com/chat/api/guides/auth/). Fully supports [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts). Supports [user authentication](https://developers.google.com/chat/api/guides/auth/users) as part of the [Google Workspace Developer Preview Program](https://developers.google.com/workspace/preview), which grants early access to certain features. [User authentication](https://developers.google.com/chat/api/guides/auth/users) requires the `chat.messages` authorization scope.",
 	//   "flatPath": "v1/spaces/{spacesId}/messages/{messagesId}",
 	//   "httpMethod": "PUT",
 	//   "id": "chat.spaces.messages.update",

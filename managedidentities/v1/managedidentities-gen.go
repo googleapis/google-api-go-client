@@ -702,6 +702,78 @@ func (s *Domain) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// DomainJoinMachineRequest: DomainJoinMachineRequest is the request
+// message for DomainJoinMachine method
+type DomainJoinMachineRequest struct {
+	// Force: Optional. force if True, forces domain join even if the
+	// computer account already exists.
+	Force bool `json:"force,omitempty"`
+
+	// OuName: Optional. OU name where the VM needs to be domain joined
+	OuName string `json:"ouName,omitempty"`
+
+	// VmIdToken: Required. Full instance id token of compute engine VM to
+	// verify instance identity. More about this:
+	// https://cloud.google.com/compute/docs/instances/verifying-instance-identity#request_signature
+	VmIdToken string `json:"vmIdToken,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Force") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Force") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DomainJoinMachineRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod DomainJoinMachineRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DomainJoinMachineResponse: DomainJoinMachineResponse is the response
+// message for DomainJoinMachine method
+type DomainJoinMachineResponse struct {
+	// DomainJoinBlob: Offline domain join blob as the response
+	DomainJoinBlob string `json:"domainJoinBlob,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "DomainJoinBlob") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DomainJoinBlob") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DomainJoinMachineResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod DomainJoinMachineResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
@@ -3702,6 +3774,150 @@ func (c *ProjectsLocationsGlobalDomainsDetachTrustCall) Do(opts ...googleapi.Cal
 	//   },
 	//   "response": {
 	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "managedidentities.projects.locations.global.domains.domainJoinMachine":
+
+type ProjectsLocationsGlobalDomainsDomainJoinMachineCall struct {
+	s                        *Service
+	domain                   string
+	domainjoinmachinerequest *DomainJoinMachineRequest
+	urlParams_               gensupport.URLParams
+	ctx_                     context.Context
+	header_                  http.Header
+}
+
+// DomainJoinMachine: DomainJoinMachine API joins a Compute Engine VM to
+// the domain
+//
+//   - domain: The domain resource name using the form:
+//     projects/{project_id}/locations/global/domains/{domain_name}.
+func (r *ProjectsLocationsGlobalDomainsService) DomainJoinMachine(domain string, domainjoinmachinerequest *DomainJoinMachineRequest) *ProjectsLocationsGlobalDomainsDomainJoinMachineCall {
+	c := &ProjectsLocationsGlobalDomainsDomainJoinMachineCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.domain = domain
+	c.domainjoinmachinerequest = domainjoinmachinerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsGlobalDomainsDomainJoinMachineCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalDomainsDomainJoinMachineCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsGlobalDomainsDomainJoinMachineCall) Context(ctx context.Context) *ProjectsLocationsGlobalDomainsDomainJoinMachineCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsGlobalDomainsDomainJoinMachineCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlobalDomainsDomainJoinMachineCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.domainjoinmachinerequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+domain}:domainJoinMachine")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"domain": c.domain,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedidentities.projects.locations.global.domains.domainJoinMachine" call.
+// Exactly one of *DomainJoinMachineResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *DomainJoinMachineResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsGlobalDomainsDomainJoinMachineCall) Do(opts ...googleapi.CallOption) (*DomainJoinMachineResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &DomainJoinMachineResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "DomainJoinMachine API joins a Compute Engine VM to the domain",
+	//   "flatPath": "v1/projects/{projectsId}/locations/global/domains/{domainsId}:domainJoinMachine",
+	//   "httpMethod": "POST",
+	//   "id": "managedidentities.projects.locations.global.domains.domainJoinMachine",
+	//   "parameterOrder": [
+	//     "domain"
+	//   ],
+	//   "parameters": {
+	//     "domain": {
+	//       "description": "Required. The domain resource name using the form: projects/{project_id}/locations/global/domains/{domain_name}",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/global/domains/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+domain}:domainJoinMachine",
+	//   "request": {
+	//     "$ref": "DomainJoinMachineRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "DomainJoinMachineResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -7848,14 +8064,7 @@ type ProjectsLocationsGlobalOperationsListCall struct {
 
 // List: Lists operations that match the specified filter in the
 // request. If the server doesn't support this method, it returns
-// `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to
-// override the binding to use different resource name schemes, such as
-// `users/*/operations`. To override the binding, API services can add a
-// binding such as "/v1/{name=users/*}/operations" to their service
-// configuration. For backwards compatibility, the default name includes
-// the operations collection id, however overriding users must ensure
-// the name binding is the parent resource, without the operations
-// collection id.
+// `UNIMPLEMENTED`.
 //
 // - name: The name of the operation's parent resource.
 func (r *ProjectsLocationsGlobalOperationsService) List(name string) *ProjectsLocationsGlobalOperationsListCall {
@@ -7984,7 +8193,7 @@ func (c *ProjectsLocationsGlobalOperationsListCall) Do(opts ...googleapi.CallOpt
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/global/operations",
 	//   "httpMethod": "GET",
 	//   "id": "managedidentities.projects.locations.global.operations.list",

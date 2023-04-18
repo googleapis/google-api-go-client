@@ -5,7 +5,7 @@ go 1.19
 require (
 	cloud.google.com/go/compute/metadata v0.2.3
 	github.com/google/go-cmp v0.5.9
-	github.com/google/s2a-go v0.1.0
+	github.com/google/s2a-go v0.1.1
 	github.com/google/uuid v1.3.0
 	github.com/googleapis/enterprise-certificate-proxy v0.2.3
 	github.com/googleapis/gax-go/v2 v2.8.0
@@ -14,7 +14,7 @@ require (
 	golang.org/x/oauth2 v0.7.0
 	golang.org/x/sync v0.1.0
 	google.golang.org/appengine v1.6.7
-	google.golang.org/genproto v0.0.0-20230403163135-c38d8f061ccd
+	google.golang.org/genproto v0.0.0-20230410155749-daa745c078e1
 	google.golang.org/grpc v1.54.0
 	google.golang.org/protobuf v1.30.0
 )

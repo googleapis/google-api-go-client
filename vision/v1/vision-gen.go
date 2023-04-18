@@ -13516,8 +13516,12 @@ func (s *TextAnnotation) MarshalJSON() ([]byte, error) {
 // TextDetectionParams: Parameters for text detections. This is used to
 // control TEXT_DETECTION and DOCUMENT_TEXT_DETECTION features.
 type TextDetectionParams struct {
-	// AdvancedOcrOptions: A list of advanced OCR options to fine-tune OCR
-	// behavior.
+	// AdvancedOcrOptions: A list of advanced OCR options to further
+	// fine-tune OCR behavior. Current valid values are: - `legacy_layout`:
+	// a heuristics layout detection algorithm, which serves as an
+	// alternative to the current ML-based layout detection algorithm.
+	// Customers can choose the best suitable layout algorithm based on
+	// their situation.
 	AdvancedOcrOptions []string `json:"advancedOcrOptions,omitempty"`
 
 	// EnableTextDetectionConfidenceScore: By default, Cloud Vision API only

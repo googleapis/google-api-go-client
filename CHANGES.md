@@ -1,5 +1,17 @@
 # Changes
 
+## [0.119.0](https://github.com/googleapis/google-api-go-client/compare/v0.118.0...v0.119.0) (2023-04-19)
+
+
+### Features
+
+* Add an option to enable DirectPath xDS ([#1942](https://github.com/googleapis/google-api-go-client/issues/1942)) ([685ec81](https://github.com/googleapis/google-api-go-client/commit/685ec81a16c29f3ae9e487042f954ed59adb97df))
+* **all:** Auto-regenerate discovery clients ([#1943](https://github.com/googleapis/google-api-go-client/issues/1943)) ([690068f](https://github.com/googleapis/google-api-go-client/commit/690068ff96fb835a881629868d069f117a983ea2))
+* **all:** Auto-regenerate discovery clients ([#1947](https://github.com/googleapis/google-api-go-client/issues/1947)) ([a0dacd5](https://github.com/googleapis/google-api-go-client/commit/a0dacd59461bc796d54c387f666520a67806d14b))
+* **all:** Auto-regenerate discovery clients ([#1948](https://github.com/googleapis/google-api-go-client/issues/1948)) ([e1eda57](https://github.com/googleapis/google-api-go-client/commit/e1eda577a094fc8ffd402c6dc28e95a2998d3010))
+* **all:** Auto-regenerate discovery clients ([#1952](https://github.com/googleapis/google-api-go-client/issues/1952)) ([4cb8eb9](https://github.com/googleapis/google-api-go-client/commit/4cb8eb989d2783f5da2b37e8c75ef38eb59441bb))
+* **all:** Auto-regenerate discovery clients ([#1953](https://github.com/googleapis/google-api-go-client/issues/1953)) ([d85769c](https://github.com/googleapis/google-api-go-client/commit/d85769c0ff0ffb1cea5215c66dadc30801621434))
+
 ## [0.118.0](https://github.com/googleapis/google-api-go-client/compare/v0.117.0...v0.118.0) (2023-04-12)
 
 

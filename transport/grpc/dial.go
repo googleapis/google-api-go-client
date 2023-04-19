@@ -164,7 +164,7 @@ func dial(ctx context.Context, insecure bool, o *internal.DialSettings) (*grpc.C
 				grpcOpts = append(grpcOpts, timeoutDialerOption)
 			}
 			// Check if google-c2p resolver is enabled for DirectPath
-			if strings.EqualFold(os.Getenv(enableDirectPathXds), "true") {
+			if isDirectPathXdsUsed(o) {
 				// google-c2p resolver target must not have a port number
 				if addr, _, err := net.SplitHostPort(endpoint); err == nil {
 					endpoint = "google-c2p:///" + addr
@@ -249,6 +249,19 @@ func isDirectPathEnabled(endpoint string, o *internal.DialSettings) bool {
 		return false
 	}
 	return true
+}
+
+func isDirectPathXdsUsed(o *internal.DialSettings) bool {
+	// Method 1: Enable DirectPath xDS by env;
+	if strings.EqualFold(os.Getenv(enableDirectPathXds), "true") {
+		return true
+	}
+	// Method 2: Enable DirectPath xDS by option;
+	if o.EnableDirectPathXds {
+		return true
+	}
+	return false
+
 }
 
 func isTokenSourceDirectPathCompatible(ts oauth2.TokenSource, o *internal.DialSettings) bool {

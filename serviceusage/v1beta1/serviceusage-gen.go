@@ -5953,6 +5953,7 @@ func (c *ServicesBatchEnableCall) Do(opts ...googleapi.CallOption) (*Operation, 
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Enables multiple services on a project. The operation is atomic: if enabling any service fails, then the entire batch fails, and no state changes occur. Operation response type: `google.protobuf.Empty`",
 	//   "flatPath": "v1beta1/{v1beta1Id}/{v1beta1Id1}/services:batchEnable",
 	//   "httpMethod": "POST",
@@ -6106,6 +6107,7 @@ func (c *ServicesDisableCall) Do(opts ...googleapi.CallOption) (*Operation, erro
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Disables a service so that it can no longer be used with a project. This prevents unintended usage that may cause unexpected billing charges or security leaks. It is not valid to call the disable method on a service that is not currently enabled. Callers will receive a `FAILED_PRECONDITION` status if the target service is not currently enabled. Operation response type: `google.protobuf.Empty`",
 	//   "flatPath": "v1beta1/{v1beta1Id}/{v1beta1Id1}/services/{servicesId}:disable",
 	//   "httpMethod": "POST",
@@ -6255,6 +6257,7 @@ func (c *ServicesEnableCall) Do(opts ...googleapi.CallOption) (*Operation, error
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Enables a service so that it can be used with a project. Operation response type: `google.protobuf.Empty`",
 	//   "flatPath": "v1beta1/{v1beta1Id}/{v1beta1Id1}/services/{servicesId}:enable",
 	//   "httpMethod": "POST",
@@ -6546,6 +6549,7 @@ func (c *ServicesGetCall) Do(opts ...googleapi.CallOption) (*Service, error) {
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Returns the service configuration and enabled state for a given service.",
 	//   "flatPath": "v1beta1/{v1beta1Id}/{v1beta1Id1}/services/{servicesId}",
 	//   "httpMethod": "GET",
@@ -6724,6 +6728,7 @@ func (c *ServicesListCall) Do(opts ...googleapi.CallOption) (*ListServicesRespon
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Lists all services available to the specified project, and the current state of those services with respect to the project. The list includes all public services, all services for which the calling user has the `servicemanagement.services.bind` permission, and all services that have already been enabled on the project. The list can be filtered to only include services in a specific state, for example to only include services enabled on the project.",
 	//   "flatPath": "v1beta1/{v1beta1Id}/{v1beta1Id1}/services",
 	//   "httpMethod": "GET",

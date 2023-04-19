@@ -698,6 +698,7 @@ type CVSS struct {
 	//   "ATTACK_COMPLEXITY_UNSPECIFIED"
 	//   "ATTACK_COMPLEXITY_LOW"
 	//   "ATTACK_COMPLEXITY_HIGH"
+	//   "ATTACK_COMPLEXITY_MEDIUM"
 	AttackComplexity string `json:"attackComplexity,omitempty"`
 
 	// AttackVector: Base Metrics Represents the intrinsic characteristics
@@ -724,6 +725,8 @@ type CVSS struct {
 	//   "IMPACT_HIGH"
 	//   "IMPACT_LOW"
 	//   "IMPACT_NONE"
+	//   "IMPACT_PARTIAL"
+	//   "IMPACT_COMPLETE"
 	AvailabilityImpact string `json:"availabilityImpact,omitempty"`
 
 	// BaseScore: The base score is a function of the base metric scores.
@@ -734,6 +737,8 @@ type CVSS struct {
 	//   "IMPACT_HIGH"
 	//   "IMPACT_LOW"
 	//   "IMPACT_NONE"
+	//   "IMPACT_PARTIAL"
+	//   "IMPACT_COMPLETE"
 	ConfidentialityImpact string `json:"confidentialityImpact,omitempty"`
 
 	ExploitabilityScore float64 `json:"exploitabilityScore,omitempty"`
@@ -745,6 +750,8 @@ type CVSS struct {
 	//   "IMPACT_HIGH"
 	//   "IMPACT_LOW"
 	//   "IMPACT_NONE"
+	//   "IMPACT_PARTIAL"
+	//   "IMPACT_COMPLETE"
 	IntegrityImpact string `json:"integrityImpact,omitempty"`
 
 	// Possible values:

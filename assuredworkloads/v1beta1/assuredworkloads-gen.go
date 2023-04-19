@@ -525,6 +525,10 @@ type GoogleCloudAssuredworkloadsV1beta1Violation struct {
 	// https://console.cloud.google.com/logs/query;query={logName}{protoPayload.resourceName}{protoPayload.methodName}{timeRange}{organization}
 	ExceptionAuditLogLink string `json:"exceptionAuditLogLink,omitempty"`
 
+	// ExceptionContexts: Output only. List of all the exception detail
+	// added for the violation.
+	ExceptionContexts []*GoogleCloudAssuredworkloadsV1beta1ViolationExceptionContext `json:"exceptionContexts,omitempty"`
+
 	// Name: Output only. Immutable. Name of the Violation. Format:
 	// organizations/{organization}/locations/{location}/workloads/{workload_
 	// id}/violations/{violations_id}
@@ -586,6 +590,44 @@ type GoogleCloudAssuredworkloadsV1beta1Violation struct {
 
 func (s *GoogleCloudAssuredworkloadsV1beta1Violation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssuredworkloadsV1beta1Violation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssuredworkloadsV1beta1ViolationExceptionContext:
+// Violation exception detail. Next Id: 5
+type GoogleCloudAssuredworkloadsV1beta1ViolationExceptionContext struct {
+	// AcknowledgementTime: Timestamp when the violation was acknowledged.
+	AcknowledgementTime string `json:"acknowledgementTime,omitempty"`
+
+	// Comment: Business justification provided towards the acknowledgement
+	// of the violation.
+	Comment string `json:"comment,omitempty"`
+
+	// PrincipalEmail: Email address of the user (or service account) who
+	// acknowledged the violation.
+	PrincipalEmail string `json:"principalEmail,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AcknowledgementTime")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AcknowledgementTime") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAssuredworkloadsV1beta1ViolationExceptionContext) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssuredworkloadsV1beta1ViolationExceptionContext
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -905,6 +947,14 @@ type GoogleCloudAssuredworkloadsV1beta1Workload struct {
 	// during GetWorkload call. In failure cases, user friendly error
 	// message is shown in SAA details page.
 	SaaEnrollmentResponse *GoogleCloudAssuredworkloadsV1beta1WorkloadSaaEnrollmentResponse `json:"saaEnrollmentResponse,omitempty"`
+
+	// ViolationNotificationsEnabled: Optional. Indicates whether the e-mail
+	// notification for a violation is enabled for a workload. This value
+	// will be by default True, and if not present will be considered as
+	// true. This should only be updated via updateWorkload call. Any
+	// Changes to this field during the createWorkload call will not be
+	// honored. This will always be true while creating the workload.
+	ViolationNotificationsEnabled bool `json:"violationNotificationsEnabled,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.

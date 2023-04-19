@@ -4739,8 +4739,9 @@ type Policy struct {
 	//   "BETA" - The beta track, which provides the latest beta release.
 	AndroidDevicePolicyTracks []string `json:"androidDevicePolicyTracks,omitempty"`
 
-	// AppAutoUpdatePolicy: Deprecated. Use autoUpdateMode instead.When
-	// autoUpdateMode is set to AUTO_UPDATE_POSTPONED or
+	// AppAutoUpdatePolicy: Recommended alternative: autoUpdateMode which is
+	// set per app, provides greater flexibility around update
+	// frequency.When autoUpdateMode is set to AUTO_UPDATE_POSTPONED or
 	// AUTO_UPDATE_HIGH_PRIORITY, this field has no effect.The app auto
 	// update policy, which controls when automatic app updates can be
 	// applied.

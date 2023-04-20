@@ -135,8 +135,61 @@ type WebfontsService struct {
 	s *Service
 }
 
+// Axis: Metadata for a variable font axis.
+type Axis struct {
+	// End: maximum value
+	End float64 `json:"end,omitempty"`
+
+	// Start: minimum value
+	Start float64 `json:"start,omitempty"`
+
+	// Tag: tag name.
+	Tag string `json:"tag,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "End") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "End") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Axis) MarshalJSON() ([]byte, error) {
+	type NoMethod Axis
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *Axis) UnmarshalJSON(data []byte) error {
+	type NoMethod Axis
+	var s1 struct {
+		End   gensupport.JSONFloat64 `json:"end"`
+		Start gensupport.JSONFloat64 `json:"start"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.End = float64(s1.End)
+	s.Start = float64(s1.Start)
+	return nil
+}
+
 // Webfont: Metadata describing a family of fonts.
 type Webfont struct {
+	// Axes: Axis for variable fonts.
+	Axes []*Axis `json:"axes,omitempty"`
+
 	// Category: The category of the font.
 	Category string `json:"category,omitempty"`
 
@@ -154,6 +207,10 @@ type Webfont struct {
 	// for the last time.
 	LastModified string `json:"lastModified,omitempty"`
 
+	// Menu: Font URL for menu subset, a subset of the font that is enough
+	// to display the font name
+	Menu string `json:"menu,omitempty"`
+
 	// Subsets: The scripts supported by the font.
 	Subsets []string `json:"subsets,omitempty"`
 
@@ -163,7 +220,7 @@ type Webfont struct {
 	// Version: The font version.
 	Version string `json:"version,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Category") to
+	// ForceSendFields is a list of field names (e.g. "Axes") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -171,8 +228,8 @@ type Webfont struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Category") to include in
-	// API requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "Axes") to include in API
+	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -240,6 +297,28 @@ func (r *WebfontsService) List() *WebfontsListCall {
 	return c
 }
 
+// Capability sets the optional parameter "capability": Controls the
+// font urls in `Webfont.files`, by default, static ttf fonts are sent.
+//
+// Possible values:
+//
+//	"CAPABILITY_UNSPECIFIED" - Default means static ttf fonts.
+//	"WOFF2" - Use WOFF2(Compressed)instead of ttf.
+//	"VF" - Prefer variable font files instead of static fonts
+//
+// instantiated at standard weights.
+func (c *WebfontsListCall) Capability(capability ...string) *WebfontsListCall {
+	c.urlParams_.SetMulti("capability", append([]string{}, capability...))
+	return c
+}
+
+// Family sets the optional parameter "family": Filters by
+// Webfont.family, using literal match. If not set, returns all families
+func (c *WebfontsListCall) Family(family ...string) *WebfontsListCall {
+	c.urlParams_.SetMulti("family", append([]string{}, family...))
+	return c
+}
+
 // Sort sets the optional parameter "sort": Enables sorting of the list.
 //
 // Possible values:
@@ -255,6 +334,14 @@ func (r *WebfontsService) List() *WebfontsListCall {
 //	"TRENDING" - Sort by trending
 func (c *WebfontsListCall) Sort(sort string) *WebfontsListCall {
 	c.urlParams_.Set("sort", sort)
+	return c
+}
+
+// Subset sets the optional parameter "subset": Filters by
+// Webfont.subset, if subset is found in Webfont.subsets. If not set,
+// returns all families.
+func (c *WebfontsListCall) Subset(subset string) *WebfontsListCall {
+	c.urlParams_.Set("subset", subset)
 	return c
 }
 
@@ -360,6 +447,28 @@ func (c *WebfontsListCall) Do(opts ...googleapi.CallOption) (*WebfontList, error
 	//   "id": "webfonts.webfonts.list",
 	//   "parameterOrder": [],
 	//   "parameters": {
+	//     "capability": {
+	//       "description": "Controls the font urls in `Webfont.files`, by default, static ttf fonts are sent.",
+	//       "enum": [
+	//         "CAPABILITY_UNSPECIFIED",
+	//         "WOFF2",
+	//         "VF"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Default means static ttf fonts.",
+	//         "Use WOFF2(Compressed)instead of ttf.",
+	//         "Prefer variable font files instead of static fonts instantiated at standard weights."
+	//       ],
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "family": {
+	//       "description": "Filters by Webfont.family, using literal match. If not set, returns all families",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
 	//     "sort": {
 	//       "description": "Enables sorting of the list.",
 	//       "enum": [
@@ -378,6 +487,11 @@ func (c *WebfontsListCall) Do(opts ...googleapi.CallOption) (*WebfontList, error
 	//         "Sort by number of styles",
 	//         "Sort by trending"
 	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "subset": {
+	//       "description": "Filters by Webfont.subset, if subset is found in Webfont.subsets. If not set, returns all families.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }

@@ -9306,6 +9306,13 @@ func (r *FilesService) EmptyTrash() *FilesEmptyTrashCall {
 	return c
 }
 
+// DriveId sets the optional parameter "driveId": If set, empties the
+// trash of the provided shared drive.
+func (c *FilesEmptyTrashCall) DriveId(driveId string) *FilesEmptyTrashCall {
+	c.urlParams_.Set("driveId", driveId)
+	return c
+}
+
 // EnforceSingleParent sets the optional parameter
 // "enforceSingleParent": Deprecated. If an item is not in a shared
 // drive and its last parent is deleted but the item itself is not, the
@@ -9377,6 +9384,11 @@ func (c *FilesEmptyTrashCall) Do(opts ...googleapi.CallOption) error {
 	//   "httpMethod": "DELETE",
 	//   "id": "drive.files.emptyTrash",
 	//   "parameters": {
+	//     "driveId": {
+	//       "description": "If set, empties the trash of the provided shared drive.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "enforceSingleParent": {
 	//       "default": "false",
 	//       "description": "Deprecated. If an item is not in a shared drive and its last parent is deleted but the item itself is not, the item will be placed under its owner's root.",

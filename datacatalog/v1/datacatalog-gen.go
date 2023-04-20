@@ -1506,17 +1506,11 @@ type GoogleCloudDatacatalogV1Entry struct {
 	// only for entries with the `FILESET` type.
 	FilesetSpec *GoogleCloudDatacatalogV1FilesetSpec `json:"filesetSpec,omitempty"`
 
-	// FullyQualifiedName: Fully qualified name (FQN) of the resource. Set
-	// automatically for entries representing resources from synced systems.
-	// Settable only during creation and read-only afterwards. Can be used
-	// for search and lookup of the entries. FQNs take two forms: * For
-	// non-regionalized resources:
-	// `{SYSTEM}:{PROJECT}.{PATH_TO_RESOURCE_SEPARATED_WITH_DOTS}` * For
-	// regionalized resources:
-	// `{SYSTEM}:{PROJECT}.{LOCATION_ID}.{PATH_TO_RESOURCE_SEPARATED_WITH_DOT
-	// S}` Example for a DPMS table:
-	// `dataproc_metastore:{PROJECT_ID}.{LOCATION_ID}.{INSTANCE_ID}.{DATABASE
-	// _ID}.{TABLE_ID}`
+	// FullyQualifiedName: Fully Qualified Name (FQN)
+	// (https://cloud.google.com//data-catalog/docs/fully-qualified-names)
+	// of the resource. Set automatically for entries representing resources
+	// from synced systems. Settable only during creation, and read-only
+	// later. Can be used for search and lookup of the entries.
 	FullyQualifiedName string `json:"fullyQualifiedName,omitempty"`
 
 	// GcsFilesetSpec: Specification that applies to a Cloud Storage
@@ -3232,6 +3226,10 @@ type GoogleCloudDatacatalogV1SearchCatalogResponse struct {
 	// Results: Search results.
 	Results []*GoogleCloudDatacatalogV1SearchCatalogResult `json:"results,omitempty"`
 
+	// TotalSize: The approximate total number of entries matched by the
+	// query.
+	TotalSize int64 `json:"totalSize,omitempty"`
+
 	// Unreachable: Unreachable locations. Search results don't include data
 	// from those locations. To get additional information on an error,
 	// repeat the search request and restrict it to specific locations by
@@ -4777,8 +4775,10 @@ func (r *EntriesService) Lookup() *EntriesLookupCall {
 }
 
 // FullyQualifiedName sets the optional parameter "fullyQualifiedName":
-// Fully qualified name (FQN) of the resource. FQNs take two forms: *
-// For non-regionalized resources:
+// Fully Qualified Name (FQN)
+// (https://cloud.google.com//data-catalog/docs/fully-qualified-names)
+// of the resource. FQNs take two forms: * For non-regionalized
+// resources:
 // `{SYSTEM}:{PROJECT}.{PATH_TO_RESOURCE_SEPARATED_WITH_DOTS}` * For
 // regionalized resources:
 // `{SYSTEM}:{PROJECT}.{LOCATION_ID}.{PATH_TO_RESOURCE_SEPARATED_WITH_DOT
@@ -4921,7 +4921,7 @@ func (c *EntriesLookupCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDataca
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "fullyQualifiedName": {
-	//       "description": "Fully qualified name (FQN) of the resource. FQNs take two forms: * For non-regionalized resources: `{SYSTEM}:{PROJECT}.{PATH_TO_RESOURCE_SEPARATED_WITH_DOTS}` * For regionalized resources: `{SYSTEM}:{PROJECT}.{LOCATION_ID}.{PATH_TO_RESOURCE_SEPARATED_WITH_DOTS}` Example for a DPMS table: `dataproc_metastore:{PROJECT_ID}.{LOCATION_ID}.{INSTANCE_ID}.{DATABASE_ID}.{TABLE_ID}`",
+	//       "description": "[Fully Qualified Name (FQN)](https://cloud.google.com//data-catalog/docs/fully-qualified-names) of the resource. FQNs take two forms: * For non-regionalized resources: `{SYSTEM}:{PROJECT}.{PATH_TO_RESOURCE_SEPARATED_WITH_DOTS}` * For regionalized resources: `{SYSTEM}:{PROJECT}.{LOCATION_ID}.{PATH_TO_RESOURCE_SEPARATED_WITH_DOTS}` Example for a DPMS table: `dataproc_metastore:{PROJECT_ID}.{LOCATION_ID}.{INSTANCE_ID}.{DATABASE_ID}.{TABLE_ID}`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

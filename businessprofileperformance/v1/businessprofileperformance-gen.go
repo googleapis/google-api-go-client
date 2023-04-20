@@ -336,7 +336,8 @@ type DatedValue struct {
 	// month value if the day field is not set.
 	Date *Date `json:"date,omitempty"`
 
-	// Value: The value of the datapoint.
+	// Value: The value of the datapoint. This will not be present when the
+	// value is zero.
 	Value int64 `json:"value,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "Date") to

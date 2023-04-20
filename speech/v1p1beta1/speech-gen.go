@@ -350,6 +350,22 @@ type CustomClass struct {
 	// Items: A collection of class items.
 	Items []*ClassItem `json:"items,omitempty"`
 
+	// KmsKeyName: Output only. The KMS key name
+	// (https://cloud.google.com/kms/docs/resource-hierarchy#keys) with
+	// which the content of the ClassItem is encrypted. The expected format
+	// is
+	// `projects/{project}/locations/{location}/keyRings/{key_ring}/cryptoKey
+	// s/{crypto_key}`.
+	KmsKeyName string `json:"kmsKeyName,omitempty"`
+
+	// KmsKeyVersionName: Output only. The KMS key version name
+	// (https://cloud.google.com/kms/docs/resource-hierarchy#key_versions)
+	// with which content of the ClassItem is encrypted. The expected format
+	// is
+	// `projects/{project}/locations/{location}/keyRings/{key_ring}/cryptoKey
+	// s/{crypto_key}/cryptoKeyVersions/{crypto_key_version}`.
+	KmsKeyVersionName string `json:"kmsKeyVersionName,omitempty"`
+
 	// Name: The resource name of the custom class.
 	Name string `json:"name,omitempty"`
 
@@ -828,6 +844,22 @@ type PhraseSet struct {
 	// finding the optimal value for your use case as well as adding phrases
 	// both with and without boost to your requests.
 	Boost float64 `json:"boost,omitempty"`
+
+	// KmsKeyName: Output only. The KMS key name
+	// (https://cloud.google.com/kms/docs/resource-hierarchy#keys) with
+	// which the content of the PhraseSet is encrypted. The expected format
+	// is
+	// `projects/{project}/locations/{location}/keyRings/{key_ring}/cryptoKey
+	// s/{crypto_key}`.
+	KmsKeyName string `json:"kmsKeyName,omitempty"`
+
+	// KmsKeyVersionName: Output only. The KMS key version name
+	// (https://cloud.google.com/kms/docs/resource-hierarchy#key_versions)
+	// with which content of the PhraseSet is encrypted. The expected format
+	// is
+	// `projects/{project}/locations/{location}/keyRings/{key_ring}/cryptoKey
+	// s/{crypto_key}/cryptoKeyVersions/{crypto_key_version}`.
+	KmsKeyVersionName string `json:"kmsKeyVersionName,omitempty"`
 
 	// Name: The resource name of the phrase set.
 	Name string `json:"name,omitempty"`

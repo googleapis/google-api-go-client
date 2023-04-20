@@ -2450,6 +2450,7 @@ type Grant struct {
 	//   "CAN_MANAGE_PUBLIC_LISTING" - Manage store presence.
 	//   "CAN_MANAGE_DRAFT_APPS" - Edit and delete draft apps.
 	//   "CAN_MANAGE_ORDERS" - Manage orders and subscriptions.
+	//   "CAN_MANAGE_APP_CONTENT" - Manage policy related pages.
 	AppLevelPermissions []string `json:"appLevelPermissions,omitempty"`
 
 	// Name: Required. Resource name for this grant, following the pattern
@@ -5975,6 +5976,8 @@ type User struct {
 	//   "CAN_CHANGE_MANAGED_PLAY_SETTING_GLOBAL" - Choose whether apps are
 	// public, or only available to your organization.
 	//   "CAN_MANAGE_ORDERS_GLOBAL" - Manage orders and subscriptions.
+	//   "CAN_MANAGE_APP_CONTENT_GLOBAL" - Manage policy related pages on
+	// all apps for the developer.
 	DeveloperAccountPermissions []string `json:"developerAccountPermissions,omitempty"`
 
 	// Email: Immutable. The user's email address.
@@ -14301,7 +14304,7 @@ type InappproductsDeleteCall struct {
 }
 
 // Delete: Deletes an in-app product (i.e. a managed product or a
-// subscriptions).
+// subscription).
 //
 // - packageName: Package name of the app.
 // - sku: Unique identifier for the in-app product.
@@ -14374,7 +14377,7 @@ func (c *InappproductsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	}
 	return nil
 	// {
-	//   "description": "Deletes an in-app product (i.e. a managed product or a subscriptions).",
+	//   "description": "Deletes an in-app product (i.e. a managed product or a subscription).",
 	//   "flatPath": "androidpublisher/v3/applications/{packageName}/inappproducts/{sku}",
 	//   "httpMethod": "DELETE",
 	//   "id": "androidpublisher.inappproducts.delete",
@@ -14573,7 +14576,7 @@ type InappproductsInsertCall struct {
 }
 
 // Insert: Creates an in-app product (i.e. a managed product or a
-// subscriptions).
+// subscription).
 //
 // - packageName: Package name of the app.
 func (r *InappproductsService) Insert(packageName string, inappproduct *InAppProduct) *InappproductsInsertCall {
@@ -14684,7 +14687,7 @@ func (c *InappproductsInsertCall) Do(opts ...googleapi.CallOption) (*InAppProduc
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates an in-app product (i.e. a managed product or a subscriptions).",
+	//   "description": "Creates an in-app product (i.e. a managed product or a subscription).",
 	//   "flatPath": "androidpublisher/v3/applications/{packageName}/inappproducts",
 	//   "httpMethod": "POST",
 	//   "id": "androidpublisher.inappproducts.insert",
@@ -14751,7 +14754,7 @@ func (c *InappproductsListCall) MaxResults(maxResults int64) *InappproductsListC
 }
 
 // StartIndex sets the optional parameter "startIndex": Deprecated and
-// ignored. Set the `token` parameter to rertieve the next page.
+// ignored. Set the `token` parameter to retrieve the next page.
 func (c *InappproductsListCall) StartIndex(startIndex int64) *InappproductsListCall {
 	c.urlParams_.Set("startIndex", fmt.Sprint(startIndex))
 	return c
@@ -14884,7 +14887,7 @@ func (c *InappproductsListCall) Do(opts ...googleapi.CallOption) (*Inappproducts
 	//       "type": "string"
 	//     },
 	//     "startIndex": {
-	//       "description": "Deprecated and ignored. Set the `token` parameter to rertieve the next page.",
+	//       "description": "Deprecated and ignored. Set the `token` parameter to retrieve the next page.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -14919,7 +14922,7 @@ type InappproductsPatchCall struct {
 }
 
 // Patch: Patches an in-app product (i.e. a managed product or a
-// subscriptions).
+// subscription).
 //
 // - packageName: Package name of the app.
 // - sku: Unique identifier for the in-app product.
@@ -15033,7 +15036,7 @@ func (c *InappproductsPatchCall) Do(opts ...googleapi.CallOption) (*InAppProduct
 	}
 	return ret, nil
 	// {
-	//   "description": "Patches an in-app product (i.e. a managed product or a subscriptions).",
+	//   "description": "Patches an in-app product (i.e. a managed product or a subscription).",
 	//   "flatPath": "androidpublisher/v3/applications/{packageName}/inappproducts/{sku}",
 	//   "httpMethod": "PATCH",
 	//   "id": "androidpublisher.inappproducts.patch",
@@ -15087,7 +15090,7 @@ type InappproductsUpdateCall struct {
 }
 
 // Update: Updates an in-app product (i.e. a managed product or a
-// subscriptions).
+// subscription).
 //
 // - packageName: Package name of the app.
 // - sku: Unique identifier for the in-app product.
@@ -15209,7 +15212,7 @@ func (c *InappproductsUpdateCall) Do(opts ...googleapi.CallOption) (*InAppProduc
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates an in-app product (i.e. a managed product or a subscriptions).",
+	//   "description": "Updates an in-app product (i.e. a managed product or a subscription).",
 	//   "flatPath": "androidpublisher/v3/applications/{packageName}/inappproducts/{sku}",
 	//   "httpMethod": "PUT",
 	//   "id": "androidpublisher.inappproducts.update",

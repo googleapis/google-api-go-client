@@ -1780,18 +1780,18 @@ func (s *GoogleCloudRetailV2CustomAttribute) MarshalJSON() ([]byte, error) {
 // GoogleCloudRetailV2ExperimentInfo: Metadata for active A/B testing
 // Experiments.
 type GoogleCloudRetailV2ExperimentInfo struct {
-	// ExperimentName: The fully qualified resource name of the experiment
-	// that provides the serving config under test, should an active
-	// experiment exist. For example:
+	// Experiment: The fully qualified resource name of the experiment that
+	// provides the serving config under test, should an active experiment
+	// exist. For example:
 	// `projects/*/locations/global/catalogs/default_catalog/experiments/expe
 	// riment_id`
-	ExperimentName string `json:"experimentName,omitempty"`
+	Experiment string `json:"experiment,omitempty"`
 
 	// ServingConfigExperiment: A/B test between existing Cloud Retail
 	// Search ServingConfigs.
 	ServingConfigExperiment *GoogleCloudRetailV2ExperimentInfoServingConfigExperiment `json:"servingConfigExperiment,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "ExperimentName") to
+	// ForceSendFields is a list of field names (e.g. "Experiment") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1799,13 +1799,12 @@ type GoogleCloudRetailV2ExperimentInfo struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ExperimentName") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "Experiment") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -4684,8 +4683,8 @@ type GoogleCloudRetailV2SearchRequest struct {
 	DynamicFacetSpec *GoogleCloudRetailV2SearchRequestDynamicFacetSpec `json:"dynamicFacetSpec,omitempty"`
 
 	// Entity: The entity for customers that may run multiple different
-	// entities, domains, sites or regions, for example, "Google US",
-	// "Google Ads", "Waymo", "google.com", "youtube.com", etc. If this is
+	// entities, domains, sites or regions, for example, `Google US`,
+	// `Google Ads`, `Waymo`, `google.com`, `youtube.com`, etc. If this is
 	// set, it should be exactly matched with UserEvent.entity to get search
 	// results boosted by entity.
 	Entity string `json:"entity,omitempty"`
@@ -4733,8 +4732,8 @@ type GoogleCloudRetailV2SearchRequest struct {
 	// this field is unrecognizable, an INVALID_ARGUMENT is returned.
 	OrderBy string `json:"orderBy,omitempty"`
 
-	// PageCategories: The categories associated with a category page.
-	// Required for category navigation queries to achieve good search
+	// PageCategories: The categories associated with a category page. Must
+	// be set for category navigation queries to achieve good search
 	// quality. The format should be the same as UserEvent.page_categories;
 	// To represent full path of category, use '>' sign to separate
 	// different hierarchies. If '>' is part of the category name, replace
@@ -5100,14 +5099,17 @@ type GoogleCloudRetailV2SearchRequestFacetSpecFacetKey struct {
 	// Only supported on textual fields. Maximum is 10.
 	Contains []string `json:"contains,omitempty"`
 
-	// Intervals: For all numerical facet keys that appear in the list of
-	// products from the catalog, the percentiles 0, 10, 30, 50, 70, 90 and
-	// 100 are computed from their distribution weekly. If the model assigns
-	// a high score to a numerical facet key and its intervals are not
-	// specified in the search request, these percentiles will become the
-	// bounds for its intervals and will be returned in the response. If the
-	// facet key intervals are specified in the request, then the specified
-	// intervals will be returned instead.
+	// Intervals: Set only if values should be bucketized into intervals.
+	// Must be set for facets with numerical values. Must not be set for
+	// facet with text values. Maximum number of intervals is 40. For all
+	// numerical facet keys that appear in the list of products from the
+	// catalog, the percentiles 0, 10, 30, 50, 70, 90 and 100 are computed
+	// from their distribution weekly. If the model assigns a high score to
+	// a numerical facet key and its intervals are not specified in the
+	// search request, these percentiles will become the bounds for its
+	// intervals and will be returned in the response. If the facet key
+	// intervals are specified in the request, then the specified intervals
+	// will be returned instead.
 	Intervals []*GoogleCloudRetailV2Interval `json:"intervals,omitempty"`
 
 	// Key: Required. Supported textual and numerical facet keys in Product
@@ -6012,8 +6014,8 @@ type GoogleCloudRetailV2UserEvent struct {
 	CompletionDetail *GoogleCloudRetailV2CompletionDetail `json:"completionDetail,omitempty"`
 
 	// Entity: The entity for customers that may run multiple different
-	// entities, domains, sites or regions, for example, "Google US",
-	// "Google Ads", "Waymo", "google.com", "youtube.com", etc. It is
+	// entities, domains, sites or regions, for example, `Google US`,
+	// `Google Ads`, `Waymo`, `google.com`, `youtube.com`, etc. It is
 	// recommended to set this field to get better per-entity search,
 	// completion and prediction results.
 	Entity string `json:"entity,omitempty"`
@@ -6836,7 +6838,6 @@ func (s *GoogleCloudRetailV2alphaImportUserEventsResponse) MarshalJSON() ([]byte
 // between a Merchant Center account and a branch. Once a link is
 // established, products from the linked merchant center account will be
 // streamed to the linked branch.
-// LINT.IfChange(MerchantCenterAccountLink)
 type GoogleCloudRetailV2alphaMerchantCenterAccountLink struct {
 	// BranchId: Required. The branch id (e.g. 0/1/2) within the catalog
 	// that products from merchant_center_account_id are streamed to. When
@@ -6884,7 +6885,7 @@ type GoogleCloudRetailV2alphaMerchantCenterAccountLink struct {
 	// countLinks/merchant_center_account_link`.
 	Name string `json:"name,omitempty"`
 
-	// ProjectId: Output only. GCP project ID.
+	// ProjectId: Output only. Google Cloud project ID.
 	ProjectId string `json:"projectId,omitempty"`
 
 	// State: Output only. Represents the state of the link.
@@ -8163,7 +8164,6 @@ func (s *GoogleCloudRetailV2betaImportUserEventsResponse) MarshalJSON() ([]byte,
 // between a Merchant Center account and a branch. Once a link is
 // established, products from the linked merchant center account will be
 // streamed to the linked branch.
-// LINT.IfChange(MerchantCenterAccountLink)
 type GoogleCloudRetailV2betaMerchantCenterAccountLink struct {
 	// BranchId: Required. The branch id (e.g. 0/1/2) within the catalog
 	// that products from merchant_center_account_id are streamed to. When
@@ -8211,7 +8211,7 @@ type GoogleCloudRetailV2betaMerchantCenterAccountLink struct {
 	// countLinks/merchant_center_account_link`.
 	Name string `json:"name,omitempty"`
 
-	// ProjectId: Output only. GCP project ID.
+	// ProjectId: Output only. Google Cloud project ID.
 	ProjectId string `json:"projectId,omitempty"`
 
 	// State: Output only. Represents the state of the link.
@@ -8951,8 +8951,8 @@ func (c *ProjectsLocationsCatalogsCompleteQueryCall) DeviceType(deviceType strin
 
 // Entity sets the optional parameter "entity": The entity for customers
 // that may run multiple different entities, domains, sites or regions,
-// for example, "Google US", "Google Ads", "Waymo", "google.com",
-// "youtube.com", etc. If this is set, it should be exactly matched with
+// for example, `Google US`, `Google Ads`, `Waymo`, `google.com`,
+// `youtube.com`, etc. If this is set, it should be exactly matched with
 // UserEvent.entity to get per-entity autocomplete results.
 func (c *ProjectsLocationsCatalogsCompleteQueryCall) Entity(entity string) *ProjectsLocationsCatalogsCompleteQueryCall {
 	c.urlParams_.Set("entity", entity)
@@ -9131,7 +9131,7 @@ func (c *ProjectsLocationsCatalogsCompleteQueryCall) Do(opts ...googleapi.CallOp
 	//       "type": "string"
 	//     },
 	//     "entity": {
-	//       "description": "The entity for customers that may run multiple different entities, domains, sites or regions, for example, \"Google US\", \"Google Ads\", \"Waymo\", \"google.com\", \"youtube.com\", etc. If this is set, it should be exactly matched with UserEvent.entity to get per-entity autocomplete results.",
+	//       "description": "The entity for customers that may run multiple different entities, domains, sites or regions, for example, `Google US`, `Google Ads`, `Waymo`, `google.com`, `youtube.com`, etc. If this is set, it should be exactly matched with UserEvent.entity to get per-entity autocomplete results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

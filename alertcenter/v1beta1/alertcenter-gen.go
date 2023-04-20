@@ -589,16 +589,17 @@ func (s *AlertMetadata) MarshalJSON() ([]byte, error) {
 }
 
 // ApnsCertificateExpirationInfo: The explanation message associated
-// with ApnsCertificationExpiring and ApnsCertificationExpired alerts.
+// with "APNS certificate is expiring soon" and "APNS certificate has
+// expired" alerts.
 type ApnsCertificateExpirationInfo struct {
-	// AppleId: The Apple ID used for the certificate may be blank if admins
-	// didn't enter it.
+	// AppleId: The Apple ID used to create the certificate. It may be blank
+	// if admins didn't enter it.
 	AppleId string `json:"appleId,omitempty"`
 
-	// ExpirationTime: The expiration date of the APNS Certificate.
+	// ExpirationTime: The expiration date of the APNS certificate.
 	ExpirationTime string `json:"expirationTime,omitempty"`
 
-	// Uid: The UID for the certificate.
+	// Uid: The UID of the certificate.
 	Uid string `json:"uid,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AppleId") to

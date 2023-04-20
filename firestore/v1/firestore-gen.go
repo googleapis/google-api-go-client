@@ -1381,7 +1381,7 @@ type GoogleFirestoreAdminV1Database struct {
 	ConcurrencyMode string `json:"concurrencyMode,omitempty"`
 
 	// CreateTime: Output only. The timestamp at which this database was
-	// created.
+	// created. Databases created before 2016 do not populate create_time.
 	CreateTime string `json:"createTime,omitempty"`
 
 	// DeleteProtectionState: State of delete protection for the database.

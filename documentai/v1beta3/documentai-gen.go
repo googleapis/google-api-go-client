@@ -9928,8 +9928,10 @@ func (s *GoogleCloudDocumentaiV1beta3ImportProcessorVersionMetadata) MarshalJSON
 
 // GoogleCloudDocumentaiV1beta3ImportProcessorVersionRequest: The
 // request message for the ImportProcessorVersion method. This method
-// requires Document AI Service Agent of the destination project in the
-// source project's IAM with Document AI Editor role
+// requires source processor version and destination processor are in
+// the same location. This method requires Document AI Service Agent of
+// the destination project in the source project's IAM with Document AI
+// Editor role
 // (https://cloud.google.com/document-ai/docs/access-control/iam-roles).
 // The destination project is specified as part of the `parent` field.
 // The source project is specified as part of `source` field. The

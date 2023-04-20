@@ -844,6 +844,7 @@ type BidMetricsRow struct {
 	BidsInAuction *MetricValue `json:"bidsInAuction,omitempty"`
 
 	// BilledImpressions: The number of bids for which the buyer was billed.
+	// Also called valid impressions as invalid impressions are not billed.
 	BilledImpressions *MetricValue `json:"billedImpressions,omitempty"`
 
 	// ImpressionsWon: The number of bids that won the auction.

@@ -2379,6 +2379,8 @@ type GoogleCloudDataplexV1DataQualityRuleStatisticRangeExpectation struct {
 	// be provided.
 	MinValue string `json:"minValue,omitempty"`
 
+	// Statistic: The aggregate metric to evaluate.
+	//
 	// Possible values:
 	//   "STATISTIC_UNDEFINED" - Unspecified statistic type
 	//   "MEAN" - Evaluate the column mean

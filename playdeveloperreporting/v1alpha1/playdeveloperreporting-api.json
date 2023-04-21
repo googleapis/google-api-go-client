@@ -880,7 +880,7 @@
       }
     }
   },
-  "revision": "20230329",
+  "revision": "20230419",
   "rootUrl": "https://playdeveloperreporting.googleapis.com/",
   "schemas": {
     "GooglePlayDeveloperReportingV1alpha1Anomaly": {
@@ -1145,7 +1145,7 @@
         },
         "decimalValueConfidenceInterval": {
           "$ref": "GooglePlayDeveloperReportingV1alpha1DecimalConfidenceInterval",
-          "description": "Confidence interval of a value that is of type type.Decimal."
+          "description": "Confidence interval of a value that is of type `type.Decimal`."
         },
         "metric": {
           "description": "Name of the metric.",

@@ -512,7 +512,7 @@
       }
     }
   },
-  "revision": "20230309",
+  "revision": "20230418",
   "rootUrl": "https://contactcenteraiplatform.googleapis.com/",
   "schemas": {
     "AdminUser": {
@@ -736,7 +736,7 @@
       "type": "object"
     },
     "Location": {
-      "description": "A resource that represents Google Cloud Platform location.",
+      "description": "A resource that represents Google Cloud location.",
       "id": "Location",
       "properties": {
         "displayName": {

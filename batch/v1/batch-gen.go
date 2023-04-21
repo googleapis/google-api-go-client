@@ -548,6 +548,9 @@ type AllocationPolicy struct {
 	// Network: The network policy.
 	Network *NetworkPolicy `json:"network,omitempty"`
 
+	// Placement: The placement policy.
+	Placement *PlacementPolicy `json:"placement,omitempty"`
+
 	// ServiceAccount: Service account that VMs will run as.
 	ServiceAccount *ServiceAccount `json:"serviceAccount,omitempty"`
 
@@ -1843,6 +1846,45 @@ func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// PlacementPolicy: PlacementPolicy describes a group placement policy
+// for the VMs controlled by this AllocationPolicy.
+type PlacementPolicy struct {
+	// Collocation: UNSPECIFIED vs. COLLOCATED (default UNSPECIFIED). Use
+	// COLLOCATED when you want VMs to be located close to each other for
+	// low network latency between the VMs. No placement policy will be
+	// generated when collocation is UNSPECIFIED.
+	Collocation string `json:"collocation,omitempty"`
+
+	// MaxDistance: When specified, causes the job to fail if more than
+	// max_distance logical switches are required between VMs. Batch uses
+	// the most compact possible placement of VMs even when max_distance is
+	// not specified. An explicit max_distance makes that level of
+	// compactness a strict requirement. Not yet implemented
+	MaxDistance int64 `json:"maxDistance,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "Collocation") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Collocation") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PlacementPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod PlacementPolicy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ReportAgentStateRequest: Request to report agent's state. The Request
 // itself implies the agent is healthy.
 type ReportAgentStateRequest struct {
@@ -1950,6 +1992,9 @@ type Runnable struct {
 	// fail. This flag allows execution of other Runnables to continue
 	// instead.
 	IgnoreExitStatus bool `json:"ignoreExitStatus,omitempty"`
+
+	// Labels: Labels for this Runnable.
+	Labels map[string]string `json:"labels,omitempty"`
 
 	// Script: Script runnable.
 	Script *Script `json:"script,omitempty"`

@@ -447,24 +447,11 @@ func (s *GoogleCloudRunV2Condition) MarshalJSON() ([]byte, error) {
 // arguments may be supplied by the system to the container at runtime.
 type GoogleCloudRunV2Container struct {
 	// Args: Arguments to the entrypoint. The docker image's CMD is used if
-	// this is not provided. Variable references $(VAR_NAME) are expanded
-	// using the container's environment. If a variable cannot be resolved,
-	// the reference in the input string will be unchanged. The $(VAR_NAME)
-	// syntax can be escaped with a double $$, ie: $$(VAR_NAME). Escaped
-	// references will never be expanded, regardless of whether the variable
-	// exists or not. More info:
-	// https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
+	// this is not provided.
 	Args []string `json:"args,omitempty"`
 
 	// Command: Entrypoint array. Not executed within a shell. The docker
-	// image's ENTRYPOINT is used if this is not provided. Variable
-	// references $(VAR_NAME) are expanded using the container's
-	// environment. If a variable cannot be resolved, the reference in the
-	// input string will be unchanged. The $(VAR_NAME) syntax can be escaped
-	// with a double $$, ie: $$(VAR_NAME). Escaped references will never be
-	// expanded, regardless of whether the variable exists or not. More
-	// info:
-	// https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
+	// image's ENTRYPOINT is used if this is not provided.
 	Command []string `json:"command,omitempty"`
 
 	// Env: List of environment variables to set in the container.
@@ -472,13 +459,11 @@ type GoogleCloudRunV2Container struct {
 
 	// Image: Required. Name of the container image in Dockerhub, Google
 	// Artifact Registry, or Google Container Registry. If the host is not
-	// provided, Dockerhub is assumed. More info:
-	// https://kubernetes.io/docs/concepts/containers/images
+	// provided, Dockerhub is assumed.
 	Image string `json:"image,omitempty"`
 
 	// LivenessProbe: Periodic probe of container liveness. Container will
-	// be restarted if the probe fails. More info:
-	// https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+	// be restarted if the probe fails.
 	LivenessProbe *GoogleCloudRunV2Probe `json:"livenessProbe,omitempty"`
 
 	// Name: Name of the container specified as a DNS_LABEL (RFC 1123).
@@ -491,16 +476,13 @@ type GoogleCloudRunV2Container struct {
 	// through the PORT environment variable for the container to listen on.
 	Ports []*GoogleCloudRunV2ContainerPort `json:"ports,omitempty"`
 
-	// Resources: Compute Resource requirements by this container. More
-	// info:
-	// https://kubernetes.io/docs/concepts/storage/persistent-volumes#resources
+	// Resources: Compute Resource requirements by this container.
 	Resources *GoogleCloudRunV2ResourceRequirements `json:"resources,omitempty"`
 
 	// StartupProbe: Startup probe of application within the container. All
 	// other probes are disabled if a startup probe is provided, until it
 	// succeeds. Container will not be added to service endpoints if the
-	// probe fails. More info:
-	// https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+	// probe fails.
 	StartupProbe *GoogleCloudRunV2Probe `json:"startupProbe,omitempty"`
 
 	// VolumeMounts: Volume to mount into the container's filesystem.
@@ -759,8 +741,7 @@ type GoogleCloudRunV2Execution struct {
 	// task_count. The actual number of tasks running in steady state will
 	// be less than this number when ((.spec.task_count -
 	// .status.successful) < .spec.parallelism), i.e. when the work left to
-	// do is less than max parallelism. More info:
-	// https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/
+	// do is less than max parallelism.
 	Parallelism int64 `json:"parallelism,omitempty"`
 
 	// Reconciling: Output only. Indicates whether the resource's
@@ -791,8 +772,7 @@ type GoogleCloudRunV2Execution struct {
 	// TaskCount: Output only. Specifies the desired number of tasks the
 	// execution should run. Setting to 1 means that parallelism is limited
 	// to 1 and the success of that task signals the success of the
-	// execution. More info:
-	// https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/
+	// execution.
 	TaskCount int64 `json:"taskCount,omitempty"`
 
 	// Template: Output only. The template used to create tasks for this
@@ -1046,11 +1026,10 @@ type GoogleCloudRunV2Job struct {
 	// metadata. They are not queryable and should be preserved when
 	// modifying objects. Cloud Run API v2 does not support annotations with
 	// `run.googleapis.com`, `cloud.googleapis.com`, `serving.knative.dev`,
-	// or `autoscaling.knative.dev` namespaces, and they will be rejected.
-	// All system annotations in v1 now have a corresponding field in v2
-	// Job. This field follows Kubernetes annotations' namespacing, limits,
-	// and rules. More info:
-	// https://kubernetes.io/docs/user-guide/annotations
+	// or `autoscaling.knative.dev` namespaces, and they will be rejected on
+	// new resources. All system annotations in v1 now have a corresponding
+	// field in v2 Job. This field follows Kubernetes annotations'
+	// namespacing, limits, and rules.
 	Annotations map[string]string `json:"annotations,omitempty"`
 
 	// BinaryAuthorization: Settings for the Binary Authorization feature.
@@ -1441,8 +1420,7 @@ type GoogleCloudRunV2Probe struct {
 	// InitialDelaySeconds: Number of seconds after the container has
 	// started before the probe is initiated. Defaults to 0 seconds. Minimum
 	// value is 0. Maximum value for liveness probe is 3600. Maximum value
-	// for startup probe is 240. More info:
-	// https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+	// for startup probe is 240.
 	InitialDelaySeconds int64 `json:"initialDelaySeconds,omitempty"`
 
 	// PeriodSeconds: How often (in seconds) to perform the probe. Default
@@ -1457,8 +1435,7 @@ type GoogleCloudRunV2Probe struct {
 
 	// TimeoutSeconds: Number of seconds after which the probe times out.
 	// Defaults to 1 second. Minimum value is 1. Maximum value is 3600. Must
-	// be smaller than period_seconds. More info:
-	// https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+	// be smaller than period_seconds.
 	TimeoutSeconds int64 `json:"timeoutSeconds,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FailureThreshold") to
@@ -1492,12 +1469,18 @@ type GoogleCloudRunV2ResourceRequirements struct {
 	// requests.
 	CpuIdle bool `json:"cpuIdle,omitempty"`
 
-	// Limits: Only memory and CPU are supported. Note: The only supported
-	// values for CPU are '1', '2', '4', and '8'. Setting 4 CPU requires at
-	// least 2Gi of memory. The values of the map is string form of the
-	// 'quantity' k8s type:
-	// https://github.com/kubernetes/kubernetes/blob/master/staging/src/k8s.io/apimachinery/pkg/api/resource/quantity.go
+	// Limits: Only ´memory´ and 'cpu' are supported. Notes: * The only
+	// supported values for CPU are '1', '2', '4', and '8'. Setting 4 CPU
+	// requires at least 2Gi of memory. For more information, go to
+	// https://cloud.google.com/run/docs/configuring/cpu. * For supported
+	// 'memory' values and syntax, go to
+	// https://cloud.google.com/run/docs/configuring/memory-limits
 	Limits map[string]string `json:"limits,omitempty"`
+
+	// StartupCpuBoost: Determines whether CPU should be boosted on startup
+	// of a new container instance above the requested CPU threshold, this
+	// can help reduce cold-start latency.
+	StartupCpuBoost bool `json:"startupCpuBoost,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CpuIdle") to
 	// unconditionally include in API requests. By default, fields with
@@ -1985,11 +1968,10 @@ type GoogleCloudRunV2Service struct {
 	// should be preserved when modifying objects. Cloud Run API v2 does not
 	// support annotations with `run.googleapis.com`,
 	// `cloud.googleapis.com`, `serving.knative.dev`, or
-	// `autoscaling.knative.dev` namespaces, and they will be rejected. All
-	// system annotations in v1 now have a corresponding field in v2
-	// Service. This field follows Kubernetes annotations' namespacing,
-	// limits, and rules. More info:
-	// https://kubernetes.io/docs/user-guide/annotations
+	// `autoscaling.knative.dev` namespaces, and they will be rejected in
+	// new resources. All system annotations in v1 now have a corresponding
+	// field in v2 Service. This field follows Kubernetes annotations'
+	// namespacing, limits, and rules.
 	Annotations map[string]string `json:"annotations,omitempty"`
 
 	// BinaryAuthorization: Settings for the Binary Authorization feature.
@@ -2683,7 +2665,6 @@ type GoogleCloudRunV2Volume struct {
 	Name string `json:"name,omitempty"`
 
 	// Secret: Secret represents a secret that should populate this volume.
-	// More info: https://kubernetes.io/docs/concepts/storage/volumes#secret
 	Secret *GoogleCloudRunV2SecretVolumeSource `json:"secret,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CloudSqlInstance") to

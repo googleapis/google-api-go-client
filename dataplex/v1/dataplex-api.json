@@ -3990,7 +3990,7 @@
       }
     }
   },
-  "revision": "20230328",
+  "revision": "20230412",
   "rootUrl": "https://dataplex.googleapis.com/",
   "schemas": {
     "Empty": {
@@ -5262,6 +5262,7 @@
           "type": "string"
         },
         "statistic": {
+          "description": "The aggregate metric to evaluate.",
           "enum": [
             "STATISTIC_UNDEFINED",
             "MEAN",

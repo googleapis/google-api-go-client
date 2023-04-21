@@ -1018,7 +1018,7 @@ type GooglePlayDeveloperReportingV1alpha1MetricValue struct {
 	DecimalValue *GoogleTypeDecimal `json:"decimalValue,omitempty"`
 
 	// DecimalValueConfidenceInterval: Confidence interval of a value that
-	// is of type type.Decimal.
+	// is of type `type.Decimal`.
 	DecimalValueConfidenceInterval *GooglePlayDeveloperReportingV1alpha1DecimalConfidenceInterval `json:"decimalValueConfidenceInterval,omitempty"`
 
 	// Metric: Name of the metric.

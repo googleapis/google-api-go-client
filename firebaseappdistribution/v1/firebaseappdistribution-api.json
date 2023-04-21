@@ -751,7 +751,7 @@
               ],
               "parameters": {
                 "pageSize": {
-                  "description": "Optional. The maximum number of groups to return. The service may return fewer than this value. The valid range is [1-100]; If unspecified (0), at most 25 groups are returned. Values above 100 are coerced to 100.",
+                  "description": "Optional. The maximum number of groups to return. The service may return fewer than this value. The valid range is [1-1000]; If unspecified (0), at most 25 groups are returned. Values above 1000 are coerced to 1000.",
                   "format": "int32",
                   "location": "query",
                   "type": "integer"
@@ -951,7 +951,7 @@
       }
     }
   },
-  "revision": "20230330",
+  "revision": "20230420",
   "rootUrl": "https://firebaseappdistribution.googleapis.com/",
   "schemas": {
     "GdataBlobstore2Info": {

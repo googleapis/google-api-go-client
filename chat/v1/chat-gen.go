@@ -984,12 +984,14 @@ type CommonEventObject struct {
 	Platform string `json:"platform,omitempty"`
 
 	// TimeZone: The timezone ID and offset from Coordinated Universal Time
-	// (UTC).
+	// (UTC). Only supported for the event types `CARD_CLICKED`
+	// (https://developers.google.com/chat/api/reference/rest/v1/EventType#ENUM_VALUES.CARD_CLICKED)
+	// and `SUBMIT_DIALOG`
+	// (https://developers.google.com/chat/api/reference/rest/v1/DialogEventType#ENUM_VALUES.SUBMIT_DIALOG).
 	TimeZone *TimeZone `json:"timeZone,omitempty"`
 
 	// UserLocale: The full `locale.displayName` in the format of [ISO 639
-	// language code]-[ISO 3166 country/region code] such as "en-US". Not
-	// supported by Chat apps.
+	// language code]-[ISO 3166 country/region code] such as "en-US".
 	UserLocale string `json:"userLocale,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FormInputs") to
@@ -1015,7 +1017,7 @@ func (s *CommonEventObject) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DateInput: Date input values. Not supported by Chat apps.
+// DateInput: Date input values.
 type DateInput struct {
 	// MsSinceEpoch: Time since epoch time, in milliseconds.
 	MsSinceEpoch int64 `json:"msSinceEpoch,omitempty,string"`
@@ -1043,8 +1045,7 @@ func (s *DateInput) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DateTimeInput: Date and time input values. Not supported by Chat
-// apps.
+// DateTimeInput: Date and time input values.
 type DateTimeInput struct {
 	// HasDate: Whether the `datetime` input includes a calendar date.
 	HasDate bool `json:"hasDate,omitempty"`
@@ -1492,12 +1493,7 @@ func (s *GoogleAppsCardV1BorderStyle) MarshalJSON() ([]byte, error) {
 
 // GoogleAppsCardV1Button: A text, icon, or text + icon button that
 // users can click. To make an image a clickable button, specify an
-// Image (not an ImageComponent) and set an `onClick` action. Currently
-// supported in Chat apps (including [dialogs]
-// (https://developers.google.com/chat/how-tos/dialogs) and [card
-// messages]
-// (https://developers.google.com/chat/api/guides/message-formats/cards))
-// and Google Workspace Add-ons.
+// Image (not an ImageComponent) and set an `onClick` action.
 type GoogleAppsCardV1Button struct {
 	// AltText: The alternative text used for accessibility. Set descriptive
 	// text that lets users know what the button does. For example, if a
@@ -1648,9 +1644,10 @@ type GoogleAppsCardV1Card struct {
 
 	// FixedFooter: The fixed footer shown at the bottom of this card.
 	// Setting `fixedFooter` without specifying a `primaryButton` or a
-	// `secondaryButton` causes an error. Chat apps support `fixedFooter` in
+	// `secondaryButton` causes an error. Supported by Google Workspace
+	// Add-ons and Chat apps. For Chat apps, you can use fixed footers in
 	// dialogs (https://developers.google.com/chat/how-tos/dialogs), but not
-	// in card messages
+	// card messages
 	// (https://developers.google.com/chat/api/guides/message-formats/cards).
 	FixedFooter *GoogleAppsCardV1CardFixedFooter `json:"fixedFooter,omitempty"`
 
@@ -1733,8 +1730,9 @@ func (s *GoogleAppsCardV1CardAction) MarshalJSON() ([]byte, error) {
 // GoogleAppsCardV1CardFixedFooter: A persistent (sticky) footer that
 // that appears at the bottom of the card. Setting `fixedFooter` without
 // specifying a `primaryButton` or a `secondaryButton` causes an error.
-// Chat apps support `fixedFooter` in dialogs
-// (https://developers.google.com/chat/how-tos/dialogs), but not in card
+// Supported by Google Workspace Add-ons and Chat apps. For Chat apps,
+// you can use fixed footers in dialogs
+// (https://developers.google.com/chat/how-tos/dialogs), but not card
 // messages
 // (https://developers.google.com/chat/api/guides/message-formats/cards).
 type GoogleAppsCardV1CardFixedFooter struct {
@@ -1922,8 +1920,9 @@ type GoogleAppsCardV1DecoratedText struct {
 	// trigger an action.
 	SwitchControl *GoogleAppsCardV1SwitchControl `json:"switchControl,omitempty"`
 
-	// Text: Required. The primary text. Supports simple formatting. See
-	// Text formatting for formatting details.
+	// Text: Required. The primary text. Supports simple formatting. For
+	// more information about formatting text, see Formatting text in Google
+	// Chat apps and Formatting text in Google Workspace Add-ons.
 	Text string `json:"text,omitempty"`
 
 	// TopLabel: The text that appears above `text`. Always truncates.
@@ -2374,8 +2373,9 @@ type GoogleAppsCardV1Section struct {
 	Collapsible bool `json:"collapsible,omitempty"`
 
 	// Header: Text that appears at the top of a section. Supports simple
-	// HTML formatted text
-	// (https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
+	// HTML formatted text. For more information about formatting text, see
+	// Formatting text in Google Chat apps and Formatting text in Google
+	// Workspace Add-ons.
 	Header string `json:"header,omitempty"`
 
 	// UncollapsibleWidgetsCount: The number of uncollapsible widgets which
@@ -2413,18 +2413,18 @@ func (s *GoogleAppsCardV1Section) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAppsCardV1SelectionInput: A widget that creates a UI item with
-// options for users to select. For example, a dropdown menu or check
-// list. Chat apps receive and can process the value of entered text
-// during form input events. For details about working with form inputs,
-// see Receive form data
+// GoogleAppsCardV1SelectionInput: A widget that creates one or more UI
+// items that users can select. For example, a dropdown menu or
+// checkboxes. You can use this widget to collect data that can be
+// predicted or enumerated. Chat apps can process the value of items
+// that users select or input. For details about working with form
+// inputs, see Receive form data
 // (https://developers.google.com/chat/how-tos/dialogs#receive_form_data_from_dialogs).
-// When you need to collect data from users that matches options you
-// set, use a selection input. To collect abstract data from users, use
-// the text input widget instead.
+// To collect undefined or abstract data from users, use the TextInput
+// widget.
 type GoogleAppsCardV1SelectionInput struct {
-	// Items: An array of the selected items. For example, all the selected
-	// check boxes.
+	// Items: An array of selectable items. For example, an array of radio
+	// buttons or checkboxes. Supports up to 100 items.
 	Items []*GoogleAppsCardV1SelectionItem `json:"items,omitempty"`
 
 	// Label: The text that appears above the selection input field in the
@@ -2434,9 +2434,9 @@ type GoogleAppsCardV1SelectionInput struct {
 	// "Urgency" or "Select urgency".
 	Label string `json:"label,omitempty"`
 
-	// Name: The name by which the selection input is identified in a form
-	// input event. For details about working with form inputs, see Receive
-	// form data
+	// Name: The name that identifies the selection input in a form input
+	// event. For details about working with form inputs, see Receive form
+	// data
 	// (https://developers.google.com/chat/how-tos/dialogs#receive_form_data_from_dialogs).
 	Name string `json:"name,omitempty"`
 
@@ -2447,21 +2447,20 @@ type GoogleAppsCardV1SelectionInput struct {
 	// (https://developers.google.com/chat/how-tos/dialogs#receive_form_data_from_dialogs).
 	OnChangeAction *GoogleAppsCardV1Action `json:"onChangeAction,omitempty"`
 
-	// Type: The way that an option appears to users. Different options
-	// support different types of interactions. For example, users can
-	// enable multiple check boxes, but can only select one value from a
-	// dropdown menu. Each selection input supports one type of selection.
-	// Mixing check boxes and switches, for example, is not supported.
+	// Type: The type of items that are displayed to users in a
+	// `SelectionInput` widget. Selection types support different types of
+	// interactions. For example, users can select one or more checkboxes,
+	// but they can only select one value from a dropdown menu.
 	//
 	// Possible values:
-	//   "CHECK_BOX" - A set of checkboxes. Users can select multiple check
-	// boxes per selection input.
+	//   "CHECK_BOX" - A set of checkboxes. Users can select one or more
+	// checkboxes.
 	//   "RADIO_BUTTON" - A set of radio buttons. Users can select one radio
-	// button per selection input.
-	//   "SWITCH" - A set of switches. Users can turn on multiple switches
-	// at once per selection input.
-	//   "DROPDOWN" - A dropdown menu. Users can select one dropdown menu
-	// item per selection input.
+	// button.
+	//   "SWITCH" - A set of switches. Users can turn on one or more
+	// switches.
+	//   "DROPDOWN" - A dropdown menu. Users can select one item from the
+	// menu.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Items") to
@@ -2487,15 +2486,15 @@ func (s *GoogleAppsCardV1SelectionInput) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAppsCardV1SelectionItem: A selectable item in a selection
-// input, such as a check box or a switch.
+// GoogleAppsCardV1SelectionItem: An item that users can select in a
+// selection input, such as a checkbox or switch.
 type GoogleAppsCardV1SelectionItem struct {
 	// Selected: When `true`, more than one item is selected. If more than
 	// one item is selected for radio buttons and dropdown menus, the first
 	// selected item is received and the ones after are ignored.
 	Selected bool `json:"selected,omitempty"`
 
-	// Text: The text displayed to users.
+	// Text: The text that identifies or describes the item to users.
 	Text string `json:"text,omitempty"`
 
 	// Value: The value associated with this item. The client should use
@@ -2656,9 +2655,9 @@ func (s *GoogleAppsCardV1SwitchControl) MarshalJSON() ([]byte, error) {
 // process the value of entered text during form input events. For
 // details about working with form inputs, see Receive form data
 // (https://developers.google.com/chat/how-tos/dialogs#receive_form_data_from_dialogs).
-// When you need to collect abstract data from users, use a text input.
-// To collect defined data from users, use the selection input widget
-// instead.
+// When you need to collect undefined or abstract data from users, use a
+// text input. To collect defined or enumerated data from users, use the
+// SelectionInput widget.
 type GoogleAppsCardV1TextInput struct {
 	// AutoCompleteAction: Optional. Specify what action to take when the
 	// text input field provides suggestions to users who interact with it.
@@ -2749,9 +2748,9 @@ func (s *GoogleAppsCardV1TextInput) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleAppsCardV1TextParagraph: A paragraph of text that supports
-// formatting. See Text formatting
-// (https://developers.google.com/workspace/add-ons/concepts/widgets#text_formatting)
-// for details.
+// formatting. For more information about formatting text, see
+// Formatting text in Google Chat apps and Formatting text in Google
+// Workspace Add-ons.
 type GoogleAppsCardV1TextParagraph struct {
 	// Text: The text that's shown in the widget.
 	Text string `json:"text,omitempty"`
@@ -2834,13 +2833,13 @@ type GoogleAppsCardV1Widget struct {
 	Image *GoogleAppsCardV1Image `json:"image,omitempty"`
 
 	// SelectionInput: Displays a selection control that lets users select
-	// items. Selection controls can be check boxes, radio buttons,
-	// switches, or dropdown menus. For example, the following JSON creates
-	// a dropdown menu that lets users choose a size: ``` "selectionInput":
-	// { "name": "size", "label": "Size" "type": "DROPDOWN", "items": [ {
-	// "text": "S", "value": "small", "selected": false }, { "text": "M",
-	// "value": "medium", "selected": true }, { "text": "L", "value":
-	// "large", "selected": false }, { "text": "XL", "value": "extra_large",
+	// items. Selection controls can be checkboxes, radio buttons, switches,
+	// or dropdown menus. For example, the following JSON creates a dropdown
+	// menu that lets users choose a size: ``` "selectionInput": { "name":
+	// "size", "label": "Size" "type": "DROPDOWN", "items": [ { "text": "S",
+	// "value": "small", "selected": false }, { "text": "M", "value":
+	// "medium", "selected": true }, { "text": "L", "value": "large",
+	// "selected": false }, { "text": "XL", "value": "extra_large",
 	// "selected": false } ] } ```
 	SelectionInput *GoogleAppsCardV1SelectionInput `json:"selectionInput,omitempty"`
 
@@ -2856,10 +2855,10 @@ type GoogleAppsCardV1Widget struct {
 	TextInput *GoogleAppsCardV1TextInput `json:"textInput,omitempty"`
 
 	// TextParagraph: Displays a text paragraph. Supports simple HTML
-	// formatted text
-	// (https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
-	// For example, the following JSON creates a bolded text: ```
-	// "textParagraph": { "text": " *bold text*" } ```
+	// formatted text. For more information about formatting text, see
+	// Formatting text in Google Chat apps and Formatting text in Google
+	// Workspace Add-ons. For example, the following JSON creates a bolded
+	// text: ``` "textParagraph": { "text": " *bold text*" } ```
 	TextParagraph *GoogleAppsCardV1TextParagraph `json:"textParagraph,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ButtonList") to
@@ -3014,11 +3013,10 @@ func (s *ImageButton) MarshalJSON() ([]byte, error) {
 // Inputs: Types of data inputs for widgets. Users enter data with these
 // inputs.
 type Inputs struct {
-	// DateInput: Date input values. Not supported by Chat apps.
+	// DateInput: Date input values.
 	DateInput *DateInput `json:"dateInput,omitempty"`
 
-	// DateTimeInput: Date and time input values. Not supported by Chat
-	// apps.
+	// DateTimeInput: Date and time input values.
 	DateTimeInput *DateTimeInput `json:"dateTimeInput,omitempty"`
 
 	// StringInputs: Input parameter for regular widgets. For single-valued
@@ -3026,7 +3024,7 @@ type Inputs struct {
 	// checkbox, all the values are presented.
 	StringInputs *StringInputs `json:"stringInputs,omitempty"`
 
-	// TimeInput: Time input values. Not supported by Chat apps.
+	// TimeInput: Time input values.
 	TimeInput *TimeInput `json:"timeInput,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DateInput") to
@@ -3057,13 +3055,17 @@ func (s *Inputs) MarshalJSON() ([]byte, error) {
 // button.
 type KeyValue struct {
 	// BottomLabel: The text of the bottom label. Formatted text supported.
+	// For more information about formatting text, see Formatting text in
+	// Google Chat apps and Formatting text in Google Workspace Add-ons.
 	BottomLabel string `json:"bottomLabel,omitempty"`
 
 	// Button: A button that can be clicked to trigger an action.
 	Button *Button `json:"button,omitempty"`
 
 	// Content: The text of the content. Formatted text supported and always
-	// required.
+	// required. For more information about formatting text, see Formatting
+	// text in Google Chat apps and Formatting text in Google Workspace
+	// Add-ons.
 	Content string `json:"content,omitempty"`
 
 	// ContentMultiline: If the content should be multiline.
@@ -3113,7 +3115,9 @@ type KeyValue struct {
 	// content region are clickable.
 	OnClick *OnClick `json:"onClick,omitempty"`
 
-	// TopLabel: The text of the top label. Formatted text supported.
+	// TopLabel: The text of the top label. Formatted text supported. For
+	// more information about formatting text, see Formatting text in Google
+	// Chat apps and Formatting text in Google Workspace Add-ons.
 	TopLabel string `json:"topLabel,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BottomLabel") to
@@ -3533,7 +3537,9 @@ func (s *OpenLink) MarshalJSON() ([]byte, error) {
 // platforms, cards have a narrow fixed width, so there is currently no
 // need for layout properties (e.g. float).
 type Section struct {
-	// Header: The header of the section, text formatted supported.
+	// Header: The header of the section. Formatted text is supported. For
+	// more information about formatting text, see Formatting text in Google
+	// Chat apps and Formatting text in Google Workspace Add-ons.
 	Header string `json:"header,omitempty"`
 
 	// Widgets: A section must contain at least 1 widget.
@@ -3862,7 +3868,9 @@ func (s *TextButton) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// TextParagraph: A paragraph of text. Formatted text supported.
+// TextParagraph: A paragraph of text. Formatted text supported. For
+// more information about formatting text, see Formatting text in Google
+// Chat apps and Formatting text in Google Workspace Add-ons.
 type TextParagraph struct {
 	Text string `json:"text,omitempty"`
 
@@ -3926,7 +3934,7 @@ func (s *Thread) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// TimeInput: Time input values. Not supported by Chat apps.
+// TimeInput: Time input values.
 type TimeInput struct {
 	// Hours: The hour on a 24-hour clock.
 	Hours int64 `json:"hours,omitempty"`
@@ -3959,7 +3967,10 @@ func (s *TimeInput) MarshalJSON() ([]byte, error) {
 }
 
 // TimeZone: The timezone ID and offset from Coordinated Universal Time
-// (UTC). Not supported by Chat apps.
+// (UTC). Only supported for the event types `CARD_CLICKED`
+// (https://developers.google.com/chat/api/reference/rest/v1/EventType#ENUM_VALUES.CARD_CLICKED)
+// and `SUBMIT_DIALOG`
+// (https://developers.google.com/chat/api/reference/rest/v1/DialogEventType#ENUM_VALUES.SUBMIT_DIALOG).
 type TimeZone struct {
 	// Id: The IANA TZ (https://www.iana.org/time-zones) time zone database
 	// code, such as "America/Toronto".
@@ -4086,7 +4097,7 @@ func (s *UserMentionMetadata) MarshalJSON() ([]byte, error) {
 // WidgetMarkup: A widget is a UI element that presents texts, images,
 // etc.
 type WidgetMarkup struct {
-	// Buttons: A list of buttons. Buttons is also oneof data and only one
+	// Buttons: A list of buttons. Buttons is also `oneof data` and only one
 	// of these fields should be set.
 	Buttons []*Button `json:"buttons,omitempty"`
 

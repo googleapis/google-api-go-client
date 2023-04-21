@@ -1234,7 +1234,7 @@ func (s *H265CodecSettings) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// Image: Overlaid jpeg image.
+// Image: Overlaid image.
 type Image struct {
 	// Alpha: Target image opacity. Valid values are from `1.0` (solid,
 	// default) to `0.0` (transparent), exclusive. Set this to a value
@@ -1247,9 +1247,9 @@ type Image struct {
 	// original image resolution, set both `x` and `y` to `0.0`.
 	Resolution *NormalizedCoordinate `json:"resolution,omitempty"`
 
-	// Uri: Required. URI of the JPEG image in Cloud Storage. For example,
-	// `gs://bucket/inputs/image.jpeg`. JPEG is the only supported image
-	// type.
+	// Uri: Required. URI of the image in Cloud Storage. For example,
+	// `gs://bucket/inputs/image.png`. Only PNG and JPEG images are
+	// supported.
 	Uri string `json:"uri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Alpha") to

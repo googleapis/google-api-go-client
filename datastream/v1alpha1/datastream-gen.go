@@ -2547,6 +2547,7 @@ func (c *ProjectsLocationsFetchStaticIpsCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "The FetchStaticIps API call exposes the static IP addresses used by Datastream.",
 	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}:fetchStaticIps",
 	//   "httpMethod": "GET",
@@ -3098,6 +3099,7 @@ func (c *ProjectsLocationsConnectionProfilesCreateCall) Do(opts ...googleapi.Cal
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Use this method to create a connection profile in a project and location.",
 	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/connectionProfiles",
 	//   "httpMethod": "POST",
@@ -3260,6 +3262,7 @@ func (c *ProjectsLocationsConnectionProfilesDeleteCall) Do(opts ...googleapi.Cal
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Use this method to delete a connection profile..",
 	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/connectionProfiles/{connectionProfilesId}",
 	//   "httpMethod": "DELETE",
@@ -3409,6 +3412,7 @@ func (c *ProjectsLocationsConnectionProfilesDiscoverCall) Do(opts ...googleapi.C
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Use this method to discover a connection profile. The discover API call exposes the data objects and metadata belonging to the profile. Typically, a request returns children data objects under a parent data object that's optionally supplied in the request.",
 	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/connectionProfiles:discover",
 	//   "httpMethod": "POST",
@@ -3558,6 +3562,7 @@ func (c *ProjectsLocationsConnectionProfilesGetCall) Do(opts ...googleapi.CallOp
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Use this method to get details about a connection profile.",
 	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/connectionProfiles/{connectionProfilesId}",
 	//   "httpMethod": "GET",
@@ -3737,6 +3742,7 @@ func (c *ProjectsLocationsConnectionProfilesListCall) Do(opts ...googleapi.CallO
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Use this method to list connection profiles created in a project and location.",
 	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/connectionProfiles",
 	//   "httpMethod": "GET",
@@ -3955,6 +3961,7 @@ func (c *ProjectsLocationsConnectionProfilesPatchCall) Do(opts ...googleapi.Call
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Use this method to update the parameters of a connection profile.",
 	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/connectionProfiles/{connectionProfilesId}",
 	//   "httpMethod": "PATCH",
@@ -4778,6 +4785,7 @@ func (c *ProjectsLocationsPrivateConnectionsCreateCall) Do(opts ...googleapi.Cal
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Use this method to create a private connectivity configuration.",
 	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/privateConnections",
 	//   "httpMethod": "POST",
@@ -4948,6 +4956,7 @@ func (c *ProjectsLocationsPrivateConnectionsDeleteCall) Do(opts ...googleapi.Cal
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Use this method to delete a private connectivity configuration.",
 	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/privateConnections/{privateConnectionsId}",
 	//   "httpMethod": "DELETE",
@@ -5105,6 +5114,7 @@ func (c *ProjectsLocationsPrivateConnectionsGetCall) Do(opts ...googleapi.CallOp
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Use this method to get details about a private connectivity configuration.",
 	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/privateConnections/{privateConnectionsId}",
 	//   "httpMethod": "GET",
@@ -5285,6 +5295,7 @@ func (c *ProjectsLocationsPrivateConnectionsListCall) Do(opts ...googleapi.CallO
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Use this method to list private connectivity configurations in a project and location.",
 	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/privateConnections",
 	//   "httpMethod": "GET",
@@ -5491,6 +5502,7 @@ func (c *ProjectsLocationsPrivateConnectionsRoutesCreateCall) Do(opts ...googlea
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Use this method to create a route for a private connectivity in a project and location.",
 	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/privateConnections/{privateConnectionsId}/routes",
 	//   "httpMethod": "POST",
@@ -5653,6 +5665,7 @@ func (c *ProjectsLocationsPrivateConnectionsRoutesDeleteCall) Do(opts ...googlea
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Use this method to delete a route.",
 	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/privateConnections/{privateConnectionsId}/routes/{routesId}",
 	//   "httpMethod": "DELETE",
@@ -5804,6 +5817,7 @@ func (c *ProjectsLocationsPrivateConnectionsRoutesGetCall) Do(opts ...googleapi.
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Use this method to get details about a route.",
 	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/privateConnections/{privateConnectionsId}/routes/{routesId}",
 	//   "httpMethod": "GET",
@@ -5982,6 +5996,7 @@ func (c *ProjectsLocationsPrivateConnectionsRoutesListCall) Do(opts ...googleapi
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Use this method to list routes created for a private connectivity in a project and location.",
 	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/privateConnections/{privateConnectionsId}/routes",
 	//   "httpMethod": "GET",
@@ -6202,6 +6217,7 @@ func (c *ProjectsLocationsStreamsCreateCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Use this method to create a stream.",
 	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/streams",
 	//   "httpMethod": "POST",
@@ -6374,6 +6390,7 @@ func (c *ProjectsLocationsStreamsDeleteCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Use this method to delete a stream.",
 	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/streams/{streamsId}",
 	//   "httpMethod": "DELETE",
@@ -6519,6 +6536,7 @@ func (c *ProjectsLocationsStreamsFetchErrorsCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Use this method to fetch any errors associated with a stream.",
 	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/streams/{streamsId}:fetchErrors",
 	//   "httpMethod": "POST",
@@ -6668,6 +6686,7 @@ func (c *ProjectsLocationsStreamsGetCall) Do(opts ...googleapi.CallOption) (*Str
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Use this method to get details about a stream.",
 	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/streams/{streamsId}",
 	//   "httpMethod": "GET",
@@ -6845,6 +6864,7 @@ func (c *ProjectsLocationsStreamsListCall) Do(opts ...googleapi.CallOption) (*Li
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Use this method to list streams in a project and location.",
 	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/streams",
 	//   "httpMethod": "GET",
@@ -7069,6 +7089,7 @@ func (c *ProjectsLocationsStreamsPatchCall) Do(opts ...googleapi.CallOption) (*O
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Use this method to update the configuration of a stream.",
 	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/streams/{streamsId}",
 	//   "httpMethod": "PATCH",
@@ -7239,6 +7260,7 @@ func (c *ProjectsLocationsStreamsObjectsGetCall) Do(opts ...googleapi.CallOption
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Use this method to get details about a stream object.",
 	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/streams/{streamsId}/objects/{objectsId}",
 	//   "httpMethod": "GET",
@@ -7403,6 +7425,7 @@ func (c *ProjectsLocationsStreamsObjectsListCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Use this method to list the objects of a specific stream.",
 	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/streams/{streamsId}/objects",
 	//   "httpMethod": "GET",
@@ -7569,6 +7592,7 @@ func (c *ProjectsLocationsStreamsObjectsStartBackfillJobCall) Do(opts ...googlea
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Starts backfill job for the specified stream object.",
 	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/streams/{streamsId}/objects/{objectsId}:startBackfillJob",
 	//   "httpMethod": "POST",
@@ -7703,6 +7727,7 @@ func (c *ProjectsLocationsStreamsObjectsStopBackfillJobCall) Do(opts ...googleap
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Stops the backfill job for the specified stream object.",
 	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/streams/{streamsId}/objects/{objectsId}:stopBackfillJob",
 	//   "httpMethod": "POST",

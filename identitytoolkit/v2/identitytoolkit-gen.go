@@ -159,6 +159,8 @@ func NewAccountsService(s *Service) *AccountsService {
 	rs := &AccountsService{s: s}
 	rs.MfaEnrollment = NewAccountsMfaEnrollmentService(s)
 	rs.MfaSignIn = NewAccountsMfaSignInService(s)
+	rs.PasskeyEnrollment = NewAccountsPasskeyEnrollmentService(s)
+	rs.PasskeySignIn = NewAccountsPasskeySignInService(s)
 	return rs
 }
 
@@ -168,6 +170,10 @@ type AccountsService struct {
 	MfaEnrollment *AccountsMfaEnrollmentService
 
 	MfaSignIn *AccountsMfaSignInService
+
+	PasskeyEnrollment *AccountsPasskeyEnrollmentService
+
+	PasskeySignIn *AccountsPasskeySignInService
 }
 
 func NewAccountsMfaEnrollmentService(s *Service) *AccountsMfaEnrollmentService {
@@ -185,6 +191,24 @@ func NewAccountsMfaSignInService(s *Service) *AccountsMfaSignInService {
 }
 
 type AccountsMfaSignInService struct {
+	s *Service
+}
+
+func NewAccountsPasskeyEnrollmentService(s *Service) *AccountsPasskeyEnrollmentService {
+	rs := &AccountsPasskeyEnrollmentService{s: s}
+	return rs
+}
+
+type AccountsPasskeyEnrollmentService struct {
+	s *Service
+}
+
+func NewAccountsPasskeySignInService(s *Service) *AccountsPasskeySignInService {
+	rs := &AccountsPasskeySignInService{s: s}
+	return rs
+}
+
+type AccountsPasskeySignInService struct {
 	s *Service
 }
 
@@ -2533,6 +2557,199 @@ func (s *GoogleCloudIdentitytoolkitAdminV2Trigger) MarshalJSON() ([]byte, error)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudIdentitytoolkitV2AuthenticatorAssertionResponse:
+// Authentication response from a FIDO authenticator.
+type GoogleCloudIdentitytoolkitV2AuthenticatorAssertionResponse struct {
+	// AuthenticatorData: The AuthenticatorData from the authenticator.
+	AuthenticatorData string `json:"authenticatorData,omitempty"`
+
+	// ClientDataJson: The CollectedClientData object from the
+	// authenticator.
+	ClientDataJson string `json:"clientDataJson,omitempty"`
+
+	// Signature: The signature from the authenticator.
+	Signature string `json:"signature,omitempty"`
+
+	// UserHandle: The user handle.
+	UserHandle string `json:"userHandle,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AuthenticatorData")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AuthenticatorData") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudIdentitytoolkitV2AuthenticatorAssertionResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudIdentitytoolkitV2AuthenticatorAssertionResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudIdentitytoolkitV2AuthenticatorAttestationResponse:
+// Attestation response from a FIDO authenticator.
+type GoogleCloudIdentitytoolkitV2AuthenticatorAttestationResponse struct {
+	// AttestationObject: The attestation object from the authenticator.
+	AttestationObject string `json:"attestationObject,omitempty"`
+
+	// ClientDataJson: The CollectedClientData object from the
+	// authenticator.
+	ClientDataJson string `json:"clientDataJson,omitempty"`
+
+	// Transports: Authenticator transports that are supported by the
+	// authenticator.
+	Transports []string `json:"transports,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AttestationObject")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AttestationObject") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudIdentitytoolkitV2AuthenticatorAttestationResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudIdentitytoolkitV2AuthenticatorAttestationResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudIdentitytoolkitV2AuthenticatorAuthenticationResponse:
+// Authenticator response to authenticate the user with an existing FIDO
+// key.
+type GoogleCloudIdentitytoolkitV2AuthenticatorAuthenticationResponse struct {
+	// AuthenticatorAssertionResponse: Authentication assertion from the
+	// authenticator.
+	AuthenticatorAssertionResponse *GoogleCloudIdentitytoolkitV2AuthenticatorAssertionResponse `json:"authenticatorAssertionResponse,omitempty"`
+
+	// CredentialId: Identifier for the authentication credential.
+	CredentialId string `json:"credentialId,omitempty"`
+
+	// CredentialType: The type of public key.
+	CredentialType string `json:"credentialType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AuthenticatorAssertionResponse") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "AuthenticatorAssertionResponse") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudIdentitytoolkitV2AuthenticatorAuthenticationResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudIdentitytoolkitV2AuthenticatorAuthenticationResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudIdentitytoolkitV2AuthenticatorRegistrationResponse:
+// Authenticator response to register a new FIDO key.
+type GoogleCloudIdentitytoolkitV2AuthenticatorRegistrationResponse struct {
+	// AuthenticatorAttestationResponse: The attestation response object as
+	// described in the spec.
+	AuthenticatorAttestationResponse *GoogleCloudIdentitytoolkitV2AuthenticatorAttestationResponse `json:"authenticatorAttestationResponse,omitempty"`
+
+	// CredentialId: Identifier for the registered credential.
+	CredentialId string `json:"credentialId,omitempty"`
+
+	// CredentialType: The type of credential.
+	CredentialType string `json:"credentialType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AuthenticatorAttestationResponse") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "AuthenticatorAttestationResponse") to include in API requests with
+	// the JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudIdentitytoolkitV2AuthenticatorRegistrationResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudIdentitytoolkitV2AuthenticatorRegistrationResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudIdentitytoolkitV2AuthenticatorSelectionCriteria: Criteria
+// for the authenticator to create a registered FIDO key.
+type GoogleCloudIdentitytoolkitV2AuthenticatorSelectionCriteria struct {
+	// AuthenticatorAttachment: The preferred authenticator attachment
+	// modality.
+	AuthenticatorAttachment string `json:"authenticatorAttachment,omitempty"`
+
+	// RequireResidentKey: Whether resident key is required.
+	RequireResidentKey bool `json:"requireResidentKey,omitempty"`
+
+	// UserVerification: The Relying Party's user verification requirements.
+	UserVerification string `json:"userVerification,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AuthenticatorAttachment") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AuthenticatorAttachment")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudIdentitytoolkitV2AuthenticatorSelectionCriteria) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudIdentitytoolkitV2AuthenticatorSelectionCriteria
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudIdentitytoolkitV2AutoRetrievalInfo: The information
 // required to auto-retrieve an SMS.
 type GoogleCloudIdentitytoolkitV2AutoRetrievalInfo struct {
@@ -2856,6 +3073,160 @@ func (s *GoogleCloudIdentitytoolkitV2FinalizeMfaTotpEnrollmentRequestInfo) Marsh
 type GoogleCloudIdentitytoolkitV2FinalizeMfaTotpEnrollmentResponseInfo struct {
 }
 
+// GoogleCloudIdentitytoolkitV2FinalizePasskeyEnrollmentRequest:
+// FinalizePasskeyEnrollment request. Registers passkey as a first
+// factor for the user.
+type GoogleCloudIdentitytoolkitV2FinalizePasskeyEnrollmentRequest struct {
+	// AuthenticatorRegistrationResponse: Optional. The registration object
+	// from the authenticator.
+	AuthenticatorRegistrationResponse *GoogleCloudIdentitytoolkitV2AuthenticatorRegistrationResponse `json:"authenticatorRegistrationResponse,omitempty"`
+
+	// IdToken: Required. The GCIP ID token of the signed-in user
+	IdToken string `json:"idToken,omitempty"`
+
+	// TenantId: Optional. The ID of the Identity Platform tenant the user
+	// is signing in to. If not set, the user will sign in to the default
+	// Identity Platform project.
+	TenantId string `json:"tenantId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AuthenticatorRegistrationResponse") to unconditionally include in
+	// API requests. By default, fields with empty or default values are
+	// omitted from API requests. However, any non-pointer, non-interface
+	// field appearing in ForceSendFields will be sent to the server
+	// regardless of whether the field is empty or not. This may be used to
+	// include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "AuthenticatorRegistrationResponse") to include in API requests with
+	// the JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudIdentitytoolkitV2FinalizePasskeyEnrollmentRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudIdentitytoolkitV2FinalizePasskeyEnrollmentRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudIdentitytoolkitV2FinalizePasskeyEnrollmentResponse:
+// FinalizePasskeyEnrollment response.
+type GoogleCloudIdentitytoolkitV2FinalizePasskeyEnrollmentResponse struct {
+	// IdToken: ID token for the authenticated user.
+	IdToken string `json:"idToken,omitempty"`
+
+	// RefreshToken: Refresh token for the authenticated user.
+	RefreshToken string `json:"refreshToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "IdToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IdToken") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudIdentitytoolkitV2FinalizePasskeyEnrollmentResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudIdentitytoolkitV2FinalizePasskeyEnrollmentResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudIdentitytoolkitV2FinalizePasskeySignInRequest: Request to
+// finalize a passkey sign-in.
+type GoogleCloudIdentitytoolkitV2FinalizePasskeySignInRequest struct {
+	// AuthenticatorAuthenticationResponse: Required. The authentication
+	// response object from the authenticator.
+	AuthenticatorAuthenticationResponse *GoogleCloudIdentitytoolkitV2AuthenticatorAuthenticationResponse `json:"authenticatorAuthenticationResponse,omitempty"`
+
+	// SessionId: Optional. The session ID that was passed into
+	// StartPasskeySignIn, if any.
+	SessionId string `json:"sessionId,omitempty"`
+
+	// TenantId: Optional. The ID of the Identity Platform tenant the user
+	// is signing in to. If not set, the user will sign in to the default
+	// Identity Platform project.
+	TenantId string `json:"tenantId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AuthenticatorAuthenticationResponse") to unconditionally include in
+	// API requests. By default, fields with empty or default values are
+	// omitted from API requests. However, any non-pointer, non-interface
+	// field appearing in ForceSendFields will be sent to the server
+	// regardless of whether the field is empty or not. This may be used to
+	// include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "AuthenticatorAuthenticationResponse") to include in API requests
+	// with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. However, any field with an empty value
+	// appearing in NullFields will be sent to the server as null. It is an
+	// error if a field in this list has a non-empty value. This may be used
+	// to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudIdentitytoolkitV2FinalizePasskeySignInRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudIdentitytoolkitV2FinalizePasskeySignInRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudIdentitytoolkitV2FinalizePasskeySignInResponse: Response
+// for FinalizePasskeySignIn.
+type GoogleCloudIdentitytoolkitV2FinalizePasskeySignInResponse struct {
+	// IdToken: ID token for the authenticated user.
+	IdToken string `json:"idToken,omitempty"`
+
+	// RefreshToken: Refresh token for the authenticated user.
+	RefreshToken string `json:"refreshToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "IdToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IdToken") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudIdentitytoolkitV2FinalizePasskeySignInResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudIdentitytoolkitV2FinalizePasskeySignInResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudIdentitytoolkitV2MfaTotpSignInRequestInfo: TOTP
 // verification info for FinalizeMfaSignInRequest.
 type GoogleCloudIdentitytoolkitV2MfaTotpSignInRequestInfo struct {
@@ -2882,6 +3253,158 @@ type GoogleCloudIdentitytoolkitV2MfaTotpSignInRequestInfo struct {
 
 func (s *GoogleCloudIdentitytoolkitV2MfaTotpSignInRequestInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV2MfaTotpSignInRequestInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudIdentitytoolkitV2PublicKeyCredentialCreationOptions:
+// Parameters for creating a FIDO key.
+type GoogleCloudIdentitytoolkitV2PublicKeyCredentialCreationOptions struct {
+	// AuthenticatorSelection: Criteria for the authenticator to create a
+	// credential.
+	AuthenticatorSelection *GoogleCloudIdentitytoolkitV2AuthenticatorSelectionCriteria `json:"authenticatorSelection,omitempty"`
+
+	// Challenge: The FIDO challenge.
+	Challenge string `json:"challenge,omitempty"`
+
+	// ExcludeCredentials: Credentials already mapped to this user.
+	ExcludeCredentials []*GoogleCloudIdentitytoolkitV2PublicKeyCredentialDescriptor `json:"excludeCredentials,omitempty"`
+
+	// PubKeyCredParams: Lists the supported key types and signature
+	// algorithms.
+	PubKeyCredParams []*GoogleCloudIdentitytoolkitV2PublicKeyCredentialParameters `json:"pubKeyCredParams,omitempty"`
+
+	// Rp: The relying party attributes for creating a new credential.
+	Rp *GoogleCloudIdentitytoolkitV2RpEntity `json:"rp,omitempty"`
+
+	// User: The user attributes for creating a new credential.
+	User *GoogleCloudIdentitytoolkitV2UserEntity `json:"user,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AuthenticatorSelection") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AuthenticatorSelection")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudIdentitytoolkitV2PublicKeyCredentialCreationOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudIdentitytoolkitV2PublicKeyCredentialCreationOptions
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudIdentitytoolkitV2PublicKeyCredentialDescriptor: Descriptor
+// for a public key credential.
+type GoogleCloudIdentitytoolkitV2PublicKeyCredentialDescriptor struct {
+	// CredentialId: The identifier for the credential.
+	CredentialId string `json:"credentialId,omitempty"`
+
+	// CredentialType: The type of public key.
+	CredentialType string `json:"credentialType,omitempty"`
+
+	// Transports: Authenticator transports that are supported by the
+	// authenticator.
+	Transports []string `json:"transports,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CredentialId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CredentialId") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudIdentitytoolkitV2PublicKeyCredentialDescriptor) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudIdentitytoolkitV2PublicKeyCredentialDescriptor
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudIdentitytoolkitV2PublicKeyCredentialParameters: Parameters
+// to create a public credential.
+type GoogleCloudIdentitytoolkitV2PublicKeyCredentialParameters struct {
+	// Alg: The COSE registry number of the cryptographic signature
+	// algorithm.
+	Alg int64 `json:"alg,omitempty,string"`
+
+	// CredentialType: The type of public key to be created.
+	CredentialType string `json:"credentialType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Alg") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Alg") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudIdentitytoolkitV2PublicKeyCredentialParameters) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudIdentitytoolkitV2PublicKeyCredentialParameters
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudIdentitytoolkitV2PublicKeyCredentialRequestOptions:
+// Parameters for signing a challenge with a FIDO key.
+type GoogleCloudIdentitytoolkitV2PublicKeyCredentialRequestOptions struct {
+	// Challenge: The FIDO challenge.
+	Challenge string `json:"challenge,omitempty"`
+
+	// RpId: The relying party identifier.
+	RpId string `json:"rpId,omitempty"`
+
+	// UserVerification: The requirements regarding user verification.
+	UserVerification string `json:"userVerification,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Challenge") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Challenge") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudIdentitytoolkitV2PublicKeyCredentialRequestOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudIdentitytoolkitV2PublicKeyCredentialRequestOptions
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3039,6 +3562,35 @@ type GoogleCloudIdentitytoolkitV2RevokeTokenResponse struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
+}
+
+// GoogleCloudIdentitytoolkitV2RpEntity: The entity object for the
+// Relying Party.
+type GoogleCloudIdentitytoolkitV2RpEntity struct {
+	// Id: The RP ID of the FIDO Relying Party.
+	Id string `json:"id,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Id") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudIdentitytoolkitV2RpEntity) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudIdentitytoolkitV2RpEntity
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudIdentitytoolkitV2StartMfaEnrollmentRequest: Sends MFA
@@ -3345,6 +3897,177 @@ type GoogleCloudIdentitytoolkitV2StartMfaTotpEnrollmentResponseInfo struct {
 
 func (s *GoogleCloudIdentitytoolkitV2StartMfaTotpEnrollmentResponseInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV2StartMfaTotpEnrollmentResponseInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudIdentitytoolkitV2StartPasskeyEnrollmentRequest: Starts
+// passkey enrollment for passkey as a first factor by returning the
+// FIDO challenge.
+type GoogleCloudIdentitytoolkitV2StartPasskeyEnrollmentRequest struct {
+	// IdToken: Required. The GCIP ID token of the signed-in user
+	IdToken string `json:"idToken,omitempty"`
+
+	// TenantId: Optional. The ID of the Identity Platform tenant the user
+	// is signing in to. If not set, the user will sign in to the default
+	// Identity Platform project.
+	TenantId string `json:"tenantId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IdToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IdToken") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudIdentitytoolkitV2StartPasskeyEnrollmentRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudIdentitytoolkitV2StartPasskeyEnrollmentRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudIdentitytoolkitV2StartPasskeyEnrollmentResponse:
+// StartPasskeyEnrollment response.
+type GoogleCloudIdentitytoolkitV2StartPasskeyEnrollmentResponse struct {
+	// CredentialCreationOptions: Parameters specified for the authenticator
+	// to create a public key.
+	CredentialCreationOptions *GoogleCloudIdentitytoolkitV2PublicKeyCredentialCreationOptions `json:"credentialCreationOptions,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CredentialCreationOptions") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "CredentialCreationOptions") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudIdentitytoolkitV2StartPasskeyEnrollmentResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudIdentitytoolkitV2StartPasskeyEnrollmentResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudIdentitytoolkitV2StartPasskeySignInRequest: Starts passkey
+// sign-in by returning the FIDO challenge.
+type GoogleCloudIdentitytoolkitV2StartPasskeySignInRequest struct {
+	// SessionId: Optional. The developer can bind their own concept of a
+	// user session to this flow.
+	SessionId string `json:"sessionId,omitempty"`
+
+	// TenantId: Optional. The ID of the Identity Platform tenant the user
+	// is signing in to. If not set, the user will sign in to the default
+	// Identity Platform project.
+	TenantId string `json:"tenantId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SessionId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SessionId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudIdentitytoolkitV2StartPasskeySignInRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudIdentitytoolkitV2StartPasskeySignInRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudIdentitytoolkitV2StartPasskeySignInResponse: Response for
+// StartPasskeySignIn.
+type GoogleCloudIdentitytoolkitV2StartPasskeySignInResponse struct {
+	// CredentialRequestOptions: Parameters specified for the authenticator
+	// to sign a challenge.
+	CredentialRequestOptions *GoogleCloudIdentitytoolkitV2PublicKeyCredentialRequestOptions `json:"credentialRequestOptions,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CredentialRequestOptions") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CredentialRequestOptions")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudIdentitytoolkitV2StartPasskeySignInResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudIdentitytoolkitV2StartPasskeySignInResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudIdentitytoolkitV2UserEntity: The entity object for the
+// user.
+type GoogleCloudIdentitytoolkitV2UserEntity struct {
+	// Id: The user ID.
+	Id string `json:"id,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Id") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudIdentitytoolkitV2UserEntity) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudIdentitytoolkitV2UserEntity
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4722,6 +5445,519 @@ func (c *AccountsMfaSignInStartCall) Do(opts ...googleapi.CallOption) (*GoogleCl
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleCloudIdentitytoolkitV2StartMfaSignInResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "identitytoolkit.accounts.passkeyEnrollment.finalize":
+
+type AccountsPasskeyEnrollmentFinalizeCall struct {
+	s                                                            *Service
+	googlecloudidentitytoolkitv2finalizepasskeyenrollmentrequest *GoogleCloudIdentitytoolkitV2FinalizePasskeyEnrollmentRequest
+	urlParams_                                                   gensupport.URLParams
+	ctx_                                                         context.Context
+	header_                                                      http.Header
+}
+
+// Finalize: Finishes enrolling a passkey credential for the user.
+func (r *AccountsPasskeyEnrollmentService) Finalize(googlecloudidentitytoolkitv2finalizepasskeyenrollmentrequest *GoogleCloudIdentitytoolkitV2FinalizePasskeyEnrollmentRequest) *AccountsPasskeyEnrollmentFinalizeCall {
+	c := &AccountsPasskeyEnrollmentFinalizeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.googlecloudidentitytoolkitv2finalizepasskeyenrollmentrequest = googlecloudidentitytoolkitv2finalizepasskeyenrollmentrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsPasskeyEnrollmentFinalizeCall) Fields(s ...googleapi.Field) *AccountsPasskeyEnrollmentFinalizeCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsPasskeyEnrollmentFinalizeCall) Context(ctx context.Context) *AccountsPasskeyEnrollmentFinalizeCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsPasskeyEnrollmentFinalizeCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsPasskeyEnrollmentFinalizeCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudidentitytoolkitv2finalizepasskeyenrollmentrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/accounts/passkeyEnrollment:finalize")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "identitytoolkit.accounts.passkeyEnrollment.finalize" call.
+// Exactly one of
+// *GoogleCloudIdentitytoolkitV2FinalizePasskeyEnrollmentResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudIdentitytoolkitV2FinalizePasskeyEnrollmentResponse.ServerR
+// esponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *AccountsPasskeyEnrollmentFinalizeCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIdentitytoolkitV2FinalizePasskeyEnrollmentResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudIdentitytoolkitV2FinalizePasskeyEnrollmentResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Finishes enrolling a passkey credential for the user.",
+	//   "flatPath": "v2/accounts/passkeyEnrollment:finalize",
+	//   "httpMethod": "POST",
+	//   "id": "identitytoolkit.accounts.passkeyEnrollment.finalize",
+	//   "parameterOrder": [],
+	//   "parameters": {},
+	//   "path": "v2/accounts/passkeyEnrollment:finalize",
+	//   "request": {
+	//     "$ref": "GoogleCloudIdentitytoolkitV2FinalizePasskeyEnrollmentRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudIdentitytoolkitV2FinalizePasskeyEnrollmentResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "identitytoolkit.accounts.passkeyEnrollment.start":
+
+type AccountsPasskeyEnrollmentStartCall struct {
+	s                                                         *Service
+	googlecloudidentitytoolkitv2startpasskeyenrollmentrequest *GoogleCloudIdentitytoolkitV2StartPasskeyEnrollmentRequest
+	urlParams_                                                gensupport.URLParams
+	ctx_                                                      context.Context
+	header_                                                   http.Header
+}
+
+// Start: Step one of the passkey enrollment process. Returns a
+// challenge and parameters for creation of the passkey credential.
+func (r *AccountsPasskeyEnrollmentService) Start(googlecloudidentitytoolkitv2startpasskeyenrollmentrequest *GoogleCloudIdentitytoolkitV2StartPasskeyEnrollmentRequest) *AccountsPasskeyEnrollmentStartCall {
+	c := &AccountsPasskeyEnrollmentStartCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.googlecloudidentitytoolkitv2startpasskeyenrollmentrequest = googlecloudidentitytoolkitv2startpasskeyenrollmentrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsPasskeyEnrollmentStartCall) Fields(s ...googleapi.Field) *AccountsPasskeyEnrollmentStartCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsPasskeyEnrollmentStartCall) Context(ctx context.Context) *AccountsPasskeyEnrollmentStartCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsPasskeyEnrollmentStartCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsPasskeyEnrollmentStartCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudidentitytoolkitv2startpasskeyenrollmentrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/accounts/passkeyEnrollment:start")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "identitytoolkit.accounts.passkeyEnrollment.start" call.
+// Exactly one of
+// *GoogleCloudIdentitytoolkitV2StartPasskeyEnrollmentResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudIdentitytoolkitV2StartPasskeyEnrollmentResponse.ServerResp
+// onse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *AccountsPasskeyEnrollmentStartCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIdentitytoolkitV2StartPasskeyEnrollmentResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudIdentitytoolkitV2StartPasskeyEnrollmentResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Step one of the passkey enrollment process. Returns a challenge and parameters for creation of the passkey credential.",
+	//   "flatPath": "v2/accounts/passkeyEnrollment:start",
+	//   "httpMethod": "POST",
+	//   "id": "identitytoolkit.accounts.passkeyEnrollment.start",
+	//   "parameterOrder": [],
+	//   "parameters": {},
+	//   "path": "v2/accounts/passkeyEnrollment:start",
+	//   "request": {
+	//     "$ref": "GoogleCloudIdentitytoolkitV2StartPasskeyEnrollmentRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudIdentitytoolkitV2StartPasskeyEnrollmentResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "identitytoolkit.accounts.passkeySignIn.finalize":
+
+type AccountsPasskeySignInFinalizeCall struct {
+	s                                                        *Service
+	googlecloudidentitytoolkitv2finalizepasskeysigninrequest *GoogleCloudIdentitytoolkitV2FinalizePasskeySignInRequest
+	urlParams_                                               gensupport.URLParams
+	ctx_                                                     context.Context
+	header_                                                  http.Header
+}
+
+// Finalize: Verifies the passkey assertion and signs the user in.
+func (r *AccountsPasskeySignInService) Finalize(googlecloudidentitytoolkitv2finalizepasskeysigninrequest *GoogleCloudIdentitytoolkitV2FinalizePasskeySignInRequest) *AccountsPasskeySignInFinalizeCall {
+	c := &AccountsPasskeySignInFinalizeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.googlecloudidentitytoolkitv2finalizepasskeysigninrequest = googlecloudidentitytoolkitv2finalizepasskeysigninrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsPasskeySignInFinalizeCall) Fields(s ...googleapi.Field) *AccountsPasskeySignInFinalizeCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsPasskeySignInFinalizeCall) Context(ctx context.Context) *AccountsPasskeySignInFinalizeCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsPasskeySignInFinalizeCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsPasskeySignInFinalizeCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudidentitytoolkitv2finalizepasskeysigninrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/accounts/passkeySignIn:finalize")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "identitytoolkit.accounts.passkeySignIn.finalize" call.
+// Exactly one of
+// *GoogleCloudIdentitytoolkitV2FinalizePasskeySignInResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudIdentitytoolkitV2FinalizePasskeySignInResponse.ServerRespo
+// nse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *AccountsPasskeySignInFinalizeCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIdentitytoolkitV2FinalizePasskeySignInResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudIdentitytoolkitV2FinalizePasskeySignInResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Verifies the passkey assertion and signs the user in.",
+	//   "flatPath": "v2/accounts/passkeySignIn:finalize",
+	//   "httpMethod": "POST",
+	//   "id": "identitytoolkit.accounts.passkeySignIn.finalize",
+	//   "parameterOrder": [],
+	//   "parameters": {},
+	//   "path": "v2/accounts/passkeySignIn:finalize",
+	//   "request": {
+	//     "$ref": "GoogleCloudIdentitytoolkitV2FinalizePasskeySignInRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudIdentitytoolkitV2FinalizePasskeySignInResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "identitytoolkit.accounts.passkeySignIn.start":
+
+type AccountsPasskeySignInStartCall struct {
+	s                                                     *Service
+	googlecloudidentitytoolkitv2startpasskeysigninrequest *GoogleCloudIdentitytoolkitV2StartPasskeySignInRequest
+	urlParams_                                            gensupport.URLParams
+	ctx_                                                  context.Context
+	header_                                               http.Header
+}
+
+// Start: Creates and returns the passkey challenge
+func (r *AccountsPasskeySignInService) Start(googlecloudidentitytoolkitv2startpasskeysigninrequest *GoogleCloudIdentitytoolkitV2StartPasskeySignInRequest) *AccountsPasskeySignInStartCall {
+	c := &AccountsPasskeySignInStartCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.googlecloudidentitytoolkitv2startpasskeysigninrequest = googlecloudidentitytoolkitv2startpasskeysigninrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsPasskeySignInStartCall) Fields(s ...googleapi.Field) *AccountsPasskeySignInStartCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsPasskeySignInStartCall) Context(ctx context.Context) *AccountsPasskeySignInStartCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsPasskeySignInStartCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsPasskeySignInStartCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudidentitytoolkitv2startpasskeysigninrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/accounts/passkeySignIn:start")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "identitytoolkit.accounts.passkeySignIn.start" call.
+// Exactly one of
+// *GoogleCloudIdentitytoolkitV2StartPasskeySignInResponse or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *GoogleCloudIdentitytoolkitV2StartPasskeySignInResponse.ServerResponse
+// .Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *AccountsPasskeySignInStartCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIdentitytoolkitV2StartPasskeySignInResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudIdentitytoolkitV2StartPasskeySignInResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates and returns the passkey challenge",
+	//   "flatPath": "v2/accounts/passkeySignIn:start",
+	//   "httpMethod": "POST",
+	//   "id": "identitytoolkit.accounts.passkeySignIn.start",
+	//   "parameterOrder": [],
+	//   "parameters": {},
+	//   "path": "v2/accounts/passkeySignIn:start",
+	//   "request": {
+	//     "$ref": "GoogleCloudIdentitytoolkitV2StartPasskeySignInRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudIdentitytoolkitV2StartPasskeySignInResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

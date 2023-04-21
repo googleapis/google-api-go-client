@@ -994,6 +994,7 @@ type CVSS struct {
 	//   "ATTACK_COMPLEXITY_UNSPECIFIED"
 	//   "ATTACK_COMPLEXITY_LOW"
 	//   "ATTACK_COMPLEXITY_HIGH"
+	//   "ATTACK_COMPLEXITY_MEDIUM"
 	AttackComplexity string `json:"attackComplexity,omitempty"`
 
 	// AttackVector: Base Metrics Represents the intrinsic characteristics
@@ -1020,6 +1021,8 @@ type CVSS struct {
 	//   "IMPACT_HIGH"
 	//   "IMPACT_LOW"
 	//   "IMPACT_NONE"
+	//   "IMPACT_PARTIAL"
+	//   "IMPACT_COMPLETE"
 	AvailabilityImpact string `json:"availabilityImpact,omitempty"`
 
 	// BaseScore: The base score is a function of the base metric scores.
@@ -1030,6 +1033,8 @@ type CVSS struct {
 	//   "IMPACT_HIGH"
 	//   "IMPACT_LOW"
 	//   "IMPACT_NONE"
+	//   "IMPACT_PARTIAL"
+	//   "IMPACT_COMPLETE"
 	ConfidentialityImpact string `json:"confidentialityImpact,omitempty"`
 
 	ExploitabilityScore float64 `json:"exploitabilityScore,omitempty"`
@@ -1041,6 +1046,8 @@ type CVSS struct {
 	//   "IMPACT_HIGH"
 	//   "IMPACT_LOW"
 	//   "IMPACT_NONE"
+	//   "IMPACT_PARTIAL"
+	//   "IMPACT_COMPLETE"
 	IntegrityImpact string `json:"integrityImpact,omitempty"`
 
 	// Possible values:
@@ -1628,6 +1635,13 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1Artifacts struct {
 	// is marked FAILURE.
 	MavenArtifacts []*ContaineranalysisGoogleDevtoolsCloudbuildV1ArtifactsMavenArtifact `json:"mavenArtifacts,omitempty"`
 
+	// NpmPackages: A list of npm packages to be uploaded to Artifact
+	// Registry upon successful completion of all build steps. Npm packages
+	// in the specified paths will be uploaded to the specified Artifact
+	// Registry repository using the builder service account's credentials.
+	// If any packages fail to be pushed, the build is marked FAILURE.
+	NpmPackages []*ContaineranalysisGoogleDevtoolsCloudbuildV1ArtifactsNpmPackage `json:"npmPackages,omitempty"`
+
 	// Objects: A list of objects to be uploaded to Cloud Storage upon
 	// successful completion of all build steps. Files in the workspace
 	// matching specified paths globs will be uploaded to the specified
@@ -1754,6 +1768,42 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1ArtifactsMavenArtifact struct {
 
 func (s *ContaineranalysisGoogleDevtoolsCloudbuildV1ArtifactsMavenArtifact) MarshalJSON() ([]byte, error) {
 	type NoMethod ContaineranalysisGoogleDevtoolsCloudbuildV1ArtifactsMavenArtifact
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ContaineranalysisGoogleDevtoolsCloudbuildV1ArtifactsNpmPackage: Npm
+// package to upload to Artifact Registry upon successful completion of
+// all build steps.
+type ContaineranalysisGoogleDevtoolsCloudbuildV1ArtifactsNpmPackage struct {
+	// PackagePath: Path to the package.json. e.g. workspace/path/to/package
+	PackagePath string `json:"packagePath,omitempty"`
+
+	// Repository: Artifact Registry repository, in the form
+	// "https://$REGION-npm.pkg.dev/$PROJECT/$REPOSITORY" Npm package in the
+	// workspace specified by path will be zipped and uploaded to Artifact
+	// Registry with this location as a prefix.
+	Repository string `json:"repository,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PackagePath") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PackagePath") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ContaineranalysisGoogleDevtoolsCloudbuildV1ArtifactsNpmPackage) MarshalJSON() ([]byte, error) {
+	type NoMethod ContaineranalysisGoogleDevtoolsCloudbuildV1ArtifactsNpmPackage
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2161,6 +2211,7 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1BuildOptions struct {
 	//   "NONE" - No hash requested.
 	//   "SHA256" - Use a sha256 hash.
 	//   "MD5" - Use a md5 hash.
+	//   "SHA512" - Use a sha512 hash.
 	SourceProvenanceHash []string `json:"sourceProvenanceHash,omitempty"`
 
 	// SubstitutionOption: Option to specify behavior when there is an error
@@ -2498,6 +2549,51 @@ func (s *ContaineranalysisGoogleDevtoolsCloudbuildV1FileHashes) MarshalJSON() ([
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ContaineranalysisGoogleDevtoolsCloudbuildV1GitSource: Location of the
+// source in any accessible Git repository.
+type ContaineranalysisGoogleDevtoolsCloudbuildV1GitSource struct {
+	// Dir: Directory, relative to the source root, in which to run the
+	// build. This must be a relative path. If a step's `dir` is specified
+	// and is an absolute path, this value is ignored for that step's
+	// execution.
+	Dir string `json:"dir,omitempty"`
+
+	// Revision: The revision to fetch from the Git repository such as a
+	// branch, a tag, a commit SHA, or any Git ref. Cloud Build uses `git
+	// fetch` to fetch the revision from the Git repository; therefore make
+	// sure that the string you provide for `revision` is parsable by the
+	// command. For information on string values accepted by `git fetch`,
+	// see https://git-scm.com/docs/gitrevisions#_specifying_revisions. For
+	// information on `git fetch`, see https://git-scm.com/docs/git-fetch.
+	Revision string `json:"revision,omitempty"`
+
+	// Url: Location of the Git repo to build. This will be used as a `git
+	// remote`, see https://git-scm.com/docs/git-remote.
+	Url string `json:"url,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Dir") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Dir") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ContaineranalysisGoogleDevtoolsCloudbuildV1GitSource) MarshalJSON() ([]byte, error) {
+	type NoMethod ContaineranalysisGoogleDevtoolsCloudbuildV1GitSource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ContaineranalysisGoogleDevtoolsCloudbuildV1Hash: Container message
 // for hash values.
 type ContaineranalysisGoogleDevtoolsCloudbuildV1Hash struct {
@@ -2507,6 +2603,7 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1Hash struct {
 	//   "NONE" - No hash requested.
 	//   "SHA256" - Use a sha256 hash.
 	//   "MD5" - Use a md5 hash.
+	//   "SHA512" - Use a sha512 hash.
 	Type string `json:"type,omitempty"`
 
 	// Value: The hash value.
@@ -2664,6 +2761,10 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1Results struct {
 	// end of the build.
 	MavenArtifacts []*ContaineranalysisGoogleDevtoolsCloudbuildV1UploadedMavenArtifact `json:"mavenArtifacts,omitempty"`
 
+	// NpmPackages: Npm packages uploaded to Artifact Registry at the end of
+	// the build.
+	NpmPackages []*ContaineranalysisGoogleDevtoolsCloudbuildV1UploadedNpmPackage `json:"npmPackages,omitempty"`
+
 	// NumArtifacts: Number of non-container artifacts uploaded to Cloud
 	// Storage. Only populated when artifacts are uploaded to Cloud Storage.
 	NumArtifacts int64 `json:"numArtifacts,omitempty,string"`
@@ -2808,6 +2909,9 @@ func (s *ContaineranalysisGoogleDevtoolsCloudbuildV1Secrets) MarshalJSON() ([]by
 // ContaineranalysisGoogleDevtoolsCloudbuildV1Source: Location of the
 // source in a supported storage service.
 type ContaineranalysisGoogleDevtoolsCloudbuildV1Source struct {
+	// GitSource: If provided, get the source from this Git repository.
+	GitSource *ContaineranalysisGoogleDevtoolsCloudbuildV1GitSource `json:"gitSource,omitempty"`
+
 	// RepoSource: If provided, get the source from this location in a Cloud
 	// Source Repository.
 	RepoSource *ContaineranalysisGoogleDevtoolsCloudbuildV1RepoSource `json:"repoSource,omitempty"`
@@ -2822,7 +2926,7 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1Source struct {
 	// (https://github.com/GoogleCloudPlatform/cloud-builders/tree/master/gcs-fetcher).
 	StorageSourceManifest *ContaineranalysisGoogleDevtoolsCloudbuildV1StorageSourceManifest `json:"storageSourceManifest,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "RepoSource") to
+	// ForceSendFields is a list of field names (e.g. "GitSource") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2830,7 +2934,7 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1Source struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "RepoSource") to include in
+	// NullFields is a list of field names (e.g. "GitSource") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -3040,6 +3144,42 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1UploadedMavenArtifact struct {
 
 func (s *ContaineranalysisGoogleDevtoolsCloudbuildV1UploadedMavenArtifact) MarshalJSON() ([]byte, error) {
 	type NoMethod ContaineranalysisGoogleDevtoolsCloudbuildV1UploadedMavenArtifact
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ContaineranalysisGoogleDevtoolsCloudbuildV1UploadedNpmPackage: An npm
+// package uploaded to Artifact Registry using the NpmPackage directive.
+type ContaineranalysisGoogleDevtoolsCloudbuildV1UploadedNpmPackage struct {
+	// FileHashes: Hash types and values of the npm package.
+	FileHashes *ContaineranalysisGoogleDevtoolsCloudbuildV1FileHashes `json:"fileHashes,omitempty"`
+
+	// PushTiming: Output only. Stores timing information for pushing the
+	// specified artifact.
+	PushTiming *ContaineranalysisGoogleDevtoolsCloudbuildV1TimeSpan `json:"pushTiming,omitempty"`
+
+	// Uri: URI of the uploaded npm package.
+	Uri string `json:"uri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FileHashes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FileHashes") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ContaineranalysisGoogleDevtoolsCloudbuildV1UploadedNpmPackage) MarshalJSON() ([]byte, error) {
+	type NoMethod ContaineranalysisGoogleDevtoolsCloudbuildV1UploadedNpmPackage
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

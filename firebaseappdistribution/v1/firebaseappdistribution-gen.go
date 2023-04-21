@@ -5163,8 +5163,8 @@ func (r *ProjectsGroupsService) List(parent string) *ProjectsGroupsListCall {
 
 // PageSize sets the optional parameter "pageSize": The maximum number
 // of groups to return. The service may return fewer than this value.
-// The valid range is [1-100]; If unspecified (0), at most 25 groups are
-// returned. Values above 100 are coerced to 100.
+// The valid range is [1-1000]; If unspecified (0), at most 25 groups
+// are returned. Values above 1000 are coerced to 1000.
 func (c *ProjectsGroupsListCall) PageSize(pageSize int64) *ProjectsGroupsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -5289,7 +5289,7 @@ func (c *ProjectsGroupsListCall) Do(opts ...googleapi.CallOption) (*GoogleFireba
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "Optional. The maximum number of groups to return. The service may return fewer than this value. The valid range is [1-100]; If unspecified (0), at most 25 groups are returned. Values above 100 are coerced to 100.",
+	//       "description": "Optional. The maximum number of groups to return. The service may return fewer than this value. The valid range is [1-1000]; If unspecified (0), at most 25 groups are returned. Values above 1000 are coerced to 1000.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"

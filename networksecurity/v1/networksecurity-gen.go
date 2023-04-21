@@ -1591,14 +1591,15 @@ func (s *Location) MarshalJSON() ([]byte, error) {
 // MTLSPolicy: Specification of the MTLSPolicy.
 type MTLSPolicy struct {
 	// ClientValidationCa: Required if the policy is to be used with Traffic
-	// Director. For External HTTPS LB it must be empty. Defines the
-	// mechanism to obtain the Certificate Authority certificate to validate
-	// the client certificate.
+	// Director. For external HTTPS load balancers it must be empty. Defines
+	// the mechanism to obtain the Certificate Authority certificate to
+	// validate the client certificate.
 	ClientValidationCa []*ValidationCA `json:"clientValidationCa,omitempty"`
 
-	// ClientValidationMode: Specifies whether client connections proceed
-	// when a client presents an invalid certificate or no certificate.
-	// Required if the policy is to be used with the External HTTPS LB. For
+	// ClientValidationMode: When the client presents an invalid certificate
+	// or no certificate to the load balancer, the `client_validation_mode`
+	// specifies how the client connection is handled. Required if the
+	// policy is to be used with the external HTTPS load balancing. For
 	// Traffic Director it must be empty.
 	//
 	// Possible values:
@@ -1620,7 +1621,7 @@ type MTLSPolicy struct {
 	// certificatemanager.googleapis.com namespace. If specified, the chain
 	// validation will be performed against certificates configured in the
 	// given TrustConfig. Allowed only if the policy is to be used with
-	// External HTTPS LB.
+	// external HTTPS load balancers.
 	ClientValidationTrustConfig string `json:"clientValidationTrustConfig,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ClientValidationCa")
@@ -1803,22 +1804,22 @@ func (s *Rule) MarshalJSON() ([]byte, error) {
 // server should authenticate incoming requests. This resource itself
 // does not affect configuration unless it is attached to a target HTTPS
 // proxy or endpoint config selector resource. ServerTlsPolicy in the
-// form accepted by External HTTPS Load Balancer can be attached only to
-// TargetHttpsProxy with an `EXTERNAL` or `EXTERNAL_MANAGED` load
+// form accepted by external HTTPS load balancers can be attached only
+// to TargetHttpsProxy with an `EXTERNAL` or `EXTERNAL_MANAGED` load
 // balancing scheme. Traffic Director compatible ServerTlsPolicies can
 // be attached to EndpointPolicy and TargetHttpsProxy with Traffic
 // Director `INTERNAL_SELF_MANAGED` load balancing scheme.
 type ServerTlsPolicy struct {
-	// AllowOpen: Can be enabled only for Traffic Director policies, must be
-	// false for External HTTPS LB policies. Determines if server allows
-	// plaintext connections. If set to true, server allows plain text
-	// connections. By default, it is set to false. This setting is not
-	// exclusive of other encryption modes. For example, if `allow_open` and
-	// `mtls_policy` are set, server allows both plain text and mTLS
-	// connections. See documentation of other encryption modes to confirm
-	// compatibility. Consider using it if you wish to upgrade in place your
-	// deployment to TLS while having mixed TLS and non-TLS traffic reaching
-	// port :80.
+	// AllowOpen: This field applies only for Traffic Director policies. It
+	// is must be set to false for external HTTPS load balancer policies.
+	// Determines if server allows plaintext connections. If set to true,
+	// server allows plain text connections. By default, it is set to false.
+	// This setting is not exclusive of other encryption modes. For example,
+	// if `allow_open` and `mtls_policy` are set, server allows both plain
+	// text and mTLS connections. See documentation of other encryption
+	// modes to confirm compatibility. Consider using it if you wish to
+	// upgrade in place your deployment to TLS while having mixed TLS and
+	// non-TLS traffic reaching port :80.
 	AllowOpen bool `json:"allowOpen,omitempty"`
 
 	// CreateTime: Output only. The timestamp when the resource was created.
@@ -1830,13 +1831,14 @@ type ServerTlsPolicy struct {
 	// Labels: Set of label tags associated with the resource.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// MtlsPolicy: Required if policy is to be used with the External HTTPS
-	// LB, for Traffic Director allowed to be empty. Defines a mechanism to
-	// provision peer validation certificates for peer to peer
-	// authentication (Mutual TLS - mTLS). If not specified, client
-	// certificate will not be requested. The connection is treated as TLS
-	// and not mTLS. If `allow_open` and `mtls_policy` are set, server
-	// allows both plain text and mTLS connections.
+	// MtlsPolicy: This field is required if the policy is used with
+	// external HTTPS load balancers. This field can be empty for Traffic
+	// Director. Defines a mechanism to provision peer validation
+	// certificates for peer to peer authentication (Mutual TLS - mTLS). If
+	// not specified, client certificate will not be requested. The
+	// connection is treated as TLS and not mTLS. If `allow_open` and
+	// `mtls_policy` are set, server allows both plain text and mTLS
+	// connections.
 	MtlsPolicy *MTLSPolicy `json:"mtlsPolicy,omitempty"`
 
 	// Name: Required. Name of the ServerTlsPolicy resource. It matches the
@@ -1846,10 +1848,10 @@ type ServerTlsPolicy struct {
 	Name string `json:"name,omitempty"`
 
 	// ServerCertificate: Optional if policy is to be used with Traffic
-	// Director, for External HTTPS LB must be empty. Defines a mechanism to
-	// provision server identity (public and private keys). Cannot be
-	// combined with `allow_open` as a permissive mode that allows both
-	// plain text and TLS is not supported.
+	// Director. For external HTTPS load balancer must be empty. Defines a
+	// mechanism to provision server identity (public and private keys).
+	// Cannot be combined with `allow_open` as a permissive mode that allows
+	// both plain text and TLS is not supported.
 	ServerCertificate *GoogleCloudNetworksecurityV1CertificateProvider `json:"serverCertificate,omitempty"`
 
 	// UpdateTime: Output only. The timestamp when the resource was updated.

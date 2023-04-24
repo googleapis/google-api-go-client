@@ -11608,7 +11608,7 @@ type LineItem struct {
 	// these settings may represent the optimized targeting feature
 	// (//support.google.com/displayvideo/answer/12060859) in place of
 	// targeting expansion. This feature will be rolled out to all partners
-	// by mid-April 2023.
+	// by early May 2023.
 	TargetingExpansion *TargetingExpansionConfig `json:"targetingExpansion,omitempty"`
 
 	// UpdateTime: Output only. The timestamp when the line item was last
@@ -16477,7 +16477,7 @@ func (s *TargetFrequency) MarshalJSON() ([]byte, error) {
 // settings may represent the optimized targeting feature
 // (//support.google.com/displayvideo/answer/12060859) in place of
 // targeting expansion. This feature will be rolled out to all partners
-// by mid-April 2023.
+// by early May 2023.
 type TargetingExpansionConfig struct {
 	// ExcludeFirstPartyAudience: Required. Whether to exclude first-party
 	// audiences from use in targeting expansion or optimized targeting.
@@ -16493,7 +16493,7 @@ type TargetingExpansionConfig struct {
 	// targeting assigned to this line item will be replaced with negative
 	// targeting of the same first-party audiences to ensure the continued
 	// exclusion of those audiences. This field will be deprecated for all
-	// partners by mid-April 2023.
+	// partners by early May 2023.
 	ExcludeFirstPartyAudience bool `json:"excludeFirstPartyAudience,omitempty"`
 
 	// TargetingExpansionLevel: Required. Magnitude of expansion for
@@ -16508,7 +16508,7 @@ type TargetingExpansionConfig struct {
 	// automatically assigned if you do not set the field. * If you set the
 	// field to any value other than `NO_EXPANSION`, it will automatically
 	// be set to `LEAST_EXPANSION`. This behavior will be rolled out to all
-	// partners by mid-April 2023.
+	// partners by early May 2023.
 	//
 	// Possible values:
 	//   "TARGETING_EXPANSION_LEVEL_UNSPECIFIED" - Targeting expansion level

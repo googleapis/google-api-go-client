@@ -4141,6 +4141,7 @@ func (c *ProjectsLocationsTransferConfigsScheduleRunsCall) Do(opts ...googleapi.
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Creates transfer runs for a time range [start_time, end_time]. For each date - or whatever granularity the data source supports - in the range, one transfer run is created. Note that runs are created per UTC time in the time range. DEPRECATED: use StartManualTransferRuns instead.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/transferConfigs/{transferConfigsId}:scheduleRuns",
 	//   "httpMethod": "POST",
@@ -6166,6 +6167,7 @@ func (c *ProjectsTransferConfigsScheduleRunsCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Creates transfer runs for a time range [start_time, end_time]. For each date - or whatever granularity the data source supports - in the range, one transfer run is created. Note that runs are created per UTC time in the time range. DEPRECATED: use StartManualTransferRuns instead.",
 	//   "flatPath": "v1/projects/{projectsId}/transferConfigs/{transferConfigsId}:scheduleRuns",
 	//   "httpMethod": "POST",

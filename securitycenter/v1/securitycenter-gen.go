@@ -668,13 +668,14 @@ func (s *Access) MarshalJSON() ([]byte, error) {
 }
 
 // AccessReview: Conveys information about a Kubernetes access review
-// (e.g. kubectl auth can-i ...) that was involved in a finding.
+// (such as one returned by a `kubectl auth can-i`
+// (https://kubernetes.io/docs/reference/access-authn-authz/authorization/#checking-api-access)
+// command) that was involved in a finding.
 type AccessReview struct {
-	// Group: Group is the API Group of the Resource. "*" means all.
+	// Group: The API group of the resource. "*" means all.
 	Group string `json:"group,omitempty"`
 
-	// Name: Name is the name of the resource being requested. Empty means
-	// all.
+	// Name: The name of the resource being requested. Empty means all.
 	Name string `json:"name,omitempty"`
 
 	// Ns: Namespace of the action being requested. Currently, there is no
@@ -682,18 +683,17 @@ type AccessReview struct {
 	// represented by "" (empty).
 	Ns string `json:"ns,omitempty"`
 
-	// Resource: Resource is the optional resource type requested. "*" means
-	// all.
+	// Resource: The optional resource type requested. "*" means all.
 	Resource string `json:"resource,omitempty"`
 
-	// Subresource: Subresource is the optional subresource type.
+	// Subresource: The optional subresource type.
 	Subresource string `json:"subresource,omitempty"`
 
-	// Verb: Verb is a Kubernetes resource API verb, like: get, list, watch,
-	// create, update, delete, proxy. "*" means all.
+	// Verb: A Kubernetes resource API verb, like get, list, watch, create,
+	// update, delete, proxy. "*" means all.
 	Verb string `json:"verb,omitempty"`
 
-	// Version: Version is the API Version of the Resource. "*" means all.
+	// Version: The API version of the resource. "*" means all.
 	Version string `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Group") to
@@ -1094,8 +1094,8 @@ type CloudDlpInspection struct {
 	// sampled subset.
 	FullScan bool `json:"fullScan,omitempty"`
 
-	// InfoType: The type of information
-	// (https://cloud.google.com/dlp/docs/infotypes-reference) found, for
+	// InfoType: The type of information (or *infoType
+	// (https://cloud.google.com/dlp/docs/infotypes-reference)*) found, for
 	// example, `EMAIL_ADDRESS` or `STREET_ADDRESS`.
 	InfoType string `json:"infoType,omitempty"`
 
@@ -1133,14 +1133,14 @@ func (s *CloudDlpInspection) MarshalJSON() ([]byte, error) {
 // Compliance: Contains compliance information about a security standard
 // indicating unmet recommendations.
 type Compliance struct {
-	// Ids: Policies within the standard/benchmark e.g. A.12.4.1
+	// Ids: Policies within the standard or benchmark, for example, A.12.4.1
 	Ids []string `json:"ids,omitempty"`
 
-	// Standard: Refers to industry wide standards or benchmarks e.g. "cis",
-	// "pci", "owasp", etc.
+	// Standard: Industry-wide compliance standards or benchmarks, such as
+	// CIS, PCI, and OWASP.
 	Standard string `json:"standard,omitempty"`
 
-	// Version: Version of the standard/benchmark e.g. 1.1
+	// Version: Version of the standard or benchmark, for example, 1.1
 	Version string `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Ids") to
@@ -1245,7 +1245,7 @@ func (s *Contact) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ContactDetails: The details pertaining to specific contacts
+// ContactDetails: Details about specific contacts
 type ContactDetails struct {
 	// Contacts: A list of contacts
 	Contacts []*Contact `json:"contacts,omitempty"`
@@ -1275,7 +1275,7 @@ func (s *ContactDetails) MarshalJSON() ([]byte, error) {
 
 // Container: Container associated with the finding.
 type Container struct {
-	// ImageId: Optional container image id, when provided by the container
+	// ImageId: Optional container image ID, if provided by the container
 	// runtime. Uniquely identifies the container image launched using a
 	// container image digest.
 	ImageId string `json:"imageId,omitempty"`
@@ -1283,11 +1283,12 @@ type Container struct {
 	// Labels: Container labels, as provided by the container runtime.
 	Labels []*Label `json:"labels,omitempty"`
 
-	// Name: Container name.
+	// Name: Name of the container.
 	Name string `json:"name,omitempty"`
 
-	// Uri: Container image URI provided when configuring a pod/container.
-	// May identify a container image version using mutable tags.
+	// Uri: Container image URI provided when configuring a pod or
+	// container. This string can identify a container image version using
+	// mutable tags.
 	Uri string `json:"uri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ImageId") to
@@ -1513,30 +1514,36 @@ func (s *Cvssv3) UnmarshalJSON(data []byte) error {
 
 // Database: Represents database access information, such as queries. A
 // database may be a sub-resource of an instance (as in the case of
-// CloudSQL instances or Cloud Spanner instances), or the database
-// instance itself. Some database resources may not have the full
-// resource name populated because these resource types are not yet
-// supported by Cloud Asset Inventory (e.g. CloudSQL databases). In
-// these cases only the display name will be provided.
+// Cloud SQL instances or Cloud Spanner instances), or the database
+// instance itself. Some database resources might not have the full
+// resource name (https://google.aip.dev/122#full-resource-names)
+// populated because these resource types, such as Cloud SQL databases,
+// are not yet supported by Cloud Asset Inventory. In these cases only
+// the display name is provided. Some database resources may not have
+// the full resource name
+// (https://google.aip.dev/122#full-resource-names) populated because
+// these resource types are not yet supported by Cloud Asset Inventory
+// (e.g. Cloud SQL databases). In these cases only the display name will
+// be provided.
 type Database struct {
-	// DisplayName: The human readable name of the database the user
+	// DisplayName: The human-readable name of the database that the user
 	// connected to.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Grantees: The target usernames/roles/groups of a SQL privilege grant
-	// (not an IAM policy change).
+	// Grantees: The target usernames, roles, or groups of an SQL privilege
+	// grant, which is not an IAM policy change.
 	Grantees []string `json:"grantees,omitempty"`
 
-	// Name: The full resource name of the database the user connected to,
-	// if it is supported by CAI.
-	// (https://google.aip.dev/122#full-resource-names)
+	// Name: The full resource name
+	// (https://google.aip.dev/122#full-resource-names) of the database that
+	// the user connected to, if it is supported by Cloud Asset Inventory.
 	Name string `json:"name,omitempty"`
 
-	// Query: The SQL statement associated with the relevant access.
+	// Query: The SQL statement that is associated with the database access.
 	Query string `json:"query,omitempty"`
 
-	// UserName: The username used to connect to the DB. This may not
-	// necessarily be an IAM principal, and has no required format.
+	// UserName: The username used to connect to the database. The username
+	// might not be an IAM principal and does not have a set format.
 	UserName string `json:"userName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
@@ -1621,8 +1628,8 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
-// EnvironmentVariable: EnvironmentVariable is a name-value pair to
-// store environment variables for Process.
+// EnvironmentVariable: A name-value pair representing an environment
+// variable used in an operating system process.
 type EnvironmentVariable struct {
 	// Name: Environment variable name as a JSON encoded string.
 	Name string `json:"name,omitempty"`
@@ -1653,16 +1660,18 @@ func (s *EnvironmentVariable) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ExfilResource: Resource that has been exfiltrated or exfiltrated_to.
+// ExfilResource: Resource where data was exfiltrated from or
+// exfiltrated to.
 type ExfilResource struct {
-	// Components: Subcomponents of the asset that is exfiltrated - these
-	// could be URIs used during exfiltration, table names, databases,
-	// filenames, etc. For example, multiple tables may be exfiltrated from
-	// the same CloudSQL instance, or multiple files from the same Cloud
-	// Storage bucket.
+	// Components: Subcomponents of the asset that was exfiltrated, like
+	// URIs used during exfiltration, table names, databases, and filenames.
+	// For example, multiple tables might have been exfiltrated from the
+	// same Cloud SQL instance, or multiple files might have been
+	// exfiltrated from the same Cloud Storage bucket.
 	Components []string `json:"components,omitempty"`
 
-	// Name: Resource's URI (https://google.aip.dev/122#full-resource-names)
+	// Name: The resource's full resource name
+	// (https://cloud.google.com/apis/design/resource_names#full_resource_name).
 	Name string `json:"name,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Components") to
@@ -1688,10 +1697,10 @@ func (s *ExfilResource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Exfiltration: Exfiltration represents a data exfiltration attempt of
-// one or more sources to one or more targets. Sources represent the
-// source of data that is exfiltrated, and Targets represents the
-// destination the data was copied to.
+// Exfiltration: Exfiltration represents a data exfiltration attempt
+// from one or more sources to one or more targets. The `sources`
+// attribute lists the sources of the exfiltrated data. The `targets`
+// attribute lists the destinations the data was copied to.
 type Exfiltration struct {
 	// Sources: If there are multiple sources, then the data is considered
 	// "joined" between them. For instance, BigQuery can join multiple
@@ -1788,8 +1797,7 @@ func (s *Expr) MarshalJSON() ([]byte, error) {
 // File: File information about the related binary/library used by an
 // executable, or the script used by a script interpreter
 type File struct {
-	// Contents: Prefix of the file contents as a JSON encoded string.
-	// (Currently only populated for Malicious Script Executed findings.)
+	// Contents: Prefix of the file contents as a JSON-encoded string.
 	Contents string `json:"contents,omitempty"`
 
 	// HashedSize: The length in bytes of the file prefix that was hashed.
@@ -2338,10 +2346,10 @@ func (s *GoogleCloudSecuritycenterV1BigQueryExport) MarshalJSON() ([]byte, error
 // GoogleCloudSecuritycenterV1Binding: Represents a Kubernetes
 // RoleBinding or ClusterRoleBinding.
 type GoogleCloudSecuritycenterV1Binding struct {
-	// Name: Name for binding.
+	// Name: Name for the binding.
 	Name string `json:"name,omitempty"`
 
-	// Ns: Namespace for binding.
+	// Ns: Namespace for the binding.
 	Ns string `json:"ns,omitempty"`
 
 	// Role: The Role or ClusterRole referenced by the binding.
@@ -3673,7 +3681,7 @@ type IamBinding struct {
 	Action string `json:"action,omitempty"`
 
 	// Member: A single identity requesting access for a Cloud Platform
-	// resource, e.g. "foo@google.com".
+	// resource, for example, "foo@google.com".
 	Member string `json:"member,omitempty"`
 
 	// Role: Role that is assigned to "members". For example,
@@ -3782,41 +3790,41 @@ func (s *Indicator) MarshalJSON() ([]byte, error) {
 
 // KernelRootkit: Kernel mode rootkit signatures.
 type KernelRootkit struct {
-	// Name: Rootkit name when available.
+	// Name: Rootkit name, when available.
 	Name string `json:"name,omitempty"`
 
-	// UnexpectedCodeModification: True when unexpected modifications of
+	// UnexpectedCodeModification: True if unexpected modifications of
 	// kernel code memory are present.
 	UnexpectedCodeModification bool `json:"unexpectedCodeModification,omitempty"`
 
-	// UnexpectedFtraceHandler: True when `ftrace` points are present with
+	// UnexpectedFtraceHandler: True if `ftrace` points are present with
 	// callbacks pointing to regions that are not in the expected kernel or
 	// module code range.
 	UnexpectedFtraceHandler bool `json:"unexpectedFtraceHandler,omitempty"`
 
-	// UnexpectedInterruptHandler: True when interrupt handlers that are are
+	// UnexpectedInterruptHandler: True if interrupt handlers that are are
 	// not in the expected kernel or module code regions are present.
 	UnexpectedInterruptHandler bool `json:"unexpectedInterruptHandler,omitempty"`
 
-	// UnexpectedKernelCodePages: True when kernel code pages that are not
-	// in the expected kernel or module code regions are present.
+	// UnexpectedKernelCodePages: True if kernel code pages that are not in
+	// the expected kernel or module code regions are present.
 	UnexpectedKernelCodePages bool `json:"unexpectedKernelCodePages,omitempty"`
 
-	// UnexpectedKprobeHandler: True when `kprobe` points are present with
+	// UnexpectedKprobeHandler: True if `kprobe` points are present with
 	// callbacks pointing to regions that are not in the expected kernel or
 	// module code range.
 	UnexpectedKprobeHandler bool `json:"unexpectedKprobeHandler,omitempty"`
 
-	// UnexpectedProcessesInRunqueue: True when unexpected processes in the
+	// UnexpectedProcessesInRunqueue: True if unexpected processes in the
 	// scheduler run queue are present. Such processes are in the run queue,
 	// but not in the process task list.
 	UnexpectedProcessesInRunqueue bool `json:"unexpectedProcessesInRunqueue,omitempty"`
 
-	// UnexpectedReadOnlyDataModification: True when unexpected
-	// modifications of kernel read-only data memory are present.
+	// UnexpectedReadOnlyDataModification: True if unexpected modifications
+	// of kernel read-only data memory are present.
 	UnexpectedReadOnlyDataModification bool `json:"unexpectedReadOnlyDataModification,omitempty"`
 
-	// UnexpectedSystemCallHandler: True when system call handlers that are
+	// UnexpectedSystemCallHandler: True if system call handlers that are
 	// are not in the expected kernel or module code regions are present.
 	UnexpectedSystemCallHandler bool `json:"unexpectedSystemCallHandler,omitempty"`
 
@@ -3846,27 +3854,34 @@ func (s *KernelRootkit) MarshalJSON() ([]byte, error) {
 // Kubernetes: Kubernetes-related attributes.
 type Kubernetes struct {
 	// AccessReviews: Provides information on any Kubernetes access reviews
-	// (i.e. privilege checks) relevant to the finding.
+	// (privilege checks) relevant to the finding.
 	AccessReviews []*AccessReview `json:"accessReviews,omitempty"`
 
 	// Bindings: Provides Kubernetes role binding information for findings
-	// that involve RoleBindings or ClusterRoleBindings.
+	// that involve RoleBindings or ClusterRoleBindings
+	// (https://cloud.google.com/kubernetes-engine/docs/how-to/role-based-access-control).
 	Bindings []*GoogleCloudSecuritycenterV1Binding `json:"bindings,omitempty"`
 
-	// NodePools: GKE Node Pools associated with the finding. This field
-	// will contain NodePool information for each Node, when it is
-	// available.
+	// NodePools: GKE node pools
+	// (https://cloud.google.com/kubernetes-engine/docs/concepts/node-pools)
+	// associated with the finding. This field contains node pool
+	// information for each node, when it is available.
 	NodePools []*NodePool `json:"nodePools,omitempty"`
 
-	// Nodes: Provides Kubernetes Node information.
+	// Nodes: Provides Kubernetes node
+	// (https://cloud.google.com/kubernetes-engine/docs/concepts/cluster-architecture#nodes)
+	// information.
 	Nodes []*Node `json:"nodes,omitempty"`
 
-	// Pods: Kubernetes Pods associated with the finding. This field will
-	// contain Pod records for each container that is owned by a Pod.
+	// Pods: Kubernetes Pods
+	// (https://cloud.google.com/kubernetes-engine/docs/concepts/pod)
+	// associated with the finding. This field contains Pod records for each
+	// container that is owned by a Pod.
 	Pods []*Pod `json:"pods,omitempty"`
 
 	// Roles: Provides Kubernetes role information for findings that involve
-	// Roles or ClusterRoles.
+	// Roles or ClusterRoles
+	// (https://cloud.google.com/kubernetes-engine/docs/how-to/role-based-access-control).
 	Roles []*Role `json:"roles,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AccessReviews") to
@@ -3892,13 +3907,15 @@ func (s *Kubernetes) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Label: Label represents a generic name=value label. Label has
-// separate name and value fields to support filtering with contains().
+// Label: Represents a generic name-value label. A label has separate
+// name and value fields to support filtering with the `contains()`
+// function. For more information, see Filtering on array-type fields
+// (https://cloud.google.com/security-command-center/docs/how-to-api-list-findings#array-contains-filtering).
 type Label struct {
-	// Name: Label name.
+	// Name: Name of the label.
 	Name string `json:"name,omitempty"`
 
-	// Value: Label value.
+	// Value: Value that corresponds to the label's name.
 	Value string `json:"value,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
@@ -4594,10 +4611,11 @@ func (s *MitreAttack) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Node: Kubernetes Nodes associated with the finding.
+// Node: Kubernetes nodes associated with the finding.
 type Node struct {
-	// Name: Full Resource name of the Compute Engine VM running the cluster
-	// node.
+	// Name: Full resource name
+	// (https://google.aip.dev/122#full-resource-names) of the Compute
+	// Engine VM running the cluster node.
 	Name string `json:"name,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
@@ -4623,9 +4641,9 @@ func (s *Node) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// NodePool: Provides GKE Node Pool information.
+// NodePool: Provides GKE node pool information.
 type NodePool struct {
-	// Name: Kubernetes Node pool name.
+	// Name: Kubernetes node pool name.
 	Name string `json:"name,omitempty"`
 
 	// Nodes: Nodes associated with the finding.
@@ -4819,7 +4837,7 @@ func (s *OrganizationSettings) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Pod: Kubernetes Pod.
+// Pod: A Kubernetes Pod.
 type Pod struct {
 	// Containers: Pod containers associated with this finding, if any.
 	Containers []*Container `json:"containers,omitempty"`
@@ -4987,19 +5005,19 @@ type Process struct {
 	// Libraries: File information for libraries loaded by the process.
 	Libraries []*File `json:"libraries,omitempty"`
 
-	// Name: The process name visible in utilities like `top` and `ps`; it
-	// can be accessed via `/proc/[pid]/comm` and changed with
-	// `prctl(PR_SET_NAME)`.
+	// Name: The process name, as displayed in utilities like `top` and
+	// `ps`. This name can be accessed through `/proc/[pid]/comm` and
+	// changed with `prctl(PR_SET_NAME)`.
 	Name string `json:"name,omitempty"`
 
-	// ParentPid: The parent process id.
+	// ParentPid: The parent process ID.
 	ParentPid int64 `json:"parentPid,omitempty,string"`
 
-	// Pid: The process id.
+	// Pid: The process ID.
 	Pid int64 `json:"pid,omitempty,string"`
 
 	// Script: When the process represents the invocation of a script,
-	// `binary` provides information about the interpreter while `script`
+	// `binary` provides information about the interpreter, while `script`
 	// provides information about the script file provided to the
 	// interpreter.
 	Script *File `json:"script,omitempty"`
@@ -5612,22 +5630,22 @@ func (s *StreamingConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Subject: Represents a Kubernetes Subject.
+// Subject: Represents a Kubernetes subject.
 type Subject struct {
-	// Kind: Authentication type for subject.
+	// Kind: Authentication type for the subject.
 	//
 	// Possible values:
 	//   "AUTH_TYPE_UNSPECIFIED" - Authentication is not specified.
 	//   "USER" - User with valid certificate.
 	//   "SERVICEACCOUNT" - Users managed by Kubernetes API with credentials
-	// stored as Secrets.
+	// stored as secrets.
 	//   "GROUP" - Collection of users.
 	Kind string `json:"kind,omitempty"`
 
-	// Name: Name for subject.
+	// Name: Name for the subject.
 	Name string `json:"name,omitempty"`
 
-	// Ns: Namespace for subject.
+	// Ns: Namespace for the subject.
 	Ns string `json:"ns,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Kind") to

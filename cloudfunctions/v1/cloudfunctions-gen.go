@@ -1147,40 +1147,6 @@ func (s *GoogleCloudFunctionsV2StateMessage) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudFunctionsV2alphaLocationMetadata: Extra GCF specific
-// location information.
-type GoogleCloudFunctionsV2alphaLocationMetadata struct {
-	// Environments: The Cloud Function environments this location supports.
-	//
-	// Possible values:
-	//   "ENVIRONMENT_UNSPECIFIED" - Unspecified
-	//   "GEN_1" - Gen 1
-	//   "GEN_2" - Gen 2
-	Environments []string `json:"environments,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Environments") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Environments") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudFunctionsV2alphaLocationMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudFunctionsV2alphaLocationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // GoogleCloudFunctionsV2alphaOperationMetadata: Represents the metadata
 // of the long-running operation.
 type GoogleCloudFunctionsV2alphaOperationMetadata struct {
@@ -1203,7 +1169,7 @@ type GoogleCloudFunctionsV2alphaOperationMetadata struct {
 	RequestResource googleapi.RawMessage `json:"requestResource,omitempty"`
 
 	// Stages: Mechanism for reporting in-progress stages
-	Stages []*Stage `json:"stages,omitempty"`
+	Stages []*GoogleCloudFunctionsV2alphaStage `json:"stages,omitempty"`
 
 	// StatusDetail: Human-readable status of the operation, if any.
 	StatusDetail string `json:"statusDetail,omitempty"`
@@ -1233,6 +1199,65 @@ type GoogleCloudFunctionsV2alphaOperationMetadata struct {
 
 func (s *GoogleCloudFunctionsV2alphaOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudFunctionsV2alphaOperationMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudFunctionsV2alphaStage: Each Stage of the deployment
+// process
+type GoogleCloudFunctionsV2alphaStage struct {
+	// Message: Message describing the Stage
+	Message string `json:"message,omitempty"`
+
+	// Name: Name of the Stage. This will be unique for each Stage.
+	//
+	// Possible values:
+	//   "NAME_UNSPECIFIED" - Not specified. Invalid name.
+	//   "ARTIFACT_REGISTRY" - Artifact Regsitry Stage
+	//   "BUILD" - Build Stage
+	//   "SERVICE" - Service Stage
+	//   "TRIGGER" - Trigger Stage
+	//   "SERVICE_ROLLBACK" - Service Rollback Stage
+	//   "TRIGGER_ROLLBACK" - Trigger Rollback Stage
+	Name string `json:"name,omitempty"`
+
+	// Resource: Resource of the Stage
+	Resource string `json:"resource,omitempty"`
+
+	// ResourceUri: Link to the current Stage resource
+	ResourceUri string `json:"resourceUri,omitempty"`
+
+	// State: Current state of the Stage
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Not specified. Invalid state.
+	//   "NOT_STARTED" - Stage has not started.
+	//   "IN_PROGRESS" - Stage is in progress.
+	//   "COMPLETE" - Stage has completed.
+	State string `json:"state,omitempty"`
+
+	// StateMessages: State messages from the current Stage.
+	StateMessages []*GoogleCloudFunctionsV2alphaStateMessage `json:"stateMessages,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Message") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Message") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudFunctionsV2alphaStage) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudFunctionsV2alphaStage
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1274,40 +1299,6 @@ type GoogleCloudFunctionsV2alphaStateMessage struct {
 
 func (s *GoogleCloudFunctionsV2alphaStateMessage) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudFunctionsV2alphaStateMessage
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudFunctionsV2betaLocationMetadata: Extra GCF specific
-// location information.
-type GoogleCloudFunctionsV2betaLocationMetadata struct {
-	// Environments: The Cloud Function environments this location supports.
-	//
-	// Possible values:
-	//   "ENVIRONMENT_UNSPECIFIED" - Unspecified
-	//   "GEN_1" - Gen 1
-	//   "GEN_2" - Gen 2
-	Environments []string `json:"environments,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Environments") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Environments") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudFunctionsV2betaLocationMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudFunctionsV2betaLocationMetadata
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1625,7 +1616,7 @@ func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Location: A resource that represents Google Cloud Platform location.
+// Location: A resource that represents a Google Cloud location.
 type Location struct {
 	// DisplayName: The friendly name for this location, typically a nearby
 	// city name. For example, "Tokyo".
@@ -1667,39 +1658,6 @@ type Location struct {
 
 func (s *Location) MarshalJSON() ([]byte, error) {
 	type NoMethod Location
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// LocationMetadata: Extra GCF specific location information.
-type LocationMetadata struct {
-	// Environments: The Cloud Function environments this location supports.
-	//
-	// Possible values:
-	//   "ENVIRONMENT_UNSPECIFIED" - Unspecified
-	//   "GEN_1" - Gen 1
-	//   "GEN_2" - Gen 2
-	Environments []string `json:"environments,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Environments") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Environments") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *LocationMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod LocationMetadata
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2159,64 +2117,6 @@ type SourceRepository struct {
 
 func (s *SourceRepository) MarshalJSON() ([]byte, error) {
 	type NoMethod SourceRepository
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// Stage: Each Stage of the deployment process
-type Stage struct {
-	// Message: Message describing the Stage
-	Message string `json:"message,omitempty"`
-
-	// Name: Name of the Stage. This will be unique for each Stage.
-	//
-	// Possible values:
-	//   "NAME_UNSPECIFIED" - Not specified. Invalid name.
-	//   "ARTIFACT_REGISTRY" - Artifact Regsitry Stage
-	//   "BUILD" - Build Stage
-	//   "SERVICE" - Service Stage
-	//   "TRIGGER" - Trigger Stage
-	//   "SERVICE_ROLLBACK" - Service Rollback Stage
-	//   "TRIGGER_ROLLBACK" - Trigger Rollback Stage
-	Name string `json:"name,omitempty"`
-
-	// Resource: Resource of the Stage
-	Resource string `json:"resource,omitempty"`
-
-	// ResourceUri: Link to the current Stage resource
-	ResourceUri string `json:"resourceUri,omitempty"`
-
-	// State: Current state of the Stage
-	//
-	// Possible values:
-	//   "STATE_UNSPECIFIED" - Not specified. Invalid state.
-	//   "NOT_STARTED" - Stage has not started.
-	//   "IN_PROGRESS" - Stage is in progress.
-	//   "COMPLETE" - Stage has completed.
-	State string `json:"state,omitempty"`
-
-	// StateMessages: State messages from the current Stage.
-	StateMessages []*GoogleCloudFunctionsV2alphaStateMessage `json:"stateMessages,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Message") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Message") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *Stage) MarshalJSON() ([]byte, error) {
-	type NoMethod Stage
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

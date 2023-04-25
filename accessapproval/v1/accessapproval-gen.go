@@ -306,6 +306,16 @@ type AccessApprovalSettings struct {
 	// allowed.
 	NotificationEmails []string `json:"notificationEmails,omitempty"`
 
+	// PreferNoBroadApprovalRequests: This preference is communicated to
+	// Google personnel when sending an approval request but can be
+	// overridden if necessary.
+	PreferNoBroadApprovalRequests bool `json:"preferNoBroadApprovalRequests,omitempty"`
+
+	// PreferredRequestExpirationDays: This preference is shared with Google
+	// personnel, but can be overridden if said personnel deems necessary.
+	// The approver ultimately can set the expiration at approval time.
+	PreferredRequestExpirationDays int64 `json:"preferredRequestExpirationDays,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`

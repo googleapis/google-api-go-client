@@ -1583,7 +1583,7 @@ type GoogleCloudDialogflowCxV3ExportAgentResponse struct {
 	AgentContent string `json:"agentContent,omitempty"`
 
 	// AgentUri: The URI to a file containing the exported agent. This field
-	// is populated only if `agent_uri` is specified in ExportAgentRequest.
+	// is populated if `agent_uri` is specified in ExportAgentRequest.
 	AgentUri string `json:"agentUri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AgentContent") to
@@ -2353,7 +2353,7 @@ func (s *GoogleCloudDialogflowCxV3InputAudioConfig) MarshalJSON() ([]byte, error
 // to interact with a conversational agent. You can provide information
 // for the Dialogflow API to use to match user input to an intent by
 // adding training phrases (i.e., examples of user input) to your
-// intent. Next ID: 15
+// intent.
 type GoogleCloudDialogflowCxV3Intent struct {
 	// Description: Human readable description for better understanding an
 	// intent like its scope, content, result etc. Maximum character limit:
@@ -5093,7 +5093,7 @@ type GoogleCloudDialogflowCxV3beta1ExportAgentResponse struct {
 	AgentContent string `json:"agentContent,omitempty"`
 
 	// AgentUri: The URI to a file containing the exported agent. This field
-	// is populated only if `agent_uri` is specified in ExportAgentRequest.
+	// is populated if `agent_uri` is specified in ExportAgentRequest.
 	AgentUri string `json:"agentUri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AgentContent") to
@@ -6017,8 +6017,7 @@ func (s *GoogleCloudDialogflowCxV3beta1IntentParameter) MarshalJSON() ([]byte, e
 }
 
 // GoogleCloudDialogflowCxV3beta1IntentTrainingPhrase: Represents an
-// example that the agent is trained on to identify the intent. Next ID:
-// 15
+// example that the agent is trained on to identify the intent.
 type GoogleCloudDialogflowCxV3beta1IntentTrainingPhrase struct {
 	// Id: Output only. The unique identifier of the training phrase.
 	Id string `json:"id,omitempty"`
@@ -12057,6 +12056,10 @@ type GoogleCloudDialogflowV2InputAudioConfig struct {
 	// If `false` and recognition doesn't return any result, trigger
 	// `NO_SPEECH_RECOGNIZED` event to Dialogflow agent.
 	DisableNoSpeechRecognizedEvent bool `json:"disableNoSpeechRecognizedEvent,omitempty"`
+
+	// EnableAutomaticPunctuation: Enable automatic punctuation option at
+	// the speech backend.
+	EnableAutomaticPunctuation bool `json:"enableAutomaticPunctuation,omitempty"`
 
 	// EnableWordInfo: If `true`, Dialogflow returns SpeechWordInfo in
 	// StreamingRecognitionResult with information about the recognized

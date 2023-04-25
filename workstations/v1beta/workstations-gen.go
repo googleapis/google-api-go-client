@@ -400,7 +400,8 @@ type Container struct {
 	Env map[string]string `json:"env,omitempty"`
 
 	// Image: Docker image defining the container. This image must be
-	// accessible by the config's service account.
+	// accessible by the service account specified in the workstation
+	// configuration.
 	Image string `json:"image,omitempty"`
 
 	// RunAsUser: If set, overrides the USER specified in the image with the
@@ -585,11 +586,11 @@ type GceInstance struct {
 	// PoolSize: Number of instances to pool for faster workstation starup.
 	PoolSize int64 `json:"poolSize,omitempty"`
 
-	// ServiceAccount: Email address of the service account that will be
-	// used on VM instances used to support this config. If not set, VMs
-	// will run with a Google-managed service account. This service account
-	// must have permission to pull the specified container image, otherwise
-	// the image must be publicly accessible.
+	// ServiceAccount: Email address of the service account used on VM
+	// instances used to support this configuration. If not set, VMs run
+	// with a Google-managed service account. This service account must have
+	// permission to pull the specified container image; otherwise, the
+	// image must be publicly accessible.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
 
 	// ShieldedInstanceConfig: A set of Compute Engine Shielded instance
@@ -1601,7 +1602,7 @@ type Workstation struct {
 	Env map[string]string `json:"env,omitempty"`
 
 	// Etag: Checksum computed by the server. May be sent on update and
-	// delete requests to ensure that the client has an up-to-date value
+	// delete requests to make sure that the client has an up-to-date value
 	// before proceeding.
 	Etag string `json:"etag,omitempty"`
 
@@ -1683,8 +1684,8 @@ type WorkstationCluster struct {
 
 	// ControlPlaneIp: Output only. The private IP address of the control
 	// plane for this cluster. Workstation VMs need access to this IP
-	// address to work with the service, so please ensure your firewall
-	// rules allow egress from the Workstation VMs to this address.
+	// address to work with the service, so make sure that your firewall
+	// rules allow egress from the workstation VMs to this address.
 	ControlPlaneIp string `json:"controlPlaneIp,omitempty"`
 
 	// CreateTime: Output only. Time when this resource was created.
@@ -1702,7 +1703,7 @@ type WorkstationCluster struct {
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Etag: Checksum computed by the server. May be sent on update and
-	// delete requests to ensure that the client has an up-to-date value
+	// delete requests to make sure that the client has an up-to-date value
 	// before proceeding.
 	Etag string `json:"etag,omitempty"`
 
@@ -1812,11 +1813,11 @@ type WorkstationConfig struct {
 	// the persistent disk is recreated. Otherwise, data on the persistent
 	// disk will be lost. If the encryption key is revoked, the workstation
 	// session will automatically be stopped within 7 hours. Immutable after
-	// workstation config is created.
+	// the workstation configuration is created.
 	EncryptionKey *CustomerEncryptionKey `json:"encryptionKey,omitempty"`
 
 	// Etag: Checksum computed by the server. May be sent on update and
-	// delete requests to ensure that the client has an up-to-date value
+	// delete requests to make sure that the client has an up-to-date value
 	// before proceeding.
 	Etag string `json:"etag,omitempty"`
 
@@ -3415,7 +3416,8 @@ func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsCreateCall) Valid
 }
 
 // WorkstationConfigId sets the optional parameter
-// "workstationConfigId": Required. ID to use for the config.
+// "workstationConfigId": Required. ID to use for the workstation
+// configuration.
 func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsCreateCall) WorkstationConfigId(workstationConfigId string) *ProjectsLocationsWorkstationClustersWorkstationConfigsCreateCall {
 	c.urlParams_.Set("workstationConfigId", workstationConfigId)
 	return c
@@ -3533,7 +3535,7 @@ func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsCreateCall) Do(op
 	//       "type": "boolean"
 	//     },
 	//     "workstationConfigId": {
-	//       "description": "Required. ID to use for the config.",
+	//       "description": "Required. ID to use for the workstation configuration.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -3564,24 +3566,25 @@ type ProjectsLocationsWorkstationClustersWorkstationConfigsDeleteCall struct {
 
 // Delete: Deletes the specified workstation configuration.
 //
-// - name: Name of the config to delete.
+// - name: Name of the workstation configuration to delete.
 func (r *ProjectsLocationsWorkstationClustersWorkstationConfigsService) Delete(name string) *ProjectsLocationsWorkstationClustersWorkstationConfigsDeleteCall {
 	c := &ProjectsLocationsWorkstationClustersWorkstationConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
 
-// Etag sets the optional parameter "etag": If set, the request will be
-// rejected if the latest version of the config on the server does not
-// have this etag.
+// Etag sets the optional parameter "etag": If set, the request is
+// rejected if the latest version of the workstation configuration on
+// the server does not have this etag.
 func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsDeleteCall) Etag(etag string) *ProjectsLocationsWorkstationClustersWorkstationConfigsDeleteCall {
 	c.urlParams_.Set("etag", etag)
 	return c
 }
 
-// Force sets the optional parameter "force": If set, any Workstations
-// in the config will also be deleted. Otherwise, the request will work
-// only if the config has no workstations.
+// Force sets the optional parameter "force": If set, any workstations
+// in the workstation configuration are also deleted. Otherwise, the
+// request works only if the workstation configuration has no
+// workstations.
 func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsDeleteCall) Force(force bool) *ProjectsLocationsWorkstationClustersWorkstationConfigsDeleteCall {
 	c.urlParams_.Set("force", fmt.Sprint(force))
 	return c
@@ -3690,17 +3693,17 @@ func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsDeleteCall) Do(op
 	//   ],
 	//   "parameters": {
 	//     "etag": {
-	//       "description": "If set, the request will be rejected if the latest version of the config on the server does not have this etag.",
+	//       "description": "If set, the request is rejected if the latest version of the workstation configuration on the server does not have this etag.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "force": {
-	//       "description": "If set, any Workstations in the config will also be deleted. Otherwise, the request will work only if the config has no workstations.",
+	//       "description": "If set, any workstations in the workstation configuration are also deleted. Otherwise, the request works only if the workstation configuration has no workstations.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "name": {
-	//       "description": "Required. Name of the config to delete.",
+	//       "description": "Required. Name of the workstation configuration to delete.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/workstationClusters/[^/]+/workstationConfigs/[^/]+$",
 	//       "required": true,
@@ -4453,16 +4456,18 @@ func (r *ProjectsLocationsWorkstationClustersWorkstationConfigsService) Patch(na
 	return c
 }
 
-// AllowMissing sets the optional parameter "allowMissing": If set, and
-// the config is not found, a new config will be created. In this
-// situation, update_mask is ignored.
+// AllowMissing sets the optional parameter "allowMissing": If set and
+// the workstation configuration is not found, a new workstation
+// configuration will be created. In this situation, update_mask is
+// ignored.
 func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsPatchCall) AllowMissing(allowMissing bool) *ProjectsLocationsWorkstationClustersWorkstationConfigsPatchCall {
 	c.urlParams_.Set("allowMissing", fmt.Sprint(allowMissing))
 	return c
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. Mask
-// specifying which fields in the config should be updated.
+// specifying which fields in the workstation configuration should be
+// updated.
 func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsWorkstationClustersWorkstationConfigsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -4576,7 +4581,7 @@ func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsPatchCall) Do(opt
 	//   ],
 	//   "parameters": {
 	//     "allowMissing": {
-	//       "description": "If set, and the config is not found, a new config will be created. In this situation, update_mask is ignored.",
+	//       "description": "If set and the workstation configuration is not found, a new workstation configuration will be created. In this situation, update_mask is ignored.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -4588,7 +4593,7 @@ func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsPatchCall) Do(opt
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. Mask specifying which fields in the config should be updated.",
+	//       "description": "Required. Mask specifying which fields in the workstation configuration should be updated.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -5711,7 +5716,8 @@ type ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsListCall 
 	header_      http.Header
 }
 
-// List: Returns all Workstations using the specified config.
+// List: Returns all Workstations using the specified workstation
+// configuration.
 //
 // - parent: Parent resource name.
 func (r *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsService) List(parent string) *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsListCall {
@@ -5833,7 +5839,7 @@ func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsListC
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns all Workstations using the specified config.",
+	//   "description": "Returns all Workstations using the specified workstation configuration.",
 	//   "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/workstationClusters/{workstationClustersId}/workstationConfigs/{workstationConfigsId}/workstations",
 	//   "httpMethod": "GET",
 	//   "id": "workstations.projects.locations.workstationClusters.workstationConfigs.workstations.list",
@@ -5903,8 +5909,9 @@ type ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsListUsabl
 	header_      http.Header
 }
 
-// ListUsable: Returns all Workstations using the specified config on
-// which the caller has the "workstations.workstations.use" permission.
+// ListUsable: Returns all workstations using the specified workstation
+// configuration on which the caller has the
+// "workstations.workstations.use" permission.
 //
 // - parent: Parent resource name.
 func (r *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsService) ListUsable(parent string) *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsListUsableCall {
@@ -6026,7 +6033,7 @@ func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsListU
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns all Workstations using the specified config on which the caller has the \"workstations.workstations.use\" permission.",
+	//   "description": "Returns all workstations using the specified workstation configuration on which the caller has the \"workstations.workstations.use\" permission.",
 	//   "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/workstationClusters/{workstationClustersId}/workstationConfigs/{workstationConfigsId}/workstations:listUsable",
 	//   "httpMethod": "GET",
 	//   "id": "workstations.projects.locations.workstationClusters.workstationConfigs.workstations.listUsable",
@@ -6106,16 +6113,17 @@ func (r *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsServi
 	return c
 }
 
-// AllowMissing sets the optional parameter "allowMissing": If set, and
-// the config is not found, a new config will be created. In this
-// situation, update_mask is ignored.
+// AllowMissing sets the optional parameter "allowMissing": If set and
+// the workstation configuration is not found, a new workstation
+// configuration is created. In this situation, update_mask is ignored.
 func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsPatchCall) AllowMissing(allowMissing bool) *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsPatchCall {
 	c.urlParams_.Set("allowMissing", fmt.Sprint(allowMissing))
 	return c
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. Mask
-// specifying which fields in the config should be updated.
+// specifying which fields in the workstation configuration should be
+// updated.
 func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -6229,7 +6237,7 @@ func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsPatch
 	//   ],
 	//   "parameters": {
 	//     "allowMissing": {
-	//       "description": "If set, and the config is not found, a new config will be created. In this situation, update_mask is ignored.",
+	//       "description": "If set and the workstation configuration is not found, a new workstation configuration is created. In this situation, update_mask is ignored.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -6241,7 +6249,7 @@ func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsPatch
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. Mask specifying which fields in the config should be updated.",
+	//       "description": "Required. Mask specifying which fields in the workstation configuration should be updated.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"

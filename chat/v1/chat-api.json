@@ -518,7 +518,7 @@
       }
     }
   },
-  "revision": "20230418",
+  "revision": "20230423",
   "rootUrl": "https://chat.googleapis.com/",
   "schemas": {
     "ActionParameter": {
@@ -2264,7 +2264,7 @@
         },
         "member": {
           "$ref": "User",
-          "description": "The Google Chat user or app the membership corresponds to."
+          "description": "The Google Chat user or app the membership corresponds to. If your Chat app [authenticates as a user](https://developers.google.com/chat/api/guides/auth/users), the output populates the [user](https://developers.google.com/chat/api/reference/rest/v1/User) `name` and `type`."
         },
         "name": {
           "description": "Resource name of the membership, assigned by the server. Format: spaces/{space}/members/{member}",

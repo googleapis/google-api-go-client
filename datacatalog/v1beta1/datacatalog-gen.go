@@ -4529,7 +4529,7 @@ func (s *GoogleCloudDatacatalogV1beta1Taxonomy) MarshalJSON() ([]byte, error) {
 // GoogleCloudDatacatalogV1beta1TaxonomyService: The source system of
 // the Taxonomy.
 type GoogleCloudDatacatalogV1beta1TaxonomyService struct {
-	// Identity: P4SA Identity of the service.
+	// Identity: The service agent for the service.
 	Identity string `json:"identity,omitempty"`
 
 	// Name: The Google Cloud service name.

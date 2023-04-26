@@ -32874,7 +32874,7 @@ func (c *OrganizationsEnvironmentsApisRevisionsDeployCall) Override(override boo
 // deployment will be capturing traffic from another environment under a
 // shared environment group or if traffic will be rerouted to a
 // different environment due to a base path removal. The
-// GenerateDeployChangeReport API (GenerateDeployChangeReport) may be
+// generateDeployChangeReport API (generateDeployChangeReport) may be
 // used to examine routing changes before issuing the deployment
 // request, and its response will indicate if a sequenced rollout is
 // recommended for the deployment.
@@ -33000,7 +33000,7 @@ func (c *OrganizationsEnvironmentsApisRevisionsDeployCall) Do(opts ...googleapi.
 	//       "type": "boolean"
 	//     },
 	//     "sequencedRollout": {
-	//       "description": "Flag that specifies whether to enable sequenced rollout. If set to `true`, the routing rules for this deployment and the environment changes to add the deployment will be rolled out in a safe order. This reduces the risk of downtime that could be caused by changing the environment group's routing before the new destination for the affected traffic is ready to receive it. This should only be necessary if the new deployment will be capturing traffic from another environment under a shared environment group or if traffic will be rerouted to a different environment due to a base path removal. The [GenerateDeployChangeReport API](GenerateDeployChangeReport) may be used to examine routing changes before issuing the deployment request, and its response will indicate if a sequenced rollout is recommended for the deployment.",
+	//       "description": "Flag that specifies whether to enable sequenced rollout. If set to `true`, the routing rules for this deployment and the environment changes to add the deployment will be rolled out in a safe order. This reduces the risk of downtime that could be caused by changing the environment group's routing before the new destination for the affected traffic is ready to receive it. This should only be necessary if the new deployment will be capturing traffic from another environment under a shared environment group or if traffic will be rerouted to a different environment due to a base path removal. The [generateDeployChangeReport API](generateDeployChangeReport) may be used to examine routing changes before issuing the deployment request, and its response will indicate if a sequenced rollout is recommended for the deployment.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },

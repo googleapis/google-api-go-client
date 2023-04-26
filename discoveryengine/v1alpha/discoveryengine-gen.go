@@ -174,6 +174,7 @@ type ProjectsLocationsService struct {
 func NewProjectsLocationsCollectionsService(s *Service) *ProjectsLocationsCollectionsService {
 	rs := &ProjectsLocationsCollectionsService{s: s}
 	rs.DataStores = NewProjectsLocationsCollectionsDataStoresService(s)
+	rs.Engines = NewProjectsLocationsCollectionsEnginesService(s)
 	rs.Operations = NewProjectsLocationsCollectionsOperationsService(s)
 	return rs
 }
@@ -182,6 +183,8 @@ type ProjectsLocationsCollectionsService struct {
 	s *Service
 
 	DataStores *ProjectsLocationsCollectionsDataStoresService
+
+	Engines *ProjectsLocationsCollectionsEnginesService
 
 	Operations *ProjectsLocationsCollectionsOperationsService
 }
@@ -288,6 +291,27 @@ func NewProjectsLocationsCollectionsDataStoresUserEventsService(s *Service) *Pro
 }
 
 type ProjectsLocationsCollectionsDataStoresUserEventsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsCollectionsEnginesService(s *Service) *ProjectsLocationsCollectionsEnginesService {
+	rs := &ProjectsLocationsCollectionsEnginesService{s: s}
+	rs.Operations = NewProjectsLocationsCollectionsEnginesOperationsService(s)
+	return rs
+}
+
+type ProjectsLocationsCollectionsEnginesService struct {
+	s *Service
+
+	Operations *ProjectsLocationsCollectionsEnginesOperationsService
+}
+
+func NewProjectsLocationsCollectionsEnginesOperationsService(s *Service) *ProjectsLocationsCollectionsEnginesOperationsService {
+	rs := &ProjectsLocationsCollectionsEnginesOperationsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsCollectionsEnginesOperationsService struct {
 	s *Service
 }
 
@@ -821,16 +845,16 @@ func (s *GoogleCloudDiscoveryengineV1alphaCompletionInfo) MarshalJSON() ([]byte,
 // that is not explicitly modeled in a resource, e.g. UserEvent.
 type GoogleCloudDiscoveryengineV1alphaCustomAttribute struct {
 	// Numbers: The numerical values of this custom attribute. For example,
-	// `[2.3, 15.4]` when the key is "lengths_cm". Exactly one of text or
-	// numbers should be set. Otherwise, an INVALID_ARGUMENT error is
-	// returned.
+	// `[2.3, 15.4]` when the key is "lengths_cm". Exactly one of
+	// CustomAttribute.text or CustomAttribute.numbers should be set.
+	// Otherwise, an `INVALID_ARGUMENT` error is returned.
 	Numbers []float64 `json:"numbers,omitempty"`
 
 	// Text: The textual values of this custom attribute. For example,
 	// `["yellow", "green"]` when the key is "color". Empty string is not
-	// allowed. Otherwise, an INVALID_ARGUMENT error is returned. Exactly
-	// one of text or numbers should be set. Otherwise, an INVALID_ARGUMENT
-	// error is returned.
+	// allowed. Otherwise, an `INVALID_ARGUMENT` error is returned. Exactly
+	// one of CustomAttribute.text or CustomAttribute.numbers should be set.
+	// Otherwise, an `INVALID_ARGUMENT` error is returned.
 	Text []string `json:"text,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Numbers") to
@@ -865,8 +889,8 @@ type GoogleCloudDiscoveryengineV1alphaDocument struct {
 	Id string `json:"id,omitempty"`
 
 	// JsonData: The JSON string representation of the document. It should
-	// conform to the registered schema or an INVALID_ARGUMENT error is
-	// thrown.
+	// conform to the registered Schema.schema or an `INVALID_ARGUMENT`
+	// error is thrown.
 	JsonData string `json:"jsonData,omitempty"`
 
 	// Name: Immutable. The full resource name of the document. Format:
@@ -887,8 +911,8 @@ type GoogleCloudDiscoveryengineV1alphaDocument struct {
 	SchemaId string `json:"schemaId,omitempty"`
 
 	// StructData: The structured JSON data for the document. It should
-	// conform to the registered schema or an INVALID_ARGUMENT error is
-	// thrown.
+	// conform to the registered Schema.schema or an `INVALID_ARGUMENT`
+	// error is thrown.
 	StructData googleapi.RawMessage `json:"structData,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -925,9 +949,9 @@ type GoogleCloudDiscoveryengineV1alphaDocumentInfo struct {
 	Id string `json:"id,omitempty"`
 
 	// Name: Required. The Document resource full name, of the form:
-	// projects/{project\_id}/locations/{location}/collections/{collection\_i
-	// d}/dataStores/{data\_store\_id}/branches/{branch\_id}/documents/{docum
-	// ent\_id}
+	// `projects/{project_id}/locations/{location}/collections/{collection_id
+	// }/dataStores/{data_store_id}/branches/{branch_id}/documents/{document_
+	// id}`
 	Name string `json:"name,omitempty"`
 
 	// PromotionIds: The promotion IDs associated with this Document.
@@ -1409,7 +1433,7 @@ type GoogleCloudDiscoveryengineV1alphaMediaInfo struct {
 
 	// MediaProgressPercentage: Media progress should be computed using only
 	// the media_progress_duration relative to the media total length. This
-	// value must be between [0, 1.0] inclusive. If this is not a playback
+	// value must be between `[0, 1.0]` inclusive. If this is not a playback
 	// or the progress cannot be computed (e.g. ongoing livestream), this
 	// field should be unset.
 	MediaProgressPercentage float64 `json:"mediaProgressPercentage,omitempty"`
@@ -1556,15 +1580,15 @@ func (s *GoogleCloudDiscoveryengineV1alphaPanelInfo) MarshalJSON() ([]byte, erro
 type GoogleCloudDiscoveryengineV1alphaRecommendRequest struct {
 	// Filter: Filter for restricting recommendation results with a length
 	// limit of 5,000 characters. Currently, only filter expressions on the
-	// `filter_tags` attribute is supported. Examples: * (filter_tags:
-	// ANY("Red", "Blue") OR filter_tags: ANY("Hot", "Cold")) *
-	// (filter_tags: ANY("Red", "Blue")) AND NOT (filter_tags: ANY("Green"))
-	// If your filter blocks all results, the API will return generic
-	// (unfiltered) popular Documents. If you only want results strictly
-	// matching the filters, set `strictFiltering` to True in
+	// `filter_tags` attribute is supported. Examples: * `(filter_tags:
+	// ANY("Red", "Blue") OR filter_tags: ANY("Hot", "Cold"))` *
+	// `(filter_tags: ANY("Red", "Blue")) AND NOT (filter_tags:
+	// ANY("Green"))` If your filter blocks all results, the API will return
+	// generic (unfiltered) popular Documents. If you only want results
+	// strictly matching the filters, set `strictFiltering` to True in
 	// RecommendRequest.params to receive empty results instead. Note that
-	// the API will never return Documents with storageStatus of "EXPIRED"
-	// or "DELETED" regardless of filter choices.
+	// the API will never return Documents with `storageStatus` of `EXPIRED`
+	// or `DELETED` regardless of filter choices.
 	Filter string `json:"filter,omitempty"`
 
 	// PageSize: Maximum number of results to return. Set this property to
@@ -1576,18 +1600,19 @@ type GoogleCloudDiscoveryengineV1alphaRecommendRequest struct {
 	// Params: Additional domain specific parameters for the
 	// recommendations. Allowed values: * `returnDocument`: Boolean. If set
 	// to true, the associated Document object will be returned in
-	// RecommendResponse.results.document. * `returnScore`: Boolean. If set
-	// to true, the recommendation 'score' corresponding to each returned
-	// Document will be set in RecommendResponse.results.metadata. The given
-	// 'score' indicates the probability of a Document conversion given the
-	// user's context and history. * `strictFiltering`: Boolean. True by
-	// default. If set to false, the service will return generic
-	// (unfiltered) popular Documents instead of empty if your filter blocks
-	// all recommendation results. * `diversityLevel`: String. Default
-	// empty. If set to be non-empty, then it needs to be one of: *
-	// 'no-diversity' * 'low-diversity' * 'medium-diversity' *
-	// 'high-diversity' * 'auto-diversity' This gives request-level control
-	// and adjusts recommendation results based on Document category.
+	// RecommendResponse.RecommendationResult.document. * `returnScore`:
+	// Boolean. If set to true, the recommendation 'score' corresponding to
+	// each returned Document will be set in
+	// RecommendResponse.RecommendationResult.metadata. The given 'score'
+	// indicates the probability of a Document conversion given the user's
+	// context and history. * `strictFiltering`: Boolean. True by default.
+	// If set to false, the service will return generic (unfiltered) popular
+	// Documents instead of empty if your filter blocks all recommendation
+	// results. * `diversityLevel`: String. Default empty. If set to be
+	// non-empty, then it needs to be one of: * `no-diversity` *
+	// `low-diversity` * `medium-diversity` * `high-diversity` *
+	// `auto-diversity` This gives request-level control and adjusts
+	// recommendation results based on Document category.
 	Params googleapi.RawMessage `json:"params,omitempty"`
 
 	// UserEvent: Required. Context about the user, what they are looking at
@@ -1913,13 +1938,13 @@ type GoogleCloudDiscoveryengineV1alphaUserEvent struct {
 	// This lets the Discovery Engine API use those custom attributes when
 	// training models and serving predictions, which helps improve
 	// recommendation quality. This field needs to pass all below criteria,
-	// otherwise an INVALID_ARGUMENT error is returned: * The key must be a
-	// UTF-8 encoded string with a length limit of 5,000 characters. * For
+	// otherwise an `INVALID_ARGUMENT` error is returned: * The key must be
+	// a UTF-8 encoded string with a length limit of 5,000 characters. * For
 	// text attributes, at most 400 values are allowed. Empty values are not
 	// allowed. Each value must be a UTF-8 encoded string with a length
 	// limit of 256 characters. * For number attributes, at most 400 values
 	// are allowed. For product recommendations, an example of extra user
-	// information is traffic_channel, which is how a user arrives at the
+	// information is ` traffic_channel`, which is how a user arrives at the
 	// site. Users can arrive at the site by coming to the site directly,
 	// coming through Google search, or in other ways.
 	Attributes map[string]GoogleCloudDiscoveryengineV1alphaCustomAttribute `json:"attributes,omitempty"`
@@ -2081,8 +2106,8 @@ type GoogleCloudDiscoveryengineV1alphaUserInfo struct {
 	// UserAgent: User agent as included in the HTTP header. Required for
 	// getting SearchResponse.sponsored_results. The field must be a UTF-8
 	// encoded string with a length limit of 1,000 characters. Otherwise, an
-	// INVALID_ARGUMENT error is returned. This should not be set when using
-	// the client side event reporting with GTM or JavaScript tag in
+	// `INVALID_ARGUMENT` error is returned. This should not be set when
+	// using the client side event reporting with GTM or JavaScript tag in
 	// UserEventService.CollectUserEvent or if direct_user_request is set.
 	UserAgent string `json:"userAgent,omitempty"`
 
@@ -2092,7 +2117,7 @@ type GoogleCloudDiscoveryengineV1alphaUserInfo struct {
 	// same fixed ID for different users. This mixes the event history of
 	// those users together, which results in degraded model quality. The
 	// field must be a UTF-8 encoded string with a length limit of 128
-	// characters. Otherwise, an INVALID_ARGUMENT error is returned.
+	// characters. Otherwise, an `INVALID_ARGUMENT` error is returned.
 	UserId string `json:"userId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "UserAgent") to
@@ -2580,12 +2605,13 @@ func (r *ProjectsLocationsCollectionsDataStoresBranchesDocumentsService) Create(
 // DocumentId sets the optional parameter "documentId": Required. The ID
 // to use for the Document, which will become the final component of the
 // Document.name. If the caller does not have permission to create the
-// Document, regardless of whether or not it exists, a PERMISSION_DENIED
-// error is returned. This field must be unique among all Documents with
-// the same parent. Otherwise, an ALREADY_EXISTS error is returned. This
-// field must conform to RFC-1034 (https://tools.ietf.org/html/rfc1034)
-// standard with a length limit of 63 characters. Otherwise, an
-// INVALID_ARGUMENT error is returned.
+// Document, regardless of whether or not it exists, a
+// `PERMISSION_DENIED` error is returned. This field must be unique
+// among all Documents with the same parent. Otherwise, an
+// `ALREADY_EXISTS` error is returned. This field must conform to
+// RFC-1034 (https://tools.ietf.org/html/rfc1034) standard with a length
+// limit of 63 characters. Otherwise, an `INVALID_ARGUMENT` error is
+// returned.
 func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsCreateCall) DocumentId(documentId string) *ProjectsLocationsCollectionsDataStoresBranchesDocumentsCreateCall {
 	c.urlParams_.Set("documentId", documentId)
 	return c
@@ -2693,7 +2719,7 @@ func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsCreateCall) Do(o
 	//   ],
 	//   "parameters": {
 	//     "documentId": {
-	//       "description": "Required. The ID to use for the Document, which will become the final component of the Document.name. If the caller does not have permission to create the Document, regardless of whether or not it exists, a PERMISSION_DENIED error is returned. This field must be unique among all Documents with the same parent. Otherwise, an ALREADY_EXISTS error is returned. This field must conform to [RFC-1034](https://tools.ietf.org/html/rfc1034) standard with a length limit of 63 characters. Otherwise, an INVALID_ARGUMENT error is returned.",
+	//       "description": "Required. The ID to use for the Document, which will become the final component of the Document.name. If the caller does not have permission to create the Document, regardless of whether or not it exists, a `PERMISSION_DENIED` error is returned. This field must be unique among all Documents with the same parent. Otherwise, an `ALREADY_EXISTS` error is returned. This field must conform to [RFC-1034](https://tools.ietf.org/html/rfc1034) standard with a length limit of 63 characters. Otherwise, an `INVALID_ARGUMENT` error is returned.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2735,9 +2761,9 @@ type ProjectsLocationsCollectionsDataStoresBranchesDocumentsDeleteCall struct {
 //     `projects/{project}/locations/{location}/collections/{collection}/da
 //     taStores/{data_store}/branches/{branch}/documents/{document}`. If
 //     the caller does not have permission to delete the Document,
-//     regardless of whether or not it exists, a PERMISSION_DENIED error
-//     is returned. If the Document to delete does not exist, a NOT_FOUND
-//     error is returned.
+//     regardless of whether or not it exists, a `PERMISSION_DENIED` error
+//     is returned. If the Document to delete does not exist, a
+//     `NOT_FOUND` error is returned.
 func (r *ProjectsLocationsCollectionsDataStoresBranchesDocumentsService) Delete(name string) *ProjectsLocationsCollectionsDataStoresBranchesDocumentsDeleteCall {
 	c := &ProjectsLocationsCollectionsDataStoresBranchesDocumentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2839,7 +2865,7 @@ func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsDeleteCall) Do(o
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Full resource name of Document, such as `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}/branches/{branch}/documents/{document}`. If the caller does not have permission to delete the Document, regardless of whether or not it exists, a PERMISSION_DENIED error is returned. If the Document to delete does not exist, a NOT_FOUND error is returned.",
+	//       "description": "Required. Full resource name of Document, such as `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}/branches/{branch}/documents/{document}`. If the caller does not have permission to delete the Document, regardless of whether or not it exists, a `PERMISSION_DENIED` error is returned. If the Document to delete does not exist, a `NOT_FOUND` error is returned.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/dataStores/[^/]+/branches/[^/]+/documents/[^/]+$",
 	//       "required": true,
@@ -2874,9 +2900,9 @@ type ProjectsLocationsCollectionsDataStoresBranchesDocumentsGetCall struct {
 //     `projects/{project}/locations/{location}/collections/{collection}/da
 //     taStores/{data_store}/branches/{branch}/documents/{document}`. If
 //     the caller does not have permission to access the Document,
-//     regardless of whether or not it exists, a PERMISSION_DENIED error
-//     is returned. If the requested Document does not exist, a NOT_FOUND
-//     error is returned.
+//     regardless of whether or not it exists, a `PERMISSION_DENIED` error
+//     is returned. If the requested Document does not exist, a
+//     `NOT_FOUND` error is returned.
 func (r *ProjectsLocationsCollectionsDataStoresBranchesDocumentsService) Get(name string) *ProjectsLocationsCollectionsDataStoresBranchesDocumentsGetCall {
 	c := &ProjectsLocationsCollectionsDataStoresBranchesDocumentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2993,7 +3019,7 @@ func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsGetCall) Do(opts
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Full resource name of Document, such as `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}/branches/{branch}/documents/{document}`. If the caller does not have permission to access the Document, regardless of whether or not it exists, a PERMISSION_DENIED error is returned. If the requested Document does not exist, a NOT_FOUND error is returned.",
+	//       "description": "Required. Full resource name of Document, such as `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}/branches/{branch}/documents/{document}`. If the caller does not have permission to access the Document, regardless of whether or not it exists, a `PERMISSION_DENIED` error is returned. If the requested Document does not exist, a `NOT_FOUND` error is returned.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/dataStores/[^/]+/branches/[^/]+/documents/[^/]+$",
 	//       "required": true,
@@ -3177,7 +3203,7 @@ type ProjectsLocationsCollectionsDataStoresBranchesDocumentsListCall struct {
 //     the branch ID, to list documents under the default branch. If the
 //     caller does not have permission to list Documentss under this
 //     branch, regardless of whether or not this branch exists, a
-//     PERMISSION_DENIED error is returned.
+//     `PERMISSION_DENIED` error is returned.
 func (r *ProjectsLocationsCollectionsDataStoresBranchesDocumentsService) List(parent string) *ProjectsLocationsCollectionsDataStoresBranchesDocumentsListCall {
 	c := &ProjectsLocationsCollectionsDataStoresBranchesDocumentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3187,7 +3213,7 @@ func (r *ProjectsLocationsCollectionsDataStoresBranchesDocumentsService) List(pa
 // PageSize sets the optional parameter "pageSize": Maximum number of
 // Documents to return. If unspecified, defaults to 100. The maximum
 // allowed value is 1000. Values above 1000 will be coerced to 1000. If
-// this field is negative, an INVALID_ARGUMENT error is returned.
+// this field is negative, an `INVALID_ARGUMENT` error is returned.
 func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsListCall) PageSize(pageSize int64) *ProjectsLocationsCollectionsDataStoresBranchesDocumentsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -3198,7 +3224,7 @@ func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsListCall) PageSi
 // DocumentService.ListDocuments call. Provide this to retrieve the
 // subsequent page. When paginating, all other parameters provided to
 // DocumentService.ListDocuments must match the call that provided the
-// page token. Otherwise, an INVALID_ARGUMENT error is returned.
+// page token. Otherwise, an `INVALID_ARGUMENT` error is returned.
 func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsListCall) PageToken(pageToken string) *ProjectsLocationsCollectionsDataStoresBranchesDocumentsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -3315,18 +3341,18 @@ func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsListCall) Do(opt
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "Maximum number of Documents to return. If unspecified, defaults to 100. The maximum allowed value is 1000. Values above 1000 will be coerced to 1000. If this field is negative, an INVALID_ARGUMENT error is returned.",
+	//       "description": "Maximum number of Documents to return. If unspecified, defaults to 100. The maximum allowed value is 1000. Values above 1000 will be coerced to 1000. If this field is negative, an `INVALID_ARGUMENT` error is returned.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A page token ListDocumentsResponse.next_page_token, received from a previous DocumentService.ListDocuments call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to DocumentService.ListDocuments must match the call that provided the page token. Otherwise, an INVALID_ARGUMENT error is returned.",
+	//       "description": "A page token ListDocumentsResponse.next_page_token, received from a previous DocumentService.ListDocuments call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to DocumentService.ListDocuments must match the call that provided the page token. Otherwise, an `INVALID_ARGUMENT` error is returned.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent branch resource name, such as `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}/branches/{branch}`. Use `default_branch` as the branch ID, to list documents under the default branch. If the caller does not have permission to list Documentss under this branch, regardless of whether or not this branch exists, a PERMISSION_DENIED error is returned.",
+	//       "description": "Required. The parent branch resource name, such as `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}/branches/{branch}`. Use `default_branch` as the branch ID, to list documents under the default branch. If the caller does not have permission to list Documentss under this branch, regardless of whether or not this branch exists, a `PERMISSION_DENIED` error is returned.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/dataStores/[^/]+/branches/[^/]+$",
 	//       "required": true,
@@ -4605,8 +4631,8 @@ type ProjectsLocationsCollectionsDataStoresServingConfigsRecommendCall struct {
 // event.
 //
 //   - servingConfig: Full resource name of the format:
-//     projects/*/locations/global/collections/*/dataStores/*/servingConfig
-//     s/* Before you can request recommendations from your model, you
+//     `projects/*/locations/global/collections/*/dataStores/*/servingConfi
+//     gs/*` Before you can request recommendations from your model, you
 //     must create at least one serving config for it.
 func (r *ProjectsLocationsCollectionsDataStoresServingConfigsService) Recommend(servingConfig string, googleclouddiscoveryenginev1alpharecommendrequest *GoogleCloudDiscoveryengineV1alphaRecommendRequest) *ProjectsLocationsCollectionsDataStoresServingConfigsRecommendCall {
 	c := &ProjectsLocationsCollectionsDataStoresServingConfigsRecommendCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -4717,7 +4743,7 @@ func (c *ProjectsLocationsCollectionsDataStoresServingConfigsRecommendCall) Do(o
 	//   ],
 	//   "parameters": {
 	//     "servingConfig": {
-	//       "description": "Required. Full resource name of the format: projects/*/locations/global/collections/*/dataStores/*/servingConfigs/* Before you can request recommendations from your model, you must create at least one serving config for it.",
+	//       "description": "Required. Full resource name of the format: `projects/*/locations/global/collections/*/dataStores/*/servingConfigs/*` Before you can request recommendations from your model, you must create at least one serving config for it.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/dataStores/[^/]+/servingConfigs/[^/]+$",
 	//       "required": true,
@@ -5225,6 +5251,154 @@ func (c *ProjectsLocationsCollectionsDataStoresUserEventsWriteCall) Do(opts ...g
 
 }
 
+// method id "discoveryengine.projects.locations.collections.engines.operations.get":
+
+type ProjectsLocationsCollectionsEnginesOperationsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the latest state of a long-running operation. Clients can
+// use this method to poll the operation result at intervals as
+// recommended by the API service.
+//
+// - name: The name of the operation resource.
+func (r *ProjectsLocationsCollectionsEnginesOperationsService) Get(name string) *ProjectsLocationsCollectionsEnginesOperationsGetCall {
+	c := &ProjectsLocationsCollectionsEnginesOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsCollectionsEnginesOperationsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsEnginesOperationsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsCollectionsEnginesOperationsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsCollectionsEnginesOperationsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsCollectionsEnginesOperationsGetCall) Context(ctx context.Context) *ProjectsLocationsCollectionsEnginesOperationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsCollectionsEnginesOperationsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsEnginesOperationsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.engines.operations.get" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsCollectionsEnginesOperationsGetCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/engines/{enginesId}/operations/{operationsId}",
+	//   "httpMethod": "GET",
+	//   "id": "discoveryengine.projects.locations.collections.engines.operations.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The name of the operation resource.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/engines/[^/]+/operations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "discoveryengine.projects.locations.collections.operations.get":
 
 type ProjectsLocationsCollectionsOperationsGetCall struct {
@@ -5606,12 +5780,13 @@ func (r *ProjectsLocationsDataStoresBranchesDocumentsService) Create(parent stri
 // DocumentId sets the optional parameter "documentId": Required. The ID
 // to use for the Document, which will become the final component of the
 // Document.name. If the caller does not have permission to create the
-// Document, regardless of whether or not it exists, a PERMISSION_DENIED
-// error is returned. This field must be unique among all Documents with
-// the same parent. Otherwise, an ALREADY_EXISTS error is returned. This
-// field must conform to RFC-1034 (https://tools.ietf.org/html/rfc1034)
-// standard with a length limit of 63 characters. Otherwise, an
-// INVALID_ARGUMENT error is returned.
+// Document, regardless of whether or not it exists, a
+// `PERMISSION_DENIED` error is returned. This field must be unique
+// among all Documents with the same parent. Otherwise, an
+// `ALREADY_EXISTS` error is returned. This field must conform to
+// RFC-1034 (https://tools.ietf.org/html/rfc1034) standard with a length
+// limit of 63 characters. Otherwise, an `INVALID_ARGUMENT` error is
+// returned.
 func (c *ProjectsLocationsDataStoresBranchesDocumentsCreateCall) DocumentId(documentId string) *ProjectsLocationsDataStoresBranchesDocumentsCreateCall {
 	c.urlParams_.Set("documentId", documentId)
 	return c
@@ -5719,7 +5894,7 @@ func (c *ProjectsLocationsDataStoresBranchesDocumentsCreateCall) Do(opts ...goog
 	//   ],
 	//   "parameters": {
 	//     "documentId": {
-	//       "description": "Required. The ID to use for the Document, which will become the final component of the Document.name. If the caller does not have permission to create the Document, regardless of whether or not it exists, a PERMISSION_DENIED error is returned. This field must be unique among all Documents with the same parent. Otherwise, an ALREADY_EXISTS error is returned. This field must conform to [RFC-1034](https://tools.ietf.org/html/rfc1034) standard with a length limit of 63 characters. Otherwise, an INVALID_ARGUMENT error is returned.",
+	//       "description": "Required. The ID to use for the Document, which will become the final component of the Document.name. If the caller does not have permission to create the Document, regardless of whether or not it exists, a `PERMISSION_DENIED` error is returned. This field must be unique among all Documents with the same parent. Otherwise, an `ALREADY_EXISTS` error is returned. This field must conform to [RFC-1034](https://tools.ietf.org/html/rfc1034) standard with a length limit of 63 characters. Otherwise, an `INVALID_ARGUMENT` error is returned.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5761,9 +5936,9 @@ type ProjectsLocationsDataStoresBranchesDocumentsDeleteCall struct {
 //     `projects/{project}/locations/{location}/collections/{collection}/da
 //     taStores/{data_store}/branches/{branch}/documents/{document}`. If
 //     the caller does not have permission to delete the Document,
-//     regardless of whether or not it exists, a PERMISSION_DENIED error
-//     is returned. If the Document to delete does not exist, a NOT_FOUND
-//     error is returned.
+//     regardless of whether or not it exists, a `PERMISSION_DENIED` error
+//     is returned. If the Document to delete does not exist, a
+//     `NOT_FOUND` error is returned.
 func (r *ProjectsLocationsDataStoresBranchesDocumentsService) Delete(name string) *ProjectsLocationsDataStoresBranchesDocumentsDeleteCall {
 	c := &ProjectsLocationsDataStoresBranchesDocumentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5865,7 +6040,7 @@ func (c *ProjectsLocationsDataStoresBranchesDocumentsDeleteCall) Do(opts ...goog
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Full resource name of Document, such as `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}/branches/{branch}/documents/{document}`. If the caller does not have permission to delete the Document, regardless of whether or not it exists, a PERMISSION_DENIED error is returned. If the Document to delete does not exist, a NOT_FOUND error is returned.",
+	//       "description": "Required. Full resource name of Document, such as `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}/branches/{branch}/documents/{document}`. If the caller does not have permission to delete the Document, regardless of whether or not it exists, a `PERMISSION_DENIED` error is returned. If the Document to delete does not exist, a `NOT_FOUND` error is returned.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/dataStores/[^/]+/branches/[^/]+/documents/[^/]+$",
 	//       "required": true,
@@ -5900,9 +6075,9 @@ type ProjectsLocationsDataStoresBranchesDocumentsGetCall struct {
 //     `projects/{project}/locations/{location}/collections/{collection}/da
 //     taStores/{data_store}/branches/{branch}/documents/{document}`. If
 //     the caller does not have permission to access the Document,
-//     regardless of whether or not it exists, a PERMISSION_DENIED error
-//     is returned. If the requested Document does not exist, a NOT_FOUND
-//     error is returned.
+//     regardless of whether or not it exists, a `PERMISSION_DENIED` error
+//     is returned. If the requested Document does not exist, a
+//     `NOT_FOUND` error is returned.
 func (r *ProjectsLocationsDataStoresBranchesDocumentsService) Get(name string) *ProjectsLocationsDataStoresBranchesDocumentsGetCall {
 	c := &ProjectsLocationsDataStoresBranchesDocumentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6019,7 +6194,7 @@ func (c *ProjectsLocationsDataStoresBranchesDocumentsGetCall) Do(opts ...googlea
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Full resource name of Document, such as `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}/branches/{branch}/documents/{document}`. If the caller does not have permission to access the Document, regardless of whether or not it exists, a PERMISSION_DENIED error is returned. If the requested Document does not exist, a NOT_FOUND error is returned.",
+	//       "description": "Required. Full resource name of Document, such as `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}/branches/{branch}/documents/{document}`. If the caller does not have permission to access the Document, regardless of whether or not it exists, a `PERMISSION_DENIED` error is returned. If the requested Document does not exist, a `NOT_FOUND` error is returned.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/dataStores/[^/]+/branches/[^/]+/documents/[^/]+$",
 	//       "required": true,
@@ -6203,7 +6378,7 @@ type ProjectsLocationsDataStoresBranchesDocumentsListCall struct {
 //     the branch ID, to list documents under the default branch. If the
 //     caller does not have permission to list Documentss under this
 //     branch, regardless of whether or not this branch exists, a
-//     PERMISSION_DENIED error is returned.
+//     `PERMISSION_DENIED` error is returned.
 func (r *ProjectsLocationsDataStoresBranchesDocumentsService) List(parent string) *ProjectsLocationsDataStoresBranchesDocumentsListCall {
 	c := &ProjectsLocationsDataStoresBranchesDocumentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6213,7 +6388,7 @@ func (r *ProjectsLocationsDataStoresBranchesDocumentsService) List(parent string
 // PageSize sets the optional parameter "pageSize": Maximum number of
 // Documents to return. If unspecified, defaults to 100. The maximum
 // allowed value is 1000. Values above 1000 will be coerced to 1000. If
-// this field is negative, an INVALID_ARGUMENT error is returned.
+// this field is negative, an `INVALID_ARGUMENT` error is returned.
 func (c *ProjectsLocationsDataStoresBranchesDocumentsListCall) PageSize(pageSize int64) *ProjectsLocationsDataStoresBranchesDocumentsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -6224,7 +6399,7 @@ func (c *ProjectsLocationsDataStoresBranchesDocumentsListCall) PageSize(pageSize
 // DocumentService.ListDocuments call. Provide this to retrieve the
 // subsequent page. When paginating, all other parameters provided to
 // DocumentService.ListDocuments must match the call that provided the
-// page token. Otherwise, an INVALID_ARGUMENT error is returned.
+// page token. Otherwise, an `INVALID_ARGUMENT` error is returned.
 func (c *ProjectsLocationsDataStoresBranchesDocumentsListCall) PageToken(pageToken string) *ProjectsLocationsDataStoresBranchesDocumentsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -6341,18 +6516,18 @@ func (c *ProjectsLocationsDataStoresBranchesDocumentsListCall) Do(opts ...google
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "Maximum number of Documents to return. If unspecified, defaults to 100. The maximum allowed value is 1000. Values above 1000 will be coerced to 1000. If this field is negative, an INVALID_ARGUMENT error is returned.",
+	//       "description": "Maximum number of Documents to return. If unspecified, defaults to 100. The maximum allowed value is 1000. Values above 1000 will be coerced to 1000. If this field is negative, an `INVALID_ARGUMENT` error is returned.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A page token ListDocumentsResponse.next_page_token, received from a previous DocumentService.ListDocuments call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to DocumentService.ListDocuments must match the call that provided the page token. Otherwise, an INVALID_ARGUMENT error is returned.",
+	//       "description": "A page token ListDocumentsResponse.next_page_token, received from a previous DocumentService.ListDocuments call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to DocumentService.ListDocuments must match the call that provided the page token. Otherwise, an `INVALID_ARGUMENT` error is returned.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent branch resource name, such as `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}/branches/{branch}`. Use `default_branch` as the branch ID, to list documents under the default branch. If the caller does not have permission to list Documentss under this branch, regardless of whether or not this branch exists, a PERMISSION_DENIED error is returned.",
+	//       "description": "Required. The parent branch resource name, such as `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}/branches/{branch}`. Use `default_branch` as the branch ID, to list documents under the default branch. If the caller does not have permission to list Documentss under this branch, regardless of whether or not this branch exists, a `PERMISSION_DENIED` error is returned.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/dataStores/[^/]+/branches/[^/]+$",
 	//       "required": true,
@@ -7631,8 +7806,8 @@ type ProjectsLocationsDataStoresServingConfigsRecommendCall struct {
 // event.
 //
 //   - servingConfig: Full resource name of the format:
-//     projects/*/locations/global/collections/*/dataStores/*/servingConfig
-//     s/* Before you can request recommendations from your model, you
+//     `projects/*/locations/global/collections/*/dataStores/*/servingConfi
+//     gs/*` Before you can request recommendations from your model, you
 //     must create at least one serving config for it.
 func (r *ProjectsLocationsDataStoresServingConfigsService) Recommend(servingConfig string, googleclouddiscoveryenginev1alpharecommendrequest *GoogleCloudDiscoveryengineV1alphaRecommendRequest) *ProjectsLocationsDataStoresServingConfigsRecommendCall {
 	c := &ProjectsLocationsDataStoresServingConfigsRecommendCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -7743,7 +7918,7 @@ func (c *ProjectsLocationsDataStoresServingConfigsRecommendCall) Do(opts ...goog
 	//   ],
 	//   "parameters": {
 	//     "servingConfig": {
-	//       "description": "Required. Full resource name of the format: projects/*/locations/global/collections/*/dataStores/*/servingConfigs/* Before you can request recommendations from your model, you must create at least one serving config for it.",
+	//       "description": "Required. Full resource name of the format: `projects/*/locations/global/collections/*/dataStores/*/servingConfigs/*` Before you can request recommendations from your model, you must create at least one serving config for it.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/dataStores/[^/]+/servingConfigs/[^/]+$",
 	//       "required": true,

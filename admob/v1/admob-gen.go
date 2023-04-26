@@ -268,7 +268,8 @@ func (s *AdUnit) MarshalJSON() ([]byte, error) {
 // App: Describes an AdMob app for a specific platform (For example:
 // Android or iOS).
 type App struct {
-	// AppApprovalState: Output only. The approval state for the app.
+	// AppApprovalState: Output only. The approval state for the app. The
+	// field is read-only.
 	//
 	// Possible values:
 	//   "APP_APPROVAL_STATE_UNSPECIFIED" - Default value for an unset

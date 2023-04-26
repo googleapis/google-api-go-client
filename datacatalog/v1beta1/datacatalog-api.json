@@ -1813,7 +1813,7 @@
       }
     }
   },
-  "revision": "20230414",
+  "revision": "20230421",
   "rootUrl": "https://datacatalog.googleapis.com/",
   "schemas": {
     "Binding": {
@@ -4190,7 +4190,7 @@
       "id": "GoogleCloudDatacatalogV1beta1TaxonomyService",
       "properties": {
         "identity": {
-          "description": "P4SA Identity of the service.",
+          "description": "The service agent for the service.",
           "type": "string"
         },
         "name": {

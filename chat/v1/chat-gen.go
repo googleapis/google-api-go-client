@@ -3283,7 +3283,12 @@ type Membership struct {
 	// when a member joined or was invited to join a space.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// Member: The Google Chat user or app the membership corresponds to.
+	// Member: The Google Chat user or app the membership corresponds to. If
+	// your Chat app authenticates as a user
+	// (https://developers.google.com/chat/api/guides/auth/users), the
+	// output populates the user
+	// (https://developers.google.com/chat/api/reference/rest/v1/User)
+	// `name` and `type`.
 	Member *User `json:"member,omitempty"`
 
 	// Name: Resource name of the membership, assigned by the server.

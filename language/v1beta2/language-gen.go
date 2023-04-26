@@ -612,9 +612,7 @@ type ClassificationCategory struct {
 	// represents the given text.
 	Confidence float64 `json:"confidence,omitempty"`
 
-	// Name: The name of the category representing the document, from the
-	// predefined taxonomy
-	// (https://cloud.google.com/natural-language/docs/categories).
+	// Name: The name of the category representing the document.
 	Name string `json:"name,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Confidence") to
@@ -1100,7 +1098,7 @@ func (s *EntityMention) MarshalJSON() ([]byte, error) {
 
 // Features: All available features for sentiment, syntax, and semantic
 // analysis. Setting each one to true will enable that specific analysis
-// for the input. Next ID: 11
+// for the input. Next ID: 12
 type Features struct {
 	// ClassificationModelOptions: The model options to use for
 	// classification. Defaults to v1 options if not specified. Only used if

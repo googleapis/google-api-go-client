@@ -421,6 +421,18 @@ type AndroidNotification struct {
 	// attention or input.
 	NotificationPriority string `json:"notificationPriority,omitempty"`
 
+	// Proxy: Setting to control when a notification may be proxied.
+	//
+	// Possible values:
+	//   "PROXY_UNSPECIFIED" - If unspecified, default to
+	// `Proxy.IF_PRIORITY_LOWERED`.
+	//   "ALLOW" - Try to proxy this notification.
+	//   "DENY" - Do not proxy this notification.
+	//   "IF_PRIORITY_LOWERED" - Only try to proxy this notification if its
+	// `AndroidMessagePriority` was lowered from `HIGH` to `NORMAL` on the
+	// device.
+	Proxy string `json:"proxy,omitempty"`
+
 	// Sound: The sound to play when the device receives the notification.
 	// Supports "default" or the filename of a sound resource bundled in the
 	// app. Sound files must reside in /res/raw/.

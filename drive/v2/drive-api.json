@@ -38,7 +38,7 @@
   "description": "Manages files in Drive including uploading, downloading, searching, detecting changes, and updating sharing permissions.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/drive/",
-  "etag": "\"VYc8DWo_6wRTElVugbtvWfkARsc/LYVlaRfUrd22kdDK7YfGWrMedUY\"",
+  "etag": "\"VYc8DWo_6wRTElVugbtvWfkARsc/vUgtTacNQXAlvuhI2YoKrF8mHHA\"",
   "icons": {
     "x16": "https://ssl.gstatic.com/docs/doclist/images/drive_icon_16.png",
     "x32": "https://ssl.gstatic.com/docs/doclist/images/drive_icon_32.png"
@@ -1290,7 +1290,7 @@
           ]
         },
         "emptyTrash": {
-          "description": "Permanently deletes all of the user's trashed files.",
+          "description": "Permanently deletes all trashed files of a user or shared drive.",
           "httpMethod": "DELETE",
           "id": "drive.files.emptyTrash",
           "parameters": {
@@ -2231,7 +2231,7 @@
           "supportsMediaUpload": true
         },
         "watch": {
-          "description": "Subscribes to changes to a file. While you can establish a channel for changes to a file on a shared drive, a change to a shared drive file won't create a notification.",
+          "description": "Subscribe to changes on a file.",
           "httpMethod": "POST",
           "id": "drive.files.watch",
           "parameterOrder": [
@@ -3673,7 +3673,7 @@
       }
     }
   },
-  "revision": "20230413",
+  "revision": "20230423",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "About": {

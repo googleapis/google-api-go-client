@@ -464,6 +464,13 @@ type GoogleCloudContactcenterinsightsV1AnnotatorSelector struct {
 	// RunSilenceAnnotator: Whether to run the silence annotator.
 	RunSilenceAnnotator bool `json:"runSilenceAnnotator,omitempty"`
 
+	// RunSummarizationAnnotator: Whether to run the summarization
+	// annotator.
+	RunSummarizationAnnotator bool `json:"runSummarizationAnnotator,omitempty"`
+
+	// SummarizationConfig: Configuration for the summarization annotator.
+	SummarizationConfig *GoogleCloudContactcenterinsightsV1AnnotatorSelectorSummarizationConfig `json:"summarizationConfig,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "IssueModels") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -483,6 +490,47 @@ type GoogleCloudContactcenterinsightsV1AnnotatorSelector struct {
 
 func (s *GoogleCloudContactcenterinsightsV1AnnotatorSelector) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1AnnotatorSelector
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1AnnotatorSelectorSummarizationConfig
+// : Configuration for summarization.
+type GoogleCloudContactcenterinsightsV1AnnotatorSelectorSummarizationConfig struct {
+	// ConversationProfile: Resource name of the Dialogflow conversation
+	// profile. Format:
+	// projects/{project}/locations/{location}/conversationProfiles/{conversa
+	// tion_profile}
+	ConversationProfile string `json:"conversationProfile,omitempty"`
+
+	// SummarizationModel: Default summarization model to be used.
+	//
+	// Possible values:
+	//   "SUMMARIZATION_MODEL_UNSPECIFIED" - Unspecified summarization
+	// model.
+	//   "BASELINE_MODEL" - The Insights baseline model.
+	SummarizationModel string `json:"summarizationModel,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConversationProfile")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConversationProfile") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudContactcenterinsightsV1AnnotatorSelectorSummarizationConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1AnnotatorSelectorSummarizationConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1015,6 +1063,9 @@ type GoogleCloudContactcenterinsightsV1Conversation struct {
 	// one exists.
 	LatestAnalysis *GoogleCloudContactcenterinsightsV1Analysis `json:"latestAnalysis,omitempty"`
 
+	// LatestSummary: Output only. Latest summary of the conversation.
+	LatestSummary *GoogleCloudContactcenterinsightsV1ConversationSummarizationSuggestionData `json:"latestSummary,omitempty"`
+
 	// Medium: Immutable. The conversation medium, if unspecified will
 	// default to PHONE_CALL.
 	//
@@ -1235,6 +1286,71 @@ func (s *GoogleCloudContactcenterinsightsV1ConversationParticipant) MarshalJSON(
 	type NoMethod GoogleCloudContactcenterinsightsV1ConversationParticipant
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1ConversationSummarizationSuggestionD
+// ata: Conversation summarization suggestion data.
+type GoogleCloudContactcenterinsightsV1ConversationSummarizationSuggestionData struct {
+	// AnswerRecord: The name of the answer record. Format:
+	// projects/{project}/locations/{location}/answerRecords/{answer_record}
+	AnswerRecord string `json:"answerRecord,omitempty"`
+
+	// Confidence: The confidence score of the summarization.
+	Confidence float64 `json:"confidence,omitempty"`
+
+	// ConversationModel: The name of the model that generates this summary.
+	// Format:
+	// projects/{project}/locations/{location}/conversationModels/{conversati
+	// on_model}
+	ConversationModel string `json:"conversationModel,omitempty"`
+
+	// Metadata: A map that contains metadata about the summarization and
+	// the document from which it originates.
+	Metadata map[string]string `json:"metadata,omitempty"`
+
+	// Text: The summarization content that is concatenated into one string.
+	Text string `json:"text,omitempty"`
+
+	// TextSections: The summarization content that is divided into
+	// sections. The key is the section's name and the value is the
+	// section's content. There is no specific format for the key or value.
+	TextSections map[string]string `json:"textSections,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AnswerRecord") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AnswerRecord") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudContactcenterinsightsV1ConversationSummarizationSuggestionData) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1ConversationSummarizationSuggestionData
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudContactcenterinsightsV1ConversationSummarizationSuggestionData) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudContactcenterinsightsV1ConversationSummarizationSuggestionData
+	var s1 struct {
+		Confidence gensupport.JSONFloat64 `json:"confidence"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Confidence = float64(s1.Confidence)
+	return nil
 }
 
 // GoogleCloudContactcenterinsightsV1ConversationTranscript: A message
@@ -3361,6 +3477,10 @@ type GoogleCloudContactcenterinsightsV1RuntimeAnnotation struct {
 	// ArticleSuggestion: Agent Assist Article Suggestion data.
 	ArticleSuggestion *GoogleCloudContactcenterinsightsV1ArticleSuggestionData `json:"articleSuggestion,omitempty"`
 
+	// ConversationSummarizationSuggestion: Conversation summarization
+	// suggestion data.
+	ConversationSummarizationSuggestion *GoogleCloudContactcenterinsightsV1ConversationSummarizationSuggestionData `json:"conversationSummarizationSuggestion,omitempty"`
+
 	// CreateTime: The time at which this annotation was created.
 	CreateTime string `json:"createTime,omitempty"`
 
@@ -4116,6 +4236,13 @@ type GoogleCloudContactcenterinsightsV1alpha1AnnotatorSelector struct {
 	// RunSilenceAnnotator: Whether to run the silence annotator.
 	RunSilenceAnnotator bool `json:"runSilenceAnnotator,omitempty"`
 
+	// RunSummarizationAnnotator: Whether to run the summarization
+	// annotator.
+	RunSummarizationAnnotator bool `json:"runSummarizationAnnotator,omitempty"`
+
+	// SummarizationConfig: Configuration for the summarization annotator.
+	SummarizationConfig *GoogleCloudContactcenterinsightsV1alpha1AnnotatorSelectorSummarizationConfig `json:"summarizationConfig,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "IssueModels") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -4135,6 +4262,47 @@ type GoogleCloudContactcenterinsightsV1alpha1AnnotatorSelector struct {
 
 func (s *GoogleCloudContactcenterinsightsV1alpha1AnnotatorSelector) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1AnnotatorSelector
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1alpha1AnnotatorSelectorSummarization
+// Config: Configuration for summarization.
+type GoogleCloudContactcenterinsightsV1alpha1AnnotatorSelectorSummarizationConfig struct {
+	// ConversationProfile: Resource name of the Dialogflow conversation
+	// profile. Format:
+	// projects/{project}/locations/{location}/conversationProfiles/{conversa
+	// tion_profile}
+	ConversationProfile string `json:"conversationProfile,omitempty"`
+
+	// SummarizationModel: Default summarization model to be used.
+	//
+	// Possible values:
+	//   "SUMMARIZATION_MODEL_UNSPECIFIED" - Unspecified summarization
+	// model.
+	//   "BASELINE_MODEL" - The Insights baseline model.
+	SummarizationModel string `json:"summarizationModel,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConversationProfile")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConversationProfile") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudContactcenterinsightsV1alpha1AnnotatorSelectorSummarizationConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1alpha1AnnotatorSelectorSummarizationConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4495,6 +4663,9 @@ type GoogleCloudContactcenterinsightsV1alpha1Conversation struct {
 	// one exists.
 	LatestAnalysis *GoogleCloudContactcenterinsightsV1alpha1Analysis `json:"latestAnalysis,omitempty"`
 
+	// LatestSummary: Output only. Latest summary of the conversation.
+	LatestSummary *GoogleCloudContactcenterinsightsV1alpha1ConversationSummarizationSuggestionData `json:"latestSummary,omitempty"`
+
 	// Medium: Immutable. The conversation medium, if unspecified will
 	// default to PHONE_CALL.
 	//
@@ -4711,6 +4882,71 @@ func (s *GoogleCloudContactcenterinsightsV1alpha1ConversationParticipant) Marsha
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1ConversationParticipant
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1alpha1ConversationSummarizationSugge
+// stionData: Conversation summarization suggestion data.
+type GoogleCloudContactcenterinsightsV1alpha1ConversationSummarizationSuggestionData struct {
+	// AnswerRecord: The name of the answer record. Format:
+	// projects/{project}/locations/{location}/answerRecords/{answer_record}
+	AnswerRecord string `json:"answerRecord,omitempty"`
+
+	// Confidence: The confidence score of the summarization.
+	Confidence float64 `json:"confidence,omitempty"`
+
+	// ConversationModel: The name of the model that generates this summary.
+	// Format:
+	// projects/{project}/locations/{location}/conversationModels/{conversati
+	// on_model}
+	ConversationModel string `json:"conversationModel,omitempty"`
+
+	// Metadata: A map that contains metadata about the summarization and
+	// the document from which it originates.
+	Metadata map[string]string `json:"metadata,omitempty"`
+
+	// Text: The summarization content that is concatenated into one string.
+	Text string `json:"text,omitempty"`
+
+	// TextSections: The summarization content that is divided into
+	// sections. The key is the section's name and the value is the
+	// section's content. There is no specific format for the key or value.
+	TextSections map[string]string `json:"textSections,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AnswerRecord") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AnswerRecord") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudContactcenterinsightsV1alpha1ConversationSummarizationSuggestionData) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1alpha1ConversationSummarizationSuggestionData
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudContactcenterinsightsV1alpha1ConversationSummarizationSuggestionData) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudContactcenterinsightsV1alpha1ConversationSummarizationSuggestionData
+	var s1 struct {
+		Confidence gensupport.JSONFloat64 `json:"confidence"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Confidence = float64(s1.Confidence)
+	return nil
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1ConversationTranscript: A
@@ -6336,6 +6572,10 @@ type GoogleCloudContactcenterinsightsV1alpha1RuntimeAnnotation struct {
 
 	// ArticleSuggestion: Agent Assist Article Suggestion data.
 	ArticleSuggestion *GoogleCloudContactcenterinsightsV1alpha1ArticleSuggestionData `json:"articleSuggestion,omitempty"`
+
+	// ConversationSummarizationSuggestion: Conversation summarization
+	// suggestion data.
+	ConversationSummarizationSuggestion *GoogleCloudContactcenterinsightsV1alpha1ConversationSummarizationSuggestionData `json:"conversationSummarizationSuggestion,omitempty"`
 
 	// CreateTime: The time at which this annotation was created.
 	CreateTime string `json:"createTime,omitempty"`

@@ -170,6 +170,58 @@ type V1beta1Service struct {
 	s *Service
 }
 
+// AbuseDetected: A generic alert for abusive user activity occurring
+// with a customer.
+type AbuseDetected struct {
+	// AdditionalDetails: List of abusive users/entities to be displayed in
+	// a table in the alert.
+	AdditionalDetails *EntityList `json:"additionalDetails,omitempty"`
+
+	// Product: Product that the abuse is originating from.
+	Product string `json:"product,omitempty"`
+
+	// SubAlertId: Unique identifier of each sub alert that is onboarded.
+	SubAlertId string `json:"subAlertId,omitempty"`
+
+	// VariationType: Variation of AbuseDetected alerts. The variation_type
+	// determines the texts displayed the alert details. This differs from
+	// sub_alert_id because each sub alert can have multiple
+	// variation_types, representing different stages of the alert.
+	//
+	// Possible values:
+	//   "ABUSE_DETECTED_VARIATION_TYPE_UNSPECIFIED" - AbuseDetected alert
+	// variation type unspecified. No alert should be unspecified.
+	//   "DRIVE_ABUSIVE_CONTENT" - Variation displayed for Drive abusive
+	// content alerts.
+	//   "LIMITED_DISABLE" - Variation displayed for Limited Disable alerts,
+	// when a Google service is disabled for a user, totally or partially,
+	// due to the user's abusive behavior.
+	VariationType string `json:"variationType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AdditionalDetails")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdditionalDetails") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AbuseDetected) MarshalJSON() ([]byte, error) {
+	type NoMethod AbuseDetected
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // AccountSuspensionDetails: Details about why an account is receiving
 // an account suspension warning.
 type AccountSuspensionDetails struct {
@@ -222,8 +274,8 @@ func (s *AccountSuspensionDetails) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// AccountSuspensionWarning: LINT.IfChange A warning that the customer's
-// account is about to be suspended.
+// AccountSuspensionWarning: A warning that the customer's account is
+// about to be suspended.
 type AccountSuspensionWarning struct {
 	// AppealWindow: The amount of time remaining to appeal an imminent
 	// suspension. After this window has elapsed, the account will be
@@ -1259,6 +1311,79 @@ type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
+}
+
+// Entity: Individual entity affected by, or related to, an alert.
+type Entity struct {
+	// Link: Link to a Security Investigation Tool search based on this
+	// entity, if available.
+	Link string `json:"link,omitempty"`
+
+	// Name: Human-readable name of this entity, such as an email address,
+	// file ID, or device name.
+	Name string `json:"name,omitempty"`
+
+	// Values: Extra values beyond name. The order of values should align
+	// with headers in EntityList.
+	Values []string `json:"values,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Link") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Link") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Entity) MarshalJSON() ([]byte, error) {
+	type NoMethod Entity
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// EntityList: EntityList stores entities in a format that can be
+// translated to a table in the Alert Center UI.
+type EntityList struct {
+	// Entities: List of entities affected by the alert.
+	Entities []*Entity `json:"entities,omitempty"`
+
+	// Headers: Headers of the values in entities. If no value is defined in
+	// Entity, this field should be empty.
+	Headers []string `json:"headers,omitempty"`
+
+	// Name: Name of the key detail used to display this entity list.
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Entities") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Entities") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EntityList) MarshalJSON() ([]byte, error) {
+	type NoMethod EntityList
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // GmailMessageInfo: Details of a message in phishing spike alert.

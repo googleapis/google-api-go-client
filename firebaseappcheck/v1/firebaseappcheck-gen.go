@@ -3153,6 +3153,7 @@ func (c *ProjectsAppsExchangeSafetyNetTokenCall) Do(opts ...googleapi.CallOption
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Validates a [SafetyNet token](https://developer.android.com/training/safetynet/attestation#request-attestation-step). If valid, returns an AppCheckToken.",
 	//   "flatPath": "v1/projects/{projectsId}/apps/{appsId}:exchangeSafetyNetToken",
 	//   "httpMethod": "POST",
@@ -6861,6 +6862,7 @@ func (c *ProjectsAppsSafetyNetConfigBatchGetCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Atomically gets the SafetyNetConfigs for the specified list of apps.",
 	//   "flatPath": "v1/projects/{projectsId}/apps/-/safetyNetConfig:batchGet",
 	//   "httpMethod": "GET",
@@ -7017,6 +7019,7 @@ func (c *ProjectsAppsSafetyNetConfigGetCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Gets the SafetyNetConfig for the specified app.",
 	//   "flatPath": "v1/projects/{projectsId}/apps/{appsId}/safetyNetConfig",
 	//   "httpMethod": "GET",
@@ -7170,6 +7173,7 @@ func (c *ProjectsAppsSafetyNetConfigPatchCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Updates the SafetyNetConfig for the specified app. While this configuration is incomplete or invalid, the app will be unable to exchange SafetyNet tokens for App Check tokens.",
 	//   "flatPath": "v1/projects/{projectsId}/apps/{appsId}/safetyNetConfig",
 	//   "httpMethod": "PATCH",

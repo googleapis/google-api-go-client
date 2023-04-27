@@ -782,6 +782,35 @@ func (s *GoogleCloudIdentitytoolkitV1DownloadAccountResponse) MarshalJSON() ([]b
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudIdentitytoolkitV1EmailInfo: Information about email MFA.
+type GoogleCloudIdentitytoolkitV1EmailInfo struct {
+	// EmailAddress: Email address that a MFA verification should be sent
+	// to.
+	EmailAddress string `json:"emailAddress,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EmailAddress") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EmailAddress") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudIdentitytoolkitV1EmailInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudIdentitytoolkitV1EmailInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudIdentitytoolkitV1EmailTemplate: Email template
 type GoogleCloudIdentitytoolkitV1EmailTemplate struct {
 	// Body: Email body
@@ -1553,6 +1582,9 @@ func (s *GoogleCloudIdentitytoolkitV1IssueSamlResponseResponse) MarshalJSON() ([
 type GoogleCloudIdentitytoolkitV1MfaEnrollment struct {
 	// DisplayName: Display name for this mfa option e.g. "corp cell phone".
 	DisplayName string `json:"displayName,omitempty"`
+
+	// EmailInfo: Contains information specific to email MFA.
+	EmailInfo *GoogleCloudIdentitytoolkitV1EmailInfo `json:"emailInfo,omitempty"`
 
 	// EnrolledAt: Timestamp when the account enrolled this second factor.
 	EnrolledAt string `json:"enrolledAt,omitempty"`

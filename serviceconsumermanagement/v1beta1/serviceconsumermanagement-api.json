@@ -500,7 +500,7 @@
       }
     }
   },
-  "revision": "20230412",
+  "revision": "20230425",
   "rootUrl": "https://serviceconsumermanagement.googleapis.com/",
   "schemas": {
     "Api": {
@@ -2041,7 +2041,8 @@
             "ADS",
             "PHOTOS",
             "STREET_VIEW",
-            "SHOPPING"
+            "SHOPPING",
+            "GEO"
           ],
           "enumDescriptions": [
             "Not useful.",
@@ -2049,7 +2050,8 @@
             "Ads (Advertising) Org.",
             "Photos Org.",
             "Street View Org.",
-            "Shopping Org."
+            "Shopping Org.",
+            "Geo Org."
           ],
           "type": "string"
         },

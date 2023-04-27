@@ -396,7 +396,7 @@
       }
     }
   },
-  "revision": "20230406",
+  "revision": "20230425",
   "rootUrl": "https://paymentsresellersubscription.googleapis.com/",
   "schemas": {
     "GoogleCloudPaymentsResellerSubscriptionV1Amount": {
@@ -962,7 +962,7 @@
           "type": "string"
         },
         "products": {
-          "description": "Required. Deprecated: consider using `line_items` as the input. Required. Resource name that identifies the purchased products. The format will be 'partners/{partner_id}/products/{product_id}'.",
+          "description": "Optional. Deprecated: consider using `line_items` as the input. Required. Resource name that identifies the purchased products. The format will be 'partners/{partner_id}/products/{product_id}'.",
           "items": {
             "type": "string"
           },

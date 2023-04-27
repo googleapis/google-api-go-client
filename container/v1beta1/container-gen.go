@@ -383,6 +383,10 @@ type AddonsConfig struct {
 	// driver.
 	GcpFilestoreCsiDriverConfig *GcpFilestoreCsiDriverConfig `json:"gcpFilestoreCsiDriverConfig,omitempty"`
 
+	// GcsFuseCsiDriverConfig: Configuration for the Cloud Storage Fuse CSI
+	// driver.
+	GcsFuseCsiDriverConfig *GcsFuseCsiDriverConfig `json:"gcsFuseCsiDriverConfig,omitempty"`
+
 	// GkeBackupAgentConfig: Configuration for the Backup for GKE agent
 	// addon.
 	GkeBackupAgentConfig *GkeBackupAgentConfig `json:"gkeBackupAgentConfig,omitempty"`
@@ -2634,6 +2638,36 @@ type GcpFilestoreCsiDriverConfig struct {
 
 func (s *GcpFilestoreCsiDriverConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GcpFilestoreCsiDriverConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GcsFuseCsiDriverConfig: Configuration for the Cloud Storage Fuse CSI
+// driver.
+type GcsFuseCsiDriverConfig struct {
+	// Enabled: Whether the Cloud Storage Fuse CSI driver is enabled for
+	// this cluster.
+	Enabled bool `json:"enabled,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Enabled") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Enabled") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GcsFuseCsiDriverConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GcsFuseCsiDriverConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

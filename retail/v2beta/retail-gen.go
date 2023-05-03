@@ -918,6 +918,9 @@ type GoogleCloudRetailV2Model struct {
 	// tune finished.
 	LastTuneTime string `json:"lastTuneTime,omitempty"`
 
+	// ModelFeaturesConfig: Optional. Additional model features config.
+	ModelFeaturesConfig *GoogleCloudRetailV2ModelModelFeaturesConfig `json:"modelFeaturesConfig,omitempty"`
+
 	// Name: Required. The fully qualified resource name of the model.
 	// Format:
 	// `projects/{project_number}/locations/{location_id}/catalogs/{catalog_i
@@ -1031,6 +1034,82 @@ type GoogleCloudRetailV2Model struct {
 
 func (s *GoogleCloudRetailV2Model) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2Model
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2ModelFrequentlyBoughtTogetherFeaturesConfig: More
+// configs of the frequently-bought-together model type.
+type GoogleCloudRetailV2ModelFrequentlyBoughtTogetherFeaturesConfig struct {
+	// ContextProductsType: Optional. Specifies the context of the model
+	// when used in predict requests. Only settable for the
+	// `frequently-bought-together` type. Will default to MULTI_CONTEXT if
+	// not specified.
+	//
+	// Possible values:
+	//   "CONTEXT_PRODUCTS_TYPE_UNSPECIFIED" - Unspecified default value,
+	// should never be explicitly set. Defaults to
+	// MULTIPLE_CONTEXT_PRODUCTS.
+	//   "SINGLE_CONTEXT_PRODUCT" - Use only a single product as context for
+	// the recommendation. Typically used on pages like add-to-cart or
+	// product details.
+	//   "MULTIPLE_CONTEXT_PRODUCTS" - Use one or multiple products as
+	// context for the recommendation. Typically used on shopping cart
+	// pages.
+	ContextProductsType string `json:"contextProductsType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ContextProductsType")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ContextProductsType") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2ModelFrequentlyBoughtTogetherFeaturesConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2ModelFrequentlyBoughtTogetherFeaturesConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2ModelModelFeaturesConfig: Additional model
+// features config.
+type GoogleCloudRetailV2ModelModelFeaturesConfig struct {
+	// FrequentlyBoughtTogetherConfig: Additional configs for
+	// frequently-bought-together models.
+	FrequentlyBoughtTogetherConfig *GoogleCloudRetailV2ModelFrequentlyBoughtTogetherFeaturesConfig `json:"frequentlyBoughtTogetherConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "FrequentlyBoughtTogetherConfig") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "FrequentlyBoughtTogetherConfig") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2ModelModelFeaturesConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2ModelModelFeaturesConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1918,6 +1997,9 @@ type GoogleCloudRetailV2alphaModel struct {
 	// tune finished.
 	LastTuneTime string `json:"lastTuneTime,omitempty"`
 
+	// ModelFeaturesConfig: Optional. Additional model features config.
+	ModelFeaturesConfig *GoogleCloudRetailV2alphaModelModelFeaturesConfig `json:"modelFeaturesConfig,omitempty"`
+
 	// Name: Required. The fully qualified resource name of the model.
 	// Format:
 	// `projects/{project_number}/locations/{location_id}/catalogs/{catalog_i
@@ -2034,6 +2116,82 @@ type GoogleCloudRetailV2alphaModel struct {
 
 func (s *GoogleCloudRetailV2alphaModel) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2alphaModel
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2alphaModelFrequentlyBoughtTogetherFeaturesConfig:
+// More configs of the frequently-bought-together model type.
+type GoogleCloudRetailV2alphaModelFrequentlyBoughtTogetherFeaturesConfig struct {
+	// ContextProductsType: Optional. Specifies the context of the model
+	// when used in predict requests. Only settable for the
+	// `frequently-bought-together` type. Will default to MULTI_CONTEXT if
+	// not specified.
+	//
+	// Possible values:
+	//   "CONTEXT_PRODUCTS_TYPE_UNSPECIFIED" - Unspecified default value,
+	// should never be explicitly set. Defaults to
+	// MULTIPLE_CONTEXT_PRODUCTS.
+	//   "SINGLE_CONTEXT_PRODUCT" - Use only a single product as context for
+	// the recommendation. Typically used on pages like add-to-cart or
+	// product details.
+	//   "MULTIPLE_CONTEXT_PRODUCTS" - Use one or multiple products as
+	// context for the recommendation. Typically used on shopping cart
+	// pages.
+	ContextProductsType string `json:"contextProductsType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ContextProductsType")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ContextProductsType") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2alphaModelFrequentlyBoughtTogetherFeaturesConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2alphaModelFrequentlyBoughtTogetherFeaturesConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2alphaModelModelFeaturesConfig: Additional model
+// features config.
+type GoogleCloudRetailV2alphaModelModelFeaturesConfig struct {
+	// FrequentlyBoughtTogetherConfig: Additional configs for
+	// frequently-bought-together models.
+	FrequentlyBoughtTogetherConfig *GoogleCloudRetailV2alphaModelFrequentlyBoughtTogetherFeaturesConfig `json:"frequentlyBoughtTogetherConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "FrequentlyBoughtTogetherConfig") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "FrequentlyBoughtTogetherConfig") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2alphaModelModelFeaturesConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2alphaModelModelFeaturesConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3327,15 +3485,14 @@ type GoogleCloudRetailV2betaCompleteQueryResponse struct {
 
 	// RecentSearchResults: Matched recent searches of this user. The
 	// maximum number of recent searches is 10. This field is a restricted
-	// feature. Contact Retail Search support team if you are interested in
-	// enabling it. This feature is only available when
-	// CompleteQueryRequest.visitor_id field is set and UserEvent is
-	// imported. The recent searches satisfy the follow rules: * They are
-	// ordered from latest to oldest. * They are matched with
-	// CompleteQueryRequest.query case insensitively. * They are transformed
-	// to lower case. * They are UTF-8 safe. Recent searches are
-	// deduplicated. More recent searches will be reserved when duplication
-	// happens.
+	// feature. If you want to enable it, contact Retail Search support.
+	// This feature is only available when CompleteQueryRequest.visitor_id
+	// field is set and UserEvent is imported. The recent searches satisfy
+	// the follow rules: * They are ordered from latest to oldest. * They
+	// are matched with CompleteQueryRequest.query case insensitively. *
+	// They are transformed to lower case. * They are UTF-8 safe. Recent
+	// searches are deduplicated. More recent searches will be reserved when
+	// duplication happens.
 	RecentSearchResults []*GoogleCloudRetailV2betaCompleteQueryResponseRecentSearchResult `json:"recentSearchResults,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -3460,8 +3617,8 @@ type GoogleCloudRetailV2betaCompletionConfig struct {
 
 	// LastSuggestionsImportOperation: Output only. Name of the LRO
 	// corresponding to the latest suggestion terms list import. Can use
-	// GetOperation API to retrieve the latest state of the Long Running
-	// Operation.
+	// GetOperation API method to retrieve the latest state of the Long
+	// Running Operation.
 	LastSuggestionsImportOperation string `json:"lastSuggestionsImportOperation,omitempty"`
 
 	// MatchingOrder: Specifies the matching order for autocomplete
@@ -3918,7 +4075,7 @@ func (s *GoogleCloudRetailV2betaCustomAttribute) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudRetailV2betaExperimentInfo: Metadata for active A/B
-// testing Experiments.
+// testing Experiment.
 type GoogleCloudRetailV2betaExperimentInfo struct {
 	// Experiment: The fully qualified resource name of the experiment that
 	// provides the serving config under test, should an active experiment
@@ -4514,9 +4671,11 @@ type GoogleCloudRetailV2betaImportProductsRequest struct {
 	// notification is sent to specified Pub/Sub topic. The message data is
 	// JSON string of a Operation. Format of the Pub/Sub topic is
 	// `projects/{project}/topics/{topic}`. It has to be within the same
-	// project as ImportProductsRequest.parent. Make sure that
-	// `service-@gcp-sa-retail.iam.gserviceaccount.com` has the
-	// `pubsub.topics.publish` IAM permission on the topic.
+	// project as ImportProductsRequest.parent. Make sure that both
+	// `cloud-retail-customer-data-access@system.gserviceaccount.com` and
+	// `service-@gcp-sa-retail.iam.gserviceaccount.com` have the
+	// `pubsub.topics.publish` IAM permission on the topic. Only supported
+	// when ImportProductsRequest.reconciliation_mode is set to `FULL`.
 	NotificationPubsubTopic string `json:"notificationPubsubTopic,omitempty"`
 
 	// ReconciliationMode: The mode of reconciliation between existing
@@ -5274,6 +5433,9 @@ type GoogleCloudRetailV2betaModel struct {
 	// tune finished.
 	LastTuneTime string `json:"lastTuneTime,omitempty"`
 
+	// ModelFeaturesConfig: Optional. Additional model features config.
+	ModelFeaturesConfig *GoogleCloudRetailV2betaModelModelFeaturesConfig `json:"modelFeaturesConfig,omitempty"`
+
 	// Name: Required. The fully qualified resource name of the model.
 	// Format:
 	// `projects/{project_number}/locations/{location_id}/catalogs/{catalog_i
@@ -5391,6 +5553,82 @@ type GoogleCloudRetailV2betaModel struct {
 
 func (s *GoogleCloudRetailV2betaModel) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2betaModel
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2betaModelFrequentlyBoughtTogetherFeaturesConfig:
+// More configs of the frequently-bought-together model type.
+type GoogleCloudRetailV2betaModelFrequentlyBoughtTogetherFeaturesConfig struct {
+	// ContextProductsType: Optional. Specifies the context of the model
+	// when used in predict requests. Only settable for the
+	// `frequently-bought-together` type. Will default to MULTI_CONTEXT if
+	// not specified.
+	//
+	// Possible values:
+	//   "CONTEXT_PRODUCTS_TYPE_UNSPECIFIED" - Unspecified default value,
+	// should never be explicitly set. Defaults to
+	// MULTIPLE_CONTEXT_PRODUCTS.
+	//   "SINGLE_CONTEXT_PRODUCT" - Use only a single product as context for
+	// the recommendation. Typically used on pages like add-to-cart or
+	// product details.
+	//   "MULTIPLE_CONTEXT_PRODUCTS" - Use one or multiple products as
+	// context for the recommendation. Typically used on shopping cart
+	// pages.
+	ContextProductsType string `json:"contextProductsType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ContextProductsType")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ContextProductsType") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2betaModelFrequentlyBoughtTogetherFeaturesConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2betaModelFrequentlyBoughtTogetherFeaturesConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2betaModelModelFeaturesConfig: Additional model
+// features config.
+type GoogleCloudRetailV2betaModelModelFeaturesConfig struct {
+	// FrequentlyBoughtTogetherConfig: Additional configs for
+	// frequently-bought-together models.
+	FrequentlyBoughtTogetherConfig *GoogleCloudRetailV2betaModelFrequentlyBoughtTogetherFeaturesConfig `json:"frequentlyBoughtTogetherConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "FrequentlyBoughtTogetherConfig") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "FrequentlyBoughtTogetherConfig") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2betaModelModelFeaturesConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2betaModelModelFeaturesConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -7045,11 +7283,11 @@ func (s *GoogleCloudRetailV2betaRuleDoNotAssociateAction) MarshalJSON() ([]byte,
 type GoogleCloudRetailV2betaRuleFilterAction struct {
 	// Filter: A filter to apply on the matching condition results.
 	// Supported features: * filter must be set. * Filter syntax is
-	// identical to SearchRequest.filter. See more details at the Retail
-	// Search user guide (/retail/search/docs/filter-and-order#filter). * To
-	// filter products with product ID "product_1" or "product_2", and color
-	// "Red" or "Blue": *(id: ANY("product_1", "product_2")) * *AND *
-	// *(colorFamilies: ANY("Red", "Blue")) *
+	// identical to SearchRequest.filter. For more information, see Filter
+	// (/retail/docs/filter-and-order#filter). * To filter products with
+	// product ID "product_1" or "product_2", and color "Red" or "Blue":
+	// *(id: ANY("product_1", "product_2")) * *AND * *(colorFamilies:
+	// ANY("Red", "Blue")) *
 	Filter string `json:"filter,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Filter") to
@@ -7249,8 +7487,8 @@ func (s *GoogleCloudRetailV2betaRuleTwowaySynonymsAction) MarshalJSON() ([]byte,
 // GoogleCloudRetailV2betaSearchRequest: Request message for
 // SearchService.Search method.
 type GoogleCloudRetailV2betaSearchRequest struct {
-	// BoostSpec: Boost specification to boost certain products. See more
-	// details at this user guide
+	// BoostSpec: Boost specification to boost certain products. For more
+	// information, see Boost results
 	// (https://cloud.google.com/retail/docs/boosting). Notice that if both
 	// ServingConfig.boost_control_ids and SearchRequest.boost_spec are set,
 	// the boost conditions from both places are evaluated. If a search
@@ -7270,10 +7508,10 @@ type GoogleCloudRetailV2betaSearchRequest struct {
 	// The filter applied to every search request when quality improvement
 	// such as query expansion is needed. For example, if a query does not
 	// have enough results, an expanded query with
-	// SearchRequest.canonical_filter will be returned as a supplement of
-	// the original query. This field is strongly recommended to achieve
-	// high search quality. See SearchRequest.filter for more details about
-	// filter syntax.
+	// SearchRequest.canonical_filter is returned as a supplement of the
+	// original query. This field is strongly recommended to achieve high
+	// search quality. For more information about filter syntax, see
+	// SearchRequest.filter.
 	CanonicalFilter string `json:"canonicalFilter,omitempty"`
 
 	// DynamicFacetSpec: Deprecated. Refer to
@@ -7297,8 +7535,8 @@ type GoogleCloudRetailV2betaSearchRequest struct {
 
 	// Filter: The filter syntax consists of an expression language for
 	// constructing a predicate from one or more fields of the products
-	// being filtered. Filter expression is case-sensitive. See more details
-	// at this user guide
+	// being filtered. Filter expression is case-sensitive. For more
+	// information, see Filter
 	// (https://cloud.google.com/retail/docs/filter-and-order#filter). If
 	// this field is unrecognizable, an INVALID_ARGUMENT is returned.
 	Filter string `json:"filter,omitempty"`
@@ -7313,9 +7551,10 @@ type GoogleCloudRetailV2betaSearchRequest struct {
 	// UTF-8 encoding, and international characters are allowed. * The key
 	// portion of a label must be unique. However, you can use the same key
 	// with multiple resources. * Keys must start with a lowercase letter or
-	// international character. See Google Cloud Document
+	// international character. For more information, see Requirements for
+	// labels
 	// (https://cloud.google.com/resource-manager/docs/creating-managing-labels#requirements)
-	// for more details.
+	// in the Resource Manager documentation.
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// Offset: A 0-indexed integer that specifies the current offset (that
@@ -7327,8 +7566,8 @@ type GoogleCloudRetailV2betaSearchRequest struct {
 
 	// OrderBy: The order in which products are returned. Products can be
 	// ordered by a field in an Product object. Leave it unset if ordered by
-	// relevance. OrderBy expression is case-sensitive. See more details at
-	// this user guide
+	// relevance. OrderBy expression is case-sensitive. For more
+	// information, see Order
 	// (https://cloud.google.com/retail/docs/filter-and-order#order). If
 	// this field is unrecognizable, an INVALID_ARGUMENT is returned.
 	OrderBy string `json:"orderBy,omitempty"`
@@ -7370,8 +7609,8 @@ type GoogleCloudRetailV2betaSearchRequest struct {
 	Query string `json:"query,omitempty"`
 
 	// QueryExpansionSpec: The query expansion specification that specifies
-	// the conditions under which query expansion will occur. See more
-	// details at this user guide
+	// the conditions under which query expansion occurs. For more
+	// information, see Query expansion
 	// (https://cloud.google.com/retail/docs/result-size#query_expansion).
 	QueryExpansionSpec *GoogleCloudRetailV2betaSearchRequestQueryExpansionSpec `json:"queryExpansionSpec,omitempty"`
 
@@ -7610,25 +7849,25 @@ func (s *GoogleCloudRetailV2betaSearchRequestDynamicFacetSpec) MarshalJSON() ([]
 type GoogleCloudRetailV2betaSearchRequestFacetSpec struct {
 	// EnableDynamicPosition: Enables dynamic position for this facet. If
 	// set to true, the position of this facet among all facets in the
-	// response is determined by Google Retail Search. It will be ordered
+	// response is determined by Google Retail Search. It is ordered
 	// together with dynamic facets if dynamic facets is enabled. If set to
-	// false, the position of this facet in the response will be the same as
-	// in the request, and it will be ranked before the facets with dynamic
-	// position enable and all dynamic facets. For example, you may always
-	// want to have rating facet returned in the response, but it's not
-	// necessarily to always display the rating facet at the top. In that
-	// case, you can set enable_dynamic_position to true so that the
-	// position of rating facet in response will be determined by Google
-	// Retail Search. Another example, assuming you have the following
-	// facets in the request: * "rating", enable_dynamic_position = true *
-	// "price", enable_dynamic_position = false * "brands",
-	// enable_dynamic_position = false And also you have a dynamic facets
-	// enable, which will generate a facet 'gender'. Then the final order of
-	// the facets in the response can be ("price", "brands", "rating",
-	// "gender") or ("price", "brands", "gender", "rating") depends on how
-	// Google Retail Search orders "gender" and "rating" facets. However,
-	// notice that "price" and "brands" will always be ranked at 1st and 2nd
-	// position since their enable_dynamic_position are false.
+	// false, the position of this facet in the response is the same as in
+	// the request, and it is ranked before the facets with dynamic position
+	// enable and all dynamic facets. For example, you may always want to
+	// have rating facet returned in the response, but it's not necessarily
+	// to always display the rating facet at the top. In that case, you can
+	// set enable_dynamic_position to true so that the position of rating
+	// facet in response is determined by Google Retail Search. Another
+	// example, assuming you have the following facets in the request: *
+	// "rating", enable_dynamic_position = true * "price",
+	// enable_dynamic_position = false * "brands", enable_dynamic_position =
+	// false And also you have a dynamic facets enable, which generates a
+	// facet "gender". Then, the final order of the facets in the response
+	// can be ("price", "brands", "rating", "gender") or ("price", "brands",
+	// "gender", "rating") depends on how Google Retail Search orders
+	// "gender" and "rating" facets. However, notice that "price" and
+	// "brands" are always ranked at first and second position because their
+	// enable_dynamic_position values are false.
 	EnableDynamicPosition bool `json:"enableDynamicPosition,omitempty"`
 
 	// ExcludedFilterKeys: List of keys to exclude when faceting. By
@@ -7696,21 +7935,21 @@ type GoogleCloudRetailV2betaSearchRequestFacetSpecFacetKey struct {
 	// Contains: Only get facet values that contains the given strings. For
 	// example, suppose "categories" has three values "Women > Shoe", "Women
 	// > Dress" and "Men > Shoe". If set "contains" to "Shoe", the
-	// "categories" facet will give only "Women > Shoe" and "Men > Shoe".
-	// Only supported on textual fields. Maximum is 10.
+	// "categories" facet gives only "Women > Shoe" and "Men > Shoe". Only
+	// supported on textual fields. Maximum is 10.
 	Contains []string `json:"contains,omitempty"`
 
 	// Intervals: Set only if values should be bucketized into intervals.
 	// Must be set for facets with numerical values. Must not be set for
 	// facet with text values. Maximum number of intervals is 40. For all
 	// numerical facet keys that appear in the list of products from the
-	// catalog, the percentiles 0, 10, 30, 50, 70, 90 and 100 are computed
+	// catalog, the percentiles 0, 10, 30, 50, 70, 90, and 100 are computed
 	// from their distribution weekly. If the model assigns a high score to
 	// a numerical facet key and its intervals are not specified in the
-	// search request, these percentiles will become the bounds for its
-	// intervals and will be returned in the response. If the facet key
-	// intervals are specified in the request, then the specified intervals
-	// will be returned instead.
+	// search request, these percentiles become the bounds for its intervals
+	// and are returned in the response. If the facet key intervals are
+	// specified in the request, then the specified intervals are returned
+	// instead.
 	Intervals []*GoogleCloudRetailV2betaInterval `json:"intervals,omitempty"`
 
 	// Key: Required. Supported textual and numerical facet keys in Product
@@ -7742,22 +7981,22 @@ type GoogleCloudRetailV2betaSearchRequestFacetSpecFacetKey struct {
 	// Prefixes: Only get facet values that start with the given string
 	// prefix. For example, suppose "categories" has three values "Women >
 	// Shoe", "Women > Dress" and "Men > Shoe". If set "prefixes" to
-	// "Women", the "categories" facet will give only "Women > Shoe" and
-	// "Women > Dress". Only supported on textual fields. Maximum is 10.
+	// "Women", the "categories" facet gives only "Women > Shoe" and "Women
+	// > Dress". Only supported on textual fields. Maximum is 10.
 	Prefixes []string `json:"prefixes,omitempty"`
 
 	// Query: The query that is used to compute facet for the given facet
-	// key. When provided, it will override the default behavior of facet
+	// key. When provided, it overrides the default behavior of facet
 	// computation. The query syntax is the same as a filter expression. See
 	// SearchRequest.filter for detail syntax and limitations. Notice that
 	// there is no limitation on FacetKey.key when query is specified. In
-	// the response, SearchResponse.Facet.values.value will be always "1"
-	// and SearchResponse.Facet.values.count will be the number of results
-	// that match the query. For example, you can set a customized facet for
+	// the response, SearchResponse.Facet.values.value is always "1" and
+	// SearchResponse.Facet.values.count is the number of results that match
+	// the query. For example, you can set a customized facet for
 	// "shipToStore", where FacetKey.key is "customizedShipToStore", and
 	// FacetKey.query is "availability: ANY(\"IN_STOCK\") AND shipToStore:
-	// ANY(\"123\")". Then the facet will count the products that are both
-	// in stock and ship to store "123".
+	// ANY(\"123\")". Then the facet counts the products that are both in
+	// stock and ship to store "123".
 	Query string `json:"query,omitempty"`
 
 	// RestrictedValues: Only get facet for the given restricted values. For
@@ -8616,9 +8855,9 @@ type GoogleCloudRetailV2betaUserEvent struct {
 
 	// Entity: The entity for customers that may run multiple different
 	// entities, domains, sites or regions, for example, `Google US`,
-	// `Google Ads`, `Waymo`, `google.com`, `youtube.com`, etc. It is
-	// recommended to set this field to get better per-entity search,
-	// completion and prediction results.
+	// `Google Ads`, `Waymo`, `google.com`, `youtube.com`, etc. We recommend
+	// that you set this field to get better per-entity search, completion,
+	// and prediction results.
 	Entity string `json:"entity,omitempty"`
 
 	// EventTime: Only required for UserEventService.ImportUserEvents
@@ -9191,10 +9430,10 @@ func (c *ProjectsLocationsCatalogsCompleteQueryCall) DeviceType(deviceType strin
 }
 
 // Entity sets the optional parameter "entity": The entity for customers
-// that may run multiple different entities, domains, sites or regions,
-// for example, `Google US`, `Google Ads`, `Waymo`, `google.com`,
-// `youtube.com`, etc. If this is set, it should be exactly matched with
-// UserEvent.entity to get per-entity autocomplete results.
+// who run multiple entities, domains, sites, or regions, for example,
+// `Google US`, `Google Ads`, `Waymo`, `google.com`, `youtube.com`, etc.
+// If this is set, it must be an exact match with UserEvent.entity to
+// get per-entity autocomplete results.
 func (c *ProjectsLocationsCatalogsCompleteQueryCall) Entity(entity string) *ProjectsLocationsCatalogsCompleteQueryCall {
 	c.urlParams_.Set("entity", entity)
 	return c
@@ -9372,7 +9611,7 @@ func (c *ProjectsLocationsCatalogsCompleteQueryCall) Do(opts ...googleapi.CallOp
 	//       "type": "string"
 	//     },
 	//     "entity": {
-	//       "description": "The entity for customers that may run multiple different entities, domains, sites or regions, for example, `Google US`, `Google Ads`, `Waymo`, `google.com`, `youtube.com`, etc. If this is set, it should be exactly matched with UserEvent.entity to get per-entity autocomplete results.",
+	//       "description": "The entity for customers who run multiple entities, domains, sites, or regions, for example, `Google US`, `Google Ads`, `Waymo`, `google.com`, `youtube.com`, etc. If this is set, it must be an exact match with UserEvent.entity to get per-entity autocomplete results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -11461,9 +11700,9 @@ type ProjectsLocationsCatalogsBranchesProductsAddFulfillmentPlacesCall struct {
 	header_                                            http.Header
 }
 
-// AddFulfillmentPlaces: It is recommended to use the
-// ProductService.AddLocalInventories method instead of
-// ProductService.AddFulfillmentPlaces.
+// AddFulfillmentPlaces: We recommend that you use the
+// ProductService.AddLocalInventories method instead of the
+// ProductService.AddFulfillmentPlaces method.
 // ProductService.AddLocalInventories achieves the same results but
 // provides more fine-grained control over ingesting local inventory
 // data. Incrementally adds place IDs to
@@ -11581,7 +11820,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsAddFulfillmentPlacesCall) Do(o
 	}
 	return ret, nil
 	// {
-	//   "description": "It is recommended to use the ProductService.AddLocalInventories method instead of ProductService.AddFulfillmentPlaces. ProductService.AddLocalInventories achieves the same results but provides more fine-grained control over ingesting local inventory data. Incrementally adds place IDs to Product.fulfillment_info.place_ids. This process is asynchronous and does not require the Product to exist before updating fulfillment information. If the request is valid, the update will be enqueued and processed downstream. As a consequence, when a response is returned, the added place IDs are not immediately manifested in the Product queried by ProductService.GetProduct or ProductService.ListProducts. The returned Operations will be obsolete after 1 day, and GetOperation API will return NOT_FOUND afterwards. If conflicting updates are issued, the Operations associated with the stale updates will not be marked as done until being obsolete.",
+	//   "description": "We recommend that you use the ProductService.AddLocalInventories method instead of the ProductService.AddFulfillmentPlaces method. ProductService.AddLocalInventories achieves the same results but provides more fine-grained control over ingesting local inventory data. Incrementally adds place IDs to Product.fulfillment_info.place_ids. This process is asynchronous and does not require the Product to exist before updating fulfillment information. If the request is valid, the update will be enqueued and processed downstream. As a consequence, when a response is returned, the added place IDs are not immediately manifested in the Product queried by ProductService.GetProduct or ProductService.ListProducts. The returned Operations will be obsolete after 1 day, and GetOperation API will return NOT_FOUND afterwards. If conflicting updates are issued, the Operations associated with the stale updates will not be marked as done until being obsolete.",
 	//   "flatPath": "v2beta/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/branches/{branchesId}/products/{productsId}:addFulfillmentPlaces",
 	//   "httpMethod": "POST",
 	//   "id": "retail.projects.locations.catalogs.branches.products.addFulfillmentPlaces",
@@ -12806,9 +13045,9 @@ type ProjectsLocationsCatalogsBranchesProductsRemoveFulfillmentPlacesCall struct
 	header_                                               http.Header
 }
 
-// RemoveFulfillmentPlaces: It is recommended to use the
-// ProductService.RemoveLocalInventories method instead of
-// ProductService.RemoveFulfillmentPlaces.
+// RemoveFulfillmentPlaces: We recommend that you use the
+// ProductService.RemoveLocalInventories method instead of the
+// ProductService.RemoveFulfillmentPlaces method.
 // ProductService.RemoveLocalInventories achieves the same results but
 // provides more fine-grained control over ingesting local inventory
 // data. Incrementally removes place IDs from a
@@ -12926,7 +13165,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsRemoveFulfillmentPlacesCall) D
 	}
 	return ret, nil
 	// {
-	//   "description": "It is recommended to use the ProductService.RemoveLocalInventories method instead of ProductService.RemoveFulfillmentPlaces. ProductService.RemoveLocalInventories achieves the same results but provides more fine-grained control over ingesting local inventory data. Incrementally removes place IDs from a Product.fulfillment_info.place_ids. This process is asynchronous and does not require the Product to exist before updating fulfillment information. If the request is valid, the update will be enqueued and processed downstream. As a consequence, when a response is returned, the removed place IDs are not immediately manifested in the Product queried by ProductService.GetProduct or ProductService.ListProducts. The returned Operations will be obsolete after 1 day, and GetOperation API will return NOT_FOUND afterwards. If conflicting updates are issued, the Operations associated with the stale updates will not be marked as done until being obsolete.",
+	//   "description": "We recommend that you use the ProductService.RemoveLocalInventories method instead of the ProductService.RemoveFulfillmentPlaces method. ProductService.RemoveLocalInventories achieves the same results but provides more fine-grained control over ingesting local inventory data. Incrementally removes place IDs from a Product.fulfillment_info.place_ids. This process is asynchronous and does not require the Product to exist before updating fulfillment information. If the request is valid, the update will be enqueued and processed downstream. As a consequence, when a response is returned, the removed place IDs are not immediately manifested in the Product queried by ProductService.GetProduct or ProductService.ListProducts. The returned Operations will be obsolete after 1 day, and GetOperation API will return NOT_FOUND afterwards. If conflicting updates are issued, the Operations associated with the stale updates will not be marked as done until being obsolete.",
 	//   "flatPath": "v2beta/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/branches/{branchesId}/products/{productsId}:removeFulfillmentPlaces",
 	//   "httpMethod": "POST",
 	//   "id": "retail.projects.locations.catalogs.branches.products.removeFulfillmentPlaces",
@@ -16005,7 +16244,7 @@ type ProjectsLocationsCatalogsPlacementsSearchCall struct {
 //     resource, such as
 //     `projects/*/locations/global/catalogs/default_catalog/placements/def
 //     ault_search`. This field is used to identify the serving config
-//     name and the set of models that will be used to make the search.
+//     name and the set of models that are used to make the search.
 func (r *ProjectsLocationsCatalogsPlacementsService) Search(placement string, googlecloudretailv2betasearchrequest *GoogleCloudRetailV2betaSearchRequest) *ProjectsLocationsCatalogsPlacementsSearchCall {
 	c := &ProjectsLocationsCatalogsPlacementsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.placement = placement
@@ -16114,7 +16353,7 @@ func (c *ProjectsLocationsCatalogsPlacementsSearchCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "placement": {
-	//       "description": "Required. The resource name of the Retail Search serving config, such as `projects/*/locations/global/catalogs/default_catalog/servingConfigs/default_serving_config` or the name of the legacy placement resource, such as `projects/*/locations/global/catalogs/default_catalog/placements/default_search`. This field is used to identify the serving config name and the set of models that will be used to make the search.",
+	//       "description": "Required. The resource name of the Retail Search serving config, such as `projects/*/locations/global/catalogs/default_catalog/servingConfigs/default_serving_config` or the name of the legacy placement resource, such as `projects/*/locations/global/catalogs/default_catalog/placements/default_search`. This field is used to identify the serving config name and the set of models that are used to make the search.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+/placements/[^/]+$",
 	//       "required": true,
@@ -17433,7 +17672,7 @@ type ProjectsLocationsCatalogsServingConfigsSearchCall struct {
 //     resource, such as
 //     `projects/*/locations/global/catalogs/default_catalog/placements/def
 //     ault_search`. This field is used to identify the serving config
-//     name and the set of models that will be used to make the search.
+//     name and the set of models that are used to make the search.
 func (r *ProjectsLocationsCatalogsServingConfigsService) Search(placement string, googlecloudretailv2betasearchrequest *GoogleCloudRetailV2betaSearchRequest) *ProjectsLocationsCatalogsServingConfigsSearchCall {
 	c := &ProjectsLocationsCatalogsServingConfigsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.placement = placement
@@ -17542,7 +17781,7 @@ func (c *ProjectsLocationsCatalogsServingConfigsSearchCall) Do(opts ...googleapi
 	//   ],
 	//   "parameters": {
 	//     "placement": {
-	//       "description": "Required. The resource name of the Retail Search serving config, such as `projects/*/locations/global/catalogs/default_catalog/servingConfigs/default_serving_config` or the name of the legacy placement resource, such as `projects/*/locations/global/catalogs/default_catalog/placements/default_search`. This field is used to identify the serving config name and the set of models that will be used to make the search.",
+	//       "description": "Required. The resource name of the Retail Search serving config, such as `projects/*/locations/global/catalogs/default_catalog/servingConfigs/default_serving_config` or the name of the legacy placement resource, such as `projects/*/locations/global/catalogs/default_catalog/placements/default_search`. This field is used to identify the serving config name and the set of models that are used to make the search.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+/servingConfigs/[^/]+$",
 	//       "required": true,

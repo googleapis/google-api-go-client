@@ -9300,7 +9300,8 @@ type FilesEmptyTrashCall struct {
 	header_    http.Header
 }
 
-// EmptyTrash: Permanently deletes all of the user's trashed files.
+// EmptyTrash: Permanently deletes all trashed files of a user or shared
+// drive.
 func (r *FilesService) EmptyTrash() *FilesEmptyTrashCall {
 	c := &FilesEmptyTrashCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -9380,7 +9381,7 @@ func (c *FilesEmptyTrashCall) Do(opts ...googleapi.CallOption) error {
 	}
 	return nil
 	// {
-	//   "description": "Permanently deletes all of the user's trashed files.",
+	//   "description": "Permanently deletes all trashed files of a user or shared drive.",
 	//   "httpMethod": "DELETE",
 	//   "id": "drive.files.emptyTrash",
 	//   "parameters": {
@@ -12681,9 +12682,7 @@ type FilesWatchCall struct {
 	header_    http.Header
 }
 
-// Watch: Subscribes to changes to a file. While you can establish a
-// channel for changes to a file on a shared drive, a change to a shared
-// drive file won't create a notification.
+// Watch: Subscribe to changes on a file.
 //
 // - fileId: The ID for the file in question.
 func (r *FilesService) Watch(fileId string, channel *Channel) *FilesWatchCall {
@@ -12868,7 +12867,7 @@ func (c *FilesWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Subscribes to changes to a file. While you can establish a channel for changes to a file on a shared drive, a change to a shared drive file won't create a notification.",
+	//   "description": "Subscribe to changes on a file.",
 	//   "httpMethod": "POST",
 	//   "id": "drive.files.watch",
 	//   "parameterOrder": [

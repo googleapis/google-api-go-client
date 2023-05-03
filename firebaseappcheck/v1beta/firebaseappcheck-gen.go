@@ -1840,6 +1840,76 @@ func (s *GoogleFirebaseAppcheckV1betaUpdateServiceRequest) MarshalJSON() ([]byte
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleFirebaseAppcheckV1betaVerifyAppCheckTokenRequest: Request
+// message for the VerifyAppCheckToken method.
+type GoogleFirebaseAppcheckV1betaVerifyAppCheckTokenRequest struct {
+	// AppCheckToken: Required. The App Check token to verify.
+	AppCheckToken string `json:"appCheckToken,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AppCheckToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AppCheckToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleFirebaseAppcheckV1betaVerifyAppCheckTokenRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirebaseAppcheckV1betaVerifyAppCheckTokenRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleFirebaseAppcheckV1betaVerifyAppCheckTokenResponse: Response
+// message for the VerifyAppCheckToken method.
+type GoogleFirebaseAppcheckV1betaVerifyAppCheckTokenResponse struct {
+	// AlreadyConsumed: Whether this token was already consumed. If this is
+	// the first time this method has seen the given App Check token, this
+	// field will contain the value `false`. The given token will then be
+	// marked as `already_consumed` for all future invocations of this
+	// method for that token. Note that if the given App Check token is
+	// invalid, an HTTP 403 error is returned instead of a response
+	// containing this field, regardless whether the token was already
+	// consumed.
+	AlreadyConsumed bool `json:"alreadyConsumed,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AlreadyConsumed") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AlreadyConsumed") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleFirebaseAppcheckV1betaVerifyAppCheckTokenResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirebaseAppcheckV1betaVerifyAppCheckTokenResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleProtobufEmpty: A generic empty message that you can re-use to
 // avoid defining duplicated empty messages in your APIs. A typical
 // example is to use it as the request or the response type of an API
@@ -1995,6 +2065,175 @@ func (c *JwksGetCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppcheckV
 	//   "path": "v1beta/{+name}",
 	//   "response": {
 	//     "$ref": "GoogleFirebaseAppcheckV1betaPublicJwkSet"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/firebase"
+	//   ]
+	// }
+
+}
+
+// method id "firebaseappcheck.projects.verifyAppCheckToken":
+
+type ProjectsVerifyAppCheckTokenCall struct {
+	s                                                      *Service
+	projectid                                              string
+	googlefirebaseappcheckv1betaverifyappchecktokenrequest *GoogleFirebaseAppcheckV1betaVerifyAppCheckTokenRequest
+	urlParams_                                             gensupport.URLParams
+	ctx_                                                   context.Context
+	header_                                                http.Header
+}
+
+// VerifyAppCheckToken: Verifies the given App Check token and returns
+// token usage signals that callers may act upon. This method currently
+// only supports App Check tokens exchanged from the following
+// attestation providers: * Play Integrity API * App Attest *
+// DeviceCheck (`DCDevice` tokens) * reCAPTCHA Enterprise * reCAPTCHA v3
+// * Custom providers App Check tokens exchanged from debug secrets are
+// also supported. Calling this method on an otherwise valid App Check
+// token with an unsupported provider will cause an HTTP 400 error to be
+// returned. Returns whether this token was already consumed before this
+// call. If this is the first time this method has seen the given App
+// Check token, the field `already_consumed` will contain the value
+// `false`. The given token will then be marked as `already_consumed`
+// for all future invocations of this method for that token. Note that
+// if the given App Check token is invalid, an HTTP 403 error is
+// returned instead of a response object, regardless whether the token
+// was already consumed. Currently, when evaluating whether an App Check
+// token was already consumed, only calls to this exact method are
+// counted. Use of the App Check token elsewhere will not mark the token
+// as being already consumed.
+//
+//   - project: The relative resource name of the project for which the
+//     token was minted, in the format: ``` projects/{project_number} ```
+//     If necessary, the `project_number` element can be replaced with the
+//     project ID of the Firebase project. Learn more about using project
+//     identifiers in Google's AIP 2510
+//     (https://google.aip.dev/cloud/2510) standard.
+func (r *ProjectsService) VerifyAppCheckToken(projectid string, googlefirebaseappcheckv1betaverifyappchecktokenrequest *GoogleFirebaseAppcheckV1betaVerifyAppCheckTokenRequest) *ProjectsVerifyAppCheckTokenCall {
+	c := &ProjectsVerifyAppCheckTokenCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.projectid = projectid
+	c.googlefirebaseappcheckv1betaverifyappchecktokenrequest = googlefirebaseappcheckv1betaverifyappchecktokenrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsVerifyAppCheckTokenCall) Fields(s ...googleapi.Field) *ProjectsVerifyAppCheckTokenCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsVerifyAppCheckTokenCall) Context(ctx context.Context) *ProjectsVerifyAppCheckTokenCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsVerifyAppCheckTokenCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsVerifyAppCheckTokenCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlefirebaseappcheckv1betaverifyappchecktokenrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+project}:verifyAppCheckToken")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.projectid,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebaseappcheck.projects.verifyAppCheckToken" call.
+// Exactly one of
+// *GoogleFirebaseAppcheckV1betaVerifyAppCheckTokenResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleFirebaseAppcheckV1betaVerifyAppCheckTokenResponse.ServerRespons
+// e.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsVerifyAppCheckTokenCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppcheckV1betaVerifyAppCheckTokenResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleFirebaseAppcheckV1betaVerifyAppCheckTokenResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Verifies the given App Check token and returns token usage signals that callers may act upon. This method currently only supports App Check tokens exchanged from the following attestation providers: * Play Integrity API * App Attest * DeviceCheck (`DCDevice` tokens) * reCAPTCHA Enterprise * reCAPTCHA v3 * Custom providers App Check tokens exchanged from debug secrets are also supported. Calling this method on an otherwise valid App Check token with an unsupported provider will cause an HTTP 400 error to be returned. Returns whether this token was already consumed before this call. If this is the first time this method has seen the given App Check token, the field `already_consumed` will contain the value `false`. The given token will then be marked as `already_consumed` for all future invocations of this method for that token. Note that if the given App Check token is invalid, an HTTP 403 error is returned instead of a response object, regardless whether the token was already consumed. Currently, when evaluating whether an App Check token was already consumed, only calls to this exact method are counted. Use of the App Check token elsewhere will not mark the token as being already consumed.",
+	//   "flatPath": "v1beta/projects/{projectsId}:verifyAppCheckToken",
+	//   "httpMethod": "POST",
+	//   "id": "firebaseappcheck.projects.verifyAppCheckToken",
+	//   "parameterOrder": [
+	//     "project"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Required. The relative resource name of the project for which the token was minted, in the format: ``` projects/{project_number} ``` If necessary, the `project_number` element can be replaced with the project ID of the Firebase project. Learn more about using project identifiers in Google's [AIP 2510](https://google.aip.dev/cloud/2510) standard.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta/{+project}:verifyAppCheckToken",
+	//   "request": {
+	//     "$ref": "GoogleFirebaseAppcheckV1betaVerifyAppCheckTokenRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleFirebaseAppcheckV1betaVerifyAppCheckTokenResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
@@ -3189,6 +3428,7 @@ func (c *ProjectsAppsExchangeRecaptchaTokenCall) Do(opts ...googleapi.CallOption
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Validates a [reCAPTCHA v3 response token](https://developers.google.com/recaptcha/docs/v3). If valid, returns an AppCheckToken.",
 	//   "flatPath": "v1beta/projects/{projectsId}/apps/{appsId}:exchangeRecaptchaToken",
 	//   "httpMethod": "POST",
@@ -3491,6 +3731,7 @@ func (c *ProjectsAppsExchangeSafetyNetTokenCall) Do(opts ...googleapi.CallOption
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Validates a [SafetyNet token](https://developer.android.com/training/safetynet/attestation#request-attestation-step). If valid, returns an AppCheckToken.",
 	//   "flatPath": "v1beta/projects/{projectsId}/apps/{appsId}:exchangeSafetyNetToken",
 	//   "httpMethod": "POST",
@@ -6231,6 +6472,7 @@ func (c *ProjectsAppsRecaptchaConfigBatchGetCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Atomically gets the RecaptchaConfigs for the specified list of apps. For security reasons, the `site_secret` field is never populated in the response.",
 	//   "flatPath": "v1beta/projects/{projectsId}/apps/-/recaptchaConfig:batchGet",
 	//   "httpMethod": "GET",
@@ -6389,6 +6631,7 @@ func (c *ProjectsAppsRecaptchaConfigGetCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Gets the RecaptchaConfig for the specified app. For security reasons, the `site_secret` field is never populated in the response.",
 	//   "flatPath": "v1beta/projects/{projectsId}/apps/{appsId}/recaptchaConfig",
 	//   "httpMethod": "GET",
@@ -6544,6 +6787,7 @@ func (c *ProjectsAppsRecaptchaConfigPatchCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Updates the RecaptchaConfig for the specified app. While this configuration is incomplete or invalid, the app will be unable to exchange reCAPTCHA tokens for App Check tokens. For security reasons, the `site_secret` field is never populated in the response.",
 	//   "flatPath": "v1beta/projects/{projectsId}/apps/{appsId}/recaptchaConfig",
 	//   "httpMethod": "PATCH",
@@ -7689,6 +7933,7 @@ func (c *ProjectsAppsSafetyNetConfigBatchGetCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Atomically gets the SafetyNetConfigs for the specified list of apps.",
 	//   "flatPath": "v1beta/projects/{projectsId}/apps/-/safetyNetConfig:batchGet",
 	//   "httpMethod": "GET",
@@ -7846,6 +8091,7 @@ func (c *ProjectsAppsSafetyNetConfigGetCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Gets the SafetyNetConfig for the specified app.",
 	//   "flatPath": "v1beta/projects/{projectsId}/apps/{appsId}/safetyNetConfig",
 	//   "httpMethod": "GET",
@@ -8000,6 +8246,7 @@ func (c *ProjectsAppsSafetyNetConfigPatchCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Updates the SafetyNetConfig for the specified app. While this configuration is incomplete or invalid, the app will be unable to exchange SafetyNet tokens for App Check tokens.",
 	//   "flatPath": "v1beta/projects/{projectsId}/apps/{appsId}/safetyNetConfig",
 	//   "httpMethod": "PATCH",

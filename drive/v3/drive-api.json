@@ -35,7 +35,7 @@
   "description": "Manages files in Drive including uploading, downloading, searching, detecting changes, and updating sharing permissions.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/drive/",
-  "etag": "\"VYc8DWo_6wRTElVugbtvWfkARsc/LNE_sW6QDmVvlTRH3pwh_AYe3ik\"",
+  "etag": "\"VYc8DWo_6wRTElVugbtvWfkARsc/OgtZCpoen_8IW8oaECY1TAD8ttU\"",
   "icons": {
     "x16": "https://ssl.gstatic.com/docs/doclist/images/drive_icon_16.png",
     "x32": "https://ssl.gstatic.com/docs/doclist/images/drive_icon_32.png"
@@ -997,7 +997,7 @@
           ]
         },
         "emptyTrash": {
-          "description": "Permanently deletes all of the user's trashed files.",
+          "description": "Permanently deletes all trashed files of a user or shared drive.",
           "httpMethod": "DELETE",
           "id": "drive.files.emptyTrash",
           "parameters": {
@@ -1429,7 +1429,7 @@
           "supportsMediaUpload": true
         },
         "watch": {
-          "description": "Subscribes to changes to a file.",
+          "description": "Subscribe to changes on a file.",
           "httpMethod": "POST",
           "id": "drive.files.watch",
           "parameterOrder": [
@@ -2317,7 +2317,7 @@
       }
     }
   },
-  "revision": "20230413",
+  "revision": "20230423",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "About": {

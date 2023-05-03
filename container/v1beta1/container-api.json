@@ -2512,7 +2512,7 @@
       }
     }
   },
-  "revision": "20230404",
+  "revision": "20230406",
   "rootUrl": "https://container.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -2581,6 +2581,10 @@
         "gcpFilestoreCsiDriverConfig": {
           "$ref": "GcpFilestoreCsiDriverConfig",
           "description": "Configuration for the GCP Filestore CSI driver."
+        },
+        "gcsFuseCsiDriverConfig": {
+          "$ref": "GcsFuseCsiDriverConfig",
+          "description": "Configuration for the Cloud Storage Fuse CSI driver."
         },
         "gkeBackupAgentConfig": {
           "$ref": "GkeBackupAgentConfig",
@@ -3958,6 +3962,17 @@
       "properties": {
         "enabled": {
           "description": "Whether the GCP Filestore CSI driver is enabled for this cluster.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "GcsFuseCsiDriverConfig": {
+      "description": "Configuration for the Cloud Storage Fuse CSI driver.",
+      "id": "GcsFuseCsiDriverConfig",
+      "properties": {
+        "enabled": {
+          "description": "Whether the Cloud Storage Fuse CSI driver is enabled for this cluster.",
           "type": "boolean"
         }
       },

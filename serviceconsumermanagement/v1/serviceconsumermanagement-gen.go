@@ -3430,6 +3430,7 @@ type Publishing struct {
 	//   "PHOTOS" - Photos Org.
 	//   "STREET_VIEW" - Street View Org.
 	//   "SHOPPING" - Shopping Org.
+	//   "GEO" - Geo Org.
 	Organization string `json:"organization,omitempty"`
 
 	// ProtoReferenceDocumentationUri: Optional link to proto reference

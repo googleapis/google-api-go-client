@@ -3891,6 +3891,10 @@ type Conversion struct {
 	// with the European Union's General Data Protection Regulation (GDPR).
 	TreatmentForUnderage bool `json:"treatmentForUnderage,omitempty"`
 
+	// UserIdentifiers: The user identifiers to enhance the conversion. The
+	// maximum number of user identifiers for each conversion is 5.
+	UserIdentifiers []*UserIdentifier `json:"userIdentifiers,omitempty"`
+
 	// Value: The value of the conversion.
 	Value float64 `json:"value,omitempty"`
 
@@ -9987,6 +9991,57 @@ func (s *ObjectFilter) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// OfflineUserAddressInfo: Identify a user by name and address.
+type OfflineUserAddressInfo struct {
+	// City: City of the address.
+	City string `json:"city,omitempty"`
+
+	// CountryCode: 2-letter country code in ISO-3166-1 alpha-2 of the
+	// user's address.
+	CountryCode string `json:"countryCode,omitempty"`
+
+	// HashedFirstName: First name of the user, which is hashed as SHA-256
+	// after normalized (Lowercase all characters; Remove any extra spaces
+	// before, after, and in between).
+	HashedFirstName string `json:"hashedFirstName,omitempty"`
+
+	// HashedLastName: Last name of the user, which is hashed as SHA-256
+	// after normalized (lower case only and no punctuation).
+	HashedLastName string `json:"hashedLastName,omitempty"`
+
+	// HashedStreetAddress: The street address of the user hashed using
+	// SHA-256 hash function after normalization (lower case only).
+	HashedStreetAddress string `json:"hashedStreetAddress,omitempty"`
+
+	// PostalCode: Postal code of the user's address.
+	PostalCode string `json:"postalCode,omitempty"`
+
+	// State: State code of the address.
+	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "City") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "City") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OfflineUserAddressInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod OfflineUserAddressInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // OffsetPosition: Offset Position.
 type OffsetPosition struct {
 	// Left: Offset distance from left side of an asset or a window.
@@ -14830,6 +14885,43 @@ type UserDefinedVariableConfiguration struct {
 
 func (s *UserDefinedVariableConfiguration) MarshalJSON() ([]byte, error) {
 	type NoMethod UserDefinedVariableConfiguration
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// UserIdentifier: User identifying information. Exactly one type of
+// identifier must be specified.
+type UserIdentifier struct {
+	// AddressInfo: Address information.
+	AddressInfo *OfflineUserAddressInfo `json:"addressInfo,omitempty"`
+
+	// HashedEmail: Hashed email address using SHA-256 hash function after
+	// normalization.
+	HashedEmail string `json:"hashedEmail,omitempty"`
+
+	// HashedPhoneNumber: Hashed phone number using SHA-256 hash function
+	// after normalization (E164 standard).
+	HashedPhoneNumber string `json:"hashedPhoneNumber,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AddressInfo") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AddressInfo") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UserIdentifier) MarshalJSON() ([]byte, error) {
+	type NoMethod UserIdentifier
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

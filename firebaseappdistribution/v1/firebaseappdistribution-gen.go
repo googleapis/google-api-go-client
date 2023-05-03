@@ -3410,28 +3410,6 @@ func (r *ProjectsAppsReleasesFeedbackReportsService) List(parent string) *Projec
 	return c
 }
 
-// Filter sets the optional parameter "filter": The expression to filter
-// feedback reports listed in the response. To learn more about
-// filtering, refer to Google's AIP-160 standard (http://aip.dev/160).
-// Supported fields: - `tester` - `createTime` supports `<`, `<=`, `>`
-// and `>=`, and expects an RFC-3339 formatted string Example: -
-// `createTime <= "2023-03-10T00:00:00+04:00" - `tester =
-// "projects/-/testers/*@example.com"
-func (c *ProjectsAppsReleasesFeedbackReportsListCall) Filter(filter string) *ProjectsAppsReleasesFeedbackReportsListCall {
-	c.urlParams_.Set("filter", filter)
-	return c
-}
-
-// OrderBy sets the optional parameter "orderBy": The fields used to
-// order releases. Supported fields: - `createTime` - `tester` To
-// specify descending order for a field, append a "desc" suffix, for
-// example, `createTime desc`. If this parameter is not set, releases
-// are ordered by `createTime` in descending order.
-func (c *ProjectsAppsReleasesFeedbackReportsListCall) OrderBy(orderBy string) *ProjectsAppsReleasesFeedbackReportsListCall {
-	c.urlParams_.Set("orderBy", orderBy)
-	return c
-}
-
 // PageSize sets the optional parameter "pageSize": The maximum number
 // of feedback reports to return. The service may return fewer than this
 // value. The valid range is [1-100]; If unspecified (0), at most 25
@@ -3560,16 +3538,6 @@ func (c *ProjectsAppsReleasesFeedbackReportsListCall) Do(opts ...googleapi.CallO
 	//     "parent"
 	//   ],
 	//   "parameters": {
-	//     "filter": {
-	//       "description": "The expression to filter feedback reports listed in the response. To learn more about filtering, refer to [Google's AIP-160 standard](http://aip.dev/160). Supported fields: - `tester` - `createTime` supports `\u003c`, `\u003c=`, `\u003e` and `\u003e=`, and expects an RFC-3339 formatted string Example: - `createTime \u003c= \"2023-03-10T00:00:00+04:00\"` - `tester = \"projects/-/testers/*@example.com\"`",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "orderBy": {
-	//       "description": "The fields used to order releases. Supported fields: - `createTime` - `tester` To specify descending order for a field, append a \"desc\" suffix, for example, `createTime desc`. If this parameter is not set, releases are ordered by `createTime` in descending order.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "pageSize": {
 	//       "description": "The maximum number of feedback reports to return. The service may return fewer than this value. The valid range is [1-100]; If unspecified (0), at most 25 feedback reports are returned. Values above 100 are coerced to 100.",
 	//       "format": "int32",

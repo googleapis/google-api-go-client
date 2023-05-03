@@ -340,22 +340,26 @@ func (s *GooglePlayDeveloperReportingV1alpha1Anomaly) MarshalJSON() ([]byte, err
 // to produce a normalized metric independent of user counts.
 // **Supported aggregation periods:** * DAILY: metrics are aggregated in
 // calendar date intervals. Due to historical constraints, the only
-// supported timezone is `America/Los_Angeles`. **Supported metrics:** *
-// `anrRate` (`google.type.Decimal`): Percentage of distinct users in
-// the aggregation period that experienced at least one ANR. *
+// supported timezone is `America/Los_Angeles`. * HOURLY: metrics are
+// aggregated in hourly intervals. The default and only supported
+// timezone is `UTC`. **Supported metrics:** * `anrRate`
+// (`google.type.Decimal`): Percentage of distinct users in the
+// aggregation period that experienced at least one ANR. *
 // `anrRate7dUserWeighted` (`google.type.Decimal`): Rolling average
 // value of `anrRate` in the last 7 days. The daily values are weighted
-// by the count of distinct users for the day. *
-// `anrRate28dUserWeighted` (`google.type.Decimal`): Rolling average
-// value of `anrRate` in the last 28 days. The daily values are weighted
-// by the count of distinct users for the day. * `userPerceivedAnrRate`
+// by the count of distinct users for the day. Not supported in HOURLY
+// granularity. * `anrRate28dUserWeighted` (`google.type.Decimal`):
+// Rolling average value of `anrRate` in the last 28 days. The daily
+// values are weighted by the count of distinct users for the day. Not
+// supported in HOURLY granularity. * `userPerceivedAnrRate`
 // (`google.type.Decimal`): Percentage of distinct users in the
 // aggregation period that experienced at least one user-perceived ANR.
 // User-perceived ANRs are currently those of 'Input dispatching' type.
 // * `userPerceivedAnrRate7dUserWeighted` (`google.type.Decimal`):
 // Rolling average value of `userPerceivedAnrRate` in the last 7 days.
 // The daily values are weighted by the count of distinct users for the
-// day. * `userPerceivedAnrRate28dUserWeighted` (`google.type.Decimal`):
+// day. Not supported in HOURLY granularity. *
+// `userPerceivedAnrRate28dUserWeighted` (`google.type.Decimal`):
 // Rolling average value of `userPerceivedAnrRate` in the last 28 days.
 // The daily values are weighted by the count of distinct users for the
 // day. * `distinctUsers` (`google.type.Decimal`): Count of distinct
@@ -436,41 +440,45 @@ func (s *GooglePlayDeveloperReportingV1alpha1AnrRateMetricSet) MarshalJSON() ([]
 // normalized metric independent of user counts. **Supported aggregation
 // periods:** * DAILY: metrics are aggregated in calendar date
 // intervals. Due to historical constraints, the only supported timezone
-// is `America/Los_Angeles`. **Supported metrics:** * `crashRate`
-// (`google.type.Decimal`): Percentage of distinct users in the
-// aggregation period that experienced at least one crash. *
-// `crashRate7dUserWeighted` (`google.type.Decimal`): Rolling average
-// value of `crashRate` in the last 7 days. The daily values are
-// weighted by the count of distinct users for the day. *
+// is `America/Los_Angeles`. * HOURLY: metrics are aggregated in hourly
+// intervals. The default and only supported timezone is `UTC`.
+// **Supported metrics:** * `crashRate` (`google.type.Decimal`):
+// Percentage of distinct users in the aggregation period that
+// experienced at least one crash. * `crashRate7dUserWeighted`
+// (`google.type.Decimal`): Rolling average value of `crashRate` in the
+// last 7 days. The daily values are weighted by the count of distinct
+// users for the day. Not supported in HOURLY granularity. *
 // `crashRate28dUserWeighted` (`google.type.Decimal`): Rolling average
 // value of `crashRate` in the last 28 days. The daily values are
-// weighted by the count of distinct users for the day. *
-// `userPerceivedCrashRate` (`google.type.Decimal`): Percentage of
-// distinct users in the aggregation period that experienced at least
-// one crash while they were actively using your app (a user-perceived
-// crash). An app is considered to be in active use if it is displaying
-// any activity or executing any foreground service. *
+// weighted by the count of distinct users for the day. Not supported in
+// HOURLY granularity. * `userPerceivedCrashRate`
+// (`google.type.Decimal`): Percentage of distinct users in the
+// aggregation period that experienced at least one crash while they
+// were actively using your app (a user-perceived crash). An app is
+// considered to be in active use if it is displaying any activity or
+// executing any foreground service. *
 // `userPerceivedCrashRate7dUserWeighted` (`google.type.Decimal`):
 // Rolling average value of `userPerceivedCrashRate` in the last 7 days.
 // The daily values are weighted by the count of distinct users for the
-// day. * `userPerceivedCrashRate28dUserWeighted`
-// (`google.type.Decimal`): Rolling average value of
-// `userPerceivedCrashRate` in the last 28 days. The daily values are
-// weighted by the count of distinct users for the day. *
-// `distinctUsers` (`google.type.Decimal`): Count of distinct users in
-// the aggregation period that were used as normalization value for the
-// `crashRate` and `userPerceivedCrashRate` metrics. A user is counted
-// in this metric if they used the app actively during the aggregation
-// period. An app is considered to be in active use if it is displaying
-// any activity or executing any foreground service. Care must be taken
-// not to aggregate this count further, as it may result in users being
-// counted multiple times. The value is rounded to the nearest multiple
-// of 10, 100, 1,000 or 1,000,000, depending on the magnitude of the
-// value. **Supported dimensions:** * `apiLevel` (string): the API level
-// of Android that was running on the user's device. * `versionCode`
-// (int64): version of the app that was running on the user's device. *
-// `deviceModel` (string): unique identifier of the user's device model.
-// * `deviceType` (string): the type (also known as form factor) of the
+// day. Not supported in HOURLY granularity. *
+// `userPerceivedCrashRate28dUserWeighted` (`google.type.Decimal`):
+// Rolling average value of `userPerceivedCrashRate` in the last 28
+// days. The daily values are weighted by the count of distinct users
+// for the day. Not supported in HOURLY granularity. * `distinctUsers`
+// (`google.type.Decimal`): Count of distinct users in the aggregation
+// period that were used as normalization value for the `crashRate` and
+// `userPerceivedCrashRate` metrics. A user is counted in this metric if
+// they used the app actively during the aggregation period. An app is
+// considered to be in active use if it is displaying any activity or
+// executing any foreground service. Care must be taken not to aggregate
+// this count further, as it may result in users being counted multiple
+// times. The value is rounded to the nearest multiple of 10, 100, 1,000
+// or 1,000,000, depending on the magnitude of the value. **Supported
+// dimensions:** * `apiLevel` (string): the API level of Android that
+// was running on the user's device. * `versionCode` (int64): version of
+// the app that was running on the user's device. * `deviceModel`
+// (string): unique identifier of the user's device model. *
+// `deviceType` (string): the type (also known as form factor) of the
 // user's device. * `countryCode` (string): the country or region of the
 // user's device based on their IP address, represented as a 2-letter
 // ISO-3166 code (e.g. US for the United States). * `deviceRamBucket`
@@ -939,6 +947,8 @@ type GooglePlayDeveloperReportingV1alpha1FreshnessInfoFreshness struct {
 	//   "AGGREGATION_PERIOD_UNSPECIFIED" - Unspecified granularity.
 	//   "HOURLY" - Data is aggregated in hourly intervals.
 	//   "DAILY" - Data is aggregated in daily intervals.
+	//   "FULL_RANGE" - Data is aggregated over the full timeline range.
+	// Effectively this produces a single value rather than a timeline.
 	AggregationPeriod string `json:"aggregationPeriod,omitempty"`
 
 	// LatestEndTime: Latest end time for which data is available, for the
@@ -1056,6 +1066,8 @@ type GooglePlayDeveloperReportingV1alpha1MetricsRow struct {
 	//   "AGGREGATION_PERIOD_UNSPECIFIED" - Unspecified granularity.
 	//   "HOURLY" - Data is aggregated in hourly intervals.
 	//   "DAILY" - Data is aggregated in daily intervals.
+	//   "FULL_RANGE" - Data is aggregated over the full timeline range.
+	// Effectively this produces a single value rather than a timeline.
 	AggregationPeriod string `json:"aggregationPeriod,omitempty"`
 
 	// Dimensions: Dimension columns in the row.
@@ -1133,27 +1145,30 @@ type GooglePlayDeveloperReportingV1alpha1QueryAnrRateMetricSetRequest struct {
 	// aggregation period that experienced at least one ANR. *
 	// `anrRate7dUserWeighted` (`google.type.Decimal`): Rolling average
 	// value of `anrRate` in the last 7 days. The daily values are weighted
-	// by the count of distinct users for the day. *
-	// `anrRate28dUserWeighted` (`google.type.Decimal`): Rolling average
-	// value of `anrRate` in the last 28 days. The daily values are weighted
-	// by the count of distinct users for the day. * `userPerceivedAnrRate`
+	// by the count of distinct users for the day. Not supported in HOURLY
+	// granularity. * `anrRate28dUserWeighted` (`google.type.Decimal`):
+	// Rolling average value of `anrRate` in the last 28 days. The daily
+	// values are weighted by the count of distinct users for the day. Not
+	// supported in HOURLY granularity. * `userPerceivedAnrRate`
 	// (`google.type.Decimal`): Percentage of distinct users in the
 	// aggregation period that experienced at least one user-perceived ANR.
 	// User-perceived ANRs are currently those of 'Input dispatching' type.
 	// * `userPerceivedAnrRate7dUserWeighted` (`google.type.Decimal`):
 	// Rolling average value of `userPerceivedAnrRate` in the last 7 days.
 	// The daily values are weighted by the count of distinct users for the
-	// day. * `userPerceivedAnrRate28dUserWeighted` (`google.type.Decimal`):
+	// day. Not supported in HOURLY granularity. *
+	// `userPerceivedAnrRate28dUserWeighted` (`google.type.Decimal`):
 	// Rolling average value of `userPerceivedAnrRate` in the last 28 days.
 	// The daily values are weighted by the count of distinct users for the
-	// day. * `distinctUsers` (`google.type.Decimal`): Count of distinct
-	// users in the aggregation period that were used as normalization value
-	// for the `anrRate` and `userPerceivedAnrRate` metrics. A user is
-	// counted in this metric if they used the app in the foreground during
-	// the aggregation period. Care must be taken not to aggregate this
-	// count further, as it may result in users being counted multiple
-	// times. The value is rounded to the nearest multiple of 10, 100, 1,000
-	// or 1,000,000, depending on the magnitude of the value.
+	// day. Not . supported in HOURLY granularity. * `distinctUsers`
+	// (`google.type.Decimal`): Count of distinct users in the aggregation
+	// period that were used as normalization value for the `anrRate` and
+	// `userPerceivedAnrRate` metrics. A user is counted in this metric if
+	// they used the app in the foreground during the aggregation period.
+	// Care must be taken not to aggregate this count further, as it may
+	// result in users being counted multiple times. The value is rounded to
+	// the nearest multiple of 10, 100, 1,000 or 1,000,000, depending on the
+	// magnitude of the value.
 	Metrics []string `json:"metrics,omitempty"`
 
 	// PageSize: Maximum size of the returned data. If unspecified, at most
@@ -1170,7 +1185,9 @@ type GooglePlayDeveloperReportingV1alpha1QueryAnrRateMetricSetRequest struct {
 	// TimelineSpec: Specification of the timeline aggregation parameters.
 	// **Supported aggregation periods:** * DAILY: metrics are aggregated in
 	// calendar date intervals. Due to historical constraints, the default
-	// and only supported timezone is `America/Los_Angeles`.
+	// and only supported timezone is `America/Los_Angeles`. * HOURLY:
+	// metrics are aggregated in hourly intervals. The default and only
+	// supported timezone is `UTC`.
 	TimelineSpec *GooglePlayDeveloperReportingV1alpha1TimelineSpec `json:"timelineSpec,omitempty"`
 
 	// UserCohort: User view to select. The output data will correspond to
@@ -1298,29 +1315,30 @@ type GooglePlayDeveloperReportingV1alpha1QueryCrashRateMetricSetRequest struct {
 	// weighted by the count of distinct users for the day. *
 	// `crashRate28dUserWeighted` (`google.type.Decimal`): Rolling average
 	// value of `crashRate` in the last 28 days. The daily values are
-	// weighted by the count of distinct users for the day. *
-	// `userPerceivedCrashRate` (`google.type.Decimal`): Percentage of
-	// distinct users in the aggregation period that experienced at least
-	// one crash while they were actively using your app (a user-perceived
-	// crash). An app is considered to be in active use if it is displaying
-	// any activity or executing any foreground service. *
+	// weighted by the count of distinct users for the day. Not supported in
+	// HOURLY granularity. * `userPerceivedCrashRate`
+	// (`google.type.Decimal`): Percentage of distinct users in the
+	// aggregation period that experienced at least one crash while they
+	// were actively using your app (a user-perceived crash). An app is
+	// considered to be in active use if it is displaying any activity or
+	// executing any foreground service. *
 	// `userPerceivedCrashRate7dUserWeighted` (`google.type.Decimal`):
 	// Rolling average value of `userPerceivedCrashRate` in the last 7 days.
 	// The daily values are weighted by the count of distinct users for the
-	// day. * `userPerceivedCrashRate28dUserWeighted`
-	// (`google.type.Decimal`): Rolling average value of
-	// `userPerceivedCrashRate` in the last 28 days. The daily values are
-	// weighted by the count of distinct users for the day. *
-	// `distinctUsers` (`google.type.Decimal`): Count of distinct users in
-	// the aggregation period that were used as normalization value for the
-	// `crashRate` and `userPerceivedCrashRate` metrics. A user is counted
-	// in this metric if they used the app actively during the aggregation
-	// period. An app is considered to be in active use if it is displaying
-	// any activity or executing any foreground service. Care must be taken
-	// not to aggregate this count further, as it may result in users being
-	// counted multiple times. The value is rounded to the nearest multiple
-	// of 10, 100, 1,000 or 1,000,000, depending on the magnitude of the
-	// value.
+	// day. Not supported in HOURLY granularity. *
+	// `userPerceivedCrashRate28dUserWeighted` (`google.type.Decimal`):
+	// Rolling average value of `userPerceivedCrashRate` in the last 28
+	// days. The daily values are weighted by the count of distinct users
+	// for the day. Not supported in HOURLY granularity. * `distinctUsers`
+	// (`google.type.Decimal`): Count of distinct users in the aggregation
+	// period that were used as normalization value for the `crashRate` and
+	// `userPerceivedCrashRate` metrics. A user is counted in this metric if
+	// they used the app actively during the aggregation period. An app is
+	// considered to be in active use if it is displaying any activity or
+	// executing any foreground service. Care must be taken not to aggregate
+	// this count further, as it may result in users being counted multiple
+	// times. The value is rounded to the nearest multiple of 10, 100, 1,000
+	// or 1,000,000, depending on the magnitude of the value.
 	Metrics []string `json:"metrics,omitempty"`
 
 	// PageSize: Maximum size of the returned data. If unspecified, at most
@@ -1337,7 +1355,9 @@ type GooglePlayDeveloperReportingV1alpha1QueryCrashRateMetricSetRequest struct {
 	// TimelineSpec: Specification of the timeline aggregation parameters.
 	// **Supported aggregation periods:** * DAILY: metrics are aggregated in
 	// calendar date intervals. Due to historical constraints, the default
-	// and only supported timezone is `America/Los_Angeles`.
+	// and only supported timezone is `America/Los_Angeles`. * HOURLY:
+	// metrics are aggregated in hourly intervals. The default and only
+	// supported timezone is `UTC`.
 	TimelineSpec *GooglePlayDeveloperReportingV1alpha1TimelineSpec `json:"timelineSpec,omitempty"`
 
 	// UserCohort: User view to select. The output data will correspond to
@@ -2537,6 +2557,8 @@ type GooglePlayDeveloperReportingV1alpha1TimelineSpec struct {
 	//   "AGGREGATION_PERIOD_UNSPECIFIED" - Unspecified granularity.
 	//   "HOURLY" - Data is aggregated in hourly intervals.
 	//   "DAILY" - Data is aggregated in daily intervals.
+	//   "FULL_RANGE" - Data is aggregated over the full timeline range.
+	// Effectively this produces a single value rather than a timeline.
 	AggregationPeriod string `json:"aggregationPeriod,omitempty"`
 
 	// EndTime: Ending datapoint of the timeline (exclusive). See start_time

@@ -1086,7 +1086,7 @@ type GoogleCloudPaymentsResellerSubscriptionV1Subscription struct {
 	//   "PROCESSING_STATE_RECURRING" - The subscription is recurring.
 	ProcessingState string `json:"processingState,omitempty"`
 
-	// Products: Required. Deprecated: consider using `line_items` as the
+	// Products: Optional. Deprecated: consider using `line_items` as the
 	// input. Required. Resource name that identifies the purchased
 	// products. The format will be
 	// 'partners/{partner_id}/products/{product_id}'.

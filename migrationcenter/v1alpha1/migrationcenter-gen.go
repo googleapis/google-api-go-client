@@ -3112,7 +3112,7 @@ func (s *ListSourcesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Location: A resource that represents Google Cloud Platform location.
+// Location: A resource that represents a Google Cloud location.
 type Location struct {
 	// DisplayName: The friendly name for this location, typically a nearby
 	// city name. For example, "Tokyo".
@@ -5077,6 +5077,16 @@ type Source struct {
 	// Priority: The information confidence of the source. The higher the
 	// value, the higher the confidence.
 	Priority int64 `json:"priority,omitempty"`
+
+	// State: Output only. The state of the source.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Unspecified.
+	//   "ACTIVE" - The source is active and ready to be used.
+	//   "DELETING" - In the process of being deleted.
+	//   "INVALID" - Source is in an invalid state. Asset frames reported to
+	// it will be ignored.
+	State string `json:"state,omitempty"`
 
 	// Type: Data source type.
 	//

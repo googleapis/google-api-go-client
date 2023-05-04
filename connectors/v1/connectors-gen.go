@@ -369,6 +369,9 @@ type AuthConfig struct {
 	// AdditionalVariables: List containing additional auth configs.
 	AdditionalVariables []*ConfigVariable `json:"additionalVariables,omitempty"`
 
+	// AuthKey: Identifier key for auth config
+	AuthKey string `json:"authKey,omitempty"`
+
 	// AuthType: The type of authentication configured.
 	//
 	// Possible values:
@@ -424,6 +427,9 @@ func (s *AuthConfig) MarshalJSON() ([]byte, error) {
 // AuthConfigTemplate: AuthConfigTemplate defines required field over an
 // authentication type.
 type AuthConfigTemplate struct {
+	// AuthKey: Identifier key for auth config
+	AuthKey string `json:"authKey,omitempty"`
+
 	// AuthType: The type of authentication configured.
 	//
 	// Possible values:
@@ -448,7 +454,7 @@ type AuthConfigTemplate struct {
 	// DisplayName: Display name for authentication template.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "AuthType") to
+	// ForceSendFields is a list of field names (e.g. "AuthKey") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -456,7 +462,7 @@ type AuthConfigTemplate struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "AuthType") to include in
+	// NullFields is a list of field names (e.g. "AuthKey") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as

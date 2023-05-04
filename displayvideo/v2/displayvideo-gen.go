@@ -2344,7 +2344,12 @@ type AudienceGroupAssignedTargetingOptionDetails struct {
 	// audience group. Used for negative targeting. The COMPLEMENT of the
 	// UNION of this group and other excluded audience groups is used as an
 	// INTERSECTION to any positive audience targeting. All items are
-	// logically ‘OR’ of each other.
+	// logically ‘OR’ of each other. **Warning:** `ACTIVITY_BASED` and
+	// `FREQUENCY_CAP` audience types will be deprecated on **May 20,
+	// 2023**. After this date, these audiences will not be able to be added
+	// to resource targeting. Read our feature deprecation announcement
+	// (/display-video/api/deprecations#features.first_and_third_party_audien
+	// ce_types) for more information.
 	ExcludedFirstAndThirdPartyAudienceGroup *FirstAndThirdPartyAudienceGroup `json:"excludedFirstAndThirdPartyAudienceGroup,omitempty"`
 
 	// ExcludedGoogleAudienceGroup: The Google audience ids of the excluded
@@ -2352,7 +2357,14 @@ type AudienceGroupAssignedTargetingOptionDetails struct {
 	// the UNION of this group and other excluded audience groups is used as
 	// an INTERSECTION to any positive audience targeting. Only contains
 	// Affinity, In-market and Installed-apps type Google audiences. All
-	// items are logically ‘OR’ of each other.
+	// items are logically ‘OR’ of each other. **Warning:**
+	// `GOOGLE_AUDIENCE_TYPE_INSTALLED_APPS` and
+	// `GOOGLE_AUDIENCE_TYPE_NEW_MOBILE_DEVICES` audience types will be
+	// deprecated on **May 20, 2023**. After this date, these audiences will
+	// not be able to be added to resource targeting. Read our feature
+	// deprecation announcement
+	// (/display-video/api/deprecations#features.google_audience_types) for
+	// more information.
 	ExcludedGoogleAudienceGroup *GoogleAudienceGroup `json:"excludedGoogleAudienceGroup,omitempty"`
 
 	// IncludedCombinedAudienceGroup: The combined audience ids of the
@@ -2370,11 +2382,23 @@ type AudienceGroupAssignedTargetingOptionDetails struct {
 	// third party audience ids only. The relation between each first and
 	// third party audience group is INTERSECTION, and the result is
 	// UNION'ed with other audience groups. Repeated groups with same
-	// settings will be ignored.
+	// settings will be ignored. **Warning:** `ACTIVITY_BASED` and
+	// `FREQUENCY_CAP` audience types will be deprecated on **May 20,
+	// 2023**. After this date, these audiences will not be able to be added
+	// to resource targeting. Read our feature deprecation announcement
+	// (/display-video/api/deprecations#features.first_and_third_party_audien
+	// ce_types) for more information.
 	IncludedFirstAndThirdPartyAudienceGroups []*FirstAndThirdPartyAudienceGroup `json:"includedFirstAndThirdPartyAudienceGroups,omitempty"`
 
 	// IncludedGoogleAudienceGroup: The Google audience ids of the included
 	// Google audience group. Contains Google audience ids only.
+	// **Warning:** `GOOGLE_AUDIENCE_TYPE_INSTALLED_APPS` and
+	// `GOOGLE_AUDIENCE_TYPE_NEW_MOBILE_DEVICES` audience types will be
+	// deprecated on **May 20, 2023**. After this date, these audiences will
+	// not be able to be added to resource targeting. Read our feature
+	// deprecation announcement
+	// (/display-video/api/deprecations#features.google_audience_types) for
+	// more information.
 	IncludedGoogleAudienceGroup *GoogleAudienceGroup `json:"includedGoogleAudienceGroup,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -8681,8 +8705,18 @@ type FirstAndThirdPartyAudience struct {
 	//   "CUSTOMER_MATCH_USER_ID" - Audience was generated through matching
 	// customers to known User IDs.
 	//   "ACTIVITY_BASED" - Audience was created based on campaign activity.
+	// **Warning:** This audience type will be deprecated on **May 20,
+	// 2023**. After this date, these audiences will not be able to be added
+	// to resource targeting. Read our [feature deprecation
+	// announcement](/display-video/api/deprecations#features.first_and_third
+	// _party_audience_types) for more information.
 	//   "FREQUENCY_CAP" - Audience was created based on excluding the
-	// number of impressions they were served.
+	// number of impressions they were served. **Warning:** This audience
+	// type will be deprecated on **May 20, 2023**. After this date, these
+	// audiences will not be able to be added to resource targeting. Read
+	// our [feature deprecation
+	// announcement](/display-video/api/deprecations#features.first_and_third
+	// _party_audience_types) for more information.
 	//   "TAG_BASED" - Audience was created based on custom variables
 	// attached to pixel.
 	//   "YOUTUBE_USERS" - Audience was created based on past interactions
@@ -9494,9 +9528,17 @@ type GoogleAudience struct {
 	//   "GOOGLE_AUDIENCE_TYPE_AFFINITY" - Affinity type Google audience.
 	//   "GOOGLE_AUDIENCE_TYPE_IN_MARKET" - In-Market type Google audience.
 	//   "GOOGLE_AUDIENCE_TYPE_INSTALLED_APPS" - Installed-Apps type Google
-	// audience.
+	// audience. **Warning:** This audience type will be deprecated on **May
+	// 20, 2023**. After this date, these audiences will not be able to be
+	// added to resource targeting. Read our [feature deprecation
+	// announcement](/display-video/api/deprecations#features.google_audience
+	// _types) for more information.
 	//   "GOOGLE_AUDIENCE_TYPE_NEW_MOBILE_DEVICES" - New-Mobile-Devices type
-	// Google audience.
+	// Google audience. **Warning:** This audience type will be deprecated
+	// on **May 20, 2023**. After this date, these audiences will not be
+	// able to be added to resource targeting. Read our [feature deprecation
+	// announcement](/display-video/api/deprecations#features.google_audience
+	// _types) for more information.
 	//   "GOOGLE_AUDIENCE_TYPE_LIFE_EVENT" - Life-Event type Google
 	// audience.
 	//   "GOOGLE_AUDIENCE_TYPE_EXTENDED_DEMOGRAPHIC" - Extended-Demographic
@@ -13282,6 +13324,11 @@ func (s *LookupInvoiceCurrencyResponse) MarshalJSON() ([]byte, error) {
 }
 
 // ManualTrigger: A single manual trigger in Display & Video 360.
+// **Warning:** Line Items using manual triggers will stop serving in
+// Display & Video 360 on **May 17, 2023**. Read our feature deprecation
+// announcement
+// (/display-video/api/deprecations#features.manual_triggers) for more
+// information.
 type ManualTrigger struct {
 	// ActivationDurationMinutes: Required. The maximum duration of each
 	// activation in minutes. Must be between 1 and 360 inclusive. After
@@ -31774,7 +31821,11 @@ type AdvertisersManualTriggersActivateCall struct {
 
 // Activate: Activates a manual trigger. Each activation of the manual
 // trigger must be at least 5 minutes apart, otherwise an error will be
-// returned.
+// returned. **Warning:** Line Items using manual triggers will stop
+// serving in Display & Video 360 on **May 17, 2023**. Read our feature
+// deprecation announcement
+// (/display-video/api/deprecations#features.manual_triggers) for more
+// information.
 //
 //   - advertiserId: The ID of the advertiser that the manual trigger
 //     belongs.
@@ -31879,7 +31930,7 @@ func (c *AdvertisersManualTriggersActivateCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "Activates a manual trigger. Each activation of the manual trigger must be at least 5 minutes apart, otherwise an error will be returned.",
+	//   "description": "Activates a manual trigger. Each activation of the manual trigger must be at least 5 minutes apart, otherwise an error will be returned. **Warning:** Line Items using manual triggers will stop serving in Display \u0026 Video 360 on **May 17, 2023**. Read our [feature deprecation announcement](/display-video/api/deprecations#features.manual_triggers) for more information.",
 	//   "flatPath": "v2/advertisers/{advertisersId}/manualTriggers/{manualTriggersId}:activate",
 	//   "httpMethod": "POST",
 	//   "id": "displayvideo.advertisers.manualTriggers.activate",
@@ -31931,7 +31982,11 @@ type AdvertisersManualTriggersCreateCall struct {
 }
 
 // Create: Creates a new manual trigger. Returns the newly created
-// manual trigger if successful.
+// manual trigger if successful. **Warning:** Line Items using manual
+// triggers will stop serving in Display & Video 360 on **May 17,
+// 2023**. Read our feature deprecation announcement
+// (/display-video/api/deprecations#features.manual_triggers) for more
+// information.
 //
 //   - advertiserId: Immutable. The unique ID of the advertiser that the
 //     manual trigger belongs to.
@@ -32033,7 +32088,7 @@ func (c *AdvertisersManualTriggersCreateCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new manual trigger. Returns the newly created manual trigger if successful.",
+	//   "description": "Creates a new manual trigger. Returns the newly created manual trigger if successful. **Warning:** Line Items using manual triggers will stop serving in Display \u0026 Video 360 on **May 17, 2023**. Read our [feature deprecation announcement](/display-video/api/deprecations#features.manual_triggers) for more information.",
 	//   "flatPath": "v2/advertisers/{advertisersId}/manualTriggers",
 	//   "httpMethod": "POST",
 	//   "id": "displayvideo.advertisers.manualTriggers.create",
@@ -32076,7 +32131,11 @@ type AdvertisersManualTriggersDeactivateCall struct {
 	header_                        http.Header
 }
 
-// Deactivate: Deactivates a manual trigger.
+// Deactivate: Deactivates a manual trigger. **Warning:** Line Items
+// using manual triggers will stop serving in Display & Video 360 on
+// **May 17, 2023**. Read our feature deprecation announcement
+// (/display-video/api/deprecations#features.manual_triggers) for more
+// information.
 //
 //   - advertiserId: The ID of the advertiser that the manual trigger
 //     belongs.
@@ -32181,7 +32240,7 @@ func (c *AdvertisersManualTriggersDeactivateCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
-	//   "description": "Deactivates a manual trigger.",
+	//   "description": "Deactivates a manual trigger. **Warning:** Line Items using manual triggers will stop serving in Display \u0026 Video 360 on **May 17, 2023**. Read our [feature deprecation announcement](/display-video/api/deprecations#features.manual_triggers) for more information.",
 	//   "flatPath": "v2/advertisers/{advertisersId}/manualTriggers/{manualTriggersId}:deactivate",
 	//   "httpMethod": "POST",
 	//   "id": "displayvideo.advertisers.manualTriggers.deactivate",
@@ -32233,7 +32292,11 @@ type AdvertisersManualTriggersGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a manual trigger.
+// Get: Gets a manual trigger. **Warning:** Line Items using manual
+// triggers will stop serving in Display & Video 360 on **May 17,
+// 2023**. Read our feature deprecation announcement
+// (/display-video/api/deprecations#features.manual_triggers) for more
+// information.
 //
 //   - advertiserId: The ID of the advertiser this manual trigger belongs
 //     to.
@@ -32345,7 +32408,7 @@ func (c *AdvertisersManualTriggersGetCall) Do(opts ...googleapi.CallOption) (*Ma
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets a manual trigger.",
+	//   "description": "Gets a manual trigger. **Warning:** Line Items using manual triggers will stop serving in Display \u0026 Video 360 on **May 17, 2023**. Read our [feature deprecation announcement](/display-video/api/deprecations#features.manual_triggers) for more information.",
 	//   "flatPath": "v2/advertisers/{advertisersId}/manualTriggers/{manualTriggersId}",
 	//   "httpMethod": "GET",
 	//   "id": "displayvideo.advertisers.manualTriggers.get",
@@ -32395,7 +32458,11 @@ type AdvertisersManualTriggersListCall struct {
 
 // List: Lists manual triggers that are accessible to the current user
 // for a given advertiser ID. The order is defined by the order_by
-// parameter. A single advertiser_id is required.
+// parameter. A single advertiser_id is required. **Warning:** Line
+// Items using manual triggers will stop serving in Display & Video 360
+// on **May 17, 2023**. Read our feature deprecation announcement
+// (/display-video/api/deprecations#features.manual_triggers) for more
+// information.
 //
 //   - advertiserId: The ID of the advertiser that the fetched manual
 //     triggers belong to.
@@ -32545,7 +32612,7 @@ func (c *AdvertisersManualTriggersListCall) Do(opts ...googleapi.CallOption) (*L
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists manual triggers that are accessible to the current user for a given advertiser ID. The order is defined by the order_by parameter. A single advertiser_id is required.",
+	//   "description": "Lists manual triggers that are accessible to the current user for a given advertiser ID. The order is defined by the order_by parameter. A single advertiser_id is required. **Warning:** Line Items using manual triggers will stop serving in Display \u0026 Video 360 on **May 17, 2023**. Read our [feature deprecation announcement](/display-video/api/deprecations#features.manual_triggers) for more information.",
 	//   "flatPath": "v2/advertisers/{advertisersId}/manualTriggers",
 	//   "httpMethod": "GET",
 	//   "id": "displayvideo.advertisers.manualTriggers.list",
@@ -32628,7 +32695,11 @@ type AdvertisersManualTriggersPatchCall struct {
 }
 
 // Patch: Updates a manual trigger. Returns the updated manual trigger
-// if successful.
+// if successful. **Warning:** Line Items using manual triggers will
+// stop serving in Display & Video 360 on **May 17, 2023**. Read our
+// feature deprecation announcement
+// (/display-video/api/deprecations#features.manual_triggers) for more
+// information.
 //
 //   - advertiserId: Immutable. The unique ID of the advertiser that the
 //     manual trigger belongs to.
@@ -32740,7 +32811,7 @@ func (c *AdvertisersManualTriggersPatchCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a manual trigger. Returns the updated manual trigger if successful.",
+	//   "description": "Updates a manual trigger. Returns the updated manual trigger if successful. **Warning:** Line Items using manual triggers will stop serving in Display \u0026 Video 360 on **May 17, 2023**. Read our [feature deprecation announcement](/display-video/api/deprecations#features.manual_triggers) for more information.",
 	//   "flatPath": "v2/advertisers/{advertisersId}/manualTriggers/{manualTriggersId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "displayvideo.advertisers.manualTriggers.patch",

@@ -2375,7 +2375,7 @@ func (s *ListPrivateConnectionsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Location: A resource that represents Google Cloud Platform location.
+// Location: A resource that represents a Google Cloud location.
 type Location struct {
 	// DisplayName: The friendly name for this location, typically a nearby
 	// city name. For example, "Tokyo".
@@ -3635,6 +3635,15 @@ func (s *SqlAclEntry) MarshalJSON() ([]byte, error) {
 
 // SqlIpConfig: IP Management configuration.
 type SqlIpConfig struct {
+	// AllocatedIpRange: Optional. The name of the allocated IP address
+	// range for the private IP Cloud SQL instance. This name refers to an
+	// already allocated IP range address. If set, the instance IP address
+	// will be created in the allocated range. Note that this IP address
+	// range can't be modified after the instance is created. If you change
+	// the VPC when configuring connectivity settings for the migration job,
+	// this field is not relevant.
+	AllocatedIpRange string `json:"allocatedIpRange,omitempty"`
+
 	// AuthorizedNetworks: The list of external networks that are allowed to
 	// connect to the instance using the IP. See
 	// https://en.wikipedia.org/wiki/CIDR_notation#CIDR_notation, also known
@@ -3655,15 +3664,15 @@ type SqlIpConfig struct {
 	// not.
 	RequireSsl bool `json:"requireSsl,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "AuthorizedNetworks")
-	// to unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "AllocatedIpRange") to
+	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "AuthorizedNetworks") to
+	// NullFields is a list of field names (e.g. "AllocatedIpRange") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the

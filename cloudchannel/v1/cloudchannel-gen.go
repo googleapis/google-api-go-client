@@ -1358,16 +1358,14 @@ func (s *GoogleCloudChannelV1CustomerRepricingConfig) MarshalJSON() ([]byte, err
 // GoogleCloudChannelV1DateRange: A representation of usage or invoice
 // date ranges.
 type GoogleCloudChannelV1DateRange struct {
-	// InvoiceEndDate: The latest invoice date (exclusive). If your product
-	// uses monthly invoices, and this value is not the beginning of a
-	// month, this will adjust the date to the first day of the following
-	// month.
+	// InvoiceEndDate: The latest invoice date (inclusive). If this value is
+	// not the last day of a month, this will move it forward to the last
+	// day of the given month.
 	InvoiceEndDate *GoogleTypeDate `json:"invoiceEndDate,omitempty"`
 
-	// InvoiceStartDate: The earliest invoice date (inclusive). If your
-	// product uses monthly invoices, and this value is not the beginning of
-	// a month, this will adjust the date to the first day of the given
-	// month.
+	// InvoiceStartDate: The earliest invoice date (inclusive). If this
+	// value is not the first day of a month, this will move it back to the
+	// first day of the given month.
 	InvoiceStartDate *GoogleTypeDate `json:"invoiceStartDate,omitempty"`
 
 	// UsageEndDateTime: The latest usage date time (exclusive). If you use
@@ -1462,6 +1460,10 @@ func (s *GoogleCloudChannelV1EduData) MarshalJSON() ([]byte, error) {
 type GoogleCloudChannelV1Entitlement struct {
 	// AssociationInfo: Association information to other entitlements.
 	AssociationInfo *GoogleCloudChannelV1AssociationInfo `json:"associationInfo,omitempty"`
+
+	// BillingAccount: Optional. The billing account resource name that is
+	// used to pay for this entitlement.
+	BillingAccount string `json:"billingAccount,omitempty"`
 
 	// CommitmentSettings: Commitment settings for a commitment-based Offer.
 	// Required for commitment based offers.
@@ -1771,6 +1773,10 @@ type GoogleCloudChannelV1FetchReportResultsRequest struct {
 	// FetchReportResultsResponse.next_page_token of the previous
 	// CloudChannelReportsService.FetchReportResults call.
 	PageToken string `json:"pageToken,omitempty"`
+
+	// PartitionKeys: Optional. List of keys specifying which report
+	// partitions to return. If empty, returns all partitions.
+	PartitionKeys []string `json:"partitionKeys,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PageSize") to
 	// unconditionally include in API requests. By default, fields with
@@ -3831,10 +3837,14 @@ func (s *GoogleCloudChannelV1RepricingConfigEntitlementGranularity) MarshalJSON(
 
 // GoogleCloudChannelV1Row: A row of report values.
 type GoogleCloudChannelV1Row struct {
+	// PartitionKey: The key for the partition this row belongs to. This
+	// field is empty if the report is not partitioned.
+	PartitionKey string `json:"partitionKey,omitempty"`
+
 	// Values: The list of values in the row.
 	Values []*GoogleCloudChannelV1ReportValue `json:"values,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Values") to
+	// ForceSendFields is a list of field names (e.g. "PartitionKey") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -3842,10 +3852,10 @@ type GoogleCloudChannelV1Row struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Values") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "PartitionKey") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -4735,16 +4745,14 @@ func (s *GoogleCloudChannelV1alpha1CustomerEvent) MarshalJSON() ([]byte, error) 
 // GoogleCloudChannelV1alpha1DateRange: A representation of usage or
 // invoice date ranges.
 type GoogleCloudChannelV1alpha1DateRange struct {
-	// InvoiceEndDate: The latest invoice date (exclusive). If your product
-	// uses monthly invoices, and this value is not the beginning of a
-	// month, this will adjust the date to the first day of the following
-	// month.
+	// InvoiceEndDate: The latest invoice date (inclusive). If this value is
+	// not the last day of a month, this will move it forward to the last
+	// day of the given month.
 	InvoiceEndDate *GoogleTypeDate `json:"invoiceEndDate,omitempty"`
 
-	// InvoiceStartDate: The earliest invoice date (inclusive). If your
-	// product uses monthly invoices, and this value is not the beginning of
-	// a month, this will adjust the date to the first day of the given
-	// month.
+	// InvoiceStartDate: The earliest invoice date (inclusive). If this
+	// value is not the first day of a month, this will move it back to the
+	// first day of the given month.
 	InvoiceStartDate *GoogleTypeDate `json:"invoiceStartDate,omitempty"`
 
 	// UsageEndDateTime: The latest usage date time (exclusive). If you use
@@ -4795,6 +4803,10 @@ type GoogleCloudChannelV1alpha1Entitlement struct {
 
 	// AssociationInfo: Association information to other entitlements.
 	AssociationInfo *GoogleCloudChannelV1alpha1AssociationInfo `json:"associationInfo,omitempty"`
+
+	// BillingAccount: Optional. The billing account resource name that is
+	// used to pay for this entitlement.
+	BillingAccount string `json:"billingAccount,omitempty"`
 
 	// ChannelPartnerId: Cloud Identity ID of a channel partner who will be
 	// the direct reseller for the customer's order. This field is generally

@@ -1988,6 +1988,48 @@ func (s *GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfoTopNValue)
 // GoogleCloudDataplexV1DataProfileSpec: DataProfileScan related
 // setting.
 type GoogleCloudDataplexV1DataProfileSpec struct {
+	// SamplingPercent: Optional. The percentage of the records to be
+	// selected from the dataset for DataScan. Value can range between 0.0
+	// and 100.0 with up to 3 significant decimal digits. Sampling is not
+	// applied if sampling_percent is not specified, 0 or 100.
+	SamplingPercent float64 `json:"samplingPercent,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SamplingPercent") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SamplingPercent") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDataplexV1DataProfileSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1DataProfileSpec
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDataplexV1DataProfileSpec) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDataplexV1DataProfileSpec
+	var s1 struct {
+		SamplingPercent gensupport.JSONFloat64 `json:"samplingPercent"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.SamplingPercent = float64(s1.SamplingPercent)
+	return nil
 }
 
 // GoogleCloudDataplexV1DataQualityDimensionResult:
@@ -2464,6 +2506,12 @@ type GoogleCloudDataplexV1DataQualitySpec struct {
 	// one rule is required.
 	Rules []*GoogleCloudDataplexV1DataQualityRule `json:"rules,omitempty"`
 
+	// SamplingPercent: Optional. The percentage of the records to be
+	// selected from the dataset for DataScan. Value can range between 0.0
+	// and 100.0 with up to 3 significant decimal digits. Sampling is not
+	// applied if sampling_percent is not specified, 0 or 100.
+	SamplingPercent float64 `json:"samplingPercent,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Rules") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -2485,6 +2533,20 @@ func (s *GoogleCloudDataplexV1DataQualitySpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1DataQualitySpec
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDataplexV1DataQualitySpec) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDataplexV1DataQualitySpec
+	var s1 struct {
+		SamplingPercent gensupport.JSONFloat64 `json:"samplingPercent"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.SamplingPercent = float64(s1.SamplingPercent)
+	return nil
 }
 
 // GoogleCloudDataplexV1DataScan: Represents a user-visible job which
@@ -6359,8 +6421,8 @@ func (s *GoogleCloudLocationListLocationsResponse) MarshalJSON() ([]byte, error)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudLocationLocation: A resource that represents Google Cloud
-// Platform location.
+// GoogleCloudLocationLocation: A resource that represents a Google
+// Cloud location.
 type GoogleCloudLocationLocation struct {
 	// DisplayName: The friendly name for this location, typically a nearby
 	// city name. For example, "Tokyo".

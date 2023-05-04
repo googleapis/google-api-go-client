@@ -2806,6 +2806,7 @@ func (s *GoogleCloudDialogflowCxV3PageInfoFormInfoParameterInfo) MarshalJSON() (
 // can contain one of: 1. A conversational query in the form of text. 2.
 // An intent query that specifies which intent to trigger. 3. Natural
 // language speech audio to be processed. 4. An event to be triggered.
+// 5. DTMF digits to invoke an intent and fill in parameter value.
 type GoogleCloudDialogflowCxV3QueryInput struct {
 	// Audio: The natural language speech audio to be processed.
 	Audio *GoogleCloudDialogflowCxV3AudioInput `json:"audio,omitempty"`
@@ -3642,6 +3643,7 @@ type GoogleCloudDialogflowCxV3TestRunDifference struct {
 	//   "PAGE" - The page.
 	//   "PARAMETERS" - The parameters.
 	//   "UTTERANCE" - The message utterance.
+	//   "FLOW" - The flow.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
@@ -6319,6 +6321,7 @@ func (s *GoogleCloudDialogflowCxV3beta1PageInfoFormInfoParameterInfo) MarshalJSO
 // It can contain one of: 1. A conversational query in the form of text.
 // 2. An intent query that specifies which intent to trigger. 3. Natural
 // language speech audio to be processed. 4. An event to be triggered.
+// 5. DTMF digits to invoke an intent and fill in parameter value.
 type GoogleCloudDialogflowCxV3beta1QueryInput struct {
 	// Audio: The natural language speech audio to be processed.
 	Audio *GoogleCloudDialogflowCxV3beta1AudioInput `json:"audio,omitempty"`
@@ -7157,6 +7160,7 @@ type GoogleCloudDialogflowCxV3beta1TestRunDifference struct {
 	//   "PAGE" - The page.
 	//   "PARAMETERS" - The parameters.
 	//   "UTTERANCE" - The message utterance.
+	//   "FLOW" - The flow.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
@@ -8328,7 +8332,9 @@ type GoogleCloudDialogflowV2AnswerFeedback struct {
 	ClickTime string `json:"clickTime,omitempty"`
 
 	// Clicked: Indicates whether the answer/item was clicked by the human
-	// agent or not. Default to false.
+	// agent or not. Default to false. For knowledge search, the answer
+	// record is considered to be clicked if the answer was copied or any
+	// URI was clicked.
 	Clicked bool `json:"clicked,omitempty"`
 
 	// CorrectnessLevel: The correctness level of the specific answer.
@@ -20896,8 +20902,8 @@ func (s *GoogleCloudLocationListLocationsResponse) MarshalJSON() ([]byte, error)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudLocationLocation: A resource that represents Google Cloud
-// Platform location.
+// GoogleCloudLocationLocation: A resource that represents a Google
+// Cloud location.
 type GoogleCloudLocationLocation struct {
 	// DisplayName: The friendly name for this location, typically a nearby
 	// city name. For example, "Tokyo".

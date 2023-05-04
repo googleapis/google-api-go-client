@@ -6916,16 +6916,16 @@ func (s *GoogleCloudRetailV2alphaImportUserEventsResponse) MarshalJSON() ([]byte
 }
 
 // GoogleCloudRetailV2alphaMerchantCenterAccountLink: Represents a link
-// between a Merchant Center account and a branch. Once a link is
-// established, products from the linked merchant center account will be
+// between a Merchant Center account and a branch. After a link is
+// established, products from the linked Merchant Center account are
 // streamed to the linked branch.
 type GoogleCloudRetailV2alphaMerchantCenterAccountLink struct {
-	// BranchId: Required. The branch id (e.g. 0/1/2) within the catalog
+	// BranchId: Required. The branch ID (e.g. 0/1/2) within the catalog
 	// that products from merchant_center_account_id are streamed to. When
 	// updating this field, an empty value will use the currently configured
 	// default branch. However, changing the default branch later on won't
-	// change the linked branch here. A single branch id can only have one
-	// linked merchant center account id.
+	// change the linked branch here. A single branch ID can only have one
+	// linked Merchant Center account ID.
 	BranchId string `json:"branchId,omitempty"`
 
 	// FeedFilters: Criteria for the Merchant Center feeds to be ingested
@@ -8321,16 +8321,16 @@ func (s *GoogleCloudRetailV2betaImportUserEventsResponse) MarshalJSON() ([]byte,
 }
 
 // GoogleCloudRetailV2betaMerchantCenterAccountLink: Represents a link
-// between a Merchant Center account and a branch. Once a link is
-// established, products from the linked merchant center account will be
+// between a Merchant Center account and a branch. After a link is
+// established, products from the linked Merchant Center account are
 // streamed to the linked branch.
 type GoogleCloudRetailV2betaMerchantCenterAccountLink struct {
-	// BranchId: Required. The branch id (e.g. 0/1/2) within the catalog
+	// BranchId: Required. The branch ID (e.g. 0/1/2) within the catalog
 	// that products from merchant_center_account_id are streamed to. When
 	// updating this field, an empty value will use the currently configured
 	// default branch. However, changing the default branch later on won't
-	// change the linked branch here. A single branch id can only have one
-	// linked merchant center account id.
+	// change the linked branch here. A single branch ID can only have one
+	// linked Merchant Center account ID.
 	BranchId string `json:"branchId,omitempty"`
 
 	// FeedFilters: Criteria for the Merchant Center feeds to be ingested

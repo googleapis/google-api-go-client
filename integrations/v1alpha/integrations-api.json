@@ -3202,7 +3202,7 @@
       }
     }
   },
-  "revision": "20230409",
+  "revision": "20230425",
   "rootUrl": "https://integrations.googleapis.com/",
   "schemas": {
     "CrmlogErrorCode": {
@@ -7687,6 +7687,10 @@
           },
           "type": "array"
         },
+        "authKey": {
+          "description": "Identifier key for auth config",
+          "type": "string"
+        },
         "authType": {
           "description": "The type of authentication configured.",
           "enum": [
@@ -7970,6 +7974,21 @@
           "$ref": "GoogleCloudConnectorsV1ConnectionStatus",
           "description": "Output only. Current status of the connection.",
           "readOnly": true
+        },
+        "subscriptionType": {
+          "description": "Output only. This subscription type enum value states if the metrics should be sent for billing or not.",
+          "enum": [
+            "SUBSCRIPTION_TYPE_UNSPECIFIED",
+            "PAY_G",
+            "PAID"
+          ],
+          "enumDescriptions": [
+            "Unspecified subscription type.",
+            "Metrics should be sent for billing for PayG type.",
+            "Metrics should not be sent for billing for Paid Subscription type."
+          ],
+          "readOnly": true,
+          "type": "string"
         },
         "suspended": {
           "description": "Optional. Suspended indicates if a user has suspended a connection or not.",
@@ -10969,7 +10988,7 @@
       "type": "object"
     },
     "GoogleInternalCloudCrmEventbusV3PostToQueueWithTriggerIdRequest": {
-      "description": "Use this request to post all workflows associated with a given trigger id. Next available id: 10",
+      "description": "Use this request to post all workflows associated with a given trigger id. Next available id: 11",
       "id": "GoogleInternalCloudCrmEventbusV3PostToQueueWithTriggerIdRequest",
       "properties": {
         "clientId": {
@@ -11004,6 +11023,10 @@
         },
         "requestId": {
           "description": "Optional. This is used to de-dup incoming request: if the duplicate request was detected, the response from the previous execution is returned. Must have no more than 36 characters and contain only alphanumeric characters and hyphens.",
+          "type": "string"
+        },
+        "resourceName": {
+          "description": "This field is only required when using Admin Access. The resource name of target, or the parent resource name. For example: \"projects/*/locations/*/integrations/*\"",
           "type": "string"
         },
         "scheduledTime": {

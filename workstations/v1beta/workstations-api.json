@@ -282,7 +282,7 @@
                   ],
                   "parameters": {
                     "etag": {
-                      "description": "If set, the request will be rejected if the latest version of the workstation cluster on the server does not have this etag.",
+                      "description": "If set, the request will be rejected if the latest version of the workstation cluster on the server does not have this ETag.",
                       "location": "query",
                       "type": "string"
                     },
@@ -469,7 +469,7 @@
                       ],
                       "parameters": {
                         "etag": {
-                          "description": "If set, the request is rejected if the latest version of the workstation configuration on the server does not have this etag.",
+                          "description": "If set, the request is rejected if the latest version of the workstation configuration on the server does not have this ETag.",
                           "location": "query",
                           "type": "string"
                         },
@@ -779,7 +779,7 @@
                           ],
                           "parameters": {
                             "etag": {
-                              "description": "If set, the request will be rejected if the latest version of the workstation on the server does not have this etag.",
+                              "description": "If set, the request will be rejected if the latest version of the workstation on the server does not have this ETag.",
                               "location": "query",
                               "type": "string"
                             },
@@ -1127,7 +1127,7 @@
       }
     }
   },
-  "revision": "20230412",
+  "revision": "20230423",
   "rootUrl": "https://workstations.googleapis.com/",
   "schemas": {
     "AuditConfig": {
@@ -1228,7 +1228,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "Environment variables passed to the container.",
+          "description": "Environment variables passed to the container's entrypoint.",
           "type": "object"
         },
         "image": {
@@ -1318,8 +1318,14 @@
           "type": "string"
         },
         "poolSize": {
-          "description": "Number of instances to pool for faster workstation starup.",
+          "description": "Number of instances to pool for faster workstation startup.",
           "format": "int32",
+          "type": "integer"
+        },
+        "pooledInstances": {
+          "description": "Output only. Number of instances currently available in the pool for faster workstation startup.",
+          "format": "int32",
+          "readOnly": true,
           "type": "integer"
         },
         "serviceAccount": {
@@ -1419,7 +1425,7 @@
       "id": "GenerateAccessTokenResponse",
       "properties": {
         "accessToken": {
-          "description": "The generated bearer access token. To use this token, include it in an Authorization header of an HTTP request sent to the associated workstation's hostname, for example, `Authorization: Bearer `.",
+          "description": "The generated bearer access token. To use this token, include it in an Authorization header of an HTTP request sent to the associated workstation's hostname—for example, `Authorization: Bearer `.",
           "type": "string"
         },
         "expireTime": {
@@ -1743,6 +1749,22 @@
       },
       "type": "object"
     },
+    "ReadinessCheck": {
+      "description": "A readiness check to be performed on a workstation.",
+      "id": "ReadinessCheck",
+      "properties": {
+        "path": {
+          "description": "Path to which the request should be sent.",
+          "type": "string"
+        },
+        "port": {
+          "description": "Port to which the request should be sent.",
+          "format": "int32",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
     "SetIamPolicyRequest": {
       "description": "Request message for `SetIamPolicy` method.",
       "id": "SetIamPolicyRequest",
@@ -1764,7 +1786,7 @@
       "id": "StartWorkstationRequest",
       "properties": {
         "etag": {
-          "description": "If set, the request will be rejected if the latest version of the workstation on the server does not have this etag.",
+          "description": "If set, the request will be rejected if the latest version of the workstation on the server does not have this ETag.",
           "type": "string"
         },
         "validateOnly": {
@@ -1806,7 +1828,7 @@
       "id": "StopWorkstationRequest",
       "properties": {
         "etag": {
-          "description": "If set, the request will be rejected if the latest version of the workstation on the server does not have this etag.",
+          "description": "If set, the request will be rejected if the latest version of the workstation on the server does not have this ETag.",
           "type": "string"
         },
         "validateOnly": {
@@ -1875,7 +1897,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "Environment variables passed to the workstation container.",
+          "description": "Environment variables passed to the workstation container's entrypoint.",
           "type": "object"
         },
         "etag": {
@@ -2107,6 +2129,13 @@
           "description": "Directories to persist across workstation sessions.",
           "items": {
             "$ref": "PersistentDirectory"
+          },
+          "type": "array"
+        },
+        "readinessChecks": {
+          "description": "Readiness checks to perform when starting a workstation using this workstation configuration. Mark a workstation as running only after all specified readiness checks return 200 status codes.",
+          "items": {
+            "$ref": "ReadinessCheck"
           },
           "type": "array"
         },

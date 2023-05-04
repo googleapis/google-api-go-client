@@ -259,6 +259,38 @@ func (s *AcknowledgeRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AvroConfig: Configuration for writing message data in Avro format.
+// Message payloads and metadata will be written to files as an Avro
+// binary.
+type AvroConfig struct {
+	// WriteMetadata: When true, write the subscription name, message_id,
+	// publish_time, attributes, and ordering_key as additional fields in
+	// the output.
+	WriteMetadata bool `json:"writeMetadata,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "WriteMetadata") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "WriteMetadata") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AvroConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod AvroConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // BigQueryConfig: Configuration for a BigQuery subscription.
 type BigQueryConfig struct {
 	// DropUnknownFields: When true and use_topic_schema is true, any fields
@@ -402,6 +434,79 @@ type Binding struct {
 
 func (s *Binding) MarshalJSON() ([]byte, error) {
 	type NoMethod Binding
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CloudStorageConfig: Configuration for a Cloud Storage subscription.
+type CloudStorageConfig struct {
+	// AvroConfig: If set, message data will be written to Cloud Storage in
+	// Avro format.
+	AvroConfig *AvroConfig `json:"avroConfig,omitempty"`
+
+	// Bucket: Required. User-provided name for the Cloud Storage bucket.
+	// The bucket must be created by the user. The bucket name must be
+	// without any prefix like "gs://". See the [bucket naming requirements]
+	// (https://cloud.google.com/storage/docs/buckets#naming).
+	Bucket string `json:"bucket,omitempty"`
+
+	// FilenamePrefix: User-provided prefix for Cloud Storage filename. See
+	// the object naming requirements
+	// (https://cloud.google.com/storage/docs/objects#naming).
+	FilenamePrefix string `json:"filenamePrefix,omitempty"`
+
+	// FilenameSuffix: User-provided suffix for Cloud Storage filename. See
+	// the object naming requirements
+	// (https://cloud.google.com/storage/docs/objects#naming).
+	FilenameSuffix string `json:"filenameSuffix,omitempty"`
+
+	// MaxBytes: The maximum bytes that can be written to a Cloud Storage
+	// file before a new file is created. Min 1 KB, max 10 GiB. The
+	// max_bytes limit may be exceeded in cases where messages are larger
+	// than the limit.
+	MaxBytes int64 `json:"maxBytes,omitempty,string"`
+
+	// MaxDuration: The maximum duration that can elapse before a new Cloud
+	// Storage file is created. Min 1 minute, max 10 minutes, default 5
+	// minutes. May not exceed the subscription's acknowledgement deadline.
+	MaxDuration string `json:"maxDuration,omitempty"`
+
+	// State: Output only. An output-only field that indicates whether or
+	// not the subscription can receive messages.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Default value. This value is unused.
+	//   "ACTIVE" - The subscription can actively send messages to Cloud
+	// Storage.
+	//   "PERMISSION_DENIED" - Cannot write to the Cloud Storage bucket
+	// because of permission denied errors.
+	//   "NOT_FOUND" - Cannot write to the Cloud Storage bucket because it
+	// does not exist.
+	State string `json:"state,omitempty"`
+
+	// TextConfig: If set, message data will be written to Cloud Storage in
+	// text format.
+	TextConfig *TextConfig `json:"textConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AvroConfig") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AvroConfig") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CloudStorageConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudStorageConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1771,9 +1876,10 @@ func (s *Snapshot) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Subscription: A subscription resource. If none of `push_config` or
-// `bigquery_config` is set, then the subscriber will pull and ack
-// messages using API methods. At most one of these fields may be set.
+// Subscription: A subscription resource. If none of `push_config`,
+// `bigquery_config`, or `cloud_storage_config` is set, then the
+// subscriber will pull and ack messages using API methods. At most one
+// of these fields may be set.
 type Subscription struct {
 	// AckDeadlineSeconds: The approximate amount of time (on a best-effort
 	// basis) Pub/Sub waits for the subscriber to acknowledge receipt before
@@ -1796,6 +1902,10 @@ type Subscription struct {
 	// BigqueryConfig: If delivery to BigQuery is used with this
 	// subscription, this field is used to configure it.
 	BigqueryConfig *BigQueryConfig `json:"bigqueryConfig,omitempty"`
+
+	// CloudStorageConfig: If delivery to Google Cloud Storage is used with
+	// this subscription, this field is used to configure it.
+	CloudStorageConfig *CloudStorageConfig `json:"cloudStorageConfig,omitempty"`
 
 	// DeadLetterPolicy: A policy that specifies the conditions for dead
 	// lettering messages in this subscription. If dead_letter_policy is not
@@ -2007,6 +2117,12 @@ func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// TextConfig: Configuration for writing message data in text format.
+// Message payloads will be written to files as raw text, separated by a
+// newline.
+type TextConfig struct {
 }
 
 // Topic: A topic resource.

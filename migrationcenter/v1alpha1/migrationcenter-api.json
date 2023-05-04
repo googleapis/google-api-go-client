@@ -1936,7 +1936,7 @@
       }
     }
   },
-  "revision": "20230414",
+  "revision": "20230420",
   "rootUrl": "https://migrationcenter.googleapis.com/",
   "schemas": {
     "AddAssetsToGroupRequest": {
@@ -3687,7 +3687,7 @@
       "type": "object"
     },
     "Location": {
-      "description": "A resource that represents Google Cloud Platform location.",
+      "description": "A resource that represents a Google Cloud location.",
       "id": "Location",
       "properties": {
         "displayName": {
@@ -4893,6 +4893,23 @@
           "description": "The information confidence of the source. The higher the value, the higher the confidence.",
           "format": "int32",
           "type": "integer"
+        },
+        "state": {
+          "description": "Output only. The state of the source.",
+          "enum": [
+            "STATE_UNSPECIFIED",
+            "ACTIVE",
+            "DELETING",
+            "INVALID"
+          ],
+          "enumDescriptions": [
+            "Unspecified.",
+            "The source is active and ready to be used.",
+            "In the process of being deleted.",
+            "Source is in an invalid state. Asset frames reported to it will be ignored."
+          ],
+          "readOnly": true,
+          "type": "string"
         },
         "type": {
           "description": "Data source type.",

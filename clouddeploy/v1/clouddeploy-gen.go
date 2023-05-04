@@ -1169,6 +1169,39 @@ func (s *DeliveryPipelineNotificationEvent) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// DeployArtifact: The artifacts produced by a deploy operation.
+type DeployArtifact struct {
+	// ArtifactUri: Output only. URI of a directory containing the
+	// artifacts. All paths are relative to this location.
+	ArtifactUri string `json:"artifactUri,omitempty"`
+
+	// ManifestPaths: Output only. File paths of the manifests applied
+	// during the deploy operation relative to the URI.
+	ManifestPaths []string `json:"manifestPaths,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ArtifactUri") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ArtifactUri") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DeployArtifact) MarshalJSON() ([]byte, error) {
+	type NoMethod DeployArtifact
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // DeployJob: A deploy Job.
 type DeployJob struct {
 }
@@ -1176,6 +1209,10 @@ type DeployJob struct {
 // DeployJobRun: DeployJobRun contains information specific to a deploy
 // `JobRun`.
 type DeployJobRun struct {
+	// Artifact: Output only. The artifact of a deploy job run, if
+	// available.
+	Artifact *DeployArtifact `json:"artifact,omitempty"`
+
 	// Build: Output only. The resource name of the Cloud Build `Build`
 	// object that is used to deploy. Format is
 	// projects/{project}/locations/{location}/builds/{build}.
@@ -1211,7 +1248,7 @@ type DeployJobRun struct {
 	// deploy job run.
 	Metadata *DeployJobRunMetadata `json:"metadata,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Build") to
+	// ForceSendFields is a list of field names (e.g. "Artifact") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1219,8 +1256,8 @@ type DeployJobRun struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Build") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "Artifact") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -1266,8 +1303,8 @@ func (s *DeployJobRunMetadata) MarshalJSON() ([]byte, error) {
 
 // DeploymentJobs: Deployment job composition.
 type DeploymentJobs struct {
-	// DeployJob: Output only. The deploy Job. This is the first job run in
-	// the phase.
+	// DeployJob: Output only. The deploy Job. This is the deploy job in the
+	// phase.
 	DeployJob *Job `json:"deployJob,omitempty"`
 
 	// VerifyJob: Output only. The verify Job. Runs after a deploy if the
@@ -2068,7 +2105,7 @@ func (s *ListTargetsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Location: A resource that represents Google Cloud Platform location.
+// Location: A resource that represents a Google Cloud location.
 type Location struct {
 	// DisplayName: The friendly name for this location, typically a nearby
 	// city name. For example, "Tokyo".
@@ -2345,6 +2382,11 @@ func (s *Phase) MarshalJSON() ([]byte, error) {
 // PhaseArtifact: Contains the paths to the artifacts, relative to the
 // URI, for a phase.
 type PhaseArtifact struct {
+	// JobManifestsPath: Output only. File path of the directory of rendered
+	// job manifests relative to the URI. This is only set if it is
+	// applicable.
+	JobManifestsPath string `json:"jobManifestsPath,omitempty"`
+
 	// ManifestPath: Output only. File path of the rendered manifest
 	// relative to the URI.
 	ManifestPath string `json:"manifestPath,omitempty"`
@@ -2353,7 +2395,7 @@ type PhaseArtifact struct {
 	// configuration relative to the URI.
 	SkaffoldConfigPath string `json:"skaffoldConfigPath,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "ManifestPath") to
+	// ForceSendFields is a list of field names (e.g. "JobManifestsPath") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2361,12 +2403,13 @@ type PhaseArtifact struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ManifestPath") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "JobManifestsPath") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 

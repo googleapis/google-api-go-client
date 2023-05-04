@@ -343,6 +343,38 @@ func (s *GoogleAdsSearchads360V0Common__GenderInfo) MarshalJSON() ([]byte, error
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAdsSearchads360V0Common__Keyword: A Keyword criterion segment.
+type GoogleAdsSearchads360V0Common__Keyword struct {
+	// AdGroupCriterion: The AdGroupCriterion resource name.
+	AdGroupCriterion string `json:"adGroupCriterion,omitempty"`
+
+	// Info: Keyword info.
+	Info *GoogleAdsSearchads360V0Common__KeywordInfo `json:"info,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AdGroupCriterion") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdGroupCriterion") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAdsSearchads360V0Common__Keyword) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0Common__Keyword
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAdsSearchads360V0Common__KeywordInfo: A keyword criterion.
 type GoogleAdsSearchads360V0Common__KeywordInfo struct {
 	// MatchType: The match type of the keyword.
@@ -1294,6 +1326,177 @@ func (s *GoogleAdsSearchads360V0Common__RealTimeBiddingSetting) MarshalJSON() ([
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAdsSearchads360V0Common__SearchAds360ExpandedDynamicSearchAdInfo
+// : An expanded dynamic search ad.
+type GoogleAdsSearchads360V0Common__SearchAds360ExpandedDynamicSearchAdInfo struct {
+	// AdTrackingId: The tracking id of the ad.
+	AdTrackingId int64 `json:"adTrackingId,omitempty,string"`
+
+	// Description1: The first line of the ad's description.
+	Description1 string `json:"description1,omitempty"`
+
+	// Description2: The second line of the ad's description.
+	Description2 string `json:"description2,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AdTrackingId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdTrackingId") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAdsSearchads360V0Common__SearchAds360ExpandedDynamicSearchAdInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0Common__SearchAds360ExpandedDynamicSearchAdInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V0Common__SearchAds360ExpandedTextAdInfo: A
+// Search Ads 360 expanded text ad.
+type GoogleAdsSearchads360V0Common__SearchAds360ExpandedTextAdInfo struct {
+	// AdTrackingId: The tracking id of the ad.
+	AdTrackingId int64 `json:"adTrackingId,omitempty,string"`
+
+	// Description1: The first line of the ad's description.
+	Description1 string `json:"description1,omitempty"`
+
+	// Description2: The second line of the ad's description.
+	Description2 string `json:"description2,omitempty"`
+
+	// Headline: The headline of the ad.
+	Headline string `json:"headline,omitempty"`
+
+	// Headline2: The second headline of the ad.
+	Headline2 string `json:"headline2,omitempty"`
+
+	// Headline3: The third headline of the ad.
+	Headline3 string `json:"headline3,omitempty"`
+
+	// Path1: Text appended to the auto-generated visible URL with a
+	// delimiter.
+	Path1 string `json:"path1,omitempty"`
+
+	// Path2: Text appended to path1 with a delimiter.
+	Path2 string `json:"path2,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AdTrackingId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdTrackingId") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAdsSearchads360V0Common__SearchAds360ExpandedTextAdInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0Common__SearchAds360ExpandedTextAdInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V0Common__SearchAds360ProductAdInfo: A Search
+// Ads 360 product ad.
+type GoogleAdsSearchads360V0Common__SearchAds360ProductAdInfo struct {
+}
+
+// GoogleAdsSearchads360V0Common__SearchAds360ResponsiveSearchAdInfo: A
+// Search Ads 360 responsive search ad.
+type GoogleAdsSearchads360V0Common__SearchAds360ResponsiveSearchAdInfo struct {
+	// AdTrackingId: The tracking id of the ad.
+	AdTrackingId int64 `json:"adTrackingId,omitempty,string"`
+
+	// Path1: Text appended to the auto-generated visible URL with a
+	// delimiter.
+	Path1 string `json:"path1,omitempty"`
+
+	// Path2: Text appended to path1 with a delimiter.
+	Path2 string `json:"path2,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AdTrackingId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdTrackingId") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAdsSearchads360V0Common__SearchAds360ResponsiveSearchAdInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0Common__SearchAds360ResponsiveSearchAdInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V0Common__SearchAds360TextAdInfo: A Search Ads
+// 360 text ad.
+type GoogleAdsSearchads360V0Common__SearchAds360TextAdInfo struct {
+	// AdTrackingId: The tracking id of the ad.
+	AdTrackingId int64 `json:"adTrackingId,omitempty,string"`
+
+	// Description1: The first line of the ad's description.
+	Description1 string `json:"description1,omitempty"`
+
+	// Description2: The second line of the ad's description.
+	Description2 string `json:"description2,omitempty"`
+
+	// DisplayMobileUrl: The displayed mobile URL of the ad.
+	DisplayMobileUrl string `json:"displayMobileUrl,omitempty"`
+
+	// DisplayUrl: The displayed URL of the ad.
+	DisplayUrl string `json:"displayUrl,omitempty"`
+
+	// Headline: The headline of the ad.
+	Headline string `json:"headline,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AdTrackingId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdTrackingId") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAdsSearchads360V0Common__SearchAds360TextAdInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0Common__SearchAds360TextAdInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAdsSearchads360V0Common__Segments: Segment only fields.
 type GoogleAdsSearchads360V0Common__Segments struct {
 	// ConversionAction: Resource name of the conversion action.
@@ -1379,6 +1582,9 @@ type GoogleAdsSearchads360V0Common__Segments struct {
 	//   "CONNECTED_TV" - Smart TVs and game consoles.
 	//   "OTHER" - Other device types.
 	Device string `json:"device,omitempty"`
+
+	// Keyword: Keyword criterion.
+	Keyword *GoogleAdsSearchads360V0Common__Keyword `json:"keyword,omitempty"`
 
 	// Month: Month as represented by the date of the first day of a month.
 	// Formatted as yyyy-MM-dd.
@@ -3082,6 +3288,13 @@ type GoogleAdsSearchads360V0Resources__Ad struct {
 	// formats.
 	DisplayUrl string `json:"displayUrl,omitempty"`
 
+	// ExpandedDynamicSearchAd: Immutable. Details pertaining to an expanded
+	// dynamic search ad.
+	ExpandedDynamicSearchAd *GoogleAdsSearchads360V0Common__SearchAds360ExpandedDynamicSearchAdInfo `json:"expandedDynamicSearchAd,omitempty"`
+
+	// ExpandedTextAd: Immutable. Details pertaining to an expanded text ad.
+	ExpandedTextAd *GoogleAdsSearchads360V0Common__SearchAds360ExpandedTextAdInfo `json:"expandedTextAd,omitempty"`
+
 	// FinalUrls: The list of possible final URLs after all cross-domain
 	// redirects for the ad.
 	FinalUrls []string `json:"finalUrls,omitempty"`
@@ -3095,9 +3308,19 @@ type GoogleAdsSearchads360V0Resources__Ad struct {
 	// DisplayUploadAd, ImageAd, ShoppingComparisonListingAd and VideoAd.
 	Name string `json:"name,omitempty"`
 
+	// ProductAd: Immutable. Details pertaining to a product ad.
+	ProductAd *GoogleAdsSearchads360V0Common__SearchAds360ProductAdInfo `json:"productAd,omitempty"`
+
 	// ResourceName: Immutable. The resource name of the ad. Ad resource
 	// names have the form: `customers/{customer_id}/ads/{ad_id}`
 	ResourceName string `json:"resourceName,omitempty"`
+
+	// ResponsiveSearchAd: Immutable. Details pertaining to a responsive
+	// search ad.
+	ResponsiveSearchAd *GoogleAdsSearchads360V0Common__SearchAds360ResponsiveSearchAdInfo `json:"responsiveSearchAd,omitempty"`
+
+	// TextAd: Immutable. Details pertaining to a text ad.
+	TextAd *GoogleAdsSearchads360V0Common__SearchAds360TextAdInfo `json:"textAd,omitempty"`
 
 	// Type: Output only. The type of ad.
 	//
@@ -3662,7 +3885,7 @@ type GoogleAdsSearchads360V0Resources__AdGroupCriterion struct {
 	// ListingGroup: Immutable. Listing group.
 	ListingGroup *GoogleAdsSearchads360V0Common__ListingGroupInfo `json:"listingGroup,omitempty"`
 
-	// Location: Immutable. Location.
+	// Location: Output only. Location.
 	Location *GoogleAdsSearchads360V0Common__LocationInfo `json:"location,omitempty"`
 
 	// Negative: Immutable. Whether to target (`false`) or exclude (`true`)
@@ -4344,7 +4567,7 @@ type GoogleAdsSearchads360V0Resources__Campaign struct {
 	//   "CALLOUT" - The asset is linked for use as a Callout extension.
 	//   "STRUCTURED_SNIPPET" - The asset is linked for use as a Structured
 	// Snippet extension.
-	//   "SITELINK" - The asset is linked for use as a Sitelink extension.
+	//   "SITELINK" - The asset is linked for use as a Sitelink.
 	//   "MOBILE_APP" - The asset is linked for use as a Mobile App
 	// extension.
 	//   "HOTEL_CALLOUT" - The asset is linked for use as a Hotel Callout
@@ -6381,106 +6604,6 @@ func (s *GoogleAdsSearchads360V0Services__SearchSearchAds360Response) MarshalJSO
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAdsSearchads360V0Services__SearchSearchAds360StreamRequest:
-// Request message for SearchAds360Service.SearchStream.
-type GoogleAdsSearchads360V0Services__SearchSearchAds360StreamRequest struct {
-	// BatchSize: The number of rows that are returned in each stream
-	// response batch. When too large batch is requested, the server may
-	// decide to further limit the number of returned rows.
-	BatchSize int64 `json:"batchSize,omitempty"`
-
-	// Query: Required. The query string.
-	Query string `json:"query,omitempty"`
-
-	// SummaryRowSetting: Determines whether a summary row will be returned.
-	// By default, summary row is not returned. If requested, the summary
-	// row will be sent in a response by itself after all other query
-	// results are returned.
-	//
-	// Possible values:
-	//   "UNSPECIFIED" - Not specified.
-	//   "UNKNOWN" - Represent unknown values of return summary row.
-	//   "NO_SUMMARY_ROW" - Do not return summary row.
-	//   "SUMMARY_ROW_WITH_RESULTS" - Return summary row along with results.
-	// The summary row will be returned in the last batch alone (last batch
-	// will contain no results).
-	//   "SUMMARY_ROW_ONLY" - Return summary row only and return no results.
-	SummaryRowSetting string `json:"summaryRowSetting,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "BatchSize") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BatchSize") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleAdsSearchads360V0Services__SearchSearchAds360StreamRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleAdsSearchads360V0Services__SearchSearchAds360StreamRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleAdsSearchads360V0Services__SearchSearchAds360StreamResponse:
-// Response message for SearchAds360Service.SearchStream.
-type GoogleAdsSearchads360V0Services__SearchSearchAds360StreamResponse struct {
-	// CustomColumnHeaders: The headers of the custom columns in the
-	// results.
-	CustomColumnHeaders []*GoogleAdsSearchads360V0Services__CustomColumnHeader `json:"customColumnHeaders,omitempty"`
-
-	// FieldMask: FieldMask that represents what fields were requested by
-	// the user.
-	FieldMask string `json:"fieldMask,omitempty"`
-
-	// RequestId: The unique id of the request that is used for debugging
-	// purposes.
-	RequestId string `json:"requestId,omitempty"`
-
-	// Results: The list of rows that matched the query.
-	Results []*GoogleAdsSearchads360V0Services__SearchAds360Row `json:"results,omitempty"`
-
-	// SummaryRow: Summary row that contains summary of metrics in results.
-	// Summary of metrics means aggregation of metrics across all results,
-	// here aggregation could be sum, average, rate, etc.
-	SummaryRow *GoogleAdsSearchads360V0Services__SearchAds360Row `json:"summaryRow,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "CustomColumnHeaders")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CustomColumnHeaders") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleAdsSearchads360V0Services__SearchSearchAds360StreamResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleAdsSearchads360V0Services__SearchSearchAds360StreamResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // method id "searchads360.customers.customColumns.get":
 
 type CustomersCustomColumnsGetCall struct {
@@ -6946,154 +7069,6 @@ func (c *CustomersSearchAds360SearchCall) Pages(ctx context.Context, f func(*Goo
 		}
 		c.googleadssearchads360v0services__searchsearchads360request.PageToken = x.NextPageToken
 	}
-}
-
-// method id "searchads360.customers.searchAds360.searchStream":
-
-type CustomersSearchAds360SearchStreamCall struct {
-	s                                                                *Service
-	customerId                                                       string
-	googleadssearchads360v0services__searchsearchads360streamrequest *GoogleAdsSearchads360V0Services__SearchSearchAds360StreamRequest
-	urlParams_                                                       gensupport.URLParams
-	ctx_                                                             context.Context
-	header_                                                          http.Header
-}
-
-// SearchStream: Returns all rows that match the search stream query.
-// List of thrown errors: AuthenticationError () [AuthorizationError]()
-// HeaderError () [InternalError]() QueryError () [QuotaError]()
-// RequestError ()
-//
-// - customerId: The ID of the customer being queried.
-func (r *CustomersSearchAds360Service) SearchStream(customerId string, googleadssearchads360v0services__searchsearchads360streamrequest *GoogleAdsSearchads360V0Services__SearchSearchAds360StreamRequest) *CustomersSearchAds360SearchStreamCall {
-	c := &CustomersSearchAds360SearchStreamCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.customerId = customerId
-	c.googleadssearchads360v0services__searchsearchads360streamrequest = googleadssearchads360v0services__searchsearchads360streamrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *CustomersSearchAds360SearchStreamCall) Fields(s ...googleapi.Field) *CustomersSearchAds360SearchStreamCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *CustomersSearchAds360SearchStreamCall) Context(ctx context.Context) *CustomersSearchAds360SearchStreamCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *CustomersSearchAds360SearchStreamCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *CustomersSearchAds360SearchStreamCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleadssearchads360v0services__searchsearchads360streamrequest)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v0/customers/{+customerId}/searchAds360:searchStream")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"customerId": c.customerId,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "searchads360.customers.searchAds360.searchStream" call.
-// Exactly one of
-// *GoogleAdsSearchads360V0Services__SearchSearchAds360StreamResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleAdsSearchads360V0Services__SearchSearchAds360StreamResponse.Ser
-// verResponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *CustomersSearchAds360SearchStreamCall) Do(opts ...googleapi.CallOption) (*GoogleAdsSearchads360V0Services__SearchSearchAds360StreamResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &GoogleAdsSearchads360V0Services__SearchSearchAds360StreamResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Returns all rows that match the search stream query. List of thrown errors: [AuthenticationError]() [AuthorizationError]() [HeaderError]() [InternalError]() [QueryError]() [QuotaError]() [RequestError]()",
-	//   "flatPath": "v0/customers/{customersId}/searchAds360:searchStream",
-	//   "httpMethod": "POST",
-	//   "id": "searchads360.customers.searchAds360.searchStream",
-	//   "parameterOrder": [
-	//     "customerId"
-	//   ],
-	//   "parameters": {
-	//     "customerId": {
-	//       "description": "Required. The ID of the customer being queried.",
-	//       "location": "path",
-	//       "pattern": "^[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v0/customers/{+customerId}/searchAds360:searchStream",
-	//   "request": {
-	//     "$ref": "GoogleAdsSearchads360V0Services__SearchSearchAds360StreamRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleAdsSearchads360V0Services__SearchSearchAds360StreamResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/doubleclicksearch"
-	//   ]
-	// }
-
 }
 
 // method id "searchads360.searchAds360Fields.get":

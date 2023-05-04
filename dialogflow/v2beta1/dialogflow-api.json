@@ -2609,6 +2609,7 @@
         "answerRecords": {
           "methods": {
             "get": {
+              "deprecated": true,
               "description": "Deprecated. Retrieves a specific answer record.",
               "flatPath": "v2beta1/projects/{projectsId}/answerRecords/{answerRecordsId}",
               "httpMethod": "GET",
@@ -3301,6 +3302,7 @@
                 "suggestions": {
                   "methods": {
                     "compile": {
+                      "deprecated": true,
                       "description": "Deprecated. use SuggestArticles and SuggestFaqAnswers instead. Gets suggestions for a participant based on specific historical messages. Note that ListSuggestions will only list the auto-generated suggestions, while CompileSuggestion will try to compile suggestion based on the provided conversation context in the real time.",
                       "flatPath": "v2beta1/projects/{projectsId}/conversations/{conversationsId}/participants/{participantsId}/suggestions:compile",
                       "httpMethod": "POST",
@@ -3330,6 +3332,7 @@
                       ]
                     },
                     "list": {
+                      "deprecated": true,
                       "description": "Deprecated: Use inline suggestion, event based suggestion or Suggestion* API instead. See HumanAgentAssistantConfig.name for more details. Removal Date: 2020-09-01. Retrieves suggestions for live agents. This method should be used by human agent client software to fetch auto generated suggestions in real-time, while the conversation with an end user is in progress. The functionality is implemented in terms of the [list pagination](https://cloud.google.com/apis/design/design_patterns#list_pagination) design pattern. The client app should use the `next_page_token` field to fetch the next batch of suggestions. `suggestions` are sorted by `create_time` in descending order. To fetch latest suggestion, just set `page_size` to 1. To fetch new suggestions without duplication, send request with filter `create_time_epoch_microseconds \u003e [first item's create_time of previous request]` and empty page_token.",
                       "flatPath": "v2beta1/projects/{projectsId}/conversations/{conversationsId}/participants/{participantsId}/suggestions",
                       "httpMethod": "GET",
@@ -6095,6 +6098,7 @@
             "answerRecords": {
               "methods": {
                 "get": {
+                  "deprecated": true,
                   "description": "Deprecated. Retrieves a specific answer record.",
                   "flatPath": "v2beta1/projects/{projectsId}/locations/{locationsId}/answerRecords/{answerRecordsId}",
                   "httpMethod": "GET",
@@ -7507,7 +7511,7 @@
       }
     }
   },
-  "revision": "20230418",
+  "revision": "20230501",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowCxV3AudioInput": {
@@ -8517,7 +8521,7 @@
       "type": "object"
     },
     "GoogleCloudDialogflowCxV3QueryInput": {
-      "description": "Represents the query input. It can contain one of: 1. A conversational query in the form of text. 2. An intent query that specifies which intent to trigger. 3. Natural language speech audio to be processed. 4. An event to be triggered. ",
+      "description": "Represents the query input. It can contain one of: 1. A conversational query in the form of text. 2. An intent query that specifies which intent to trigger. 3. Natural language speech audio to be processed. 4. An event to be triggered. 5. DTMF digits to invoke an intent and fill in parameter value.",
       "id": "GoogleCloudDialogflowCxV3QueryInput",
       "properties": {
         "audio": {
@@ -8968,14 +8972,16 @@
             "INTENT",
             "PAGE",
             "PARAMETERS",
-            "UTTERANCE"
+            "UTTERANCE",
+            "FLOW"
           ],
           "enumDescriptions": [
             "Should never be used.",
             "The intent.",
             "The page.",
             "The parameters.",
-            "The message utterance."
+            "The message utterance.",
+            "The flow."
           ],
           "type": "string"
         }
@@ -10382,7 +10388,7 @@
       "type": "object"
     },
     "GoogleCloudDialogflowCxV3beta1QueryInput": {
-      "description": "Represents the query input. It can contain one of: 1. A conversational query in the form of text. 2. An intent query that specifies which intent to trigger. 3. Natural language speech audio to be processed. 4. An event to be triggered. ",
+      "description": "Represents the query input. It can contain one of: 1. A conversational query in the form of text. 2. An intent query that specifies which intent to trigger. 3. Natural language speech audio to be processed. 4. An event to be triggered. 5. DTMF digits to invoke an intent and fill in parameter value.",
       "id": "GoogleCloudDialogflowCxV3beta1QueryInput",
       "properties": {
         "audio": {
@@ -10833,14 +10839,16 @@
             "INTENT",
             "PAGE",
             "PARAMETERS",
-            "UTTERANCE"
+            "UTTERANCE",
+            "FLOW"
           ],
           "enumDescriptions": [
             "Should never be used.",
             "The intent.",
             "The page.",
             "The parameters.",
-            "The message utterance."
+            "The message utterance.",
+            "The flow."
           ],
           "type": "string"
         }
@@ -13680,7 +13688,7 @@
           "type": "string"
         },
         "clicked": {
-          "description": "Indicates whether the answer/item was clicked by the human agent or not. Default to false.",
+          "description": "Indicates whether the answer/item was clicked by the human agent or not. Default to false. For knowledge search, the answer record is considered to be clicked if the answer was copied or any URI was clicked.",
           "type": "boolean"
         },
         "correctnessLevel": {
@@ -18763,7 +18771,7 @@
       "type": "object"
     },
     "GoogleCloudLocationLocation": {
-      "description": "A resource that represents Google Cloud Platform location.",
+      "description": "A resource that represents a Google Cloud location.",
       "id": "GoogleCloudLocationLocation",
       "properties": {
         "displayName": {

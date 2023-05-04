@@ -1860,9 +1860,9 @@ type GoogleCloudRetailV2alphaCatalog struct {
 	DisplayName string `json:"displayName,omitempty"`
 
 	// MerchantCenterLinkingConfig: The Merchant Center linking
-	// configuration. Once a link is added, the data stream from Merchant
+	// configuration. After a link is added, the data stream from Merchant
 	// Center to Cloud Retail will be enabled automatically. The requester
-	// must have access to the merchant center account in order to make
+	// must have access to the Merchant Center account in order to make
 	// changes to this field.
 	MerchantCenterLinkingConfig *GoogleCloudRetailV2alphaMerchantCenterLinkingConfig `json:"merchantCenterLinkingConfig,omitempty"`
 
@@ -1932,16 +1932,15 @@ type GoogleCloudRetailV2alphaCatalogAttribute struct {
 	// an attribute.
 	ExactSearchableOption string `json:"exactSearchableOption,omitempty"`
 
-	// FacetIntervals: Set manually for numerical attributes only. If the
-	// facet SearchResponse.FacetSpec.intervals are not set by the customer
-	// for a numerical attribute, then a weekly pipeline will calculate some
-	// intervals using some percentiles on the distribution of all its
-	// product numerical attribute values. The latter computed intervals
-	// might not be ideal for the use case of that attribute. For this
-	// reason, the customer can set them manually. As another option, for
-	// any numerical attribute that is passed as a facet key in the request
-	// along with some given intervals, then these given intervals will be
-	// the facet intervals returned in the response.
+	// FacetIntervals: If you don't set the facet
+	// SearchRequest.FacetSpec.FacetKey.intervals to a numerical attribute,
+	// then a weekly pipeline calculates intervals using some percentiles on
+	// the distribution of all its product numerical attribute values. The
+	// calculated intervals might not be ideal for some attributes.
+	// Therefore, we give you the option the overwrite them. For any
+	// numerical attribute that is passed as a facet key in the request
+	// along with given intervals, the given intervals are the facet
+	// intervals returned in the response.
 	FacetIntervals []*GoogleCloudRetailV2alphaInterval `json:"facetIntervals,omitempty"`
 
 	// IgnoredFacetValues: Each instance represents a list of attribute
@@ -3924,16 +3923,16 @@ func (s *GoogleCloudRetailV2alphaLocalInventory) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudRetailV2alphaMerchantCenterAccountLink: Represents a link
-// between a Merchant Center account and a branch. Once a link is
-// established, products from the linked merchant center account will be
+// between a Merchant Center account and a branch. After a link is
+// established, products from the linked Merchant Center account are
 // streamed to the linked branch.
 type GoogleCloudRetailV2alphaMerchantCenterAccountLink struct {
-	// BranchId: Required. The branch id (e.g. 0/1/2) within the catalog
+	// BranchId: Required. The branch ID (e.g. 0/1/2) within the catalog
 	// that products from merchant_center_account_id are streamed to. When
 	// updating this field, an empty value will use the currently configured
 	// default branch. However, changing the default branch later on won't
-	// change the linked branch here. A single branch id can only have one
-	// linked merchant center account id.
+	// change the linked branch here. A single branch ID can only have one
+	// linked Merchant Center account ID.
 	BranchId string `json:"branchId,omitempty"`
 
 	// FeedFilters: Criteria for the Merchant Center feeds to be ingested
@@ -4076,16 +4075,16 @@ func (s *GoogleCloudRetailV2alphaMerchantCenterFeedFilter) MarshalJSON() ([]byte
 }
 
 // GoogleCloudRetailV2alphaMerchantCenterLink: Represents a link between
-// a Merchant Center account and a branch. Once a link is established,
-// products from the linked merchant center account will be streamed to
-// the linked branch.
+// a Merchant Center account and a branch. After a link is established,
+// products from the linked Merchant Center account are streamed to the
+// linked branch.
 type GoogleCloudRetailV2alphaMerchantCenterLink struct {
 	// BranchId: The branch ID (e.g. 0/1/2) within this catalog that
 	// products from merchant_center_account_id are streamed to. When
 	// updating this field, an empty value will use the currently configured
 	// default branch. However, changing the default branch later on won't
 	// change the linked branch here. A single branch ID can only have one
-	// linked merchant center account ID.
+	// linked Merchant Center account ID.
 	BranchId string `json:"branchId,omitempty"`
 
 	// Destinations: String representing the destination to import for, all
@@ -4110,7 +4109,7 @@ type GoogleCloudRetailV2alphaMerchantCenterLink struct {
 	// value: `en`.
 	LanguageCode string `json:"languageCode,omitempty"`
 
-	// MerchantCenterAccountId: Required. The linked Merchant center account
+	// MerchantCenterAccountId: Required. The linked Merchant Center account
 	// ID
 	// (https://developers.google.com/shopping-content/guides/accountstatuses).
 	// The account must be a standalone account or a sub-account of a MCA.
@@ -8823,16 +8822,16 @@ func (s *GoogleCloudRetailV2betaImportUserEventsResponse) MarshalJSON() ([]byte,
 }
 
 // GoogleCloudRetailV2betaMerchantCenterAccountLink: Represents a link
-// between a Merchant Center account and a branch. Once a link is
-// established, products from the linked merchant center account will be
+// between a Merchant Center account and a branch. After a link is
+// established, products from the linked Merchant Center account are
 // streamed to the linked branch.
 type GoogleCloudRetailV2betaMerchantCenterAccountLink struct {
-	// BranchId: Required. The branch id (e.g. 0/1/2) within the catalog
+	// BranchId: Required. The branch ID (e.g. 0/1/2) within the catalog
 	// that products from merchant_center_account_id are streamed to. When
 	// updating this field, an empty value will use the currently configured
 	// default branch. However, changing the default branch later on won't
-	// change the linked branch here. A single branch id can only have one
-	// linked merchant center account id.
+	// change the linked branch here. A single branch ID can only have one
+	// linked Merchant Center account ID.
 	BranchId string `json:"branchId,omitempty"`
 
 	// FeedFilters: Criteria for the Merchant Center feeds to be ingested
@@ -15109,7 +15108,7 @@ type ProjectsLocationsCatalogsMerchantCenterAccountLinksCreateCall struct {
 //
 //   - parent: The branch resource where this MerchantCenterAccountLink
 //     will be created. Format:
-//     projects/{PROJECT_NUMBER}/locations/global/catalogs/{CATALOG_ID}}.
+//     `projects/{PROJECT_NUMBER}/locations/global/catalogs/{CATALOG_ID}`.
 func (r *ProjectsLocationsCatalogsMerchantCenterAccountLinksService) Create(parent string, googlecloudretailv2alphamerchantcenteraccountlink *GoogleCloudRetailV2alphaMerchantCenterAccountLink) *ProjectsLocationsCatalogsMerchantCenterAccountLinksCreateCall {
 	c := &ProjectsLocationsCatalogsMerchantCenterAccountLinksCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15217,7 +15216,7 @@ func (c *ProjectsLocationsCatalogsMerchantCenterAccountLinksCreateCall) Do(opts 
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The branch resource where this MerchantCenterAccountLink will be created. Format: projects/{PROJECT_NUMBER}/locations/global/catalogs/{CATALOG_ID}}",
+	//       "description": "Required. The branch resource where this MerchantCenterAccountLink will be created. Format: `projects/{PROJECT_NUMBER}/locations/global/catalogs/{CATALOG_ID}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+$",
 	//       "required": true,
@@ -15253,8 +15252,8 @@ type ProjectsLocationsCatalogsMerchantCenterAccountLinksDeleteCall struct {
 // is returned.
 //
 //   - name: Full resource name. Format:
-//     projects/{project_number}/locations/{location_id}/catalogs/{catalog_
-//     id}/merchantCenterAccountLinks/{merchant_center_account_link_id}.
+//     `projects/{project_number}/locations/{location_id}/catalogs/{catalog
+//     _id}/merchantCenterAccountLinks/{merchant_center_account_link_id}`.
 func (r *ProjectsLocationsCatalogsMerchantCenterAccountLinksService) Delete(name string) *ProjectsLocationsCatalogsMerchantCenterAccountLinksDeleteCall {
 	c := &ProjectsLocationsCatalogsMerchantCenterAccountLinksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15356,7 +15355,7 @@ func (c *ProjectsLocationsCatalogsMerchantCenterAccountLinksDeleteCall) Do(opts 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Full resource name. Format: projects/{project_number}/locations/{location_id}/catalogs/{catalog_id}/merchantCenterAccountLinks/{merchant_center_account_link_id}",
+	//       "description": "Required. Full resource name. Format: `projects/{project_number}/locations/{location_id}/catalogs/{catalog_id}/merchantCenterAccountLinks/{merchant_center_account_link_id}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+/merchantCenterAccountLinks/[^/]+$",
 	//       "required": true,
@@ -15390,7 +15389,7 @@ type ProjectsLocationsCatalogsMerchantCenterAccountLinksListCall struct {
 //
 //   - parent: The parent Catalog of the resource. It must match this
 //     format:
-//     projects/{PROJECT_NUMBER}/locations/global/catalogs/{CATALOG_ID}.
+//     `projects/{PROJECT_NUMBER}/locations/global/catalogs/{CATALOG_ID}`.
 func (r *ProjectsLocationsCatalogsMerchantCenterAccountLinksService) List(parent string) *ProjectsLocationsCatalogsMerchantCenterAccountLinksListCall {
 	c := &ProjectsLocationsCatalogsMerchantCenterAccountLinksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15508,7 +15507,7 @@ func (c *ProjectsLocationsCatalogsMerchantCenterAccountLinksListCall) Do(opts ..
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The parent Catalog of the resource. It must match this format: projects/{PROJECT_NUMBER}/locations/global/catalogs/{CATALOG_ID}",
+	//       "description": "Required. The parent Catalog of the resource. It must match this format: `projects/{PROJECT_NUMBER}/locations/global/catalogs/{CATALOG_ID}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+$",
 	//       "required": true,

@@ -6243,6 +6243,9 @@ type GoogleCloudConnectorsV1AuthConfig struct {
 	// AdditionalVariables: List containing additional auth configs.
 	AdditionalVariables []*GoogleCloudConnectorsV1ConfigVariable `json:"additionalVariables,omitempty"`
 
+	// AuthKey: Identifier key for auth config
+	AuthKey string `json:"authKey,omitempty"`
+
 	// AuthType: The type of authentication configured.
 	//
 	// Possible values:
@@ -6637,6 +6640,16 @@ type GoogleCloudConnectorsV1Connection struct {
 
 	// Status: Output only. Current status of the connection.
 	Status *GoogleCloudConnectorsV1ConnectionStatus `json:"status,omitempty"`
+
+	// SubscriptionType: Output only. This subscription type enum value
+	// states if the metrics should be sent for billing or not.
+	//
+	// Possible values:
+	//   "SUBSCRIPTION_TYPE_UNSPECIFIED" - Unspecified subscription type.
+	//   "PAY_G" - Metrics should be sent for billing for PayG type.
+	//   "PAID" - Metrics should not be sent for billing for Paid
+	// Subscription type.
+	SubscriptionType string `json:"subscriptionType,omitempty"`
 
 	// Suspended: Optional. Suspended indicates if a user has suspended a
 	// connection or not.
@@ -11056,7 +11069,7 @@ func (s *GoogleCloudIntegrationsV1alphaValueType) UnmarshalJSON(data []byte) err
 
 // GoogleInternalCloudCrmEventbusV3PostToQueueWithTriggerIdRequest: Use
 // this request to post all workflows associated with a given trigger
-// id. Next available id: 10
+// id. Next available id: 11
 type GoogleInternalCloudCrmEventbusV3PostToQueueWithTriggerIdRequest struct {
 	// ClientId: Optional. If the client id is provided, then the
 	// combination of trigger id and client id is matched across all the
@@ -11106,6 +11119,11 @@ type GoogleInternalCloudCrmEventbusV3PostToQueueWithTriggerIdRequest struct {
 	// execution is returned. Must have no more than 36 characters and
 	// contain only alphanumeric characters and hyphens.
 	RequestId string `json:"requestId,omitempty"`
+
+	// ResourceName: This field is only required when using Admin Access.
+	// The resource name of target, or the parent resource name. For
+	// example: "projects/*/locations/*/integrations/*"
+	ResourceName string `json:"resourceName,omitempty"`
 
 	// ScheduledTime: Optional. Time in milliseconds since epoch when the
 	// given event would be scheduled.

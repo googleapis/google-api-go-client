@@ -396,7 +396,7 @@ type Container struct {
 	// image.
 	Command []string `json:"command,omitempty"`
 
-	// Env: Environment variables passed to the container.
+	// Env: Environment variables passed to the container's entrypoint.
 	Env map[string]string `json:"env,omitempty"`
 
 	// Image: Docker image defining the container. This image must be
@@ -583,8 +583,12 @@ type GceInstance struct {
 	// MachineType: The name of a Compute Engine machine type.
 	MachineType string `json:"machineType,omitempty"`
 
-	// PoolSize: Number of instances to pool for faster workstation starup.
+	// PoolSize: Number of instances to pool for faster workstation startup.
 	PoolSize int64 `json:"poolSize,omitempty"`
+
+	// PooledInstances: Output only. Number of instances currently available
+	// in the pool for faster workstation startup.
+	PooledInstances int64 `json:"pooledInstances,omitempty"`
 
 	// ServiceAccount: Email address of the service account used on VM
 	// instances used to support this configuration. If not set, VMs run
@@ -757,7 +761,7 @@ func (s *GenerateAccessTokenRequest) MarshalJSON() ([]byte, error) {
 type GenerateAccessTokenResponse struct {
 	// AccessToken: The generated bearer access token. To use this token,
 	// include it in an Authorization header of an HTTP request sent to the
-	// associated workstation's hostname, for example, `Authorization:
+	// associated workstation's hostname—for example, `Authorization:
 	// Bearer `.
 	AccessToken string `json:"accessToken,omitempty"`
 
@@ -1370,6 +1374,37 @@ func (s *PrivateClusterConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ReadinessCheck: A readiness check to be performed on a workstation.
+type ReadinessCheck struct {
+	// Path: Path to which the request should be sent.
+	Path string `json:"path,omitempty"`
+
+	// Port: Port to which the request should be sent.
+	Port int64 `json:"port,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Path") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Path") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ReadinessCheck) MarshalJSON() ([]byte, error) {
+	type NoMethod ReadinessCheck
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // SetIamPolicyRequest: Request message for `SetIamPolicy` method.
 type SetIamPolicyRequest struct {
 	// Policy: REQUIRED: The complete policy to be applied to the
@@ -1410,7 +1445,7 @@ func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 // StartWorkstationRequest: Request message for StartWorkstation.
 type StartWorkstationRequest struct {
 	// Etag: If set, the request will be rejected if the latest version of
-	// the workstation on the server does not have this etag.
+	// the workstation on the server does not have this ETag.
 	Etag string `json:"etag,omitempty"`
 
 	// ValidateOnly: If set, validate the request and preview the review,
@@ -1487,7 +1522,7 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 // StopWorkstationRequest: Request message for StopWorkstation.
 type StopWorkstationRequest struct {
 	// Etag: If set, the request will be rejected if the latest version of
-	// the workstation on the server does not have this etag.
+	// the workstation on the server does not have this ETag.
 	Etag string `json:"etag,omitempty"`
 
 	// ValidateOnly: If set, validate the request and preview the review,
@@ -1598,7 +1633,8 @@ type Workstation struct {
 	// DisplayName: Human-readable name for this resource.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Env: Environment variables passed to the workstation container.
+	// Env: Environment variables passed to the workstation container's
+	// entrypoint.
 	Env map[string]string `json:"env,omitempty"`
 
 	// Etag: Checksum computed by the server. May be sent on update and
@@ -1840,6 +1876,12 @@ type WorkstationConfig struct {
 	// PersistentDirectories: Directories to persist across workstation
 	// sessions.
 	PersistentDirectories []*PersistentDirectory `json:"persistentDirectories,omitempty"`
+
+	// ReadinessChecks: Readiness checks to perform when starting a
+	// workstation using this workstation configuration. Mark a workstation
+	// as running only after all specified readiness checks return 200
+	// status codes.
+	ReadinessChecks []*ReadinessCheck `json:"readinessChecks,omitempty"`
 
 	// Reconciling: Output only. Indicates whether this resource is
 	// currently being updated to match its intended state.
@@ -2716,7 +2758,7 @@ func (r *ProjectsLocationsWorkstationClustersService) Delete(name string) *Proje
 
 // Etag sets the optional parameter "etag": If set, the request will be
 // rejected if the latest version of the workstation cluster on the
-// server does not have this etag.
+// server does not have this ETag.
 func (c *ProjectsLocationsWorkstationClustersDeleteCall) Etag(etag string) *ProjectsLocationsWorkstationClustersDeleteCall {
 	c.urlParams_.Set("etag", etag)
 	return c
@@ -2833,7 +2875,7 @@ func (c *ProjectsLocationsWorkstationClustersDeleteCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "etag": {
-	//       "description": "If set, the request will be rejected if the latest version of the workstation cluster on the server does not have this etag.",
+	//       "description": "If set, the request will be rejected if the latest version of the workstation cluster on the server does not have this ETag.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3575,7 +3617,7 @@ func (r *ProjectsLocationsWorkstationClustersWorkstationConfigsService) Delete(n
 
 // Etag sets the optional parameter "etag": If set, the request is
 // rejected if the latest version of the workstation configuration on
-// the server does not have this etag.
+// the server does not have this ETag.
 func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsDeleteCall) Etag(etag string) *ProjectsLocationsWorkstationClustersWorkstationConfigsDeleteCall {
 	c.urlParams_.Set("etag", etag)
 	return c
@@ -3693,7 +3735,7 @@ func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsDeleteCall) Do(op
 	//   ],
 	//   "parameters": {
 	//     "etag": {
-	//       "description": "If set, the request is rejected if the latest version of the workstation configuration on the server does not have this etag.",
+	//       "description": "If set, the request is rejected if the latest version of the workstation configuration on the server does not have this ETag.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5103,7 +5145,7 @@ func (r *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsServi
 
 // Etag sets the optional parameter "etag": If set, the request will be
 // rejected if the latest version of the workstation on the server does
-// not have this etag.
+// not have this ETag.
 func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsDeleteCall) Etag(etag string) *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsDeleteCall {
 	c.urlParams_.Set("etag", etag)
 	return c
@@ -5212,7 +5254,7 @@ func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsDelet
 	//   ],
 	//   "parameters": {
 	//     "etag": {
-	//       "description": "If set, the request will be rejected if the latest version of the workstation on the server does not have this etag.",
+	//       "description": "If set, the request will be rejected if the latest version of the workstation on the server does not have this ETag.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

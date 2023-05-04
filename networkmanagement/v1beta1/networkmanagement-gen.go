@@ -278,7 +278,7 @@ func (s *AbortInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// AppEngineVersionEndpoint: Wrapper for app engine service version
+// AppEngineVersionEndpoint: Wrapper for the App Engine service version
 // attributes.
 type AppEngineVersionEndpoint struct {
 	// Uri: An App Engine (https://cloud.google.com/appengine) [service
@@ -1132,12 +1132,12 @@ type Endpoint struct {
 	//
 	// Possible values:
 	//   "NETWORK_TYPE_UNSPECIFIED" - Default type if unspecified.
-	//   "GCP_NETWORK" - A network hosted within Google Cloud Platform. To
-	// receive more detailed output, specify the URI for the source or
-	// destination network.
-	//   "NON_GCP_NETWORK" - A network hosted outside of Google Cloud
-	// Platform. This can be an on-premises network, or a network hosted by
-	// another cloud provider.
+	//   "GCP_NETWORK" - A network hosted within Google Cloud. To receive
+	// more detailed output, specify the URI for the source or destination
+	// network.
+	//   "NON_GCP_NETWORK" - A network hosted outside of Google Cloud. This
+	// can be an on-premises network, or a network hosted by another cloud
+	// provider.
 	NetworkType string `json:"networkType,omitempty"`
 
 	// Port: The IP protocol port of the endpoint. Only applicable when
@@ -1148,9 +1148,9 @@ type Endpoint struct {
 	// can be derived from the URI if you provide a VM instance or network
 	// URI. The following are two cases where you must provide the project
 	// ID: 1. Only the IP address is specified, and the IP address is within
-	// a GCP project. 2. When you are using Shared VPC and the IP address
-	// that you provide is from the service project. In this case, the
-	// network that the IP address resides in is defined in the host
+	// a Google Cloud project. 2. When you are using Shared VPC and the IP
+	// address that you provide is from the service project. In this case,
+	// the network that the IP address resides in is defined in the host
 	// project.
 	ProjectId string `json:"projectId,omitempty"`
 
@@ -1851,7 +1851,7 @@ func (s *LoadBalancerInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Location: A resource that represents Google Cloud Platform location.
+// Location: A resource that represents a Google Cloud location.
 type Location struct {
 	// DisplayName: The friendly name for this location, typically a nearby
 	// city name. For example, "Tokyo".

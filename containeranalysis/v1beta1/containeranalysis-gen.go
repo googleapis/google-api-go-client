@@ -142,6 +142,7 @@ func NewProjectsService(s *Service) *ProjectsService {
 	rs := &ProjectsService{s: s}
 	rs.Notes = NewProjectsNotesService(s)
 	rs.Occurrences = NewProjectsOccurrencesService(s)
+	rs.Resources = NewProjectsResourcesService(s)
 	return rs
 }
 
@@ -151,6 +152,8 @@ type ProjectsService struct {
 	Notes *ProjectsNotesService
 
 	Occurrences *ProjectsOccurrencesService
+
+	Resources *ProjectsResourcesService
 }
 
 func NewProjectsNotesService(s *Service) *ProjectsNotesService {
@@ -180,6 +183,15 @@ func NewProjectsOccurrencesService(s *Service) *ProjectsOccurrencesService {
 }
 
 type ProjectsOccurrencesService struct {
+	s *Service
+}
+
+func NewProjectsResourcesService(s *Service) *ProjectsResourcesService {
+	rs := &ProjectsResourcesService{s: s}
+	return rs
+}
+
+type ProjectsResourcesService struct {
 	s *Service
 }
 
@@ -4117,6 +4129,12 @@ func (s *FixableTotalByDigest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GeneratePackagesSummaryRequest: GeneratePackagesSummaryRequest is the
+// request body for the GeneratePackagesSummary API method. It just
+// takes a single name argument, referring to the resource.
+type GeneratePackagesSummaryRequest struct {
+}
+
 // GenericSignedAttestation: An attestation wrapper that uses the
 // Grafeas `Signature` message. This attestation must define the
 // `serialized_payload` that the `signatures` verify and any metadata
@@ -5061,6 +5079,40 @@ func (s *License) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// LicensesSummary: Per license count
+type LicensesSummary struct {
+	// Count: The number of fixable vulnerabilities associated with this
+	// resource.
+	Count int64 `json:"count,omitempty,string"`
+
+	// License: The license of the package. Note that the format of this
+	// value is not guaranteed. It may be nil, an empty string, a boolean
+	// value (A | B), a differently formed boolean value (A OR B), etc...
+	License string `json:"license,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Count") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Count") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LicensesSummary) MarshalJSON() ([]byte, error) {
+	type NoMethod LicensesSummary
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Link: This corresponds to an in-toto link.
 type Link struct {
 	// Byproducts: ByProducts are data generated as part of a software
@@ -5809,6 +5861,45 @@ type PackageIssue struct {
 
 func (s *PackageIssue) MarshalJSON() ([]byte, error) {
 	type NoMethod PackageIssue
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PackagesSummaryResponse: A summary of the packages found within the
+// given resource.
+type PackagesSummaryResponse struct {
+	// LicensesSummary: A listing by license name of each of the licenses
+	// and their counts.
+	LicensesSummary []*LicensesSummary `json:"licensesSummary,omitempty"`
+
+	// ResourceUrl: The unique URL of the image or the container for which
+	// this summary applies.
+	ResourceUrl string `json:"resourceUrl,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "LicensesSummary") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LicensesSummary") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PackagesSummaryResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod PackagesSummaryResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -10740,6 +10831,150 @@ func (c *ProjectsOccurrencesTestIamPermissionsCall) Do(opts ...googleapi.CallOpt
 	//   },
 	//   "response": {
 	//     "$ref": "TestIamPermissionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "containeranalysis.projects.resources.generatePackagesSummary":
+
+type ProjectsResourcesGeneratePackagesSummaryCall struct {
+	s                              *Service
+	name                           string
+	generatepackagessummaryrequest *GeneratePackagesSummaryRequest
+	urlParams_                     gensupport.URLParams
+	ctx_                           context.Context
+	header_                        http.Header
+}
+
+// GeneratePackagesSummary: Gets a summary of the packages within a
+// given resource.
+//
+//   - name: The name of the resource to get a packages summary for in the
+//     form of `projects/[PROJECT_ID]/resources/[RESOURCE_URL]`.
+func (r *ProjectsResourcesService) GeneratePackagesSummary(name string, generatepackagessummaryrequest *GeneratePackagesSummaryRequest) *ProjectsResourcesGeneratePackagesSummaryCall {
+	c := &ProjectsResourcesGeneratePackagesSummaryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.generatepackagessummaryrequest = generatepackagessummaryrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsResourcesGeneratePackagesSummaryCall) Fields(s ...googleapi.Field) *ProjectsResourcesGeneratePackagesSummaryCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsResourcesGeneratePackagesSummaryCall) Context(ctx context.Context) *ProjectsResourcesGeneratePackagesSummaryCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsResourcesGeneratePackagesSummaryCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsResourcesGeneratePackagesSummaryCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.generatepackagessummaryrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}:generatePackagesSummary")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "containeranalysis.projects.resources.generatePackagesSummary" call.
+// Exactly one of *PackagesSummaryResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *PackagesSummaryResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsResourcesGeneratePackagesSummaryCall) Do(opts ...googleapi.CallOption) (*PackagesSummaryResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &PackagesSummaryResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a summary of the packages within a given resource.",
+	//   "flatPath": "v1beta1/projects/{projectsId}/resources/{resourcesId}:generatePackagesSummary",
+	//   "httpMethod": "POST",
+	//   "id": "containeranalysis.projects.resources.generatePackagesSummary",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the resource to get a packages summary for in the form of `projects/[PROJECT_ID]/resources/[RESOURCE_URL]`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/resources/.*$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+name}:generatePackagesSummary",
+	//   "request": {
+	//     "$ref": "GeneratePackagesSummaryRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "PackagesSummaryResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

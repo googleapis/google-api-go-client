@@ -305,13 +305,16 @@ func (s *ContactCenter) MarshalJSON() ([]byte, error) {
 
 // ContactCenterQuota: Represents a quota for contact centers.
 type ContactCenterQuota struct {
-	// ContactCenterCountLimit: Reflects the count limit of contact centers
-	// on a billing account.
+	// ContactCenterCountLimit: Deprecated: Use the Quota fields instead.
+	// Reflects the count limit of contact centers on a billing account.
 	ContactCenterCountLimit int64 `json:"contactCenterCountLimit,omitempty"`
 
-	// ContactCenterCountSum: Reflects the count sum of contact centers on a
-	// billing account.
+	// ContactCenterCountSum: Deprecated: Use the Quota fields instead.
+	// Reflects the count sum of contact centers on a billing account.
 	ContactCenterCountSum int64 `json:"contactCenterCountSum,omitempty"`
+
+	// Quotas: Quota details per contact center instance type.
+	Quotas []*Quota `json:"quotas,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -506,7 +509,7 @@ func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Location: A resource that represents Google Cloud location.
+// Location: A resource that represents a Google Cloud location.
 type Location struct {
 	// DisplayName: The friendly name for this location, typically a nearby
 	// city name. For example, "Tokyo".
@@ -669,6 +672,54 @@ type OperationMetadata struct {
 
 func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod OperationMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Quota: Quota details.
+type Quota struct {
+	// ContactCenterCountLimit: Reflects the count limit of contact centers
+	// on a billing account.
+	ContactCenterCountLimit int64 `json:"contactCenterCountLimit,omitempty"`
+
+	// ContactCenterCountSum: Reflects the count sum of contact centers on a
+	// billing account.
+	ContactCenterCountSum int64 `json:"contactCenterCountSum,omitempty"`
+
+	// ContactCenterInstanceSize: Contact center instance type.
+	//
+	// Possible values:
+	//   "INSTANCE_SIZE_UNSPECIFIED" - The default value. This value is used
+	// if the state is omitted.
+	//   "STANDARD_SMALL" - Instance Size STANDARD_SMALL.
+	//   "STANDARD_MEDIUM" - Instance Size STANDARD_MEDIUM.
+	//   "STANDARD_LARGE" - Instance Size STANDARD_LARGE.
+	//   "STANDARD_XLARGE" - Instance Size STANDARD_XLARGE.
+	//   "STANDARD_2XLARGE" - Instance Size STANDARD_2XLARGE.
+	//   "STANDARD_3XLARGE" - Instance Size STANDARD_3XLARGE.
+	ContactCenterInstanceSize string `json:"contactCenterInstanceSize,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ContactCenterCountLimit") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ContactCenterCountLimit")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Quota) MarshalJSON() ([]byte, error) {
+	type NoMethod Quota
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

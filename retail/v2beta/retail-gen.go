@@ -4074,6 +4074,23 @@ func (s *GoogleCloudRetailV2betaCustomAttribute) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+func (s *GoogleCloudRetailV2betaCustomAttribute) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudRetailV2betaCustomAttribute
+	var s1 struct {
+		Numbers []gensupport.JSONFloat64 `json:"numbers"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Numbers = make([]float64, len(s1.Numbers))
+	for i := range s1.Numbers {
+		s.Numbers[i] = float64(s1.Numbers[i])
+	}
+	return nil
+}
+
 // GoogleCloudRetailV2betaExperimentInfo: Metadata for active A/B
 // testing Experiment.
 type GoogleCloudRetailV2betaExperimentInfo struct {

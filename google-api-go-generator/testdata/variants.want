@@ -475,6 +475,23 @@ func (s *MapFolder) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+func (s *MapFolder) UnmarshalJSON(data []byte) error {
+	type NoMethod MapFolder
+	var s1 struct {
+		DefaultViewport []gensupport.JSONFloat64 `json:"defaultViewport"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.DefaultViewport = make([]float64, len(s1.DefaultViewport))
+	for i := range s1.DefaultViewport {
+		s.DefaultViewport[i] = float64(s1.DefaultViewport[i])
+	}
+	return nil
+}
+
 type MapItem map[string]interface{}
 
 func (t MapItem) Type() string {
@@ -551,6 +568,23 @@ func (s *MapKmlLink) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+func (s *MapKmlLink) UnmarshalJSON(data []byte) error {
+	type NoMethod MapKmlLink
+	var s1 struct {
+		DefaultViewport []gensupport.JSONFloat64 `json:"defaultViewport"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.DefaultViewport = make([]float64, len(s1.DefaultViewport))
+	for i := range s1.DefaultViewport {
+		s.DefaultViewport[i] = float64(s1.DefaultViewport[i])
+	}
+	return nil
+}
+
 type MapLayer struct {
 	// DefaultViewport: An array of four numbers (west, south, east, north)
 	// which defines the rectangular bounding box of the default viewport.
@@ -599,4 +633,21 @@ func (s *MapLayer) MarshalJSON() ([]byte, error) {
 	type NoMethod MapLayer
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *MapLayer) UnmarshalJSON(data []byte) error {
+	type NoMethod MapLayer
+	var s1 struct {
+		DefaultViewport []gensupport.JSONFloat64 `json:"defaultViewport"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.DefaultViewport = make([]float64, len(s1.DefaultViewport))
+	for i := range s1.DefaultViewport {
+		s.DefaultViewport[i] = float64(s1.DefaultViewport[i])
+	}
+	return nil
 }

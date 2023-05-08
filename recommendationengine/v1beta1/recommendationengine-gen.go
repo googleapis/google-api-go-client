@@ -862,6 +862,23 @@ func (s *GoogleCloudRecommendationengineV1beta1FeatureMapFloatList) MarshalJSON(
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+func (s *GoogleCloudRecommendationengineV1beta1FeatureMapFloatList) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudRecommendationengineV1beta1FeatureMapFloatList
+	var s1 struct {
+		Value []gensupport.JSONFloat64 `json:"value"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Value = make([]float64, len(s1.Value))
+	for i := range s1.Value {
+		s.Value[i] = float64(s1.Value[i])
+	}
+	return nil
+}
+
 // GoogleCloudRecommendationengineV1beta1FeatureMapStringList: A list of
 // string features.
 type GoogleCloudRecommendationengineV1beta1FeatureMapStringList struct {

@@ -1386,6 +1386,23 @@ func (s *CropHintsParams) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+func (s *CropHintsParams) UnmarshalJSON(data []byte) error {
+	type NoMethod CropHintsParams
+	var s1 struct {
+		AspectRatios []gensupport.JSONFloat64 `json:"aspectRatios"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.AspectRatios = make([]float64, len(s1.AspectRatios))
+	for i := range s1.AspectRatios {
+		s.AspectRatios[i] = float64(s1.AspectRatios[i])
+	}
+	return nil
+}
+
 // DetectedBreak: Detected start or end of a structural component.
 type DetectedBreak struct {
 	// IsPrefix: True if break prepends the element.

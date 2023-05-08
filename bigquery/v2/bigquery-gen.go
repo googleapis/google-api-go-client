@@ -447,14 +447,24 @@ func (s *ArimaCoefficients) MarshalJSON() ([]byte, error) {
 func (s *ArimaCoefficients) UnmarshalJSON(data []byte) error {
 	type NoMethod ArimaCoefficients
 	var s1 struct {
-		InterceptCoefficient gensupport.JSONFloat64 `json:"interceptCoefficient"`
+		AutoRegressiveCoefficients []gensupport.JSONFloat64 `json:"autoRegressiveCoefficients"`
+		InterceptCoefficient       gensupport.JSONFloat64   `json:"interceptCoefficient"`
+		MovingAverageCoefficients  []gensupport.JSONFloat64 `json:"movingAverageCoefficients"`
 		*NoMethod
 	}
 	s1.NoMethod = (*NoMethod)(s)
 	if err := json.Unmarshal(data, &s1); err != nil {
 		return err
 	}
+	s.AutoRegressiveCoefficients = make([]float64, len(s1.AutoRegressiveCoefficients))
+	for i := range s1.AutoRegressiveCoefficients {
+		s.AutoRegressiveCoefficients[i] = float64(s1.AutoRegressiveCoefficients[i])
+	}
 	s.InterceptCoefficient = float64(s1.InterceptCoefficient)
+	s.MovingAverageCoefficients = make([]float64, len(s1.MovingAverageCoefficients))
+	for i := range s1.MovingAverageCoefficients {
+		s.MovingAverageCoefficients[i] = float64(s1.MovingAverageCoefficients[i])
+	}
 	return nil
 }
 
@@ -2655,6 +2665,23 @@ func (s *DoubleCandidates) MarshalJSON() ([]byte, error) {
 	type NoMethod DoubleCandidates
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *DoubleCandidates) UnmarshalJSON(data []byte) error {
+	type NoMethod DoubleCandidates
+	var s1 struct {
+		Candidates []gensupport.JSONFloat64 `json:"candidates"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Candidates = make([]float64, len(s1.Candidates))
+	for i := range s1.Candidates {
+		s.Candidates[i] = float64(s1.Candidates[i])
+	}
+	return nil
 }
 
 // DoubleHparamSearchSpace: Search space for a double hyperparameter.

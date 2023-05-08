@@ -2146,6 +2146,23 @@ func (s *GoogleCloudVisionV1p1beta1CropHintsParams) MarshalJSON() ([]byte, error
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+func (s *GoogleCloudVisionV1p1beta1CropHintsParams) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudVisionV1p1beta1CropHintsParams
+	var s1 struct {
+		AspectRatios []gensupport.JSONFloat64 `json:"aspectRatios"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.AspectRatios = make([]float64, len(s1.AspectRatios))
+	for i := range s1.AspectRatios {
+		s.AspectRatios[i] = float64(s1.AspectRatios[i])
+	}
+	return nil
+}
+
 // GoogleCloudVisionV1p1beta1DominantColorsAnnotation: Set of dominant
 // colors and their corresponding scores.
 type GoogleCloudVisionV1p1beta1DominantColorsAnnotation struct {

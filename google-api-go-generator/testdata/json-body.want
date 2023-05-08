@@ -1314,13 +1314,18 @@ func (s *GoogleCloudMlV1__ParameterSpec) MarshalJSON() ([]byte, error) {
 func (s *GoogleCloudMlV1__ParameterSpec) UnmarshalJSON(data []byte) error {
 	type NoMethod GoogleCloudMlV1__ParameterSpec
 	var s1 struct {
-		MaxValue gensupport.JSONFloat64 `json:"maxValue"`
-		MinValue gensupport.JSONFloat64 `json:"minValue"`
+		DiscreteValues []gensupport.JSONFloat64 `json:"discreteValues"`
+		MaxValue       gensupport.JSONFloat64   `json:"maxValue"`
+		MinValue       gensupport.JSONFloat64   `json:"minValue"`
 		*NoMethod
 	}
 	s1.NoMethod = (*NoMethod)(s)
 	if err := json.Unmarshal(data, &s1); err != nil {
 		return err
+	}
+	s.DiscreteValues = make([]float64, len(s1.DiscreteValues))
+	for i := range s1.DiscreteValues {
+		s.DiscreteValues[i] = float64(s1.DiscreteValues[i])
 	}
 	s.MaxValue = float64(s1.MaxValue)
 	s.MinValue = float64(s1.MinValue)

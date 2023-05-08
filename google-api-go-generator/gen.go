@@ -1477,7 +1477,8 @@ func (s *Schema) writeSchemaMarshal(forceSendFieldName, nullFieldsName string) {
 func (s *Schema) writeSchemaUnmarshal() {
 	var floatProps []*Property
 	for _, p := range s.properties() {
-		if p.p.Schema.Type == "number" {
+		if p.p.Schema.Type == "number" ||
+			(p.p.Schema.Type == "array" && p.p.Schema.ItemSchema.Type == "number") {
 			floatProps = append(floatProps, p)
 		}
 	}
@@ -1495,6 +1496,9 @@ func (s *Schema) writeSchemaUnmarshal() {
 		if p.forcePointerType() {
 			typ = "*" + typ
 		}
+		if p.p.Schema.Type == "array" {
+			typ = "[]" + typ
+		}
 		pn("%s %s `json:\"%s\"`", p.assignedGoName, typ, p.p.Name)
 	}
 	pn("    *NoMethod") // embed the schema
@@ -1509,6 +1513,11 @@ func (s *Schema) writeSchemaUnmarshal() {
 		n := p.assignedGoName
 		if p.forcePointerType() {
 			pn("if s1.%s != nil { s.%s = (*float64)(s1.%s) }", n, n, n)
+		} else if p.p.Schema.Type == "array" {
+			pn("s.%s = make([]float64, len(s1.%s))", n, n)
+			pn("  for i := range s1.%s {", n)
+			pn("  s.%s[i] = float64(s1.%s[i])", n, n)
+			pn("}")
 		} else {
 			pn("s.%s = float64(s1.%s)", n, n)
 		}

@@ -9196,6 +9196,23 @@ func (s *DoubleValues) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+func (s *DoubleValues) UnmarshalJSON(data []byte) error {
+	type NoMethod DoubleValues
+	var s1 struct {
+		Values []gensupport.JSONFloat64 `json:"values"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Values = make([]float64, len(s1.Values))
+	for i := range s1.Values {
+		s.Values[i] = float64(s1.Values[i])
+	}
+	return nil
+}
+
 type DriveClientActionMarkup struct {
 	RequestFileScope *RequestFileScope `json:"requestFileScope,omitempty"`
 

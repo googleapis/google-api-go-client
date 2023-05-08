@@ -849,6 +849,23 @@ func (s *TimeseriesBin) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+func (s *TimeseriesBin) UnmarshalJSON(data []byte) error {
+	type NoMethod TimeseriesBin
+	var s1 struct {
+		Densities []gensupport.JSONFloat64 `json:"densities"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Densities = make([]float64, len(s1.Densities))
+	for i := range s1.Densities {
+		s.Densities[i] = float64(s1.Densities[i])
+	}
+	return nil
+}
+
 // TimeseriesPercentiles: Percentiles contains synthetic values of a
 // metric at a given statistical percentile. These are used for
 // estimating a metric's value as experienced by a percentage of users

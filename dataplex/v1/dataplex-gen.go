@@ -1816,10 +1816,11 @@ func (s *GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfoDoubleFiel
 func (s *GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfoDoubleFieldInfo) UnmarshalJSON(data []byte) error {
 	type NoMethod GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfoDoubleFieldInfo
 	var s1 struct {
-		Average           gensupport.JSONFloat64 `json:"average"`
-		Max               gensupport.JSONFloat64 `json:"max"`
-		Min               gensupport.JSONFloat64 `json:"min"`
-		StandardDeviation gensupport.JSONFloat64 `json:"standardDeviation"`
+		Average           gensupport.JSONFloat64   `json:"average"`
+		Max               gensupport.JSONFloat64   `json:"max"`
+		Min               gensupport.JSONFloat64   `json:"min"`
+		Quartiles         []gensupport.JSONFloat64 `json:"quartiles"`
+		StandardDeviation gensupport.JSONFloat64   `json:"standardDeviation"`
 		*NoMethod
 	}
 	s1.NoMethod = (*NoMethod)(s)
@@ -1829,6 +1830,10 @@ func (s *GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfoDoubleFiel
 	s.Average = float64(s1.Average)
 	s.Max = float64(s1.Max)
 	s.Min = float64(s1.Min)
+	s.Quartiles = make([]float64, len(s1.Quartiles))
+	for i := range s1.Quartiles {
+		s.Quartiles[i] = float64(s1.Quartiles[i])
+	}
 	s.StandardDeviation = float64(s1.StandardDeviation)
 	return nil
 }

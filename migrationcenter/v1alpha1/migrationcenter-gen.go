@@ -469,6 +469,23 @@ func (s *AggregationHistogram) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+func (s *AggregationHistogram) UnmarshalJSON(data []byte) error {
+	type NoMethod AggregationHistogram
+	var s1 struct {
+		LowerBounds []gensupport.JSONFloat64 `json:"lowerBounds"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.LowerBounds = make([]float64, len(s1.LowerBounds))
+	for i := range s1.LowerBounds {
+		s.LowerBounds[i] = float64(s1.LowerBounds[i])
+	}
+	return nil
+}
+
 // AggregationResult: Message describing a result of an aggregation.
 type AggregationResult struct {
 	Count *AggregationResultCount `json:"count,omitempty"`

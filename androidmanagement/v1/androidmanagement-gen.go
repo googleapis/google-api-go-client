@@ -2838,6 +2838,58 @@ func (s *HardwareInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+func (s *HardwareInfo) UnmarshalJSON(data []byte) error {
+	type NoMethod HardwareInfo
+	var s1 struct {
+		BatteryShutdownTemperatures   []gensupport.JSONFloat64 `json:"batteryShutdownTemperatures"`
+		BatteryThrottlingTemperatures []gensupport.JSONFloat64 `json:"batteryThrottlingTemperatures"`
+		CpuShutdownTemperatures       []gensupport.JSONFloat64 `json:"cpuShutdownTemperatures"`
+		CpuThrottlingTemperatures     []gensupport.JSONFloat64 `json:"cpuThrottlingTemperatures"`
+		GpuShutdownTemperatures       []gensupport.JSONFloat64 `json:"gpuShutdownTemperatures"`
+		GpuThrottlingTemperatures     []gensupport.JSONFloat64 `json:"gpuThrottlingTemperatures"`
+		SkinShutdownTemperatures      []gensupport.JSONFloat64 `json:"skinShutdownTemperatures"`
+		SkinThrottlingTemperatures    []gensupport.JSONFloat64 `json:"skinThrottlingTemperatures"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.BatteryShutdownTemperatures = make([]float64, len(s1.BatteryShutdownTemperatures))
+	for i := range s1.BatteryShutdownTemperatures {
+		s.BatteryShutdownTemperatures[i] = float64(s1.BatteryShutdownTemperatures[i])
+	}
+	s.BatteryThrottlingTemperatures = make([]float64, len(s1.BatteryThrottlingTemperatures))
+	for i := range s1.BatteryThrottlingTemperatures {
+		s.BatteryThrottlingTemperatures[i] = float64(s1.BatteryThrottlingTemperatures[i])
+	}
+	s.CpuShutdownTemperatures = make([]float64, len(s1.CpuShutdownTemperatures))
+	for i := range s1.CpuShutdownTemperatures {
+		s.CpuShutdownTemperatures[i] = float64(s1.CpuShutdownTemperatures[i])
+	}
+	s.CpuThrottlingTemperatures = make([]float64, len(s1.CpuThrottlingTemperatures))
+	for i := range s1.CpuThrottlingTemperatures {
+		s.CpuThrottlingTemperatures[i] = float64(s1.CpuThrottlingTemperatures[i])
+	}
+	s.GpuShutdownTemperatures = make([]float64, len(s1.GpuShutdownTemperatures))
+	for i := range s1.GpuShutdownTemperatures {
+		s.GpuShutdownTemperatures[i] = float64(s1.GpuShutdownTemperatures[i])
+	}
+	s.GpuThrottlingTemperatures = make([]float64, len(s1.GpuThrottlingTemperatures))
+	for i := range s1.GpuThrottlingTemperatures {
+		s.GpuThrottlingTemperatures[i] = float64(s1.GpuThrottlingTemperatures[i])
+	}
+	s.SkinShutdownTemperatures = make([]float64, len(s1.SkinShutdownTemperatures))
+	for i := range s1.SkinShutdownTemperatures {
+		s.SkinShutdownTemperatures[i] = float64(s1.SkinShutdownTemperatures[i])
+	}
+	s.SkinThrottlingTemperatures = make([]float64, len(s1.SkinThrottlingTemperatures))
+	for i := range s1.SkinThrottlingTemperatures {
+		s.SkinThrottlingTemperatures[i] = float64(s1.SkinThrottlingTemperatures[i])
+	}
+	return nil
+}
+
 // HardwareStatus: Hardware status. Temperatures may be compared to the
 // temperature thresholds available in hardwareInfo to determine
 // hardware health.
@@ -2892,6 +2944,48 @@ func (s *HardwareStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod HardwareStatus
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *HardwareStatus) UnmarshalJSON(data []byte) error {
+	type NoMethod HardwareStatus
+	var s1 struct {
+		BatteryTemperatures []gensupport.JSONFloat64 `json:"batteryTemperatures"`
+		CpuTemperatures     []gensupport.JSONFloat64 `json:"cpuTemperatures"`
+		CpuUsages           []gensupport.JSONFloat64 `json:"cpuUsages"`
+		FanSpeeds           []gensupport.JSONFloat64 `json:"fanSpeeds"`
+		GpuTemperatures     []gensupport.JSONFloat64 `json:"gpuTemperatures"`
+		SkinTemperatures    []gensupport.JSONFloat64 `json:"skinTemperatures"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.BatteryTemperatures = make([]float64, len(s1.BatteryTemperatures))
+	for i := range s1.BatteryTemperatures {
+		s.BatteryTemperatures[i] = float64(s1.BatteryTemperatures[i])
+	}
+	s.CpuTemperatures = make([]float64, len(s1.CpuTemperatures))
+	for i := range s1.CpuTemperatures {
+		s.CpuTemperatures[i] = float64(s1.CpuTemperatures[i])
+	}
+	s.CpuUsages = make([]float64, len(s1.CpuUsages))
+	for i := range s1.CpuUsages {
+		s.CpuUsages[i] = float64(s1.CpuUsages[i])
+	}
+	s.FanSpeeds = make([]float64, len(s1.FanSpeeds))
+	for i := range s1.FanSpeeds {
+		s.FanSpeeds[i] = float64(s1.FanSpeeds[i])
+	}
+	s.GpuTemperatures = make([]float64, len(s1.GpuTemperatures))
+	for i := range s1.GpuTemperatures {
+		s.GpuTemperatures[i] = float64(s1.GpuTemperatures[i])
+	}
+	s.SkinTemperatures = make([]float64, len(s1.SkinTemperatures))
+	for i := range s1.SkinTemperatures {
+		s.SkinTemperatures[i] = float64(s1.SkinTemperatures[i])
+	}
+	return nil
 }
 
 // IssueCommandResponse: Response on issuing a command. This is

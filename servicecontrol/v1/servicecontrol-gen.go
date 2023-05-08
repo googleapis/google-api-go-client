@@ -1133,6 +1133,23 @@ func (s *ExplicitBuckets) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+func (s *ExplicitBuckets) UnmarshalJSON(data []byte) error {
+	type NoMethod ExplicitBuckets
+	var s1 struct {
+		Bounds []gensupport.JSONFloat64 `json:"bounds"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Bounds = make([]float64, len(s1.Bounds))
+	for i := range s1.Bounds {
+		s.Bounds[i] = float64(s1.Bounds[i])
+	}
+	return nil
+}
+
 // ExponentialBuckets: Describing buckets with exponentially growing
 // width.
 type ExponentialBuckets struct {

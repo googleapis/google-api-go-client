@@ -1379,6 +1379,23 @@ func (s *EnterpriseCrmEventbusProtoDoubleArray) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+func (s *EnterpriseCrmEventbusProtoDoubleArray) UnmarshalJSON(data []byte) error {
+	type NoMethod EnterpriseCrmEventbusProtoDoubleArray
+	var s1 struct {
+		Values []gensupport.JSONFloat64 `json:"values"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Values = make([]float64, len(s1.Values))
+	for i := range s1.Values {
+		s.Values[i] = float64(s1.Values[i])
+	}
+	return nil
+}
+
 type EnterpriseCrmEventbusProtoDoubleArrayFunction struct {
 	// Possible values:
 	//   "UNSPECIFIED"
@@ -1491,6 +1508,23 @@ func (s *EnterpriseCrmEventbusProtoDoubleParameterArray) MarshalJSON() ([]byte, 
 	type NoMethod EnterpriseCrmEventbusProtoDoubleParameterArray
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *EnterpriseCrmEventbusProtoDoubleParameterArray) UnmarshalJSON(data []byte) error {
+	type NoMethod EnterpriseCrmEventbusProtoDoubleParameterArray
+	var s1 struct {
+		DoubleValues []gensupport.JSONFloat64 `json:"doubleValues"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.DoubleValues = make([]float64, len(s1.DoubleValues))
+	for i := range s1.DoubleValues {
+		s.DoubleValues[i] = float64(s1.DoubleValues[i])
+	}
+	return nil
 }
 
 // EnterpriseCrmEventbusProtoErrorDetail: An error, warning, or
@@ -4787,6 +4821,23 @@ func (s *EnterpriseCrmFrontendsEventbusProtoDoubleParameterArray) MarshalJSON() 
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+func (s *EnterpriseCrmFrontendsEventbusProtoDoubleParameterArray) UnmarshalJSON(data []byte) error {
+	type NoMethod EnterpriseCrmFrontendsEventbusProtoDoubleParameterArray
+	var s1 struct {
+		DoubleValues []gensupport.JSONFloat64 `json:"doubleValues"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.DoubleValues = make([]float64, len(s1.DoubleValues))
+	for i := range s1.DoubleValues {
+		s.DoubleValues[i] = float64(s1.DoubleValues[i])
+	}
+	return nil
+}
+
 // EnterpriseCrmFrontendsEventbusProtoEventExecutionDetails: Contains
 // the details of the execution info of this event: this includes the
 // tasks execution details plus the event execution statistics. Next
@@ -7699,6 +7750,23 @@ func (s *GoogleCloudIntegrationsV1alphaDoubleParameterArray) MarshalJSON() ([]by
 	type NoMethod GoogleCloudIntegrationsV1alphaDoubleParameterArray
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudIntegrationsV1alphaDoubleParameterArray) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudIntegrationsV1alphaDoubleParameterArray
+	var s1 struct {
+		DoubleValues []gensupport.JSONFloat64 `json:"doubleValues"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.DoubleValues = make([]float64, len(s1.DoubleValues))
+	for i := range s1.DoubleValues {
+		s.DoubleValues[i] = float64(s1.DoubleValues[i])
+	}
+	return nil
 }
 
 // GoogleCloudIntegrationsV1alphaDownloadIntegrationVersionResponse:

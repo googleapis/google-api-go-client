@@ -1115,6 +1115,23 @@ func (s *GoogleCloudDiscoveryengineV1betaCustomAttribute) MarshalJSON() ([]byte,
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+func (s *GoogleCloudDiscoveryengineV1betaCustomAttribute) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDiscoveryengineV1betaCustomAttribute
+	var s1 struct {
+		Numbers []gensupport.JSONFloat64 `json:"numbers"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Numbers = make([]float64, len(s1.Numbers))
+	for i := range s1.Numbers {
+		s.Numbers[i] = float64(s1.Numbers[i])
+	}
+	return nil
+}
+
 // GoogleCloudDiscoveryengineV1betaDocument: Document captures all raw
 // metadata information of items to be recommended or searched.
 type GoogleCloudDiscoveryengineV1betaDocument struct {

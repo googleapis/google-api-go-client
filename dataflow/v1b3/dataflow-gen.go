@@ -2263,6 +2263,23 @@ func (s *FloatingPointList) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+func (s *FloatingPointList) UnmarshalJSON(data []byte) error {
+	type NoMethod FloatingPointList
+	var s1 struct {
+		Elements []gensupport.JSONFloat64 `json:"elements"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Elements = make([]float64, len(s1.Elements))
+	for i := range s1.Elements {
+		s.Elements[i] = float64(s1.Elements[i])
+	}
+	return nil
+}
+
 // FloatingPointMean: A representation of a floating point mean metric
 // contribution.
 type FloatingPointMean struct {

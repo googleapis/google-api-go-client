@@ -3390,6 +3390,23 @@ func (s *MetricMatrixRow) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+func (s *MetricMatrixRow) UnmarshalJSON(data []byte) error {
+	type NoMethod MetricMatrixRow
+	var s1 struct {
+		Cols []gensupport.JSONFloat64 `json:"cols"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Cols = make([]float64, len(s1.Cols))
+	for i := range s1.Cols {
+		s.Cols[i] = float64(s1.Cols[i])
+	}
+	return nil
+}
+
 // Mutation: A modification to one or more Cloud Spanner rows. Mutations
 // can be applied to a Cloud Spanner database by sending them in a
 // Commit call.

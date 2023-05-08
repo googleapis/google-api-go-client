@@ -2009,6 +2009,23 @@ func (s *Explicit) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+func (s *Explicit) UnmarshalJSON(data []byte) error {
+	type NoMethod Explicit
+	var s1 struct {
+		Bounds []gensupport.JSONFloat64 `json:"bounds"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Bounds = make([]float64, len(s1.Bounds))
+	for i := range s1.Bounds {
+		s.Bounds[i] = float64(s1.Bounds[i])
+	}
+	return nil
+}
+
 // Exponential: Specifies an exponential sequence of buckets that have a
 // width that is proportional to the value of the lower bound. Each
 // bucket represents a constant relative uncertainty on a specific value

@@ -527,6 +527,23 @@ func (s *GoogleCloudMlV1StudyConfigParameterSpecDiscreteValueSpec) MarshalJSON()
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+func (s *GoogleCloudMlV1StudyConfigParameterSpecDiscreteValueSpec) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudMlV1StudyConfigParameterSpecDiscreteValueSpec
+	var s1 struct {
+		Values []gensupport.JSONFloat64 `json:"values"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Values = make([]float64, len(s1.Values))
+	for i := range s1.Values {
+		s.Values[i] = float64(s1.Values[i])
+	}
+	return nil
+}
+
 type GoogleCloudMlV1StudyConfigParameterSpecDoubleValueSpec struct {
 	// MaxValue: Must be specified if type is `DOUBLE`. Maximum value of the
 	// parameter.
@@ -667,6 +684,23 @@ func (s *GoogleCloudMlV1StudyConfigParameterSpecMatchingParentDiscreteValueSpec)
 	type NoMethod GoogleCloudMlV1StudyConfigParameterSpecMatchingParentDiscreteValueSpec
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudMlV1StudyConfigParameterSpecMatchingParentDiscreteValueSpec) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudMlV1StudyConfigParameterSpecMatchingParentDiscreteValueSpec
+	var s1 struct {
+		Values []gensupport.JSONFloat64 `json:"values"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Values = make([]float64, len(s1.Values))
+	for i := range s1.Values {
+		s.Values[i] = float64(s1.Values[i])
+	}
+	return nil
 }
 
 // GoogleCloudMlV1StudyConfigParameterSpecMatchingParentIntValueSpec:
@@ -2646,13 +2680,18 @@ func (s *GoogleCloudMlV1__ParameterSpec) MarshalJSON() ([]byte, error) {
 func (s *GoogleCloudMlV1__ParameterSpec) UnmarshalJSON(data []byte) error {
 	type NoMethod GoogleCloudMlV1__ParameterSpec
 	var s1 struct {
-		MaxValue gensupport.JSONFloat64 `json:"maxValue"`
-		MinValue gensupport.JSONFloat64 `json:"minValue"`
+		DiscreteValues []gensupport.JSONFloat64 `json:"discreteValues"`
+		MaxValue       gensupport.JSONFloat64   `json:"maxValue"`
+		MinValue       gensupport.JSONFloat64   `json:"minValue"`
 		*NoMethod
 	}
 	s1.NoMethod = (*NoMethod)(s)
 	if err := json.Unmarshal(data, &s1); err != nil {
 		return err
+	}
+	s.DiscreteValues = make([]float64, len(s1.DiscreteValues))
+	for i := range s1.DiscreteValues {
+		s.DiscreteValues[i] = float64(s1.DiscreteValues[i])
 	}
 	s.MaxValue = float64(s1.MaxValue)
 	s.MinValue = float64(s1.MinValue)

@@ -3172,6 +3172,23 @@ func (s *NumericBucketingOption) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+func (s *NumericBucketingOption) UnmarshalJSON(data []byte) error {
+	type NoMethod NumericBucketingOption
+	var s1 struct {
+		BucketBounds []gensupport.JSONFloat64 `json:"bucketBounds"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.BucketBounds = make([]float64, len(s1.BucketBounds))
+	for i := range s1.BucketBounds {
+		s.BucketBounds[i] = float64(s1.BucketBounds[i])
+	}
+	return nil
+}
+
 // NumericBucketingResult: Output only. Custom numeric bucketing result.
 type NumericBucketingResult struct {
 	// Counts: Count within each bucket. Its size is the length of

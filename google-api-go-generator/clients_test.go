@@ -398,6 +398,20 @@ func TestUnmarshalSpecialFloats(t *testing.T) {
 	}
 }
 
+func TestUnmarshalArrayFloats(t *testing.T) {
+	in := `{"bounds": [3, "Infinity", "-Infinity", "NaN"]}`
+	want := []float64{3, math.Inf(1), math.Inf(-1), math.NaN()}
+	var got mon.Explicit
+	if err := json.Unmarshal([]byte(in), &got); err != nil {
+		t.Fatal(err)
+	}
+	for i := range want {
+		if !fleq(got.Bounds[i], want[i]) {
+			t.Errorf("got\n%+v\nwant\n%+v", got.Bounds[i], want)
+		}
+	}
+}
+
 func fleq(f1, f2 float64) bool {
 	return f1 == f2 || (math.IsNaN(f1) && math.IsNaN(f2))
 }

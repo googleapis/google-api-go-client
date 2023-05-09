@@ -6497,9 +6497,9 @@ func (r *FoldersBigQueryExportsService) Create(parent string, googlecloudsecurit
 
 // BigQueryExportId sets the optional parameter "bigQueryExportId":
 // Required. Unique identifier provided by the client within the parent
-// scope. It must consist of lower case letters, numbers, and hyphen,
-// with the first character a letter, the last a letter or a number, and
-// a 63 character maximum.
+// scope. It must consist of only lowercase letters, numbers, and
+// hyphens, must start with a letter, must end with either a letter or a
+// number, and must be 63 characters or less.
 func (c *FoldersBigQueryExportsCreateCall) BigQueryExportId(bigQueryExportId string) *FoldersBigQueryExportsCreateCall {
 	c.urlParams_.Set("bigQueryExportId", bigQueryExportId)
 	return c
@@ -6607,7 +6607,7 @@ func (c *FoldersBigQueryExportsCreateCall) Do(opts ...googleapi.CallOption) (*Go
 	//   ],
 	//   "parameters": {
 	//     "bigQueryExportId": {
-	//       "description": "Required. Unique identifier provided by the client within the parent scope. It must consist of lower case letters, numbers, and hyphen, with the first character a letter, the last a letter or a number, and a 63 character maximum.",
+	//       "description": "Required. Unique identifier provided by the client within the parent scope. It must consist of only lowercase letters, numbers, and hyphens, must start with a letter, must end with either a letter or a number, and must be 63 characters or less.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -7458,9 +7458,9 @@ func (r *FoldersMuteConfigsService) Create(parent string, googlecloudsecuritycen
 
 // MuteConfigId sets the optional parameter "muteConfigId": Required.
 // Unique identifier provided by the client within the parent scope. It
-// must consist of lower case letters, numbers, and hyphen, with the
-// first character a letter, the last a letter or a number, and a 63
-// character maximum.
+// must consist of only lowercase letters, numbers, and hyphens, must
+// start with a letter, must end with either a letter or a number, and
+// must be 63 characters or less.
 func (c *FoldersMuteConfigsCreateCall) MuteConfigId(muteConfigId string) *FoldersMuteConfigsCreateCall {
 	c.urlParams_.Set("muteConfigId", muteConfigId)
 	return c
@@ -7567,7 +7567,7 @@ func (c *FoldersMuteConfigsCreateCall) Do(opts ...googleapi.CallOption) (*Google
 	//   ],
 	//   "parameters": {
 	//     "muteConfigId": {
-	//       "description": "Required. Unique identifier provided by the client within the parent scope. It must consist of lower case letters, numbers, and hyphen, with the first character a letter, the last a letter or a number, and a 63 character maximum.",
+	//       "description": "Required. Unique identifier provided by the client within the parent scope. It must consist of only lowercase letters, numbers, and hyphens, must start with a letter, must end with either a letter or a number, and must be 63 characters or less.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -13069,9 +13069,9 @@ func (r *OrganizationsBigQueryExportsService) Create(parent string, googleclouds
 
 // BigQueryExportId sets the optional parameter "bigQueryExportId":
 // Required. Unique identifier provided by the client within the parent
-// scope. It must consist of lower case letters, numbers, and hyphen,
-// with the first character a letter, the last a letter or a number, and
-// a 63 character maximum.
+// scope. It must consist of only lowercase letters, numbers, and
+// hyphens, must start with a letter, must end with either a letter or a
+// number, and must be 63 characters or less.
 func (c *OrganizationsBigQueryExportsCreateCall) BigQueryExportId(bigQueryExportId string) *OrganizationsBigQueryExportsCreateCall {
 	c.urlParams_.Set("bigQueryExportId", bigQueryExportId)
 	return c
@@ -13179,7 +13179,7 @@ func (c *OrganizationsBigQueryExportsCreateCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "bigQueryExportId": {
-	//       "description": "Required. Unique identifier provided by the client within the parent scope. It must consist of lower case letters, numbers, and hyphen, with the first character a letter, the last a letter or a number, and a 63 character maximum.",
+	//       "description": "Required. Unique identifier provided by the client within the parent scope. It must consist of only lowercase letters, numbers, and hyphens, must start with a letter, must end with either a letter or a number, and must be 63 characters or less.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -14030,9 +14030,9 @@ func (r *OrganizationsMuteConfigsService) Create(parent string, googlecloudsecur
 
 // MuteConfigId sets the optional parameter "muteConfigId": Required.
 // Unique identifier provided by the client within the parent scope. It
-// must consist of lower case letters, numbers, and hyphen, with the
-// first character a letter, the last a letter or a number, and a 63
-// character maximum.
+// must consist of only lowercase letters, numbers, and hyphens, must
+// start with a letter, must end with either a letter or a number, and
+// must be 63 characters or less.
 func (c *OrganizationsMuteConfigsCreateCall) MuteConfigId(muteConfigId string) *OrganizationsMuteConfigsCreateCall {
 	c.urlParams_.Set("muteConfigId", muteConfigId)
 	return c
@@ -14139,7 +14139,7 @@ func (c *OrganizationsMuteConfigsCreateCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "muteConfigId": {
-	//       "description": "Required. Unique identifier provided by the client within the parent scope. It must consist of lower case letters, numbers, and hyphen, with the first character a letter, the last a letter or a number, and a 63 character maximum.",
+	//       "description": "Required. Unique identifier provided by the client within the parent scope. It must consist of only lowercase letters, numbers, and hyphens, must start with a letter, must end with either a letter or a number, and must be 63 characters or less.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -20861,9 +20861,9 @@ func (r *ProjectsBigQueryExportsService) Create(parent string, googlecloudsecuri
 
 // BigQueryExportId sets the optional parameter "bigQueryExportId":
 // Required. Unique identifier provided by the client within the parent
-// scope. It must consist of lower case letters, numbers, and hyphen,
-// with the first character a letter, the last a letter or a number, and
-// a 63 character maximum.
+// scope. It must consist of only lowercase letters, numbers, and
+// hyphens, must start with a letter, must end with either a letter or a
+// number, and must be 63 characters or less.
 func (c *ProjectsBigQueryExportsCreateCall) BigQueryExportId(bigQueryExportId string) *ProjectsBigQueryExportsCreateCall {
 	c.urlParams_.Set("bigQueryExportId", bigQueryExportId)
 	return c
@@ -20971,7 +20971,7 @@ func (c *ProjectsBigQueryExportsCreateCall) Do(opts ...googleapi.CallOption) (*G
 	//   ],
 	//   "parameters": {
 	//     "bigQueryExportId": {
-	//       "description": "Required. Unique identifier provided by the client within the parent scope. It must consist of lower case letters, numbers, and hyphen, with the first character a letter, the last a letter or a number, and a 63 character maximum.",
+	//       "description": "Required. Unique identifier provided by the client within the parent scope. It must consist of only lowercase letters, numbers, and hyphens, must start with a letter, must end with either a letter or a number, and must be 63 characters or less.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -21822,9 +21822,9 @@ func (r *ProjectsMuteConfigsService) Create(parent string, googlecloudsecurityce
 
 // MuteConfigId sets the optional parameter "muteConfigId": Required.
 // Unique identifier provided by the client within the parent scope. It
-// must consist of lower case letters, numbers, and hyphen, with the
-// first character a letter, the last a letter or a number, and a 63
-// character maximum.
+// must consist of only lowercase letters, numbers, and hyphens, must
+// start with a letter, must end with either a letter or a number, and
+// must be 63 characters or less.
 func (c *ProjectsMuteConfigsCreateCall) MuteConfigId(muteConfigId string) *ProjectsMuteConfigsCreateCall {
 	c.urlParams_.Set("muteConfigId", muteConfigId)
 	return c
@@ -21931,7 +21931,7 @@ func (c *ProjectsMuteConfigsCreateCall) Do(opts ...googleapi.CallOption) (*Googl
 	//   ],
 	//   "parameters": {
 	//     "muteConfigId": {
-	//       "description": "Required. Unique identifier provided by the client within the parent scope. It must consist of lower case letters, numbers, and hyphen, with the first character a letter, the last a letter or a number, and a 63 character maximum.",
+	//       "description": "Required. Unique identifier provided by the client within the parent scope. It must consist of only lowercase letters, numbers, and hyphens, must start with a letter, must end with either a letter or a number, and must be 63 characters or less.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

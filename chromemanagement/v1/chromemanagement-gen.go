@@ -458,7 +458,7 @@ func (s *GoogleChromeManagementV1AppDetails) UnmarshalJSON(data []byte) error {
 // Frequency: 3 hours - Policy Controlled: Yes * Cache: If the device is
 // offline, the collected data is stored locally, and will be reported
 // when the device is next online: No * Reported for affiliated users
-// only: N/A
+// only: N/A * Granular permission needed: TELEMETRY_API_AUDIO_REPORT
 type GoogleChromeManagementV1AudioStatusReport struct {
 	// InputDevice: Output only. Active input device's name.
 	InputDevice string `json:"inputDevice,omitempty"`
@@ -514,7 +514,7 @@ func (s *GoogleChromeManagementV1AudioStatusReport) MarshalJSON() ([]byte, error
 // Frequency: 3 hours - Policy Controlled: Yes * Cache: If the device is
 // offline, the collected data is stored locally, and will be reported
 // when the device is next online: No * Reported for affiliated users
-// only: N/A
+// only: N/A * Granular permission needed: TELEMETRY_API_BATTERY_INFO
 type GoogleChromeManagementV1BatteryInfo struct {
 	// DesignCapacity: Output only. Design capacity (mAmpere-hours).
 	DesignCapacity int64 `json:"designCapacity,omitempty,string"`
@@ -630,7 +630,7 @@ func (s *GoogleChromeManagementV1BatterySampleReport) MarshalJSON() ([]byte, err
 // Frequency: 3 hours - Policy Controlled: Yes * Cache: If the device is
 // offline, the collected data is stored locally, and will be reported
 // when the device is next online: No * Reported for affiliated users
-// only: N/A
+// only: N/A * Granular permission needed: TELEMETRY_API_BATTERY_REPORT
 type GoogleChromeManagementV1BatteryStatusReport struct {
 	// BatteryHealth: Output only. Battery health.
 	//
@@ -693,7 +693,8 @@ func (s *GoogleChromeManagementV1BatteryStatusReport) MarshalJSON() ([]byte, err
 // Reporting Frequency: 3 hours - Policy Controlled: Yes * Cache: If the
 // device is offline, the collected data is stored locally, and will be
 // reported when the device is next online: Yes * Reported for
-// affiliated users only: N/A
+// affiliated users only: N/A * Granular permission needed:
+// TELEMETRY_API_OS_REPORT
 type GoogleChromeManagementV1BootPerformanceReport struct {
 	// BootUpDuration: Total time to boot up.
 	BootUpDuration string `json:"bootUpDuration,omitempty"`
@@ -1310,7 +1311,7 @@ func (s *GoogleChromeManagementV1CountInstalledAppsResponse) MarshalJSON() ([]by
 // Frequency: 3 hours - Policy Controlled: Yes * Cache: If the device is
 // offline, the collected data is stored locally, and will be reported
 // when the device is next online: No * Reported for affiliated users
-// only: N/A
+// only: N/A * Granular permission needed: TELEMETRY_API_CPU_INFO
 type GoogleChromeManagementV1CpuInfo struct {
 	// Architecture: Output only. Architecture type for the CPU. * This
 	// field provides device information, which is static and will not
@@ -1375,7 +1376,7 @@ func (s *GoogleChromeManagementV1CpuInfo) MarshalJSON() ([]byte, error) {
 // Frequency: 3 hours - Policy Controlled: Yes * Cache: If the device is
 // offline, the collected data is stored locally, and will be reported
 // when the device is next online: No * Reported for affiliated users
-// only: N/A
+// only: N/A * Granular permission needed: TELEMETRY_API_CPU_REPORT
 type GoogleChromeManagementV1CpuStatusReport struct {
 	// CpuTemperatureInfo: Output only. CPU temperature sample info per CPU
 	// core in Celsius
@@ -1836,7 +1837,7 @@ func (s *GoogleChromeManagementV1GraphicsAdapterInfo) MarshalJSON() ([]byte, err
 // Frequency: 3 hours - Policy Controlled: Yes * Cache: If the device is
 // offline, the collected data is stored locally, and will be reported
 // when the device is next online: No * Reported for affiliated users
-// only: N/A
+// only: N/A * Granular permission needed: TELEMETRY_API_GRAPHICS_INFO
 type GoogleChromeManagementV1GraphicsInfo struct {
 	// AdapterInfo: Output only. Information about the graphics adapter
 	// (GPU).
@@ -1885,7 +1886,7 @@ func (s *GoogleChromeManagementV1GraphicsInfo) MarshalJSON() ([]byte, error) {
 // Frequency: 3 hours - Policy Controlled: Yes * Cache: If the device is
 // offline, the collected data is stored locally, and will be reported
 // when the device is next online: No * Reported for affiliated users
-// only: N/A
+// only: N/A * Granular permission needed: TELEMETRY_API_GRAPHICS_REPORT
 type GoogleChromeManagementV1GraphicsStatusReport struct {
 	// Displays: Output only. Information about the displays for the device.
 	Displays []*GoogleChromeManagementV1DisplayInfo `json:"displays,omitempty"`
@@ -2170,7 +2171,8 @@ func (s *GoogleChromeManagementV1ListTelemetryUsersResponse) MarshalJSON() ([]by
 // at device startup - Policy Controlled: Yes * Cache: If the device is
 // offline, the collected data is stored locally, and will be reported
 // when the device is next online: only for `totalMemoryEncryption` *
-// Reported for affiliated users only: N/A
+// Reported for affiliated users only: N/A * Granular permission needed:
+// TELEMETRY_API_MEMORY_INFO
 type GoogleChromeManagementV1MemoryInfo struct {
 	// AvailableRamBytes: Output only. Amount of available RAM in bytes.
 	AvailableRamBytes int64 `json:"availableRamBytes,omitempty,string"`
@@ -2215,7 +2217,8 @@ func (s *GoogleChromeManagementV1MemoryInfo) MarshalJSON() ([]byte, error) {
 // collected every 10 minutes * Default Data Reporting Frequency: Every
 // 3 hours - Policy Controlled: Yes * Cache: If the device is offline,
 // the collected data is stored locally, and will be reported when the
-// device is next online: No * Reported for affiliated users only: N/A
+// device is next online: No * Reported for affiliated users only: N/A *
+// Granular permission needed: TELEMETRY_API_MEMORY_REPORT
 type GoogleChromeManagementV1MemoryStatusReport struct {
 	// PageFaults: Output only. Number of page faults during this collection
 	PageFaults int64 `json:"pageFaults,omitempty"`
@@ -2320,7 +2323,8 @@ func (s *GoogleChromeManagementV1NetworkDevice) MarshalJSON() ([]byte, error) {
 
 // GoogleChromeManagementV1NetworkDiagnosticsReport: Network testing
 // results to determine the health of the device's network connection,
-// for example whether the HTTPS latency is high or normal.
+// for example whether the HTTPS latency is high or normal. * Granular
+// permission needed: TELEMETRY_API_NETWORK_REPORT
 type GoogleChromeManagementV1NetworkDiagnosticsReport struct {
 	// HttpsLatencyData: Output only. HTTPS latency test data.
 	HttpsLatencyData *GoogleChromeManagementV1HttpsLatencyRoutineData `json:"httpsLatencyData,omitempty"`
@@ -2362,7 +2366,8 @@ func (s *GoogleChromeManagementV1NetworkDiagnosticsReport) MarshalJSON() ([]byte
 // Reporting Frequency: At device startup - Policy Controlled: Yes *
 // Cache: If the device is offline, the collected data is stored
 // locally, and will be reported when the device is next online: Yes *
-// Reported for affiliated users only: N/A
+// Reported for affiliated users only: N/A * Granular permission needed:
+// TELEMETRY_API_NETWORK_INFO
 type GoogleChromeManagementV1NetworkInfo struct {
 	// NetworkDevices: Output only. List of network devices.
 	NetworkDevices []*GoogleChromeManagementV1NetworkDevice `json:"networkDevices,omitempty"`
@@ -2400,7 +2405,7 @@ func (s *GoogleChromeManagementV1NetworkInfo) MarshalJSON() ([]byte, error) {
 // Frequency: 3 hours - Policy Controlled: Yes * Cache: If the device is
 // offline, the collected data is stored locally, and will be reported
 // when the device is next online: Yes * Reported for affiliated users
-// only: Yes
+// only: Yes * Granular permission needed: TELEMETRY_API_NETWORK_REPORT
 type GoogleChromeManagementV1NetworkStatusReport struct {
 	// ConnectionState: Output only. Current connection state of the
 	// network.
@@ -2507,7 +2512,7 @@ func (s *GoogleChromeManagementV1NetworkStatusReport) MarshalJSON() ([]byte, err
 // Frequency: 3 hours - Policy Controlled: Yes * Cache: If the device is
 // offline, the collected data is stored locally, and will be reported
 // when the device is next online: No * Reported for affiliated users
-// only: N/A
+// only: N/A * Granular permission needed: TELEMETRY_API_OS_REPORT
 type GoogleChromeManagementV1OsUpdateStatus struct {
 	// LastRebootTime: Output only. Timestamp of the last reboot.
 	LastRebootTime string `json:"lastRebootTime,omitempty"`
@@ -2563,7 +2568,8 @@ func (s *GoogleChromeManagementV1OsUpdateStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleChromeManagementV1PeripheralsReport: Peripherals report.
+// GoogleChromeManagementV1PeripheralsReport: Peripherals report. *
+// Granular permission needed: TELEMETRY_API_PERIPHERALS_REPORT
 type GoogleChromeManagementV1PeripheralsReport struct {
 	// ReportTime: Output only. Timestamp of when the report was collected.
 	ReportTime string `json:"reportTime,omitempty"`
@@ -2603,7 +2609,7 @@ func (s *GoogleChromeManagementV1PeripheralsReport) MarshalJSON() ([]byte, error
 // Frequency: 3 hours - Policy Controlled: Yes * Cache: If the device is
 // offline, the collected data is stored locally, and will be reported
 // when the device is next online: No * Reported for affiliated users
-// only: N/A
+// only: N/A * Granular permission needed: TELEMETRY_API_STORAGE_INFO
 type GoogleChromeManagementV1StorageInfo struct {
 	// AvailableDiskBytes: The available space for user data storage in the
 	// device in bytes.
@@ -2685,7 +2691,7 @@ func (s *GoogleChromeManagementV1StorageInfoDiskVolume) MarshalJSON() ([]byte, e
 // Frequency: 3 hours - Policy Controlled: Yes * Cache: If the device is
 // offline, the collected data is stored locally, and will be reported
 // when the device is next online: No * Reported for affiliated users
-// only: N/A
+// only: N/A * Granular permission needed: TELEMETRY_API_STORAGE_REPORT
 type GoogleChromeManagementV1StorageStatusReport struct {
 	// Disk: Output only. Reports on disk.
 	Disk []*GoogleChromeManagementV1DiskInfo `json:"disk,omitempty"`
@@ -2719,12 +2725,14 @@ func (s *GoogleChromeManagementV1StorageStatusReport) MarshalJSON() ([]byte, err
 
 // GoogleChromeManagementV1TelemetryAudioSevereUnderrunEvent:
 // `TelemetryAudioSevereUnderrunEvent` is triggered when a audio devices
-// run out of buffer data for more than 5 seconds.
+// run out of buffer data for more than 5 seconds. * Granular permission
+// needed: TELEMETRY_API_AUDIO_REPORT
 type GoogleChromeManagementV1TelemetryAudioSevereUnderrunEvent struct {
 }
 
 // GoogleChromeManagementV1TelemetryDevice: Telemetry data collected
-// from a managed device.
+// from a managed device. * Granular permission needed:
+// TELEMETRY_API_DEVICE
 type GoogleChromeManagementV1TelemetryDevice struct {
 	// AudioStatusReport: Output only. Audio reports collected periodically
 	// sorted in a decreasing order of report_time.
@@ -2844,7 +2852,8 @@ func (s *GoogleChromeManagementV1TelemetryDevice) MarshalJSON() ([]byte, error) 
 }
 
 // GoogleChromeManagementV1TelemetryDeviceInfo: Information about a
-// device associated with telemetry data.
+// device associated with telemetry data. * Granular Permission needed:
+// TELEMETRY_API_DEVICE
 type GoogleChromeManagementV1TelemetryDeviceInfo struct {
 	// DeviceId: Output only. The unique Directory API ID of the device.
 	// This value is the same as the Admin Console's Directory API ID in the
@@ -2950,7 +2959,8 @@ func (s *GoogleChromeManagementV1TelemetryEvent) MarshalJSON() ([]byte, error) {
 // GoogleChromeManagementV1TelemetryHttpsLatencyChangeEvent: Https
 // latency routine is run periodically and
 // `TelemetryHttpsLatencyChangeEvent` is triggered if a latency problem
-// was detected or if the device has recovered from a latency problem..
+// was detected or if the device has recovered from a latency problem. *
+// Granular permission needed: TELEMETRY_API_NETWORK_REPORT
 type GoogleChromeManagementV1TelemetryHttpsLatencyChangeEvent struct {
 	// HttpsLatencyRoutineData: HTTPS latency routine data that triggered
 	// the event.
@@ -2992,7 +3002,8 @@ func (s *GoogleChromeManagementV1TelemetryHttpsLatencyChangeEvent) MarshalJSON()
 
 // GoogleChromeManagementV1TelemetryUsbPeripheralsEvent:
 // `TelemetryUsbPeripheralsEvent` is triggered USB devices are either
-// added or removed.
+// added or removed. * Granular permission needed:
+// TELEMETRY_API_PERIPHERALS_REPORT
 type GoogleChromeManagementV1TelemetryUsbPeripheralsEvent struct {
 	// UsbPeripheralReport: List of usb devices that were either added or
 	// removed.
@@ -3023,7 +3034,7 @@ func (s *GoogleChromeManagementV1TelemetryUsbPeripheralsEvent) MarshalJSON() ([]
 }
 
 // GoogleChromeManagementV1TelemetryUser: Telemetry data collected from
-// a managed user.
+// a managed user. * Granular permission needed: TELEMETRY_API_USER
 type GoogleChromeManagementV1TelemetryUser struct {
 	// Customer: G Suite Customer whose enterprise enrolled the device.
 	Customer string `json:"customer,omitempty"`
@@ -3071,7 +3082,8 @@ func (s *GoogleChromeManagementV1TelemetryUser) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleChromeManagementV1TelemetryUserDevice: Telemetry data collected
-// for a managed user and device.
+// for a managed user and device. * Granular permission needed:
+// TELEMETRY_API_DEVICE
 type GoogleChromeManagementV1TelemetryUserDevice struct {
 	// AudioStatusReport: Output only. Audio reports collected periodically
 	// sorted in a decreasing order of report_time.
@@ -3111,7 +3123,8 @@ func (s *GoogleChromeManagementV1TelemetryUserDevice) MarshalJSON() ([]byte, err
 }
 
 // GoogleChromeManagementV1TelemetryUserInfo: Information about a user
-// associated with telemetry data.
+// associated with telemetry data. * Granular permission needed:
+// TELEMETRY_API_USER
 type GoogleChromeManagementV1TelemetryUserInfo struct {
 	// Email: Output only. User's email.
 	Email string `json:"email,omitempty"`
@@ -3151,7 +3164,8 @@ func (s *GoogleChromeManagementV1TelemetryUserInfo) MarshalJSON() ([]byte, error
 // Reporting Frequency: At device startup - Policy Controlled: No *
 // Cache: If the device is offline, the collected data is stored
 // locally, and will be reported when the device is next online: Yes *
-// Reported for affiliated users only: N/A
+// Reported for affiliated users only: N/A * Granular permission needed:
+// TELEMETRY_API_BUS_DEVICE_INFO
 type GoogleChromeManagementV1ThunderboltInfo struct {
 	// SecurityLevel: Security level of the Thunderbolt bus.
 	//

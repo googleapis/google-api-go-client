@@ -1406,6 +1406,11 @@ type DocumentationRule struct {
 	// the proto element.
 	Description string `json:"description,omitempty"`
 
+	// DisableReplacementWords: String of comma or space separated
+	// case-sensitive words for which method/field name replacement will be
+	// disabled by go/api-docgen.
+	DisableReplacementWords string `json:"disableReplacementWords,omitempty"`
+
 	// Selector: The selector is a comma-separated list of patterns for any
 	// element such as a method, a field, an enum value. Each pattern is a
 	// qualified name of the element which may end in "*", indicating a
@@ -3431,6 +3436,8 @@ type Publishing struct {
 	//   "STREET_VIEW" - Street View Org.
 	//   "SHOPPING" - Shopping Org.
 	//   "GEO" - Geo Org.
+	//   "GENERATIVE_AI" - Generative AI -
+	// https://developers.generativeai.google
 	Organization string `json:"organization,omitempty"`
 
 	// ProtoReferenceDocumentationUri: Optional link to proto reference

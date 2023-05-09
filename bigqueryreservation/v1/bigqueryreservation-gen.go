@@ -716,7 +716,6 @@ func (s *MoveAssignmentRequest) MarshalJSON() ([]byte, error) {
 // users.
 type Reservation struct {
 	// Autoscale: The configuration parameters for the auto scaling feature.
-	// Note this is an alpha feature.
 	Autoscale *Autoscale `json:"autoscale,omitempty"`
 
 	// Concurrency: Job concurrency target which sets a soft upper bound on

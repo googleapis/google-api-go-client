@@ -11501,10 +11501,10 @@ func (c *V1SearchAllIamPoliciesCall) OrderBy(orderBy string) *V1SearchAllIamPoli
 
 // PageSize sets the optional parameter "pageSize": The page size for
 // search result pagination. Page size is capped at 500 even if a larger
-// value is given. If set to zero, server will pick an appropriate
-// default. Returned results may be fewer than requested. When this
-// happens, there could be more results as long as `next_page_token` is
-// returned.
+// value is given. If set to zero or a negative value, server will pick
+// an appropriate default. Returned results may be fewer than requested.
+// When this happens, there could be more results as long as
+// `next_page_token` is returned.
 func (c *V1SearchAllIamPoliciesCall) PageSize(pageSize int64) *V1SearchAllIamPoliciesCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -11681,7 +11681,7 @@ func (c *V1SearchAllIamPoliciesCall) Do(opts ...googleapi.CallOption) (*SearchAl
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Optional. The page size for search result pagination. Page size is capped at 500 even if a larger value is given. If set to zero, server will pick an appropriate default. Returned results may be fewer than requested. When this happens, there could be more results as long as `next_page_token` is returned.",
+	//       "description": "Optional. The page size for search result pagination. Page size is capped at 500 even if a larger value is given. If set to zero or a negative value, server will pick an appropriate default. Returned results may be fewer than requested. When this happens, there could be more results as long as `next_page_token` is returned.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -11803,10 +11803,10 @@ func (c *V1SearchAllResourcesCall) OrderBy(orderBy string) *V1SearchAllResources
 
 // PageSize sets the optional parameter "pageSize": The page size for
 // search result pagination. Page size is capped at 500 even if a larger
-// value is given. If set to zero, server will pick an appropriate
-// default. Returned results may be fewer than requested. When this
-// happens, there could be more results as long as `next_page_token` is
-// returned.
+// value is given. If set to zero or a negative value, server will pick
+// an appropriate default. Returned results may be fewer than requested.
+// When this happens, there could be more results as long as
+// `next_page_token` is returned.
 func (c *V1SearchAllResourcesCall) PageSize(pageSize int64) *V1SearchAllResourcesCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -12013,7 +12013,7 @@ func (c *V1SearchAllResourcesCall) Do(opts ...googleapi.CallOption) (*SearchAllR
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Optional. The page size for search result pagination. Page size is capped at 500 even if a larger value is given. If set to zero, server will pick an appropriate default. Returned results may be fewer than requested. When this happens, there could be more results as long as `next_page_token` is returned.",
+	//       "description": "Optional. The page size for search result pagination. Page size is capped at 500 even if a larger value is given. If set to zero or a negative value, server will pick an appropriate default. Returned results may be fewer than requested. When this happens, there could be more results as long as `next_page_token` is returned.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"

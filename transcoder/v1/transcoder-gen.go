@@ -1623,14 +1623,14 @@ type Manifest struct {
 	// for each element of the `Manifest.mux_streams`.
 	MuxStreams []string `json:"muxStreams,omitempty"`
 
-	// Type: Required. Type of the manifest, can be `HLS` or `DASH`.
+	// Type: Required. Type of the manifest.
 	//
 	// Possible values:
 	//   "MANIFEST_TYPE_UNSPECIFIED" - The manifest type is not specified.
-	//   "HLS" - Create `HLS` manifest. The corresponding file extension is
+	//   "HLS" - Create an HLS manifest. The corresponding file extension is
 	// `.m3u8`.
-	//   "DASH" - Create `DASH` manifest. The corresponding file extension
-	// is `.mpd`.
+	//   "DASH" - Create an MPEG-DASH manifest. The corresponding file
+	// extension is `.mpd`.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FileName") to

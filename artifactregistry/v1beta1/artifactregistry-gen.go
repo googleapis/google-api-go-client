@@ -973,6 +973,7 @@ type Repository struct {
 	//   "NPM" - NPM package format.
 	//   "APT" - APT package format.
 	//   "YUM" - YUM package format.
+	//   "GOOGET" - GooGet package format.
 	//   "PYTHON" - Python package format.
 	Format string `json:"format,omitempty"`
 

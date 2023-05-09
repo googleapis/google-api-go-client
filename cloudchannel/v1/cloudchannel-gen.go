@@ -1358,16 +1358,14 @@ func (s *GoogleCloudChannelV1CustomerRepricingConfig) MarshalJSON() ([]byte, err
 // GoogleCloudChannelV1DateRange: A representation of usage or invoice
 // date ranges.
 type GoogleCloudChannelV1DateRange struct {
-	// InvoiceEndDate: The latest invoice date (exclusive). If your product
-	// uses monthly invoices, and this value is not the beginning of a
-	// month, this will adjust the date to the first day of the following
-	// month.
+	// InvoiceEndDate: The latest invoice date (inclusive). If this value is
+	// not the last day of a month, this will move it forward to the last
+	// day of the given month.
 	InvoiceEndDate *GoogleTypeDate `json:"invoiceEndDate,omitempty"`
 
-	// InvoiceStartDate: The earliest invoice date (inclusive). If your
-	// product uses monthly invoices, and this value is not the beginning of
-	// a month, this will adjust the date to the first day of the given
-	// month.
+	// InvoiceStartDate: The earliest invoice date (inclusive). If this
+	// value is not the first day of a month, this will move it back to the
+	// first day of the given month.
 	InvoiceStartDate *GoogleTypeDate `json:"invoiceStartDate,omitempty"`
 
 	// UsageEndDateTime: The latest usage date time (exclusive). If you use
@@ -1463,6 +1461,10 @@ type GoogleCloudChannelV1Entitlement struct {
 	// AssociationInfo: Association information to other entitlements.
 	AssociationInfo *GoogleCloudChannelV1AssociationInfo `json:"associationInfo,omitempty"`
 
+	// BillingAccount: Optional. The billing account resource name that is
+	// used to pay for this entitlement.
+	BillingAccount string `json:"billingAccount,omitempty"`
+
 	// CommitmentSettings: Commitment settings for a commitment-based Offer.
 	// Required for commitment based offers.
 	CommitmentSettings *GoogleCloudChannelV1CommitmentSettings `json:"commitmentSettings,omitempty"`
@@ -1488,9 +1490,9 @@ type GoogleCloudChannelV1Entitlement struct {
 	// assignable units for a flexible offer OR - num_units: The total
 	// commitment for commitment-based offers The response may additionally
 	// include the following output-only Parameters: - assigned_units: The
-	// number of licenses assigned to users. For GCP billing subaccounts,
-	// the following Parameter may be accepted as input: - display_name: The
-	// display name of the billing subaccount.
+	// number of licenses assigned to users. For Google Cloud billing
+	// subaccounts, the following Parameter may be accepted as input: -
+	// display_name: The display name of the billing subaccount.
 	Parameters []*GoogleCloudChannelV1Parameter `json:"parameters,omitempty"`
 
 	// ProvisionedService: Output only. Service provisioning details for the
@@ -1771,6 +1773,10 @@ type GoogleCloudChannelV1FetchReportResultsRequest struct {
 	// FetchReportResultsResponse.next_page_token of the previous
 	// CloudChannelReportsService.FetchReportResults call.
 	PageToken string `json:"pageToken,omitempty"`
+
+	// PartitionKeys: Optional. List of keys specifying which report
+	// partitions to return. If empty, returns all partitions.
+	PartitionKeys []string `json:"partitionKeys,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PageSize") to
 	// unconditionally include in API requests. By default, fields with
@@ -2928,7 +2934,7 @@ func (s *GoogleCloudChannelV1Period) MarshalJSON() ([]byte, error) {
 // how to make a payment.
 type GoogleCloudChannelV1Plan struct {
 	// BillingAccount: Reseller Billing account to charge after an offer
-	// transaction. Only present for Google Cloud Platform offers.
+	// transaction. Only present for Google Cloud offers.
 	BillingAccount string `json:"billingAccount,omitempty"`
 
 	// PaymentCycle: Describes how frequently the reseller will be billed,
@@ -3058,13 +3064,12 @@ type GoogleCloudChannelV1PriceByResource struct {
 	//   "GB" - GB (used for storage SKUs).
 	//   "LICENSED_USER" - Active licensed users(for Voice SKUs).
 	//   "MINUTES" - Voice usage.
-	//   "IAAS_USAGE" - For IaaS SKUs like Google Cloud Platform,
-	// monetization is based on usage accrued on your billing account
-	// irrespective of the type of monetizable resource. This enum
-	// represents an aggregated resource/container for all usage SKUs on a
-	// billing account. Currently, only applicable to Google Cloud Platform.
-	//   "SUBSCRIPTION" - For Google Cloud Platform subscriptions like
-	// Anthos or SAP.
+	//   "IAAS_USAGE" - For IaaS SKUs like Google Cloud, monetization is
+	// based on usage accrued on your billing account irrespective of the
+	// type of monetizable resource. This enum represents an aggregated
+	// resource/container for all usage SKUs on a billing account.
+	// Currently, only applicable to Google Cloud.
+	//   "SUBSCRIPTION" - For Google Cloud subscriptions like Anthos or SAP.
 	ResourceType string `json:"resourceType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Price") to
@@ -3256,8 +3261,7 @@ type GoogleCloudChannelV1ProvisionedService struct {
 
 	// ProvisioningId: Output only. Provisioning ID of the entitlement. For
 	// Google Workspace, this is the underlying Subscription ID. For Google
-	// Cloud Platform, this is the Billing Account ID of the billing
-	// subaccount."
+	// Cloud, this is the Billing Account ID of the billing subaccount."
 	ProvisioningId string `json:"provisioningId,omitempty"`
 
 	// SkuId: Output only. The SKU pertaining to the provisioning resource
@@ -3459,8 +3463,8 @@ func (s *GoogleCloudChannelV1RenewalSettings) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudChannelV1Report: The ID and description of a report that
-// was used to generate report data. For example, "GCP Daily Spend",
-// "Google Workspace License Activity", etc.
+// was used to generate report data. For example, "Google Cloud Daily
+// Spend", "Google Workspace License Activity", etc.
 type GoogleCloudChannelV1Report struct {
 	// Columns: The list of columns included in the report. This defines the
 	// schema of the report results.
@@ -3831,10 +3835,14 @@ func (s *GoogleCloudChannelV1RepricingConfigEntitlementGranularity) MarshalJSON(
 
 // GoogleCloudChannelV1Row: A row of report values.
 type GoogleCloudChannelV1Row struct {
+	// PartitionKey: The key for the partition this row belongs to. This
+	// field is empty if the report is not partitioned.
+	PartitionKey string `json:"partitionKey,omitempty"`
+
 	// Values: The list of values in the row.
 	Values []*GoogleCloudChannelV1ReportValue `json:"values,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Values") to
+	// ForceSendFields is a list of field names (e.g. "PartitionKey") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -3842,10 +3850,10 @@ type GoogleCloudChannelV1Row struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Values") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "PartitionKey") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -4735,16 +4743,14 @@ func (s *GoogleCloudChannelV1alpha1CustomerEvent) MarshalJSON() ([]byte, error) 
 // GoogleCloudChannelV1alpha1DateRange: A representation of usage or
 // invoice date ranges.
 type GoogleCloudChannelV1alpha1DateRange struct {
-	// InvoiceEndDate: The latest invoice date (exclusive). If your product
-	// uses monthly invoices, and this value is not the beginning of a
-	// month, this will adjust the date to the first day of the following
-	// month.
+	// InvoiceEndDate: The latest invoice date (inclusive). If this value is
+	// not the last day of a month, this will move it forward to the last
+	// day of the given month.
 	InvoiceEndDate *GoogleTypeDate `json:"invoiceEndDate,omitempty"`
 
-	// InvoiceStartDate: The earliest invoice date (inclusive). If your
-	// product uses monthly invoices, and this value is not the beginning of
-	// a month, this will adjust the date to the first day of the given
-	// month.
+	// InvoiceStartDate: The earliest invoice date (inclusive). If this
+	// value is not the first day of a month, this will move it back to the
+	// first day of the given month.
 	InvoiceStartDate *GoogleTypeDate `json:"invoiceStartDate,omitempty"`
 
 	// UsageEndDateTime: The latest usage date time (exclusive). If you use
@@ -4796,6 +4802,10 @@ type GoogleCloudChannelV1alpha1Entitlement struct {
 	// AssociationInfo: Association information to other entitlements.
 	AssociationInfo *GoogleCloudChannelV1alpha1AssociationInfo `json:"associationInfo,omitempty"`
 
+	// BillingAccount: Optional. The billing account resource name that is
+	// used to pay for this entitlement.
+	BillingAccount string `json:"billingAccount,omitempty"`
+
 	// ChannelPartnerId: Cloud Identity ID of a channel partner who will be
 	// the direct reseller for the customer's order. This field is generally
 	// used in 2-tier ordering, where the order is placed by a top-level
@@ -4842,9 +4852,9 @@ type GoogleCloudChannelV1alpha1Entitlement struct {
 	// assignable units for a flexible offer OR - num_units: The total
 	// commitment for commitment-based offers The response may additionally
 	// include the following output-only Parameters: - assigned_units: The
-	// number of licenses assigned to users. For GCP billing subaccounts,
-	// the following Parameter may be accepted as input: - display_name: The
-	// display name of the billing subaccount.
+	// number of licenses assigned to users. For Google Cloud billing
+	// subaccounts, the following Parameter may be accepted as input: -
+	// display_name: The display name of the billing subaccount.
 	Parameters []*GoogleCloudChannelV1alpha1Parameter `json:"parameters,omitempty"`
 
 	// ProvisionedService: Output only. Service provisioning details for the
@@ -5124,8 +5134,7 @@ type GoogleCloudChannelV1alpha1ProvisionedService struct {
 
 	// ProvisioningId: Output only. Provisioning ID of the entitlement. For
 	// Google Workspace, this is the underlying Subscription ID. For Google
-	// Cloud Platform, this is the Billing Account ID of the billing
-	// subaccount."
+	// Cloud, this is the Billing Account ID of the billing subaccount."
 	ProvisioningId string `json:"provisioningId,omitempty"`
 
 	// SkuId: Output only. The SKU pertaining to the provisioning resource
@@ -5225,8 +5234,8 @@ func (s *GoogleCloudChannelV1alpha1RenewalSettings) MarshalJSON() ([]byte, error
 }
 
 // GoogleCloudChannelV1alpha1Report: The ID and description of a report
-// that was used to generate report data. For example, "GCP Daily
-// Spend", "Google Workspace License Activity", etc.
+// that was used to generate report data. For example, "Google Cloud
+// Daily Spend", "Google Workspace License Activity", etc.
 type GoogleCloudChannelV1alpha1Report struct {
 	// Columns: The list of columns included in the report. This defines the
 	// schema of the report results.

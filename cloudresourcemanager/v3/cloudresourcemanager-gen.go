@@ -2228,15 +2228,15 @@ type TagKey struct {
 	// Possible values:
 	//   "PURPOSE_UNSPECIFIED" - Unspecified purpose.
 	//   "GCE_FIREWALL" - Purpose for Compute Engine firewalls. A
-	// corresponding purpose_data should be set for the network the tag is
-	// intended for. The key should be 'network' and the value should be in
-	// either of these two formats:
-	// -https://www.googleapis.com/compute/{compute_version}/projects/{projec
-	// t_id}/global/networks/{network_id} -{project_id}/{network_name}
-	// Examples:
-	// -https://www.googleapis.com/compute/staging_v1/projects/fail-closed-lo
-	// ad-testing/global/networks/6992953698831725600
-	// -fail-closed-load-testing/load-testing-network
+	// corresponding `purpose_data` should be set for the network the tag is
+	// intended for. The key should be `network` and the value should be in
+	// ## either of these two formats:
+	// `https://www.googleapis.com/compute/{compute_version}/projects/{projec
+	// t_id}/global/networks/{network_id}` - `{project_id}/{network_name}`
+	// ## Examples:
+	// `https://www.googleapis.com/compute/staging_v1/projects/fail-closed-lo
+	// ad-testing/global/networks/6992953698831725600` -
+	// `fail-closed-load-testing/load-testing-network`
 	Purpose string `json:"purpose,omitempty"`
 
 	// PurposeData: Optional. Purpose data corresponds to the policy system

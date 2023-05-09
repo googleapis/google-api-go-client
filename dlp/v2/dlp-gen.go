@@ -2258,6 +2258,13 @@ type GooglePrivacyDlpV2CustomInfoType struct {
 	// Regex: Regular expression based CustomInfoType.
 	Regex *GooglePrivacyDlpV2Regex `json:"regex,omitempty"`
 
+	// SensitivityScore: Sensitivity for this CustomInfoType. If this
+	// CustomInfoType extends an existing InfoType, the sensitivity here
+	// will take precedent over that of the original InfoType. If unset for
+	// a CustomInfoType, it will default to HIGH. This only applies to data
+	// profiling.
+	SensitivityScore *GooglePrivacyDlpV2SensitivityScore `json:"sensitivityScore,omitempty"`
+
 	// StoredType: Load an existing `StoredInfoType` resource for use in
 	// `InspectDataSource`. Not currently supported in `InspectContent`.
 	StoredType *GooglePrivacyDlpV2StoredType `json:"storedType,omitempty"`
@@ -4545,6 +4552,10 @@ type GooglePrivacyDlpV2InfoType struct {
 	// a built-in type. When sending Cloud DLP results to Data Catalog,
 	// infoType names should conform to the pattern `[A-Za-z0-9$_-]{1,64}`.
 	Name string `json:"name,omitempty"`
+
+	// SensitivityScore: Optional custom sensitivity for this InfoType. This
+	// only applies to data profiling.
+	SensitivityScore *GooglePrivacyDlpV2SensitivityScore `json:"sensitivityScore,omitempty"`
 
 	// Version: Optional version name for this InfoType.
 	Version string `json:"version,omitempty"`

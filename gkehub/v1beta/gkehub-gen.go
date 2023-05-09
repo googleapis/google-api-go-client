@@ -1992,7 +1992,7 @@ type Feature struct {
 	// to all memberships of the fleet.
 	FleetDefaultMemberConfig *CommonFleetDefaultMemberConfigSpec `json:"fleetDefaultMemberConfig,omitempty"`
 
-	// Labels: GCP labels for this Feature.
+	// Labels: Labels for this Feature.
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// MembershipSpecs: Optional. Membership-specific configuration for this
@@ -2194,8 +2194,8 @@ type Fleet struct {
 
 	// Name: Output only. The full, unique resource name of this fleet in
 	// the format of
-	// `projects/{project}/locations/{location}/fleets/{fleet}`. Each GCP
-	// project can have at most one fleet resource, named "default".
+	// `projects/{project}/locations/{location}/fleets/{fleet}`. Each Google
+	// Cloud project can have at most one fleet resource, named "default".
 	Name string `json:"name,omitempty"`
 
 	// State: Output only. State of the namespace resource.
@@ -2276,11 +2276,71 @@ func (s *FleetLifecycleState) MarshalJSON() ([]byte, error) {
 // FleetObservabilityFeatureSpec: **Fleet Observability**: The Hub-wide
 // input for the FleetObservability feature.
 type FleetObservabilityFeatureSpec struct {
+	// LoggingConfig: Specified if fleet logging feature is enabled for the
+	// entire fleet. If UNSPECIFIED, fleet logging feature is disabled for
+	// the entire fleet.
+	LoggingConfig *FleetObservabilityLoggingConfig `json:"loggingConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "LoggingConfig") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LoggingConfig") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FleetObservabilityFeatureSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod FleetObservabilityFeatureSpec
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // FleetObservabilityFeatureState: **FleetObservability**: An empty
 // state left as an example Hub-wide Feature state.
 type FleetObservabilityFeatureState struct {
+}
+
+// FleetObservabilityLoggingConfig: LoggingConfig defines the
+// configuration for different types of logs.
+type FleetObservabilityLoggingConfig struct {
+	// DefaultConfig: Specified if applying the default routing config to
+	// logs not specified in other configs.
+	DefaultConfig *FleetObservabilityRoutingConfig `json:"defaultConfig,omitempty"`
+
+	// FleetScopeLogsConfig: Specified if applying the routing config to all
+	// logs for all fleet scopes.
+	FleetScopeLogsConfig *FleetObservabilityRoutingConfig `json:"fleetScopeLogsConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DefaultConfig") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DefaultConfig") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FleetObservabilityLoggingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod FleetObservabilityLoggingConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // FleetObservabilityMembershipSpec: **FleetObservability**: The
@@ -2291,6 +2351,41 @@ type FleetObservabilityMembershipSpec struct {
 // FleetObservabilityMembershipState: **FleetObservability**: An empty
 // state left as an example membership-specific Feature state.
 type FleetObservabilityMembershipState struct {
+}
+
+// FleetObservabilityRoutingConfig: RoutingConfig configures the
+// behaviour of fleet logging feature.
+type FleetObservabilityRoutingConfig struct {
+	// Mode: mode configures the logs routing mode.
+	//
+	// Possible values:
+	//   "MODE_UNSPECIFIED" - If UNSPECIFIED, fleet logging feature is
+	// disabled.
+	//   "COPY" - logs will be copied to the destination project.
+	//   "MOVE" - logs will be moved to the destination project.
+	Mode string `json:"mode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Mode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Mode") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FleetObservabilityRoutingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod FleetObservabilityRoutingConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // GoogleRpcStatus: The `Status` type defines a logical error model that
@@ -2900,7 +2995,7 @@ func (s *ListScopesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Location: A resource that represents Google Cloud Platform location.
+// Location: A resource that represents a Google Cloud location.
 type Location struct {
 	// DisplayName: The friendly name for this location, typically a nearby
 	// city name. For example, "Tokyo".
@@ -3599,11 +3694,11 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 // specification configuration for a single managed bundle.
 type PolicyControllerBundleInstallSpec struct {
 	// ExemptedNamespaces: the set of namespaces to be exempted from the
-	// bundle TODO (b/271878194): Decrement this
+	// bundle
 	ExemptedNamespaces []string `json:"exemptedNamespaces,omitempty"`
 
 	// Management: Management specifies how the bundle will be managed by
-	// the controller. TODO (b/271878194): Remove this
+	// the controller.
 	//
 	// Possible values:
 	//   "MANAGEMENT_UNSPECIFIED" - No Management strategy has been
@@ -3649,7 +3744,7 @@ type PolicyControllerHubConfig struct {
 	ConstraintViolationLimit int64 `json:"constraintViolationLimit,omitempty,string"`
 
 	// DeploymentConfigs: Map of deployment configs to deployments
-	// (“admission”, “audit”, “mutation”).
+	// ("admission", "audit", "mutation').
 	DeploymentConfigs map[string]PolicyControllerPolicyControllerDeploymentConfig `json:"deploymentConfigs,omitempty"`
 
 	// ExemptableNamespaces: The set of namespaces that are excluded from
@@ -3692,7 +3787,7 @@ type PolicyControllerHubConfig struct {
 	ReferentialRulesEnabled bool `json:"referentialRulesEnabled,omitempty"`
 
 	// TemplateLibraryConfig: Configures the library templates to install
-	// along with Policy Controller. TODO (b/271878194): Remove this
+	// along with Policy Controller.
 	TemplateLibraryConfig *PolicyControllerTemplateLibraryConfig `json:"templateLibraryConfig,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -3763,12 +3858,11 @@ type PolicyControllerMembershipState struct {
 	ComponentStates map[string]PolicyControllerOnClusterState `json:"componentStates,omitempty"`
 
 	// ContentStates: The state of the template library and any bundles
-	// included in the chosen version of the manifest TODO (b/271878194):
-	// Remove this
+	// included in the chosen version of the manifest
 	ContentStates map[string]PolicyControllerOnClusterState `json:"contentStates,omitempty"`
 
 	// PolicyContentState: The overall content state observed by the Hub
-	// Feature controller. TODO (b/271878194): Decrement this
+	// Feature controller.
 	PolicyContentState *PolicyControllerPolicyContentState `json:"policyContentState,omitempty"`
 
 	// State: The overall Policy Controller lifecycle state observed by the
@@ -4121,11 +4215,11 @@ func (s *PolicyControllerResourceRequirements) MarshalJSON() ([]byte, error) {
 // default library templates to install.
 type PolicyControllerTemplateLibraryConfig struct {
 	// Included: Whether the standard template library should be installed
-	// or not. TODO (b/271878194): Remove this
+	// or not.
 	Included bool `json:"included,omitempty"`
 
 	// Installation: Configures the manner in which the template library is
-	// installed on the cluster. TODO (b/271878194): Decrement this
+	// installed on the cluster.
 	//
 	// Possible values:
 	//   "INSTALLATION_UNSPECIFIED" - No installation strategy has been
@@ -7372,8 +7466,9 @@ type ProjectsLocationsFleetsPatchCall struct {
 //
 //   - name: Output only. The full, unique resource name of this fleet in
 //     the format of
-//     `projects/{project}/locations/{location}/fleets/{fleet}`. Each GCP
-//     project can have at most one fleet resource, named "default".
+//     `projects/{project}/locations/{location}/fleets/{fleet}`. Each
+//     Google Cloud project can have at most one fleet resource, named
+//     "default".
 func (r *ProjectsLocationsFleetsService) Patch(name string, fleet *Fleet) *ProjectsLocationsFleetsPatchCall {
 	c := &ProjectsLocationsFleetsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7488,7 +7583,7 @@ func (c *ProjectsLocationsFleetsPatchCall) Do(opts ...googleapi.CallOption) (*Op
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Output only. The full, unique resource name of this fleet in the format of `projects/{project}/locations/{location}/fleets/{fleet}`. Each GCP project can have at most one fleet resource, named \"default\".",
+	//       "description": "Output only. The full, unique resource name of this fleet in the format of `projects/{project}/locations/{location}/fleets/{fleet}`. Each Google Cloud project can have at most one fleet resource, named \"default\".",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/fleets/[^/]+$",
 	//       "required": true,

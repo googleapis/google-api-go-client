@@ -2927,14 +2927,17 @@ type GuaranteedFixedPriceTerms struct {
 	GuaranteedImpressions int64 `json:"guaranteedImpressions,omitempty,string"`
 
 	// GuaranteedLooks: Count of guaranteed looks. Required for deal,
-	// optional for product.
+	// optional for product. For CPD deals, buyer changes to
+	// guaranteed_looks will be ignored.
 	GuaranteedLooks int64 `json:"guaranteedLooks,omitempty,string"`
 
 	// ImpressionCap: The lifetime impression cap for CPM sponsorship deals.
 	// The deal will stop serving when the cap is reached.
 	ImpressionCap int64 `json:"impressionCap,omitempty,string"`
 
-	// MinimumDailyLooks: Daily minimum looks for CPD deal types.
+	// MinimumDailyLooks: Daily minimum looks for CPD deal types. For CPD
+	// deals, buyer should negotiate on this field instead of
+	// guaranteed_looks.
 	MinimumDailyLooks int64 `json:"minimumDailyLooks,omitempty,string"`
 
 	// PercentShareOfVoice: For sponsorship deals, this is the percentage of

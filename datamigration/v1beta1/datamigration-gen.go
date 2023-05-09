@@ -973,7 +973,7 @@ func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Location: A resource that represents Google Cloud Platform location.
+// Location: A resource that represents a Google Cloud location.
 type Location struct {
 	// DisplayName: The friendly name for this location, typically a nearby
 	// city name. For example, "Tokyo".
@@ -1193,6 +1193,9 @@ type MigrationJobVerificationError struct {
 	//   "UNSUPPORTED_DATABASE_FDW_CONFIG" - The source uses an unsupported
 	// Foreign Data Wrapper configuration.
 	//   "ERROR_RDBMS" - There was an underlying RDBMS error.
+	//   "SOURCE_SIZE_EXCEEDS_THRESHOLD" - The source DB size in Bytes
+	// exceeds a certain threshold. The migration might require an increase
+	// of quota, or might not be supported.
 	ErrorCode string `json:"errorCode,omitempty"`
 
 	// ErrorDetailMessage: Output only. A specific detailed error message,

@@ -753,6 +753,11 @@ type CloneContext struct {
 	// the source instance is cloned.
 	PointInTime string `json:"pointInTime,omitempty"`
 
+	// PreferredZone: (Point-in-time recovery for PostgreSQL only) Clone to
+	// an instance in the specified zone. If no zone is specified, clone to
+	// the same zone as the source instance.
+	PreferredZone string `json:"preferredZone,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "AllocatedIpRange") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -823,6 +828,7 @@ type ConnectSettings struct {
 	//   "POSTGRES_12" - The database version is PostgreSQL 12.
 	//   "POSTGRES_13" - The database version is PostgreSQL 13.
 	//   "POSTGRES_14" - The database version is PostgreSQL 14.
+	//   "POSTGRES_15" - The database version is PostgreSQL 15.
 	//   "MYSQL_8_0" - The database version is MySQL 8.
 	//   "MYSQL_8_0_18" - The database major version is MySQL 8.0 and the
 	// minor version is 18.
@@ -1059,6 +1065,7 @@ type DatabaseInstance struct {
 	//   "POSTGRES_12" - The database version is PostgreSQL 12.
 	//   "POSTGRES_13" - The database version is PostgreSQL 13.
 	//   "POSTGRES_14" - The database version is PostgreSQL 14.
+	//   "POSTGRES_15" - The database version is PostgreSQL 15.
 	//   "MYSQL_8_0" - The database version is MySQL 8.
 	//   "MYSQL_8_0_18" - The database major version is MySQL 8.0 and the
 	// minor version is 18.
@@ -1885,6 +1892,7 @@ type Flag struct {
 	//   "POSTGRES_12" - The database version is PostgreSQL 12.
 	//   "POSTGRES_13" - The database version is PostgreSQL 13.
 	//   "POSTGRES_14" - The database version is PostgreSQL 14.
+	//   "POSTGRES_15" - The database version is PostgreSQL 15.
 	//   "MYSQL_8_0" - The database version is MySQL 8.
 	//   "MYSQL_8_0_18" - The database major version is MySQL 8.0 and the
 	// minor version is 18.
@@ -3957,6 +3965,9 @@ func (s *SqlExternalSyncSettingError) MarshalJSON() ([]byte, error) {
 type SqlInstancesGetDiskShrinkConfigResponse struct {
 	// Kind: This is always `sql#getDiskShrinkConfig`.
 	Kind string `json:"kind,omitempty"`
+
+	// Message: Additional message to customers.
+	Message string `json:"message,omitempty"`
 
 	// MinimalTargetSizeGb: The minimum size to which a disk can be shrunk
 	// in GigaBytes.
@@ -6243,7 +6254,8 @@ type DatabasesInsertCall struct {
 }
 
 // Insert: Inserts a resource containing information about a database
-// inside a Cloud SQL instance.
+// inside a Cloud SQL instance. **Note:** You can't modify the default
+// character set and collation.
 //
 //   - instance: Database instance ID. This does not include the project
 //     ID.
@@ -6348,7 +6360,7 @@ func (c *DatabasesInsertCall) Do(opts ...googleapi.CallOption) (*Operation, erro
 	}
 	return ret, nil
 	// {
-	//   "description": "Inserts a resource containing information about a database inside a Cloud SQL instance.",
+	//   "description": "Inserts a resource containing information about a database inside a Cloud SQL instance. **Note:** You can't modify the default character set and collation.",
 	//   "flatPath": "v1/projects/{project}/instances/{instance}/databases",
 	//   "httpMethod": "POST",
 	//   "id": "sql.databases.insert",

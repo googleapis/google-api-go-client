@@ -1074,13 +1074,13 @@ func (s *GoogleCloudRetailV2Model) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRetailV2ModelFrequentlyBoughtTogetherFeaturesConfig: More
-// configs of the frequently-bought-together model type.
+// GoogleCloudRetailV2ModelFrequentlyBoughtTogetherFeaturesConfig:
+// Additional configs for the frequently-bought-together model type.
 type GoogleCloudRetailV2ModelFrequentlyBoughtTogetherFeaturesConfig struct {
 	// ContextProductsType: Optional. Specifies the context of the model
-	// when used in predict requests. Only settable for the
-	// `frequently-bought-together` type. Will default to MULTI_CONTEXT if
-	// not specified.
+	// when it is used in predict requests. Can only be set for the
+	// `frequently-bought-together` type. If it isn't specified, it defaults
+	// to MULTIPLE_CONTEXT_PRODUCTS.
 	//
 	// Possible values:
 	//   "CONTEXT_PRODUCTS_TYPE_UNSPECIFIED" - Unspecified default value,
@@ -1860,9 +1860,9 @@ type GoogleCloudRetailV2alphaCatalog struct {
 	DisplayName string `json:"displayName,omitempty"`
 
 	// MerchantCenterLinkingConfig: The Merchant Center linking
-	// configuration. Once a link is added, the data stream from Merchant
+	// configuration. After a link is added, the data stream from Merchant
 	// Center to Cloud Retail will be enabled automatically. The requester
-	// must have access to the merchant center account in order to make
+	// must have access to the Merchant Center account in order to make
 	// changes to this field.
 	MerchantCenterLinkingConfig *GoogleCloudRetailV2alphaMerchantCenterLinkingConfig `json:"merchantCenterLinkingConfig,omitempty"`
 
@@ -1931,22 +1931,6 @@ type GoogleCloudRetailV2alphaCatalogAttribute struct {
 	//   "EXACT_SEARCHABLE_DISABLED" - Exact searchable option disabled for
 	// an attribute.
 	ExactSearchableOption string `json:"exactSearchableOption,omitempty"`
-
-	// FacetIntervals: Set manually for numerical attributes only. If the
-	// facet SearchResponse.FacetSpec.intervals are not set by the customer
-	// for a numerical attribute, then a weekly pipeline will calculate some
-	// intervals using some percentiles on the distribution of all its
-	// product numerical attribute values. The latter computed intervals
-	// might not be ideal for the use case of that attribute. For this
-	// reason, the customer can set them manually. As another option, for
-	// any numerical attribute that is passed as a facet key in the request
-	// along with some given intervals, then these given intervals will be
-	// the facet intervals returned in the response.
-	FacetIntervals []*GoogleCloudRetailV2alphaInterval `json:"facetIntervals,omitempty"`
-
-	// IgnoredFacetValues: Each instance represents a list of attribute
-	// values to ignore as facet values for a specific time range.
-	IgnoredFacetValues []*GoogleCloudRetailV2alphaCatalogAttributeIgnoredFacetValues `json:"ignoredFacetValues,omitempty"`
 
 	// InUse: Output only. Indicates whether this attribute has been used by
 	// any products. `True` if at least one Product is using this attribute
@@ -2061,49 +2045,6 @@ type GoogleCloudRetailV2alphaCatalogAttribute struct {
 
 func (s *GoogleCloudRetailV2alphaCatalogAttribute) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2alphaCatalogAttribute
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudRetailV2alphaCatalogAttributeIgnoredFacetValues: Facet
-// values to ignore on facets during the specified time range for the
-// given SearchResponse.Facet.key attribute.
-type GoogleCloudRetailV2alphaCatalogAttributeIgnoredFacetValues struct {
-	// EndTime: If start time is empty and end time is not empty, then
-	// ignore these facet values before end time.
-	EndTime string `json:"endTime,omitempty"`
-
-	// StartTime: Time range for the current list of facet values to ignore.
-	// If multiple time ranges are specified for an facet value for the
-	// current attribute, consider all of them. If both are empty, ignore
-	// always. If start time and end time are set, then start time must be
-	// before end time. If start time is not empty and end time is empty,
-	// then will ignore these facet values after the start time.
-	StartTime string `json:"startTime,omitempty"`
-
-	// Values: List of facet values to ignore for the following time range.
-	// The facet values are the same as the attribute values.
-	Values []string `json:"values,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "EndTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EndTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudRetailV2alphaCatalogAttributeIgnoredFacetValues) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudRetailV2alphaCatalogAttributeIgnoredFacetValues
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3941,16 +3882,16 @@ func (s *GoogleCloudRetailV2alphaLocalInventory) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudRetailV2alphaMerchantCenterAccountLink: Represents a link
-// between a Merchant Center account and a branch. Once a link is
-// established, products from the linked merchant center account will be
+// between a Merchant Center account and a branch. After a link is
+// established, products from the linked Merchant Center account are
 // streamed to the linked branch.
 type GoogleCloudRetailV2alphaMerchantCenterAccountLink struct {
-	// BranchId: Required. The branch id (e.g. 0/1/2) within the catalog
+	// BranchId: Required. The branch ID (e.g. 0/1/2) within the catalog
 	// that products from merchant_center_account_id are streamed to. When
 	// updating this field, an empty value will use the currently configured
 	// default branch. However, changing the default branch later on won't
-	// change the linked branch here. A single branch id can only have one
-	// linked merchant center account id.
+	// change the linked branch here. A single branch ID can only have one
+	// linked Merchant Center account ID.
 	BranchId string `json:"branchId,omitempty"`
 
 	// FeedFilters: Criteria for the Merchant Center feeds to be ingested
@@ -4093,16 +4034,16 @@ func (s *GoogleCloudRetailV2alphaMerchantCenterFeedFilter) MarshalJSON() ([]byte
 }
 
 // GoogleCloudRetailV2alphaMerchantCenterLink: Represents a link between
-// a Merchant Center account and a branch. Once a link is established,
-// products from the linked merchant center account will be streamed to
-// the linked branch.
+// a Merchant Center account and a branch. After a link is established,
+// products from the linked Merchant Center account are streamed to the
+// linked branch.
 type GoogleCloudRetailV2alphaMerchantCenterLink struct {
 	// BranchId: The branch ID (e.g. 0/1/2) within this catalog that
 	// products from merchant_center_account_id are streamed to. When
 	// updating this field, an empty value will use the currently configured
 	// default branch. However, changing the default branch later on won't
 	// change the linked branch here. A single branch ID can only have one
-	// linked merchant center account ID.
+	// linked Merchant Center account ID.
 	BranchId string `json:"branchId,omitempty"`
 
 	// Destinations: String representing the destination to import for, all
@@ -4127,7 +4068,7 @@ type GoogleCloudRetailV2alphaMerchantCenterLink struct {
 	// value: `en`.
 	LanguageCode string `json:"languageCode,omitempty"`
 
-	// MerchantCenterAccountId: Required. The linked Merchant center account
+	// MerchantCenterAccountId: Required. The linked Merchant Center account
 	// ID
 	// (https://developers.google.com/shopping-content/guides/accountstatuses).
 	// The account must be a standalone account or a sub-account of a MCA.
@@ -4367,12 +4308,12 @@ func (s *GoogleCloudRetailV2alphaModel) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudRetailV2alphaModelFrequentlyBoughtTogetherFeaturesConfig:
-// More configs of the frequently-bought-together model type.
+// Additional configs for the frequently-bought-together model type.
 type GoogleCloudRetailV2alphaModelFrequentlyBoughtTogetherFeaturesConfig struct {
 	// ContextProductsType: Optional. Specifies the context of the model
-	// when used in predict requests. Only settable for the
-	// `frequently-bought-together` type. Will default to MULTI_CONTEXT if
-	// not specified.
+	// when it is used in predict requests. Can only be set for the
+	// `frequently-bought-together` type. If it isn't specified, it defaults
+	// to MULTIPLE_CONTEXT_PRODUCTS.
 	//
 	// Possible values:
 	//   "CONTEXT_PRODUCTS_TYPE_UNSPECIFIED" - Unspecified default value,
@@ -8840,16 +8781,16 @@ func (s *GoogleCloudRetailV2betaImportUserEventsResponse) MarshalJSON() ([]byte,
 }
 
 // GoogleCloudRetailV2betaMerchantCenterAccountLink: Represents a link
-// between a Merchant Center account and a branch. Once a link is
-// established, products from the linked merchant center account will be
+// between a Merchant Center account and a branch. After a link is
+// established, products from the linked Merchant Center account are
 // streamed to the linked branch.
 type GoogleCloudRetailV2betaMerchantCenterAccountLink struct {
-	// BranchId: Required. The branch id (e.g. 0/1/2) within the catalog
+	// BranchId: Required. The branch ID (e.g. 0/1/2) within the catalog
 	// that products from merchant_center_account_id are streamed to. When
 	// updating this field, an empty value will use the currently configured
 	// default branch. However, changing the default branch later on won't
-	// change the linked branch here. A single branch id can only have one
-	// linked merchant center account id.
+	// change the linked branch here. A single branch ID can only have one
+	// linked Merchant Center account ID.
 	BranchId string `json:"branchId,omitempty"`
 
 	// FeedFilters: Criteria for the Merchant Center feeds to be ingested
@@ -9125,12 +9066,12 @@ func (s *GoogleCloudRetailV2betaModel) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudRetailV2betaModelFrequentlyBoughtTogetherFeaturesConfig:
-// More configs of the frequently-bought-together model type.
+// Additional configs for the frequently-bought-together model type.
 type GoogleCloudRetailV2betaModelFrequentlyBoughtTogetherFeaturesConfig struct {
 	// ContextProductsType: Optional. Specifies the context of the model
-	// when used in predict requests. Only settable for the
-	// `frequently-bought-together` type. Will default to MULTI_CONTEXT if
-	// not specified.
+	// when it is used in predict requests. Can only be set for the
+	// `frequently-bought-together` type. If it isn't specified, it defaults
+	// to MULTIPLE_CONTEXT_PRODUCTS.
 	//
 	// Possible values:
 	//   "CONTEXT_PRODUCTS_TYPE_UNSPECIFIED" - Unspecified default value,
@@ -15126,7 +15067,7 @@ type ProjectsLocationsCatalogsMerchantCenterAccountLinksCreateCall struct {
 //
 //   - parent: The branch resource where this MerchantCenterAccountLink
 //     will be created. Format:
-//     projects/{PROJECT_NUMBER}/locations/global/catalogs/{CATALOG_ID}}.
+//     `projects/{PROJECT_NUMBER}/locations/global/catalogs/{CATALOG_ID}`.
 func (r *ProjectsLocationsCatalogsMerchantCenterAccountLinksService) Create(parent string, googlecloudretailv2alphamerchantcenteraccountlink *GoogleCloudRetailV2alphaMerchantCenterAccountLink) *ProjectsLocationsCatalogsMerchantCenterAccountLinksCreateCall {
 	c := &ProjectsLocationsCatalogsMerchantCenterAccountLinksCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15234,7 +15175,7 @@ func (c *ProjectsLocationsCatalogsMerchantCenterAccountLinksCreateCall) Do(opts 
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The branch resource where this MerchantCenterAccountLink will be created. Format: projects/{PROJECT_NUMBER}/locations/global/catalogs/{CATALOG_ID}}",
+	//       "description": "Required. The branch resource where this MerchantCenterAccountLink will be created. Format: `projects/{PROJECT_NUMBER}/locations/global/catalogs/{CATALOG_ID}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+$",
 	//       "required": true,
@@ -15270,8 +15211,8 @@ type ProjectsLocationsCatalogsMerchantCenterAccountLinksDeleteCall struct {
 // is returned.
 //
 //   - name: Full resource name. Format:
-//     projects/{project_number}/locations/{location_id}/catalogs/{catalog_
-//     id}/merchantCenterAccountLinks/{merchant_center_account_link_id}.
+//     `projects/{project_number}/locations/{location_id}/catalogs/{catalog
+//     _id}/merchantCenterAccountLinks/{merchant_center_account_link_id}`.
 func (r *ProjectsLocationsCatalogsMerchantCenterAccountLinksService) Delete(name string) *ProjectsLocationsCatalogsMerchantCenterAccountLinksDeleteCall {
 	c := &ProjectsLocationsCatalogsMerchantCenterAccountLinksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15373,7 +15314,7 @@ func (c *ProjectsLocationsCatalogsMerchantCenterAccountLinksDeleteCall) Do(opts 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Full resource name. Format: projects/{project_number}/locations/{location_id}/catalogs/{catalog_id}/merchantCenterAccountLinks/{merchant_center_account_link_id}",
+	//       "description": "Required. Full resource name. Format: `projects/{project_number}/locations/{location_id}/catalogs/{catalog_id}/merchantCenterAccountLinks/{merchant_center_account_link_id}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+/merchantCenterAccountLinks/[^/]+$",
 	//       "required": true,
@@ -15407,7 +15348,7 @@ type ProjectsLocationsCatalogsMerchantCenterAccountLinksListCall struct {
 //
 //   - parent: The parent Catalog of the resource. It must match this
 //     format:
-//     projects/{PROJECT_NUMBER}/locations/global/catalogs/{CATALOG_ID}.
+//     `projects/{PROJECT_NUMBER}/locations/global/catalogs/{CATALOG_ID}`.
 func (r *ProjectsLocationsCatalogsMerchantCenterAccountLinksService) List(parent string) *ProjectsLocationsCatalogsMerchantCenterAccountLinksListCall {
 	c := &ProjectsLocationsCatalogsMerchantCenterAccountLinksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15525,7 +15466,7 @@ func (c *ProjectsLocationsCatalogsMerchantCenterAccountLinksListCall) Do(opts ..
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The parent Catalog of the resource. It must match this format: projects/{PROJECT_NUMBER}/locations/global/catalogs/{CATALOG_ID}",
+	//       "description": "Required. The parent Catalog of the resource. It must match this format: `projects/{PROJECT_NUMBER}/locations/global/catalogs/{CATALOG_ID}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+$",
 	//       "required": true,

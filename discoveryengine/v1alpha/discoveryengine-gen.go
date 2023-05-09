@@ -1592,6 +1592,118 @@ func (s *GoogleCloudDiscoveryengineV1alphaPanelInfo) MarshalJSON() ([]byte, erro
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1alphaPurgeDocumentsMetadata: Metadata
+// related to the progress of the PurgeDocuments operation. This will be
+// returned by the google.longrunning.Operation.metadata field.
+type GoogleCloudDiscoveryengineV1alphaPurgeDocumentsMetadata struct {
+	// CreateTime: Operation create time.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// FailureCount: Count of entries that encountered errors while
+	// processing.
+	FailureCount int64 `json:"failureCount,omitempty,string"`
+
+	// SuccessCount: Count of entries that were deleted successfully.
+	SuccessCount int64 `json:"successCount,omitempty,string"`
+
+	// UpdateTime: Operation last update time. If the operation is done,
+	// this is also the finish time.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaPurgeDocumentsMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaPurgeDocumentsMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaPurgeDocumentsRequest: Request
+// message for DocumentService.PurgeDocuments method.
+type GoogleCloudDiscoveryengineV1alphaPurgeDocumentsRequest struct {
+	// Filter: Required. Filter matching documents to purge. Only currently
+	// supported value is “*” (all items).
+	Filter string `json:"filter,omitempty"`
+
+	// Force: Actually performs the purge. If `force` is set to false,
+	// return the expected purge count without deleting any documents.
+	Force bool `json:"force,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Filter") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Filter") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaPurgeDocumentsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaPurgeDocumentsRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaPurgeDocumentsResponse: Response
+// message for DocumentService.PurgeDocuments method. If the long
+// running operation is successfully done, then this message is returned
+// by the google.longrunning.Operations.response field.
+type GoogleCloudDiscoveryengineV1alphaPurgeDocumentsResponse struct {
+	// PurgeCount: The total count of documents purged as a result of the
+	// operation.
+	PurgeCount int64 `json:"purgeCount,omitempty,string"`
+
+	// PurgeSample: A sample of document names that will be deleted. Only
+	// populated if `force` is set to false. A max of 100 names will be
+	// returned and the names are chosen at random.
+	PurgeSample []string `json:"purgeSample,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PurgeCount") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PurgeCount") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaPurgeDocumentsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaPurgeDocumentsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1alphaRecommendRequest: Request message
 // for Recommend method.
 type GoogleCloudDiscoveryengineV1alphaRecommendRequest struct {
@@ -1836,9 +1948,9 @@ type GoogleCloudDiscoveryengineV1alphaSearchInfo struct {
 	// SearchQuery: The user's search query. See SearchRequest.query for
 	// definition. The value must be a UTF-8 encoded string with a length
 	// limit of 5,000 characters. Otherwise, an INVALID_ARGUMENT error is
-	// returned. At least one of search_query or page_categories is required
-	// for `search` events. Other event types should not set this field.
-	// Otherwise, an INVALID_ARGUMENT error is returned.
+	// returned. At least one of search_query or PageInfo.page_category is
+	// required for `search` events. Other event types should not set this
+	// field. Otherwise, an INVALID_ARGUMENT error is returned.
 	SearchQuery string `json:"searchQuery,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Offset") to
@@ -1968,19 +2080,20 @@ type GoogleCloudDiscoveryengineV1alphaUserEvent struct {
 
 	// AttributionToken: Token to attribute an API response to user
 	// action(s) to trigger the event. Highly recommended for user events
-	// that are the result of PredictionService.Predict. This field enables
-	// accurate attribution of recommendation model performance. The value
-	// must be one of: * PredictResponse.attribution_token for events that
-	// are the result of PredictionService.Predict. *
+	// that are the result of RecommendationService.Recommend. This field
+	// enables accurate attribution of recommendation model performance. The
+	// value must be one of: * PredictResponse.attribution_token for events
+	// that are the result of RecommendationService.Recommend. *
 	// SearchResponse.attribution_token for events that are the result of
 	// SearchService.Search. * CompleteQueryResponse.attribution_token for
-	// events that are the result of SearchService.CompleteQuery. This token
-	// enables us to accurately attribute page view or conversion completion
-	// back to the event and the particular predict response containing this
-	// clicked/purchased product. If user clicks on product K in the
-	// recommendation results, pass PredictResponse.attribution_token as a
-	// URL parameter to product K's page. When recording events on product
-	// K's page, log the PredictResponse.attribution_token to this field.
+	// events that are the result of CompletionService.CompleteQuery. This
+	// token enables us to accurately attribute page view or conversion
+	// completion back to the event and the particular predict response
+	// containing this clicked/purchased product. If user clicks on product
+	// K in the recommendation results, pass
+	// PredictResponse.attribution_token as a URL parameter to product K's
+	// page. When recording events on product K's page, log the
+	// PredictResponse.attribution_token to this field.
 	AttributionToken string `json:"attributionToken,omitempty"`
 
 	// CompletionInfo: CompleteQuery API details related to the event. This
@@ -2026,15 +2139,14 @@ type GoogleCloudDiscoveryengineV1alphaUserEvent struct {
 	// Filter: The filter syntax consists of an expression language for
 	// constructing a predicate from one or more fields of the documents
 	// being filtered. One example is for `search` events, the associated
-	// SearchService.SearchRequest may contain a filter expression in
-	// SearchService.SearchRequest.filter conforming to
-	// https://google.aip.dev/160#filtering. Similarly, for `view-item-list`
-	// events that are generated from a PredictionService.PredictRequest,
-	// this field may be populated directly from
-	// PredictionService.PredictRequest.filter conforming to
-	// https://google.aip.dev/160#filtering. The value must be a UTF-8
-	// encoded string with a length limit of 1,000 characters. Otherwise, an
-	// INVALID_ARGUMENT error is returned.
+	// SearchRequest may contain a filter expression in SearchRequest.filter
+	// conforming to https://google.aip.dev/160#filtering. Similarly, for
+	// `view-item-list` events that are generated from a
+	// RecommendationService.RecommendRequest, this field may be populated
+	// directly from RecommendationService.RecommendRequest.filter
+	// conforming to https://google.aip.dev/160#filtering. The value must be
+	// a UTF-8 encoded string with a length limit of 1,000 characters.
+	// Otherwise, an INVALID_ARGUMENT error is returned.
 	Filter string `json:"filter,omitempty"`
 
 	// MediaInfo: Media-specific info.
@@ -2125,7 +2237,8 @@ type GoogleCloudDiscoveryengineV1alphaUserInfo struct {
 	// encoded string with a length limit of 1,000 characters. Otherwise, an
 	// `INVALID_ARGUMENT` error is returned. This should not be set when
 	// using the client side event reporting with GTM or JavaScript tag in
-	// UserEventService.CollectUserEvent or if direct_user_request is set.
+	// UserEventService.CollectUserEvent or if UserEvent.direct_user_request
+	// is set.
 	UserAgent string `json:"userAgent,omitempty"`
 
 	// UserId: Highly recommended for logged-in users. Unique identifier for
@@ -2352,6 +2465,84 @@ type GoogleCloudDiscoveryengineV1betaImportUserEventsResponse struct {
 
 func (s *GoogleCloudDiscoveryengineV1betaImportUserEventsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1betaImportUserEventsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaPurgeDocumentsMetadata: Metadata
+// related to the progress of the PurgeDocuments operation. This will be
+// returned by the google.longrunning.Operation.metadata field.
+type GoogleCloudDiscoveryengineV1betaPurgeDocumentsMetadata struct {
+	// CreateTime: Operation create time.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// FailureCount: Count of entries that encountered errors while
+	// processing.
+	FailureCount int64 `json:"failureCount,omitempty,string"`
+
+	// SuccessCount: Count of entries that were deleted successfully.
+	SuccessCount int64 `json:"successCount,omitempty,string"`
+
+	// UpdateTime: Operation last update time. If the operation is done,
+	// this is also the finish time.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1betaPurgeDocumentsMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaPurgeDocumentsMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaPurgeDocumentsResponse: Response
+// message for DocumentService.PurgeDocuments method. If the long
+// running operation is successfully done, then this message is returned
+// by the google.longrunning.Operations.response field.
+type GoogleCloudDiscoveryengineV1betaPurgeDocumentsResponse struct {
+	// PurgeCount: The total count of documents purged as a result of the
+	// operation.
+	PurgeCount int64 `json:"purgeCount,omitempty,string"`
+
+	// PurgeSample: A sample of document names that will be deleted. Only
+	// populated if `force` is set to false. A max of 100 names will be
+	// returned and the names are chosen at random.
+	PurgeSample []string `json:"purgeSample,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PurgeCount") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PurgeCount") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1betaPurgeDocumentsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaPurgeDocumentsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3560,6 +3751,157 @@ func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsPatchCall) Do(op
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleCloudDiscoveryengineV1alphaDocument"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "discoveryengine.projects.locations.collections.dataStores.branches.documents.purge":
+
+type ProjectsLocationsCollectionsDataStoresBranchesDocumentsPurgeCall struct {
+	s                                                      *Service
+	parent                                                 string
+	googleclouddiscoveryenginev1alphapurgedocumentsrequest *GoogleCloudDiscoveryengineV1alphaPurgeDocumentsRequest
+	urlParams_                                             gensupport.URLParams
+	ctx_                                                   context.Context
+	header_                                                http.Header
+}
+
+// Purge: Permanently deletes all selected Documents under a branch.
+// This process is asynchronous. If the request is valid, the removal
+// will be enquired and processed offlines. Depending on the number of
+// Documents, this operation could take hours to complete. Before the
+// operation completes, some Documents may still be returned by
+// DocumentService.GetDocument or DocumentService.ListDocuments. To get
+// a sample of Documents that would be deleted, set
+// PurgeDocumentsRequest.force to false.
+//
+//   - parent: The parent resource name, such as
+//     `projects/{project}/locations/{location}/collections/{collection}/da
+//     taStores/{data_store}/branches/{branch}`.
+func (r *ProjectsLocationsCollectionsDataStoresBranchesDocumentsService) Purge(parent string, googleclouddiscoveryenginev1alphapurgedocumentsrequest *GoogleCloudDiscoveryengineV1alphaPurgeDocumentsRequest) *ProjectsLocationsCollectionsDataStoresBranchesDocumentsPurgeCall {
+	c := &ProjectsLocationsCollectionsDataStoresBranchesDocumentsPurgeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleclouddiscoveryenginev1alphapurgedocumentsrequest = googleclouddiscoveryenginev1alphapurgedocumentsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsPurgeCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsDataStoresBranchesDocumentsPurgeCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsPurgeCall) Context(ctx context.Context) *ProjectsLocationsCollectionsDataStoresBranchesDocumentsPurgeCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsPurgeCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsPurgeCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddiscoveryenginev1alphapurgedocumentsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/documents:purge")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.dataStores.branches.documents.purge" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsPurgeCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Permanently deletes all selected Documents under a branch. This process is asynchronous. If the request is valid, the removal will be enquired and processed offlines. Depending on the number of Documents, this operation could take hours to complete. Before the operation completes, some Documents may still be returned by DocumentService.GetDocument or DocumentService.ListDocuments. To get a sample of Documents that would be deleted, set PurgeDocumentsRequest.force to false.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/dataStores/{dataStoresId}/branches/{branchesId}/documents:purge",
+	//   "httpMethod": "POST",
+	//   "id": "discoveryengine.projects.locations.collections.dataStores.branches.documents.purge",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The parent resource name, such as `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}/branches/{branch}`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/dataStores/[^/]+/branches/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+parent}/documents:purge",
+	//   "request": {
+	//     "$ref": "GoogleCloudDiscoveryengineV1alphaPurgeDocumentsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -5416,6 +5758,213 @@ func (c *ProjectsLocationsCollectionsEnginesOperationsGetCall) Do(opts ...google
 
 }
 
+// method id "discoveryengine.projects.locations.collections.engines.operations.list":
+
+type ProjectsLocationsCollectionsEnginesOperationsListCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists operations that match the specified filter in the
+// request. If the server doesn't support this method, it returns
+// `UNIMPLEMENTED`.
+//
+// - name: The name of the operation's parent resource.
+func (r *ProjectsLocationsCollectionsEnginesOperationsService) List(name string) *ProjectsLocationsCollectionsEnginesOperationsListCall {
+	c := &ProjectsLocationsCollectionsEnginesOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Filter sets the optional parameter "filter": The standard list
+// filter.
+func (c *ProjectsLocationsCollectionsEnginesOperationsListCall) Filter(filter string) *ProjectsLocationsCollectionsEnginesOperationsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The standard list
+// page size.
+func (c *ProjectsLocationsCollectionsEnginesOperationsListCall) PageSize(pageSize int64) *ProjectsLocationsCollectionsEnginesOperationsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The standard list
+// page token.
+func (c *ProjectsLocationsCollectionsEnginesOperationsListCall) PageToken(pageToken string) *ProjectsLocationsCollectionsEnginesOperationsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsCollectionsEnginesOperationsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsEnginesOperationsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsCollectionsEnginesOperationsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsCollectionsEnginesOperationsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsCollectionsEnginesOperationsListCall) Context(ctx context.Context) *ProjectsLocationsCollectionsEnginesOperationsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsCollectionsEnginesOperationsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsEnginesOperationsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}/operations")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.engines.operations.list" call.
+// Exactly one of *GoogleLongrunningListOperationsResponse or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *GoogleLongrunningListOperationsResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsCollectionsEnginesOperationsListCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningListOperationsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningListOperationsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/engines/{enginesId}/operations",
+	//   "httpMethod": "GET",
+	//   "id": "discoveryengine.projects.locations.collections.engines.operations.list",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "The standard list filter.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "The name of the operation's parent resource.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/engines/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The standard list page size.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The standard list page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}/operations",
+	//   "response": {
+	//     "$ref": "GoogleLongrunningListOperationsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsCollectionsEnginesOperationsListCall) Pages(ctx context.Context, f func(*GoogleLongrunningListOperationsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "discoveryengine.projects.locations.collections.operations.get":
 
 type ProjectsLocationsCollectionsOperationsGetCall struct {
@@ -6735,6 +7284,157 @@ func (c *ProjectsLocationsDataStoresBranchesDocumentsPatchCall) Do(opts ...googl
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleCloudDiscoveryengineV1alphaDocument"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "discoveryengine.projects.locations.dataStores.branches.documents.purge":
+
+type ProjectsLocationsDataStoresBranchesDocumentsPurgeCall struct {
+	s                                                      *Service
+	parent                                                 string
+	googleclouddiscoveryenginev1alphapurgedocumentsrequest *GoogleCloudDiscoveryengineV1alphaPurgeDocumentsRequest
+	urlParams_                                             gensupport.URLParams
+	ctx_                                                   context.Context
+	header_                                                http.Header
+}
+
+// Purge: Permanently deletes all selected Documents under a branch.
+// This process is asynchronous. If the request is valid, the removal
+// will be enquired and processed offlines. Depending on the number of
+// Documents, this operation could take hours to complete. Before the
+// operation completes, some Documents may still be returned by
+// DocumentService.GetDocument or DocumentService.ListDocuments. To get
+// a sample of Documents that would be deleted, set
+// PurgeDocumentsRequest.force to false.
+//
+//   - parent: The parent resource name, such as
+//     `projects/{project}/locations/{location}/collections/{collection}/da
+//     taStores/{data_store}/branches/{branch}`.
+func (r *ProjectsLocationsDataStoresBranchesDocumentsService) Purge(parent string, googleclouddiscoveryenginev1alphapurgedocumentsrequest *GoogleCloudDiscoveryengineV1alphaPurgeDocumentsRequest) *ProjectsLocationsDataStoresBranchesDocumentsPurgeCall {
+	c := &ProjectsLocationsDataStoresBranchesDocumentsPurgeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleclouddiscoveryenginev1alphapurgedocumentsrequest = googleclouddiscoveryenginev1alphapurgedocumentsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDataStoresBranchesDocumentsPurgeCall) Fields(s ...googleapi.Field) *ProjectsLocationsDataStoresBranchesDocumentsPurgeCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDataStoresBranchesDocumentsPurgeCall) Context(ctx context.Context) *ProjectsLocationsDataStoresBranchesDocumentsPurgeCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDataStoresBranchesDocumentsPurgeCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDataStoresBranchesDocumentsPurgeCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddiscoveryenginev1alphapurgedocumentsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/documents:purge")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.dataStores.branches.documents.purge" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDataStoresBranchesDocumentsPurgeCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Permanently deletes all selected Documents under a branch. This process is asynchronous. If the request is valid, the removal will be enquired and processed offlines. Depending on the number of Documents, this operation could take hours to complete. Before the operation completes, some Documents may still be returned by DocumentService.GetDocument or DocumentService.ListDocuments. To get a sample of Documents that would be deleted, set PurgeDocumentsRequest.force to false.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/dataStores/{dataStoresId}/branches/{branchesId}/documents:purge",
+	//   "httpMethod": "POST",
+	//   "id": "discoveryengine.projects.locations.dataStores.branches.documents.purge",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The parent resource name, such as `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}/branches/{branch}`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/dataStores/[^/]+/branches/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+parent}/documents:purge",
+	//   "request": {
+	//     "$ref": "GoogleCloudDiscoveryengineV1alphaPurgeDocumentsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

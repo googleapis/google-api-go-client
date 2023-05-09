@@ -690,15 +690,16 @@ type SynthesizeLongAudioRequest struct {
 	AudioConfig *AudioConfig `json:"audioConfig,omitempty"`
 
 	// Input: Required. The Synthesizer requires either plain text or SSML
-	// as input.
+	// as input. While Long Audio is in preview, SSML is temporarily
+	// unsupported.
 	Input *SynthesisInput `json:"input,omitempty"`
 
-	// OutputGcsUri: Specifies a Cloud Storage URI for the synthesis
-	// results. Must be specified in the format:
+	// OutputGcsUri: Required. Specifies a Cloud Storage URI for the
+	// synthesis results. Must be specified in the format:
 	// `gs://bucket_name/object_name`, and the bucket must already exist.
 	OutputGcsUri string `json:"outputGcsUri,omitempty"`
 
-	// Voice: The desired voice of the synthesized audio.
+	// Voice: Required. The desired voice of the synthesized audio.
 	Voice *VoiceSelectionParams `json:"voice,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AudioConfig") to

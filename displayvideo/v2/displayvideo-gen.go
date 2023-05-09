@@ -2144,7 +2144,9 @@ type AssignedTargetingOption struct {
 	//   "TARGETING_TYPE_LANGUAGE" - Target ads to a specific language (for
 	// example, English or Japanese).
 	//   "TARGETING_TYPE_AUTHORIZED_SELLER_STATUS" - Target ads to ads.txt
-	// authorized sellers.
+	// authorized sellers. If no targeting option of this type is assigned,
+	// the resource uses the "Authorized Direct Sellers and Resellers"
+	// option by default.
 	//   "TARGETING_TYPE_GEO_REGION" - Target ads to a specific regional
 	// location (for example, a city or state).
 	//   "TARGETING_TYPE_INVENTORY_SOURCE_GROUP" - Purchase impressions from
@@ -2344,7 +2346,12 @@ type AudienceGroupAssignedTargetingOptionDetails struct {
 	// audience group. Used for negative targeting. The COMPLEMENT of the
 	// UNION of this group and other excluded audience groups is used as an
 	// INTERSECTION to any positive audience targeting. All items are
-	// logically ‘OR’ of each other.
+	// logically ‘OR’ of each other. **Warning:** `ACTIVITY_BASED` and
+	// `FREQUENCY_CAP` audience types will be deprecated on **May 20,
+	// 2023**. After this date, these audiences will not be able to be added
+	// to resource targeting. Read our feature deprecation announcement
+	// (/display-video/api/deprecations#features.first_and_third_party_audien
+	// ce_types) for more information.
 	ExcludedFirstAndThirdPartyAudienceGroup *FirstAndThirdPartyAudienceGroup `json:"excludedFirstAndThirdPartyAudienceGroup,omitempty"`
 
 	// ExcludedGoogleAudienceGroup: The Google audience ids of the excluded
@@ -2352,7 +2359,14 @@ type AudienceGroupAssignedTargetingOptionDetails struct {
 	// the UNION of this group and other excluded audience groups is used as
 	// an INTERSECTION to any positive audience targeting. Only contains
 	// Affinity, In-market and Installed-apps type Google audiences. All
-	// items are logically ‘OR’ of each other.
+	// items are logically ‘OR’ of each other. **Warning:**
+	// `GOOGLE_AUDIENCE_TYPE_INSTALLED_APPS` and
+	// `GOOGLE_AUDIENCE_TYPE_NEW_MOBILE_DEVICES` audience types will be
+	// deprecated on **May 20, 2023**. After this date, these audiences will
+	// not be able to be added to resource targeting. Read our feature
+	// deprecation announcement
+	// (/display-video/api/deprecations#features.google_audience_types) for
+	// more information.
 	ExcludedGoogleAudienceGroup *GoogleAudienceGroup `json:"excludedGoogleAudienceGroup,omitempty"`
 
 	// IncludedCombinedAudienceGroup: The combined audience ids of the
@@ -2370,11 +2384,23 @@ type AudienceGroupAssignedTargetingOptionDetails struct {
 	// third party audience ids only. The relation between each first and
 	// third party audience group is INTERSECTION, and the result is
 	// UNION'ed with other audience groups. Repeated groups with same
-	// settings will be ignored.
+	// settings will be ignored. **Warning:** `ACTIVITY_BASED` and
+	// `FREQUENCY_CAP` audience types will be deprecated on **May 20,
+	// 2023**. After this date, these audiences will not be able to be added
+	// to resource targeting. Read our feature deprecation announcement
+	// (/display-video/api/deprecations#features.first_and_third_party_audien
+	// ce_types) for more information.
 	IncludedFirstAndThirdPartyAudienceGroups []*FirstAndThirdPartyAudienceGroup `json:"includedFirstAndThirdPartyAudienceGroups,omitempty"`
 
 	// IncludedGoogleAudienceGroup: The Google audience ids of the included
 	// Google audience group. Contains Google audience ids only.
+	// **Warning:** `GOOGLE_AUDIENCE_TYPE_INSTALLED_APPS` and
+	// `GOOGLE_AUDIENCE_TYPE_NEW_MOBILE_DEVICES` audience types will be
+	// deprecated on **May 20, 2023**. After this date, these audiences will
+	// not be able to be added to resource targeting. Read our feature
+	// deprecation announcement
+	// (/display-video/api/deprecations#features.google_audience_types) for
+	// more information.
 	IncludedGoogleAudienceGroup *GoogleAudienceGroup `json:"includedGoogleAudienceGroup,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -2646,7 +2672,10 @@ func (s *AuditAdvertiserResponse) MarshalJSON() ([]byte, error) {
 // AuthorizedSellerStatusAssignedTargetingOptionDetails: Represents an
 // assigned authorized seller status. This will be populated in the
 // details field of an AssignedTargetingOption when targeting_type is
-// `TARGETING_TYPE_AUTHORIZED_SELLER_STATUS`.
+// `TARGETING_TYPE_AUTHORIZED_SELLER_STATUS`. If a resource does not
+// have an `TARGETING_TYPE_AUTHORIZED_SELLER_STATUS` assigned targeting
+// option, it is using the "Authorized Direct Sellers and Resellers"
+// option.
 type AuthorizedSellerStatusAssignedTargetingOptionDetails struct {
 	// AuthorizedSellerStatus: Output only. The authorized seller status to
 	// target.
@@ -2654,16 +2683,18 @@ type AuthorizedSellerStatusAssignedTargetingOptionDetails struct {
 	// Possible values:
 	//   "AUTHORIZED_SELLER_STATUS_UNSPECIFIED" - Default value when
 	// authorized seller status is not specified in this version. This enum
-	// is a placeholder for default value and does not represent a real
-	// authorized seller status option.
+	// is a placeholder for the default value, or "Authorized Direct Sellers
+	// and Resellers" in the UI.
 	//   "AUTHORIZED_SELLER_STATUS_AUTHORIZED_DIRECT_SELLERS_ONLY" - Only
 	// authorized sellers that directly own the inventory being monetized,
-	// as indicated by a DIRECT declaration in the ads.txt file.
+	// as indicated by a DIRECT declaration in the ads.txt file. This value
+	// is equivalent to "Authorized Direct Sellers" in the UI.
 	//
 	// "AUTHORIZED_SELLER_STATUS_AUTHORIZED_AND_NON_PARTICIPATING_PUBLISHERS"
 	//  - All authorized sellers, including publishers that have not posted
 	// an ads.txt file. Display & Video 360 automatically disallows
-	// unauthorized sellers.
+	// unauthorized sellers. This value is equivalent to "Authorized and
+	// Non-Participating Publishers" in the UI.
 	AuthorizedSellerStatus string `json:"authorizedSellerStatus,omitempty"`
 
 	// TargetingOptionId: Required. The targeting_option_id of a
@@ -2705,16 +2736,18 @@ type AuthorizedSellerStatusTargetingOptionDetails struct {
 	// Possible values:
 	//   "AUTHORIZED_SELLER_STATUS_UNSPECIFIED" - Default value when
 	// authorized seller status is not specified in this version. This enum
-	// is a placeholder for default value and does not represent a real
-	// authorized seller status option.
+	// is a placeholder for the default value, or "Authorized Direct Sellers
+	// and Resellers" in the UI.
 	//   "AUTHORIZED_SELLER_STATUS_AUTHORIZED_DIRECT_SELLERS_ONLY" - Only
 	// authorized sellers that directly own the inventory being monetized,
-	// as indicated by a DIRECT declaration in the ads.txt file.
+	// as indicated by a DIRECT declaration in the ads.txt file. This value
+	// is equivalent to "Authorized Direct Sellers" in the UI.
 	//
 	// "AUTHORIZED_SELLER_STATUS_AUTHORIZED_AND_NON_PARTICIPATING_PUBLISHERS"
 	//  - All authorized sellers, including publishers that have not posted
 	// an ads.txt file. Display & Video 360 automatically disallows
-	// unauthorized sellers.
+	// unauthorized sellers. This value is equivalent to "Authorized and
+	// Non-Participating Publishers" in the UI.
 	AuthorizedSellerStatus string `json:"authorizedSellerStatus,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -5616,7 +5649,9 @@ type CreateAssignedTargetingOptionsRequest struct {
 	//   "TARGETING_TYPE_LANGUAGE" - Target ads to a specific language (for
 	// example, English or Japanese).
 	//   "TARGETING_TYPE_AUTHORIZED_SELLER_STATUS" - Target ads to ads.txt
-	// authorized sellers.
+	// authorized sellers. If no targeting option of this type is assigned,
+	// the resource uses the "Authorized Direct Sellers and Resellers"
+	// option by default.
 	//   "TARGETING_TYPE_GEO_REGION" - Target ads to a specific regional
 	// location (for example, a city or state).
 	//   "TARGETING_TYPE_INVENTORY_SOURCE_GROUP" - Purchase impressions from
@@ -6913,7 +6948,9 @@ type DeleteAssignedTargetingOptionsRequest struct {
 	//   "TARGETING_TYPE_LANGUAGE" - Target ads to a specific language (for
 	// example, English or Japanese).
 	//   "TARGETING_TYPE_AUTHORIZED_SELLER_STATUS" - Target ads to ads.txt
-	// authorized sellers.
+	// authorized sellers. If no targeting option of this type is assigned,
+	// the resource uses the "Authorized Direct Sellers and Resellers"
+	// option by default.
 	//   "TARGETING_TYPE_GEO_REGION" - Target ads to a specific regional
 	// location (for example, a city or state).
 	//   "TARGETING_TYPE_INVENTORY_SOURCE_GROUP" - Purchase impressions from
@@ -8681,8 +8718,18 @@ type FirstAndThirdPartyAudience struct {
 	//   "CUSTOMER_MATCH_USER_ID" - Audience was generated through matching
 	// customers to known User IDs.
 	//   "ACTIVITY_BASED" - Audience was created based on campaign activity.
+	// **Warning:** This audience type will be deprecated on **May 20,
+	// 2023**. After this date, these audiences will not be able to be added
+	// to resource targeting. Read our [feature deprecation
+	// announcement](/display-video/api/deprecations#features.first_and_third
+	// _party_audience_types) for more information.
 	//   "FREQUENCY_CAP" - Audience was created based on excluding the
-	// number of impressions they were served.
+	// number of impressions they were served. **Warning:** This audience
+	// type will be deprecated on **May 20, 2023**. After this date, these
+	// audiences will not be able to be added to resource targeting. Read
+	// our [feature deprecation
+	// announcement](/display-video/api/deprecations#features.first_and_third
+	// _party_audience_types) for more information.
 	//   "TAG_BASED" - Audience was created based on custom variables
 	// attached to pixel.
 	//   "YOUTUBE_USERS" - Audience was created based on past interactions
@@ -9494,9 +9541,17 @@ type GoogleAudience struct {
 	//   "GOOGLE_AUDIENCE_TYPE_AFFINITY" - Affinity type Google audience.
 	//   "GOOGLE_AUDIENCE_TYPE_IN_MARKET" - In-Market type Google audience.
 	//   "GOOGLE_AUDIENCE_TYPE_INSTALLED_APPS" - Installed-Apps type Google
-	// audience.
+	// audience. **Warning:** This audience type will be deprecated on **May
+	// 20, 2023**. After this date, these audiences will not be able to be
+	// added to resource targeting. Read our [feature deprecation
+	// announcement](/display-video/api/deprecations#features.google_audience
+	// _types) for more information.
 	//   "GOOGLE_AUDIENCE_TYPE_NEW_MOBILE_DEVICES" - New-Mobile-Devices type
-	// Google audience.
+	// Google audience. **Warning:** This audience type will be deprecated
+	// on **May 20, 2023**. After this date, these audiences will not be
+	// able to be added to resource targeting. Read our [feature deprecation
+	// announcement](/display-video/api/deprecations#features.google_audience
+	// _types) for more information.
 	//   "GOOGLE_AUDIENCE_TYPE_LIFE_EVENT" - Life-Event type Google
 	// audience.
 	//   "GOOGLE_AUDIENCE_TYPE_EXTENDED_DEMOGRAPHIC" - Extended-Demographic
@@ -13282,6 +13337,11 @@ func (s *LookupInvoiceCurrencyResponse) MarshalJSON() ([]byte, error) {
 }
 
 // ManualTrigger: A single manual trigger in Display & Video 360.
+// **Warning:** Line Items using manual triggers will stop serving in
+// Display & Video 360 on **May 17, 2023**. Read our feature deprecation
+// announcement
+// (/display-video/api/deprecations#features.manual_triggers) for more
+// information.
 type ManualTrigger struct {
 	// ActivationDurationMinutes: Required. The maximum duration of each
 	// activation in minutes. Must be between 1 and 360 inclusive. After
@@ -16724,7 +16784,9 @@ type TargetingOption struct {
 	//   "TARGETING_TYPE_LANGUAGE" - Target ads to a specific language (for
 	// example, English or Japanese).
 	//   "TARGETING_TYPE_AUTHORIZED_SELLER_STATUS" - Target ads to ads.txt
-	// authorized sellers.
+	// authorized sellers. If no targeting option of this type is assigned,
+	// the resource uses the "Authorized Direct Sellers and Resellers"
+	// option by default.
 	//   "TARGETING_TYPE_GEO_REGION" - Target ads to a specific regional
 	// location (for example, a city or state).
 	//   "TARGETING_TYPE_INVENTORY_SOURCE_GROUP" - Purchase impressions from
@@ -19149,22 +19211,23 @@ func (r *AdvertisersService) List() *AdvertisersListCall {
 }
 
 // Filter sets the optional parameter "filter": Allows filtering by
-// advertiser properties. Supported syntax: * Filter expressions are
-// made up of one or more restrictions. * Restrictions can be combined
-// by `AND` or `OR` logical operators. A sequence of restrictions
-// implicitly uses `AND`. * A restriction has the form of `{field}
-// {operator} {value}`. * The operator used on `updateTime` must be
-// `GREATER THAN OR EQUAL TO (>=)` or `LESS THAN OR EQUAL TO (<=)`. *
-// The operator must be `EQUALS (=)`. * Supported fields: -
-// `advertiserId` - `displayName` - `entityStatus` - `updateTime` (input
-// in ISO 8601 format, or YYYY-MM-DDTHH:MM:SSZ) Examples: * All active
-// advertisers under a partner: `entityStatus="ENTITY_STATUS_ACTIVE" *
-// All advertisers with an update time less than or equal to
-// `2020-11-04T18:54:47Z (format of ISO 8601)`:
-// `updateTime<="2020-11-04T18:54:47Z" * All advertisers with an update
-// time greater than or equal to `2020-11-04T18:54:47Z (format of ISO
-// 8601)`: `updateTime>="2020-11-04T18:54:47Z" The length of this field
-// should be no more than 500 characters.
+// advertiser fields. Supported syntax: * Filter expressions are made up
+// of one or more restrictions. * Restrictions can be combined by `AND`
+// or `OR` logical operators. * A restriction has the form of `{field}
+// {operator} {value}`. * The `updateTime` field must use the `GREATER
+// THAN OR EQUAL TO (>=)` or `LESS THAN OR EQUAL TO (<=)` operators. *
+// All other fields must use the `EQUALS (=)` operator. Supported
+// fields: * `advertiserId` * `displayName` * `entityStatus` *
+// `updateTime` (input in ISO 8601 format, or `YYYY-MM-DDTHH:MM:SSZ`)
+// Examples: * All active advertisers under a partner:
+// `entityStatus="ENTITY_STATUS_ACTIVE" * All advertisers with an
+// update time less than or equal to 2020-11-04T18:54:47Z (format of ISO
+// 8601): `updateTime<="2020-11-04T18:54:47Z" * All advertisers with an
+// update time greater than or equal to 2020-11-04T18:54:47Z (format of
+// ISO 8601): `updateTime>="2020-11-04T18:54:47Z" The length of this
+// field should be no more than 500 characters. Reference our filter
+// `LIST` requests (/display-video/api/guides/how-tos/filters) guide for
+// more information.
 func (c *AdvertisersListCall) Filter(filter string) *AdvertisersListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -19308,7 +19371,7 @@ func (c *AdvertisersListCall) Do(opts ...googleapi.CallOption) (*ListAdvertisers
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Allows filtering by advertiser properties. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by `AND` or `OR` logical operators. A sequence of restrictions implicitly uses `AND`. * A restriction has the form of `{field} {operator} {value}`. * The operator used on `updateTime` must be `GREATER THAN OR EQUAL TO (\u003e=)` or `LESS THAN OR EQUAL TO (\u003c=)`. * The operator must be `EQUALS (=)`. * Supported fields: - `advertiserId` - `displayName` - `entityStatus` - `updateTime` (input in ISO 8601 format, or YYYY-MM-DDTHH:MM:SSZ) Examples: * All active advertisers under a partner: `entityStatus=\"ENTITY_STATUS_ACTIVE\"` * All advertisers with an update time less than or equal to `2020-11-04T18:54:47Z (format of ISO 8601)`: `updateTime\u003c=\"2020-11-04T18:54:47Z\"` * All advertisers with an update time greater than or equal to `2020-11-04T18:54:47Z (format of ISO 8601)`: `updateTime\u003e=\"2020-11-04T18:54:47Z\"` The length of this field should be no more than 500 characters.",
+	//       "description": "Allows filtering by advertiser fields. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by `AND` or `OR` logical operators. * A restriction has the form of `{field} {operator} {value}`. * The `updateTime` field must use the `GREATER THAN OR EQUAL TO (\u003e=)` or `LESS THAN OR EQUAL TO (\u003c=)` operators. * All other fields must use the `EQUALS (=)` operator. Supported fields: * `advertiserId` * `displayName` * `entityStatus` * `updateTime` (input in ISO 8601 format, or `YYYY-MM-DDTHH:MM:SSZ`) Examples: * All active advertisers under a partner: `entityStatus=\"ENTITY_STATUS_ACTIVE\"` * All advertisers with an update time less than or equal to 2020-11-04T18:54:47Z (format of ISO 8601): `updateTime\u003c=\"2020-11-04T18:54:47Z\"` * All advertisers with an update time greater than or equal to 2020-11-04T18:54:47Z (format of ISO 8601): `updateTime\u003e=\"2020-11-04T18:54:47Z\"` The length of this field should be no more than 500 characters. Reference our [filter `LIST` requests](/display-video/api/guides/how-tos/filters) guide for more information.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -19389,14 +19452,16 @@ func (r *AdvertisersService) ListAssignedTargetingOptions(advertiserId int64) *A
 }
 
 // Filter sets the optional parameter "filter": Allows filtering by
-// assigned targeting option properties. Supported syntax: * Filter
+// assigned targeting option fields. Supported syntax: * Filter
 // expressions are made up of one or more restrictions. * Restrictions
-// can be combined by the logical operator `OR`.. * A restriction has
-// the form of `{field} {operator} {value}`. * The operator must be
-// `EQUALS (=)`. * Supported fields: - `targetingType` Examples: *
-// targetingType with value TARGETING_TYPE_CHANNEL
+// can be combined by the `OR` logical operator. * A restriction has the
+// form of `{field} {operator} {value}`. * All fields must use the
+// `EQUALS (=) operator`. Supported fields: * `targetingType` Examples:
+// * targetingType with value TARGETING_TYPE_CHANNEL
 // `targetingType="TARGETING_TYPE_CHANNEL" The length of this field
-// should be no more than 500 characters.
+// should be no more than 500 characters. Reference our filter `LIST`
+// requests (/display-video/api/guides/how-tos/filters) guide for more
+// information.
 func (c *AdvertisersListAssignedTargetingOptionsCall) Filter(filter string) *AdvertisersListAssignedTargetingOptionsCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -19549,7 +19614,7 @@ func (c *AdvertisersListAssignedTargetingOptionsCall) Do(opts ...googleapi.CallO
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Allows filtering by assigned targeting option properties. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by the logical operator `OR`.. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `EQUALS (=)`. * Supported fields: - `targetingType` Examples: * targetingType with value TARGETING_TYPE_CHANNEL `targetingType=\"TARGETING_TYPE_CHANNEL\"` The length of this field should be no more than 500 characters.",
+	//       "description": "Allows filtering by assigned targeting option fields. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by the `OR` logical operator. * A restriction has the form of `{field} {operator} {value}`. * All fields must use the `EQUALS (=) operator`. Supported fields: * `targetingType` Examples: * targetingType with value TARGETING_TYPE_CHANNEL `targetingType=\"TARGETING_TYPE_CHANNEL\"` The length of this field should be no more than 500 characters. Reference our [filter `LIST` requests](/display-video/api/guides/how-tos/filters) guide for more information.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -20471,23 +20536,25 @@ func (r *AdvertisersCampaignsService) List(advertiserId int64) *AdvertisersCampa
 }
 
 // Filter sets the optional parameter "filter": Allows filtering by
-// campaign properties. Supported syntax: * Filter expressions are made
-// up of one or more restrictions. * Restrictions can be combined by
-// `AND` or `OR` logical operators. A sequence of restrictions
-// implicitly uses `AND`. * A restriction has the form of `{field}
-// {operator} {value}`. * The operator used on `updateTime` must be
-// `GREATER THAN OR EQUAL TO (>=)` or `LESS THAN OR EQUAL TO (<=)`. *
-// The operator must be `EQUALS (=)`. * Supported fields: - `campaignId`
-// - `displayName` - `entityStatus` - `updateTime` (input in ISO 8601
-// format, or YYYY-MM-DDTHH:MM:SSZ) Examples: * All
+// campaign fields. Supported syntax: * Filter expressions are made up
+// of one or more restrictions. * Restrictions can be combined by `AND`
+// or `OR` logical operators. A sequence of restrictions implicitly uses
+// `AND`. * A restriction has the form of `{field} {operator} {value}`.
+// * The `updateTime` field must use the `GREATER THAN OR EQUAL TO (>=)`
+// or `LESS THAN OR EQUAL TO (<=)` operators. * All other fields must
+// use the `EQUALS (=)` operator. Supported fields: * `campaignId` *
+// `displayName` * `entityStatus` * `updateTime` (input in ISO 8601
+// format, or `YYYY-MM-DDTHH:MM:SSZ`) Examples: * All
 // `ENTITY_STATUS_ACTIVE` or `ENTITY_STATUS_PAUSED` campaigns under an
 // advertiser: `(entityStatus="ENTITY_STATUS_ACTIVE" OR
 // entityStatus="ENTITY_STATUS_PAUSED")` * All campaigns with an update
-// time less than or equal to `2020-11-04T18:54:47Z (format of ISO
-// 8601)`: `updateTime<="2020-11-04T18:54:47Z" * All campaigns with an
-// update time greater than or equal to `2020-11-04T18:54:47Z (format of
-// ISO 8601)`: `updateTime>="2020-11-04T18:54:47Z" The length of this
-// field should be no more than 500 characters.
+// time less than or equal to 2020-11-04T18:54:47Z (format of ISO 8601):
+// `updateTime<="2020-11-04T18:54:47Z" * All campaigns with an update
+// time greater than or equal to 2020-11-04T18:54:47Z (format of ISO
+// 8601): `updateTime>="2020-11-04T18:54:47Z" The length of this field
+// should be no more than 500 characters. Reference our filter `LIST`
+// requests (/display-video/api/guides/how-tos/filters) guide for more
+// information.
 func (c *AdvertisersCampaignsListCall) Filter(filter string) *AdvertisersCampaignsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -20636,7 +20703,7 @@ func (c *AdvertisersCampaignsListCall) Do(opts ...googleapi.CallOption) (*ListCa
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Allows filtering by campaign properties. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by `AND` or `OR` logical operators. A sequence of restrictions implicitly uses `AND`. * A restriction has the form of `{field} {operator} {value}`. * The operator used on `updateTime` must be `GREATER THAN OR EQUAL TO (\u003e=)` or `LESS THAN OR EQUAL TO (\u003c=)`. * The operator must be `EQUALS (=)`. * Supported fields: - `campaignId` - `displayName` - `entityStatus` - `updateTime` (input in ISO 8601 format, or YYYY-MM-DDTHH:MM:SSZ) Examples: * All `ENTITY_STATUS_ACTIVE` or `ENTITY_STATUS_PAUSED` campaigns under an advertiser: `(entityStatus=\"ENTITY_STATUS_ACTIVE\" OR entityStatus=\"ENTITY_STATUS_PAUSED\")` * All campaigns with an update time less than or equal to `2020-11-04T18:54:47Z (format of ISO 8601)`: `updateTime\u003c=\"2020-11-04T18:54:47Z\"` * All campaigns with an update time greater than or equal to `2020-11-04T18:54:47Z (format of ISO 8601)`: `updateTime\u003e=\"2020-11-04T18:54:47Z\"` The length of this field should be no more than 500 characters.",
+	//       "description": "Allows filtering by campaign fields. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by `AND` or `OR` logical operators. A sequence of restrictions implicitly uses `AND`. * A restriction has the form of `{field} {operator} {value}`. * The `updateTime` field must use the `GREATER THAN OR EQUAL TO (\u003e=)` or `LESS THAN OR EQUAL TO (\u003c=)` operators. * All other fields must use the `EQUALS (=)` operator. Supported fields: * `campaignId` * `displayName` * `entityStatus` * `updateTime` (input in ISO 8601 format, or `YYYY-MM-DDTHH:MM:SSZ`) Examples: * All `ENTITY_STATUS_ACTIVE` or `ENTITY_STATUS_PAUSED` campaigns under an advertiser: `(entityStatus=\"ENTITY_STATUS_ACTIVE\" OR entityStatus=\"ENTITY_STATUS_PAUSED\")` * All campaigns with an update time less than or equal to 2020-11-04T18:54:47Z (format of ISO 8601): `updateTime\u003c=\"2020-11-04T18:54:47Z\"` * All campaigns with an update time greater than or equal to 2020-11-04T18:54:47Z (format of ISO 8601): `updateTime\u003e=\"2020-11-04T18:54:47Z\"` The length of this field should be no more than 500 characters. Reference our [filter `LIST` requests](/display-video/api/guides/how-tos/filters) guide for more information.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -20716,18 +20783,21 @@ func (r *AdvertisersCampaignsService) ListAssignedTargetingOptions(advertiserId 
 }
 
 // Filter sets the optional parameter "filter": Allows filtering by
-// assigned targeting option properties. Supported syntax: * Filter
+// assigned targeting option fields. Supported syntax: * Filter
 // expressions are made up of one or more restrictions. * Restrictions
-// can be combined by the logical operator `OR` on the same field. * A
-// restriction has the form of `{field} {operator} {value}`. * The
-// operator must be `EQUALS (=)`. * Supported fields: - `targetingType`
-// - `inheritance` Examples: * AssignedTargetingOptions of targeting
-// type TARGETING_TYPE_LANGUAGE or TARGETING_TYPE_GENDER
+// can be combined by the `OR` logical operator. * A restriction has the
+// form of `{field} {operator} {value}`. * All fields must use the
+// `EQUALS (=)` operator. Supported fields: * `targetingType` *
+// `inheritance` Examples: * `AssignedTargetingOption` resources of
+// targeting type `TARGETING_TYPE_LANGUAGE` or `TARGETING_TYPE_GENDER`:
 // `targetingType="TARGETING_TYPE_LANGUAGE" OR
-// targetingType="TARGETING_TYPE_GENDER" * AssignedTargetingOptions
-// with inheritance status of NOT_INHERITED or INHERITED_FROM_PARTNER
-// `inheritance="NOT_INHERITED" OR inheritance="INHERITED_FROM_PARTNER"
-// The length of this field should be no more than 500 characters.
+// targetingType="TARGETING_TYPE_GENDER" * `AssignedTargetingOption`
+// resources with inheritance status of `NOT_INHERITED` or
+// `INHERITED_FROM_PARTNER`: `inheritance="NOT_INHERITED" OR
+// inheritance="INHERITED_FROM_PARTNER" The length of this field should
+// be no more than 500 characters. Reference our filter `LIST` requests
+// (/display-video/api/guides/how-tos/filters) guide for more
+// information.
 func (c *AdvertisersCampaignsListAssignedTargetingOptionsCall) Filter(filter string) *AdvertisersCampaignsListAssignedTargetingOptionsCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -20890,7 +20960,7 @@ func (c *AdvertisersCampaignsListAssignedTargetingOptionsCall) Do(opts ...google
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Allows filtering by assigned targeting option properties. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by the logical operator `OR` on the same field. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `EQUALS (=)`. * Supported fields: - `targetingType` - `inheritance` Examples: * AssignedTargetingOptions of targeting type TARGETING_TYPE_LANGUAGE or TARGETING_TYPE_GENDER `targetingType=\"TARGETING_TYPE_LANGUAGE\" OR targetingType=\"TARGETING_TYPE_GENDER\"` * AssignedTargetingOptions with inheritance status of NOT_INHERITED or INHERITED_FROM_PARTNER `inheritance=\"NOT_INHERITED\" OR inheritance=\"INHERITED_FROM_PARTNER\"` The length of this field should be no more than 500 characters.",
+	//       "description": "Allows filtering by assigned targeting option fields. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by the `OR` logical operator. * A restriction has the form of `{field} {operator} {value}`. * All fields must use the `EQUALS (=)` operator. Supported fields: * `targetingType` * `inheritance` Examples: * `AssignedTargetingOption` resources of targeting type `TARGETING_TYPE_LANGUAGE` or `TARGETING_TYPE_GENDER`: `targetingType=\"TARGETING_TYPE_LANGUAGE\" OR targetingType=\"TARGETING_TYPE_GENDER\"` * `AssignedTargetingOption` resources with inheritance status of `NOT_INHERITED` or `INHERITED_FROM_PARTNER`: `inheritance=\"NOT_INHERITED\" OR inheritance=\"INHERITED_FROM_PARTNER\"` The length of this field should be no more than 500 characters. Reference our [filter `LIST` requests](/display-video/api/guides/how-tos/filters) guide for more information.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -21387,7 +21457,7 @@ func (c *AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsGetCall) Do(o
 	//         "Target ads to a specific content category (for example, arts \u0026 entertainment).",
 	//         "Purchase impressions from specific deals and auction packages.",
 	//         "Target ads to a specific language (for example, English or Japanese).",
-	//         "Target ads to ads.txt authorized sellers.",
+	//         "Target ads to ads.txt authorized sellers. If no targeting option of this type is assigned, the resource uses the \"Authorized Direct Sellers and Resellers\" option by default.",
 	//         "Target ads to a specific regional location (for example, a city or state).",
 	//         "Purchase impressions from a group of deals and auction packages.",
 	//         "Purchase impressions from specific exchanges.",
@@ -21466,17 +21536,21 @@ func (r *AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsService) List
 }
 
 // Filter sets the optional parameter "filter": Allows filtering by
-// assigned targeting option properties. Supported syntax: * Filter
+// assigned targeting option fields. Supported syntax: * Filter
 // expressions are made up of one or more restrictions. * Restrictions
-// can be combined by the logical operator `OR`. * A restriction has the
-// form of `{field} {operator} {value}`. * The operator must be `EQUALS
-// (=)`. * Supported fields: - `assignedTargetingOptionId` -
-// `inheritance` Examples: * AssignedTargetingOptions with ID 1 or 2
+// can be combined by the `OR` logical operator. * A restriction has the
+// form of `{field} {operator} {value}`. * All fields must use the
+// `EQUALS (=)` operator. Supported fields: *
+// `assignedTargetingOptionId` * `inheritance` Examples: *
+// `AssignedTargetingOption` resources with ID 1 or 2
 // `assignedTargetingOptionId="1" OR assignedTargetingOptionId="2" *
-// AssignedTargetingOptions with inheritance status of NOT_INHERITED or
-// INHERITED_FROM_PARTNER `inheritance="NOT_INHERITED" OR
-// inheritance="INHERITED_FROM_PARTNER" The length of this field should
-// be no more than 500 characters.
+// `AssignedTargetingOption` resources with inheritance status of
+// `NOT_INHERITED` or `INHERITED_FROM_PARTNER`
+// `inheritance="NOT_INHERITED" OR inheritance="INHERITED_FROM_PARTNER"
+// The length of this field should be no more than 500 characters.
+// Reference our filter `LIST` requests
+// (/display-video/api/guides/how-tos/filters) guide for more
+// information.
 func (c *AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsListCall) Filter(filter string) *AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -21641,7 +21715,7 @@ func (c *AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsListCall) Do(
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Allows filtering by assigned targeting option properties. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by the logical operator `OR`. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `EQUALS (=)`. * Supported fields: - `assignedTargetingOptionId` - `inheritance` Examples: * AssignedTargetingOptions with ID 1 or 2 `assignedTargetingOptionId=\"1\" OR assignedTargetingOptionId=\"2\"` * AssignedTargetingOptions with inheritance status of NOT_INHERITED or INHERITED_FROM_PARTNER `inheritance=\"NOT_INHERITED\" OR inheritance=\"INHERITED_FROM_PARTNER\"` The length of this field should be no more than 500 characters.",
+	//       "description": "Allows filtering by assigned targeting option fields. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by the `OR` logical operator. * A restriction has the form of `{field} {operator} {value}`. * All fields must use the `EQUALS (=)` operator. Supported fields: * `assignedTargetingOptionId` * `inheritance` Examples: * `AssignedTargetingOption` resources with ID 1 or 2 `assignedTargetingOptionId=\"1\" OR assignedTargetingOptionId=\"2\"` * `AssignedTargetingOption` resources with inheritance status of `NOT_INHERITED` or `INHERITED_FROM_PARTNER` `inheritance=\"NOT_INHERITED\" OR inheritance=\"INHERITED_FROM_PARTNER\"` The length of this field should be no more than 500 characters. Reference our [filter `LIST` requests](/display-video/api/guides/how-tos/filters) guide for more information.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -21748,7 +21822,7 @@ func (c *AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsListCall) Do(
 	//         "Target ads to a specific content category (for example, arts \u0026 entertainment).",
 	//         "Purchase impressions from specific deals and auction packages.",
 	//         "Target ads to a specific language (for example, English or Japanese).",
-	//         "Target ads to ads.txt authorized sellers.",
+	//         "Target ads to ads.txt authorized sellers. If no targeting option of this type is assigned, the resource uses the \"Authorized Direct Sellers and Resellers\" option by default.",
 	//         "Target ads to a specific regional location (for example, a city or state).",
 	//         "Purchase impressions from a group of deals and auction packages.",
 	//         "Purchase impressions from specific exchanges.",
@@ -22157,12 +22231,14 @@ func (r *AdvertisersChannelsService) List(advertiserId int64) *AdvertisersChanne
 
 // Filter sets the optional parameter "filter": Allows filtering by
 // channel fields. Supported syntax: * Filter expressions for channel
-// currently can only contain at most one * restriction. * A restriction
-// has the form of `{field} {operator} {value}`. * The operator must be
-// `CONTAINS (:)`. * Supported fields: - `displayName` Examples: * All
+// can only contain at most one restriction. * A restriction has the
+// form of `{field} {operator} {value}`. * All fields must use the `HAS
+// (:)` operator. Supported fields: * `displayName` Examples: * All
 // channels for which the display name contains "google": `displayName :
 // "google". The length of this field should be no more than 500
-// characters.
+// characters. Reference our filter `LIST` requests
+// (/display-video/api/guides/how-tos/filters) guide for more
+// information.
 func (c *AdvertisersChannelsListCall) Filter(filter string) *AdvertisersChannelsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -22320,7 +22396,7 @@ func (c *AdvertisersChannelsListCall) Do(opts ...googleapi.CallOption) (*ListCha
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Allows filtering by channel fields. Supported syntax: * Filter expressions for channel currently can only contain at most one * restriction. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `CONTAINS (:)`. * Supported fields: - `displayName` Examples: * All channels for which the display name contains \"google\": `displayName : \"google\"`. The length of this field should be no more than 500 characters.",
+	//       "description": "Allows filtering by channel fields. Supported syntax: * Filter expressions for channel can only contain at most one restriction. * A restriction has the form of `{field} {operator} {value}`. * All fields must use the `HAS (:)` operator. Supported fields: * `displayName` Examples: * All channels for which the display name contains \"google\": `displayName : \"google\"`. The length of this field should be no more than 500 characters. Reference our [filter `LIST` requests](/display-video/api/guides/how-tos/filters) guide for more information.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -23087,11 +23163,15 @@ func (r *AdvertisersChannelsSitesService) List(advertiserId int64, channelId int
 }
 
 // Filter sets the optional parameter "filter": Allows filtering by site
-// fields. Supported syntax: * Filter expressions for site currently can
-// only contain at most one * restriction. * A restriction has the form
-// of `{field} {operator} {value}`. * The operator must be `CONTAINS
-// (:)`. * Supported fields: - `urlOrAppId` Examples: * All sites for
+// fields. Supported syntax: * Filter expressions for site retrieval can
+// only contain at most one restriction. * A restriction has the form of
+// `{field} {operator} {value}`. * All fields must use the `HAS (:)`
+// operator. Supported fields: * `urlOrAppId` Examples: * All sites for
 // which the URL or app ID contains "google": `urlOrAppId : "google"
+// The length of this field should be no more than 500 characters.
+// Reference our filter `LIST` requests
+// (/display-video/api/guides/how-tos/filters) guide for more
+// information.
 func (c *AdvertisersChannelsSitesListCall) Filter(filter string) *AdvertisersChannelsSitesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -23259,7 +23339,7 @@ func (c *AdvertisersChannelsSitesListCall) Do(opts ...googleapi.CallOption) (*Li
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Allows filtering by site fields. Supported syntax: * Filter expressions for site currently can only contain at most one * restriction. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `CONTAINS (:)`. * Supported fields: - `urlOrAppId` Examples: * All sites for which the URL or app ID contains \"google\": `urlOrAppId : \"google\"`",
+	//       "description": "Allows filtering by site fields. Supported syntax: * Filter expressions for site retrieval can only contain at most one restriction. * A restriction has the form of `{field} {operator} {value}`. * All fields must use the `HAS (:)` operator. Supported fields: * `urlOrAppId` Examples: * All sites for which the URL or app ID contains \"google\": `urlOrAppId : \"google\"` The length of this field should be no more than 500 characters. Reference our [filter `LIST` requests](/display-video/api/guides/how-tos/filters) guide for more information.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -23955,38 +24035,33 @@ func (r *AdvertisersCreativesService) List(advertiserId int64) *AdvertisersCreat
 }
 
 // Filter sets the optional parameter "filter": Allows filtering by
-// creative properties. Supported syntax: * Filter expressions are made
-// up of one or more restrictions. * Restriction for the same field must
-// be combined by `OR`. * Restriction for different fields must be
-// combined by `AND`. * Between `(` and `)` there can only be
-// restrictions combined by `OR` for the same field. * A restriction has
-// the form of `{field} {operator} {value}`. * The operator must be
-// `EQUALS (=)` for the following fields: - `entityStatus` -
-// `creativeType`. - `dimensions` - `minDuration` - `maxDuration` -
-// `approvalStatus` - `exchangeReviewStatus` - `dynamic` - `creativeId`
-// * The operator must be `HAS (:)` for the following fields: -
-// `lineItemIds` * The operator must be `GREATER THAN OR EQUAL TO (>=)`
-// or `LESS THAN OR EQUAL TO (<=)` for the following fields: -
-// `updateTime` (input in ISO 8601 format, or YYYY-MM-DDTHH:MM:SSZ) *
-// For `entityStatus`, `minDuration`, `maxDuration`, `updateTime`, and
-// `dynamic`, there may be at most one restriction. * For `dimensions`,
-// the value is in the form of "{width}x{height}". * For
-// `exchangeReviewStatus`, the value is in the form of
-// `{exchange}-{reviewStatus}`. * For `minDuration` and `maxDuration`,
-// the value is in the form of "{duration}s". Only seconds are
-// supported with millisecond granularity. * For `updateTime`, a
-// creative resource's field value reflects the last time that a
-// creative has been updated, which includes updates made by the system
-// (e.g. creative review updates). * There may be multiple `lineItemIds`
-// restrictions in order to search against multiple possible line item
-// IDs. * There may be multiple `creativeId` restrictions in order to
-// search against multiple possible creative IDs. Examples: * All native
-// creatives: `creativeType="CREATIVE_TYPE_NATIVE" * All active
-// creatives with 300x400 or 50x100 dimensions:
-// `entityStatus="ENTITY_STATUS_ACTIVE" AND (dimensions="300x400" OR
-// dimensions="50x100")` * All dynamic creatives that are approved by
-// AdX or AppNexus, with a minimum duration of 5 seconds and 200ms.
-// `dynamic="true" AND minDuration="5.2s" AND
+// creative fields. Supported syntax: * Filter expressions are made up
+// of one or more restrictions. * Restrictions can be combined by `AND`
+// or `OR` logical operators. A sequence of restrictions implicitly uses
+// `AND`. * A restriction has the form of `{field} {operator} {value}`.
+// * The `lineItemIds` field must use the `HAS (:)` operator. * The
+// `updateTime` field must use the `GREATER THAN OR EQUAL TO (>=)` or
+// `LESS THAN OR EQUAL TO (<=)` operators. * All other fields must use
+// the `EQUALS (=)` operator. * For `entityStatus`, `minDuration`,
+// `maxDuration`, `updateTime`, and `dynamic` fields, there may be at
+// most one restriction. Supported Fields: * `approvalStatus` *
+// `creativeId` * `creativeType` * `dimensions` (input in the form of
+// `{width}x{height}`) * `dynamic` * `entityStatus` *
+// `exchangeReviewStatus` (input in the form of
+// `{exchange}-{reviewStatus}`) * `lineItemIds` * `maxDuration` (input
+// in the form of `{duration}s`. Only seconds are supported) *
+// `minDuration` (input in the form of `{duration}s`. Only seconds are
+// supported) * `updateTime` (input in ISO 8601 format, or
+// `YYYY-MM-DDTHH:MM:SSZ`) Notes: * For `updateTime`, a creative
+// resource's field value reflects the last time that a creative has
+// been updated, which includes updates made by the system (e.g.
+// creative review updates). Examples: * All native creatives:
+// `creativeType="CREATIVE_TYPE_NATIVE" * All active creatives with
+// 300x400 or 50x100 dimensions: `entityStatus="ENTITY_STATUS_ACTIVE"
+// AND (dimensions="300x400" OR dimensions="50x100")` * All dynamic
+// creatives that are approved by AdX or AppNexus, with a minimum
+// duration of 5 seconds and 200ms: `dynamic="true" AND
+// minDuration="5.2s" AND
 // (exchangeReviewStatus="EXCHANGE_GOOGLE_AD_MANAGER-REVIEW_STATUS_APPROV
 // ED" OR
 // exchangeReviewStatus="EXCHANGE_APPNEXUS-REVIEW_STATUS_APPROVED")` *
@@ -23994,9 +24069,11 @@ func (r *AdvertisersCreativesService) List(advertiserId int64) *AdvertisersCreat
 // `creativeType="CREATIVE_TYPE_VIDEO" AND (lineItemIds:1 OR
 // lineItemIds:2)` * Find creatives by multiple creative IDs:
 // `creativeId=1 OR creativeId=2` * All creatives with an update time
-// greater than or equal to `2020-11-04T18:54:47Z (format of ISO 8601)`:
+// greater than or equal to 2020-11-04T18:54:47Z (format of ISO 8601):
 // `updateTime>="2020-11-04T18:54:47Z" The length of this field should
-// be no more than 500 characters.
+// be no more than 500 characters. Reference our filter `LIST` requests
+// (/display-video/api/guides/how-tos/filters) guide for more
+// information.
 func (c *AdvertisersCreativesListCall) Filter(filter string) *AdvertisersCreativesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -24148,7 +24225,7 @@ func (c *AdvertisersCreativesListCall) Do(opts ...googleapi.CallOption) (*ListCr
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Allows filtering by creative properties. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restriction for the same field must be combined by `OR`. * Restriction for different fields must be combined by `AND`. * Between `(` and `)` there can only be restrictions combined by `OR` for the same field. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `EQUALS (=)` for the following fields: - `entityStatus` - `creativeType`. - `dimensions` - `minDuration` - `maxDuration` - `approvalStatus` - `exchangeReviewStatus` - `dynamic` - `creativeId` * The operator must be `HAS (:)` for the following fields: - `lineItemIds` * The operator must be `GREATER THAN OR EQUAL TO (\u003e=)` or `LESS THAN OR EQUAL TO (\u003c=)` for the following fields: - `updateTime` (input in ISO 8601 format, or YYYY-MM-DDTHH:MM:SSZ) * For `entityStatus`, `minDuration`, `maxDuration`, `updateTime`, and `dynamic`, there may be at most one restriction. * For `dimensions`, the value is in the form of `\"{width}x{height}\"`. * For `exchangeReviewStatus`, the value is in the form of `{exchange}-{reviewStatus}`. * For `minDuration` and `maxDuration`, the value is in the form of `\"{duration}s\"`. Only seconds are supported with millisecond granularity. * For `updateTime`, a creative resource's field value reflects the last time that a creative has been updated, which includes updates made by the system (e.g. creative review updates). * There may be multiple `lineItemIds` restrictions in order to search against multiple possible line item IDs. * There may be multiple `creativeId` restrictions in order to search against multiple possible creative IDs. Examples: * All native creatives: `creativeType=\"CREATIVE_TYPE_NATIVE\"` * All active creatives with 300x400 or 50x100 dimensions: `entityStatus=\"ENTITY_STATUS_ACTIVE\" AND (dimensions=\"300x400\" OR dimensions=\"50x100\")` * All dynamic creatives that are approved by AdX or AppNexus, with a minimum duration of 5 seconds and 200ms. `dynamic=\"true\" AND minDuration=\"5.2s\" AND (exchangeReviewStatus=\"EXCHANGE_GOOGLE_AD_MANAGER-REVIEW_STATUS_APPROVED\" OR exchangeReviewStatus=\"EXCHANGE_APPNEXUS-REVIEW_STATUS_APPROVED\")` * All video creatives that are associated with line item ID 1 or 2: `creativeType=\"CREATIVE_TYPE_VIDEO\" AND (lineItemIds:1 OR lineItemIds:2)` * Find creatives by multiple creative IDs: `creativeId=1 OR creativeId=2` * All creatives with an update time greater than or equal to `2020-11-04T18:54:47Z (format of ISO 8601)`: `updateTime\u003e=\"2020-11-04T18:54:47Z\"` The length of this field should be no more than 500 characters.",
+	//       "description": "Allows filtering by creative fields. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by `AND` or `OR` logical operators. A sequence of restrictions implicitly uses `AND`. * A restriction has the form of `{field} {operator} {value}`. * The `lineItemIds` field must use the `HAS (:)` operator. * The `updateTime` field must use the `GREATER THAN OR EQUAL TO (\u003e=)` or `LESS THAN OR EQUAL TO (\u003c=)` operators. * All other fields must use the `EQUALS (=)` operator. * For `entityStatus`, `minDuration`, `maxDuration`, `updateTime`, and `dynamic` fields, there may be at most one restriction. Supported Fields: * `approvalStatus` * `creativeId` * `creativeType` * `dimensions` (input in the form of `{width}x{height}`) * `dynamic` * `entityStatus` * `exchangeReviewStatus` (input in the form of `{exchange}-{reviewStatus}`) * `lineItemIds` * `maxDuration` (input in the form of `{duration}s`. Only seconds are supported) * `minDuration` (input in the form of `{duration}s`. Only seconds are supported) * `updateTime` (input in ISO 8601 format, or `YYYY-MM-DDTHH:MM:SSZ`) Notes: * For `updateTime`, a creative resource's field value reflects the last time that a creative has been updated, which includes updates made by the system (e.g. creative review updates). Examples: * All native creatives: `creativeType=\"CREATIVE_TYPE_NATIVE\"` * All active creatives with 300x400 or 50x100 dimensions: `entityStatus=\"ENTITY_STATUS_ACTIVE\" AND (dimensions=\"300x400\" OR dimensions=\"50x100\")` * All dynamic creatives that are approved by AdX or AppNexus, with a minimum duration of 5 seconds and 200ms: `dynamic=\"true\" AND minDuration=\"5.2s\" AND (exchangeReviewStatus=\"EXCHANGE_GOOGLE_AD_MANAGER-REVIEW_STATUS_APPROVED\" OR exchangeReviewStatus=\"EXCHANGE_APPNEXUS-REVIEW_STATUS_APPROVED\")` * All video creatives that are associated with line item ID 1 or 2: `creativeType=\"CREATIVE_TYPE_VIDEO\" AND (lineItemIds:1 OR lineItemIds:2)` * Find creatives by multiple creative IDs: `creativeId=1 OR creativeId=2` * All creatives with an update time greater than or equal to 2020-11-04T18:54:47Z (format of ISO 8601): `updateTime\u003e=\"2020-11-04T18:54:47Z\"` The length of this field should be no more than 500 characters. Reference our [filter `LIST` requests](/display-video/api/guides/how-tos/filters) guide for more information.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -24855,31 +24932,31 @@ func (r *AdvertisersInsertionOrdersService) List(advertiserId int64) *Advertiser
 }
 
 // Filter sets the optional parameter "filter": Allows filtering by
-// insertion order properties. Supported syntax: * Filter expressions
-// are made up of one or more restrictions. * Restrictions can be
-// combined by `AND` or `OR` logical operators. A sequence of
-// restrictions implicitly uses `AND`. * A restriction has the form of
-// `{field} {operator} {value}`. * The operator used on
-// `budget.budget_segments.date_range.end_date` must be LESS THAN (<). *
-// The operator used on `updateTime` must be `GREATER THAN OR EQUAL TO
-// (>=)` or `LESS THAN OR EQUAL TO (<=)`. * The operators used on all
-// other fields must be `EQUALS (=)`. * Supported fields: - `campaignId`
-// - `displayName` - `entityStatus` -
-// `budget.budget_segments.date_range.end_date` (input as YYYY-MM-DD) -
-// `updateTime` (input in ISO 8601 format, or YYYY-MM-DDTHH:MM:SSZ)
+// insertion order fields. Supported syntax: * Filter expressions are
+// made up of one or more restrictions. * Restrictions can be combined
+// by `AND` or `OR` logical operators. A sequence of restrictions
+// implicitly uses `AND`. * A restriction has the form of `{field}
+// {operator} {value}`. * The
+// `budget.budget_segments.date_range.end_date` field must use the `LESS
+// THAN (<)` operator. * The `updateTime` field must use the `GREATER
+// THAN OR EQUAL TO (>=)` or `LESS THAN OR EQUAL TO (<=)` operators. *
+// All other fields must use the `EQUALS (=)` operator. Supported
+// fields: * `campaignId` * `displayName` * `entityStatus` *
+// `budget.budget_segments.date_range.end_date` (input in the form of
+// `YYYY-MM-DD`) **Deprecated. Not available after June 8, 2023** *
+// `updateTime` (input in ISO 8601 format, or `YYYY-MM-DDTHH:MM:SSZ`)
 // Examples: * All insertion orders under a campaign:
 // `campaignId="1234" * All `ENTITY_STATUS_ACTIVE` or
 // `ENTITY_STATUS_PAUSED` insertion orders under an advertiser:
 // `(entityStatus="ENTITY_STATUS_ACTIVE" OR
-// entityStatus="ENTITY_STATUS_PAUSED")` * All insertion orders whose
-// budget segments' dates end before March 28, 2019:
-// `budget.budget_segments.date_range.end_date<"2019-03-28" * All
-// insertion orders with an update time less than or equal to
-// `2020-11-04T18:54:47Z (format of ISO 8601)`:
-// `updateTime<="2020-11-04T18:54:47Z" * All insertion orders with an
-// update time greater than or equal to `2020-11-04T18:54:47Z (format of
-// ISO 8601)`: `updateTime>="2020-11-04T18:54:47Z" The length of this
-// field should be no more than 500 characters.
+// entityStatus="ENTITY_STATUS_PAUSED")` * All insertion orders with an
+// update time less than or equal to 2020-11-04T18:54:47Z (format of ISO
+// 8601): `updateTime<="2020-11-04T18:54:47Z" * All insertion orders
+// with an update time greater than or equal to 2020-11-04T18:54:47Z
+// (format of ISO 8601): `updateTime>="2020-11-04T18:54:47Z" The length
+// of this field should be no more than 500 characters. Reference our
+// filter `LIST` requests (/display-video/api/guides/how-tos/filters)
+// guide for more information.
 func (c *AdvertisersInsertionOrdersListCall) Filter(filter string) *AdvertisersInsertionOrdersListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -25030,7 +25107,7 @@ func (c *AdvertisersInsertionOrdersListCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Allows filtering by insertion order properties. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by `AND` or `OR` logical operators. A sequence of restrictions implicitly uses `AND`. * A restriction has the form of `{field} {operator} {value}`. * The operator used on `budget.budget_segments.date_range.end_date` must be LESS THAN (\u003c). * The operator used on `updateTime` must be `GREATER THAN OR EQUAL TO (\u003e=)` or `LESS THAN OR EQUAL TO (\u003c=)`. * The operators used on all other fields must be `EQUALS (=)`. * Supported fields: - `campaignId` - `displayName` - `entityStatus` - `budget.budget_segments.date_range.end_date` (input as YYYY-MM-DD) - `updateTime` (input in ISO 8601 format, or YYYY-MM-DDTHH:MM:SSZ) Examples: * All insertion orders under a campaign: `campaignId=\"1234\"` * All `ENTITY_STATUS_ACTIVE` or `ENTITY_STATUS_PAUSED` insertion orders under an advertiser: `(entityStatus=\"ENTITY_STATUS_ACTIVE\" OR entityStatus=\"ENTITY_STATUS_PAUSED\")` * All insertion orders whose budget segments' dates end before March 28, 2019: `budget.budget_segments.date_range.end_date\u003c\"2019-03-28\"` * All insertion orders with an update time less than or equal to `2020-11-04T18:54:47Z (format of ISO 8601)`: `updateTime\u003c=\"2020-11-04T18:54:47Z\"` * All insertion orders with an update time greater than or equal to `2020-11-04T18:54:47Z (format of ISO 8601)`: `updateTime\u003e=\"2020-11-04T18:54:47Z\"` The length of this field should be no more than 500 characters.",
+	//       "description": "Allows filtering by insertion order fields. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by `AND` or `OR` logical operators. A sequence of restrictions implicitly uses `AND`. * A restriction has the form of `{field} {operator} {value}`. * The `budget.budget_segments.date_range.end_date` field must use the `LESS THAN (\u003c)` operator. * The `updateTime` field must use the `GREATER THAN OR EQUAL TO (\u003e=)` or `LESS THAN OR EQUAL TO (\u003c=)` operators. * All other fields must use the `EQUALS (=)` operator. Supported fields: * `campaignId` * `displayName` * `entityStatus` * `budget.budget_segments.date_range.end_date` (input in the form of `YYYY-MM-DD`) **Deprecated. Not available after June 8, 2023** * `updateTime` (input in ISO 8601 format, or `YYYY-MM-DDTHH:MM:SSZ`) Examples: * All insertion orders under a campaign: `campaignId=\"1234\"` * All `ENTITY_STATUS_ACTIVE` or `ENTITY_STATUS_PAUSED` insertion orders under an advertiser: `(entityStatus=\"ENTITY_STATUS_ACTIVE\" OR entityStatus=\"ENTITY_STATUS_PAUSED\")` * All insertion orders with an update time less than or equal to 2020-11-04T18:54:47Z (format of ISO 8601): `updateTime\u003c=\"2020-11-04T18:54:47Z\"` * All insertion orders with an update time greater than or equal to 2020-11-04T18:54:47Z (format of ISO 8601): `updateTime\u003e=\"2020-11-04T18:54:47Z\"` The length of this field should be no more than 500 characters. Reference our [filter `LIST` requests](/display-video/api/guides/how-tos/filters) guide for more information.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -25110,18 +25187,22 @@ func (r *AdvertisersInsertionOrdersService) ListAssignedTargetingOptions(adverti
 }
 
 // Filter sets the optional parameter "filter": Allows filtering by
-// assigned targeting option properties. Supported syntax: * Filter
+// assigned targeting option fields. Supported syntax: * Filter
 // expressions are made up of one or more restrictions. * Restrictions
-// can be combined by the logical operator `OR` on the same field. * A
-// restriction has the form of `{field} {operator} {value}`. * The
-// operator must be `EQUALS (=)`. * Supported fields: - `targetingType`
-// - `inheritance` Examples: * AssignedTargetingOptions of targeting
-// type TARGETING_TYPE_PROXIMITY_LOCATION_LIST or TARGETING_TYPE_CHANNEL
+// can be combined by the logical operator `OR`. * A restriction has the
+// form of `{field} {operator} {value}`. * All fields must use the
+// `EQUALS (=)` operator. Supported fields: * `targetingType` *
+// `inheritance` Examples: * `AssignedTargetingOption` resources of
+// targeting type `TARGETING_TYPE_PROXIMITY_LOCATION_LIST` or
+// `TARGETING_TYPE_CHANNEL`:
 // `targetingType="TARGETING_TYPE_PROXIMITY_LOCATION_LIST" OR
-// targetingType="TARGETING_TYPE_CHANNEL" * AssignedTargetingOptions
-// with inheritance status of NOT_INHERITED or INHERITED_FROM_PARTNER
-// `inheritance="NOT_INHERITED" OR inheritance="INHERITED_FROM_PARTNER"
-// The length of this field should be no more than 500 characters.
+// targetingType="TARGETING_TYPE_CHANNEL" * `AssignedTargetingOption`
+// resources with inheritance status of `NOT_INHERITED` or
+// `INHERITED_FROM_PARTNER`: `inheritance="NOT_INHERITED" OR
+// inheritance="INHERITED_FROM_PARTNER" The length of this field should
+// be no more than 500 characters. Reference our filter `LIST` requests
+// (/display-video/api/guides/how-tos/filters) guide for more
+// information.
 func (c *AdvertisersInsertionOrdersListAssignedTargetingOptionsCall) Filter(filter string) *AdvertisersInsertionOrdersListAssignedTargetingOptionsCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -25277,7 +25358,7 @@ func (c *AdvertisersInsertionOrdersListAssignedTargetingOptionsCall) Do(opts ...
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Allows filtering by assigned targeting option properties. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by the logical operator `OR` on the same field. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `EQUALS (=)`. * Supported fields: - `targetingType` - `inheritance` Examples: * AssignedTargetingOptions of targeting type TARGETING_TYPE_PROXIMITY_LOCATION_LIST or TARGETING_TYPE_CHANNEL `targetingType=\"TARGETING_TYPE_PROXIMITY_LOCATION_LIST\" OR targetingType=\"TARGETING_TYPE_CHANNEL\"` * AssignedTargetingOptions with inheritance status of NOT_INHERITED or INHERITED_FROM_PARTNER `inheritance=\"NOT_INHERITED\" OR inheritance=\"INHERITED_FROM_PARTNER\"` The length of this field should be no more than 500 characters.",
+	//       "description": "Allows filtering by assigned targeting option fields. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by the logical operator `OR`. * A restriction has the form of `{field} {operator} {value}`. * All fields must use the `EQUALS (=)` operator. Supported fields: * `targetingType` * `inheritance` Examples: * `AssignedTargetingOption` resources of targeting type `TARGETING_TYPE_PROXIMITY_LOCATION_LIST` or `TARGETING_TYPE_CHANNEL`: `targetingType=\"TARGETING_TYPE_PROXIMITY_LOCATION_LIST\" OR targetingType=\"TARGETING_TYPE_CHANNEL\"` * `AssignedTargetingOption` resources with inheritance status of `NOT_INHERITED` or `INHERITED_FROM_PARTNER`: `inheritance=\"NOT_INHERITED\" OR inheritance=\"INHERITED_FROM_PARTNER\"` The length of this field should be no more than 500 characters. Reference our [filter `LIST` requests](/display-video/api/guides/how-tos/filters) guide for more information.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -25767,7 +25848,7 @@ func (c *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsCreateC
 	//         "Target ads to a specific content category (for example, arts \u0026 entertainment).",
 	//         "Purchase impressions from specific deals and auction packages.",
 	//         "Target ads to a specific language (for example, English or Japanese).",
-	//         "Target ads to ads.txt authorized sellers.",
+	//         "Target ads to ads.txt authorized sellers. If no targeting option of this type is assigned, the resource uses the \"Authorized Direct Sellers and Resellers\" option by default.",
 	//         "Target ads to a specific regional location (for example, a city or state).",
 	//         "Purchase impressions from a group of deals and auction packages.",
 	//         "Purchase impressions from specific exchanges.",
@@ -26066,7 +26147,7 @@ func (c *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsDeleteC
 	//         "Target ads to a specific content category (for example, arts \u0026 entertainment).",
 	//         "Purchase impressions from specific deals and auction packages.",
 	//         "Target ads to a specific language (for example, English or Japanese).",
-	//         "Target ads to ads.txt authorized sellers.",
+	//         "Target ads to ads.txt authorized sellers. If no targeting option of this type is assigned, the resource uses the \"Authorized Direct Sellers and Resellers\" option by default.",
 	//         "Target ads to a specific regional location (for example, a city or state).",
 	//         "Purchase impressions from a group of deals and auction packages.",
 	//         "Purchase impressions from specific exchanges.",
@@ -26389,7 +26470,7 @@ func (c *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsGetCall
 	//         "Target ads to a specific content category (for example, arts \u0026 entertainment).",
 	//         "Purchase impressions from specific deals and auction packages.",
 	//         "Target ads to a specific language (for example, English or Japanese).",
-	//         "Target ads to ads.txt authorized sellers.",
+	//         "Target ads to ads.txt authorized sellers. If no targeting option of this type is assigned, the resource uses the \"Authorized Direct Sellers and Resellers\" option by default.",
 	//         "Target ads to a specific regional location (for example, a city or state).",
 	//         "Purchase impressions from a group of deals and auction packages.",
 	//         "Purchase impressions from specific exchanges.",
@@ -26485,17 +26566,21 @@ func (r *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsService
 }
 
 // Filter sets the optional parameter "filter": Allows filtering by
-// assigned targeting option properties. Supported syntax: * Filter
+// assigned targeting option fields. Supported syntax: * Filter
 // expressions are made up of one or more restrictions. * Restrictions
 // can be combined by the logical operator `OR`. * A restriction has the
-// form of `{field} {operator} {value}`. * The operator must be `EQUALS
-// (=)`. * Supported fields: - `assignedTargetingOptionId` -
-// `inheritance` Examples: * AssignedTargetingOptions with ID 1 or 2
+// form of `{field} {operator} {value}`. * All fields must use the
+// `EQUALS (=)` operator. Supported fields: *
+// `assignedTargetingOptionId` * `inheritance` Examples: *
+// `AssignedTargetingOption` resources with ID 1 or 2:
 // `assignedTargetingOptionId="1" OR assignedTargetingOptionId="2" *
-// AssignedTargetingOptions with inheritance status of NOT_INHERITED or
-// INHERITED_FROM_PARTNER `inheritance="NOT_INHERITED" OR
-// inheritance="INHERITED_FROM_PARTNER" The length of this field should
-// be no more than 500 characters.
+// `AssignedTargetingOption` resources with inheritance status of
+// `NOT_INHERITED` or `INHERITED_FROM_PARTNER`:
+// `inheritance="NOT_INHERITED" OR inheritance="INHERITED_FROM_PARTNER"
+// The length of this field should be no more than 500 characters.
+// Reference our filter `LIST` requests
+// (/display-video/api/guides/how-tos/filters) guide for more
+// information.
 func (c *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsListCall) Filter(filter string) *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -26652,7 +26737,7 @@ func (c *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsListCal
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Allows filtering by assigned targeting option properties. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by the logical operator `OR`. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `EQUALS (=)`. * Supported fields: - `assignedTargetingOptionId` - `inheritance` Examples: * AssignedTargetingOptions with ID 1 or 2 `assignedTargetingOptionId=\"1\" OR assignedTargetingOptionId=\"2\"` * AssignedTargetingOptions with inheritance status of NOT_INHERITED or INHERITED_FROM_PARTNER `inheritance=\"NOT_INHERITED\" OR inheritance=\"INHERITED_FROM_PARTNER\"` The length of this field should be no more than 500 characters.",
+	//       "description": "Allows filtering by assigned targeting option fields. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by the logical operator `OR`. * A restriction has the form of `{field} {operator} {value}`. * All fields must use the `EQUALS (=)` operator. Supported fields: * `assignedTargetingOptionId` * `inheritance` Examples: * `AssignedTargetingOption` resources with ID 1 or 2: `assignedTargetingOptionId=\"1\" OR assignedTargetingOptionId=\"2\"` * `AssignedTargetingOption` resources with inheritance status of `NOT_INHERITED` or `INHERITED_FROM_PARTNER`: `inheritance=\"NOT_INHERITED\" OR inheritance=\"INHERITED_FROM_PARTNER\"` The length of this field should be no more than 500 characters. Reference our [filter `LIST` requests](/display-video/api/guides/how-tos/filters) guide for more information.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -26767,7 +26852,7 @@ func (c *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsListCal
 	//         "Target ads to a specific content category (for example, arts \u0026 entertainment).",
 	//         "Purchase impressions from specific deals and auction packages.",
 	//         "Target ads to a specific language (for example, English or Japanese).",
-	//         "Target ads to ads.txt authorized sellers.",
+	//         "Target ads to ads.txt authorized sellers. If no targeting option of this type is assigned, the resource uses the \"Authorized Direct Sellers and Resellers\" option by default.",
 	//         "Target ads to a specific regional location (for example, a city or state).",
 	//         "Purchase impressions from a group of deals and auction packages.",
 	//         "Purchase impressions from specific exchanges.",
@@ -27405,18 +27490,22 @@ func (r *AdvertisersLineItemsService) BulkListAssignedTargetingOptions(advertise
 }
 
 // Filter sets the optional parameter "filter": Allows filtering by
-// assigned targeting option properties. Supported syntax: * Filter
+// assigned targeting option fields. Supported syntax: * Filter
 // expressions are made up of one or more restrictions. * Restrictions
 // can be combined by the logical operator `OR` on the same field. * A
-// restriction has the form of `{field} {operator} {value}`. * The
-// operator must be `EQUALS (=)`. * Supported fields: - `targetingType`
-// - `inheritance` Examples: * AssignedTargetingOptions of targeting
-// type TARGETING_TYPE_PROXIMITY_LOCATION_LIST or TARGETING_TYPE_CHANNEL
+// restriction has the form of `{field} {operator} {value}`. * All
+// fields must use the `EQUALS (=)` operator. Supported fields: *
+// `targetingType` * `inheritance` Examples: * `AssignedTargetingOption`
+// resources of targeting type `TARGETING_TYPE_PROXIMITY_LOCATION_LIST`
+// or `TARGETING_TYPE_CHANNEL`:
 // `targetingType="TARGETING_TYPE_PROXIMITY_LOCATION_LIST" OR
-// targetingType="TARGETING_TYPE_CHANNEL" * AssignedTargetingOptions
-// with inheritance status of NOT_INHERITED or INHERITED_FROM_PARTNER
-// `inheritance="NOT_INHERITED" OR inheritance="INHERITED_FROM_PARTNER"
-// The length of this field should be no more than 500 characters.
+// targetingType="TARGETING_TYPE_CHANNEL" * `AssignedTargetingOption`
+// resources with inheritance status of `NOT_INHERITED` or
+// `INHERITED_FROM_PARTNER`: `inheritance="NOT_INHERITED" OR
+// inheritance="INHERITED_FROM_PARTNER" The length of this field should
+// be no more than 500 characters. Reference our filter `LIST` requests
+// (/display-video/api/guides/how-tos/filters) guide for more
+// information.
 func (c *AdvertisersLineItemsBulkListAssignedTargetingOptionsCall) Filter(filter string) *AdvertisersLineItemsBulkListAssignedTargetingOptionsCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -27580,7 +27669,7 @@ func (c *AdvertisersLineItemsBulkListAssignedTargetingOptionsCall) Do(opts ...go
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Allows filtering by assigned targeting option properties. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by the logical operator `OR` on the same field. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `EQUALS (=)`. * Supported fields: - `targetingType` - `inheritance` Examples: * AssignedTargetingOptions of targeting type TARGETING_TYPE_PROXIMITY_LOCATION_LIST or TARGETING_TYPE_CHANNEL `targetingType=\"TARGETING_TYPE_PROXIMITY_LOCATION_LIST\" OR targetingType=\"TARGETING_TYPE_CHANNEL\"` * AssignedTargetingOptions with inheritance status of NOT_INHERITED or INHERITED_FROM_PARTNER `inheritance=\"NOT_INHERITED\" OR inheritance=\"INHERITED_FROM_PARTNER\"` The length of this field should be no more than 500 characters.",
+	//       "description": "Allows filtering by assigned targeting option fields. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by the logical operator `OR` on the same field. * A restriction has the form of `{field} {operator} {value}`. * All fields must use the `EQUALS (=)` operator. Supported fields: * `targetingType` * `inheritance` Examples: * `AssignedTargetingOption` resources of targeting type `TARGETING_TYPE_PROXIMITY_LOCATION_LIST` or `TARGETING_TYPE_CHANNEL`: `targetingType=\"TARGETING_TYPE_PROXIMITY_LOCATION_LIST\" OR targetingType=\"TARGETING_TYPE_CHANNEL\"` * `AssignedTargetingOption` resources with inheritance status of `NOT_INHERITED` or `INHERITED_FROM_PARTNER`: `inheritance=\"NOT_INHERITED\" OR inheritance=\"INHERITED_FROM_PARTNER\"` The length of this field should be no more than 500 characters. Reference our [filter `LIST` requests](/display-video/api/guides/how-tos/filters) guide for more information.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -28570,38 +28659,41 @@ func (r *AdvertisersLineItemsService) List(advertiserId int64) *AdvertisersLineI
 }
 
 // Filter sets the optional parameter "filter": Allows filtering by line
-// item properties. Supported syntax: * Filter expressions are made up
-// of one or more restrictions. * Restrictions can be combined by `AND`
-// or `OR` logical operators. A sequence of restrictions implicitly uses
+// item fields. Supported syntax: * Filter expressions are made up of
+// one or more restrictions. * Restrictions can be combined by `AND` or
+// `OR` logical operators. A sequence of restrictions implicitly uses
 // `AND`. * A restriction has the form of `{field} {operator} {value}`.
-// * The operator used on `flight.dateRange.endDate` must be LESS THAN
-// (<). * The operator used on `updateTime` must be `GREATER THAN OR
-// EQUAL TO (>=)` or `LESS THAN OR EQUAL TO (<=)`. * The operator used
-// on `warningMessages` must be `HAS (:)`. * The operators used on all
-// other fields must be `EQUALS (=)`. * Supported properties: -
-// `campaignId` - `displayName` - `insertionOrderId` - `entityStatus` -
-// `lineItemId` - `lineItemType` - `flight.dateRange.endDate` (input
-// formatted as YYYY-MM-DD) - `warningMessages` - `flight.triggerId` -
-// `updateTime` (input in ISO 8601 format, or YYYY-MM-DDTHH:MM:SSZ) -
-// `targetedChannelId` - `targetedNegativeKeywordListId` Examples: * All
-// line items under an insertion order: `insertionOrderId="1234" * All
-// `ENTITY_STATUS_ACTIVE` or `ENTITY_STATUS_PAUSED` and
-// `LINE_ITEM_TYPE_DISPLAY_DEFAULT` line items under an advertiser:
-// `(entityStatus="ENTITY_STATUS_ACTIVE" OR
+// * The `flight.dateRange.endDate` field must use the `LESS THAN (<)`
+// operator. * The `updateTime` field must use the `GREATER THAN OR
+// EQUAL TO (>=)` or `LESS THAN OR EQUAL TO (<=)` operators. * The
+// `warningMessages` field must use the `HAS (:)` operator. * All other
+// fields must use the `EQUALS (=)` operator. Supported fields: *
+// `campaignId` * `displayName` * `entityStatus` *
+// `flight.dateRange.endDate` (input formatted as `YYYY-MM-DD`)
+// **Deprecated. Not available after June 8, 2023** * `flight.triggerId`
+// * `insertionOrderId` * `lineItemId` * `lineItemType` *
+// `targetedChannelId` * `targetedNegativeKeywordListId` * `updateTime`
+// (input in ISO 8601 format, or `YYYY-MM-DDTHH:MM:SSZ`) *
+// `warningMessages` Examples: * All line items under an insertion
+// order: `insertionOrderId="1234" * All `ENTITY_STATUS_ACTIVE` or
+// `ENTITY_STATUS_PAUSED` and `LINE_ITEM_TYPE_DISPLAY_DEFAULT` line
+// items under an advertiser: `(entityStatus="ENTITY_STATUS_ACTIVE" OR
 // entityStatus="ENTITY_STATUS_PAUSED") AND
 // lineItemType="LINE_ITEM_TYPE_DISPLAY_DEFAULT" * All line items whose
 // flight dates end before March 28, 2019:
 // `flight.dateRange.endDate<"2019-03-28" * All line items that have
 // `NO_VALID_CREATIVE` in `warningMessages`:
 // `warningMessages:"NO_VALID_CREATIVE" * All line items with an update
-// time less than or equal to `2020-11-04T18:54:47Z (format of ISO
-// 8601)`: `updateTime<="2020-11-04T18:54:47Z" * All line items with an
-// update time greater than or equal to `2020-11-04T18:54:47Z (format of
-// ISO 8601)`: `updateTime>="2020-11-04T18:54:47Z" * All line items
-// that are using both the specified channel and specified negative
-// keyword list in their targeting: `targetedNegativeKeywordListId=789
-// AND targetedChannelId=12345` The length of this field should be no
-// more than 500 characters.
+// time less than or equal to 2020-11-04T18:54:47Z (format of ISO 8601):
+// `updateTime<="2020-11-04T18:54:47Z" * All line items with an update
+// time greater than or equal to 2020-11-04T18:54:47Z (format of ISO
+// 8601): `updateTime>="2020-11-04T18:54:47Z" * All line items that are
+// using both the specified channel and specified negative keyword list
+// in their targeting: `targetedNegativeKeywordListId=789 AND
+// targetedChannelId=12345` The length of this field should be no more
+// than 500 characters. Reference our filter `LIST` requests
+// (/display-video/api/guides/how-tos/filters) guide for more
+// information.
 func (c *AdvertisersLineItemsListCall) Filter(filter string) *AdvertisersLineItemsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -28609,10 +28701,11 @@ func (c *AdvertisersLineItemsListCall) Filter(filter string) *AdvertisersLineIte
 
 // OrderBy sets the optional parameter "orderBy": Field by which to sort
 // the list. Acceptable values are: * `displayName` (default) *
-// `entityStatus` * `flight.dateRange.endDate` * `updateTime` The
-// default sorting order is ascending. To specify descending order for a
-// field, a suffix "desc" should be added to the field name. Example:
-// `displayName desc`.
+// `entityStatus` * `flight.dateRange.endDate` **Deprecated. Not
+// available after June 8, 2023** * `updateTime` The default sorting
+// order is ascending. To specify descending order for a field, a suffix
+// "desc" should be added to the field name. Example: `displayName
+// desc`.
 func (c *AdvertisersLineItemsListCall) OrderBy(orderBy string) *AdvertisersLineItemsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -28753,12 +28846,12 @@ func (c *AdvertisersLineItemsListCall) Do(opts ...googleapi.CallOption) (*ListLi
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Allows filtering by line item properties. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by `AND` or `OR` logical operators. A sequence of restrictions implicitly uses `AND`. * A restriction has the form of `{field} {operator} {value}`. * The operator used on `flight.dateRange.endDate` must be LESS THAN (\u003c). * The operator used on `updateTime` must be `GREATER THAN OR EQUAL TO (\u003e=)` or `LESS THAN OR EQUAL TO (\u003c=)`. * The operator used on `warningMessages` must be `HAS (:)`. * The operators used on all other fields must be `EQUALS (=)`. * Supported properties: - `campaignId` - `displayName` - `insertionOrderId` - `entityStatus` - `lineItemId` - `lineItemType` - `flight.dateRange.endDate` (input formatted as YYYY-MM-DD) - `warningMessages` - `flight.triggerId` - `updateTime` (input in ISO 8601 format, or YYYY-MM-DDTHH:MM:SSZ) - `targetedChannelId` - `targetedNegativeKeywordListId` Examples: * All line items under an insertion order: `insertionOrderId=\"1234\"` * All `ENTITY_STATUS_ACTIVE` or `ENTITY_STATUS_PAUSED` and `LINE_ITEM_TYPE_DISPLAY_DEFAULT` line items under an advertiser: `(entityStatus=\"ENTITY_STATUS_ACTIVE\" OR entityStatus=\"ENTITY_STATUS_PAUSED\") AND lineItemType=\"LINE_ITEM_TYPE_DISPLAY_DEFAULT\"` * All line items whose flight dates end before March 28, 2019: `flight.dateRange.endDate\u003c\"2019-03-28\"` * All line items that have `NO_VALID_CREATIVE` in `warningMessages`: `warningMessages:\"NO_VALID_CREATIVE\"` * All line items with an update time less than or equal to `2020-11-04T18:54:47Z (format of ISO 8601)`: `updateTime\u003c=\"2020-11-04T18:54:47Z\"` * All line items with an update time greater than or equal to `2020-11-04T18:54:47Z (format of ISO 8601)`: `updateTime\u003e=\"2020-11-04T18:54:47Z\"` * All line items that are using both the specified channel and specified negative keyword list in their targeting: `targetedNegativeKeywordListId=789 AND targetedChannelId=12345` The length of this field should be no more than 500 characters.",
+	//       "description": "Allows filtering by line item fields. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by `AND` or `OR` logical operators. A sequence of restrictions implicitly uses `AND`. * A restriction has the form of `{field} {operator} {value}`. * The `flight.dateRange.endDate` field must use the `LESS THAN (\u003c)` operator. * The `updateTime` field must use the `GREATER THAN OR EQUAL TO (\u003e=)` or `LESS THAN OR EQUAL TO (\u003c=)` operators. * The `warningMessages` field must use the `HAS (:)` operator. * All other fields must use the `EQUALS (=)` operator. Supported fields: * `campaignId` * `displayName` * `entityStatus` * `flight.dateRange.endDate` (input formatted as `YYYY-MM-DD`) **Deprecated. Not available after June 8, 2023** * `flight.triggerId` * `insertionOrderId` * `lineItemId` * `lineItemType` * `targetedChannelId` * `targetedNegativeKeywordListId` * `updateTime` (input in ISO 8601 format, or `YYYY-MM-DDTHH:MM:SSZ`) * `warningMessages` Examples: * All line items under an insertion order: `insertionOrderId=\"1234\"` * All `ENTITY_STATUS_ACTIVE` or `ENTITY_STATUS_PAUSED` and `LINE_ITEM_TYPE_DISPLAY_DEFAULT` line items under an advertiser: `(entityStatus=\"ENTITY_STATUS_ACTIVE\" OR entityStatus=\"ENTITY_STATUS_PAUSED\") AND lineItemType=\"LINE_ITEM_TYPE_DISPLAY_DEFAULT\"` * All line items whose flight dates end before March 28, 2019: `flight.dateRange.endDate\u003c\"2019-03-28\"` * All line items that have `NO_VALID_CREATIVE` in `warningMessages`: `warningMessages:\"NO_VALID_CREATIVE\"` * All line items with an update time less than or equal to 2020-11-04T18:54:47Z (format of ISO 8601): `updateTime\u003c=\"2020-11-04T18:54:47Z\"` * All line items with an update time greater than or equal to 2020-11-04T18:54:47Z (format of ISO 8601): `updateTime\u003e=\"2020-11-04T18:54:47Z\"` * All line items that are using both the specified channel and specified negative keyword list in their targeting: `targetedNegativeKeywordListId=789 AND targetedChannelId=12345` The length of this field should be no more than 500 characters. Reference our [filter `LIST` requests](/display-video/api/guides/how-tos/filters) guide for more information.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Field by which to sort the list. Acceptable values are: * `displayName` (default) * `entityStatus` * `flight.dateRange.endDate` * `updateTime` The default sorting order is ascending. To specify descending order for a field, a suffix \"desc\" should be added to the field name. Example: `displayName desc`.",
+	//       "description": "Field by which to sort the list. Acceptable values are: * `displayName` (default) * `entityStatus` * `flight.dateRange.endDate` **Deprecated. Not available after June 8, 2023** * `updateTime` The default sorting order is ascending. To specify descending order for a field, a suffix \"desc\" should be added to the field name. Example: `displayName desc`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -29253,7 +29346,7 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsCreateCall) D
 	//         "Target ads to a specific content category (for example, arts \u0026 entertainment).",
 	//         "Purchase impressions from specific deals and auction packages.",
 	//         "Target ads to a specific language (for example, English or Japanese).",
-	//         "Target ads to ads.txt authorized sellers.",
+	//         "Target ads to ads.txt authorized sellers. If no targeting option of this type is assigned, the resource uses the \"Authorized Direct Sellers and Resellers\" option by default.",
 	//         "Target ads to a specific regional location (for example, a city or state).",
 	//         "Purchase impressions from a group of deals and auction packages.",
 	//         "Purchase impressions from specific exchanges.",
@@ -29567,7 +29660,7 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsDeleteCall) D
 	//         "Target ads to a specific content category (for example, arts \u0026 entertainment).",
 	//         "Purchase impressions from specific deals and auction packages.",
 	//         "Target ads to a specific language (for example, English or Japanese).",
-	//         "Target ads to ads.txt authorized sellers.",
+	//         "Target ads to ads.txt authorized sellers. If no targeting option of this type is assigned, the resource uses the \"Authorized Direct Sellers and Resellers\" option by default.",
 	//         "Target ads to a specific regional location (for example, a city or state).",
 	//         "Purchase impressions from a group of deals and auction packages.",
 	//         "Purchase impressions from specific exchanges.",
@@ -29893,7 +29986,7 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsGetCall) Do(o
 	//         "Target ads to a specific content category (for example, arts \u0026 entertainment).",
 	//         "Purchase impressions from specific deals and auction packages.",
 	//         "Target ads to a specific language (for example, English or Japanese).",
-	//         "Target ads to ads.txt authorized sellers.",
+	//         "Target ads to ads.txt authorized sellers. If no targeting option of this type is assigned, the resource uses the \"Authorized Direct Sellers and Resellers\" option by default.",
 	//         "Target ads to a specific regional location (for example, a city or state).",
 	//         "Purchase impressions from a group of deals and auction packages.",
 	//         "Purchase impressions from specific exchanges.",
@@ -29992,17 +30085,21 @@ func (r *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsService) List
 }
 
 // Filter sets the optional parameter "filter": Allows filtering by
-// assigned targeting option properties. Supported syntax: * Filter
+// assigned targeting option fields. Supported syntax: * Filter
 // expressions are made up of one or more restrictions. * Restrictions
 // can be combined by the logical operator `OR`. * A restriction has the
-// form of `{field} {operator} {value}`. * The operator must be `EQUALS
-// (=)`. * Supported fields: - `assignedTargetingOptionId` -
-// `inheritance` Examples: * AssignedTargetingOptions with ID 1 or 2
+// form of `{field} {operator} {value}`. * All fields must use the
+// `EQUALS (=)` operator. Supported fields: *
+// `assignedTargetingOptionId` * `inheritance` Examples: *
+// `AssignedTargetingOption` resources with ID 1 or 2:
 // `assignedTargetingOptionId="1" OR assignedTargetingOptionId="2" *
-// AssignedTargetingOptions with inheritance status of NOT_INHERITED or
-// INHERITED_FROM_PARTNER `inheritance="NOT_INHERITED" OR
-// inheritance="INHERITED_FROM_PARTNER" The length of this field should
-// be no more than 500 characters.
+// `AssignedTargetingOption` resources with inheritance status of
+// `NOT_INHERITED` or `INHERITED_FROM_PARTNER`:
+// `inheritance="NOT_INHERITED" OR inheritance="INHERITED_FROM_PARTNER"
+// The length of this field should be no more than 500 characters.
+// Reference our filter `LIST` requests
+// (/display-video/api/guides/how-tos/filters) guide for more
+// information.
 func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall) Filter(filter string) *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -30159,7 +30256,7 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall) Do(
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Allows filtering by assigned targeting option properties. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by the logical operator `OR`. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `EQUALS (=)`. * Supported fields: - `assignedTargetingOptionId` - `inheritance` Examples: * AssignedTargetingOptions with ID 1 or 2 `assignedTargetingOptionId=\"1\" OR assignedTargetingOptionId=\"2\"` * AssignedTargetingOptions with inheritance status of NOT_INHERITED or INHERITED_FROM_PARTNER `inheritance=\"NOT_INHERITED\" OR inheritance=\"INHERITED_FROM_PARTNER\"` The length of this field should be no more than 500 characters.",
+	//       "description": "Allows filtering by assigned targeting option fields. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by the logical operator `OR`. * A restriction has the form of `{field} {operator} {value}`. * All fields must use the `EQUALS (=)` operator. Supported fields: * `assignedTargetingOptionId` * `inheritance` Examples: * `AssignedTargetingOption` resources with ID 1 or 2: `assignedTargetingOptionId=\"1\" OR assignedTargetingOptionId=\"2\"` * `AssignedTargetingOption` resources with inheritance status of `NOT_INHERITED` or `INHERITED_FROM_PARTNER`: `inheritance=\"NOT_INHERITED\" OR inheritance=\"INHERITED_FROM_PARTNER\"` The length of this field should be no more than 500 characters. Reference our [filter `LIST` requests](/display-video/api/guides/how-tos/filters) guide for more information.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -30274,7 +30371,7 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall) Do(
 	//         "Target ads to a specific content category (for example, arts \u0026 entertainment).",
 	//         "Purchase impressions from specific deals and auction packages.",
 	//         "Target ads to a specific language (for example, English or Japanese).",
-	//         "Target ads to ads.txt authorized sellers.",
+	//         "Target ads to ads.txt authorized sellers. If no targeting option of this type is assigned, the resource uses the \"Authorized Direct Sellers and Resellers\" option by default.",
 	//         "Target ads to a specific regional location (for example, a city or state).",
 	//         "Purchase impressions from a group of deals and auction packages.",
 	//         "Purchase impressions from specific exchanges.",
@@ -30661,10 +30758,14 @@ func (r *AdvertisersLocationListsService) List(advertiserId int64) *AdvertisersL
 // up of one or more restrictions. * Restrictions can be combined by
 // `AND` or `OR` logical operators. A sequence of restrictions
 // implicitly uses `AND`. * A restriction has the form of `{field}
-// {operator} {value}`. * The operator must be `EQUALS (=)`. * Supported
-// fields: - `locationType` Examples: * All regional location list:
-// `locationType="TARGETING_LOCATION_TYPE_REGIONAL" * All proximity
-// location list: `locationType="TARGETING_LOCATION_TYPE_PROXIMITY"
+// {operator} {value}`. * All fields must use the `EQUALS (=)` operator.
+// Supported fields: * `locationType` Examples: * All regional location
+// list: `locationType="TARGETING_LOCATION_TYPE_REGIONAL" * All
+// proximity location list:
+// `locationType="TARGETING_LOCATION_TYPE_PROXIMITY" The length of this
+// field should be no more than 500 characters. Reference our filter
+// `LIST` requests (/display-video/api/guides/how-tos/filters) guide for
+// more information.
 func (c *AdvertisersLocationListsListCall) Filter(filter string) *AdvertisersLocationListsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -30814,7 +30915,7 @@ func (c *AdvertisersLocationListsListCall) Do(opts ...googleapi.CallOption) (*Li
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Allows filtering by location list fields. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by `AND` or `OR` logical operators. A sequence of restrictions implicitly uses `AND`. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `EQUALS (=)`. * Supported fields: - `locationType` Examples: * All regional location list: `locationType=\"TARGETING_LOCATION_TYPE_REGIONAL\"` * All proximity location list: `locationType=\"TARGETING_LOCATION_TYPE_PROXIMITY\"`",
+	//       "description": "Allows filtering by location list fields. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by `AND` or `OR` logical operators. A sequence of restrictions implicitly uses `AND`. * A restriction has the form of `{field} {operator} {value}`. * All fields must use the `EQUALS (=)` operator. Supported fields: * `locationType` Examples: * All regional location list: `locationType=\"TARGETING_LOCATION_TYPE_REGIONAL\"` * All proximity location list: `locationType=\"TARGETING_LOCATION_TYPE_PROXIMITY\"` The length of this field should be no more than 500 characters. Reference our [filter `LIST` requests](/display-video/api/guides/how-tos/filters) guide for more information.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -31545,10 +31646,13 @@ func (r *AdvertisersLocationListsAssignedLocationsService) List(advertiserId int
 // Filter sets the optional parameter "filter": Allows filtering by
 // location list assignment fields. Supported syntax: * Filter
 // expressions are made up of one or more restrictions. * Restrictions
-// can be combined by the logical operator `OR`. * A restriction has the
-// form of `{field} {operator} {value}`. * The operator must be `EQUALS
-// (=)`. * Supported fields: - `assignedLocationId` The length of this
-// field should be no more than 500 characters.
+// can be combined by the `OR` logical operator. * A restriction has the
+// form of `{field} {operator} {value}`. * All fields must use the
+// `EQUALS (=)` operator. Supported fields: * `assignedLocationId` The
+// length of this field should be no more than 500 characters. Reference
+// our filter `LIST` requests
+// (/display-video/api/guides/how-tos/filters) guide for more
+// information.
 func (c *AdvertisersLocationListsAssignedLocationsListCall) Filter(filter string) *AdvertisersLocationListsAssignedLocationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -31700,7 +31804,7 @@ func (c *AdvertisersLocationListsAssignedLocationsListCall) Do(opts ...googleapi
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Allows filtering by location list assignment fields. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by the logical operator `OR`. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `EQUALS (=)`. * Supported fields: - `assignedLocationId` The length of this field should be no more than 500 characters.",
+	//       "description": "Allows filtering by location list assignment fields. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by the `OR` logical operator. * A restriction has the form of `{field} {operator} {value}`. * All fields must use the `EQUALS (=)` operator. Supported fields: * `assignedLocationId` The length of this field should be no more than 500 characters. Reference our [filter `LIST` requests](/display-video/api/guides/how-tos/filters) guide for more information.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -31774,7 +31878,11 @@ type AdvertisersManualTriggersActivateCall struct {
 
 // Activate: Activates a manual trigger. Each activation of the manual
 // trigger must be at least 5 minutes apart, otherwise an error will be
-// returned.
+// returned. **Warning:** Line Items using manual triggers will stop
+// serving in Display & Video 360 on **May 17, 2023**. Read our feature
+// deprecation announcement
+// (/display-video/api/deprecations#features.manual_triggers) for more
+// information.
 //
 //   - advertiserId: The ID of the advertiser that the manual trigger
 //     belongs.
@@ -31879,7 +31987,7 @@ func (c *AdvertisersManualTriggersActivateCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "Activates a manual trigger. Each activation of the manual trigger must be at least 5 minutes apart, otherwise an error will be returned.",
+	//   "description": "Activates a manual trigger. Each activation of the manual trigger must be at least 5 minutes apart, otherwise an error will be returned. **Warning:** Line Items using manual triggers will stop serving in Display \u0026 Video 360 on **May 17, 2023**. Read our [feature deprecation announcement](/display-video/api/deprecations#features.manual_triggers) for more information.",
 	//   "flatPath": "v2/advertisers/{advertisersId}/manualTriggers/{manualTriggersId}:activate",
 	//   "httpMethod": "POST",
 	//   "id": "displayvideo.advertisers.manualTriggers.activate",
@@ -31931,7 +32039,11 @@ type AdvertisersManualTriggersCreateCall struct {
 }
 
 // Create: Creates a new manual trigger. Returns the newly created
-// manual trigger if successful.
+// manual trigger if successful. **Warning:** Line Items using manual
+// triggers will stop serving in Display & Video 360 on **May 17,
+// 2023**. Read our feature deprecation announcement
+// (/display-video/api/deprecations#features.manual_triggers) for more
+// information.
 //
 //   - advertiserId: Immutable. The unique ID of the advertiser that the
 //     manual trigger belongs to.
@@ -32033,7 +32145,7 @@ func (c *AdvertisersManualTriggersCreateCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new manual trigger. Returns the newly created manual trigger if successful.",
+	//   "description": "Creates a new manual trigger. Returns the newly created manual trigger if successful. **Warning:** Line Items using manual triggers will stop serving in Display \u0026 Video 360 on **May 17, 2023**. Read our [feature deprecation announcement](/display-video/api/deprecations#features.manual_triggers) for more information.",
 	//   "flatPath": "v2/advertisers/{advertisersId}/manualTriggers",
 	//   "httpMethod": "POST",
 	//   "id": "displayvideo.advertisers.manualTriggers.create",
@@ -32076,7 +32188,11 @@ type AdvertisersManualTriggersDeactivateCall struct {
 	header_                        http.Header
 }
 
-// Deactivate: Deactivates a manual trigger.
+// Deactivate: Deactivates a manual trigger. **Warning:** Line Items
+// using manual triggers will stop serving in Display & Video 360 on
+// **May 17, 2023**. Read our feature deprecation announcement
+// (/display-video/api/deprecations#features.manual_triggers) for more
+// information.
 //
 //   - advertiserId: The ID of the advertiser that the manual trigger
 //     belongs.
@@ -32181,7 +32297,7 @@ func (c *AdvertisersManualTriggersDeactivateCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
-	//   "description": "Deactivates a manual trigger.",
+	//   "description": "Deactivates a manual trigger. **Warning:** Line Items using manual triggers will stop serving in Display \u0026 Video 360 on **May 17, 2023**. Read our [feature deprecation announcement](/display-video/api/deprecations#features.manual_triggers) for more information.",
 	//   "flatPath": "v2/advertisers/{advertisersId}/manualTriggers/{manualTriggersId}:deactivate",
 	//   "httpMethod": "POST",
 	//   "id": "displayvideo.advertisers.manualTriggers.deactivate",
@@ -32233,7 +32349,11 @@ type AdvertisersManualTriggersGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a manual trigger.
+// Get: Gets a manual trigger. **Warning:** Line Items using manual
+// triggers will stop serving in Display & Video 360 on **May 17,
+// 2023**. Read our feature deprecation announcement
+// (/display-video/api/deprecations#features.manual_triggers) for more
+// information.
 //
 //   - advertiserId: The ID of the advertiser this manual trigger belongs
 //     to.
@@ -32345,7 +32465,7 @@ func (c *AdvertisersManualTriggersGetCall) Do(opts ...googleapi.CallOption) (*Ma
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets a manual trigger.",
+	//   "description": "Gets a manual trigger. **Warning:** Line Items using manual triggers will stop serving in Display \u0026 Video 360 on **May 17, 2023**. Read our [feature deprecation announcement](/display-video/api/deprecations#features.manual_triggers) for more information.",
 	//   "flatPath": "v2/advertisers/{advertisersId}/manualTriggers/{manualTriggersId}",
 	//   "httpMethod": "GET",
 	//   "id": "displayvideo.advertisers.manualTriggers.get",
@@ -32395,7 +32515,11 @@ type AdvertisersManualTriggersListCall struct {
 
 // List: Lists manual triggers that are accessible to the current user
 // for a given advertiser ID. The order is defined by the order_by
-// parameter. A single advertiser_id is required.
+// parameter. A single advertiser_id is required. **Warning:** Line
+// Items using manual triggers will stop serving in Display & Video 360
+// on **May 17, 2023**. Read our feature deprecation announcement
+// (/display-video/api/deprecations#features.manual_triggers) for more
+// information.
 //
 //   - advertiserId: The ID of the advertiser that the fetched manual
 //     triggers belong to.
@@ -32406,14 +32530,16 @@ func (r *AdvertisersManualTriggersService) List(advertiserId int64) *Advertisers
 }
 
 // Filter sets the optional parameter "filter": Allows filtering by
-// manual trigger properties. Supported syntax: * Filter expressions are
+// manual trigger fields. Supported syntax: * Filter expressions are
 // made up of one or more restrictions. * Restrictions can be combined
 // by `AND` or `OR` logical operators. A sequence of restrictions
 // implicitly uses `AND`. * A restriction has the form of `{field}
-// {operator} {value}`. * The operator must be `EQUALS (=)`. * Supported
-// fields: - `displayName` - `state` Examples: * All active manual
-// triggers under an advertiser: `state="ACTIVE" The length of this
-// field should be no more than 500 characters.
+// {operator} {value}`. * All fields must use the `EQUALS (=)` operator.
+// Supported fields: * `displayName` * `state` Examples: * All active
+// manual triggers under an advertiser: `state="ACTIVE" The length of
+// this field should be no more than 500 characters. Reference our
+// filter `LIST` requests (/display-video/api/guides/how-tos/filters)
+// guide for more information.
 func (c *AdvertisersManualTriggersListCall) Filter(filter string) *AdvertisersManualTriggersListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -32545,7 +32671,7 @@ func (c *AdvertisersManualTriggersListCall) Do(opts ...googleapi.CallOption) (*L
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists manual triggers that are accessible to the current user for a given advertiser ID. The order is defined by the order_by parameter. A single advertiser_id is required.",
+	//   "description": "Lists manual triggers that are accessible to the current user for a given advertiser ID. The order is defined by the order_by parameter. A single advertiser_id is required. **Warning:** Line Items using manual triggers will stop serving in Display \u0026 Video 360 on **May 17, 2023**. Read our [feature deprecation announcement](/display-video/api/deprecations#features.manual_triggers) for more information.",
 	//   "flatPath": "v2/advertisers/{advertisersId}/manualTriggers",
 	//   "httpMethod": "GET",
 	//   "id": "displayvideo.advertisers.manualTriggers.list",
@@ -32562,7 +32688,7 @@ func (c *AdvertisersManualTriggersListCall) Do(opts ...googleapi.CallOption) (*L
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Allows filtering by manual trigger properties. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by `AND` or `OR` logical operators. A sequence of restrictions implicitly uses `AND`. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `EQUALS (=)`. * Supported fields: - `displayName` - `state` Examples: * All active manual triggers under an advertiser: `state=\"ACTIVE\"` The length of this field should be no more than 500 characters.",
+	//       "description": "Allows filtering by manual trigger fields. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by `AND` or `OR` logical operators. A sequence of restrictions implicitly uses `AND`. * A restriction has the form of `{field} {operator} {value}`. * All fields must use the `EQUALS (=)` operator. Supported fields: * `displayName` * `state` Examples: * All active manual triggers under an advertiser: `state=\"ACTIVE\"` The length of this field should be no more than 500 characters. Reference our [filter `LIST` requests](/display-video/api/guides/how-tos/filters) guide for more information.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -32628,7 +32754,11 @@ type AdvertisersManualTriggersPatchCall struct {
 }
 
 // Patch: Updates a manual trigger. Returns the updated manual trigger
-// if successful.
+// if successful. **Warning:** Line Items using manual triggers will
+// stop serving in Display & Video 360 on **May 17, 2023**. Read our
+// feature deprecation announcement
+// (/display-video/api/deprecations#features.manual_triggers) for more
+// information.
 //
 //   - advertiserId: Immutable. The unique ID of the advertiser that the
 //     manual trigger belongs to.
@@ -32740,7 +32870,7 @@ func (c *AdvertisersManualTriggersPatchCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a manual trigger. Returns the updated manual trigger if successful.",
+	//   "description": "Updates a manual trigger. Returns the updated manual trigger if successful. **Warning:** Line Items using manual triggers will stop serving in Display \u0026 Video 360 on **May 17, 2023**. Read our [feature deprecation announcement](/display-video/api/deprecations#features.manual_triggers) for more information.",
 	//   "flatPath": "v2/advertisers/{advertisersId}/manualTriggers/{manualTriggersId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "displayvideo.advertisers.manualTriggers.patch",
@@ -34118,11 +34248,14 @@ func (r *AdvertisersNegativeKeywordListsNegativeKeywordsService) List(advertiser
 
 // Filter sets the optional parameter "filter": Allows filtering by
 // negative keyword fields. Supported syntax: * Filter expressions for
-// negative keyword currently can only contain at most one *
-// restriction. * A restriction has the form of `{field} {operator}
-// {value}`. * The operator must be `CONTAINS (:)`. * Supported fields:
-// - `keywordValue` Examples: * All negative keywords for which the
-// keyword value contains "google": `keywordValue : "google"
+// negative keywords can only contain at most one restriction. * A
+// restriction has the form of `{field} {operator} {value}`. * All
+// fields must use the `HAS (:)` operator. Supported fields: *
+// `keywordValue` Examples: * All negative keywords for which the
+// keyword value contains "google": `keywordValue : "google" The length
+// of this field should be no more than 500 characters. Reference our
+// filter `LIST` requests (/display-video/api/guides/how-tos/filters)
+// guide for more information.
 func (c *AdvertisersNegativeKeywordListsNegativeKeywordsListCall) Filter(filter string) *AdvertisersNegativeKeywordListsNegativeKeywordsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -34275,7 +34408,7 @@ func (c *AdvertisersNegativeKeywordListsNegativeKeywordsListCall) Do(opts ...goo
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Allows filtering by negative keyword fields. Supported syntax: * Filter expressions for negative keyword currently can only contain at most one * restriction. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `CONTAINS (:)`. * Supported fields: - `keywordValue` Examples: * All negative keywords for which the keyword value contains \"google\": `keywordValue : \"google\"`",
+	//       "description": "Allows filtering by negative keyword fields. Supported syntax: * Filter expressions for negative keywords can only contain at most one restriction. * A restriction has the form of `{field} {operator} {value}`. * All fields must use the `HAS (:)` operator. Supported fields: * `keywordValue` Examples: * All negative keywords for which the keyword value contains \"google\": `keywordValue : \"google\"` The length of this field should be no more than 500 characters. Reference our [filter `LIST` requests](/display-video/api/guides/how-tos/filters) guide for more information.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -34721,7 +34854,7 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsCreateCall) Do(opts ..
 	//         "Target ads to a specific content category (for example, arts \u0026 entertainment).",
 	//         "Purchase impressions from specific deals and auction packages.",
 	//         "Target ads to a specific language (for example, English or Japanese).",
-	//         "Target ads to ads.txt authorized sellers.",
+	//         "Target ads to ads.txt authorized sellers. If no targeting option of this type is assigned, the resource uses the \"Authorized Direct Sellers and Resellers\" option by default.",
 	//         "Target ads to a specific regional location (for example, a city or state).",
 	//         "Purchase impressions from a group of deals and auction packages.",
 	//         "Purchase impressions from specific exchanges.",
@@ -34988,7 +35121,7 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsDeleteCall) Do(opts ..
 	//         "Target ads to a specific content category (for example, arts \u0026 entertainment).",
 	//         "Purchase impressions from specific deals and auction packages.",
 	//         "Target ads to a specific language (for example, English or Japanese).",
-	//         "Target ads to ads.txt authorized sellers.",
+	//         "Target ads to ads.txt authorized sellers. If no targeting option of this type is assigned, the resource uses the \"Authorized Direct Sellers and Resellers\" option by default.",
 	//         "Target ads to a specific regional location (for example, a city or state).",
 	//         "Purchase impressions from a group of deals and auction packages.",
 	//         "Purchase impressions from specific exchanges.",
@@ -35268,7 +35401,7 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsGetCall) Do(opts ...go
 	//         "Target ads to a specific content category (for example, arts \u0026 entertainment).",
 	//         "Purchase impressions from specific deals and auction packages.",
 	//         "Target ads to a specific language (for example, English or Japanese).",
-	//         "Target ads to ads.txt authorized sellers.",
+	//         "Target ads to ads.txt authorized sellers. If no targeting option of this type is assigned, the resource uses the \"Authorized Direct Sellers and Resellers\" option by default.",
 	//         "Target ads to a specific regional location (for example, a city or state).",
 	//         "Purchase impressions from a group of deals and auction packages.",
 	//         "Purchase impressions from specific exchanges.",
@@ -35331,14 +35464,16 @@ func (r *AdvertisersTargetingTypesAssignedTargetingOptionsService) List(advertis
 }
 
 // Filter sets the optional parameter "filter": Allows filtering by
-// assigned targeting option properties. Supported syntax: * Filter
+// assigned targeting option fields. Supported syntax: * Filter
 // expressions are made up of one or more restrictions. * Restrictions
-// can be combined by the logical operator `OR`. * A restriction has the
-// form of `{field} {operator} {value}`. * The operator must be `EQUALS
-// (=)`. * Supported fields: - `assignedTargetingOptionId` Examples: *
-// AssignedTargetingOption with ID 123456
-// `assignedTargetingOptionId="123456" The length of this field should
-// be no more than 500 characters.
+// can be combined by the `OR` logical operator. * A restriction has the
+// form of `{field} {operator} {value}`. * All fields must use the
+// `EQUALS (=)` operator. Supported fields: *
+// `assignedTargetingOptionId` Examples: * `AssignedTargetingOption`
+// with ID 123456: `assignedTargetingOptionId="123456" The length of
+// this field should be no more than 500 characters. Reference our
+// filter `LIST` requests (/display-video/api/guides/how-tos/filters)
+// guide for more information.
 func (c *AdvertisersTargetingTypesAssignedTargetingOptionsListCall) Filter(filter string) *AdvertisersTargetingTypesAssignedTargetingOptionsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -35493,7 +35628,7 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsListCall) Do(opts ...g
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Allows filtering by assigned targeting option properties. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by the logical operator `OR`. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `EQUALS (=)`. * Supported fields: - `assignedTargetingOptionId` Examples: * AssignedTargetingOption with ID 123456 `assignedTargetingOptionId=\"123456\"` The length of this field should be no more than 500 characters.",
+	//       "description": "Allows filtering by assigned targeting option fields. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by the `OR` logical operator. * A restriction has the form of `{field} {operator} {value}`. * All fields must use the `EQUALS (=)` operator. Supported fields: * `assignedTargetingOptionId` Examples: * `AssignedTargetingOption` with ID 123456: `assignedTargetingOptionId=\"123456\"` The length of this field should be no more than 500 characters. Reference our [filter `LIST` requests](/display-video/api/guides/how-tos/filters) guide for more information.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -35600,7 +35735,7 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsListCall) Do(opts ...g
 	//         "Target ads to a specific content category (for example, arts \u0026 entertainment).",
 	//         "Purchase impressions from specific deals and auction packages.",
 	//         "Target ads to a specific language (for example, English or Japanese).",
-	//         "Target ads to ads.txt authorized sellers.",
+	//         "Target ads to ads.txt authorized sellers. If no targeting option of this type is assigned, the resource uses the \"Authorized Direct Sellers and Resellers\" option by default.",
 	//         "Target ads to a specific regional location (for example, a city or state).",
 	//         "Purchase impressions from a group of deals and auction packages.",
 	//         "Purchase impressions from specific exchanges.",
@@ -35838,16 +35973,19 @@ func (r *AdvertisersYoutubeAdGroupAdsService) List(advertiserId int64) *Advertis
 // Filter sets the optional parameter "filter": Allows filtering by
 // custom YouTube ad group ad fields. Supported syntax: * Filter
 // expressions are made up of one or more restrictions. * Restrictions
-// can be combined by `AND` and `OR`. Only the restrictions for * the
-// same field can be combined by `OR`. A sequence of restrictions *
+// can be combined by `AND` and `OR`. A sequence of restrictions
 // implicitly uses `AND`. * A restriction has the form of `{field}
-// {operator} {value}`. * The operator must be `EQUALS (=)`. * Supported
-// properties: - `adGroupId` - `displayName` - `entityStatus` -
+// {operator} {value}`. * All fields must use the `EQUALS (=)` operator.
+// Supported fields: * `adGroupId` * `displayName` * `entityStatus` *
 // `adGroupAdId` Examples: * All ad group ads under an ad group:
-// `adGroupId="1234" and its * entityStatus is `ENTITY_STATUS_ACTIVE`
-// or `ENTITY_STATUS_PAUSED`: `(entityStatus="ENTITY_STATUS_ACTIVE" OR
+// `adGroupId="1234" * All ad group ads under an ad group with an
+// entityStatus of `ENTITY_STATUS_ACTIVE` or `ENTITY_STATUS_PAUSED`:
+// `(entityStatus="ENTITY_STATUS_ACTIVE" OR
 // entityStatus="ENTITY_STATUS_PAUSED") AND adGroupId="12345" The
-// length of this field should be no more than 500 characters.
+// length of this field should be no more than 500 characters. Reference
+// our filter `LIST` requests
+// (/display-video/api/guides/how-tos/filters) guide for more
+// information.
 func (c *AdvertisersYoutubeAdGroupAdsListCall) Filter(filter string) *AdvertisersYoutubeAdGroupAdsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -35998,7 +36136,7 @@ func (c *AdvertisersYoutubeAdGroupAdsListCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Allows filtering by custom YouTube ad group ad fields. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by `AND` and `OR`. Only the restrictions for * the same field can be combined by `OR`. A sequence of restrictions * implicitly uses `AND`. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `EQUALS (=)`. * Supported properties: - `adGroupId` - `displayName` - `entityStatus` - `adGroupAdId` Examples: * All ad group ads under an ad group: `adGroupId=\"1234\"` and its * entityStatus is `ENTITY_STATUS_ACTIVE` or `ENTITY_STATUS_PAUSED`: `(entityStatus=\"ENTITY_STATUS_ACTIVE\" OR entityStatus=\"ENTITY_STATUS_PAUSED\") AND adGroupId=\"12345\"` The length of this field should be no more than 500 characters.",
+	//       "description": "Allows filtering by custom YouTube ad group ad fields. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by `AND` and `OR`. A sequence of restrictions implicitly uses `AND`. * A restriction has the form of `{field} {operator} {value}`. * All fields must use the `EQUALS (=)` operator. Supported fields: * `adGroupId` * `displayName` * `entityStatus` * `adGroupAdId` Examples: * All ad group ads under an ad group: `adGroupId=\"1234\"` * All ad group ads under an ad group with an entityStatus of `ENTITY_STATUS_ACTIVE` or `ENTITY_STATUS_PAUSED`: `(entityStatus=\"ENTITY_STATUS_ACTIVE\" OR entityStatus=\"ENTITY_STATUS_PAUSED\") AND adGroupId=\"12345\"` The length of this field should be no more than 500 characters. Reference our [filter `LIST` requests](/display-video/api/guides/how-tos/filters) guide for more information.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -36074,16 +36212,18 @@ func (r *AdvertisersYoutubeAdGroupsService) BulkListAdGroupAssignedTargetingOpti
 }
 
 // Filter sets the optional parameter "filter": Allows filtering by
-// assigned targeting option properties. Supported syntax: * Filter
+// assigned targeting option fields. Supported syntax: * Filter
 // expressions are made up of one or more restrictions. * Restrictions
-// can be combined by the logical operator `OR` on the same field. * A
-// restriction has the form of `{field} {operator} {value}`. * The
-// operator must be `EQUALS (=)`. * Supported fields: - `targetingType`
-// Examples: * AssignedTargetingOptions of targeting type
-// TARGETING_TYPE_YOUTUBE_VIDEO or TARGETING_TYPE_YOUTUBE_CHANNEL
+// can be combined by the logical operator `OR`. * A restriction has the
+// form of `{field} {operator} {value}`. * All fields must use the
+// `EQUALS (=)` operator. Supported fields: * `targetingType` Examples:
+// * `AssignedTargetingOption` resources of targeting type
+// `TARGETING_TYPE_YOUTUBE_VIDEO` or `TARGETING_TYPE_YOUTUBE_CHANNEL`:
 // `targetingType="TARGETING_TYPE_YOUTUBE_VIDEO" OR
 // targetingType="TARGETING_TYPE_YOUTUBE_CHANNEL" The length of this
-// field should be no more than 500 characters.
+// field should be no more than 500 characters. Reference our filter
+// `LIST` requests (/display-video/api/guides/how-tos/filters) guide for
+// more information.
 func (c *AdvertisersYoutubeAdGroupsBulkListAdGroupAssignedTargetingOptionsCall) Filter(filter string) *AdvertisersYoutubeAdGroupsBulkListAdGroupAssignedTargetingOptionsCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -36250,7 +36390,7 @@ func (c *AdvertisersYoutubeAdGroupsBulkListAdGroupAssignedTargetingOptionsCall) 
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Allows filtering by assigned targeting option properties. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by the logical operator `OR` on the same field. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `EQUALS (=)`. * Supported fields: - `targetingType` Examples: * AssignedTargetingOptions of targeting type TARGETING_TYPE_YOUTUBE_VIDEO or TARGETING_TYPE_YOUTUBE_CHANNEL `targetingType=\"TARGETING_TYPE_YOUTUBE_VIDEO\" OR targetingType=\"TARGETING_TYPE_YOUTUBE_CHANNEL\"` The length of this field should be no more than 500 characters.",
+	//       "description": "Allows filtering by assigned targeting option fields. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by the logical operator `OR`. * A restriction has the form of `{field} {operator} {value}`. * All fields must use the `EQUALS (=)` operator. Supported fields: * `targetingType` Examples: * `AssignedTargetingOption` resources of targeting type `TARGETING_TYPE_YOUTUBE_VIDEO` or `TARGETING_TYPE_YOUTUBE_CHANNEL`: `targetingType=\"TARGETING_TYPE_YOUTUBE_VIDEO\" OR targetingType=\"TARGETING_TYPE_YOUTUBE_CHANNEL\"` The length of this field should be no more than 500 characters. Reference our [filter `LIST` requests](/display-video/api/guides/how-tos/filters) guide for more information.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -36493,19 +36633,21 @@ func (r *AdvertisersYoutubeAdGroupsService) List(advertiserId int64) *Advertiser
 // Filter sets the optional parameter "filter": Allows filtering by
 // custom YouTube ad group fields. Supported syntax: * Filter
 // expressions are made up of one or more restrictions. * Restrictions
-// can be combined by `AND` and `OR`. Only the restrictions for * the
-// same field can be combined by `OR`. A sequence of restrictions *
+// can be combined by `AND` and `OR`. A sequence of restrictions
 // implicitly uses `AND`. * A restriction has the form of `{field}
-// {operator} {value}`. * The operator must be `EQUALS (=)`. * Supported
-// properties: - `adGroupId` - `displayName` - `entityStatus` -
-// `lineItemId` - `adGroupFormat` Examples: * All ad groups under an
+// {operator} {value}`. * All fields must use the `EQUALS (=)` operator.
+// Supported properties: * `adGroupId` * `displayName` * `entityStatus`
+// * `lineItemId` * `adGroupFormat` Examples: * All ad groups under an
 // line item: `lineItemId="1234" * All `ENTITY_STATUS_ACTIVE` or
-// `ENTITY_STATUS_PAUSED` and
+// `ENTITY_STATUS_PAUSED`
 // `YOUTUBE_AND_PARTNERS_AD_GROUP_FORMAT_IN_STREAM` ad groups under an
 // advertiser: `(entityStatus="ENTITY_STATUS_ACTIVE" OR
 // entityStatus="ENTITY_STATUS_PAUSED") AND
 // adGroupFormat="YOUTUBE_AND_PARTNERS_AD_GROUP_FORMAT_IN_STREAM" The
-// length of this field should be no more than 500 characters.
+// length of this field should be no more than 500 characters. Reference
+// our filter `LIST` requests
+// (/display-video/api/guides/how-tos/filters) guide for more
+// information.
 func (c *AdvertisersYoutubeAdGroupsListCall) Filter(filter string) *AdvertisersYoutubeAdGroupsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -36656,7 +36798,7 @@ func (c *AdvertisersYoutubeAdGroupsListCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Allows filtering by custom YouTube ad group fields. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by `AND` and `OR`. Only the restrictions for * the same field can be combined by `OR`. A sequence of restrictions * implicitly uses `AND`. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `EQUALS (=)`. * Supported properties: - `adGroupId` - `displayName` - `entityStatus` - `lineItemId` - `adGroupFormat` Examples: * All ad groups under an line item: `lineItemId=\"1234\"` * All `ENTITY_STATUS_ACTIVE` or `ENTITY_STATUS_PAUSED` and `YOUTUBE_AND_PARTNERS_AD_GROUP_FORMAT_IN_STREAM` ad groups under an advertiser: `(entityStatus=\"ENTITY_STATUS_ACTIVE\" OR entityStatus=\"ENTITY_STATUS_PAUSED\") AND adGroupFormat=\"YOUTUBE_AND_PARTNERS_AD_GROUP_FORMAT_IN_STREAM\"` The length of this field should be no more than 500 characters.",
+	//       "description": "Allows filtering by custom YouTube ad group fields. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by `AND` and `OR`. A sequence of restrictions implicitly uses `AND`. * A restriction has the form of `{field} {operator} {value}`. * All fields must use the `EQUALS (=)` operator. Supported properties: * `adGroupId` * `displayName` * `entityStatus` * `lineItemId` * `adGroupFormat` Examples: * All ad groups under an line item: `lineItemId=\"1234\"` * All `ENTITY_STATUS_ACTIVE` or `ENTITY_STATUS_PAUSED` `YOUTUBE_AND_PARTNERS_AD_GROUP_FORMAT_IN_STREAM` ad groups under an advertiser: `(entityStatus=\"ENTITY_STATUS_ACTIVE\" OR entityStatus=\"ENTITY_STATUS_PAUSED\") AND adGroupFormat=\"YOUTUBE_AND_PARTNERS_AD_GROUP_FORMAT_IN_STREAM\"` The length of this field should be no more than 500 characters. Reference our [filter `LIST` requests](/display-video/api/guides/how-tos/filters) guide for more information.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -36965,7 +37107,7 @@ func (c *AdvertisersYoutubeAdGroupsTargetingTypesAssignedTargetingOptionsGetCall
 	//         "Target ads to a specific content category (for example, arts \u0026 entertainment).",
 	//         "Purchase impressions from specific deals and auction packages.",
 	//         "Target ads to a specific language (for example, English or Japanese).",
-	//         "Target ads to ads.txt authorized sellers.",
+	//         "Target ads to ads.txt authorized sellers. If no targeting option of this type is assigned, the resource uses the \"Authorized Direct Sellers and Resellers\" option by default.",
 	//         "Target ads to a specific regional location (for example, a city or state).",
 	//         "Purchase impressions from a group of deals and auction packages.",
 	//         "Purchase impressions from specific exchanges.",
@@ -37044,14 +37186,17 @@ func (r *AdvertisersYoutubeAdGroupsTargetingTypesAssignedTargetingOptionsService
 }
 
 // Filter sets the optional parameter "filter": Allows filtering by
-// assigned targeting option properties. Supported syntax: * Filter
+// assigned targeting option fields. Supported syntax: * Filter
 // expressions are made up of one or more restrictions. * Restrictions
 // can be combined by the logical operator `OR`. * A restriction has the
-// form of `{field} {operator} {value}`. * The operator must be `EQUALS
-// (=)`. * Supported fields: - `assignedTargetingOptionId` Examples: *
-// AssignedTargetingOptions with ID 1 or 2
-// `assignedTargetingOptionId="1" OR assignedTargetingOptionId="2" The
-// length of this field should be no more than 500 characters.
+// form of `{field} {operator} {value}`. * All fields must use the
+// `EQUALS (=)` operator. Supported fields: *
+// `assignedTargetingOptionId` Examples: * `AssignedTargetingOption`
+// resources with ID 1 or 2: `assignedTargetingOptionId="1" OR
+// assignedTargetingOptionId="2" The length of this field should be no
+// more than 500 characters. Reference our filter `LIST` requests
+// (/display-video/api/guides/how-tos/filters) guide for more
+// information.
 func (c *AdvertisersYoutubeAdGroupsTargetingTypesAssignedTargetingOptionsListCall) Filter(filter string) *AdvertisersYoutubeAdGroupsTargetingTypesAssignedTargetingOptionsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -37208,7 +37353,7 @@ func (c *AdvertisersYoutubeAdGroupsTargetingTypesAssignedTargetingOptionsListCal
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Allows filtering by assigned targeting option properties. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by the logical operator `OR`. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `EQUALS (=)`. * Supported fields: - `assignedTargetingOptionId` Examples: * AssignedTargetingOptions with ID 1 or 2 `assignedTargetingOptionId=\"1\" OR assignedTargetingOptionId=\"2\"` The length of this field should be no more than 500 characters.",
+	//       "description": "Allows filtering by assigned targeting option fields. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by the logical operator `OR`. * A restriction has the form of `{field} {operator} {value}`. * All fields must use the `EQUALS (=)` operator. Supported fields: * `assignedTargetingOptionId` Examples: * `AssignedTargetingOption` resources with ID 1 or 2: `assignedTargetingOptionId=\"1\" OR assignedTargetingOptionId=\"2\"` The length of this field should be no more than 500 characters. Reference our [filter `LIST` requests](/display-video/api/guides/how-tos/filters) guide for more information.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -37315,7 +37460,7 @@ func (c *AdvertisersYoutubeAdGroupsTargetingTypesAssignedTargetingOptionsListCal
 	//         "Target ads to a specific content category (for example, arts \u0026 entertainment).",
 	//         "Purchase impressions from specific deals and auction packages.",
 	//         "Target ads to a specific language (for example, English or Japanese).",
-	//         "Target ads to ads.txt authorized sellers.",
+	//         "Target ads to ads.txt authorized sellers. If no targeting option of this type is assigned, the resource uses the \"Authorized Direct Sellers and Resellers\" option by default.",
 	//         "Target ads to a specific regional location (for example, a city or state).",
 	//         "Purchase impressions from a group of deals and auction packages.",
 	//         "Purchase impressions from specific exchanges.",
@@ -37577,12 +37722,14 @@ func (c *CombinedAudiencesListCall) AdvertiserId(advertiserId int64) *CombinedAu
 
 // Filter sets the optional parameter "filter": Allows filtering by
 // combined audience fields. Supported syntax: * Filter expressions for
-// combined audiences currently can only contain at most one
-// restriction. * A restriction has the form of `{field} {operator}
-// {value}`. * The operator must be `CONTAINS (:)`. * Supported fields:
-// - `displayName` Examples: * All combined audiences for which the
+// combined audiences can only contain at most one restriction. * A
+// restriction has the form of `{field} {operator} {value}`. * All
+// fields must use the `HAS (:)` operator. Supported fields: *
+// `displayName` Examples: * All combined audiences for which the
 // display name contains "Google": `displayName : "Google". The length
-// of this field should be no more than 500 characters.
+// of this field should be no more than 500 characters. Reference our
+// filter `LIST` requests (/display-video/api/guides/how-tos/filters)
+// guide for more information.
 func (c *CombinedAudiencesListCall) Filter(filter string) *CombinedAudiencesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -37733,7 +37880,7 @@ func (c *CombinedAudiencesListCall) Do(opts ...googleapi.CallOption) (*ListCombi
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Allows filtering by combined audience fields. Supported syntax: * Filter expressions for combined audiences currently can only contain at most one restriction. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `CONTAINS (:)`. * Supported fields: - `displayName` Examples: * All combined audiences for which the display name contains \"Google\": `displayName : \"Google\"`. The length of this field should be no more than 500 characters.",
+	//       "description": "Allows filtering by combined audience fields. Supported syntax: * Filter expressions for combined audiences can only contain at most one restriction. * A restriction has the form of `{field} {operator} {value}`. * All fields must use the `HAS (:)` operator. Supported fields: * `displayName` Examples: * All combined audiences for which the display name contains \"Google\": `displayName : \"Google\"`. The length of this field should be no more than 500 characters. Reference our [filter `LIST` requests](/display-video/api/guides/how-tos/filters) guide for more information.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -38120,21 +38267,18 @@ func (c *CustomBiddingAlgorithmsListCall) AdvertiserId(advertiserId int64) *Cust
 // Filter sets the optional parameter "filter": Allows filtering by
 // custom bidding algorithm fields. Supported syntax: * Filter
 // expressions are made up of one or more restrictions. * Restrictions
-// can be combined by `AND`. A sequence of restrictions * implicitly
-// uses `AND`. * A restriction has the form of `{field} {operator}
-// {value}`. * The operator must be `CONTAINS (:)` or `EQUALS (=)`. *
-// The operator must be `CONTAINS (:)` for the following field: -
-// `displayName` * The operator must be `EQUALS (=)` for the following
-// field: - `customBiddingAlgorithmType` * For `displayName`, the value
-// is a string. We return all custom bidding algorithms whose
-// display_name contains such string. * For
-// `customBiddingAlgorithmType`, the value is a string. We return all
-// algorithms whose custom_bidding_algorithm_type is equal to the given
-// type. Examples: * All custom bidding algorithms for which the display
-// name contains "politics": `displayName:politics`. * All custom
-// bidding algorithms for which the type is "SCRIPT_BASED":
+// can be combined by `AND`. A sequence of restrictions implicitly uses
+// `AND`. * A restriction has the form of `{field} {operator} {value}`.
+// * The `customBiddingAlgorithmType` field must use the `EQUALS (=)`
+// operator. * The `displayName` field must use the `HAS (:)` operator.
+// Supported fields: * `customBiddingAlgorithmType` * `displayName`
+// Examples: * All custom bidding algorithms for which the display name
+// contains "politics": `displayName:"politics". * All custom bidding
+// algorithms for which the type is "SCRIPT_BASED":
 // `customBiddingAlgorithmType=SCRIPT_BASED` The length of this field
-// should be no more than 500 characters.
+// should be no more than 500 characters. Reference our filter `LIST`
+// requests (/display-video/api/guides/how-tos/filters) guide for more
+// information.
 func (c *CustomBiddingAlgorithmsListCall) Filter(filter string) *CustomBiddingAlgorithmsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -38286,7 +38430,7 @@ func (c *CustomBiddingAlgorithmsListCall) Do(opts ...googleapi.CallOption) (*Lis
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Allows filtering by custom bidding algorithm fields. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by `AND`. A sequence of restrictions * implicitly uses `AND`. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `CONTAINS (:)` or `EQUALS (=)`. * The operator must be `CONTAINS (:)` for the following field: - `displayName` * The operator must be `EQUALS (=)` for the following field: - `customBiddingAlgorithmType` * For `displayName`, the value is a string. We return all custom bidding algorithms whose display_name contains such string. * For `customBiddingAlgorithmType`, the value is a string. We return all algorithms whose custom_bidding_algorithm_type is equal to the given type. Examples: * All custom bidding algorithms for which the display name contains \"politics\": `displayName:politics`. * All custom bidding algorithms for which the type is \"SCRIPT_BASED\": `customBiddingAlgorithmType=SCRIPT_BASED` The length of this field should be no more than 500 characters.",
+	//       "description": "Allows filtering by custom bidding algorithm fields. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by `AND`. A sequence of restrictions implicitly uses `AND`. * A restriction has the form of `{field} {operator} {value}`. * The `customBiddingAlgorithmType` field must use the `EQUALS (=)` operator. * The `displayName` field must use the `HAS (:)` operator. Supported fields: * `customBiddingAlgorithmType` * `displayName` Examples: * All custom bidding algorithms for which the display name contains \"politics\": `displayName:\"politics\"`. * All custom bidding algorithms for which the type is \"SCRIPT_BASED\": `customBiddingAlgorithmType=SCRIPT_BASED` The length of this field should be no more than 500 characters. Reference our [filter `LIST` requests](/display-video/api/guides/how-tos/filters) guide for more information.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -39470,12 +39614,14 @@ func (c *CustomListsListCall) AdvertiserId(advertiserId int64) *CustomListsListC
 
 // Filter sets the optional parameter "filter": Allows filtering by
 // custom list fields. Supported syntax: * Filter expressions for custom
-// lists currently can only contain at most one restriction. * A
-// restriction has the form of `{field} {operator} {value}`. * The
-// operator must be `CONTAINS (:)`. * Supported fields: - `displayName`
-// Examples: * All custom lists for which the display name contains
-// "Google": `displayName : "Google". The length of this field should
-// be no more than 500 characters.
+// lists can only contain at most one restriction. * A restriction has
+// the form of `{field} {operator} {value}`. * All fields must use the
+// `HAS (:)` operator. Supported fields: * `displayName` Examples: * All
+// custom lists for which the display name contains "Google":
+// `displayName:"Google". The length of this field should be no more
+// than 500 characters. Reference our filter `LIST` requests
+// (/display-video/api/guides/how-tos/filters) guide for more
+// information.
 func (c *CustomListsListCall) Filter(filter string) *CustomListsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -39619,7 +39765,7 @@ func (c *CustomListsListCall) Do(opts ...googleapi.CallOption) (*ListCustomLists
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Allows filtering by custom list fields. Supported syntax: * Filter expressions for custom lists currently can only contain at most one restriction. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `CONTAINS (:)`. * Supported fields: - `displayName` Examples: * All custom lists for which the display name contains \"Google\": `displayName : \"Google\"`. The length of this field should be no more than 500 characters.",
+	//       "description": "Allows filtering by custom list fields. Supported syntax: * Filter expressions for custom lists can only contain at most one restriction. * A restriction has the form of `{field} {operator} {value}`. * All fields must use the `HAS (:)` operator. Supported fields: * `displayName` Examples: * All custom lists for which the display name contains \"Google\": `displayName:\"Google\"`. The length of this field should be no more than 500 characters. Reference our [filter `LIST` requests](/display-video/api/guides/how-tos/filters) guide for more information.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -40163,13 +40309,15 @@ func (c *FirstAndThirdPartyAudiencesListCall) AdvertiserId(advertiserId int64) *
 
 // Filter sets the optional parameter "filter": Allows filtering by
 // first and third party audience fields. Supported syntax: * Filter
-// expressions for first and third party audiences currently can only
-// contain at most one restriction. * A restriction has the form of
-// `{field} {operator} {value}`. * The operator must be `CONTAINS (:)`.
-// * Supported fields: - `displayName` Examples: * All first and third
+// expressions for first and third party audiences can only contain at
+// most one restriction. * A restriction has the form of `{field}
+// {operator} {value}`. * All fields must use the `HAS (:)` operator.
+// Supported fields: * `displayName` Examples: * All first and third
 // party audiences for which the display name contains "Google":
-// `displayName : "Google". The length of this field should be no more
-// than 500 characters.
+// `displayName:"Google". The length of this field should be no more
+// than 500 characters. Reference our filter `LIST` requests
+// (/display-video/api/guides/how-tos/filters) guide for more
+// information.
 func (c *FirstAndThirdPartyAudiencesListCall) Filter(filter string) *FirstAndThirdPartyAudiencesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -40322,7 +40470,7 @@ func (c *FirstAndThirdPartyAudiencesListCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Allows filtering by first and third party audience fields. Supported syntax: * Filter expressions for first and third party audiences currently can only contain at most one restriction. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `CONTAINS (:)`. * Supported fields: - `displayName` Examples: * All first and third party audiences for which the display name contains \"Google\": `displayName : \"Google\"`. The length of this field should be no more than 500 characters.",
+	//       "description": "Allows filtering by first and third party audience fields. Supported syntax: * Filter expressions for first and third party audiences can only contain at most one restriction. * A restriction has the form of `{field} {operator} {value}`. * All fields must use the `HAS (:)` operator. Supported fields: * `displayName` Examples: * All first and third party audiences for which the display name contains \"Google\": `displayName:\"Google\"`. The length of this field should be no more than 500 characters. Reference our [filter `LIST` requests](/display-video/api/guides/how-tos/filters) guide for more information.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -41085,12 +41233,14 @@ func (c *GoogleAudiencesListCall) AdvertiserId(advertiserId int64) *GoogleAudien
 
 // Filter sets the optional parameter "filter": Allows filtering by
 // Google audience fields. Supported syntax: * Filter expressions for
-// Google audiences currently can only contain at most one restriction.
-// * A restriction has the form of `{field} {operator} {value}`. * The
-// operator must be `CONTAINS (:)`. * Supported fields: - `displayName`
-// Examples: * All Google audiences for which the display name contains
-// "Google": `displayName : "Google". The length of this field should
-// be no more than 500 characters.
+// Google audiences can only contain at most one restriction. * A
+// restriction has the form of `{field} {operator} {value}`. * All
+// fields must use the `HAS (:)` operator. Supported fields: *
+// `displayName` Examples: * All Google audiences for which the display
+// name contains "Google": `displayName:"Google". The length of this
+// field should be no more than 500 characters. Reference our filter
+// `LIST` requests (/display-video/api/guides/how-tos/filters) guide for
+// more information.
 func (c *GoogleAudiencesListCall) Filter(filter string) *GoogleAudiencesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -41241,7 +41391,7 @@ func (c *GoogleAudiencesListCall) Do(opts ...googleapi.CallOption) (*ListGoogleA
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Allows filtering by Google audience fields. Supported syntax: * Filter expressions for Google audiences currently can only contain at most one restriction. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `CONTAINS (:)`. * Supported fields: - `displayName` Examples: * All Google audiences for which the display name contains \"Google\": `displayName : \"Google\"`. The length of this field should be no more than 500 characters.",
+	//       "description": "Allows filtering by Google audience fields. Supported syntax: * Filter expressions for Google audiences can only contain at most one restriction. * A restriction has the form of `{field} {operator} {value}`. * All fields must use the `HAS (:)` operator. Supported fields: * `displayName` Examples: * All Google audiences for which the display name contains \"Google\": `displayName:\"Google\"`. The length of this field should be no more than 500 characters. Reference our [filter `LIST` requests](/display-video/api/guides/how-tos/filters) guide for more information.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -41799,18 +41949,20 @@ func (c *GuaranteedOrdersListCall) AdvertiserId(advertiserId int64) *GuaranteedO
 }
 
 // Filter sets the optional parameter "filter": Allows filtering by
-// guaranteed order properties. * Filter expressions are made up of one
-// or more restrictions. * Restrictions can be combined by `AND` or `OR`
+// guaranteed order fields. * Filter expressions are made up of one or
+// more restrictions. * Restrictions can be combined by `AND` or `OR`
 // logical operators. A sequence of restrictions implicitly uses `AND`.
-// * A restriction has the form of `{field} {operator} {value}`. * The
-// operator must be `EQUALS (=)`. * Supported fields: -
-// `guaranteed_order_id` - `exchange` - `display_name` -
+// * A restriction has the form of `{field} {operator} {value}`. * All
+// fields must use the `EQUALS (=)` operator. Supported fields: *
+// `guaranteed_order_id` * `exchange` * `display_name` *
 // `status.entityStatus` Examples: * All active guaranteed orders:
 // `status.entityStatus="ENTITY_STATUS_ACTIVE" * Guaranteed orders
 // belonging to Google Ad Manager or Rubicon exchanges:
 // `exchange="EXCHANGE_GOOGLE_AD_MANAGER" OR
 // exchange="EXCHANGE_RUBICON" The length of this field should be no
-// more than 500 characters.
+// more than 500 characters. Reference our filter `LIST` requests
+// (/display-video/api/guides/how-tos/filters) guide for more
+// information.
 func (c *GuaranteedOrdersListCall) Filter(filter string) *GuaranteedOrdersListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -41959,7 +42111,7 @@ func (c *GuaranteedOrdersListCall) Do(opts ...googleapi.CallOption) (*ListGuaran
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Allows filtering by guaranteed order properties. * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by `AND` or `OR` logical operators. A sequence of restrictions implicitly uses `AND`. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `EQUALS (=)`. * Supported fields: - `guaranteed_order_id` - `exchange` - `display_name` - `status.entityStatus` Examples: * All active guaranteed orders: `status.entityStatus=\"ENTITY_STATUS_ACTIVE\"` * Guaranteed orders belonging to Google Ad Manager or Rubicon exchanges: `exchange=\"EXCHANGE_GOOGLE_AD_MANAGER\" OR exchange=\"EXCHANGE_RUBICON\"` The length of this field should be no more than 500 characters.",
+	//       "description": "Allows filtering by guaranteed order fields. * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by `AND` or `OR` logical operators. A sequence of restrictions implicitly uses `AND`. * A restriction has the form of `{field} {operator} {value}`. * All fields must use the `EQUALS (=)` operator. Supported fields: * `guaranteed_order_id` * `exchange` * `display_name` * `status.entityStatus` Examples: * All active guaranteed orders: `status.entityStatus=\"ENTITY_STATUS_ACTIVE\"` * Guaranteed orders belonging to Google Ad Manager or Rubicon exchanges: `exchange=\"EXCHANGE_GOOGLE_AD_MANAGER\" OR exchange=\"EXCHANGE_RUBICON\"` The length of this field should be no more than 500 characters. Reference our [filter `LIST` requests](/display-video/api/guides/how-tos/filters) guide for more information.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -42724,12 +42876,15 @@ func (c *InventorySourceGroupsListCall) AdvertiserId(advertiserId int64) *Invent
 }
 
 // Filter sets the optional parameter "filter": Allows filtering by
-// inventory source group properties. Supported syntax: * Filter
-// expressions are made up of one or more restrictions. * Restrictions
-// can be combined by the logical operator `OR`. * A restriction has the
-// form of `{field} {operator} {value}`. * The operator must be `EQUALS
-// (=)`. * Supported fields: - `inventorySourceGroupId` The length of
-// this field should be no more than 500 characters.
+// inventory source group fields. Supported syntax: * Filter expressions
+// are made up of one or more restrictions. * Restrictions can be
+// combined by the logical operator `OR`. * A restriction has the form
+// of `{field} {operator} {value}`. * All fields must use the `EQUALS
+// (=)` operator. Supported fields: * `inventorySourceGroupId` The
+// length of this field should be no more than 500 characters. Reference
+// our filter `LIST` requests
+// (/display-video/api/guides/how-tos/filters) guide for more
+// information.
 func (c *InventorySourceGroupsListCall) Filter(filter string) *InventorySourceGroupsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -42880,7 +43035,7 @@ func (c *InventorySourceGroupsListCall) Do(opts ...googleapi.CallOption) (*ListI
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Allows filtering by inventory source group properties. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by the logical operator `OR`. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `EQUALS (=)`. * Supported fields: - `inventorySourceGroupId` The length of this field should be no more than 500 characters.",
+	//       "description": "Allows filtering by inventory source group fields. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by the logical operator `OR`. * A restriction has the form of `{field} {operator} {value}`. * All fields must use the `EQUALS (=)` operator. Supported fields: * `inventorySourceGroupId` The length of this field should be no more than 500 characters. Reference our [filter `LIST` requests](/display-video/api/guides/how-tos/filters) guide for more information.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -43662,10 +43817,13 @@ func (c *InventorySourceGroupsAssignedInventorySourcesListCall) AdvertiserId(adv
 // Filter sets the optional parameter "filter": Allows filtering by
 // assigned inventory source fields. Supported syntax: * Filter
 // expressions are made up of one or more restrictions. * Restrictions
-// can be combined by the logical operator `OR`. * A restriction has the
-// form of `{field} {operator} {value}`. * The operator must be `EQUALS
-// (=)`. * Supported fields: - `assignedInventorySourceId` The length of
-// this field should be no more than 500 characters.
+// can be combined by the `OR` logical operator. * A restriction has the
+// form of `{field} {operator} {value}`. * All fields must use the
+// `EQUALS (=)` operator. Supported fields: *
+// `assignedInventorySourceId` The length of this field should be no
+// more than 500 characters. Reference our filter `LIST` requests
+// (/display-video/api/guides/how-tos/filters) guide for more
+// information.
 func (c *InventorySourceGroupsAssignedInventorySourcesListCall) Filter(filter string) *InventorySourceGroupsAssignedInventorySourcesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -43824,7 +43982,7 @@ func (c *InventorySourceGroupsAssignedInventorySourcesListCall) Do(opts ...googl
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Allows filtering by assigned inventory source fields. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by the logical operator `OR`. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `EQUALS (=)`. * Supported fields: - `assignedInventorySourceId` The length of this field should be no more than 500 characters.",
+	//       "description": "Allows filtering by assigned inventory source fields. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by the `OR` logical operator. * A restriction has the form of `{field} {operator} {value}`. * All fields must use the `EQUALS (=)` operator. Supported fields: * `assignedInventorySourceId` The length of this field should be no more than 500 characters. Reference our [filter `LIST` requests](/display-video/api/guides/how-tos/filters) guide for more information.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -44377,19 +44535,21 @@ func (c *InventorySourcesListCall) AdvertiserId(advertiserId int64) *InventorySo
 }
 
 // Filter sets the optional parameter "filter": Allows filtering by
-// inventory source properties. Supported syntax: * Filter expressions
-// are made up of one or more restrictions. * Restrictions can be
-// combined by `AND` or `OR` logical operators. A sequence of
-// restrictions implicitly uses `AND`. * A restriction has the form of
-// `{field} {operator} {value}`. * The operator must be `EQUALS (=)`. *
-// Supported fields: - `status.entityStatus` - `commitment` -
-// `deliveryMethod` - `rateDetails.rateType` - `exchange` Examples: *
+// inventory source fields. Supported syntax: * Filter expressions are
+// made up of one or more restrictions. * Restrictions can be combined
+// by `AND` or `OR` logical operators. A sequence of restrictions
+// implicitly uses `AND`. * A restriction has the form of `{field}
+// {operator} {value}`. * All fields must use the `EQUALS (=)` operator.
+// Supported fields: * `status.entityStatus` * `commitment` *
+// `deliveryMethod` * `rateDetails.rateType` * `exchange` Examples: *
 // All active inventory sources:
 // `status.entityStatus="ENTITY_STATUS_ACTIVE" * Inventory sources
 // belonging to Google Ad Manager or Rubicon exchanges:
 // `exchange="EXCHANGE_GOOGLE_AD_MANAGER" OR
 // exchange="EXCHANGE_RUBICON" The length of this field should be no
-// more than 500 characters.
+// more than 500 characters. Reference our filter `LIST` requests
+// (/display-video/api/guides/how-tos/filters) guide for more
+// information.
 func (c *InventorySourcesListCall) Filter(filter string) *InventorySourcesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -44538,7 +44698,7 @@ func (c *InventorySourcesListCall) Do(opts ...googleapi.CallOption) (*ListInvent
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Allows filtering by inventory source properties. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by `AND` or `OR` logical operators. A sequence of restrictions implicitly uses `AND`. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `EQUALS (=)`. * Supported fields: - `status.entityStatus` - `commitment` - `deliveryMethod` - `rateDetails.rateType` - `exchange` Examples: * All active inventory sources: `status.entityStatus=\"ENTITY_STATUS_ACTIVE\"` * Inventory sources belonging to Google Ad Manager or Rubicon exchanges: `exchange=\"EXCHANGE_GOOGLE_AD_MANAGER\" OR exchange=\"EXCHANGE_RUBICON\"` The length of this field should be no more than 500 characters.",
+	//       "description": "Allows filtering by inventory source fields. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by `AND` or `OR` logical operators. A sequence of restrictions implicitly uses `AND`. * A restriction has the form of `{field} {operator} {value}`. * All fields must use the `EQUALS (=)` operator. Supported fields: * `status.entityStatus` * `commitment` * `deliveryMethod` * `rateDetails.rateType` * `exchange` Examples: * All active inventory sources: `status.entityStatus=\"ENTITY_STATUS_ACTIVE\"` * Inventory sources belonging to Google Ad Manager or Rubicon exchanges: `exchange=\"EXCHANGE_GOOGLE_AD_MANAGER\" OR exchange=\"EXCHANGE_RUBICON\"` The length of this field should be no more than 500 characters. Reference our [filter `LIST` requests](/display-video/api/guides/how-tos/filters) guide for more information.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -45492,14 +45652,16 @@ func (r *PartnersService) List() *PartnersListCall {
 }
 
 // Filter sets the optional parameter "filter": Allows filtering by
-// partner properties. Supported syntax: * Filter expressions are made
-// up of one or more restrictions. * Restrictions can be combined by
-// `AND` or `OR` logical operators. A sequence of restrictions
-// implicitly uses `AND`. * A restriction has the form of `{field}
-// {operator} {value}`. * The operator must be `EQUALS (=)`. * Supported
-// fields: - `entityStatus` Examples: * All active partners:
+// partner fields. Supported syntax: * Filter expressions are made up of
+// one or more restrictions. * Restrictions can be combined by `AND` or
+// `OR` logical operators. A sequence of restrictions implicitly uses
+// `AND`. * A restriction has the form of `{field} {operator} {value}`.
+// * All fields must use the `EQUALS (=)` operator. Supported fields: *
+// `entityStatus` Examples: * All active partners:
 // `entityStatus="ENTITY_STATUS_ACTIVE" The length of this field should
-// be no more than 500 characters.
+// be no more than 500 characters. Reference our filter `LIST` requests
+// (/display-video/api/guides/how-tos/filters) guide for more
+// information.
 func (c *PartnersListCall) Filter(filter string) *PartnersListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -45635,7 +45797,7 @@ func (c *PartnersListCall) Do(opts ...googleapi.CallOption) (*ListPartnersRespon
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Allows filtering by partner properties. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by `AND` or `OR` logical operators. A sequence of restrictions implicitly uses `AND`. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `EQUALS (=)`. * Supported fields: - `entityStatus` Examples: * All active partners: `entityStatus=\"ENTITY_STATUS_ACTIVE\"` The length of this field should be no more than 500 characters.",
+	//       "description": "Allows filtering by partner fields. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by `AND` or `OR` logical operators. A sequence of restrictions implicitly uses `AND`. * A restriction has the form of `{field} {operator} {value}`. * All fields must use the `EQUALS (=)` operator. Supported fields: * `entityStatus` Examples: * All active partners: `entityStatus=\"ENTITY_STATUS_ACTIVE\"` The length of this field should be no more than 500 characters. Reference our [filter `LIST` requests](/display-video/api/guides/how-tos/filters) guide for more information.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -46047,12 +46209,14 @@ func (c *PartnersChannelsListCall) AdvertiserId(advertiserId int64) *PartnersCha
 
 // Filter sets the optional parameter "filter": Allows filtering by
 // channel fields. Supported syntax: * Filter expressions for channel
-// currently can only contain at most one * restriction. * A restriction
-// has the form of `{field} {operator} {value}`. * The operator must be
-// `CONTAINS (:)`. * Supported fields: - `displayName` Examples: * All
+// can only contain at most one restriction. * A restriction has the
+// form of `{field} {operator} {value}`. * All fields must use the `HAS
+// (:)` operator. Supported fields: * `displayName` Examples: * All
 // channels for which the display name contains "google": `displayName :
 // "google". The length of this field should be no more than 500
-// characters.
+// characters. Reference our filter `LIST` requests
+// (/display-video/api/guides/how-tos/filters) guide for more
+// information.
 func (c *PartnersChannelsListCall) Filter(filter string) *PartnersChannelsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -46201,7 +46365,7 @@ func (c *PartnersChannelsListCall) Do(opts ...googleapi.CallOption) (*ListChanne
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Allows filtering by channel fields. Supported syntax: * Filter expressions for channel currently can only contain at most one * restriction. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `CONTAINS (:)`. * Supported fields: - `displayName` Examples: * All channels for which the display name contains \"google\": `displayName : \"google\"`. The length of this field should be no more than 500 characters.",
+	//       "description": "Allows filtering by channel fields. Supported syntax: * Filter expressions for channel can only contain at most one restriction. * A restriction has the form of `{field} {operator} {value}`. * All fields must use the `HAS (:)` operator. Supported fields: * `displayName` Examples: * All channels for which the display name contains \"google\": `displayName : \"google\"`. The length of this field should be no more than 500 characters. Reference our [filter `LIST` requests](/display-video/api/guides/how-tos/filters) guide for more information.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -46972,11 +47136,15 @@ func (c *PartnersChannelsSitesListCall) AdvertiserId(advertiserId int64) *Partne
 }
 
 // Filter sets the optional parameter "filter": Allows filtering by site
-// fields. Supported syntax: * Filter expressions for site currently can
-// only contain at most one * restriction. * A restriction has the form
-// of `{field} {operator} {value}`. * The operator must be `CONTAINS
-// (:)`. * Supported fields: - `urlOrAppId` Examples: * All sites for
+// fields. Supported syntax: * Filter expressions for site retrieval can
+// only contain at most one restriction. * A restriction has the form of
+// `{field} {operator} {value}`. * All fields must use the `HAS (:)`
+// operator. Supported fields: * `urlOrAppId` Examples: * All sites for
 // which the URL or app ID contains "google": `urlOrAppId : "google"
+// The length of this field should be no more than 500 characters.
+// Reference our filter `LIST` requests
+// (/display-video/api/guides/how-tos/filters) guide for more
+// information.
 func (c *PartnersChannelsSitesListCall) Filter(filter string) *PartnersChannelsSitesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -47135,7 +47303,7 @@ func (c *PartnersChannelsSitesListCall) Do(opts ...googleapi.CallOption) (*ListS
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Allows filtering by site fields. Supported syntax: * Filter expressions for site currently can only contain at most one * restriction. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `CONTAINS (:)`. * Supported fields: - `urlOrAppId` Examples: * All sites for which the URL or app ID contains \"google\": `urlOrAppId : \"google\"`",
+	//       "description": "Allows filtering by site fields. Supported syntax: * Filter expressions for site retrieval can only contain at most one restriction. * A restriction has the form of `{field} {operator} {value}`. * All fields must use the `HAS (:)` operator. Supported fields: * `urlOrAppId` Examples: * All sites for which the URL or app ID contains \"google\": `urlOrAppId : \"google\"` The length of this field should be no more than 500 characters. Reference our [filter `LIST` requests](/display-video/api/guides/how-tos/filters) guide for more information.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -47576,7 +47744,7 @@ func (c *PartnersTargetingTypesAssignedTargetingOptionsCreateCall) Do(opts ...go
 	//         "Target ads to a specific content category (for example, arts \u0026 entertainment).",
 	//         "Purchase impressions from specific deals and auction packages.",
 	//         "Target ads to a specific language (for example, English or Japanese).",
-	//         "Target ads to ads.txt authorized sellers.",
+	//         "Target ads to ads.txt authorized sellers. If no targeting option of this type is assigned, the resource uses the \"Authorized Direct Sellers and Resellers\" option by default.",
 	//         "Target ads to a specific regional location (for example, a city or state).",
 	//         "Purchase impressions from a group of deals and auction packages.",
 	//         "Purchase impressions from specific exchanges.",
@@ -47840,7 +48008,7 @@ func (c *PartnersTargetingTypesAssignedTargetingOptionsDeleteCall) Do(opts ...go
 	//         "Target ads to a specific content category (for example, arts \u0026 entertainment).",
 	//         "Purchase impressions from specific deals and auction packages.",
 	//         "Target ads to a specific language (for example, English or Japanese).",
-	//         "Target ads to ads.txt authorized sellers.",
+	//         "Target ads to ads.txt authorized sellers. If no targeting option of this type is assigned, the resource uses the \"Authorized Direct Sellers and Resellers\" option by default.",
 	//         "Target ads to a specific regional location (for example, a city or state).",
 	//         "Purchase impressions from a group of deals and auction packages.",
 	//         "Purchase impressions from specific exchanges.",
@@ -48116,7 +48284,7 @@ func (c *PartnersTargetingTypesAssignedTargetingOptionsGetCall) Do(opts ...googl
 	//         "Target ads to a specific content category (for example, arts \u0026 entertainment).",
 	//         "Purchase impressions from specific deals and auction packages.",
 	//         "Target ads to a specific language (for example, English or Japanese).",
-	//         "Target ads to ads.txt authorized sellers.",
+	//         "Target ads to ads.txt authorized sellers. If no targeting option of this type is assigned, the resource uses the \"Authorized Direct Sellers and Resellers\" option by default.",
 	//         "Target ads to a specific regional location (for example, a city or state).",
 	//         "Purchase impressions from a group of deals and auction packages.",
 	//         "Purchase impressions from specific exchanges.",
@@ -48175,14 +48343,17 @@ func (r *PartnersTargetingTypesAssignedTargetingOptionsService) List(partnerId i
 }
 
 // Filter sets the optional parameter "filter": Allows filtering by
-// assigned targeting option properties. Supported syntax: * Filter
+// assigned targeting option fields. Supported syntax: * Filter
 // expressions are made up of one or more restrictions. * Restrictions
 // can be combined by the logical operator `OR`. * A restriction has the
-// form of `{field} {operator} {value}`. * The operator must be `EQUALS
-// (=)`. * Supported fields: - `assignedTargetingOptionId` Examples: *
-// AssignedTargetingOption with ID 123456
-// `assignedTargetingOptionId="123456" The length of this field should
-// be no more than 500 characters.
+// form of `{field} {operator} {value}`. * All fields must use the
+// `EQUALS (=)` operator. Supported fields: *
+// `assignedTargetingOptionId` Examples: * `AssignedTargetingOption`
+// resource with ID 123456: `assignedTargetingOptionId="123456" The
+// length of this field should be no more than 500 characters. Reference
+// our filter `LIST` requests
+// (/display-video/api/guides/how-tos/filters) guide for more
+// information.
 func (c *PartnersTargetingTypesAssignedTargetingOptionsListCall) Filter(filter string) *PartnersTargetingTypesAssignedTargetingOptionsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -48329,7 +48500,7 @@ func (c *PartnersTargetingTypesAssignedTargetingOptionsListCall) Do(opts ...goog
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Allows filtering by assigned targeting option properties. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by the logical operator `OR`. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `EQUALS (=)`. * Supported fields: - `assignedTargetingOptionId` Examples: * AssignedTargetingOption with ID 123456 `assignedTargetingOptionId=\"123456\"` The length of this field should be no more than 500 characters.",
+	//       "description": "Allows filtering by assigned targeting option fields. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by the logical operator `OR`. * A restriction has the form of `{field} {operator} {value}`. * All fields must use the `EQUALS (=)` operator. Supported fields: * `assignedTargetingOptionId` Examples: * `AssignedTargetingOption` resource with ID 123456: `assignedTargetingOptionId=\"123456\"` The length of this field should be no more than 500 characters. Reference our [filter `LIST` requests](/display-video/api/guides/how-tos/filters) guide for more information.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -48444,7 +48615,7 @@ func (c *PartnersTargetingTypesAssignedTargetingOptionsListCall) Do(opts ...goog
 	//         "Target ads to a specific content category (for example, arts \u0026 entertainment).",
 	//         "Purchase impressions from specific deals and auction packages.",
 	//         "Target ads to a specific language (for example, English or Japanese).",
-	//         "Target ads to ads.txt authorized sellers.",
+	//         "Target ads to ads.txt authorized sellers. If no targeting option of this type is assigned, the resource uses the \"Authorized Direct Sellers and Resellers\" option by default.",
 	//         "Target ads to a specific regional location (for example, a city or state).",
 	//         "Purchase impressions from a group of deals and auction packages.",
 	//         "Purchase impressions from specific exchanges.",
@@ -49040,7 +49211,7 @@ func (c *TargetingTypesTargetingOptionsGetCall) Do(opts ...googleapi.CallOption)
 	//         "Target ads to a specific content category (for example, arts \u0026 entertainment).",
 	//         "Purchase impressions from specific deals and auction packages.",
 	//         "Target ads to a specific language (for example, English or Japanese).",
-	//         "Target ads to ads.txt authorized sellers.",
+	//         "Target ads to ads.txt authorized sellers. If no targeting option of this type is assigned, the resource uses the \"Authorized Direct Sellers and Resellers\" option by default.",
 	//         "Target ads to a specific regional location (for example, a city or state).",
 	//         "Purchase impressions from a group of deals and auction packages.",
 	//         "Purchase impressions from specific exchanges.",
@@ -49122,20 +49293,22 @@ func (c *TargetingTypesTargetingOptionsListCall) AdvertiserId(advertiserId int64
 }
 
 // Filter sets the optional parameter "filter": Allows filtering by
-// targeting option properties. Supported syntax: * Filter expressions
-// are made up of one or more restrictions. * Restrictions can be
-// combined by `OR` logical operators. * A restriction has the form of
-// `{field} {operator} {value}`. * The operator must be "=" (equal
-// sign). * Supported fields: - `carrierAndIspDetails.type` -
-// `geoRegionDetails.geoRegionType` - `targetingOptionId` Examples: *
+// targeting option fields. Supported syntax: * Filter expressions are
+// made up of one or more restrictions. * Restrictions can be combined
+// by `OR` logical operators. * A restriction has the form of `{field}
+// {operator} {value}`. * All fields must use the `EQUALS (=)` operator.
+// Supported fields: * `carrierAndIspDetails.type` *
+// `geoRegionDetails.geoRegionType` * `targetingOptionId` Examples: *
 // All `GEO REGION` targeting options that belong to sub type
 // `GEO_REGION_TYPE_COUNTRY` or `GEO_REGION_TYPE_STATE`:
 // `geoRegionDetails.geoRegionType="GEO_REGION_TYPE_COUNTRY" OR
 // geoRegionDetails.geoRegionType="GEO_REGION_TYPE_STATE" * All
 // `CARRIER AND ISP` targeting options that belong to sub type
 // `CARRIER_AND_ISP_TYPE_CARRIER`:
-// `carrierAndIspDetails.type="CARRIER_AND_ISP_TYPE_CARRIER". The
-// length of this field should be no more than 500 characters.
+// `carrierAndIspDetails.type="CARRIER_AND_ISP_TYPE_CARRIER" The length
+// of this field should be no more than 500 characters. Reference our
+// filter `LIST` requests (/display-video/api/guides/how-tos/filters)
+// guide for more information.
 func (c *TargetingTypesTargetingOptionsListCall) Filter(filter string) *TargetingTypesTargetingOptionsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -49284,7 +49457,7 @@ func (c *TargetingTypesTargetingOptionsListCall) Do(opts ...googleapi.CallOption
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Allows filtering by targeting option properties. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by `OR` logical operators. * A restriction has the form of `{field} {operator} {value}`. * The operator must be \"=\" (equal sign). * Supported fields: - `carrierAndIspDetails.type` - `geoRegionDetails.geoRegionType` - `targetingOptionId` Examples: * All `GEO REGION` targeting options that belong to sub type `GEO_REGION_TYPE_COUNTRY` or `GEO_REGION_TYPE_STATE`: `geoRegionDetails.geoRegionType=\"GEO_REGION_TYPE_COUNTRY\" OR geoRegionDetails.geoRegionType=\"GEO_REGION_TYPE_STATE\"` * All `CARRIER AND ISP` targeting options that belong to sub type `CARRIER_AND_ISP_TYPE_CARRIER`: `carrierAndIspDetails.type=\"CARRIER_AND_ISP_TYPE_CARRIER\"`. The length of this field should be no more than 500 characters.",
+	//       "description": "Allows filtering by targeting option fields. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by `OR` logical operators. * A restriction has the form of `{field} {operator} {value}`. * All fields must use the `EQUALS (=)` operator. Supported fields: * `carrierAndIspDetails.type` * `geoRegionDetails.geoRegionType` * `targetingOptionId` Examples: * All `GEO REGION` targeting options that belong to sub type `GEO_REGION_TYPE_COUNTRY` or `GEO_REGION_TYPE_STATE`: `geoRegionDetails.geoRegionType=\"GEO_REGION_TYPE_COUNTRY\" OR geoRegionDetails.geoRegionType=\"GEO_REGION_TYPE_STATE\"` * All `CARRIER AND ISP` targeting options that belong to sub type `CARRIER_AND_ISP_TYPE_CARRIER`: `carrierAndIspDetails.type=\"CARRIER_AND_ISP_TYPE_CARRIER\"` The length of this field should be no more than 500 characters. Reference our [filter `LIST` requests](/display-video/api/guides/how-tos/filters) guide for more information.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -49391,7 +49564,7 @@ func (c *TargetingTypesTargetingOptionsListCall) Do(opts ...googleapi.CallOption
 	//         "Target ads to a specific content category (for example, arts \u0026 entertainment).",
 	//         "Purchase impressions from specific deals and auction packages.",
 	//         "Target ads to a specific language (for example, English or Japanese).",
-	//         "Target ads to ads.txt authorized sellers.",
+	//         "Target ads to ads.txt authorized sellers. If no targeting option of this type is assigned, the resource uses the \"Authorized Direct Sellers and Resellers\" option by default.",
 	//         "Target ads to a specific regional location (for example, a city or state).",
 	//         "Purchase impressions from a group of deals and auction packages.",
 	//         "Purchase impressions from specific exchanges.",
@@ -49656,7 +49829,7 @@ func (c *TargetingTypesTargetingOptionsSearchCall) Do(opts ...googleapi.CallOpti
 	//         "Target ads to a specific content category (for example, arts \u0026 entertainment).",
 	//         "Purchase impressions from specific deals and auction packages.",
 	//         "Target ads to a specific language (for example, English or Japanese).",
-	//         "Target ads to ads.txt authorized sellers.",
+	//         "Target ads to ads.txt authorized sellers. If no targeting option of this type is assigned, the resource uses the \"Authorized Direct Sellers and Resellers\" option by default.",
 	//         "Target ads to a specific regional location (for example, a city or state).",
 	//         "Purchase impressions from a group of deals and auction packages.",
 	//         "Purchase impressions from specific exchanges.",
@@ -49729,7 +49902,12 @@ type UsersBulkEditAssignedUserRolesCall struct {
 // operation will delete the assigned user roles provided in
 // BulkEditAssignedUserRolesRequest.deletedAssignedUserRoles and then
 // assign the user roles provided in
-// BulkEditAssignedUserRolesRequest.createdAssignedUserRoles.
+// BulkEditAssignedUserRolesRequest.createdAssignedUserRoles. This
+// method has unique authentication requirements. Read the prerequisites
+// in our Managing Users guide
+// (/display-video/api/guides/users/overview#prerequisites) before using
+// this method. The "Try this method" feature does not work for this
+// method.
 //
 // - userId: The ID of the user to which the assigned user roles belong.
 func (r *UsersService) BulkEditAssignedUserRoles(userId int64, bulkeditassigneduserrolesrequest *BulkEditAssignedUserRolesRequest) *UsersBulkEditAssignedUserRolesCall {
@@ -49831,7 +50009,7 @@ func (c *UsersBulkEditAssignedUserRolesCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "Bulk edits user roles for a user. The operation will delete the assigned user roles provided in BulkEditAssignedUserRolesRequest.deletedAssignedUserRoles and then assign the user roles provided in BulkEditAssignedUserRolesRequest.createdAssignedUserRoles.",
+	//   "description": "Bulk edits user roles for a user. The operation will delete the assigned user roles provided in BulkEditAssignedUserRolesRequest.deletedAssignedUserRoles and then assign the user roles provided in BulkEditAssignedUserRolesRequest.createdAssignedUserRoles. This method has unique authentication requirements. Read the prerequisites in our [Managing Users guide](/display-video/api/guides/users/overview#prerequisites) before using this method. The \"Try this method\" feature does not work for this method.",
 	//   "flatPath": "v2/users/{usersId}:bulkEditAssignedUserRoles",
 	//   "httpMethod": "POST",
 	//   "id": "displayvideo.users.bulkEditAssignedUserRoles",
@@ -49873,7 +50051,11 @@ type UsersCreateCall struct {
 }
 
 // Create: Creates a new user. Returns the newly created user if
-// successful.
+// successful. This method has unique authentication requirements. Read
+// the prerequisites in our Managing Users guide
+// (/display-video/api/guides/users/overview#prerequisites) before using
+// this method. The "Try this method" feature does not work for this
+// method.
 func (r *UsersService) Create(user *User) *UsersCreateCall {
 	c := &UsersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.user = user
@@ -49968,7 +50150,7 @@ func (c *UsersCreateCall) Do(opts ...googleapi.CallOption) (*User, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new user. Returns the newly created user if successful.",
+	//   "description": "Creates a new user. Returns the newly created user if successful. This method has unique authentication requirements. Read the prerequisites in our [Managing Users guide](/display-video/api/guides/users/overview#prerequisites) before using this method. The \"Try this method\" feature does not work for this method.",
 	//   "flatPath": "v2/users",
 	//   "httpMethod": "POST",
 	//   "id": "displayvideo.users.create",
@@ -49998,7 +50180,11 @@ type UsersDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a user.
+// Delete: Deletes a user. This method has unique authentication
+// requirements. Read the prerequisites in our Managing Users guide
+// (/display-video/api/guides/users/overview#prerequisites) before using
+// this method. The "Try this method" feature does not work for this
+// method.
 //
 // - userId: The ID of the user to delete.
 func (r *UsersService) Delete(userId int64) *UsersDeleteCall {
@@ -50093,7 +50279,7 @@ func (c *UsersDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a user.",
+	//   "description": "Deletes a user. This method has unique authentication requirements. Read the prerequisites in our [Managing Users guide](/display-video/api/guides/users/overview#prerequisites) before using this method. The \"Try this method\" feature does not work for this method.",
 	//   "flatPath": "v2/users/{usersId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "displayvideo.users.delete",
@@ -50132,7 +50318,11 @@ type UsersGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a user.
+// Get: Gets a user. This method has unique authentication requirements.
+// Read the prerequisites in our Managing Users guide
+// (/display-video/api/guides/users/overview#prerequisites) before using
+// this method. The "Try this method" feature does not work for this
+// method.
 //
 // - userId: The ID of the user to fetch.
 func (r *UsersService) Get(userId int64) *UsersGetCall {
@@ -50240,7 +50430,7 @@ func (c *UsersGetCall) Do(opts ...googleapi.CallOption) (*User, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets a user.",
+	//   "description": "Gets a user. This method has unique authentication requirements. Read the prerequisites in our [Managing Users guide](/display-video/api/guides/users/overview#prerequisites) before using this method. The \"Try this method\" feature does not work for this method.",
 	//   "flatPath": "v2/users/{usersId}",
 	//   "httpMethod": "GET",
 	//   "id": "displayvideo.users.get",
@@ -50280,37 +50470,44 @@ type UsersListCall struct {
 
 // List: Lists users that are accessible to the current user. If two
 // users have user roles on the same partner or advertiser, they can
-// access each other.
+// access each other. This method has unique authentication
+// requirements. Read the prerequisites in our Managing Users guide
+// (/display-video/api/guides/users/overview#prerequisites) before using
+// this method. The "Try this method" feature does not work for this
+// method.
 func (r *UsersService) List() *UsersListCall {
 	c := &UsersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
 }
 
 // Filter sets the optional parameter "filter": Allows filtering by user
-// properties. Supported syntax: * Filter expressions are made up of one
-// or more restrictions. * Restrictions can be combined by the logical
+// fields. Supported syntax: * Filter expressions are made up of one or
+// more restrictions. * Restrictions can be combined by the logical
 // operator `AND`. * A restriction has the form of `{field} {operator}
-// {value}`. * The operator must be `CONTAINS (:)` or `EQUALS (=)`. *
-// The operator must be `CONTAINS (:)` for the following fields: -
-// `displayName` - `email` * The operator must be `EQUALS (=)` for the
-// following fields: - `assignedUserRole.userRole` -
-// `assignedUserRole.partnerId` - `assignedUserRole.advertiserId` -
-// `assignedUserRole.entityType`: A synthetic field of AssignedUserRole
-// used for filtering. Identifies the type of entity to which the user
-// role is assigned. Valid values are `Partner` and `Advertiser`. -
-// `assignedUserRole.parentPartnerId`: A synthetic field of
-// AssignedUserRole used for filtering. Identifies the parent partner of
-// the entity to which the user role is assigned." Examples: * The user
-// with displayName containing `foo`: `displayName:"foo" * The user
-// with email containing `bar`: `email:"bar" * All users with standard
-// user roles: `assignedUserRole.userRole="STANDARD" * All users with
-// user roles for partner 123: `assignedUserRole.partnerId="123" * All
-// users with user roles for advertiser 123:
-// `assignedUserRole.advertiserId="123" * All users with partner level
-// user roles: `entityType="PARTNER" * All users with user roles for
-// partner 123 and advertisers under partner 123:
-// `parentPartnerId="123" The length of this field should be no more
-// than 500 characters.
+// {value}`. * The `budget.budget_segments.date_range.end_date` field
+// must use the `LESS THAN (<)` operator. * The `displayName and `email`
+// field must use the `HAS (:)` operator. * All other fields must use
+// the `EQUALS (=)` operator. Supported fields: *
+// `assignedUserRole.advertiserId` * `assignedUserRole.entityType` *
+// This is synthetic field of `AssignedUserRole` used for filtering.
+// Identifies the type of entity to which the user role is assigned.
+// Valid values are `Partner` and `Advertiser`. *
+// `assignedUserRole.parentPartnerId` * This is a synthetic field of
+// `AssignedUserRole` used for filtering. Identifies the parent partner
+// of the entity to which the user role is assigned. *
+// `assignedUserRole.partnerId` * `assignedUserRole.userRole` *
+// `displayName` * `email` Examples: * The user with `displayName`
+// containing "foo": `displayName:"foo" * The user with `email`
+// containing "bar": `email:"bar" * All users with standard user roles:
+// `assignedUserRole.userRole="STANDARD" * All users with user roles
+// for partner 123: `assignedUserRole.partnerId="123" * All users with
+// user roles for advertiser 123: `assignedUserRole.advertiserId="123"
+// * All users with partner level user roles: `entityType="PARTNER" *
+// All users with user roles for partner 123 and advertisers under
+// partner 123: `parentPartnerId="123" The length of this field should
+// be no more than 500 characters. Reference our filter `LIST` requests
+// (/display-video/api/guides/how-tos/filters) guide for more
+// information.
 func (c *UsersListCall) Filter(filter string) *UsersListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -50439,14 +50636,14 @@ func (c *UsersListCall) Do(opts ...googleapi.CallOption) (*ListUsersResponse, er
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists users that are accessible to the current user. If two users have user roles on the same partner or advertiser, they can access each other.",
+	//   "description": "Lists users that are accessible to the current user. If two users have user roles on the same partner or advertiser, they can access each other. This method has unique authentication requirements. Read the prerequisites in our [Managing Users guide](/display-video/api/guides/users/overview#prerequisites) before using this method. The \"Try this method\" feature does not work for this method.",
 	//   "flatPath": "v2/users",
 	//   "httpMethod": "GET",
 	//   "id": "displayvideo.users.list",
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Allows filtering by user properties. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by the logical operator `AND`. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `CONTAINS (:)` or `EQUALS (=)`. * The operator must be `CONTAINS (:)` for the following fields: - `displayName` - `email` * The operator must be `EQUALS (=)` for the following fields: - `assignedUserRole.userRole` - `assignedUserRole.partnerId` - `assignedUserRole.advertiserId` - `assignedUserRole.entityType`: A synthetic field of AssignedUserRole used for filtering. Identifies the type of entity to which the user role is assigned. Valid values are `Partner` and `Advertiser`. - `assignedUserRole.parentPartnerId`: A synthetic field of AssignedUserRole used for filtering. Identifies the parent partner of the entity to which the user role is assigned.\" Examples: * The user with displayName containing `foo`: `displayName:\"foo\"` * The user with email containing `bar`: `email:\"bar\"` * All users with standard user roles: `assignedUserRole.userRole=\"STANDARD\"` * All users with user roles for partner 123: `assignedUserRole.partnerId=\"123\"` * All users with user roles for advertiser 123: `assignedUserRole.advertiserId=\"123\"` * All users with partner level user roles: `entityType=\"PARTNER\"` * All users with user roles for partner 123 and advertisers under partner 123: `parentPartnerId=\"123\"` The length of this field should be no more than 500 characters.",
+	//       "description": "Allows filtering by user fields. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by the logical operator `AND`. * A restriction has the form of `{field} {operator} {value}`. * The `budget.budget_segments.date_range.end_date` field must use the `LESS THAN (\u003c)` operator. * The `displayName and `email` field must use the `HAS (:)` operator. * All other fields must use the `EQUALS (=)` operator. Supported fields: * `assignedUserRole.advertiserId` * `assignedUserRole.entityType` * This is synthetic field of `AssignedUserRole` used for filtering. Identifies the type of entity to which the user role is assigned. Valid values are `Partner` and `Advertiser`. * `assignedUserRole.parentPartnerId` * This is a synthetic field of `AssignedUserRole` used for filtering. Identifies the parent partner of the entity to which the user role is assigned. * `assignedUserRole.partnerId` * `assignedUserRole.userRole` * `displayName` * `email` Examples: * The user with `displayName` containing \"foo\": `displayName:\"foo\"` * The user with `email` containing \"bar\": `email:\"bar\"` * All users with standard user roles: `assignedUserRole.userRole=\"STANDARD\"` * All users with user roles for partner 123: `assignedUserRole.partnerId=\"123\"` * All users with user roles for advertiser 123: `assignedUserRole.advertiserId=\"123\"` * All users with partner level user roles: `entityType=\"PARTNER\"` * All users with user roles for partner 123 and advertisers under partner 123: `parentPartnerId=\"123\"` The length of this field should be no more than 500 characters. Reference our [filter `LIST` requests](/display-video/api/guides/how-tos/filters) guide for more information.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -50511,7 +50708,11 @@ type UsersPatchCall struct {
 }
 
 // Patch: Updates an existing user. Returns the updated user if
-// successful.
+// successful. This method has unique authentication requirements. Read
+// the prerequisites in our Managing Users guide
+// (/display-video/api/guides/users/overview#prerequisites) before using
+// this method. The "Try this method" feature does not work for this
+// method.
 //
 //   - userId: Output only. The unique ID of the user. Assigned by the
 //     system.
@@ -50620,7 +50821,7 @@ func (c *UsersPatchCall) Do(opts ...googleapi.CallOption) (*User, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates an existing user. Returns the updated user if successful.",
+	//   "description": "Updates an existing user. Returns the updated user if successful. This method has unique authentication requirements. Read the prerequisites in our [Managing Users guide](/display-video/api/guides/users/overview#prerequisites) before using this method. The \"Try this method\" feature does not work for this method.",
 	//   "flatPath": "v2/users/{usersId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "displayvideo.users.patch",

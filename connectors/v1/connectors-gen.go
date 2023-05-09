@@ -153,6 +153,7 @@ type ProjectsService struct {
 func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs := &ProjectsLocationsService{s: s}
 	rs.Connections = NewProjectsLocationsConnectionsService(s)
+	rs.EndpointAttachments = NewProjectsLocationsEndpointAttachmentsService(s)
 	rs.Global = NewProjectsLocationsGlobalService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
 	rs.Providers = NewProjectsLocationsProvidersService(s)
@@ -163,6 +164,8 @@ type ProjectsLocationsService struct {
 	s *Service
 
 	Connections *ProjectsLocationsConnectionsService
+
+	EndpointAttachments *ProjectsLocationsEndpointAttachmentsService
 
 	Global *ProjectsLocationsGlobalService
 
@@ -216,12 +219,33 @@ type ProjectsLocationsConnectionsRuntimeEntitySchemasService struct {
 	s *Service
 }
 
+func NewProjectsLocationsEndpointAttachmentsService(s *Service) *ProjectsLocationsEndpointAttachmentsService {
+	rs := &ProjectsLocationsEndpointAttachmentsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsEndpointAttachmentsService struct {
+	s *Service
+}
+
 func NewProjectsLocationsGlobalService(s *Service) *ProjectsLocationsGlobalService {
 	rs := &ProjectsLocationsGlobalService{s: s}
+	rs.ManagedZones = NewProjectsLocationsGlobalManagedZonesService(s)
 	return rs
 }
 
 type ProjectsLocationsGlobalService struct {
+	s *Service
+
+	ManagedZones *ProjectsLocationsGlobalManagedZonesService
+}
+
+func NewProjectsLocationsGlobalManagedZonesService(s *Service) *ProjectsLocationsGlobalManagedZonesService {
+	rs := &ProjectsLocationsGlobalManagedZonesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsGlobalManagedZonesService struct {
 	s *Service
 }
 
@@ -369,6 +393,9 @@ type AuthConfig struct {
 	// AdditionalVariables: List containing additional auth configs.
 	AdditionalVariables []*ConfigVariable `json:"additionalVariables,omitempty"`
 
+	// AuthKey: Identifier key for auth config
+	AuthKey string `json:"authKey,omitempty"`
+
 	// AuthType: The type of authentication configured.
 	//
 	// Possible values:
@@ -424,6 +451,9 @@ func (s *AuthConfig) MarshalJSON() ([]byte, error) {
 // AuthConfigTemplate: AuthConfigTemplate defines required field over an
 // authentication type.
 type AuthConfigTemplate struct {
+	// AuthKey: Identifier key for auth config
+	AuthKey string `json:"authKey,omitempty"`
+
 	// AuthType: The type of authentication configured.
 	//
 	// Possible values:
@@ -448,7 +478,7 @@ type AuthConfigTemplate struct {
 	// DisplayName: Display name for authentication template.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "AuthType") to
+	// ForceSendFields is a list of field names (e.g. "AuthKey") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -456,7 +486,7 @@ type AuthConfigTemplate struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "AuthType") to include in
+	// NullFields is a list of field names (e.g. "AuthKey") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -787,6 +817,16 @@ type Connection struct {
 
 	// Status: Output only. Current status of the connection.
 	Status *ConnectionStatus `json:"status,omitempty"`
+
+	// SubscriptionType: Output only. This subscription type enum value
+	// states if the metrics should be sent for billing or not.
+	//
+	// Possible values:
+	//   "SUBSCRIPTION_TYPE_UNSPECIFIED" - Unspecified subscription type.
+	//   "PAY_G" - Metrics should be sent for billing for PayG type.
+	//   "PAID" - Metrics should not be sent for billing for Paid
+	// Subscription type.
+	SubscriptionType string `json:"subscriptionType,omitempty"`
 
 	// Suspended: Optional. Suspended indicates if a user has suspended a
 	// connection or not.
@@ -1302,6 +1342,62 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// EndpointAttachment: represents the Connector's Endpoint Attachment
+// resource
+type EndpointAttachment struct {
+	// CreateTime: Output only. Created time.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// Description: Optional. Description of the resource.
+	Description string `json:"description,omitempty"`
+
+	// EndpointIp: Output only. The Private Service Connect connection
+	// endpoint ip
+	EndpointIp string `json:"endpointIp,omitempty"`
+
+	// Labels: Optional. Resource labels to represent user-provided
+	// metadata. Refer to cloud documentation on labels for more details.
+	// https://cloud.google.com/compute/docs/labeling-resources
+	Labels map[string]string `json:"labels,omitempty"`
+
+	// Name: Output only. Resource name of the Endpoint Attachment. Format:
+	// projects/{project}/locations/{location}/endpointAttachments/{endpoint_
+	// attachment}
+	Name string `json:"name,omitempty"`
+
+	// ServiceAttachment: Required. The path of the service attachment
+	ServiceAttachment string `json:"serviceAttachment,omitempty"`
+
+	// UpdateTime: Output only. Updated time.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EndpointAttachment) MarshalJSON() ([]byte, error) {
+	type NoMethod EndpointAttachment
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // EnumOption: EnumOption definition
 type EnumOption struct {
 	// DisplayName: Display name of the option.
@@ -1807,6 +1903,46 @@ func (s *ListConnectorsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ListEndpointAttachmentsResponse: Response message for
+// ConnectorsService.ListEndpointAttachments
+type ListEndpointAttachmentsResponse struct {
+	// EndpointAttachments: EndpointAttachments.
+	EndpointAttachments []*EndpointAttachment `json:"endpointAttachments,omitempty"`
+
+	// NextPageToken: Next page token.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Unreachable: Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "EndpointAttachments")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EndpointAttachments") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListEndpointAttachmentsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListEndpointAttachmentsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ListLocationsResponse: The response message for
 // Locations.ListLocations.
 type ListLocationsResponse struct {
@@ -1840,6 +1976,42 @@ type ListLocationsResponse struct {
 
 func (s *ListLocationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListLocationsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListManagedZonesResponse: Response message for
+// ConnectorsService.ListManagedZones
+type ListManagedZonesResponse struct {
+	// ManagedZones: ManagedZones.
+	ManagedZones []*ManagedZone `json:"managedZones,omitempty"`
+
+	// NextPageToken: Next page token.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "ManagedZones") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ManagedZones") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListManagedZonesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListManagedZonesResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1991,7 +2163,7 @@ func (s *ListRuntimeEntitySchemasResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Location: A resource that represents Google Cloud Platform location.
+// Location: A resource that represents a Google Cloud location.
 type Location struct {
 	// DisplayName: The friendly name for this location, typically a nearby
 	// city name. For example, "Tokyo".
@@ -2069,6 +2241,62 @@ type LockConfig struct {
 
 func (s *LockConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod LockConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ManagedZone: represents the Connector's Managed Zone resource
+type ManagedZone struct {
+	// CreateTime: Output only. Created time.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// Description: Optional. Description of the resource.
+	Description string `json:"description,omitempty"`
+
+	// Dns: Required. DNS Name of the resource
+	Dns string `json:"dns,omitempty"`
+
+	// Labels: Optional. Resource labels to represent user-provided
+	// metadata. Refer to cloud documentation on labels for more details.
+	// https://cloud.google.com/compute/docs/labeling-resources
+	Labels map[string]string `json:"labels,omitempty"`
+
+	// Name: Output only. Resource name of the Managed Zone. Format:
+	// projects/{project}/locations/global/managedZones/{managed_zone}
+	Name string `json:"name,omitempty"`
+
+	// TargetProject: Required. The name of the Target Project
+	TargetProject string `json:"targetProject,omitempty"`
+
+	// TargetVpc: Required. The name of the Target Project VPC Network
+	TargetVpc string `json:"targetVpc,omitempty"`
+
+	// UpdateTime: Output only. Updated time.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ManagedZone) MarshalJSON() ([]byte, error) {
+	type NoMethod ManagedZone
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5892,6 +6120,819 @@ func (c *ProjectsLocationsConnectionsRuntimeEntitySchemasListCall) Pages(ctx con
 	}
 }
 
+// method id "connectors.projects.locations.endpointAttachments.create":
+
+type ProjectsLocationsEndpointAttachmentsCreateCall struct {
+	s                  *Service
+	parent             string
+	endpointattachment *EndpointAttachment
+	urlParams_         gensupport.URLParams
+	ctx_               context.Context
+	header_            http.Header
+}
+
+// Create: Creates a new EndpointAttachment in a given project and
+// location.
+//
+//   - parent: Parent resource of the EndpointAttachment, of the form:
+//     `projects/*/locations/*`.
+func (r *ProjectsLocationsEndpointAttachmentsService) Create(parent string, endpointattachment *EndpointAttachment) *ProjectsLocationsEndpointAttachmentsCreateCall {
+	c := &ProjectsLocationsEndpointAttachmentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.endpointattachment = endpointattachment
+	return c
+}
+
+// EndpointAttachmentId sets the optional parameter
+// "endpointAttachmentId": Required. Identifier to assign to the
+// EndpointAttachment. Must be unique within scope of the parent
+// resource.
+func (c *ProjectsLocationsEndpointAttachmentsCreateCall) EndpointAttachmentId(endpointAttachmentId string) *ProjectsLocationsEndpointAttachmentsCreateCall {
+	c.urlParams_.Set("endpointAttachmentId", endpointAttachmentId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsEndpointAttachmentsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsEndpointAttachmentsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsEndpointAttachmentsCreateCall) Context(ctx context.Context) *ProjectsLocationsEndpointAttachmentsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsEndpointAttachmentsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsEndpointAttachmentsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.endpointattachment)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/endpointAttachments")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "connectors.projects.locations.endpointAttachments.create" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsEndpointAttachmentsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new EndpointAttachment in a given project and location.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/endpointAttachments",
+	//   "httpMethod": "POST",
+	//   "id": "connectors.projects.locations.endpointAttachments.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "endpointAttachmentId": {
+	//       "description": "Required. Identifier to assign to the EndpointAttachment. Must be unique within scope of the parent resource.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Parent resource of the EndpointAttachment, of the form: `projects/*/locations/*`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/endpointAttachments",
+	//   "request": {
+	//     "$ref": "EndpointAttachment"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "connectors.projects.locations.endpointAttachments.delete":
+
+type ProjectsLocationsEndpointAttachmentsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a single EndpointAttachment.
+//
+//   - name: Resource name of the form:
+//     `projects/*/locations/*/endpointAttachments/*`.
+func (r *ProjectsLocationsEndpointAttachmentsService) Delete(name string) *ProjectsLocationsEndpointAttachmentsDeleteCall {
+	c := &ProjectsLocationsEndpointAttachmentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsEndpointAttachmentsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsEndpointAttachmentsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsEndpointAttachmentsDeleteCall) Context(ctx context.Context) *ProjectsLocationsEndpointAttachmentsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsEndpointAttachmentsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsEndpointAttachmentsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "connectors.projects.locations.endpointAttachments.delete" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsEndpointAttachmentsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a single EndpointAttachment.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/endpointAttachments/{endpointAttachmentsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "connectors.projects.locations.endpointAttachments.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Resource name of the form: `projects/*/locations/*/endpointAttachments/*`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/endpointAttachments/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "connectors.projects.locations.endpointAttachments.get":
+
+type ProjectsLocationsEndpointAttachmentsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a single EndpointAttachment.
+//
+//   - name: Resource name of the form:
+//     `projects/*/locations/*/endpointAttachments/*`.
+func (r *ProjectsLocationsEndpointAttachmentsService) Get(name string) *ProjectsLocationsEndpointAttachmentsGetCall {
+	c := &ProjectsLocationsEndpointAttachmentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsEndpointAttachmentsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsEndpointAttachmentsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsEndpointAttachmentsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsEndpointAttachmentsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsEndpointAttachmentsGetCall) Context(ctx context.Context) *ProjectsLocationsEndpointAttachmentsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsEndpointAttachmentsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsEndpointAttachmentsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "connectors.projects.locations.endpointAttachments.get" call.
+// Exactly one of *EndpointAttachment or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *EndpointAttachment.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsEndpointAttachmentsGetCall) Do(opts ...googleapi.CallOption) (*EndpointAttachment, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &EndpointAttachment{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets details of a single EndpointAttachment.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/endpointAttachments/{endpointAttachmentsId}",
+	//   "httpMethod": "GET",
+	//   "id": "connectors.projects.locations.endpointAttachments.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Resource name of the form: `projects/*/locations/*/endpointAttachments/*`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/endpointAttachments/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "EndpointAttachment"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "connectors.projects.locations.endpointAttachments.list":
+
+type ProjectsLocationsEndpointAttachmentsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: List EndpointAttachments in a given project
+//
+//   - parent: Parent resource od the EndpointAttachment, of the form:
+//     `projects/*/locations/*`.
+func (r *ProjectsLocationsEndpointAttachmentsService) List(parent string) *ProjectsLocationsEndpointAttachmentsListCall {
+	c := &ProjectsLocationsEndpointAttachmentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filter.
+// https://g3doc.corp.google.com/cloud/control2/g3doc/dev/apihosting/list_filtering.md#filtering.
+func (c *ProjectsLocationsEndpointAttachmentsListCall) Filter(filter string) *ProjectsLocationsEndpointAttachmentsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Order by parameters.
+func (c *ProjectsLocationsEndpointAttachmentsListCall) OrderBy(orderBy string) *ProjectsLocationsEndpointAttachmentsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Page size.
+func (c *ProjectsLocationsEndpointAttachmentsListCall) PageSize(pageSize int64) *ProjectsLocationsEndpointAttachmentsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Page token.
+func (c *ProjectsLocationsEndpointAttachmentsListCall) PageToken(pageToken string) *ProjectsLocationsEndpointAttachmentsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsEndpointAttachmentsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsEndpointAttachmentsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsEndpointAttachmentsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsEndpointAttachmentsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsEndpointAttachmentsListCall) Context(ctx context.Context) *ProjectsLocationsEndpointAttachmentsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsEndpointAttachmentsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsEndpointAttachmentsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/endpointAttachments")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "connectors.projects.locations.endpointAttachments.list" call.
+// Exactly one of *ListEndpointAttachmentsResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListEndpointAttachmentsResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsEndpointAttachmentsListCall) Do(opts ...googleapi.CallOption) (*ListEndpointAttachmentsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListEndpointAttachmentsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List EndpointAttachments in a given project",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/endpointAttachments",
+	//   "httpMethod": "GET",
+	//   "id": "connectors.projects.locations.endpointAttachments.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Filter. https://g3doc.corp.google.com/cloud/control2/g3doc/dev/apihosting/list_filtering.md#filtering.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Order by parameters.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Page size.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Parent resource od the EndpointAttachment, of the form: `projects/*/locations/*`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/endpointAttachments",
+	//   "response": {
+	//     "$ref": "ListEndpointAttachmentsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsEndpointAttachmentsListCall) Pages(ctx context.Context, f func(*ListEndpointAttachmentsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "connectors.projects.locations.endpointAttachments.patch":
+
+type ProjectsLocationsEndpointAttachmentsPatchCall struct {
+	s                  *Service
+	name               string
+	endpointattachment *EndpointAttachment
+	urlParams_         gensupport.URLParams
+	ctx_               context.Context
+	header_            http.Header
+}
+
+// Patch: Updates the parameters of a single EndpointAttachment.
+//
+//   - name: Output only. Resource name of the Endpoint Attachment.
+//     Format:
+//     projects/{project}/locations/{location}/endpointAttachments/{endpoin
+//     t_attachment}.
+func (r *ProjectsLocationsEndpointAttachmentsService) Patch(name string, endpointattachment *EndpointAttachment) *ProjectsLocationsEndpointAttachmentsPatchCall {
+	c := &ProjectsLocationsEndpointAttachmentsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.endpointattachment = endpointattachment
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. The
+// list of fields to update. Fields are specified relative to the
+// endpointAttachment. A field will be overwritten if it is in the mask.
+// You can modify only the fields listed below. To update the
+// endpointAttachment details: * `description` * `labels`
+func (c *ProjectsLocationsEndpointAttachmentsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsEndpointAttachmentsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsEndpointAttachmentsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsEndpointAttachmentsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsEndpointAttachmentsPatchCall) Context(ctx context.Context) *ProjectsLocationsEndpointAttachmentsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsEndpointAttachmentsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsEndpointAttachmentsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.endpointattachment)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "connectors.projects.locations.endpointAttachments.patch" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsEndpointAttachmentsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates the parameters of a single EndpointAttachment.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/endpointAttachments/{endpointAttachmentsId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "connectors.projects.locations.endpointAttachments.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Output only. Resource name of the Endpoint Attachment. Format: projects/{project}/locations/{location}/endpointAttachments/{endpoint_attachment}",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/endpointAttachments/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Required. The list of fields to update. Fields are specified relative to the endpointAttachment. A field will be overwritten if it is in the mask. You can modify only the fields listed below. To update the endpointAttachment details: * `description` * `labels`",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "EndpointAttachment"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "connectors.projects.locations.global.getSettings":
 
 type ProjectsLocationsGlobalGetSettingsCall struct {
@@ -6031,6 +7072,816 @@ func (c *ProjectsLocationsGlobalGetSettingsCall) Do(opts ...googleapi.CallOption
 	//   "path": "v1/{+name}",
 	//   "response": {
 	//     "$ref": "Settings"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "connectors.projects.locations.global.managedZones.create":
+
+type ProjectsLocationsGlobalManagedZonesCreateCall struct {
+	s           *Service
+	parent      string
+	managedzone *ManagedZone
+	urlParams_  gensupport.URLParams
+	ctx_        context.Context
+	header_     http.Header
+}
+
+// Create: Creates a new ManagedZone in a given project and location.
+//
+//   - parent: Parent resource of the ManagedZone, of the form:
+//     `projects/*/locations/global`.
+func (r *ProjectsLocationsGlobalManagedZonesService) Create(parent string, managedzone *ManagedZone) *ProjectsLocationsGlobalManagedZonesCreateCall {
+	c := &ProjectsLocationsGlobalManagedZonesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.managedzone = managedzone
+	return c
+}
+
+// ManagedZoneId sets the optional parameter "managedZoneId": Required.
+// Identifier to assign to the ManagedZone. Must be unique within scope
+// of the parent resource.
+func (c *ProjectsLocationsGlobalManagedZonesCreateCall) ManagedZoneId(managedZoneId string) *ProjectsLocationsGlobalManagedZonesCreateCall {
+	c.urlParams_.Set("managedZoneId", managedZoneId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsGlobalManagedZonesCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalManagedZonesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsGlobalManagedZonesCreateCall) Context(ctx context.Context) *ProjectsLocationsGlobalManagedZonesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsGlobalManagedZonesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlobalManagedZonesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.managedzone)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/managedZones")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "connectors.projects.locations.global.managedZones.create" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsGlobalManagedZonesCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new ManagedZone in a given project and location.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/global/managedZones",
+	//   "httpMethod": "POST",
+	//   "id": "connectors.projects.locations.global.managedZones.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "managedZoneId": {
+	//       "description": "Required. Identifier to assign to the ManagedZone. Must be unique within scope of the parent resource.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Parent resource of the ManagedZone, of the form: `projects/*/locations/global`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/global$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/managedZones",
+	//   "request": {
+	//     "$ref": "ManagedZone"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "connectors.projects.locations.global.managedZones.delete":
+
+type ProjectsLocationsGlobalManagedZonesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a single ManagedZone.
+//
+//   - name: Resource name of the form:
+//     `projects/*/locations/global/managedZones/*`.
+func (r *ProjectsLocationsGlobalManagedZonesService) Delete(name string) *ProjectsLocationsGlobalManagedZonesDeleteCall {
+	c := &ProjectsLocationsGlobalManagedZonesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsGlobalManagedZonesDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalManagedZonesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsGlobalManagedZonesDeleteCall) Context(ctx context.Context) *ProjectsLocationsGlobalManagedZonesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsGlobalManagedZonesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlobalManagedZonesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "connectors.projects.locations.global.managedZones.delete" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsGlobalManagedZonesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a single ManagedZone.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/global/managedZones/{managedZonesId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "connectors.projects.locations.global.managedZones.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Resource name of the form: `projects/*/locations/global/managedZones/*`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/global/managedZones/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "connectors.projects.locations.global.managedZones.get":
+
+type ProjectsLocationsGlobalManagedZonesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a single ManagedZone.
+//
+//   - name: Resource name of the form:
+//     `projects/*/locations/global/managedZones/*`.
+func (r *ProjectsLocationsGlobalManagedZonesService) Get(name string) *ProjectsLocationsGlobalManagedZonesGetCall {
+	c := &ProjectsLocationsGlobalManagedZonesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsGlobalManagedZonesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalManagedZonesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsGlobalManagedZonesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsGlobalManagedZonesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsGlobalManagedZonesGetCall) Context(ctx context.Context) *ProjectsLocationsGlobalManagedZonesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsGlobalManagedZonesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlobalManagedZonesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "connectors.projects.locations.global.managedZones.get" call.
+// Exactly one of *ManagedZone or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *ManagedZone.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsGlobalManagedZonesGetCall) Do(opts ...googleapi.CallOption) (*ManagedZone, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ManagedZone{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets details of a single ManagedZone.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/global/managedZones/{managedZonesId}",
+	//   "httpMethod": "GET",
+	//   "id": "connectors.projects.locations.global.managedZones.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Resource name of the form: `projects/*/locations/global/managedZones/*`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/global/managedZones/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "ManagedZone"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "connectors.projects.locations.global.managedZones.list":
+
+type ProjectsLocationsGlobalManagedZonesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: List ManagedZones in a given project
+//
+//   - parent: Parent resource of the Managed Zone, of the form:
+//     `projects/*/locations/global`.
+func (r *ProjectsLocationsGlobalManagedZonesService) List(parent string) *ProjectsLocationsGlobalManagedZonesListCall {
+	c := &ProjectsLocationsGlobalManagedZonesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filter.
+// https://g3doc.corp.google.com/cloud/control2/g3doc/dev/apihosting/list_filtering.md#filtering.
+func (c *ProjectsLocationsGlobalManagedZonesListCall) Filter(filter string) *ProjectsLocationsGlobalManagedZonesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Order by parameters.
+func (c *ProjectsLocationsGlobalManagedZonesListCall) OrderBy(orderBy string) *ProjectsLocationsGlobalManagedZonesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Page size.
+func (c *ProjectsLocationsGlobalManagedZonesListCall) PageSize(pageSize int64) *ProjectsLocationsGlobalManagedZonesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Page token.
+func (c *ProjectsLocationsGlobalManagedZonesListCall) PageToken(pageToken string) *ProjectsLocationsGlobalManagedZonesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsGlobalManagedZonesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalManagedZonesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsGlobalManagedZonesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsGlobalManagedZonesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsGlobalManagedZonesListCall) Context(ctx context.Context) *ProjectsLocationsGlobalManagedZonesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsGlobalManagedZonesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlobalManagedZonesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/managedZones")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "connectors.projects.locations.global.managedZones.list" call.
+// Exactly one of *ListManagedZonesResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListManagedZonesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsGlobalManagedZonesListCall) Do(opts ...googleapi.CallOption) (*ListManagedZonesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListManagedZonesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List ManagedZones in a given project",
+	//   "flatPath": "v1/projects/{projectsId}/locations/global/managedZones",
+	//   "httpMethod": "GET",
+	//   "id": "connectors.projects.locations.global.managedZones.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Filter. https://g3doc.corp.google.com/cloud/control2/g3doc/dev/apihosting/list_filtering.md#filtering.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Order by parameters.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Page size.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Parent resource of the Managed Zone, of the form: `projects/*/locations/global`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/global$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/managedZones",
+	//   "response": {
+	//     "$ref": "ListManagedZonesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsGlobalManagedZonesListCall) Pages(ctx context.Context, f func(*ListManagedZonesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "connectors.projects.locations.global.managedZones.patch":
+
+type ProjectsLocationsGlobalManagedZonesPatchCall struct {
+	s           *Service
+	name        string
+	managedzone *ManagedZone
+	urlParams_  gensupport.URLParams
+	ctx_        context.Context
+	header_     http.Header
+}
+
+// Patch: Updates the parameters of a single ManagedZone.
+//
+//   - name: Output only. Resource name of the Managed Zone. Format:
+//     projects/{project}/locations/global/managedZones/{managed_zone}.
+func (r *ProjectsLocationsGlobalManagedZonesService) Patch(name string, managedzone *ManagedZone) *ProjectsLocationsGlobalManagedZonesPatchCall {
+	c := &ProjectsLocationsGlobalManagedZonesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.managedzone = managedzone
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. The
+// list of fields to update. Fields are specified relative to the
+// managedZone. A field will be overwritten if it is in the mask. You
+// can modify only the fields listed below. To update the managedZone
+// details: * `description` * `labels` * `target_project` *
+// `target_network`
+func (c *ProjectsLocationsGlobalManagedZonesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsGlobalManagedZonesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsGlobalManagedZonesPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalManagedZonesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsGlobalManagedZonesPatchCall) Context(ctx context.Context) *ProjectsLocationsGlobalManagedZonesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsGlobalManagedZonesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlobalManagedZonesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.managedzone)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "connectors.projects.locations.global.managedZones.patch" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsGlobalManagedZonesPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates the parameters of a single ManagedZone.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/global/managedZones/{managedZonesId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "connectors.projects.locations.global.managedZones.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Output only. Resource name of the Managed Zone. Format: projects/{project}/locations/global/managedZones/{managed_zone}",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/global/managedZones/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Required. The list of fields to update. Fields are specified relative to the managedZone. A field will be overwritten if it is in the mask. You can modify only the fields listed below. To update the managedZone details: * `description` * `labels` * `target_project` * `target_network`",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "ManagedZone"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

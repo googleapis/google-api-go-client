@@ -4820,7 +4820,8 @@ func (s *DeliveryAreaPostalCodeRange) MarshalJSON() ([]byte, error) {
 
 type DeliveryTime struct {
 	// CutoffTime: Business days cutoff time definition. If not configured
-	// the cutoff time will be defaulted to 8AM PST.
+	// the cutoff time will be defaulted to 8AM PST. If local delivery, use
+	// Service.StoreConfig.CutoffConfig.
 	CutoffTime *CutoffTime `json:"cutoffTime,omitempty"`
 
 	// HandlingBusinessDayConfig: The business days during which orders can
@@ -4889,6 +4890,38 @@ type DeliveryTime struct {
 
 func (s *DeliveryTime) MarshalJSON() ([]byte, error) {
 	type NoMethod DeliveryTime
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Distance: Distance represented by an integer and unit.
+type Distance struct {
+	// Unit: The distance unit. Acceptable values are `None`, `Miles`, and
+	// `Kilometers`.
+	Unit string `json:"unit,omitempty"`
+
+	// Value: The distance represented as a number.
+	Value int64 `json:"value,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "Unit") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Unit") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Distance) MarshalJSON() ([]byte, error) {
+	type NoMethod Distance
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -7305,8 +7338,6 @@ func (s *MerchantRejectionReason) MarshalJSON() ([]byte, error) {
 }
 
 // MethodQuota: The quota information per method in the Content API.
-// Includes only methods with current usage greater than zero for your
-// account.
 type MethodQuota struct {
 	// Method: The method name, for example `products.list`. Method name
 	// does not contain version because quota can be shared between
@@ -12823,6 +12854,13 @@ type Product struct {
 	// Description: Description of the item.
 	Description string `json:"description,omitempty"`
 
+	// DisclosureDate: The date time when an offer becomes visible in search
+	// results across Google’s YouTube surfaces, in ISO 8601
+	// (http://en.wikipedia.org/wiki/ISO_8601) format. See Disclosure date (
+	// https://support.google.com/merchants/answer/13034208) for more
+	// information.
+	DisclosureDate string `json:"disclosureDate,omitempty"`
+
 	// DisplayAdsId: An identifier for an item for dynamic remarketing
 	// campaigns.
 	DisplayAdsId string `json:"displayAdsId,omitempty"`
@@ -13750,7 +13788,8 @@ type ProductStatusDestinationStatus struct {
 	// the offer is pending approval.
 	PendingCountries []string `json:"pendingCountries,omitempty"`
 
-	// Status: Destination approval status in `targetCountry` of the offer.
+	// Status: Deprecated. Destination approval status in `targetCountry` of
+	// the offer.
 	Status string `json:"status,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ApprovedCountries")
@@ -14274,6 +14313,9 @@ type ProductViewItemIssueItemIssueType struct {
 	// CanonicalAttribute: Canonical attribute name for attribute-specific
 	// issues.
 	CanonicalAttribute string `json:"canonicalAttribute,omitempty"`
+
+	// Code: Error code of the issue.
+	Code string `json:"code,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CanonicalAttribute")
 	// to unconditionally include in API requests. By default, fields with
@@ -18021,8 +18063,13 @@ type Service struct {
 	RateGroups []*RateGroup `json:"rateGroups,omitempty"`
 
 	// ShipmentType: Type of locations this service ships orders to.
-	// Acceptable values are: - "delivery" - "pickup"
+	// Acceptable values are: - "delivery" - "pickup" -
+	// "local_delivery"
 	ShipmentType string `json:"shipmentType,omitempty"`
+
+	// StoreConfig: A list of stores your products are delivered from. This
+	// is only available for the local delivery shipment type.
+	StoreConfig *ServiceStoreConfig `json:"storeConfig,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Active") to
 	// unconditionally include in API requests. By default, fields with
@@ -18043,6 +18090,123 @@ type Service struct {
 
 func (s *Service) MarshalJSON() ([]byte, error) {
 	type NoMethod Service
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ServiceStoreConfig: Stores that provide local delivery. Only valid
+// with local delivery fulfillment.
+type ServiceStoreConfig struct {
+	// CutoffConfig: Time local delivery ends for the day. This can be
+	// either `local_cutoff_time` or `store_close_offset_hours`, if both are
+	// provided an error is thrown.
+	CutoffConfig *ServiceStoreConfigCutoffConfig `json:"cutoffConfig,omitempty"`
+
+	// ServiceRadius: Maximum delivery radius. Only needed for local
+	// delivery fulfillment type.
+	ServiceRadius *Distance `json:"serviceRadius,omitempty"`
+
+	// StoreCodes: A list of store codes that provide local delivery. If
+	// empty, then `store_service_type` must be `all_stores`, or an error is
+	// thrown. If not empty, then `store_service_type` must be
+	// `selected_stores`, or an error is thrown.
+	StoreCodes []string `json:"storeCodes,omitempty"`
+
+	// StoreServiceType: Indicates whether all stores listed by this
+	// merchant provide local delivery or not. Acceptable values are `all
+	// stores` and `selected stores`
+	StoreServiceType string `json:"storeServiceType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CutoffConfig") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CutoffConfig") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ServiceStoreConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ServiceStoreConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ServiceStoreConfigCutoffConfig: Time local delivery ends for the day
+// based on the local timezone of the store. `local_cutoff_time` and
+// `store_close_offset_hours` are mutually exclusive.
+type ServiceStoreConfigCutoffConfig struct {
+	// LocalCutoffTime: Time in hours and minutes in the local timezone when
+	// local delivery ends.
+	LocalCutoffTime *ServiceStoreConfigCutoffConfigLocalCutoffTime `json:"localCutoffTime,omitempty"`
+
+	// StoreCloseOffsetHours: Represents cutoff time as the number of hours
+	// before store closing. Mutually exclusive with other fields (hour and
+	// minute).
+	StoreCloseOffsetHours int64 `json:"storeCloseOffsetHours,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "LocalCutoffTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LocalCutoffTime") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ServiceStoreConfigCutoffConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ServiceStoreConfigCutoffConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ServiceStoreConfigCutoffConfigLocalCutoffTime: Time in hours and
+// minutes in the local timezone when local delivery ends.
+type ServiceStoreConfigCutoffConfigLocalCutoffTime struct {
+	// Hour: Hour local delivery orders must be placed by to process the
+	// same day.
+	Hour int64 `json:"hour,omitempty,string"`
+
+	// Minute: Minute local delivery orders must be placed by to process the
+	// same day.
+	Minute int64 `json:"minute,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "Hour") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Hour") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ServiceStoreConfigCutoffConfigLocalCutoffTime) MarshalJSON() ([]byte, error) {
+	type NoMethod ServiceStoreConfigCutoffConfigLocalCutoffTime
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

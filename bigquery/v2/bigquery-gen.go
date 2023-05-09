@@ -3677,6 +3677,14 @@ func (s *GoogleSheetsOptions) MarshalJSON() ([]byte, error) {
 }
 
 type HivePartitioningOptions struct {
+	// Fields: [Output-only] For permanent external tables, this field is
+	// populated with the hive partition keys in the order they were
+	// inferred. The types of the partition keys can be deduced by checking
+	// the table schema (which will include the partition keys). Not every
+	// API will populate this field in the output. For example, Tables.Get
+	// will populate it, but Tables.List will not contain this field.
+	Fields []string `json:"fields,omitempty"`
+
 	// Mode: [Optional] When set, what mode of hive partitioning to use when
 	// reading data. The following modes are supported. (1) AUTO:
 	// automatically infer partition key name(s) and type(s). (2) STRINGS:
@@ -3708,7 +3716,7 @@ type HivePartitioningOptions struct {
 	// slash does not matter).
 	SourceUriPrefix string `json:"sourceUriPrefix,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Mode") to
+	// ForceSendFields is a list of field names (e.g. "Fields") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -3716,7 +3724,7 @@ type HivePartitioningOptions struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Mode") to include in API
+	// NullFields is a list of field names (e.g. "Fields") to include in API
 	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -5860,6 +5868,7 @@ type Model struct {
 	//   "DNN_CLASSIFIER" - DNN classifier model.
 	//   "TENSORFLOW" - An imported TensorFlow model.
 	//   "DNN_REGRESSOR" - DNN regressor model.
+	//   "XGBOOST" - An imported XGBoost model.
 	//   "BOOSTED_TREE_REGRESSOR" - Boosted tree regressor model.
 	//   "BOOSTED_TREE_CLASSIFIER" - Boosted tree classifier model.
 	//   "ARIMA" - ARIMA model.
@@ -5870,8 +5879,11 @@ type Model struct {
 	//   "DNN_LINEAR_COMBINED_REGRESSOR" - Wide-and-deep regressor model.
 	//   "AUTOENCODER" - Autoencoder model.
 	//   "ARIMA_PLUS" - New name for the ARIMA model.
+	//   "ARIMA_PLUS_XREG" - ARIMA with external regressors.
 	//   "RANDOM_FOREST_REGRESSOR" - Random Forest regressor model.
 	//   "RANDOM_FOREST_CLASSIFIER" - Random Forest classifier model.
+	//   "TENSORFLOW_LITE" - An imported TensorFlow Lite model.
+	//   "ONNX" - An imported ONNX model.
 	ModelType string `json:"modelType,omitempty"`
 
 	// OptimalTrialIds: Output only. For single-objective hyperparameter
@@ -5883,6 +5895,9 @@ type Model struct {
 	// overview) models, it contains all Pareto optimal trials sorted by
 	// trial_id.
 	OptimalTrialIds googleapi.Int64s `json:"optimalTrialIds,omitempty"`
+
+	// RemoteModelInfo: Output only. Remote model info
+	RemoteModelInfo *RemoteModelInfo `json:"remoteModelInfo,omitempty"`
 
 	// TrainingRuns: Information for all training runs in increasing order
 	// of start_time.
@@ -7034,6 +7049,63 @@ type RemoteFunctionOptions struct {
 
 func (s *RemoteFunctionOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod RemoteFunctionOptions
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RemoteModelInfo: Remote Model Info
+type RemoteModelInfo struct {
+	// Connection: Output only. Fully qualified name of the user-provided
+	// connection object of the remote model. Format:
+	// ``"projects/{project_id}/locations/{location_id}/connections/{connect
+	// ion_id}"``
+	Connection string `json:"connection,omitempty"`
+
+	// Endpoint: Output only. The endpoint for remote model.
+	Endpoint string `json:"endpoint,omitempty"`
+
+	// MaxBatchingRows: Output only. Max number of rows in each batch sent
+	// to the remote service. If unset, the number of rows in each batch is
+	// set dynamically.
+	MaxBatchingRows int64 `json:"maxBatchingRows,omitempty,string"`
+
+	// RemoteServiceType: Output only. The remote service type for remote
+	// model.
+	//
+	// Possible values:
+	//   "REMOTE_SERVICE_TYPE_UNSPECIFIED" - Unspecified remote service
+	// type.
+	//   "CLOUD_AI_TRANSLATE_V3" - V3 Cloud AI Translation API. See more
+	// details at [Cloud Translation API]
+	// (https://cloud.google.com/translate/docs/reference/rest).
+	//   "CLOUD_AI_VISION_V1" - V1 Cloud AI Vision API See more details at
+	// [Cloud Vision API]
+	// (https://cloud.google.com/vision/docs/reference/rest).
+	//   "CLOUD_AI_NATURAL_LANGUAGE_V1" - V1 Cloud AI Natural Language API.
+	// See more details at [REST Resource:
+	// documents](https://cloud.google.com/natural-language/docs/reference/re
+	// st/v1/documents).
+	RemoteServiceType string `json:"remoteServiceType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Connection") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Connection") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RemoteModelInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod RemoteModelInfo
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -9170,6 +9242,10 @@ type TrainingOptions struct {
 	// InputLabelColumns: Name of input label columns in training data.
 	InputLabelColumns []string `json:"inputLabelColumns,omitempty"`
 
+	// InstanceWeightColumn: Name of the instance weight column for training
+	// data. This column isn't be used as a feature.
+	InstanceWeightColumn string `json:"instanceWeightColumn,omitempty"`
+
 	// IntegratedGradientsNumSteps: Number of integral steps for the
 	// integrated gradients explain method.
 	IntegratedGradientsNumSteps int64 `json:"integratedGradientsNumSteps,omitempty,string"`
@@ -9305,6 +9381,10 @@ type TrainingOptions struct {
 	// prevent overfitting for boosted tree models.
 	Subsample float64 `json:"subsample,omitempty"`
 
+	// TfVersion: Based on the selected TF version, the corresponding docker
+	// image is used to train external models.
+	TfVersion string `json:"tfVersion,omitempty"`
+
 	// TimeSeriesDataColumn: Column to be designated as time series data for
 	// ARIMA model.
 	TimeSeriesDataColumn string `json:"timeSeriesDataColumn,omitempty"`
@@ -9349,6 +9429,10 @@ type TrainingOptions struct {
 
 	// WarmStart: Whether to train a model from the last checkpoint.
 	WarmStart bool `json:"warmStart,omitempty"`
+
+	// XgboostVersion: User-selected XGBoost versions for training of
+	// XGBoost models.
+	XgboostVersion string `json:"xgboostVersion,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AdjustStepChanges")
 	// to unconditionally include in API requests. By default, fields with

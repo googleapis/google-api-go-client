@@ -751,11 +751,43 @@
               ]
             }
           }
+        },
+        "resources": {
+          "methods": {
+            "generatePackagesSummary": {
+              "description": "Gets a summary of the packages within a given resource.",
+              "flatPath": "v1beta1/projects/{projectsId}/resources/{resourcesId}:generatePackagesSummary",
+              "httpMethod": "POST",
+              "id": "containeranalysis.projects.resources.generatePackagesSummary",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "Required. The name of the resource to get a packages summary for in the form of `projects/[PROJECT_ID]/resources/[RESOURCE_URL]`.",
+                  "location": "path",
+                  "pattern": "^projects/[^/]+/resources/.*$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1beta1/{+name}:generatePackagesSummary",
+              "request": {
+                "$ref": "GeneratePackagesSummaryRequest"
+              },
+              "response": {
+                "$ref": "PackagesSummaryResponse"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            }
+          }
         }
       }
     }
   },
-  "revision": "20230414",
+  "revision": "20230505",
   "rootUrl": "https://containeranalysis.googleapis.com/",
   "schemas": {
     "AliasContext": {
@@ -3511,6 +3543,12 @@
       },
       "type": "object"
     },
+    "GeneratePackagesSummaryRequest": {
+      "description": "GeneratePackagesSummaryRequest is the request body for the GeneratePackagesSummary API method. It just takes a single name argument, referring to the resource.",
+      "id": "GeneratePackagesSummaryRequest",
+      "properties": {},
+      "type": "object"
+    },
     "GenericSignedAttestation": {
       "description": "An attestation wrapper that uses the Grafeas `Signature` message. This attestation must define the `serialized_payload` that the `signatures` verify and any metadata necessary to interpret that plaintext. The signatures should always be over the `serialized_payload` bytestring.",
       "id": "GenericSignedAttestation",
@@ -4068,6 +4106,22 @@
         },
         "expression": {
           "description": "Often a single license can be used to represent the licensing terms. Sometimes it is necessary to include a choice of one or more licenses or some combination of license identifiers. Examples: \"LGPL-2.1-only OR MIT\", \"LGPL-2.1-only AND MIT\", \"GPL-2.0-or-later WITH Bison-exception-2.2\".",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "LicensesSummary": {
+      "description": "Per license count",
+      "id": "LicensesSummary",
+      "properties": {
+        "count": {
+          "description": "The number of fixable vulnerabilities associated with this resource.",
+          "format": "int64",
+          "type": "string"
+        },
+        "license": {
+          "description": "The license of the package. Note that the format of this value is not guaranteed. It may be nil, an empty string, a boolean value (A | B), a differently formed boolean value (A OR B), etc...",
           "type": "string"
         }
       },
@@ -4690,6 +4744,24 @@
         },
         "severityName": {
           "description": "Deprecated, use Details.effective_severity instead The severity (e.g., distro assigned severity) for this vulnerability.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "PackagesSummaryResponse": {
+      "description": "A summary of the packages found within the given resource.",
+      "id": "PackagesSummaryResponse",
+      "properties": {
+        "licensesSummary": {
+          "description": "A listing by license name of each of the licenses and their counts.",
+          "items": {
+            "$ref": "LicensesSummary"
+          },
+          "type": "array"
+        },
+        "resourceUrl": {
+          "description": "The unique URL of the image or the container for which this summary applies.",
           "type": "string"
         }
       },

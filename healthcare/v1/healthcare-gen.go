@@ -1430,6 +1430,14 @@ type DeidentifyConfig struct {
 	// the source_dataset.
 	Text *TextConfig `json:"text,omitempty"`
 
+	// UseRegionalDataProcessing: Ensures in-flight data remains in the
+	// region of origin during de-identification. Using this option results
+	// in a significant reduction of throughput, and is not compatible with
+	// `LOCATION` or `ORGANIZATION_NAME` infoTypes. `LOCATION` must be
+	// excluded within `TextConfig`, and must also be excluded within
+	// `ImageConfig` if image redaction is required.
+	UseRegionalDataProcessing bool `json:"useRegionalDataProcessing,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Dicom") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -4431,7 +4439,7 @@ func (s *ListUserDataMappingsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Location: A resource that represents Google Cloud Platform location.
+// Location: A resource that represents a Google Cloud location.
 type Location struct {
 	// DisplayName: The friendly name for this location, typically a nearby
 	// city name. For example, "Tokyo".
@@ -5834,25 +5842,34 @@ func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 }
 
 type TextConfig struct {
+	// AdditionalTransformations: Transformations to apply to the detected
+	// data, overridden by `exclude_info_types`.
+	AdditionalTransformations []*InfoTypeTransformation `json:"additionalTransformations,omitempty"`
+
+	// ExcludeInfoTypes: InfoTypes to skip transforming, overriding
+	// `additional_transformations`.
+	ExcludeInfoTypes []string `json:"excludeInfoTypes,omitempty"`
+
 	// Transformations: The transformations to apply to the detected data.
 	// Deprecated. Use `additional_transformations` instead.
 	Transformations []*InfoTypeTransformation `json:"transformations,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Transformations") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "AdditionalTransformations") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Transformations") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g.
+	// "AdditionalTransformations") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 

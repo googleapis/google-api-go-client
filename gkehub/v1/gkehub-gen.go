@@ -257,8 +257,8 @@ func (s *AppDevExperienceFeatureState) MarshalJSON() ([]byte, error) {
 // ApplianceCluster: ApplianceCluster contains information specific to
 // GDC Edge Appliance Clusters.
 type ApplianceCluster struct {
-	// ResourceLink: Immutable. Self-link of the GCP resource for the
-	// Appliance Cluster. For example:
+	// ResourceLink: Immutable. Self-link of the Google Cloud resource for
+	// the Appliance Cluster. For example:
 	// //transferappliance.googleapis.com/projects/my-project/locations/us-we
 	// st1-a/appliances/my-appliance
 	ResourceLink string `json:"resourceLink,omitempty"`
@@ -1761,8 +1761,8 @@ func (s *ConnectAgentResource) MarshalJSON() ([]byte, error) {
 // EdgeCluster: EdgeCluster contains information specific to Google Edge
 // Clusters.
 type EdgeCluster struct {
-	// ResourceLink: Immutable. Self-link of the GCP resource for the Edge
-	// Cluster. For example:
+	// ResourceLink: Immutable. Self-link of the Google Cloud resource for
+	// the Edge Cluster. For example:
 	// //edgecontainer.googleapis.com/projects/my-project/locations/us-west1-
 	// a/clusters/my-cluster
 	ResourceLink string `json:"resourceLink,omitempty"`
@@ -1874,7 +1874,7 @@ type Feature struct {
 	// to all memberships of the fleet.
 	FleetDefaultMemberConfig *CommonFleetDefaultMemberConfigSpec `json:"fleetDefaultMemberConfig,omitempty"`
 
-	// Labels: GCP labels for this Feature.
+	// Labels: Labels for this Feature.
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// MembershipSpecs: Optional. Membership-specific configuration for this
@@ -2121,8 +2121,8 @@ type GkeCluster struct {
 	// Plane.
 	ClusterMissing bool `json:"clusterMissing,omitempty"`
 
-	// ResourceLink: Immutable. Self-link of the GCP resource for the GKE
-	// cluster. For example:
+	// ResourceLink: Immutable. Self-link of the Google Cloud resource for
+	// the GKE cluster. For example:
 	// //container.googleapis.com/projects/my-project/locations/us-west1-a/cl
 	// usters/my-cluster Zonal clusters are also supported.
 	ResourceLink string `json:"resourceLink,omitempty"`
@@ -2804,7 +2804,7 @@ func (s *ListScopesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Location: A resource that represents Google Cloud Platform location.
+// Location: A resource that represents a Google Cloud location.
 type Location struct {
 	// DisplayName: The friendly name for this location, typically a nearby
 	// city name. For example, "Tokyo".
@@ -2882,7 +2882,7 @@ type Membership struct {
 	// to the UID of the `kube-system` namespace object.
 	ExternalId string `json:"externalId,omitempty"`
 
-	// Labels: Optional. GCP labels for this membership.
+	// Labels: Optional. Labels for this membership.
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// LastConnectionTime: Output only. For clusters using Connect, the
@@ -3297,8 +3297,8 @@ type MultiCloudCluster struct {
 	// Multi-Cloud cluster no longer exists.
 	ClusterMissing bool `json:"clusterMissing,omitempty"`
 
-	// ResourceLink: Immutable. Self-link of the GCP resource for the GKE
-	// Multi-Cloud cluster. For example:
+	// ResourceLink: Immutable. Self-link of the Google Cloud resource for
+	// the GKE Multi-Cloud cluster. For example:
 	// //gkemulticloud.googleapis.com/projects/my-project/locations/us-west1-
 	// a/awsClusters/my-cluster
 	// //gkemulticloud.googleapis.com/projects/my-project/locations/us-west1-
@@ -3384,8 +3384,8 @@ type OnPremCluster struct {
 	//   "USER" - The ClusterType is user cluster.
 	ClusterType string `json:"clusterType,omitempty"`
 
-	// ResourceLink: Immutable. Self-link of the GCP resource for the GKE
-	// On-Prem cluster. For example:
+	// ResourceLink: Immutable. Self-link of the Google Cloud resource for
+	// the GKE On-Prem cluster. For example:
 	// //gkeonprem.googleapis.com/projects/my-project/locations/us-west1-a/vm
 	// wareClusters/my-cluster
 	// //gkeonprem.googleapis.com/projects/my-project/locations/us-west1-a/ba

@@ -2977,6 +2977,11 @@ type Job struct {
 	// interested.
 	RequestedState string `json:"requestedState,omitempty"`
 
+	// RuntimeUpdatableParams: This field may ONLY be modified at runtime
+	// using the projects.jobs.update method to adjust job behavior. This
+	// field has no effect when specified at job creation.
+	RuntimeUpdatableParams *RuntimeUpdatableParams `json:"runtimeUpdatableParams,omitempty"`
+
 	// SatisfiesPzs: Reserved for future use. This field is set only in
 	// responses from the server; it is ignored if it is set in any
 	// requests.
@@ -4386,6 +4391,10 @@ type ParameterMetadata struct {
 	//   "BIGQUERY_TABLE" - The parameter specifies a BigQuery table.
 	//   "JAVASCRIPT_UDF_FILE" - The parameter specifies a JavaScript UDF in
 	// Cloud Storage.
+	//   "SERVICE_ACCOUNT" - The parameter specifies a Service Account
+	// email.
+	//   "MACHINE_TYPE" - The parameter specifies a Machine Type.
+	//   "KMS_KEY_NAME" - The parameter specifies a KMS Key name.
 	ParamType string `json:"paramType,omitempty"`
 
 	// ParentName: Optional. Specifies the name of the parent parameter.
@@ -5138,6 +5147,41 @@ type RuntimeMetadata struct {
 
 func (s *RuntimeMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod RuntimeMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RuntimeUpdatableParams: Additional job parameters that can only be
+// updated during runtime using the projects.jobs.update method. These
+// fields have no effect when specified during job creation.
+type RuntimeUpdatableParams struct {
+	// MaxNumWorkers: The maximum number of workers to cap autoscaling at.
+	// This field is currently only supported for Streaming Engine jobs.
+	MaxNumWorkers int64 `json:"maxNumWorkers,omitempty"`
+
+	// MinNumWorkers: The minimum number of workers to scale down to. This
+	// field is currently only supported for Streaming Engine jobs.
+	MinNumWorkers int64 `json:"minNumWorkers,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MaxNumWorkers") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MaxNumWorkers") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RuntimeUpdatableParams) MarshalJSON() ([]byte, error) {
+	type NoMethod RuntimeUpdatableParams
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

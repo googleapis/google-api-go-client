@@ -1,5 +1,17 @@
 # Changes
 
+## [0.122.0](https://github.com/googleapis/google-api-go-client/compare/v0.121.0...v0.122.0) (2023-05-09)
+
+
+### Features
+
+* **all:** Auto-regenerate discovery clients ([#1973](https://github.com/googleapis/google-api-go-client/issues/1973)) ([ab64815](https://github.com/googleapis/google-api-go-client/commit/ab64815cd796f5a7930d9bbf53b8c19ec2efca83))
+
+
+### Bug Fixes
+
+* Add better support of array of floats ([#1971](https://github.com/googleapis/google-api-go-client/issues/1971)) ([8b0974e](https://github.com/googleapis/google-api-go-client/commit/8b0974e59d252ca5a42629e9b77baadd226a4090))
+
 ## [0.121.0](https://github.com/googleapis/google-api-go-client/compare/v0.120.0...v0.121.0) (2023-05-03)
 
 

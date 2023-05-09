@@ -1899,6 +1899,19 @@ type DeidentifyConfig struct {
 	// the source_dataset.
 	Text *TextConfig `json:"text,omitempty"`
 
+	// UseRegionalDataProcessing: Ensures in-flight data remains in the
+	// region of origin during de-identification. Using this option results
+	// in a significant reduction of throughput, and is not compatible with
+	// `LOCATION` or `ORGANIZATION_NAME` infoTypes. If the deprecated
+	// `DicomConfig`
+	// (google.cloud.healthcare.v1beta1.deidentify.DeidentifyConfig.dicom_con
+	// fig) or `FhirConfig`
+	// (google.cloud.healthcare.v1beta1.deidentify.DeidentifyConfig.fhir_conf
+	// ig) are used, then `LOCATION` must be excluded within `TextConfig`,
+	// and must also be excluded within `ImageConfig` if image redaction is
+	// required.
+	UseRegionalDataProcessing bool `json:"useRegionalDataProcessing,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Annotation") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -5857,7 +5870,7 @@ func (s *ListUserDataMappingsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Location: A resource that represents Google Cloud Platform location.
+// Location: A resource that represents a Google Cloud location.
 type Location struct {
 	// DisplayName: The friendly name for this location, typically a nearby
 	// city name. For example, "Tokyo".

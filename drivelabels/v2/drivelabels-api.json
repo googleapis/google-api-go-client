@@ -898,7 +898,7 @@
       }
     }
   },
-  "revision": "20230327",
+  "revision": "20230428",
   "rootUrl": "https://drivelabels.googleapis.com/",
   "schemas": {
     "GoogleAppsDriveLabelsV2BadgeColors": {
@@ -2186,12 +2186,14 @@
           "enum": [
             "LABEL_TYPE_UNSPECIFIED",
             "SHARED",
-            "ADMIN"
+            "ADMIN",
+            "GOOGLE_APP"
           ],
           "enumDescriptions": [
             "Unknown label type.",
             "Shared labels may be shared with users to apply to Drive items.",
-            "Admin-owned label. Only creatable and editable by admins. Supports some additional admin-only features."
+            "Admin-owned label. Only creatable and editable by admins. Supports some additional admin-only features.",
+            "A label owned by an internal Google application rather than a customer. These labels are read-only."
           ],
           "type": "string"
         },

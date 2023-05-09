@@ -1338,6 +1338,10 @@ type GoogleChromePolicyVersionsV1PolicySchemaFieldKnownValueDescription struct {
 	// Description: Output only. Additional description for this value.
 	Description string `json:"description,omitempty"`
 
+	// FieldDependencies: Output only. Field conditions required for this
+	// value to be valid.
+	FieldDependencies []*GoogleChromePolicyVersionsV1PolicySchemaFieldDependencies `json:"fieldDependencies,omitempty"`
+
 	// Value: Output only. The string represenstation of the value that can
 	// be set for the field.
 	Value string `json:"value,omitempty"`

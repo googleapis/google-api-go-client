@@ -552,7 +552,7 @@ func (s *Binding) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// BufferTaskRequest: LINT.IfChange Request message for BufferTask.
+// BufferTaskRequest: Request message for BufferTask.
 type BufferTaskRequest struct {
 	// Body: Optional. Body of the HTTP request. The body can take any
 	// generic value. The value is written to the HttpRequest of the [Task].
@@ -1084,6 +1084,21 @@ type HttpTarget struct {
 	//   "PATCH" - HTTP PATCH
 	//   "OPTIONS" - HTTP OPTIONS
 	HttpMethod string `json:"httpMethod,omitempty"`
+
+	// OauthToken: If specified, an OAuth token
+	// (https://developers.google.com/identity/protocols/OAuth2) will be
+	// generated and attached as the `Authorization` header in the HTTP
+	// request. This type of authorization should generally only be used
+	// when calling Google APIs hosted on *.googleapis.com.
+	OauthToken *OAuthToken `json:"oauthToken,omitempty"`
+
+	// OidcToken: If specified, an OIDC
+	// (https://developers.google.com/identity/protocols/OpenIDConnect)
+	// token will be generated and attached as an `Authorization` header in
+	// the HTTP request. This type of authorization can be used for many
+	// scenarios, including calling Cloud Run, or endpoints where you intend
+	// to validate the token yourself.
+	OidcToken *OidcToken `json:"oidcToken,omitempty"`
 
 	// UriOverride: URI override. When specified, overrides the execution
 	// URI for all the tasks in the queue.

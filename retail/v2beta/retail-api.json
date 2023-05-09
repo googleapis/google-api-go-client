@@ -2059,7 +2059,7 @@
       }
     }
   },
-  "revision": "20230420",
+  "revision": "20230504",
   "rootUrl": "https://retail.googleapis.com/",
   "schemas": {
     "GoogleApiHttpBody": {
@@ -2482,11 +2482,11 @@
       "type": "object"
     },
     "GoogleCloudRetailV2ModelFrequentlyBoughtTogetherFeaturesConfig": {
-      "description": "More configs of the frequently-bought-together model type.",
+      "description": "Additional configs for the frequently-bought-together model type.",
       "id": "GoogleCloudRetailV2ModelFrequentlyBoughtTogetherFeaturesConfig",
       "properties": {
         "contextProductsType": {
-          "description": "Optional. Specifies the context of the model when used in predict requests. Only settable for the `frequently-bought-together` type. Will default to MULTI_CONTEXT if not specified.",
+          "description": "Optional. Specifies the context of the model when it is used in predict requests. Can only be set for the `frequently-bought-together` type. If it isn't specified, it defaults to MULTIPLE_CONTEXT_PRODUCTS.",
           "enum": [
             "CONTEXT_PRODUCTS_TYPE_UNSPECIFIED",
             "SINGLE_CONTEXT_PRODUCT",
@@ -2888,11 +2888,11 @@
       "type": "object"
     },
     "GoogleCloudRetailV2alphaMerchantCenterAccountLink": {
-      "description": "Represents a link between a Merchant Center account and a branch. Once a link is established, products from the linked merchant center account will be streamed to the linked branch.",
+      "description": "Represents a link between a Merchant Center account and a branch. After a link is established, products from the linked Merchant Center account are streamed to the linked branch.",
       "id": "GoogleCloudRetailV2alphaMerchantCenterAccountLink",
       "properties": {
         "branchId": {
-          "description": "Required. The branch id (e.g. 0/1/2) within the catalog that products from merchant_center_account_id are streamed to. When updating this field, an empty value will use the currently configured default branch. However, changing the default branch later on won't change the linked branch here. A single branch id can only have one linked merchant center account id.",
+          "description": "Required. The branch ID (e.g. 0/1/2) within the catalog that products from merchant_center_account_id are streamed to. When updating this field, an empty value will use the currently configured default branch. However, changing the default branch later on won't change the linked branch here. A single branch ID can only have one linked Merchant Center account ID.",
           "type": "string"
         },
         "feedFilters": {
@@ -3105,11 +3105,11 @@
       "type": "object"
     },
     "GoogleCloudRetailV2alphaModelFrequentlyBoughtTogetherFeaturesConfig": {
-      "description": "More configs of the frequently-bought-together model type.",
+      "description": "Additional configs for the frequently-bought-together model type.",
       "id": "GoogleCloudRetailV2alphaModelFrequentlyBoughtTogetherFeaturesConfig",
       "properties": {
         "contextProductsType": {
-          "description": "Optional. Specifies the context of the model when used in predict requests. Only settable for the `frequently-bought-together` type. Will default to MULTI_CONTEXT if not specified.",
+          "description": "Optional. Specifies the context of the model when it is used in predict requests. Can only be set for the `frequently-bought-together` type. If it isn't specified, it defaults to MULTIPLE_CONTEXT_PRODUCTS.",
           "enum": [
             "CONTEXT_PRODUCTS_TYPE_UNSPECIFIED",
             "SINGLE_CONTEXT_PRODUCT",
@@ -3655,7 +3655,7 @@
         },
         "merchantCenterLinkingConfig": {
           "$ref": "GoogleCloudRetailV2betaMerchantCenterLinkingConfig",
-          "description": "The Merchant Center linking configuration. Once a link is added, the data stream from Merchant Center to Cloud Retail will be enabled automatically. The requester must have access to the merchant center account in order to make changes to this field."
+          "description": "The Merchant Center linking configuration. After a link is added, the data stream from Merchant Center to Cloud Retail will be enabled automatically. The requester must have access to the Merchant Center account in order to make changes to this field."
         },
         "name": {
           "description": "Required. Immutable. The fully qualified resource name of the catalog.",
@@ -4633,11 +4633,11 @@
       "type": "object"
     },
     "GoogleCloudRetailV2betaMerchantCenterAccountLink": {
-      "description": "Represents a link between a Merchant Center account and a branch. Once a link is established, products from the linked merchant center account will be streamed to the linked branch.",
+      "description": "Represents a link between a Merchant Center account and a branch. After a link is established, products from the linked Merchant Center account are streamed to the linked branch.",
       "id": "GoogleCloudRetailV2betaMerchantCenterAccountLink",
       "properties": {
         "branchId": {
-          "description": "Required. The branch id (e.g. 0/1/2) within the catalog that products from merchant_center_account_id are streamed to. When updating this field, an empty value will use the currently configured default branch. However, changing the default branch later on won't change the linked branch here. A single branch id can only have one linked merchant center account id.",
+          "description": "Required. The branch ID (e.g. 0/1/2) within the catalog that products from merchant_center_account_id are streamed to. When updating this field, an empty value will use the currently configured default branch. However, changing the default branch later on won't change the linked branch here. A single branch ID can only have one linked Merchant Center account ID.",
           "type": "string"
         },
         "feedFilters": {
@@ -4728,11 +4728,11 @@
       "type": "object"
     },
     "GoogleCloudRetailV2betaMerchantCenterLink": {
-      "description": "Represents a link between a Merchant Center account and a branch. Once a link is established, products from the linked merchant center account will be streamed to the linked branch.",
+      "description": "Represents a link between a Merchant Center account and a branch. After a link is established, products from the linked Merchant Center account are streamed to the linked branch.",
       "id": "GoogleCloudRetailV2betaMerchantCenterLink",
       "properties": {
         "branchId": {
-          "description": "The branch ID (e.g. 0/1/2) within this catalog that products from merchant_center_account_id are streamed to. When updating this field, an empty value will use the currently configured default branch. However, changing the default branch later on won't change the linked branch here. A single branch ID can only have one linked merchant center account ID.",
+          "description": "The branch ID (e.g. 0/1/2) within this catalog that products from merchant_center_account_id are streamed to. When updating this field, an empty value will use the currently configured default branch. However, changing the default branch later on won't change the linked branch here. A single branch ID can only have one linked Merchant Center account ID.",
           "type": "string"
         },
         "destinations": {
@@ -4754,7 +4754,7 @@
           "type": "string"
         },
         "merchantCenterAccountId": {
-          "description": "Required. The linked [Merchant center account ID](https://developers.google.com/shopping-content/guides/accountstatuses). The account must be a standalone account or a sub-account of a MCA.",
+          "description": "Required. The linked [Merchant Center account ID](https://developers.google.com/shopping-content/guides/accountstatuses). The account must be a standalone account or a sub-account of a MCA.",
           "format": "int64",
           "type": "string"
         },
@@ -4914,11 +4914,11 @@
       "type": "object"
     },
     "GoogleCloudRetailV2betaModelFrequentlyBoughtTogetherFeaturesConfig": {
-      "description": "More configs of the frequently-bought-together model type.",
+      "description": "Additional configs for the frequently-bought-together model type.",
       "id": "GoogleCloudRetailV2betaModelFrequentlyBoughtTogetherFeaturesConfig",
       "properties": {
         "contextProductsType": {
-          "description": "Optional. Specifies the context of the model when used in predict requests. Only settable for the `frequently-bought-together` type. Will default to MULTI_CONTEXT if not specified.",
+          "description": "Optional. Specifies the context of the model when it is used in predict requests. Can only be set for the `frequently-bought-together` type. If it isn't specified, it defaults to MULTIPLE_CONTEXT_PRODUCTS.",
           "enum": [
             "CONTEXT_PRODUCTS_TYPE_UNSPECIFIED",
             "SINGLE_CONTEXT_PRODUCT",

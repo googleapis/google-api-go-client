@@ -1279,7 +1279,7 @@ func (s *ListTriggersResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Location: A resource that represents Google Cloud Platform location.
+// Location: A resource that represents a Google Cloud location.
 type Location struct {
 	// DisplayName: The friendly name for this location, typically a nearby
 	// city name. For example, "Tokyo".
@@ -3716,8 +3716,8 @@ func (c *ProjectsLocationsChannelsCreateCall) ChannelId(channelId string) *Proje
 	return c
 }
 
-// ValidateOnly sets the optional parameter "validateOnly": Required. If
-// set, validate the request and preview the review, but do not post it.
+// ValidateOnly sets the optional parameter "validateOnly": If set,
+// validate the request and preview the review, but do not post it.
 func (c *ProjectsLocationsChannelsCreateCall) ValidateOnly(validateOnly bool) *ProjectsLocationsChannelsCreateCall {
 	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
@@ -3835,7 +3835,7 @@ func (c *ProjectsLocationsChannelsCreateCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "string"
 	//     },
 	//     "validateOnly": {
-	//       "description": "Required. If set, validate the request and preview the review, but do not post it.",
+	//       "description": "Optional. If set, validate the request and preview the review, but do not post it.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -3873,8 +3873,8 @@ func (r *ProjectsLocationsChannelsService) Delete(name string) *ProjectsLocation
 	return c
 }
 
-// ValidateOnly sets the optional parameter "validateOnly": Required. If
-// set, validate the request and preview the review, but do not post it.
+// ValidateOnly sets the optional parameter "validateOnly": If set,
+// validate the request and preview the review, but do not post it.
 func (c *ProjectsLocationsChannelsDeleteCall) ValidateOnly(validateOnly bool) *ProjectsLocationsChannelsDeleteCall {
 	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
@@ -3982,7 +3982,7 @@ func (c *ProjectsLocationsChannelsDeleteCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "string"
 	//     },
 	//     "validateOnly": {
-	//       "description": "Required. If set, validate the request and preview the review, but do not post it.",
+	//       "description": "Optional. If set, validate the request and preview the review, but do not post it.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -4562,8 +4562,8 @@ func (c *ProjectsLocationsChannelsPatchCall) UpdateMask(updateMask string) *Proj
 	return c
 }
 
-// ValidateOnly sets the optional parameter "validateOnly": Required. If
-// set, validate the request and preview the review, but do not post it.
+// ValidateOnly sets the optional parameter "validateOnly": If set,
+// validate the request and preview the review, but do not post it.
 func (c *ProjectsLocationsChannelsPatchCall) ValidateOnly(validateOnly bool) *ProjectsLocationsChannelsPatchCall {
 	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
@@ -4682,7 +4682,7 @@ func (c *ProjectsLocationsChannelsPatchCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "validateOnly": {
-	//       "description": "Required. If set, validate the request and preview the review, but do not post it.",
+	//       "description": "Optional. If set, validate the request and preview the review, but do not post it.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -6035,8 +6035,8 @@ func (c *ProjectsLocationsTriggersCreateCall) TriggerId(triggerId string) *Proje
 	return c
 }
 
-// ValidateOnly sets the optional parameter "validateOnly": Required. If
-// set, validate the request and preview the review, but do not post it.
+// ValidateOnly sets the optional parameter "validateOnly": If set,
+// validate the request and preview the review, but do not post it.
 func (c *ProjectsLocationsTriggersCreateCall) ValidateOnly(validateOnly bool) *ProjectsLocationsTriggersCreateCall {
 	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
@@ -6154,7 +6154,7 @@ func (c *ProjectsLocationsTriggersCreateCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "string"
 	//     },
 	//     "validateOnly": {
-	//       "description": "Required. If set, validate the request and preview the review, but do not post it.",
+	//       "description": "Optional. If set, validate the request and preview the review, but do not post it.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -6208,8 +6208,8 @@ func (c *ProjectsLocationsTriggersDeleteCall) Etag(etag string) *ProjectsLocatio
 	return c
 }
 
-// ValidateOnly sets the optional parameter "validateOnly": Required. If
-// set, validate the request and preview the review, but do not post it.
+// ValidateOnly sets the optional parameter "validateOnly": If set,
+// validate the request and preview the review, but do not post it.
 func (c *ProjectsLocationsTriggersDeleteCall) ValidateOnly(validateOnly bool) *ProjectsLocationsTriggersDeleteCall {
 	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
@@ -6327,7 +6327,7 @@ func (c *ProjectsLocationsTriggersDeleteCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "string"
 	//     },
 	//     "validateOnly": {
-	//       "description": "Required. If set, validate the request and preview the review, but do not post it.",
+	//       "description": "Optional. If set, validate the request and preview the review, but do not post it.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -6930,8 +6930,8 @@ func (c *ProjectsLocationsTriggersPatchCall) UpdateMask(updateMask string) *Proj
 	return c
 }
 
-// ValidateOnly sets the optional parameter "validateOnly": Required. If
-// set, validate the request and preview the review, but do not post it.
+// ValidateOnly sets the optional parameter "validateOnly": If set,
+// validate the request and preview the review, but do not post it.
 func (c *ProjectsLocationsTriggersPatchCall) ValidateOnly(validateOnly bool) *ProjectsLocationsTriggersPatchCall {
 	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
@@ -7055,7 +7055,7 @@ func (c *ProjectsLocationsTriggersPatchCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "validateOnly": {
-	//       "description": "Required. If set, validate the request and preview the review, but do not post it.",
+	//       "description": "Optional. If set, validate the request and preview the review, but do not post it.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }

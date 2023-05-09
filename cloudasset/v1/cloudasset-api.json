@@ -1008,7 +1008,7 @@
               "type": "string"
             },
             "pageSize": {
-              "description": "Optional. The page size for search result pagination. Page size is capped at 500 even if a larger value is given. If set to zero, server will pick an appropriate default. Returned results may be fewer than requested. When this happens, there could be more results as long as `next_page_token` is returned.",
+              "description": "Optional. The page size for search result pagination. Page size is capped at 500 even if a larger value is given. If set to zero or a negative value, server will pick an appropriate default. Returned results may be fewer than requested. When this happens, there could be more results as long as `next_page_token` is returned.",
               "format": "int32",
               "location": "query",
               "type": "integer"
@@ -1060,7 +1060,7 @@
               "type": "string"
             },
             "pageSize": {
-              "description": "Optional. The page size for search result pagination. Page size is capped at 500 even if a larger value is given. If set to zero, server will pick an appropriate default. Returned results may be fewer than requested. When this happens, there could be more results as long as `next_page_token` is returned.",
+              "description": "Optional. The page size for search result pagination. Page size is capped at 500 even if a larger value is given. If set to zero or a negative value, server will pick an appropriate default. Returned results may be fewer than requested. When this happens, there could be more results as long as `next_page_token` is returned.",
               "format": "int32",
               "location": "query",
               "type": "integer"
@@ -1100,7 +1100,7 @@
       }
     }
   },
-  "revision": "20230414",
+  "revision": "20230429",
   "rootUrl": "https://cloudasset.googleapis.com/",
   "schemas": {
     "AccessSelector": {

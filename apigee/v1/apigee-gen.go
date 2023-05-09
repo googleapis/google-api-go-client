@@ -1607,6 +1607,9 @@ func (s *GoogleCloudApigeeV1ApiCategory) MarshalJSON() ([]byte, error) {
 
 // GoogleCloudApigeeV1ApiCategoryData: the Api category resource.
 type GoogleCloudApigeeV1ApiCategoryData struct {
+	// GcpResource: GCP name of api category resource.
+	GcpResource string `json:"gcpResource,omitempty"`
+
 	// Id: ID of the category (a UUID).
 	Id string `json:"id,omitempty"`
 
@@ -1620,7 +1623,7 @@ type GoogleCloudApigeeV1ApiCategoryData struct {
 	// epoch.
 	UpdateTime int64 `json:"updateTime,omitempty,string"`
 
-	// ForceSendFields is a list of field names (e.g. "Id") to
+	// ForceSendFields is a list of field names (e.g. "GcpResource") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1628,10 +1631,10 @@ type GoogleCloudApigeeV1ApiCategoryData struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Id") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "GcpResource") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -2039,47 +2042,6 @@ type GoogleCloudApigeeV1ApiProxyRevision struct {
 
 func (s *GoogleCloudApigeeV1ApiProxyRevision) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ApiProxyRevision
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type GoogleCloudApigeeV1ApiResponseWrapper struct {
-	// ErrorCode: ID that can be used to find errors in the log files.
-	ErrorCode string `json:"errorCode,omitempty"`
-
-	// Message: Description of the operation.
-	Message string `json:"message,omitempty"`
-
-	// RequestId: ID that can be used to find request details in the log
-	// files.
-	RequestId string `json:"requestId,omitempty"`
-
-	// Status: Status of the operation.
-	Status string `json:"status,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "ErrorCode") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ErrorCode") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudApigeeV1ApiResponseWrapper) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudApigeeV1ApiResponseWrapper
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3598,6 +3560,52 @@ type GoogleCloudApigeeV1DeleteCustomReportResponse struct {
 
 func (s *GoogleCloudApigeeV1DeleteCustomReportResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1DeleteCustomReportResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1DeleteResponse: Response for certain delete
+// operations.
+type GoogleCloudApigeeV1DeleteResponse struct {
+	// ErrorCode: ID that can be used to find errors in the log files.
+	ErrorCode string `json:"errorCode,omitempty"`
+
+	// GcpResource: GCP name of deleted resource.
+	GcpResource string `json:"gcpResource,omitempty"`
+
+	// Message: Description of the operation.
+	Message string `json:"message,omitempty"`
+
+	// RequestId: ID that can be used to find request details in the log
+	// files.
+	RequestId string `json:"requestId,omitempty"`
+
+	// Status: Status of the operation.
+	Status string `json:"status,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "ErrorCode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ErrorCode") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1DeleteResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1DeleteResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -54880,14 +54888,14 @@ func (c *OrganizationsSitesApicategoriesDeleteCall) doRequest(alt string) (*http
 }
 
 // Do executes the "apigee.organizations.sites.apicategories.delete" call.
-// Exactly one of *GoogleCloudApigeeV1ApiResponseWrapper or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
-// *GoogleCloudApigeeV1ApiResponseWrapper.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *OrganizationsSitesApicategoriesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1ApiResponseWrapper, error) {
+// Exactly one of *GoogleCloudApigeeV1DeleteResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudApigeeV1DeleteResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsSitesApicategoriesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1DeleteResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -54906,7 +54914,7 @@ func (c *OrganizationsSitesApicategoriesDeleteCall) Do(opts ...googleapi.CallOpt
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, gensupport.WrapError(err)
 	}
-	ret := &GoogleCloudApigeeV1ApiResponseWrapper{
+	ret := &GoogleCloudApigeeV1DeleteResponse{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -54936,7 +54944,7 @@ func (c *OrganizationsSitesApicategoriesDeleteCall) Do(opts ...googleapi.CallOpt
 	//   },
 	//   "path": "v1/{+name}",
 	//   "response": {
-	//     "$ref": "GoogleCloudApigeeV1ApiResponseWrapper"
+	//     "$ref": "GoogleCloudApigeeV1DeleteResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

@@ -1038,13 +1038,13 @@ func (s *GoogleCloudRetailV2Model) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRetailV2ModelFrequentlyBoughtTogetherFeaturesConfig: More
-// configs of the frequently-bought-together model type.
+// GoogleCloudRetailV2ModelFrequentlyBoughtTogetherFeaturesConfig:
+// Additional configs for the frequently-bought-together model type.
 type GoogleCloudRetailV2ModelFrequentlyBoughtTogetherFeaturesConfig struct {
 	// ContextProductsType: Optional. Specifies the context of the model
-	// when used in predict requests. Only settable for the
-	// `frequently-bought-together` type. Will default to MULTI_CONTEXT if
-	// not specified.
+	// when it is used in predict requests. Can only be set for the
+	// `frequently-bought-together` type. If it isn't specified, it defaults
+	// to MULTIPLE_CONTEXT_PRODUCTS.
 	//
 	// Possible values:
 	//   "CONTEXT_PRODUCTS_TYPE_UNSPECIFIED" - Unspecified default value,
@@ -1833,16 +1833,16 @@ func (s *GoogleCloudRetailV2alphaImportUserEventsResponse) MarshalJSON() ([]byte
 }
 
 // GoogleCloudRetailV2alphaMerchantCenterAccountLink: Represents a link
-// between a Merchant Center account and a branch. Once a link is
-// established, products from the linked merchant center account will be
+// between a Merchant Center account and a branch. After a link is
+// established, products from the linked Merchant Center account are
 // streamed to the linked branch.
 type GoogleCloudRetailV2alphaMerchantCenterAccountLink struct {
-	// BranchId: Required. The branch id (e.g. 0/1/2) within the catalog
+	// BranchId: Required. The branch ID (e.g. 0/1/2) within the catalog
 	// that products from merchant_center_account_id are streamed to. When
 	// updating this field, an empty value will use the currently configured
 	// default branch. However, changing the default branch later on won't
-	// change the linked branch here. A single branch id can only have one
-	// linked merchant center account id.
+	// change the linked branch here. A single branch ID can only have one
+	// linked Merchant Center account ID.
 	BranchId string `json:"branchId,omitempty"`
 
 	// FeedFilters: Criteria for the Merchant Center feeds to be ingested
@@ -2121,12 +2121,12 @@ func (s *GoogleCloudRetailV2alphaModel) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudRetailV2alphaModelFrequentlyBoughtTogetherFeaturesConfig:
-// More configs of the frequently-bought-together model type.
+// Additional configs for the frequently-bought-together model type.
 type GoogleCloudRetailV2alphaModelFrequentlyBoughtTogetherFeaturesConfig struct {
 	// ContextProductsType: Optional. Specifies the context of the model
-	// when used in predict requests. Only settable for the
-	// `frequently-bought-together` type. Will default to MULTI_CONTEXT if
-	// not specified.
+	// when it is used in predict requests. Can only be set for the
+	// `frequently-bought-together` type. If it isn't specified, it defaults
+	// to MULTIPLE_CONTEXT_PRODUCTS.
 	//
 	// Possible values:
 	//   "CONTEXT_PRODUCTS_TYPE_UNSPECIFIED" - Unspecified default value,
@@ -3233,9 +3233,9 @@ type GoogleCloudRetailV2betaCatalog struct {
 	DisplayName string `json:"displayName,omitempty"`
 
 	// MerchantCenterLinkingConfig: The Merchant Center linking
-	// configuration. Once a link is added, the data stream from Merchant
+	// configuration. After a link is added, the data stream from Merchant
 	// Center to Cloud Retail will be enabled automatically. The requester
-	// must have access to the merchant center account in order to make
+	// must have access to the Merchant Center account in order to make
 	// changes to this field.
 	MerchantCenterLinkingConfig *GoogleCloudRetailV2betaMerchantCenterLinkingConfig `json:"merchantCenterLinkingConfig,omitempty"`
 
@@ -5152,16 +5152,16 @@ func (s *GoogleCloudRetailV2betaLocalInventory) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudRetailV2betaMerchantCenterAccountLink: Represents a link
-// between a Merchant Center account and a branch. Once a link is
-// established, products from the linked merchant center account will be
+// between a Merchant Center account and a branch. After a link is
+// established, products from the linked Merchant Center account are
 // streamed to the linked branch.
 type GoogleCloudRetailV2betaMerchantCenterAccountLink struct {
-	// BranchId: Required. The branch id (e.g. 0/1/2) within the catalog
+	// BranchId: Required. The branch ID (e.g. 0/1/2) within the catalog
 	// that products from merchant_center_account_id are streamed to. When
 	// updating this field, an empty value will use the currently configured
 	// default branch. However, changing the default branch later on won't
-	// change the linked branch here. A single branch id can only have one
-	// linked merchant center account id.
+	// change the linked branch here. A single branch ID can only have one
+	// linked Merchant Center account ID.
 	BranchId string `json:"branchId,omitempty"`
 
 	// FeedFilters: Criteria for the Merchant Center feeds to be ingested
@@ -5304,16 +5304,16 @@ func (s *GoogleCloudRetailV2betaMerchantCenterFeedFilter) MarshalJSON() ([]byte,
 }
 
 // GoogleCloudRetailV2betaMerchantCenterLink: Represents a link between
-// a Merchant Center account and a branch. Once a link is established,
-// products from the linked merchant center account will be streamed to
-// the linked branch.
+// a Merchant Center account and a branch. After a link is established,
+// products from the linked Merchant Center account are streamed to the
+// linked branch.
 type GoogleCloudRetailV2betaMerchantCenterLink struct {
 	// BranchId: The branch ID (e.g. 0/1/2) within this catalog that
 	// products from merchant_center_account_id are streamed to. When
 	// updating this field, an empty value will use the currently configured
 	// default branch. However, changing the default branch later on won't
 	// change the linked branch here. A single branch ID can only have one
-	// linked merchant center account ID.
+	// linked Merchant Center account ID.
 	BranchId string `json:"branchId,omitempty"`
 
 	// Destinations: String representing the destination to import for, all
@@ -5338,7 +5338,7 @@ type GoogleCloudRetailV2betaMerchantCenterLink struct {
 	// value: `en`.
 	LanguageCode string `json:"languageCode,omitempty"`
 
-	// MerchantCenterAccountId: Required. The linked Merchant center account
+	// MerchantCenterAccountId: Required. The linked Merchant Center account
 	// ID
 	// (https://developers.google.com/shopping-content/guides/accountstatuses).
 	// The account must be a standalone account or a sub-account of a MCA.
@@ -5575,12 +5575,12 @@ func (s *GoogleCloudRetailV2betaModel) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudRetailV2betaModelFrequentlyBoughtTogetherFeaturesConfig:
-// More configs of the frequently-bought-together model type.
+// Additional configs for the frequently-bought-together model type.
 type GoogleCloudRetailV2betaModelFrequentlyBoughtTogetherFeaturesConfig struct {
 	// ContextProductsType: Optional. Specifies the context of the model
-	// when used in predict requests. Only settable for the
-	// `frequently-bought-together` type. Will default to MULTI_CONTEXT if
-	// not specified.
+	// when it is used in predict requests. Can only be set for the
+	// `frequently-bought-together` type. If it isn't specified, it defaults
+	// to MULTIPLE_CONTEXT_PRODUCTS.
 	//
 	// Possible values:
 	//   "CONTEXT_PRODUCTS_TYPE_UNSPECIFIED" - Unspecified default value,

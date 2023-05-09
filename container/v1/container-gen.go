@@ -1439,6 +1439,9 @@ type ClusterUpdate struct {
 	// cluster's master.
 	DesiredEnablePrivateEndpoint bool `json:"desiredEnablePrivateEndpoint,omitempty"`
 
+	// DesiredFleet: The desired fleet configuration for the cluster.
+	DesiredFleet *Fleet `json:"desiredFleet,omitempty"`
+
 	// DesiredGatewayApiConfig: The desired config of Gateway API on this
 	// cluster.
 	DesiredGatewayApiConfig *GatewayAPIConfig `json:"desiredGatewayApiConfig,omitempty"`
@@ -9359,6 +9362,7 @@ func (c *ProjectsLocationsClustersSetLocationsCall) Do(opts ...googleapi.CallOpt
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Sets the locations for a specific cluster. Deprecated. Use [projects.locations.clusters.update](https://cloud.google.com/kubernetes-engine/docs/reference/rest/v1/projects.locations.clusters/update) instead.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/clusters/{clustersId}:setLocations",
 	//   "httpMethod": "POST",
@@ -14468,6 +14472,7 @@ func (c *ProjectsZonesClustersLocationsCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Sets the locations for a specific cluster. Deprecated. Use [projects.locations.clusters.update](https://cloud.google.com/kubernetes-engine/docs/reference/rest/v1/projects.locations.clusters/update) instead.",
 	//   "flatPath": "v1/projects/{projectId}/zones/{zone}/clusters/{clusterId}/locations",
 	//   "httpMethod": "POST",

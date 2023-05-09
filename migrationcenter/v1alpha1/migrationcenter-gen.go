@@ -260,10 +260,22 @@ type ProjectsLocationsReportConfigsReportsService struct {
 
 func NewProjectsLocationsSourcesService(s *Service) *ProjectsLocationsSourcesService {
 	rs := &ProjectsLocationsSourcesService{s: s}
+	rs.ErrorFrames = NewProjectsLocationsSourcesErrorFramesService(s)
 	return rs
 }
 
 type ProjectsLocationsSourcesService struct {
+	s *Service
+
+	ErrorFrames *ProjectsLocationsSourcesErrorFramesService
+}
+
+func NewProjectsLocationsSourcesErrorFramesService(s *Service) *ProjectsLocationsSourcesErrorFramesService {
+	rs := &ProjectsLocationsSourcesErrorFramesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsSourcesErrorFramesService struct {
 	s *Service
 }
 
@@ -1811,6 +1823,49 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// ErrorFrame: Message representing a frame which failed to be processed
+// due to an error.
+type ErrorFrame struct {
+	// IngestionTime: Output only. Frame ingestion time.
+	IngestionTime string `json:"ingestionTime,omitempty"`
+
+	// Name: Output only. The identifier of the ErrorFrame.
+	Name string `json:"name,omitempty"`
+
+	// OriginalFrame: Output only. The frame that was originally reported.
+	OriginalFrame *AssetFrame `json:"originalFrame,omitempty"`
+
+	// Violations: Output only. All the violations that were detected for
+	// the frame.
+	Violations []*FrameViolationEntry `json:"violations,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "IngestionTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IngestionTime") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ErrorFrame) MarshalJSON() ([]byte, error) {
+	type NoMethod ErrorFrame
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ExecutionReport: A resource that reports result of the import job
 // execution.
 type ExecutionReport struct {
@@ -1923,6 +1978,38 @@ type FitDescriptor struct {
 
 func (s *FitDescriptor) MarshalJSON() ([]byte, error) {
 	type NoMethod FitDescriptor
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// FrameViolationEntry: A resource that contains a single violation of a
+// reported `AssetFrame` resource.
+type FrameViolationEntry struct {
+	// Field: The field of the original frame where the violation occurred.
+	Field string `json:"field,omitempty"`
+
+	// Violation: A message describing the violation.
+	Violation string `json:"violation,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Field") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Field") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FrameViolationEntry) MarshalJSON() ([]byte, error) {
+	type NoMethod FrameViolationEntry
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2777,6 +2864,45 @@ func (s *ListAssetsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ListErrorFramesResponse: A response for listing error frames.
+type ListErrorFramesResponse struct {
+	// ErrorFrames: The list of error frames.
+	ErrorFrames []*ErrorFrame `json:"errorFrames,omitempty"`
+
+	// NextPageToken: A token identifying a page of results the server
+	// should return.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Unreachable: Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "ErrorFrames") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ErrorFrames") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListErrorFramesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListErrorFramesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ListGroupsResponse: A response for listing groups.
 type ListGroupsResponse struct {
 	// Groups: The list of Group
@@ -3129,7 +3255,7 @@ func (s *ListSourcesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Location: A resource that represents Google Cloud Platform location.
+// Location: A resource that represents a Google Cloud location.
 type Location struct {
 	// DisplayName: The friendly name for this location, typically a nearby
 	// city name. For example, "Tokyo".
@@ -5081,6 +5207,10 @@ type Source struct {
 	// DisplayName: User-friendly display name.
 	DisplayName string `json:"displayName,omitempty"`
 
+	// ErrorFrameCount: Output only. The number of frames that were reported
+	// by the source and contained errors.
+	ErrorFrameCount int64 `json:"errorFrameCount,omitempty"`
+
 	// IsManaged: If `true`, the source is managed by other service(s).
 	IsManaged bool `json:"isManaged,omitempty"`
 
@@ -5094,6 +5224,16 @@ type Source struct {
 	// Priority: The information confidence of the source. The higher the
 	// value, the higher the confidence.
 	Priority int64 `json:"priority,omitempty"`
+
+	// State: Output only. The state of the source.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Unspecified.
+	//   "ACTIVE" - The source is active and ready to be used.
+	//   "DELETING" - In the process of being deleted.
+	//   "INVALID" - Source is in an invalid state. Asset frames reported to
+	// it will be ignored.
+	State string `json:"state,omitempty"`
 
 	// Type: Data source type.
 	//
@@ -14450,4 +14590,415 @@ func (c *ProjectsLocationsSourcesPatchCall) Do(opts ...googleapi.CallOption) (*O
 	//   ]
 	// }
 
+}
+
+// method id "migrationcenter.projects.locations.sources.errorFrames.get":
+
+type ProjectsLocationsSourcesErrorFramesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the details of an error frame.
+//
+//   - name: The name of the frame to retrieve. Format:
+//     projects/{project}/locations/{location}/sources/{source}/errorFrames
+//     /{error_frame}.
+func (r *ProjectsLocationsSourcesErrorFramesService) Get(name string) *ProjectsLocationsSourcesErrorFramesGetCall {
+	c := &ProjectsLocationsSourcesErrorFramesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// View sets the optional parameter "view": An optional view mode to
+// control the level of details for the frame. The default is a basic
+// frame view.
+//
+// Possible values:
+//
+//	"ERROR_FRAME_VIEW_UNSPECIFIED" - Value is unset. The system will
+//
+// fallback to the default value.
+//
+//	"ERROR_FRAME_VIEW_BASIC" - Include basic frame data, but not the
+//
+// full contents.
+//
+//	"ERROR_FRAME_VIEW_FULL" - Include everything.
+func (c *ProjectsLocationsSourcesErrorFramesGetCall) View(view string) *ProjectsLocationsSourcesErrorFramesGetCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsSourcesErrorFramesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsSourcesErrorFramesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsSourcesErrorFramesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsSourcesErrorFramesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsSourcesErrorFramesGetCall) Context(ctx context.Context) *ProjectsLocationsSourcesErrorFramesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsSourcesErrorFramesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSourcesErrorFramesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "migrationcenter.projects.locations.sources.errorFrames.get" call.
+// Exactly one of *ErrorFrame or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *ErrorFrame.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsSourcesErrorFramesGetCall) Do(opts ...googleapi.CallOption) (*ErrorFrame, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ErrorFrame{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the details of an error frame.",
+	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/sources/{sourcesId}/errorFrames/{errorFramesId}",
+	//   "httpMethod": "GET",
+	//   "id": "migrationcenter.projects.locations.sources.errorFrames.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the frame to retrieve. Format: projects/{project}/locations/{location}/sources/{source}/errorFrames/{error_frame}",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/sources/[^/]+/errorFrames/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "view": {
+	//       "description": "Optional. An optional view mode to control the level of details for the frame. The default is a basic frame view.",
+	//       "enum": [
+	//         "ERROR_FRAME_VIEW_UNSPECIFIED",
+	//         "ERROR_FRAME_VIEW_BASIC",
+	//         "ERROR_FRAME_VIEW_FULL"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Value is unset. The system will fallback to the default value.",
+	//         "Include basic frame data, but not the full contents.",
+	//         "Include everything."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha1/{+name}",
+	//   "response": {
+	//     "$ref": "ErrorFrame"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "migrationcenter.projects.locations.sources.errorFrames.list":
+
+type ProjectsLocationsSourcesErrorFramesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all error frames in a given source and location.
+//
+// - parent: Parent value (the source) for `ListErrorFramesRequest`.
+func (r *ProjectsLocationsSourcesErrorFramesService) List(parent string) *ProjectsLocationsSourcesErrorFramesListCall {
+	c := &ProjectsLocationsSourcesErrorFramesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size.
+// Server may return fewer items than requested. If unspecified, server
+// will pick an appropriate default.
+func (c *ProjectsLocationsSourcesErrorFramesListCall) PageSize(pageSize int64) *ProjectsLocationsSourcesErrorFramesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token
+// identifying a page of results the server should return.
+func (c *ProjectsLocationsSourcesErrorFramesListCall) PageToken(pageToken string) *ProjectsLocationsSourcesErrorFramesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// View sets the optional parameter "view": An optional view mode to
+// control the level of details of each error frame. The default is a
+// BASIC frame view.
+//
+// Possible values:
+//
+//	"ERROR_FRAME_VIEW_UNSPECIFIED" - Value is unset. The system will
+//
+// fallback to the default value.
+//
+//	"ERROR_FRAME_VIEW_BASIC" - Include basic frame data, but not the
+//
+// full contents.
+//
+//	"ERROR_FRAME_VIEW_FULL" - Include everything.
+func (c *ProjectsLocationsSourcesErrorFramesListCall) View(view string) *ProjectsLocationsSourcesErrorFramesListCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsSourcesErrorFramesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsSourcesErrorFramesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsSourcesErrorFramesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsSourcesErrorFramesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsSourcesErrorFramesListCall) Context(ctx context.Context) *ProjectsLocationsSourcesErrorFramesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsSourcesErrorFramesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSourcesErrorFramesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/{+parent}/errorFrames")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "migrationcenter.projects.locations.sources.errorFrames.list" call.
+// Exactly one of *ListErrorFramesResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListErrorFramesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSourcesErrorFramesListCall) Do(opts ...googleapi.CallOption) (*ListErrorFramesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListErrorFramesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all error frames in a given source and location.",
+	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/sources/{sourcesId}/errorFrames",
+	//   "httpMethod": "GET",
+	//   "id": "migrationcenter.projects.locations.sources.errorFrames.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Requested page size. Server may return fewer items than requested. If unspecified, server will pick an appropriate default.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A token identifying a page of results the server should return.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Parent value (the source) for `ListErrorFramesRequest`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/sources/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "view": {
+	//       "description": "Optional. An optional view mode to control the level of details of each error frame. The default is a BASIC frame view.",
+	//       "enum": [
+	//         "ERROR_FRAME_VIEW_UNSPECIFIED",
+	//         "ERROR_FRAME_VIEW_BASIC",
+	//         "ERROR_FRAME_VIEW_FULL"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Value is unset. The system will fallback to the default value.",
+	//         "Include basic frame data, but not the full contents.",
+	//         "Include everything."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha1/{+parent}/errorFrames",
+	//   "response": {
+	//     "$ref": "ListErrorFramesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsSourcesErrorFramesListCall) Pages(ctx context.Context, f func(*ListErrorFramesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }

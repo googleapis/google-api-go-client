@@ -292,7 +292,7 @@
       }
     }
   },
-  "revision": "20230420",
+  "revision": "20230504",
   "rootUrl": "https://documentai.googleapis.com/",
   "schemas": {
     "GoogleCloudDocumentaiUiv1beta3AutoLabelDocumentsMetadata": {
@@ -503,7 +503,7 @@
       "type": "object"
     },
     "GoogleCloudDocumentaiUiv1beta3CreateLabelerPoolOperationMetadata": {
-      "description": "The long-running operation metadata for CreateLabelerPool.",
+      "description": "The long-running operation metadata for the CreateLabelerPool method.",
       "id": "GoogleCloudDocumentaiUiv1beta3CreateLabelerPoolOperationMetadata",
       "properties": {
         "commonMetadata": {
@@ -525,7 +525,7 @@
       "type": "object"
     },
     "GoogleCloudDocumentaiUiv1beta3DeleteProcessorMetadata": {
-      "description": "The long-running operation metadata for delete processor method.",
+      "description": "The long-running operation metadata for the DeleteProcessor method.",
       "id": "GoogleCloudDocumentaiUiv1beta3DeleteProcessorMetadata",
       "properties": {
         "commonMetadata": {
@@ -536,7 +536,7 @@
       "type": "object"
     },
     "GoogleCloudDocumentaiUiv1beta3DeleteProcessorVersionMetadata": {
-      "description": "The long-running operation metadata for delete processor version method.",
+      "description": "The long-running operation metadata for the DeleteProcessorVersion method.",
       "id": "GoogleCloudDocumentaiUiv1beta3DeleteProcessorVersionMetadata",
       "properties": {
         "commonMetadata": {
@@ -547,7 +547,7 @@
       "type": "object"
     },
     "GoogleCloudDocumentaiUiv1beta3DeployProcessorVersionMetadata": {
-      "description": "The long-running operation metadata for deploy processor version method.",
+      "description": "The long-running operation metadata for the DeployProcessorVersion method.",
       "id": "GoogleCloudDocumentaiUiv1beta3DeployProcessorVersionMetadata",
       "properties": {
         "commonMetadata": {
@@ -558,13 +558,13 @@
       "type": "object"
     },
     "GoogleCloudDocumentaiUiv1beta3DeployProcessorVersionResponse": {
-      "description": "Response message for the deploy processor version method.",
+      "description": "Response message for the DeployProcessorVersion method.",
       "id": "GoogleCloudDocumentaiUiv1beta3DeployProcessorVersionResponse",
       "properties": {},
       "type": "object"
     },
     "GoogleCloudDocumentaiUiv1beta3DisableProcessorMetadata": {
-      "description": "The long-running operation metadata for disable processor method.",
+      "description": "The long-running operation metadata for the DisableProcessor method.",
       "id": "GoogleCloudDocumentaiUiv1beta3DisableProcessorMetadata",
       "properties": {
         "commonMetadata": {
@@ -575,7 +575,7 @@
       "type": "object"
     },
     "GoogleCloudDocumentaiUiv1beta3DisableProcessorResponse": {
-      "description": "Response message for the disable processor method. Intentionally empty proto for adding fields in future.",
+      "description": "Response message for the DisableProcessor method. Intentionally empty proto for adding fields in future.",
       "id": "GoogleCloudDocumentaiUiv1beta3DisableProcessorResponse",
       "properties": {},
       "type": "object"
@@ -610,7 +610,7 @@
       "type": "object"
     },
     "GoogleCloudDocumentaiUiv1beta3EnableProcessorMetadata": {
-      "description": "The long-running operation metadata for enable processor method.",
+      "description": "The long-running operation metadata for the EnableProcessor method.",
       "id": "GoogleCloudDocumentaiUiv1beta3EnableProcessorMetadata",
       "properties": {
         "commonMetadata": {
@@ -621,7 +621,7 @@
       "type": "object"
     },
     "GoogleCloudDocumentaiUiv1beta3EnableProcessorResponse": {
-      "description": "Response message for the enable processor method. Intentionally empty proto for adding fields in future.",
+      "description": "Response message for the EnableProcessor method. Intentionally empty proto for adding fields in future.",
       "id": "GoogleCloudDocumentaiUiv1beta3EnableProcessorResponse",
       "properties": {},
       "type": "object"
@@ -956,8 +956,43 @@
       },
       "type": "object"
     },
+    "GoogleCloudDocumentaiUiv1beta3SampleDocumentsMetadata": {
+      "description": "Metadata of the sample documents operation.",
+      "id": "GoogleCloudDocumentaiUiv1beta3SampleDocumentsMetadata",
+      "properties": {
+        "commonMetadata": {
+          "$ref": "GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata",
+          "description": "The basic metadata of the long running operation."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDocumentaiUiv1beta3SampleDocumentsResponse": {
+      "description": "Response of the sample documents operation.",
+      "id": "GoogleCloudDocumentaiUiv1beta3SampleDocumentsResponse",
+      "properties": {
+        "selectedDocuments": {
+          "description": "The result of the sampling process.",
+          "items": {
+            "$ref": "GoogleCloudDocumentaiUiv1beta3SampleDocumentsResponseSelectedDocument"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDocumentaiUiv1beta3SampleDocumentsResponseSelectedDocument": {
+      "id": "GoogleCloudDocumentaiUiv1beta3SampleDocumentsResponseSelectedDocument",
+      "properties": {
+        "documentId": {
+          "description": "An internal identifier for document.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDocumentaiUiv1beta3SetDefaultProcessorVersionMetadata": {
-      "description": "The long-running operation metadata for set default processor version method.",
+      "description": "The long-running operation metadata for the SetDefaultProcessorVersion method.",
       "id": "GoogleCloudDocumentaiUiv1beta3SetDefaultProcessorVersionMetadata",
       "properties": {
         "commonMetadata": {
@@ -968,7 +1003,7 @@
       "type": "object"
     },
     "GoogleCloudDocumentaiUiv1beta3SetDefaultProcessorVersionResponse": {
-      "description": "Response message for set default processor version method.",
+      "description": "Response message for the SetDefaultProcessorVersion method.",
       "id": "GoogleCloudDocumentaiUiv1beta3SetDefaultProcessorVersionResponse",
       "properties": {},
       "type": "object"
@@ -1035,7 +1070,7 @@
       "type": "object"
     },
     "GoogleCloudDocumentaiUiv1beta3UndeployProcessorVersionMetadata": {
-      "description": "The long-running operation metadata for the undeploy processor version method.",
+      "description": "The long-running operation metadata for the UndeployProcessorVersion method.",
       "id": "GoogleCloudDocumentaiUiv1beta3UndeployProcessorVersionMetadata",
       "properties": {
         "commonMetadata": {
@@ -1046,7 +1081,7 @@
       "type": "object"
     },
     "GoogleCloudDocumentaiUiv1beta3UndeployProcessorVersionResponse": {
-      "description": "Response message for the undeploy processor version method.",
+      "description": "Response message for the UndeployProcessorVersion method.",
       "id": "GoogleCloudDocumentaiUiv1beta3UndeployProcessorVersionResponse",
       "properties": {},
       "type": "object"
@@ -1142,11 +1177,11 @@
           "description": "The status of human review on the processed document."
         },
         "inputGcsSource": {
-          "description": "The source of the document, same as the [input_gcs_source] field in the request when the batch process started. The batch process is started by take snapshot of that document, since a user can move or change that document during the process.",
+          "description": "The source of the document, same as the input_gcs_source field in the request when the batch process started.",
           "type": "string"
         },
         "outputGcsDestination": {
-          "description": "The output_gcs_destination (in the request as `output_gcs_destination`) of the processed document if it was successful, otherwise empty.",
+          "description": "The Cloud Storage output destination (in the request as DocumentOutputConfig.GcsOutputConfig.gcs_uri) of the processed document if it was successful, otherwise empty.",
           "type": "string"
         },
         "status": {
@@ -1208,7 +1243,7 @@
       "type": "object"
     },
     "GoogleCloudDocumentaiV1DeleteProcessorMetadata": {
-      "description": "The long-running operation metadata for delete processor method.",
+      "description": "The long-running operation metadata for the DeleteProcessor method.",
       "id": "GoogleCloudDocumentaiV1DeleteProcessorMetadata",
       "properties": {
         "commonMetadata": {
@@ -1219,7 +1254,7 @@
       "type": "object"
     },
     "GoogleCloudDocumentaiV1DeleteProcessorVersionMetadata": {
-      "description": "The long-running operation metadata for delete processor version method.",
+      "description": "The long-running operation metadata for the DeleteProcessorVersion method.",
       "id": "GoogleCloudDocumentaiV1DeleteProcessorVersionMetadata",
       "properties": {
         "commonMetadata": {
@@ -1230,7 +1265,7 @@
       "type": "object"
     },
     "GoogleCloudDocumentaiV1DeployProcessorVersionMetadata": {
-      "description": "The long-running operation metadata for deploy processor version method.",
+      "description": "The long-running operation metadata for the DeployProcessorVersion method.",
       "id": "GoogleCloudDocumentaiV1DeployProcessorVersionMetadata",
       "properties": {
         "commonMetadata": {
@@ -1241,13 +1276,13 @@
       "type": "object"
     },
     "GoogleCloudDocumentaiV1DeployProcessorVersionResponse": {
-      "description": "Response message for the deploy processor version method.",
+      "description": "Response message for the DeployProcessorVersion method.",
       "id": "GoogleCloudDocumentaiV1DeployProcessorVersionResponse",
       "properties": {},
       "type": "object"
     },
     "GoogleCloudDocumentaiV1DisableProcessorMetadata": {
-      "description": "The long-running operation metadata for disable processor method.",
+      "description": "The long-running operation metadata for the DisableProcessor method.",
       "id": "GoogleCloudDocumentaiV1DisableProcessorMetadata",
       "properties": {
         "commonMetadata": {
@@ -1258,13 +1293,13 @@
       "type": "object"
     },
     "GoogleCloudDocumentaiV1DisableProcessorResponse": {
-      "description": "Response message for the disable processor method. Intentionally empty proto for adding fields in future.",
+      "description": "Response message for the DisableProcessor method. Intentionally empty proto for adding fields in future.",
       "id": "GoogleCloudDocumentaiV1DisableProcessorResponse",
       "properties": {},
       "type": "object"
     },
     "GoogleCloudDocumentaiV1EnableProcessorMetadata": {
-      "description": "The long-running operation metadata for enable processor method.",
+      "description": "The long-running operation metadata for the EnableProcessor method.",
       "id": "GoogleCloudDocumentaiV1EnableProcessorMetadata",
       "properties": {
         "commonMetadata": {
@@ -1275,7 +1310,7 @@
       "type": "object"
     },
     "GoogleCloudDocumentaiV1EnableProcessorResponse": {
-      "description": "Response message for the enable processor method. Intentionally empty proto for adding fields in future.",
+      "description": "Response message for the EnableProcessor method. Intentionally empty proto for adding fields in future.",
       "id": "GoogleCloudDocumentaiV1EnableProcessorResponse",
       "properties": {},
       "type": "object"
@@ -1336,7 +1371,7 @@
       "type": "object"
     },
     "GoogleCloudDocumentaiV1ReviewDocumentOperationMetadata": {
-      "description": "The long-running operation metadata for review document method.",
+      "description": "The long-running operation metadata for the ReviewDocument method.",
       "id": "GoogleCloudDocumentaiV1ReviewDocumentOperationMetadata",
       "properties": {
         "commonMetadata": {
@@ -1351,7 +1386,7 @@
       "type": "object"
     },
     "GoogleCloudDocumentaiV1ReviewDocumentResponse": {
-      "description": "Response message for review document method.",
+      "description": "Response message for the ReviewDocument method.",
       "id": "GoogleCloudDocumentaiV1ReviewDocumentResponse",
       "properties": {
         "gcsDestination": {
@@ -1380,7 +1415,7 @@
       "type": "object"
     },
     "GoogleCloudDocumentaiV1SetDefaultProcessorVersionMetadata": {
-      "description": "The long-running operation metadata for set default processor version method.",
+      "description": "The long-running operation metadata for the SetDefaultProcessorVersion method.",
       "id": "GoogleCloudDocumentaiV1SetDefaultProcessorVersionMetadata",
       "properties": {
         "commonMetadata": {
@@ -1391,7 +1426,7 @@
       "type": "object"
     },
     "GoogleCloudDocumentaiV1SetDefaultProcessorVersionResponse": {
-      "description": "Response message for set default processor version method.",
+      "description": "Response message for the SetDefaultProcessorVersion method.",
       "id": "GoogleCloudDocumentaiV1SetDefaultProcessorVersionResponse",
       "properties": {},
       "type": "object"
@@ -1458,7 +1493,7 @@
       "type": "object"
     },
     "GoogleCloudDocumentaiV1UndeployProcessorVersionMetadata": {
-      "description": "The long-running operation metadata for the undeploy processor version method.",
+      "description": "The long-running operation metadata for the UndeployProcessorVersion method.",
       "id": "GoogleCloudDocumentaiV1UndeployProcessorVersionMetadata",
       "properties": {
         "commonMetadata": {
@@ -1469,7 +1504,7 @@
       "type": "object"
     },
     "GoogleCloudDocumentaiV1UndeployProcessorVersionResponse": {
-      "description": "Response message for the undeploy processor version method.",
+      "description": "Response message for the UndeployProcessorVersion method.",
       "id": "GoogleCloudDocumentaiV1UndeployProcessorVersionResponse",
       "properties": {},
       "type": "object"
@@ -1596,7 +1631,7 @@
           "type": "array"
         },
         "uri": {
-          "description": "Optional. Currently supports Google Cloud Storage URI of the form `gs://bucket_name/object_name`. Object versioning is not supported. See [Google Cloud Storage Request URIs](https://cloud.google.com/storage/docs/reference-uris) for more info.",
+          "description": "Optional. Currently supports Google Cloud Storage URI of the form `gs://bucket_name/object_name`. Object versioning is not supported. For more information, refer to [Google Cloud Storage Request URIs](https://cloud.google.com/storage/docs/reference-uris).",
           "type": "string"
         }
       },
@@ -2336,11 +2371,11 @@
           "description": "Color of the background."
         },
         "bold": {
-          "description": "Whether the text is bold (equivalent to font weight \u003e= 700).",
+          "description": "Whether the text is bold (equivalent to font_weight is at least `700`).",
           "type": "boolean"
         },
         "fontSize": {
-          "description": "Font size in points (1 point is 1/72\").",
+          "description": "Font size in points (`1` point is `¹⁄₇₂` inches).",
           "format": "int32",
           "type": "integer"
         },
@@ -2349,7 +2384,7 @@
           "type": "string"
         },
         "fontWeight": {
-          "description": "TrueType weight on a scale 100 (Thin) to 1000 (Ultra-heavy). Normal is 400, Bold is 700.",
+          "description": "TrueType weight on a scale `100` (thin) to `1000` (ultra-heavy). Normal is `400`, bold is `700`.",
           "format": "int32",
           "type": "integer"
         },
@@ -2367,12 +2402,12 @@
           "type": "number"
         },
         "pixelFontSize": {
-          "description": "Font size in pixels, equal to unrounded_fontsize * resolution / 72.0.",
+          "description": "Font size in pixels, equal to _unrounded font_size_ * _resolution_ ÷ `72.0`.",
           "format": "double",
           "type": "number"
         },
         "smallcaps": {
-          "description": "Whether the text are small caps.",
+          "description": "Whether the text is in small caps.",
           "type": "boolean"
         },
         "strikeout": {
@@ -2979,7 +3014,7 @@
           "type": "array"
         },
         "uri": {
-          "description": "Optional. Currently supports Google Cloud Storage URI of the form `gs://bucket_name/object_name`. Object versioning is not supported. See [Google Cloud Storage Request URIs](https://cloud.google.com/storage/docs/reference-uris) for more info.",
+          "description": "Optional. Currently supports Google Cloud Storage URI of the form `gs://bucket_name/object_name`. Object versioning is not supported. For more information, refer to [Google Cloud Storage Request URIs](https://cloud.google.com/storage/docs/reference-uris).",
           "type": "string"
         }
       },
@@ -3739,11 +3774,11 @@
           "description": "Color of the background."
         },
         "bold": {
-          "description": "Whether the text is bold (equivalent to font weight \u003e= 700).",
+          "description": "Whether the text is bold (equivalent to font_weight is at least `700`).",
           "type": "boolean"
         },
         "fontSize": {
-          "description": "Font size in points (1 point is 1/72\").",
+          "description": "Font size in points (`1` point is `¹⁄₇₂` inches).",
           "format": "int32",
           "type": "integer"
         },
@@ -3752,7 +3787,7 @@
           "type": "string"
         },
         "fontWeight": {
-          "description": "TrueType weight on a scale 100 (Thin) to 1000 (Ultra-heavy). Normal is 400, Bold is 700.",
+          "description": "TrueType weight on a scale `100` (thin) to `1000` (ultra-heavy). Normal is `400`, bold is `700`.",
           "format": "int32",
           "type": "integer"
         },
@@ -3770,12 +3805,12 @@
           "type": "number"
         },
         "pixelFontSize": {
-          "description": "Font size in pixels, equal to unrounded_fontsize * resolution / 72.0.",
+          "description": "Font size in pixels, equal to _unrounded font_size_ * _resolution_ ÷ `72.0`.",
           "format": "double",
           "type": "number"
         },
         "smallcaps": {
-          "description": "Whether the text are small caps.",
+          "description": "Whether the text is in small caps.",
           "type": "boolean"
         },
         "strikeout": {
@@ -4445,7 +4480,7 @@
       "id": "GoogleCloudDocumentaiV1beta3BatchProcessMetadataIndividualProcessStatus",
       "properties": {
         "humanReviewOperation": {
-          "description": "The name of the operation triggered by the processed document. If the human review process isn't triggered, this field will be empty. It has the same response type and metadata as the long-running operation returned by ReviewDocument method.",
+          "description": "The name of the operation triggered by the processed document. If the human review process isn't triggered, this field will be empty. It has the same response type and metadata as the long-running operation returned by the ReviewDocument method.",
           "type": "string"
         },
         "humanReviewStatus": {
@@ -4453,11 +4488,11 @@
           "description": "The status of human review on the processed document."
         },
         "inputGcsSource": {
-          "description": "The source of the document, same as the [input_gcs_source] field in the request when the batch process started. The batch process is started by take snapshot of that document, since a user can move or change that document during the process.",
+          "description": "The source of the document, same as the input_gcs_source field in the request when the batch process started.",
           "type": "string"
         },
         "outputGcsDestination": {
-          "description": "The output_gcs_destination (in the request as `output_gcs_destination`) of the processed document if it was successful, otherwise empty.",
+          "description": "The Cloud Storage output destination (in the request as DocumentOutputConfig.GcsOutputConfig.gcs_uri) of the processed document if it was successful, otherwise empty.",
           "type": "string"
         },
         "status": {
@@ -4519,7 +4554,7 @@
       "type": "object"
     },
     "GoogleCloudDocumentaiV1beta3DeleteProcessorMetadata": {
-      "description": "The long-running operation metadata for delete processor method.",
+      "description": "The long-running operation metadata for the DeleteProcessor method.",
       "id": "GoogleCloudDocumentaiV1beta3DeleteProcessorMetadata",
       "properties": {
         "commonMetadata": {
@@ -4530,7 +4565,7 @@
       "type": "object"
     },
     "GoogleCloudDocumentaiV1beta3DeleteProcessorVersionMetadata": {
-      "description": "The long-running operation metadata for delete processor version method.",
+      "description": "The long-running operation metadata for the DeleteProcessorVersion method.",
       "id": "GoogleCloudDocumentaiV1beta3DeleteProcessorVersionMetadata",
       "properties": {
         "commonMetadata": {
@@ -4541,7 +4576,7 @@
       "type": "object"
     },
     "GoogleCloudDocumentaiV1beta3DeployProcessorVersionMetadata": {
-      "description": "The long-running operation metadata for deploy processor version method.",
+      "description": "The long-running operation metadata for the DeployProcessorVersion method.",
       "id": "GoogleCloudDocumentaiV1beta3DeployProcessorVersionMetadata",
       "properties": {
         "commonMetadata": {
@@ -4552,13 +4587,13 @@
       "type": "object"
     },
     "GoogleCloudDocumentaiV1beta3DeployProcessorVersionResponse": {
-      "description": "Response message for the deploy processor version method.",
+      "description": "Response message for the DeployProcessorVersion method.",
       "id": "GoogleCloudDocumentaiV1beta3DeployProcessorVersionResponse",
       "properties": {},
       "type": "object"
     },
     "GoogleCloudDocumentaiV1beta3DisableProcessorMetadata": {
-      "description": "The long-running operation metadata for disable processor method.",
+      "description": "The long-running operation metadata for the DisableProcessor method.",
       "id": "GoogleCloudDocumentaiV1beta3DisableProcessorMetadata",
       "properties": {
         "commonMetadata": {
@@ -4569,13 +4604,13 @@
       "type": "object"
     },
     "GoogleCloudDocumentaiV1beta3DisableProcessorResponse": {
-      "description": "Response message for the disable processor method. Intentionally empty proto for adding fields in future.",
+      "description": "Response message for the DisableProcessor method. Intentionally empty proto for adding fields in future.",
       "id": "GoogleCloudDocumentaiV1beta3DisableProcessorResponse",
       "properties": {},
       "type": "object"
     },
     "GoogleCloudDocumentaiV1beta3EnableProcessorMetadata": {
-      "description": "The long-running operation metadata for enable processor method.",
+      "description": "The long-running operation metadata for the EnableProcessor method.",
       "id": "GoogleCloudDocumentaiV1beta3EnableProcessorMetadata",
       "properties": {
         "commonMetadata": {
@@ -4586,7 +4621,7 @@
       "type": "object"
     },
     "GoogleCloudDocumentaiV1beta3EnableProcessorResponse": {
-      "description": "Response message for the enable processor method. Intentionally empty proto for adding fields in future.",
+      "description": "Response message for the EnableProcessor method. Intentionally empty proto for adding fields in future.",
       "id": "GoogleCloudDocumentaiV1beta3EnableProcessorResponse",
       "properties": {},
       "type": "object"
@@ -4669,7 +4704,7 @@
       "type": "object"
     },
     "GoogleCloudDocumentaiV1beta3ReviewDocumentOperationMetadata": {
-      "description": "The long-running operation metadata for review document method.",
+      "description": "The long-running operation metadata for the ReviewDocument method.",
       "id": "GoogleCloudDocumentaiV1beta3ReviewDocumentOperationMetadata",
       "properties": {
         "commonMetadata": {
@@ -4718,7 +4753,7 @@
       "type": "object"
     },
     "GoogleCloudDocumentaiV1beta3ReviewDocumentResponse": {
-      "description": "Response message for review document method.",
+      "description": "Response message for the ReviewDocument method.",
       "id": "GoogleCloudDocumentaiV1beta3ReviewDocumentResponse",
       "properties": {
         "gcsDestination": {
@@ -4747,7 +4782,7 @@
       "type": "object"
     },
     "GoogleCloudDocumentaiV1beta3SetDefaultProcessorVersionMetadata": {
-      "description": "The long-running operation metadata for set default processor version method.",
+      "description": "The long-running operation metadata for the SetDefaultProcessorVersion method.",
       "id": "GoogleCloudDocumentaiV1beta3SetDefaultProcessorVersionMetadata",
       "properties": {
         "commonMetadata": {
@@ -4758,7 +4793,7 @@
       "type": "object"
     },
     "GoogleCloudDocumentaiV1beta3SetDefaultProcessorVersionResponse": {
-      "description": "Response message for set default processor version method.",
+      "description": "Response message for the SetDefaultProcessorVersion method.",
       "id": "GoogleCloudDocumentaiV1beta3SetDefaultProcessorVersionResponse",
       "properties": {},
       "type": "object"
@@ -4825,7 +4860,7 @@
       "type": "object"
     },
     "GoogleCloudDocumentaiV1beta3UndeployProcessorVersionMetadata": {
-      "description": "The long-running operation metadata for the undeploy processor version method.",
+      "description": "The long-running operation metadata for the UndeployProcessorVersion method.",
       "id": "GoogleCloudDocumentaiV1beta3UndeployProcessorVersionMetadata",
       "properties": {
         "commonMetadata": {
@@ -4836,7 +4871,7 @@
       "type": "object"
     },
     "GoogleCloudDocumentaiV1beta3UndeployProcessorVersionResponse": {
-      "description": "Response message for the undeploy processor version method.",
+      "description": "Response message for the UndeployProcessorVersion method.",
       "id": "GoogleCloudDocumentaiV1beta3UndeployProcessorVersionResponse",
       "properties": {},
       "type": "object"

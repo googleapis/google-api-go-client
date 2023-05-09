@@ -751,43 +751,11 @@
               ]
             }
           }
-        },
-        "resources": {
-          "methods": {
-            "generatePackagesSummary": {
-              "description": "Gets a summary of the packages within a given resource.",
-              "flatPath": "v1/projects/{projectsId}/resources/{resourcesId}:generatePackagesSummary",
-              "httpMethod": "POST",
-              "id": "containeranalysis.projects.resources.generatePackagesSummary",
-              "parameterOrder": [
-                "name"
-              ],
-              "parameters": {
-                "name": {
-                  "description": "Required. The name of the resource to get a packages summary for in the form of `projects/[PROJECT_ID]/resources/[RESOURCE_URL]`.",
-                  "location": "path",
-                  "pattern": "^projects/[^/]+/resources/.*$",
-                  "required": true,
-                  "type": "string"
-                }
-              },
-              "path": "v1/{+name}:generatePackagesSummary",
-              "request": {
-                "$ref": "GeneratePackagesSummaryRequest"
-              },
-              "response": {
-                "$ref": "PackagesSummaryResponse"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
-              ]
-            }
-          }
         }
       }
     }
   },
-  "revision": "20230414",
+  "revision": "20230505",
   "rootUrl": "https://containeranalysis.googleapis.com/",
   "schemas": {
     "AliasContext": {
@@ -3149,7 +3117,8 @@
             "UPGRADE",
             "COMPLIANCE",
             "DSSE_ATTESTATION",
-            "VULNERABILITY_ASSESSMENT"
+            "VULNERABILITY_ASSESSMENT",
+            "SBOM_REFERENCE"
           ],
           "enumDescriptions": [
             "Default value. This value is unused.",
@@ -3163,7 +3132,8 @@
             "This represents an available package upgrade.",
             "This represents a Compliance Note",
             "This represents a DSSE attestation Note",
-            "This represents a Vulnerability Assessment."
+            "This represents a Vulnerability Assessment.",
+            "This represents an SBOM Reference."
           ],
           "type": "string"
         }
@@ -3420,12 +3390,6 @@
           "type": "string"
         }
       },
-      "type": "object"
-    },
-    "GeneratePackagesSummaryRequest": {
-      "description": "GeneratePackagesSummaryRequest is the request body for the GeneratePackagesSummary API method. It just takes a single name argument, referring to the resource.",
-      "id": "GeneratePackagesSummaryRequest",
-      "properties": {},
       "type": "object"
     },
     "GerritSourceContext": {
@@ -3850,22 +3814,6 @@
       },
       "type": "object"
     },
-    "LicensesSummary": {
-      "description": "Per license count",
-      "id": "LicensesSummary",
-      "properties": {
-        "count": {
-          "description": "The number of fixable vulnerabilities associated with this resource.",
-          "format": "int64",
-          "type": "string"
-        },
-        "license": {
-          "description": "The license of the package. Note that the format of this value is not guaranteed. It may be nil, an empty string, a boolean value (A | B), a differently formed boolean value (A OR B), etc...",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
     "ListNoteOccurrencesResponse": {
       "description": "Response for listing occurrences for a note.",
       "id": "ListNoteOccurrencesResponse",
@@ -4058,7 +4006,8 @@
             "UPGRADE",
             "COMPLIANCE",
             "DSSE_ATTESTATION",
-            "VULNERABILITY_ASSESSMENT"
+            "VULNERABILITY_ASSESSMENT",
+            "SBOM_REFERENCE"
           ],
           "enumDescriptions": [
             "Default value. This value is unused.",
@@ -4072,7 +4021,8 @@
             "This represents an available package upgrade.",
             "This represents a Compliance Note",
             "This represents a DSSE attestation Note",
-            "This represents a Vulnerability Assessment."
+            "This represents a Vulnerability Assessment.",
+            "This represents an SBOM Reference."
           ],
           "type": "string"
         },
@@ -4101,6 +4051,10 @@
             "$ref": "RelatedUrl"
           },
           "type": "array"
+        },
+        "sbomReference": {
+          "$ref": "SBOMReferenceNote",
+          "description": "A note describing an SBOM reference."
         },
         "shortDescription": {
           "description": "A one sentence description of this note.",
@@ -4181,7 +4135,8 @@
             "UPGRADE",
             "COMPLIANCE",
             "DSSE_ATTESTATION",
-            "VULNERABILITY_ASSESSMENT"
+            "VULNERABILITY_ASSESSMENT",
+            "SBOM_REFERENCE"
           ],
           "enumDescriptions": [
             "Default value. This value is unused.",
@@ -4195,7 +4150,8 @@
             "This represents an available package upgrade.",
             "This represents a Compliance Note",
             "This represents a DSSE attestation Note",
-            "This represents a Vulnerability Assessment."
+            "This represents a Vulnerability Assessment.",
+            "This represents an SBOM Reference."
           ],
           "type": "string"
         },
@@ -4218,6 +4174,10 @@
         "resourceUri": {
           "description": "Required. Immutable. A URI that represents the resource for which the occurrence applies. For example, `https://gcr.io/project/image@sha256:123abc` for a Docker image.",
           "type": "string"
+        },
+        "sbomReference": {
+          "$ref": "SBOMReferenceOccurrence",
+          "description": "Describes a specific SBOM reference occurrences."
         },
         "updateTime": {
           "description": "Output only. The time this occurrence was last updated.",
@@ -4422,24 +4382,6 @@
       },
       "type": "object"
     },
-    "PackagesSummaryResponse": {
-      "description": "A summary of the packages found within the given resource.",
-      "id": "PackagesSummaryResponse",
-      "properties": {
-        "licensesSummary": {
-          "description": "A listing by license name of each of the licenses and their counts.",
-          "items": {
-            "$ref": "LicensesSummary"
-          },
-          "type": "array"
-        },
-        "resourceUrl": {
-          "description": "The unique URL of the image or the container for which this summary applies.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
     "Policy": {
       "description": "An Identity and Access Management (IAM) policy, which specifies access controls for Google Cloud resources. A `Policy` is a collection of `bindings`. A `binding` binds one or more `members`, or principals, to a single `role`. Principals can be user accounts, service accounts, Google groups, and domains (such as G Suite). A `role` is a named list of permissions; each `role` can be an IAM predefined role or a user-created custom role. For some types of Google Cloud resources, a `binding` can also specify a `condition`, which is a logical expression that allows access to a resource only if the expression evaluates to `true`. A condition can add constraints based on attributes of the request, the resource, or both. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies). **JSON example:** { \"bindings\": [ { \"role\": \"roles/resourcemanager.organizationAdmin\", \"members\": [ \"user:mike@example.com\", \"group:admins@example.com\", \"domain:google.com\", \"serviceAccount:my-project-id@appspot.gserviceaccount.com\" ] }, { \"role\": \"roles/resourcemanager.organizationViewer\", \"members\": [ \"user:eve@example.com\" ], \"condition\": { \"title\": \"expirable access\", \"description\": \"Does not grant access after Sep 2020\", \"expression\": \"request.time \u003c timestamp('2020-10-01T00:00:00.000Z')\", } } ], \"etag\": \"BwWWja0YfJA=\", \"version\": 3 } **YAML example:** bindings: - members: - user:mike@example.com - group:admins@example.com - domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.com role: roles/resourcemanager.organizationViewer condition: title: expirable access description: Does not grant access after Sep 2020 expression: request.time \u003c timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For a description of IAM and its features, see the [IAM documentation](https://cloud.google.com/iam/docs/).",
       "id": "Policy",
@@ -4619,6 +4561,95 @@
         },
         "uid": {
           "description": "A server-assigned, globally unique identifier.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "SBOMReferenceNote": {
+      "description": "The note representing an SBOM reference.",
+      "id": "SBOMReferenceNote",
+      "properties": {
+        "format": {
+          "description": "The format that SBOM takes. E.g. may be spdx, cyclonedx, etc...",
+          "type": "string"
+        },
+        "version": {
+          "description": "The version of the format that the SBOM takes. E.g. if the format is spdx, the version may be 2.3.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "SBOMReferenceOccurrence": {
+      "description": "The occurrence representing an SBOM reference as applied to a specific resource. The occurrence follows the DSSE specification. See https://github.com/secure-systems-lab/dsse/blob/master/envelope.md for more details.",
+      "id": "SBOMReferenceOccurrence",
+      "properties": {
+        "payload": {
+          "$ref": "SbomReferenceIntotoPayload",
+          "description": "The actual payload that contains the SBOM reference data."
+        },
+        "payloadType": {
+          "description": "The kind of payload that SbomReferenceIntotoPayload takes. Since it's in the intoto format, this value is expected to be 'application/vnd.in-toto+json'.",
+          "type": "string"
+        },
+        "signatures": {
+          "description": "The signatures over the payload.",
+          "items": {
+            "$ref": "EnvelopeSignature"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "SbomReferenceIntotoPayload": {
+      "description": "The actual payload that contains the SBOM Reference data. The payload follows the intoto statement specification. See https://github.com/in-toto/attestation/blob/main/spec/v1.0/statement.md for more details.",
+      "id": "SbomReferenceIntotoPayload",
+      "properties": {
+        "_type": {
+          "description": "Identifier for the schema of the Statement.",
+          "type": "string"
+        },
+        "predicate": {
+          "$ref": "SbomReferenceIntotoPredicate",
+          "description": "Additional parameters of the Predicate. Includes the actual data about the SBOM."
+        },
+        "predicateType": {
+          "description": "URI identifying the type of the Predicate.",
+          "type": "string"
+        },
+        "subject": {
+          "description": "Set of software artifacts that the attestation applies to. Each element represents a single software artifact.",
+          "items": {
+            "$ref": "Subject"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "SbomReferenceIntotoPredicate": {
+      "description": "A predicate which describes the SBOM being referenced.",
+      "id": "SbomReferenceIntotoPredicate",
+      "properties": {
+        "digest": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "A map of algorithm to digest of the contents of the SBOM.",
+          "type": "object"
+        },
+        "location": {
+          "description": "The location of the SBOM.",
+          "type": "string"
+        },
+        "mimeType": {
+          "description": "The mime type of the SBOM.",
+          "type": "string"
+        },
+        "referrerId": {
+          "description": "The person or system referring this predicate to the consumer.",
           "type": "string"
         }
       },

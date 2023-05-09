@@ -278,6 +278,8 @@ type Backup struct {
 	// performance scaling capabilities.
 	//   "ENTERPRISE" - ENTERPRISE instances offer the features and
 	// availability needed for mission-critical workloads.
+	//   "ZONAL" - ZONAL instances offer expanded capacity and performance
+	// scaling capabilities.
 	SourceInstanceTier string `json:"sourceInstanceTier,omitempty"`
 
 	// State: Output only. The backup state.
@@ -450,6 +452,38 @@ type DenyMaintenancePeriod struct {
 
 func (s *DenyMaintenancePeriod) MarshalJSON() ([]byte, error) {
 	type NoMethod DenyMaintenancePeriod
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DirectoryServicesConfig: Directory Services configuration for
+// Kerberos-based authentication.
+type DirectoryServicesConfig struct {
+	// ManagedActiveDirectory: Configuration for Managed Service for
+	// Microsoft Active Directory.
+	ManagedActiveDirectory *ManagedActiveDirectoryConfig `json:"managedActiveDirectory,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ManagedActiveDirectory") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ManagedActiveDirectory")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DirectoryServicesConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod DirectoryServicesConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1005,6 +1039,11 @@ type Instance struct {
 	// less).
 	Description string `json:"description,omitempty"`
 
+	// DirectoryServices: Directory Services configuration for
+	// Kerberos-based authentication. Should only be set if protocol is
+	// "NFS_V4_1".
+	DirectoryServices *DirectoryServicesConfig `json:"directoryServices,omitempty"`
+
 	// Etag: Server-specified ETag for the instance resource to prevent
 	// simultaneous updates from overwriting each other.
 	Etag string `json:"etag,omitempty"`
@@ -1110,6 +1149,8 @@ type Instance struct {
 	// performance scaling capabilities.
 	//   "ENTERPRISE" - ENTERPRISE instances offer the features and
 	// availability needed for mission-critical workloads.
+	//   "ZONAL" - ZONAL instances offer expanded capacity and performance
+	// scaling capabilities.
 	Tier string `json:"tier,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1381,7 +1422,7 @@ func (s *ListSnapshotsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Location: A resource that represents Google Cloud Platform location.
+// Location: A resource that represents a Google Cloud location.
 type Location struct {
 	// DisplayName: The friendly name for this location, typically a nearby
 	// city name. For example, "Tokyo".
@@ -1524,6 +1565,41 @@ func (s *MaintenanceWindow) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ManagedActiveDirectoryConfig: ManagedActiveDirectoryConfig contains
+// all the parameters for connecting to Managed Active Directory.
+type ManagedActiveDirectoryConfig struct {
+	// Computer: The computer name is used as a prefix to the mount remote
+	// target. Example: if the computer_name is `my-computer`, the mount
+	// command will look like: `$mount -o vers=4,sec=krb5
+	// my-computer.filestore.:`.
+	Computer string `json:"computer,omitempty"`
+
+	// Domain: Fully qualified domain name.
+	Domain string `json:"domain,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Computer") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Computer") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ManagedActiveDirectoryConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ManagedActiveDirectoryConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // NetworkConfig: Network configuration for the instance.
 type NetworkConfig struct {
 	// ConnectMode: The network connect mode of the Filestore instance. If
@@ -1632,6 +1708,21 @@ type NfsExportOptions struct {
 	// IP ranges/addresses for each FileShareConfig among all
 	// NfsExportOptions.
 	IpRanges []string `json:"ipRanges,omitempty"`
+
+	// SecurityFlavors: The security flavors allowed for mount operations.
+	// The default is AUTH_SYS.
+	//
+	// Possible values:
+	//   "SECURITY_FLAVOR_UNSPECIFIED" - SecurityFlavor not set.
+	//   "AUTH_SYS" - The user's UNIX user-id and group-ids are transferred
+	// "in the clear" (not encrypted) on the network, unauthenticated by the
+	// NFS server (default).
+	//   "KRB5" - End-user authentication through Kerberos V5.
+	//   "KRB5I" - krb5 plus integrity protection (data packets are tamper
+	// proof).
+	//   "KRB5P" - krb5i plus privacy protection (data packets are tamper
+	// proof and encrypted).
+	SecurityFlavors []string `json:"securityFlavors,omitempty"`
 
 	// SquashMode: Either NO_ROOT_SQUASH, for allowing root access on the
 	// exported directory, or ROOT_SQUASH, for not allowing root access. The

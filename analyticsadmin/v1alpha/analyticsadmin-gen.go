@@ -320,6 +320,7 @@ type PropertiesCustomMetricsService struct {
 
 func NewPropertiesDataStreamsService(s *Service) *PropertiesDataStreamsService {
 	rs := &PropertiesDataStreamsService{s: s}
+	rs.EventCreateRules = NewPropertiesDataStreamsEventCreateRulesService(s)
 	rs.MeasurementProtocolSecrets = NewPropertiesDataStreamsMeasurementProtocolSecretsService(s)
 	return rs
 }
@@ -327,7 +328,18 @@ func NewPropertiesDataStreamsService(s *Service) *PropertiesDataStreamsService {
 type PropertiesDataStreamsService struct {
 	s *Service
 
+	EventCreateRules *PropertiesDataStreamsEventCreateRulesService
+
 	MeasurementProtocolSecrets *PropertiesDataStreamsMeasurementProtocolSecretsService
+}
+
+func NewPropertiesDataStreamsEventCreateRulesService(s *Service) *PropertiesDataStreamsEventCreateRulesService {
+	rs := &PropertiesDataStreamsEventCreateRulesService{s: s}
+	return rs
+}
+
+type PropertiesDataStreamsEventCreateRulesService struct {
+	s *Service
 }
 
 func NewPropertiesDataStreamsMeasurementProtocolSecretsService(s *Service) *PropertiesDataStreamsMeasurementProtocolSecretsService {
@@ -2818,6 +2830,9 @@ type GoogleAnalyticsAdminV1alphaChangeHistoryChangeChangeHistoryResource struct 
 	// change history.
 	AttributionSettings *GoogleAnalyticsAdminV1alphaAttributionSettings `json:"attributionSettings,omitempty"`
 
+	// Audience: A snapshot of an Audience resource in change history.
+	Audience *GoogleAnalyticsAdminV1alphaAudience `json:"audience,omitempty"`
+
 	// BigqueryLink: A snapshot of a BigQuery link resource in change
 	// history.
 	BigqueryLink *GoogleAnalyticsAdminV1alphaBigQueryLink `json:"bigqueryLink,omitempty"`
@@ -2856,6 +2871,10 @@ type GoogleAnalyticsAdminV1alphaChangeHistoryChangeChangeHistoryResource struct 
 	// EnhancedMeasurementSettings: A snapshot of
 	// EnhancedMeasurementSettings resource in change history.
 	EnhancedMeasurementSettings *GoogleAnalyticsAdminV1alphaEnhancedMeasurementSettings `json:"enhancedMeasurementSettings,omitempty"`
+
+	// EventCreateRule: A snapshot of an EventCreateRule resource in change
+	// history.
+	EventCreateRule *GoogleAnalyticsAdminV1alphaEventCreateRule `json:"eventCreateRule,omitempty"`
 
 	// ExpandedDataSet: A snapshot of an ExpandedDataSet resource in change
 	// history.
@@ -4186,6 +4205,68 @@ func (s *GoogleAnalyticsAdminV1alphaEnhancedMeasurementSettings) MarshalJSON() (
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAnalyticsAdminV1alphaEventCreateRule: An Event Create Rule
+// defines conditions that will trigger the creation of an entirely new
+// event based upon matched criteria of a source event. Additional
+// mutations of the parameters from the source event can be defined.
+// Unlike Event Edit rules, Event Creation Rules have no defined order.
+// They will all be run independently. Event Edit and Event Create rules
+// can't be used to modify an event created from an Event Create rule.
+type GoogleAnalyticsAdminV1alphaEventCreateRule struct {
+	// DestinationEvent: Required. The name of the new event to be created.
+	// This value must: * be less than 40 characters * consist only of
+	// letters, digits or _ (underscores) * start with a letter
+	DestinationEvent string `json:"destinationEvent,omitempty"`
+
+	// EventConditions: Required. Must have at least one condition, and can
+	// have up to 10 max. Conditions on the source event must match for this
+	// rule to be applied.
+	EventConditions []*GoogleAnalyticsAdminV1alphaMatchingCondition `json:"eventConditions,omitempty"`
+
+	// Name: Output only. Resource name for this EventCreateRule resource.
+	// Format:
+	// properties/{property}/dataStreams/{data_stream}/eventCreateRules
+	Name string `json:"name,omitempty"`
+
+	// ParameterMutations: Parameter mutations define parameter behavior on
+	// the new event, and are applied in order. A maximum of 20 mutations
+	// can be applied.
+	ParameterMutations []*GoogleAnalyticsAdminV1alphaParameterMutation `json:"parameterMutations,omitempty"`
+
+	// SourceCopyParameters: If true, the source parameters are copied to
+	// the new event. If false, or unset, all non-internal parameters are
+	// not copied from the source event. Parameter mutations are applied
+	// after the parameters have been copied.
+	SourceCopyParameters bool `json:"sourceCopyParameters,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "DestinationEvent") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DestinationEvent") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaEventCreateRule) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaEventCreateRule
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAnalyticsAdminV1alphaExpandedDataSet: A resource message
 // representing a GA4 ExpandedDataSet.
 type GoogleAnalyticsAdminV1alphaExpandedDataSet struct {
@@ -5385,6 +5466,46 @@ func (s *GoogleAnalyticsAdminV1alphaListDisplayVideo360AdvertiserLinksResponse) 
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAnalyticsAdminV1alphaListEventCreateRulesResponse: Response
+// message for ListEventCreateRules RPC.
+type GoogleAnalyticsAdminV1alphaListEventCreateRulesResponse struct {
+	// EventCreateRules: List of EventCreateRules. These will be ordered
+	// stably, but in an arbitrary order.
+	EventCreateRules []*GoogleAnalyticsAdminV1alphaEventCreateRule `json:"eventCreateRules,omitempty"`
+
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "EventCreateRules") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EventCreateRules") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaListEventCreateRulesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaListEventCreateRulesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAnalyticsAdminV1alphaListExpandedDataSetsResponse: Response
 // message for ListExpandedDataSets RPC.
 type GoogleAnalyticsAdminV1alphaListExpandedDataSetsResponse struct {
@@ -5661,6 +5782,72 @@ func (s *GoogleAnalyticsAdminV1alphaListUserLinksResponse) MarshalJSON() ([]byte
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAnalyticsAdminV1alphaMatchingCondition: Defines a condition for
+// when an Event Edit or Event Creation rule applies to an event.
+type GoogleAnalyticsAdminV1alphaMatchingCondition struct {
+	// ComparisonType: Required. The type of comparison to be applied to the
+	// value.
+	//
+	// Possible values:
+	//   "COMPARISON_TYPE_UNSPECIFIED" - Unknown
+	//   "EQUALS" - Equals, case sensitive
+	//   "EQUALS_CASE_INSENSITIVE" - Equals, case insensitive
+	//   "CONTAINS" - Contains, case sensitive
+	//   "CONTAINS_CASE_INSENSITIVE" - Contains, case insensitive
+	//   "STARTS_WITH" - Starts with, case sensitive
+	//   "STARTS_WITH_CASE_INSENSITIVE" - Starts with, case insensitive
+	//   "ENDS_WITH" - Ends with, case sensitive
+	//   "ENDS_WITH_CASE_INSENSITIVE" - Ends with, case insensitive
+	//   "GREATER_THAN" - Greater than
+	//   "GREATER_THAN_OR_EQUAL" - Greater than or equal
+	//   "LESS_THAN" - Less than
+	//   "LESS_THAN_OR_EQUAL" - Less than or equal
+	//   "REGULAR_EXPRESSION" - regular expression. Only supported for web
+	// streams.
+	//   "REGULAR_EXPRESSION_CASE_INSENSITIVE" - regular expression, case
+	// insensitive. Only supported for web streams.
+	ComparisonType string `json:"comparisonType,omitempty"`
+
+	// Field: Required. The name of the field that is compared against for
+	// the condition. If 'event_name' is specified this condition will apply
+	// to the name of the event. Otherwise the condition will apply to a
+	// parameter with the specified name. This value cannot contain spaces.
+	Field string `json:"field,omitempty"`
+
+	// Negated: Whether or not the result of the comparison should be
+	// negated. For example, if `negated` is true, then 'equals' comparisons
+	// would function as 'not equals'.
+	Negated bool `json:"negated,omitempty"`
+
+	// Value: Required. The value being compared against for this condition.
+	// The runtime implementation may perform type coercion of this value to
+	// evaluate this condition based on the type of the parameter value.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ComparisonType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ComparisonType") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaMatchingCondition) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaMatchingCondition
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret: A secret value
 // used for sending hits to Measurement Protocol.
 type GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret struct {
@@ -5748,6 +5935,47 @@ func (s *GoogleAnalyticsAdminV1alphaNumericValue) UnmarshalJSON(data []byte) err
 	}
 	s.DoubleValue = float64(s1.DoubleValue)
 	return nil
+}
+
+// GoogleAnalyticsAdminV1alphaParameterMutation: Defines an event
+// parameter to mutate.
+type GoogleAnalyticsAdminV1alphaParameterMutation struct {
+	// Parameter: Required. The name of the parameter to mutate. This value
+	// must: * be less than 40 characters. * be unique across across all
+	// mutations within the rule * consist only of letters, digits or _
+	// (underscores) For event edit rules, the name may also be set to
+	// 'event_name' to modify the event_name in place.
+	Parameter string `json:"parameter,omitempty"`
+
+	// ParameterValue: Required. The value mutation to perform. * Must be
+	// less than 100 characters. * To specify a constant value for the
+	// param, use the value's string. * To copy value from another
+	// parameter, use syntax like "[[other_parameter]]" For more details,
+	// see this help center article
+	// (https://support.google.com/analytics/answer/10085872#modify-an-event&zippy=%2Cin-this-article%2Cmodify-parameters).
+	ParameterValue string `json:"parameterValue,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Parameter") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Parameter") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaParameterMutation) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaParameterMutation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaProperty: A resource message representing
@@ -6291,6 +6519,8 @@ type GoogleAnalyticsAdminV1alphaSearchChangeHistoryEventsRequest struct {
 	//   "CHANNEL_GROUP" - ChannelGroup resource
 	//   "ENHANCED_MEASUREMENT_SETTINGS" - EnhancedMeasurementSettings
 	// resource
+	//   "AUDIENCE" - Audience resource
+	//   "EVENT_CREATE_RULE" - EventCreateRule resource
 	ResourceType []string `json:"resourceType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Action") to
@@ -20580,6 +20810,796 @@ func (c *PropertiesDataStreamsUpdateEnhancedMeasurementSettingsCall) Do(opts ...
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleAnalyticsAdminV1alphaEnhancedMeasurementSettings"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit"
+	//   ]
+	// }
+
+}
+
+// method id "analyticsadmin.properties.dataStreams.eventCreateRules.create":
+
+type PropertiesDataStreamsEventCreateRulesCreateCall struct {
+	s                                          *Service
+	parent                                     string
+	googleanalyticsadminv1alphaeventcreaterule *GoogleAnalyticsAdminV1alphaEventCreateRule
+	urlParams_                                 gensupport.URLParams
+	ctx_                                       context.Context
+	header_                                    http.Header
+}
+
+// Create: Creates an EventCreateRule.
+//
+// - parent: Example format: properties/123/dataStreams/456.
+func (r *PropertiesDataStreamsEventCreateRulesService) Create(parent string, googleanalyticsadminv1alphaeventcreaterule *GoogleAnalyticsAdminV1alphaEventCreateRule) *PropertiesDataStreamsEventCreateRulesCreateCall {
+	c := &PropertiesDataStreamsEventCreateRulesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleanalyticsadminv1alphaeventcreaterule = googleanalyticsadminv1alphaeventcreaterule
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PropertiesDataStreamsEventCreateRulesCreateCall) Fields(s ...googleapi.Field) *PropertiesDataStreamsEventCreateRulesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PropertiesDataStreamsEventCreateRulesCreateCall) Context(ctx context.Context) *PropertiesDataStreamsEventCreateRulesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PropertiesDataStreamsEventCreateRulesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesDataStreamsEventCreateRulesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleanalyticsadminv1alphaeventcreaterule)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/eventCreateRules")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.dataStreams.eventCreateRules.create" call.
+// Exactly one of *GoogleAnalyticsAdminV1alphaEventCreateRule or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleAnalyticsAdminV1alphaEventCreateRule.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *PropertiesDataStreamsEventCreateRulesCreateCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaEventCreateRule, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAnalyticsAdminV1alphaEventCreateRule{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates an EventCreateRule.",
+	//   "flatPath": "v1alpha/properties/{propertiesId}/dataStreams/{dataStreamsId}/eventCreateRules",
+	//   "httpMethod": "POST",
+	//   "id": "analyticsadmin.properties.dataStreams.eventCreateRules.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. Example format: properties/123/dataStreams/456",
+	//       "location": "path",
+	//       "pattern": "^properties/[^/]+/dataStreams/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+parent}/eventCreateRules",
+	//   "request": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaEventCreateRule"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaEventCreateRule"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit"
+	//   ]
+	// }
+
+}
+
+// method id "analyticsadmin.properties.dataStreams.eventCreateRules.delete":
+
+type PropertiesDataStreamsEventCreateRulesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes an EventCreateRule.
+//
+//   - name: Example format:
+//     properties/123/dataStreams/456/eventCreateRules/789.
+func (r *PropertiesDataStreamsEventCreateRulesService) Delete(name string) *PropertiesDataStreamsEventCreateRulesDeleteCall {
+	c := &PropertiesDataStreamsEventCreateRulesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PropertiesDataStreamsEventCreateRulesDeleteCall) Fields(s ...googleapi.Field) *PropertiesDataStreamsEventCreateRulesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PropertiesDataStreamsEventCreateRulesDeleteCall) Context(ctx context.Context) *PropertiesDataStreamsEventCreateRulesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PropertiesDataStreamsEventCreateRulesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesDataStreamsEventCreateRulesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.dataStreams.eventCreateRules.delete" call.
+// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *PropertiesDataStreamsEventCreateRulesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes an EventCreateRule.",
+	//   "flatPath": "v1alpha/properties/{propertiesId}/dataStreams/{dataStreamsId}/eventCreateRules/{eventCreateRulesId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "analyticsadmin.properties.dataStreams.eventCreateRules.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Example format: properties/123/dataStreams/456/eventCreateRules/789",
+	//       "location": "path",
+	//       "pattern": "^properties/[^/]+/dataStreams/[^/]+/eventCreateRules/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleProtobufEmpty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit"
+	//   ]
+	// }
+
+}
+
+// method id "analyticsadmin.properties.dataStreams.eventCreateRules.get":
+
+type PropertiesDataStreamsEventCreateRulesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Lookup for a single EventCreateRule.
+//
+//   - name: The name of the EventCreateRule to get. Example format:
+//     properties/123/dataStreams/456/eventCreateRules/789.
+func (r *PropertiesDataStreamsEventCreateRulesService) Get(name string) *PropertiesDataStreamsEventCreateRulesGetCall {
+	c := &PropertiesDataStreamsEventCreateRulesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PropertiesDataStreamsEventCreateRulesGetCall) Fields(s ...googleapi.Field) *PropertiesDataStreamsEventCreateRulesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *PropertiesDataStreamsEventCreateRulesGetCall) IfNoneMatch(entityTag string) *PropertiesDataStreamsEventCreateRulesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PropertiesDataStreamsEventCreateRulesGetCall) Context(ctx context.Context) *PropertiesDataStreamsEventCreateRulesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PropertiesDataStreamsEventCreateRulesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesDataStreamsEventCreateRulesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.dataStreams.eventCreateRules.get" call.
+// Exactly one of *GoogleAnalyticsAdminV1alphaEventCreateRule or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleAnalyticsAdminV1alphaEventCreateRule.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *PropertiesDataStreamsEventCreateRulesGetCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaEventCreateRule, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAnalyticsAdminV1alphaEventCreateRule{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lookup for a single EventCreateRule.",
+	//   "flatPath": "v1alpha/properties/{propertiesId}/dataStreams/{dataStreamsId}/eventCreateRules/{eventCreateRulesId}",
+	//   "httpMethod": "GET",
+	//   "id": "analyticsadmin.properties.dataStreams.eventCreateRules.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the EventCreateRule to get. Example format: properties/123/dataStreams/456/eventCreateRules/789",
+	//       "location": "path",
+	//       "pattern": "^properties/[^/]+/dataStreams/[^/]+/eventCreateRules/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaEventCreateRule"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit",
+	//     "https://www.googleapis.com/auth/analytics.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "analyticsadmin.properties.dataStreams.eventCreateRules.list":
+
+type PropertiesDataStreamsEventCreateRulesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists EventCreateRules on a web data stream.
+//
+// - parent: Example format: properties/123/dataStreams/456.
+func (r *PropertiesDataStreamsEventCreateRulesService) List(parent string) *PropertiesDataStreamsEventCreateRulesListCall {
+	c := &PropertiesDataStreamsEventCreateRulesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of resources to return. If unspecified, at most 50 resources will be
+// returned. The maximum value is 200 (higher values will be coerced to
+// the maximum).
+func (c *PropertiesDataStreamsEventCreateRulesListCall) PageSize(pageSize int64) *PropertiesDataStreamsEventCreateRulesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `ListEventCreateRules` call. Provide this to
+// retrieve the subsequent page. When paginating, all other parameters
+// provided to `ListEventCreateRules` must match the call that provided
+// the page token.
+func (c *PropertiesDataStreamsEventCreateRulesListCall) PageToken(pageToken string) *PropertiesDataStreamsEventCreateRulesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PropertiesDataStreamsEventCreateRulesListCall) Fields(s ...googleapi.Field) *PropertiesDataStreamsEventCreateRulesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *PropertiesDataStreamsEventCreateRulesListCall) IfNoneMatch(entityTag string) *PropertiesDataStreamsEventCreateRulesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PropertiesDataStreamsEventCreateRulesListCall) Context(ctx context.Context) *PropertiesDataStreamsEventCreateRulesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PropertiesDataStreamsEventCreateRulesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesDataStreamsEventCreateRulesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/eventCreateRules")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.dataStreams.eventCreateRules.list" call.
+// Exactly one of
+// *GoogleAnalyticsAdminV1alphaListEventCreateRulesResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleAnalyticsAdminV1alphaListEventCreateRulesResponse.ServerRespons
+// e.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *PropertiesDataStreamsEventCreateRulesListCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaListEventCreateRulesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAnalyticsAdminV1alphaListEventCreateRulesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists EventCreateRules on a web data stream.",
+	//   "flatPath": "v1alpha/properties/{propertiesId}/dataStreams/{dataStreamsId}/eventCreateRules",
+	//   "httpMethod": "GET",
+	//   "id": "analyticsadmin.properties.dataStreams.eventCreateRules.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The maximum number of resources to return. If unspecified, at most 50 resources will be returned. The maximum value is 200 (higher values will be coerced to the maximum).",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A page token, received from a previous `ListEventCreateRules` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListEventCreateRules` must match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Example format: properties/123/dataStreams/456",
+	//       "location": "path",
+	//       "pattern": "^properties/[^/]+/dataStreams/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+parent}/eventCreateRules",
+	//   "response": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaListEventCreateRulesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit",
+	//     "https://www.googleapis.com/auth/analytics.readonly"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *PropertiesDataStreamsEventCreateRulesListCall) Pages(ctx context.Context, f func(*GoogleAnalyticsAdminV1alphaListEventCreateRulesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "analyticsadmin.properties.dataStreams.eventCreateRules.patch":
+
+type PropertiesDataStreamsEventCreateRulesPatchCall struct {
+	s                                          *Service
+	name                                       string
+	googleanalyticsadminv1alphaeventcreaterule *GoogleAnalyticsAdminV1alphaEventCreateRule
+	urlParams_                                 gensupport.URLParams
+	ctx_                                       context.Context
+	header_                                    http.Header
+}
+
+// Patch: Updates an EventCreateRule.
+//
+//   - name: Output only. Resource name for this EventCreateRule resource.
+//     Format:
+//     properties/{property}/dataStreams/{data_stream}/eventCreateRules.
+func (r *PropertiesDataStreamsEventCreateRulesService) Patch(name string, googleanalyticsadminv1alphaeventcreaterule *GoogleAnalyticsAdminV1alphaEventCreateRule) *PropertiesDataStreamsEventCreateRulesPatchCall {
+	c := &PropertiesDataStreamsEventCreateRulesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleanalyticsadminv1alphaeventcreaterule = googleanalyticsadminv1alphaeventcreaterule
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. The
+// list of fields to be updated. Field names must be in snake case
+// (e.g., "field_to_update"). Omitted fields will not be updated. To
+// replace the entire entity, use one path with the string "*" to match
+// all fields.
+func (c *PropertiesDataStreamsEventCreateRulesPatchCall) UpdateMask(updateMask string) *PropertiesDataStreamsEventCreateRulesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PropertiesDataStreamsEventCreateRulesPatchCall) Fields(s ...googleapi.Field) *PropertiesDataStreamsEventCreateRulesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PropertiesDataStreamsEventCreateRulesPatchCall) Context(ctx context.Context) *PropertiesDataStreamsEventCreateRulesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PropertiesDataStreamsEventCreateRulesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesDataStreamsEventCreateRulesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleanalyticsadminv1alphaeventcreaterule)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.dataStreams.eventCreateRules.patch" call.
+// Exactly one of *GoogleAnalyticsAdminV1alphaEventCreateRule or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleAnalyticsAdminV1alphaEventCreateRule.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *PropertiesDataStreamsEventCreateRulesPatchCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaEventCreateRule, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAnalyticsAdminV1alphaEventCreateRule{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an EventCreateRule.",
+	//   "flatPath": "v1alpha/properties/{propertiesId}/dataStreams/{dataStreamsId}/eventCreateRules/{eventCreateRulesId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "analyticsadmin.properties.dataStreams.eventCreateRules.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Output only. Resource name for this EventCreateRule resource. Format: properties/{property}/dataStreams/{data_stream}/eventCreateRules",
+	//       "location": "path",
+	//       "pattern": "^properties/[^/]+/dataStreams/[^/]+/eventCreateRules/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Required. The list of fields to be updated. Field names must be in snake case (e.g., \"field_to_update\"). Omitted fields will not be updated. To replace the entire entity, use one path with the string \"*\" to match all fields.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "request": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaEventCreateRule"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaEventCreateRule"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/analytics.edit"

@@ -255,7 +255,7 @@
               ],
               "parameters": {
                 "bigQueryExportId": {
-                  "description": "Required. Unique identifier provided by the client within the parent scope. It must consist of lower case letters, numbers, and hyphen, with the first character a letter, the last a letter or a number, and a 63 character maximum.",
+                  "description": "Required. Unique identifier provided by the client within the parent scope. It must consist of only lowercase letters, numbers, and hyphens, must start with a letter, must end with either a letter or a number, and must be 63 characters or less.",
                   "location": "query",
                   "type": "string"
                 },
@@ -444,7 +444,7 @@
               ],
               "parameters": {
                 "muteConfigId": {
-                  "description": "Required. Unique identifier provided by the client within the parent scope. It must consist of lower case letters, numbers, and hyphen, with the first character a letter, the last a letter or a number, and a 63 character maximum.",
+                  "description": "Required. Unique identifier provided by the client within the parent scope. It must consist of only lowercase letters, numbers, and hyphens, must start with a letter, must end with either a letter or a number, and must be 63 characters or less.",
                   "location": "query",
                   "type": "string"
                 },
@@ -1552,7 +1552,7 @@
               ],
               "parameters": {
                 "bigQueryExportId": {
-                  "description": "Required. Unique identifier provided by the client within the parent scope. It must consist of lower case letters, numbers, and hyphen, with the first character a letter, the last a letter or a number, and a 63 character maximum.",
+                  "description": "Required. Unique identifier provided by the client within the parent scope. It must consist of only lowercase letters, numbers, and hyphens, must start with a letter, must end with either a letter or a number, and must be 63 characters or less.",
                   "location": "query",
                   "type": "string"
                 },
@@ -1741,7 +1741,7 @@
               ],
               "parameters": {
                 "muteConfigId": {
-                  "description": "Required. Unique identifier provided by the client within the parent scope. It must consist of lower case letters, numbers, and hyphen, with the first character a letter, the last a letter or a number, and a 63 character maximum.",
+                  "description": "Required. Unique identifier provided by the client within the parent scope. It must consist of only lowercase letters, numbers, and hyphens, must start with a letter, must end with either a letter or a number, and must be 63 characters or less.",
                   "location": "query",
                   "type": "string"
                 },
@@ -3084,7 +3084,7 @@
               ],
               "parameters": {
                 "bigQueryExportId": {
-                  "description": "Required. Unique identifier provided by the client within the parent scope. It must consist of lower case letters, numbers, and hyphen, with the first character a letter, the last a letter or a number, and a 63 character maximum.",
+                  "description": "Required. Unique identifier provided by the client within the parent scope. It must consist of only lowercase letters, numbers, and hyphens, must start with a letter, must end with either a letter or a number, and must be 63 characters or less.",
                   "location": "query",
                   "type": "string"
                 },
@@ -3273,7 +3273,7 @@
               ],
               "parameters": {
                 "muteConfigId": {
-                  "description": "Required. Unique identifier provided by the client within the parent scope. It must consist of lower case letters, numbers, and hyphen, with the first character a letter, the last a letter or a number, and a 63 character maximum.",
+                  "description": "Required. Unique identifier provided by the client within the parent scope. It must consist of only lowercase letters, numbers, and hyphens, must start with a letter, must end with either a letter or a number, and must be 63 characters or less.",
                   "location": "query",
                   "type": "string"
                 },
@@ -4143,7 +4143,7 @@
       }
     }
   },
-  "revision": "20230420",
+  "revision": "20230504",
   "rootUrl": "https://securitycenter.googleapis.com/",
   "schemas": {
     "Access": {

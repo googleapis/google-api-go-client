@@ -372,8 +372,7 @@ type Case struct {
 	// Name: The resource name for the case.
 	Name string `json:"name,omitempty"`
 
-	// Priority: The priority of this case. If this is set, do not set
-	// severity.
+	// Priority: The priority of this case.
 	//
 	// Possible values:
 	//   "PRIORITY_UNSPECIFIED" - Priority is undefined or has not been set
@@ -1018,12 +1017,12 @@ func (s *ListAttachmentsResponse) MarshalJSON() ([]byte, error) {
 
 // ListCasesResponse: The response message for the ListCases endpoint.
 type ListCasesResponse struct {
-	// Cases: The list of cases associated with the cloud resource, after
-	// any filters have been applied.
+	// Cases: The list of cases associated with the Google Cloud Resource,
+	// after any filters have been applied.
 	Cases []*Case `json:"cases,omitempty"`
 
 	// NextPageToken: A token to retrieve the next page of results. This
-	// should be set in the `page_token` field of subsequent
+	// should be set in the `page_token` field of the subsequent
 	// `ListCasesRequest` message that is issued. If unspecified, there are
 	// no more results to retrieve.
 	NextPageToken string `json:"nextPageToken,omitempty"`
@@ -1327,8 +1326,8 @@ func (s *SearchCaseClassificationsResponse) MarshalJSON() ([]byte, error) {
 // SearchCasesResponse: The response message for the SearchCases
 // endpoint.
 type SearchCasesResponse struct {
-	// Cases: The list of Case associated with the cloud resource, after any
-	// filters have been applied.
+	// Cases: The list of cases associated with the Google Cloud Resource,
+	// after any filters have been applied.
 	Cases []*Case `json:"cases,omitempty"`
 
 	// NextPageToken: A token to retrieve the next page of results. This
@@ -1451,8 +1450,8 @@ func (c *CaseClassificationsSearchCall) PageToken(pageToken string) *CaseClassif
 }
 
 // Query sets the optional parameter "query": An expression written in
-// the Cloud filter language. If non-empty, then only cases whose fields
-// match the filter are returned. If empty, then no messages are
+// the Google Cloud filter language. If non-empty, then only cases whose
+// fields match the filter are returned. If empty, then no messages are
 // filtered out.
 func (c *CaseClassificationsSearchCall) Query(query string) *CaseClassificationsSearchCall {
 	c.urlParams_.Set("query", query)
@@ -1574,7 +1573,7 @@ func (c *CaseClassificationsSearchCall) Do(opts ...googleapi.CallOption) (*Searc
 	//       "type": "string"
 	//     },
 	//     "query": {
-	//       "description": "An expression written in the Cloud filter language. If non-empty, then only cases whose fields match the filter are returned. If empty, then no messages are filtered out.",
+	//       "description": "An expression written in the Google Cloud filter language. If non-empty, then only cases whose fields match the filter are returned. If empty, then no messages are filtered out.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -1764,12 +1763,12 @@ type CasesCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Create a new case and associate it with the given Cloud
-// resource. The case object must have the following fields set:
-// display_name, description, classification, and severity.
+// Create: Create a new case and associate it with the given Google
+// Cloud Resource. The case object must have the following fields set:
+// `display_name`, `description`, `classification`, and `priority`.
 //
-//   - parent: The name of the Cloud resource under which the case should
-//     be created.
+//   - parent: The name of the Google Cloud Resource under which the case
+//     should be created.
 func (r *CasesService) Create(parent string, case_ *Case) *CasesCreateCall {
 	c := &CasesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1868,7 +1867,7 @@ func (c *CasesCreateCall) Do(opts ...googleapi.CallOption) (*Case, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Create a new case and associate it with the given Cloud resource. The case object must have the following fields set: display_name, description, classification, and severity.",
+	//   "description": "Create a new case and associate it with the given Google Cloud Resource. The case object must have the following fields set: `display_name`, `description`, `classification`, and `priority`.",
 	//   "flatPath": "v2beta/{v2betaId}/{v2betaId1}/cases",
 	//   "httpMethod": "POST",
 	//   "id": "cloudsupport.cases.create",
@@ -1877,7 +1876,7 @@ func (c *CasesCreateCall) Do(opts ...googleapi.CallOption) (*Case, error) {
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The name of the Cloud resource under which the case should be created.",
+	//       "description": "Required. The name of the Google Cloud Resource under which the case should be created.",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+$",
 	//       "required": true,
@@ -1909,8 +1908,8 @@ type CasesEscalateCall struct {
 	header_             http.Header
 }
 
-// Escalate: Escalate a case. Escalating a case will initiate the Cloud
-// Support escalation management process. This operation is only
+// Escalate: Escalate a case. Escalating a case will initiate the Google
+// Cloud Support escalation management process. This operation is only
 // available to certain Customer Care tiers. Go to
 // https://cloud.google.com/support and look for 'Technical support
 // escalations' in the feature list to find out which tiers are able to
@@ -2016,7 +2015,7 @@ func (c *CasesEscalateCall) Do(opts ...googleapi.CallOption) (*Case, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Escalate a case. Escalating a case will initiate the Cloud Support escalation management process. This operation is only available to certain Customer Care tiers. Go to https://cloud.google.com/support and look for 'Technical support escalations' in the feature list to find out which tiers are able to perform escalations.",
+	//   "description": "Escalate a case. Escalating a case will initiate the Google Cloud Support escalation management process. This operation is only available to certain Customer Care tiers. Go to https://cloud.google.com/support and look for 'Technical support escalations' in the feature list to find out which tiers are able to perform escalations.",
 	//   "flatPath": "v2beta/{v2betaId}/{v2betaId1}/cases/{casesId}:escalate",
 	//   "httpMethod": "POST",
 	//   "id": "cloudsupport.cases.escalate",
@@ -2224,11 +2223,10 @@ func (r *CasesService) List(parent string) *CasesListCall {
 // and `AND`: - `state`: The accepted values are `OPEN` or `CLOSED`. -
 // `priority`: The accepted values are `P0`, `P1`, `P2`, `P3`, or `P4`.
 // You can specify multiple values for priority using the `OR` operator.
-// For example, `priority=P1 OR priority=P2`. - [DEPRECATED] `severity`:
-// The accepted values are `S0`, `S1`, `S2`, `S3`, or `S4`. -
-// `creator.email`: The email address of the case creator. Examples: -
-// `state=CLOSED` - `state=OPEN AND creator.email="tester@example.com"
-// - `state=OPEN AND (priority=P0 OR priority=P1)`
+// For example, `priority=P1 OR priority=P2`. - `creator.email`: The
+// email address of the case creator. Examples: - `state=CLOSED` -
+// `state=OPEN AND creator.email="tester@example.com" - `state=OPEN AND
+// (priority=P0 OR priority=P1)`
 func (c *CasesListCall) Filter(filter string) *CasesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -2357,7 +2355,7 @@ func (c *CasesListCall) Do(opts ...googleapi.CallOption) (*ListCasesResponse, er
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "An expression written in filter language. If non-empty, the query returns the cases that match the filter. Else, the query doesn't filter the cases. Filter expressions use the following fields with the operators equals (`=`) and `AND`: - `state`: The accepted values are `OPEN` or `CLOSED`. - `priority`: The accepted values are `P0`, `P1`, `P2`, `P3`, or `P4`. You can specify multiple values for priority using the `OR` operator. For example, `priority=P1 OR priority=P2`. - [DEPRECATED] `severity`: The accepted values are `S0`, `S1`, `S2`, `S3`, or `S4`. - `creator.email`: The email address of the case creator. Examples: - `state=CLOSED` - `state=OPEN AND creator.email=\"tester@example.com\"` - `state=OPEN AND (priority=P0 OR priority=P1)`",
+	//       "description": "An expression written in filter language. If non-empty, the query returns the cases that match the filter. Else, the query doesn't filter the cases. Filter expressions use the following fields with the operators equals (`=`) and `AND`: - `state`: The accepted values are `OPEN` or `CLOSED`. - `priority`: The accepted values are `P0`, `P1`, `P2`, `P3`, or `P4`. You can specify multiple values for priority using the `OR` operator. For example, `priority=P1 OR priority=P2`. - `creator.email`: The email address of the case creator. Examples: - `state=CLOSED` - `state=OPEN AND creator.email=\"tester@example.com\"` - `state=OPEN AND (priority=P0 OR priority=P1)`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2436,12 +2434,12 @@ func (r *CasesService) Patch(name string, case_ *Case) *CasesPatchCall {
 
 // UpdateMask sets the optional parameter "updateMask": A list of
 // attributes of the case object that should be updated as part of this
-// request. Supported values are severity, display_name, and
-// subscriber_email_addresses. If no fields are specified, all supported
-// fields are updated. WARNING: If you do not provide a field mask, then
-// you may accidentally clear some fields. For example, if you leave
-// field mask empty and do not provide a value for
-// subscriber_email_addresses, then subscriber_email_addresses is
+// request. Supported values are `priority`, `display_name`, and
+// `subscriber_email_addresses`. If no fields are specified, all
+// supported fields are updated. WARNING: If you do not provide a field
+// mask, then you might accidentally clear some fields. For example, if
+// you leave the field mask empty and do not provide a value for
+// `subscriber_email_addresses`, then `subscriber_email_addresses` is
 // updated to empty.
 func (c *CasesPatchCall) UpdateMask(updateMask string) *CasesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
@@ -2555,7 +2553,7 @@ func (c *CasesPatchCall) Do(opts ...googleapi.CallOption) (*Case, error) {
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "A list of attributes of the case object that should be updated as part of this request. Supported values are severity, display_name, and subscriber_email_addresses. If no fields are specified, all supported fields are updated. WARNING: If you do not provide a field mask, then you may accidentally clear some fields. For example, if you leave field mask empty and do not provide a value for subscriber_email_addresses, then subscriber_email_addresses is updated to empty.",
+	//       "description": "A list of attributes of the case object that should be updated as part of this request. Supported values are `priority`, `display_name`, and `subscriber_email_addresses`. If no fields are specified, all supported fields are updated. WARNING: If you do not provide a field mask, then you might accidentally clear some fields. For example, if you leave the field mask empty and do not provide a value for `subscriber_email_addresses`, then `subscriber_email_addresses` is updated to empty.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -2613,16 +2611,15 @@ func (c *CasesSearchCall) PageToken(pageToken string) *CasesSearchCall {
 // `projects/`. - `state`: The accepted values are `OPEN` or `CLOSED`. -
 // `priority`: The accepted values are `P0`, `P1`, `P2`, `P3`, or `P4`.
 // You can specify multiple values for priority using the `OR` operator.
-// For example, `priority=P1 OR priority=P2`. - [DEPRECATED] `severity`:
-// The accepted values are `S0`, `S1`, `S2`, `S3`, or `S4`. -
-// `creator.email`: The email address of the case creator. -
-// `billingAccount`: A billing account in the form `billingAccounts/`
-// You must specify eitehr `organization` or `project`. To search across
-// `displayName`, `description`, and comments, use a global restriction
-// with no keyword or operator. For example, "my search". To search
-// only cases updated after a certain date, use `update_time` retricted
-// with that particular date, time, and timezone in ISO datetime format.
-// For example, `update_time>"2020-01-01T00:00:00-05:00". `update_time`
+// For example, `priority=P1 OR priority=P2`. - `creator.email`: The
+// email address of the case creator. - `billingAccount`: A billing
+// account in the form `billingAccounts/` You must specify either
+// `organization` or `project`. To search across `displayName`,
+// `description`, and comments, use a global restriction with no keyword
+// or operator. For example, "my search". To search only cases updated
+// after a certain date, use `update_time` restricted with that
+// particular date, time, and timezone in ISO datetime format. For
+// example, `update_time>"2020-01-01T00:00:00-05:00". `update_time`
 // only supports the greater than operator (`>`). Examples: -
 // `organization="organizations/123456789" -
 // `project="projects/my-project-id" - `project="projects/123456789" -
@@ -2750,7 +2747,7 @@ func (c *CasesSearchCall) Do(opts ...googleapi.CallOption) (*SearchCasesResponse
 	//       "type": "string"
 	//     },
 	//     "query": {
-	//       "description": "An expression written in filter language. A query uses the following fields with the operators equals (`=`) and `AND`: - `organization`: An organization name in the form `organizations/`. - `project`: A project name in the form `projects/`. - `state`: The accepted values are `OPEN` or `CLOSED`. - `priority`: The accepted values are `P0`, `P1`, `P2`, `P3`, or `P4`. You can specify multiple values for priority using the `OR` operator. For example, `priority=P1 OR priority=P2`. - [DEPRECATED] `severity`: The accepted values are `S0`, `S1`, `S2`, `S3`, or `S4`. - `creator.email`: The email address of the case creator. - `billingAccount`: A billing account in the form `billingAccounts/` You must specify eitehr `organization` or `project`. To search across `displayName`, `description`, and comments, use a global restriction with no keyword or operator. For example, `\"my search\"`. To search only cases updated after a certain date, use `update_time` retricted with that particular date, time, and timezone in ISO datetime format. For example, `update_time\u003e\"2020-01-01T00:00:00-05:00\"`. `update_time` only supports the greater than operator (`\u003e`). Examples: - `organization=\"organizations/123456789\"` - `project=\"projects/my-project-id\"` - `project=\"projects/123456789\"` - `billing_account=\"billingAccounts/123456-A0B0C0-CUZ789\"` - `organization=\"organizations/123456789\" AND state=CLOSED` - `project=\"projects/my-project-id\" AND creator.email=\"tester@example.com\"` - `project=\"projects/my-project-id\" AND (priority=P0 OR priority=P1)`",
+	//       "description": "An expression written in filter language. A query uses the following fields with the operators equals (`=`) and `AND`: - `organization`: An organization name in the form `organizations/`. - `project`: A project name in the form `projects/`. - `state`: The accepted values are `OPEN` or `CLOSED`. - `priority`: The accepted values are `P0`, `P1`, `P2`, `P3`, or `P4`. You can specify multiple values for priority using the `OR` operator. For example, `priority=P1 OR priority=P2`. - `creator.email`: The email address of the case creator. - `billingAccount`: A billing account in the form `billingAccounts/` You must specify either `organization` or `project`. To search across `displayName`, `description`, and comments, use a global restriction with no keyword or operator. For example, `\"my search\"`. To search only cases updated after a certain date, use `update_time` restricted with that particular date, time, and timezone in ISO datetime format. For example, `update_time\u003e\"2020-01-01T00:00:00-05:00\"`. `update_time` only supports the greater than operator (`\u003e`). Examples: - `organization=\"organizations/123456789\"` - `project=\"projects/my-project-id\"` - `project=\"projects/123456789\"` - `billing_account=\"billingAccounts/123456-A0B0C0-CUZ789\"` - `organization=\"organizations/123456789\" AND state=CLOSED` - `project=\"projects/my-project-id\" AND creator.email=\"tester@example.com\"` - `project=\"projects/my-project-id\" AND (priority=P0 OR priority=P1)`",
 	//       "location": "query",
 	//       "type": "string"
 	//     }

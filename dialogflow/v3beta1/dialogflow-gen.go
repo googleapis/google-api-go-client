@@ -2398,6 +2398,7 @@ func (s *GoogleCloudDialogflowCxV3PageInfoFormInfoParameterInfo) MarshalJSON() (
 // can contain one of: 1. A conversational query in the form of text. 2.
 // An intent query that specifies which intent to trigger. 3. Natural
 // language speech audio to be processed. 4. An event to be triggered.
+// 5. DTMF digits to invoke an intent and fill in parameter value.
 type GoogleCloudDialogflowCxV3QueryInput struct {
 	// Audio: The natural language speech audio to be processed.
 	Audio *GoogleCloudDialogflowCxV3AudioInput `json:"audio,omitempty"`
@@ -3234,6 +3235,7 @@ type GoogleCloudDialogflowCxV3TestRunDifference struct {
 	//   "PAGE" - The page.
 	//   "PARAMETERS" - The parameters.
 	//   "UTTERANCE" - The message utterance.
+	//   "FLOW" - The flow.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
@@ -6729,7 +6731,7 @@ func (s *GoogleCloudDialogflowCxV3beta1FulfillmentSetParameterAction) MarshalJSO
 // (e.g. exported agent or transcripts) outside of Dialogflow.
 type GoogleCloudDialogflowCxV3beta1GcsDestination struct {
 	// Uri: Required. The Google Cloud Storage URI for the exported objects.
-	// A URI is of the form: gs://bucket/object-name-or-prefix Whether a
+	// A URI is of the form: `gs://bucket/object-name-or-prefix` Whether a
 	// full object name, or just a prefix, its usage depends on the
 	// Dialogflow operation.
 	Uri string `json:"uri,omitempty"`
@@ -7293,8 +7295,8 @@ func (s *GoogleCloudDialogflowCxV3beta1IntentCoverage) UnmarshalJSON(data []byte
 // GoogleCloudDialogflowCxV3beta1IntentCoverageIntent: The agent's
 // intent.
 type GoogleCloudDialogflowCxV3beta1IntentCoverageIntent struct {
-	// Covered: Whether or not the intent is covered by at least one of the
-	// agent's test cases.
+	// Covered: Whether the intent is covered by at least one of the agent's
+	// test cases.
 	Covered bool `json:"covered,omitempty"`
 
 	// Intent: The intent full resource name
@@ -8747,6 +8749,7 @@ func (s *GoogleCloudDialogflowCxV3beta1PageInfoFormInfoParameterInfo) MarshalJSO
 // It can contain one of: 1. A conversational query in the form of text.
 // 2. An intent query that specifies which intent to trigger. 3. Natural
 // language speech audio to be processed. 4. An event to be triggered.
+// 5. DTMF digits to invoke an intent and fill in parameter value.
 type GoogleCloudDialogflowCxV3beta1QueryInput struct {
 	// Audio: The natural language speech audio to be processed.
 	Audio *GoogleCloudDialogflowCxV3beta1AudioInput `json:"audio,omitempty"`
@@ -10520,6 +10523,7 @@ type GoogleCloudDialogflowCxV3beta1TestRunDifference struct {
 	//   "PAGE" - The page.
 	//   "PARAMETERS" - The parameters.
 	//   "UTTERANCE" - The message utterance.
+	//   "FLOW" - The flow.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
@@ -10576,12 +10580,18 @@ func (s *GoogleCloudDialogflowCxV3beta1TextInput) MarshalJSON() ([]byte, error) 
 }
 
 // GoogleCloudDialogflowCxV3beta1TextToSpeechSettings: Settings related
-// to speech generating.
+// to speech synthesizing.
 type GoogleCloudDialogflowCxV3beta1TextToSpeechSettings struct {
 	// SynthesizeSpeechConfigs: Configuration of how speech should be
 	// synthesized, mapping from language
-	// (https://dialogflow.com/docs/reference/language) to
-	// SynthesizeSpeechConfig.
+	// (https://cloud.google.com/dialogflow/cx/docs/reference/language) to
+	// SynthesizeSpeechConfig. These settings affect: - The synthesize
+	// configuration used in phone gateway
+	// (https://cloud.google.com/dialogflow/cx/docs/concept/integration/phone-gateway).
+	// - You no longer need to specify
+	// OutputAudioConfig.synthesize_speech_config when invoking API calls.
+	// Your agent will use the pre-configured options for speech
+	// synthesizing.
 	SynthesizeSpeechConfigs map[string]GoogleCloudDialogflowCxV3beta1SynthesizeSpeechConfig `json:"synthesizeSpeechConfigs,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -10666,8 +10676,8 @@ func (s *GoogleCloudDialogflowCxV3beta1TransitionCoverage) UnmarshalJSON(data []
 // GoogleCloudDialogflowCxV3beta1TransitionCoverageTransition: A
 // transition in a page.
 type GoogleCloudDialogflowCxV3beta1TransitionCoverageTransition struct {
-	// Covered: Whether or not the transition is covered by at least one of
-	// the agent's test cases.
+	// Covered: Whether the transition is covered by at least one of the
+	// agent's test cases.
 	Covered bool `json:"covered,omitempty"`
 
 	// EventHandler: Event handler.
@@ -10959,8 +10969,8 @@ func (s *GoogleCloudDialogflowCxV3beta1TransitionRouteGroupCoverageCoverage) Unm
 // GoogleCloudDialogflowCxV3beta1TransitionRouteGroupCoverageCoverageTran
 // sition: A transition coverage in a transition route group.
 type GoogleCloudDialogflowCxV3beta1TransitionRouteGroupCoverageCoverageTransition struct {
-	// Covered: Whether or not the transition route is covered by at least
-	// one of the agent's test cases.
+	// Covered: Whether the transition route is covered by at least one of
+	// the agent's test cases.
 	Covered bool `json:"covered,omitempty"`
 
 	// TransitionRoute: Intent route or condition route.
@@ -19582,8 +19592,8 @@ func (s *GoogleCloudLocationListLocationsResponse) MarshalJSON() ([]byte, error)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudLocationLocation: A resource that represents Google Cloud
-// Platform location.
+// GoogleCloudLocationLocation: A resource that represents a Google
+// Cloud location.
 type GoogleCloudLocationLocation struct {
 	// DisplayName: The friendly name for this location, typically a nearby
 	// city name. For example, "Tokyo".

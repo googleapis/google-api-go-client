@@ -971,7 +971,7 @@ func (s *ApigatewayListOperationsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ApigatewayLocation: A resource that represents Google Cloud Platform
+// ApigatewayLocation: A resource that represents a Google Cloud
 // location.
 type ApigatewayLocation struct {
 	// DisplayName: The friendly name for this location, typically a nearby

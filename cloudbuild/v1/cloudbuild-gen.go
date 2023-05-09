@@ -2413,6 +2413,12 @@ type GitFileSource struct {
 	//   "GITLAB" - A GitLab-hosted repo.
 	RepoType string `json:"repoType,omitempty"`
 
+	// Repository: The fully qualified resource name of the Repo API
+	// repository. Either uri or repository can be specified. If
+	// unspecified, the repo from which the trigger invocation originated is
+	// assumed to be the repo from which to read the specified path.
+	Repository string `json:"repository,omitempty"`
+
 	// Revision: The branch, tag, arbitrary ref, or SHA version of the repo
 	// to use when resolving the filename (optional). This field respects
 	// the same syntax/resolution as described here:
@@ -2962,6 +2968,10 @@ type GitRepoSource struct {
 	//   "BITBUCKET_SERVER" - A Bitbucket Server-hosted repo.
 	//   "GITLAB" - A GitLab-hosted repo.
 	RepoType string `json:"repoType,omitempty"`
+
+	// Repository: The qualified resource name of the Repo API repository
+	// Either uri or repository can be specified and is required.
+	Repository string `json:"repository,omitempty"`
 
 	// Uri: The URI of the repo. Either uri or repository can be specified
 	// and is required.

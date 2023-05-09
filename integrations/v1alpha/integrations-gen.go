@@ -1029,6 +1029,11 @@ type EnterpriseCrmEventbusProtoCloudKmsConfig struct {
 	// LocationName: Location name of the key ring, e.g. "us-west1".
 	LocationName string `json:"locationName,omitempty"`
 
+	// ServiceAccount: Optional. The service account used for authentication
+	// of this KMS key. If this is not provided, the service account in
+	// Client.clientSource will be used.
+	ServiceAccount string `json:"serviceAccount,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "GcpProjectId") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -4089,6 +4094,22 @@ type EnterpriseCrmEventbusProtoTaskMetadata struct {
 	//   "UNSPECIFIED_EXTERNAL_CATEGORY"
 	//   "CORE"
 	//   "CONNECTORS"
+	//   "EXTERNAL_HTTP" - HTTP tasks, e.g. rest api call task
+	//   "EXTERNAL_INTEGRATION_SERVICES" - Integration services, e.g.
+	// connector task
+	//   "EXTERNAL_CUSTOMER_ACTIONS" - Customer ations, e.g. email task
+	//   "EXTERNAL_FLOW_CONTROL" - Flow control, e.g. while loop task
+	//   "EXTERNAL_WORKSPACE" - Workspace tasks, e.g. list drive task
+	//   "EXTERNAL_SECURITY" - Security, e.g. kms related tasks
+	//   "EXTERNAL_DATABASES" - Database operation tasks, e.g. read
+	// firestore info tasks
+	//   "EXTERNAL_ANALYTICS" - Analytics tasks, e.g. dataflow creattion
+	// tasks
+	//   "EXTERNAL_BYOC" - BYOC tasks
+	//   "EXTERNAL_BYOT" - BYOT tasks
+	//   "EXTERNAL_ARTIFICIAL_INTELIGENCE" - AI related tasks.
+	//   "EXTERNAL_DATA_MANIPULATION" - Data manipulation related tasks,
+	// e.g. data mapping task
 	ExternalCategory string `json:"externalCategory,omitempty"`
 
 	// ExternalCategorySequence: Sequence with which the task in specific
@@ -6294,6 +6315,9 @@ type GoogleCloudConnectorsV1AuthConfig struct {
 	// AdditionalVariables: List containing additional auth configs.
 	AdditionalVariables []*GoogleCloudConnectorsV1ConfigVariable `json:"additionalVariables,omitempty"`
 
+	// AuthKey: Identifier key for auth config
+	AuthKey string `json:"authKey,omitempty"`
+
 	// AuthType: The type of authentication configured.
 	//
 	// Possible values:
@@ -6688,6 +6712,16 @@ type GoogleCloudConnectorsV1Connection struct {
 
 	// Status: Output only. Current status of the connection.
 	Status *GoogleCloudConnectorsV1ConnectionStatus `json:"status,omitempty"`
+
+	// SubscriptionType: Output only. This subscription type enum value
+	// states if the metrics should be sent for billing or not.
+	//
+	// Possible values:
+	//   "SUBSCRIPTION_TYPE_UNSPECIFIED" - Unspecified subscription type.
+	//   "PAY_G" - Metrics should be sent for billing for PayG type.
+	//   "PAID" - Metrics should not be sent for billing for Paid
+	// Subscription type.
+	SubscriptionType string `json:"subscriptionType,omitempty"`
 
 	// Suspended: Optional. Suspended indicates if a user has suspended a
 	// connection or not.
@@ -11124,7 +11158,7 @@ func (s *GoogleCloudIntegrationsV1alphaValueType) UnmarshalJSON(data []byte) err
 
 // GoogleInternalCloudCrmEventbusV3PostToQueueWithTriggerIdRequest: Use
 // this request to post all workflows associated with a given trigger
-// id. Next available id: 10
+// id. Next available id: 11
 type GoogleInternalCloudCrmEventbusV3PostToQueueWithTriggerIdRequest struct {
 	// ClientId: Optional. If the client id is provided, then the
 	// combination of trigger id and client id is matched across all the
@@ -11174,6 +11208,11 @@ type GoogleInternalCloudCrmEventbusV3PostToQueueWithTriggerIdRequest struct {
 	// execution is returned. Must have no more than 36 characters and
 	// contain only alphanumeric characters and hyphens.
 	RequestId string `json:"requestId,omitempty"`
+
+	// ResourceName: This field is only required when using Admin Access.
+	// The resource name of target, or the parent resource name. For
+	// example: "projects/*/locations/*/integrations/*"
+	ResourceName string `json:"resourceName,omitempty"`
 
 	// ScheduledTime: Optional. Time in milliseconds since epoch when the
 	// given event would be scheduled.

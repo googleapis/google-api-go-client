@@ -6225,7 +6225,7 @@
       }
     }
   },
-  "revision": "20230328",
+  "revision": "20230503",
   "rootUrl": "https://shoppingcontent.googleapis.com/",
   "schemas": {
     "Account": {
@@ -8747,7 +8747,7 @@
       "properties": {
         "cutoffTime": {
           "$ref": "CutoffTime",
-          "description": "Business days cutoff time definition. If not configured the cutoff time will be defaulted to 8AM PST."
+          "description": "Business days cutoff time definition. If not configured the cutoff time will be defaulted to 8AM PST. If local delivery, use Service.StoreConfig.CutoffConfig."
         },
         "handlingBusinessDayConfig": {
           "$ref": "BusinessDayConfig",
@@ -8794,6 +8794,22 @@
             "$ref": "WarehouseBasedDeliveryTime"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "Distance": {
+      "description": "Distance represented by an integer and unit.",
+      "id": "Distance",
+      "properties": {
+        "unit": {
+          "description": "The distance unit. Acceptable values are `None`, `Miles`, and `Kilometers`.",
+          "type": "string"
+        },
+        "value": {
+          "description": "The distance represented as a number.",
+          "format": "int64",
+          "type": "string"
         }
       },
       "type": "object"
@@ -10154,7 +10170,7 @@
       "type": "object"
     },
     "MethodQuota": {
-      "description": "The quota information per method in the Content API. Includes only methods with current usage greater than zero for your account.",
+      "description": "The quota information per method in the Content API.",
       "id": "MethodQuota",
       "properties": {
         "method": {
@@ -13315,6 +13331,10 @@
           "description": "Description of the item.",
           "type": "string"
         },
+        "disclosureDate": {
+          "description": "The date time when an offer becomes visible in search results across Google’s YouTube surfaces, in [ISO 8601](http://en.wikipedia.org/wiki/ISO_8601) format. See [Disclosure date]( https://support.google.com/merchants/answer/13034208) for more information.",
+          "type": "string"
+        },
         "displayAdsId": {
           "description": "An identifier for an item for dynamic remarketing campaigns.",
           "type": "string"
@@ -13998,7 +14018,7 @@
           "type": "array"
         },
         "status": {
-          "description": "Destination approval status in `targetCountry` of the offer.",
+          "description": "Deprecated. Destination approval status in `targetCountry` of the offer.",
           "type": "string"
         }
       },
@@ -14367,6 +14387,10 @@
       "properties": {
         "canonicalAttribute": {
           "description": "Canonical attribute name for attribute-specific issues.",
+          "type": "string"
+        },
+        "code": {
+          "description": "Error code of the issue.",
           "type": "string"
         }
       },
@@ -16753,7 +16777,70 @@
           "type": "array"
         },
         "shipmentType": {
-          "description": "Type of locations this service ships orders to. Acceptable values are: - \"`delivery`\" - \"`pickup`\" ",
+          "description": "Type of locations this service ships orders to. Acceptable values are: - \"`delivery`\" - \"`pickup`\" - \"`local_delivery`\" ",
+          "type": "string"
+        },
+        "storeConfig": {
+          "$ref": "ServiceStoreConfig",
+          "description": "A list of stores your products are delivered from. This is only available for the local delivery shipment type."
+        }
+      },
+      "type": "object"
+    },
+    "ServiceStoreConfig": {
+      "description": "Stores that provide local delivery. Only valid with local delivery fulfillment.",
+      "id": "ServiceStoreConfig",
+      "properties": {
+        "cutoffConfig": {
+          "$ref": "ServiceStoreConfigCutoffConfig",
+          "description": "Time local delivery ends for the day. This can be either `local_cutoff_time` or `store_close_offset_hours`, if both are provided an error is thrown."
+        },
+        "serviceRadius": {
+          "$ref": "Distance",
+          "description": "Maximum delivery radius. Only needed for local delivery fulfillment type."
+        },
+        "storeCodes": {
+          "description": "A list of store codes that provide local delivery. If empty, then `store_service_type` must be `all_stores`, or an error is thrown. If not empty, then `store_service_type` must be `selected_stores`, or an error is thrown.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "storeServiceType": {
+          "description": "Indicates whether all stores listed by this merchant provide local delivery or not. Acceptable values are `all stores` and `selected stores`",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ServiceStoreConfigCutoffConfig": {
+      "description": "Time local delivery ends for the day based on the local timezone of the store. `local_cutoff_time` and `store_close_offset_hours` are mutually exclusive.",
+      "id": "ServiceStoreConfigCutoffConfig",
+      "properties": {
+        "localCutoffTime": {
+          "$ref": "ServiceStoreConfigCutoffConfigLocalCutoffTime",
+          "description": "Time in hours and minutes in the local timezone when local delivery ends."
+        },
+        "storeCloseOffsetHours": {
+          "description": "Represents cutoff time as the number of hours before store closing. Mutually exclusive with other fields (hour and minute).",
+          "format": "int64",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ServiceStoreConfigCutoffConfigLocalCutoffTime": {
+      "description": "Time in hours and minutes in the local timezone when local delivery ends.",
+      "id": "ServiceStoreConfigCutoffConfigLocalCutoffTime",
+      "properties": {
+        "hour": {
+          "description": "Hour local delivery orders must be placed by to process the same day.",
+          "format": "int64",
+          "type": "string"
+        },
+        "minute": {
+          "description": "Minute local delivery orders must be placed by to process the same day.",
+          "format": "int64",
           "type": "string"
         }
       },

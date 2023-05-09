@@ -33275,7 +33275,7 @@
       }
     }
   },
-  "revision": "20230418",
+  "revision": "20230425",
   "rootUrl": "https://compute.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -34608,6 +34608,11 @@
         },
         "provisionedIops": {
           "description": "Indicates how many IOPS to provision for the disk. This sets the number of I/O operations per second that the disk can handle. Values must be between 10,000 and 120,000. For more details, see the Extreme persistent disk documentation.",
+          "format": "int64",
+          "type": "string"
+        },
+        "provisionedThroughput": {
+          "description": "Indicates how much throughput to provision for the disk. This sets the number of throughput mb per second that the disk can handle. Values must be between 1 and 7,124.",
           "format": "int64",
           "type": "string"
         },
@@ -37265,7 +37270,7 @@
           "type": "string"
         },
         "splitSourceCommitment": {
-          "description": "Source commitment to be splitted into a new commitment.",
+          "description": "Source commitment to be split into a new commitment.",
           "type": "string"
         },
         "startTimestamp": {
@@ -38078,6 +38083,11 @@
         },
         "provisionedIops": {
           "description": "Indicates how many IOPS to provision for the disk. This sets the number of I/O operations per second that the disk can handle. Values must be between 10,000 and 120,000. For more details, see the Extreme persistent disk documentation.",
+          "format": "int64",
+          "type": "string"
+        },
+        "provisionedThroughput": {
+          "description": "Indicates how much throughput to provision for the disk. This sets the number of throughput mb per second that the disk can handle. Values must be between 1 and 7,124.",
           "format": "int64",
           "type": "string"
         },
@@ -49735,7 +49745,7 @@
           "type": "string"
         },
         "network": {
-          "description": "[Output Only] The URL of the network which the Network Attachment belongs to.",
+          "description": "[Output Only] The URL of the network which the Network Attachment belongs to. Practically it is inferred by fetching the network of the first subnetwork associated. Because it is required that all the subnetworks must be from the same network, it is assured that the Network Attachment belongs to the same network as all the subnetworks.",
           "type": "string"
         },
         "producerAcceptLists": {
@@ -69140,7 +69150,7 @@
           "type": "integer"
         },
         "peerGatewayInterface": {
-          "description": "The peer gateway interface this VPN tunnel is connected to, the peer gateway could either be an external VPN gateway or GCP VPN gateway.",
+          "description": "The peer gateway interface this VPN tunnel is connected to, the peer gateway could either be an external VPN gateway or a Google Cloud VPN gateway.",
           "format": "uint32",
           "type": "integer"
         },
@@ -69152,7 +69162,7 @@
       "type": "object"
     },
     "VpnGatewayStatusVpnConnection": {
-      "description": "A VPN connection contains all VPN tunnels connected from this VpnGateway to the same peer gateway. The peer gateway could either be a external VPN gateway or GCP VPN gateway.",
+      "description": "A VPN connection contains all VPN tunnels connected from this VpnGateway to the same peer gateway. The peer gateway could either be an external VPN gateway or a Google Cloud VPN gateway.",
       "id": "VpnGatewayStatusVpnConnection",
       "properties": {
         "peerExternalGateway": {

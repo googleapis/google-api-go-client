@@ -3597,8 +3597,8 @@ func (s *ListWorkflowTemplatesResponse) MarshalJSON() ([]byte, error) {
 // LoggingConfig: The runtime logging config of the job.
 type LoggingConfig struct {
 	// DriverLogLevels: The per-package log levels for the driver. This may
-	// include "root" package name to configure rootLogger. Examples:
-	// 'com.google = FATAL', 'root = INFO', 'org.apache = DEBUG'
+	// include "root" package name to configure rootLogger. Examples: -
+	// 'com.google = FATAL' - 'root = INFO' - 'org.apache = DEBUG'
 	DriverLogLevels map[string]string `json:"driverLogLevels,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DriverLogLevels") to
@@ -3737,11 +3737,11 @@ func (s *MetastoreConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Metric: A Dataproc OSS metric.
+// Metric: A Dataproc custom metric.
 type Metric struct {
-	// MetricOverrides: Optional. Specify one or more available OSS metrics
-	// (https://cloud.google.com/dataproc/docs/guides/monitoring#available_oss_metrics)
-	// to collect for the metric course (for the SPARK metric source, any
+	// MetricOverrides: Optional. Specify one or more Custom metrics
+	// (https://cloud.google.com/dataproc/docs/guides/dataproc-metrics#custom_metrics)
+	// to collect for the metric course (for the SPARK metric source (any
 	// Spark metric
 	// (https://spark.apache.org/docs/latest/monitoring.html#metrics) can be
 	// specified).Provide metrics in the following format: METRIC_SOURCE:
@@ -3750,27 +3750,27 @@ type Metric struct {
 	// spark:driver:DAGScheduler:job.allJobs
 	// sparkHistoryServer:JVM:Memory:NonHeapMemoryUsage.committed
 	// hiveserver2:JVM:Memory:NonHeapMemoryUsage.used Notes: Only the
-	// specified overridden metrics will be collected for the metric source.
-	// For example, if one or more spark:executive metrics are listed as
-	// metric overrides, other SPARK metrics will not be collected. The
-	// collection of the default metrics for other OSS metric sources is
-	// unaffected. For example, if both SPARK andd YARN metric sources are
-	// enabled, and overrides are provided for Spark metrics only, all
-	// default YARN metrics will be collected.
+	// specified overridden metrics are collected for the metric source. For
+	// example, if one or more spark:executive metrics are listed as metric
+	// overrides, other SPARK metrics are not collected. The collection of
+	// the metrics for other enabled custom metric sources is unaffected.
+	// For example, if both SPARK andd YARN metric sources are enabled, and
+	// overrides are provided for Spark metrics only, all YARN metrics are
+	// collected.
 	MetricOverrides []string `json:"metricOverrides,omitempty"`
 
-	// MetricSource: Required. Default metrics are collected unless
-	// metricOverrides are specified for the metric source (see Available
-	// OSS metrics
-	// (https://cloud.google.com/dataproc/docs/guides/monitoring#available_oss_metrics)
+	// MetricSource: Required. A standard set of metrics is collected unless
+	// metricOverrides are specified for the metric source (see Custom
+	// metrics
+	// (https://cloud.google.com/dataproc/docs/guides/dataproc-metrics#custom_metrics)
 	// for more information).
 	//
 	// Possible values:
 	//   "METRIC_SOURCE_UNSPECIFIED" - Required unspecified metric source.
-	//   "MONITORING_AGENT_DEFAULTS" - Default monitoring agent metrics. If
-	// this source is enabled, Dataproc enables the monitoring agent in
-	// Compute Engine, and collects default monitoring agent metrics, which
-	// are published with an agent.googleapis.com prefix.
+	//   "MONITORING_AGENT_DEFAULTS" - Monitoring agent metrics. If this
+	// source is enabled, Dataproc enables the monitoring agent in Compute
+	// Engine, and collects monitoring agent metrics, which are published
+	// with an agent.googleapis.com prefix.
 	//   "HDFS" - HDFS metric source.
 	//   "SPARK" - Spark metric source.
 	//   "YARN" - YARN metric source.

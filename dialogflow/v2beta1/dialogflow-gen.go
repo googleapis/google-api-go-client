@@ -2734,6 +2734,7 @@ func (s *GoogleCloudDialogflowCxV3PageInfoFormInfoParameterInfo) MarshalJSON() (
 // can contain one of: 1. A conversational query in the form of text. 2.
 // An intent query that specifies which intent to trigger. 3. Natural
 // language speech audio to be processed. 4. An event to be triggered.
+// 5. DTMF digits to invoke an intent and fill in parameter value.
 type GoogleCloudDialogflowCxV3QueryInput struct {
 	// Audio: The natural language speech audio to be processed.
 	Audio *GoogleCloudDialogflowCxV3AudioInput `json:"audio,omitempty"`
@@ -3570,6 +3571,7 @@ type GoogleCloudDialogflowCxV3TestRunDifference struct {
 	//   "PAGE" - The page.
 	//   "PARAMETERS" - The parameters.
 	//   "UTTERANCE" - The message utterance.
+	//   "FLOW" - The flow.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
@@ -6247,6 +6249,7 @@ func (s *GoogleCloudDialogflowCxV3beta1PageInfoFormInfoParameterInfo) MarshalJSO
 // It can contain one of: 1. A conversational query in the form of text.
 // 2. An intent query that specifies which intent to trigger. 3. Natural
 // language speech audio to be processed. 4. An event to be triggered.
+// 5. DTMF digits to invoke an intent and fill in parameter value.
 type GoogleCloudDialogflowCxV3beta1QueryInput struct {
 	// Audio: The natural language speech audio to be processed.
 	Audio *GoogleCloudDialogflowCxV3beta1AudioInput `json:"audio,omitempty"`
@@ -7085,6 +7088,7 @@ type GoogleCloudDialogflowCxV3beta1TestRunDifference struct {
 	//   "PAGE" - The page.
 	//   "PARAMETERS" - The parameters.
 	//   "UTTERANCE" - The message utterance.
+	//   "FLOW" - The flow.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
@@ -11851,7 +11855,9 @@ type GoogleCloudDialogflowV2beta1AnswerFeedback struct {
 	ClickTime string `json:"clickTime,omitempty"`
 
 	// Clicked: Indicates whether the answer/item was clicked by the human
-	// agent or not. Default to false.
+	// agent or not. Default to false. For knowledge search, the answer
+	// record is considered to be clicked if the answer was copied or any
+	// URI was clicked.
 	Clicked bool `json:"clicked,omitempty"`
 
 	// CorrectnessLevel: The correctness level of the specific answer.
@@ -21107,8 +21113,8 @@ func (s *GoogleCloudLocationListLocationsResponse) MarshalJSON() ([]byte, error)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudLocationLocation: A resource that represents Google Cloud
-// Platform location.
+// GoogleCloudLocationLocation: A resource that represents a Google
+// Cloud location.
 type GoogleCloudLocationLocation struct {
 	// DisplayName: The friendly name for this location, typically a nearby
 	// city name. For example, "Tokyo".
@@ -33977,6 +33983,7 @@ func (c *ProjectsAnswerRecordsGetCall) Do(opts ...googleapi.CallOption) (*Google
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Deprecated. Retrieves a specific answer record.",
 	//   "flatPath": "v2beta1/projects/{projectsId}/answerRecords/{answerRecordsId}",
 	//   "httpMethod": "GET",
@@ -37459,6 +37466,7 @@ func (c *ProjectsConversationsParticipantsSuggestionsCompileCall) Do(opts ...goo
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Deprecated. use SuggestArticles and SuggestFaqAnswers instead. Gets suggestions for a participant based on specific historical messages. Note that ListSuggestions will only list the auto-generated suggestions, while CompileSuggestion will try to compile suggestion based on the provided conversation context in the real time.",
 	//   "flatPath": "v2beta1/projects/{projectsId}/conversations/{conversationsId}/participants/{participantsId}/suggestions:compile",
 	//   "httpMethod": "POST",
@@ -37652,6 +37660,7 @@ func (c *ProjectsConversationsParticipantsSuggestionsListCall) Do(opts ...google
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Deprecated: Use inline suggestion, event based suggestion or Suggestion* API instead. See HumanAgentAssistantConfig.name for more details. Removal Date: 2020-09-01. Retrieves suggestions for live agents. This method should be used by human agent client software to fetch auto generated suggestions in real-time, while the conversation with an end user is in progress. The functionality is implemented in terms of the [list pagination](https://cloud.google.com/apis/design/design_patterns#list_pagination) design pattern. The client app should use the `next_page_token` field to fetch the next batch of suggestions. `suggestions` are sorted by `create_time` in descending order. To fetch latest suggestion, just set `page_size` to 1. To fetch new suggestions without duplication, send request with filter `create_time_epoch_microseconds \u003e [first item's create_time of previous request]` and empty page_token.",
 	//   "flatPath": "v2beta1/projects/{projectsId}/conversations/{conversationsId}/participants/{participantsId}/suggestions",
 	//   "httpMethod": "GET",
@@ -51433,6 +51442,7 @@ func (c *ProjectsLocationsAnswerRecordsGetCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Deprecated. Retrieves a specific answer record.",
 	//   "flatPath": "v2beta1/projects/{projectsId}/locations/{locationsId}/answerRecords/{answerRecordsId}",
 	//   "httpMethod": "GET",

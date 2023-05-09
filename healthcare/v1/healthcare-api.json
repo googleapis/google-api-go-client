@@ -4078,7 +4078,7 @@
       }
     }
   },
-  "revision": "20230412",
+  "revision": "20230427",
   "rootUrl": "https://healthcare.googleapis.com/",
   "schemas": {
     "ActivateConsentRequest": {
@@ -4653,6 +4653,10 @@
         "text": {
           "$ref": "TextConfig",
           "description": "Configures de-identification of text wherever it is found in the source_dataset."
+        },
+        "useRegionalDataProcessing": {
+          "description": "Ensures in-flight data remains in the region of origin during de-identification. Using this option results in a significant reduction of throughput, and is not compatible with `LOCATION` or `ORGANIZATION_NAME` infoTypes. `LOCATION` must be excluded within `TextConfig`, and must also be excluded within `ImageConfig` if image redaction is required.",
+          "type": "boolean"
         }
       },
       "type": "object"
@@ -6074,7 +6078,7 @@
       "type": "object"
     },
     "Location": {
-      "description": "A resource that represents Google Cloud Platform location.",
+      "description": "A resource that represents a Google Cloud location.",
       "id": "Location",
       "properties": {
         "displayName": {
@@ -6792,6 +6796,20 @@
     "TextConfig": {
       "id": "TextConfig",
       "properties": {
+        "additionalTransformations": {
+          "description": "Transformations to apply to the detected data, overridden by `exclude_info_types`.",
+          "items": {
+            "$ref": "InfoTypeTransformation"
+          },
+          "type": "array"
+        },
+        "excludeInfoTypes": {
+          "description": "InfoTypes to skip transforming, overriding `additional_transformations`.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
         "transformations": {
           "description": "The transformations to apply to the detected data. Deprecated. Use `additional_transformations` instead.",
           "items": {

@@ -14467,8 +14467,8 @@ type CommentsSetModerationStatusCall struct {
 //   - moderationStatus: Specifies the requested moderation status. Note,
 //     comments can be in statuses, which are not available through this
 //     call. For example, this call does not allow to mark a comment as
-//     'likely spam'. Valid values: MODERATION_STATUS_PUBLISHED,
-//     MODERATION_STATUS_HELD_FOR_REVIEW, MODERATION_STATUS_REJECTED.
+//     'likely spam'. Valid values: 'heldForReview', 'published' or
+//     'rejected'.
 func (r *CommentsService) SetModerationStatus(id []string, moderationStatus string) *CommentsSetModerationStatusCall {
 	c := &CommentsSetModerationStatusCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("id", append([]string{}, id...))
@@ -14566,7 +14566,7 @@ func (c *CommentsSetModerationStatusCall) Do(opts ...googleapi.CallOption) error
 	//       "type": "string"
 	//     },
 	//     "moderationStatus": {
-	//       "description": "Specifies the requested moderation status. Note, comments can be in statuses, which are not available through this call. For example, this call does not allow to mark a comment as 'likely spam'. Valid values: MODERATION_STATUS_PUBLISHED, MODERATION_STATUS_HELD_FOR_REVIEW, MODERATION_STATUS_REJECTED.",
+	//       "description": "Specifies the requested moderation status. Note, comments can be in statuses, which are not available through this call. For example, this call does not allow to mark a comment as 'likely spam'. Valid values: 'heldForReview', 'published' or 'rejected'.",
 	//       "enum": [
 	//         "published",
 	//         "heldForReview",

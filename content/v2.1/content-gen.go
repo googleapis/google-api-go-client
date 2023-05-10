@@ -2822,7 +2822,7 @@ type AttributionSettings struct {
 	//   "CROSS_CHANNEL_LAST_CLICK" - Cross-channel Last Click model.
 	//   "ADS_PREFERRED_LAST_CLICK" - Ads-preferred Last Click model.
 	//   "CROSS_CHANNEL_DATA_DRIVEN" - Cross-channel Data Driven model.
-	//   "CROSS_CHANNEL_FIRST_CLICK" - Cross-channel Frist Click model.
+	//   "CROSS_CHANNEL_FIRST_CLICK" - Cross-channel First Click model.
 	//   "CROSS_CHANNEL_LINEAR" - Cross-channel Linear model.
 	//   "CROSS_CHANNEL_POSITION_BASED" - Cross-channel Position Based
 	// model.
@@ -3308,6 +3308,92 @@ func (s *CarriersCarrier) MarshalJSON() ([]byte, error) {
 	type NoMethod CarriersCarrier
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CloudExportAdditionalProperties: Product property for the Cloud
+// Retail API. For example, properties for a TV product could be
+// "Screen-Resolution" or "Screen-Size".
+type CloudExportAdditionalProperties struct {
+	// BoolValue: Boolean value of the given property. For example for a TV
+	// product, "True" or "False" if the screen is UHD.
+	BoolValue bool `json:"boolValue,omitempty"`
+
+	// FloatValue: Float values of the given property. For example for a TV
+	// product 1.2345. Maximum number of specified values for this field is
+	// 400. Values are stored in an arbitrary but consistent order.
+	FloatValue []float64 `json:"floatValue,omitempty"`
+
+	// IntValue: Integer values of the given property. For example, 1080 for
+	// a screen resolution of a TV product. Maximum number of specified
+	// values for this field is 400. Values are stored in an arbitrary but
+	// consistent order.
+	IntValue googleapi.Int64s `json:"intValue,omitempty"`
+
+	// MaxValue: Maximum float value of the given property. For example for
+	// a TV product 100.00.
+	MaxValue float64 `json:"maxValue,omitempty"`
+
+	// MinValue: Minimum float value of the given property. For example for
+	// a TV product 1.00.
+	MinValue float64 `json:"minValue,omitempty"`
+
+	// PropertyName: Name of the given property. For example,
+	// "Screen-Resolution" for a TV product. Maximum string size is 256
+	// characters.
+	PropertyName string `json:"propertyName,omitempty"`
+
+	// TextValue: Text value of the given property. For example, "8K(UHD)"
+	// could be a text value for a TV product. Maximum number of specified
+	// values for this field is 400. Values are stored in an arbitrary but
+	// consistent order. Maximum string size is 256 characters.
+	TextValue []string `json:"textValue,omitempty"`
+
+	// UnitCode: Unit of the given property. For example, "Pixels" for a TV
+	// product. Maximum string size is 256 bytes.
+	UnitCode string `json:"unitCode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BoolValue") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BoolValue") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CloudExportAdditionalProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudExportAdditionalProperties
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *CloudExportAdditionalProperties) UnmarshalJSON(data []byte) error {
+	type NoMethod CloudExportAdditionalProperties
+	var s1 struct {
+		FloatValue []gensupport.JSONFloat64 `json:"floatValue"`
+		MaxValue   gensupport.JSONFloat64   `json:"maxValue"`
+		MinValue   gensupport.JSONFloat64   `json:"minValue"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.FloatValue = make([]float64, len(s1.FloatValue))
+	for i := range s1.FloatValue {
+		s.FloatValue[i] = float64(s1.FloatValue[i])
+	}
+	s.MaxValue = float64(s1.MaxValue)
+	s.MinValue = float64(s1.MinValue)
+	return nil
 }
 
 // Collection: The collection message.
@@ -4819,7 +4905,7 @@ func (s *DeliveryAreaPostalCodeRange) MarshalJSON() ([]byte, error) {
 }
 
 type DeliveryTime struct {
-	// CutoffTime: Business days cutoff time definition. If not configured
+	// CutoffTime: Business days cutoff time definition. If not configured,
 	// the cutoff time will be defaulted to 8AM PST. If local delivery, use
 	// Service.StoreConfig.CutoffConfig.
 	CutoffTime *CutoffTime `json:"cutoffTime,omitempty"`
@@ -12808,6 +12894,10 @@ type Product struct {
 	// Channel: Required. The item's channel (online or local). Acceptable
 	// values are: - "local" - "online"
 	Channel string `json:"channel,omitempty"`
+
+	// CloudExportAdditionalProperties: Extra fields to export to the Cloud
+	// Retail program.
+	CloudExportAdditionalProperties []*CloudExportAdditionalProperties `json:"cloudExportAdditionalProperties,omitempty"`
 
 	// Color: Color of the item.
 	Color string `json:"color,omitempty"`
@@ -41487,9 +41577,10 @@ func (r *RecommendationsService) Generate(merchantId int64) *RecommendationsGene
 
 // AllowedTag sets the optional parameter "allowedTag": List of allowed
 // tags. Tags are a set of predefined strings that describe the category
-// that individual recommendation types. User can specify zero or more
-// tags in this field to indicate what group of recommendations they
-// want to receive. Current list of supported tags: - TREND
+// that individual recommendation types belong to. User can specify zero
+// or more tags in this field to indicate what categories of
+// recommendations they want to receive. Current list of supported tags:
+// - TREND
 func (c *RecommendationsGenerateCall) AllowedTag(allowedTag ...string) *RecommendationsGenerateCall {
 	c.urlParams_.SetMulti("allowedTag", append([]string{}, allowedTag...))
 	return c
@@ -41615,7 +41706,7 @@ func (c *RecommendationsGenerateCall) Do(opts ...googleapi.CallOption) (*Generat
 	//   ],
 	//   "parameters": {
 	//     "allowedTag": {
-	//       "description": "Optional. List of allowed tags. Tags are a set of predefined strings that describe the category that individual recommendation types. User can specify zero or more tags in this field to indicate what group of recommendations they want to receive. Current list of supported tags: - TREND",
+	//       "description": "Optional. List of allowed tags. Tags are a set of predefined strings that describe the category that individual recommendation types belong to. User can specify zero or more tags in this field to indicate what categories of recommendations they want to receive. Current list of supported tags: - TREND",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"

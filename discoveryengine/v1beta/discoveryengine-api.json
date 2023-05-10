@@ -298,7 +298,7 @@
                               ]
                             },
                             "purge": {
-                              "description": "Permanently deletes all selected Documents under a branch. This process is asynchronous. If the request is valid, the removal will be enquired and processed offlines. Depending on the number of Documents, this operation could take hours to complete. Before the operation completes, some Documents may still be returned by DocumentService.GetDocument or DocumentService.ListDocuments. To get a sample of Documents that would be deleted, set PurgeDocumentsRequest.force to false.",
+                              "description": "Permanently deletes all selected Documents in a branch. This process is asynchronous. Depending on the number of Documents to be deleted, this operation can take hours to complete. Before the delete operation completes, some Documents might still be returned by DocumentService.GetDocument or DocumentService.ListDocuments. To get a list of the Documents to be deleted, set PurgeDocumentsRequest.force to false.",
                               "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/dataStores/{dataStoresId}/branches/{branchesId}/documents:purge",
                               "httpMethod": "POST",
                               "id": "discoveryengine.projects.locations.collections.dataStores.branches.documents.purge",
@@ -1011,7 +1011,7 @@
                           ]
                         },
                         "purge": {
-                          "description": "Permanently deletes all selected Documents under a branch. This process is asynchronous. If the request is valid, the removal will be enquired and processed offlines. Depending on the number of Documents, this operation could take hours to complete. Before the operation completes, some Documents may still be returned by DocumentService.GetDocument or DocumentService.ListDocuments. To get a sample of Documents that would be deleted, set PurgeDocumentsRequest.force to false.",
+                          "description": "Permanently deletes all selected Documents in a branch. This process is asynchronous. Depending on the number of Documents to be deleted, this operation can take hours to complete. Before the delete operation completes, some Documents might still be returned by DocumentService.GetDocument or DocumentService.ListDocuments. To get a list of the Documents to be deleted, set PurgeDocumentsRequest.force to false.",
                           "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/dataStores/{dataStoresId}/branches/{branchesId}/documents:purge",
                           "httpMethod": "POST",
                           "id": "discoveryengine.projects.locations.dataStores.branches.documents.purge",
@@ -1536,7 +1536,7 @@
       }
     }
   },
-  "revision": "20230503",
+  "revision": "20230504",
   "rootUrl": "https://discoveryengine.googleapis.com/",
   "schemas": {
     "GoogleApiHttpBody": {
@@ -1992,6 +1992,10 @@
           "description": "Quantity of the Document associated with the user event. Defaults to 1. For example, this field will be 2 if two quantities of the same Document are involved in a `add-to-cart` event. Required for events of the following event types: * `add-to-cart` * `purchase`",
           "format": "int32",
           "type": "integer"
+        },
+        "uri": {
+          "description": "Required. The Document url - only allowed for DataStores with content_config PUBLIC_WEBSITE.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -2328,7 +2332,7 @@
       "id": "GoogleCloudDiscoveryengineV1betaPurgeDocumentsRequest",
       "properties": {
         "filter": {
-          "description": "Required. Filter matching documents to purge. Only currently supported value is “*” (all items).",
+          "description": "Required. Filter matching documents to purge. Only currently supported value is `*` (all items).",
           "type": "string"
         },
         "force": {

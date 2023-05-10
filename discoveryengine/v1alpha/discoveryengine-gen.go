@@ -981,6 +981,10 @@ type GoogleCloudDiscoveryengineV1alphaDocumentInfo struct {
 	// events of the following event types: * `add-to-cart` * `purchase`
 	Quantity int64 `json:"quantity,omitempty"`
 
+	// Uri: Required. The Document url - only allowed for DataStores with
+	// content_config PUBLIC_WEBSITE.
+	Uri string `json:"uri,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Id") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -1637,7 +1641,7 @@ func (s *GoogleCloudDiscoveryengineV1alphaPurgeDocumentsMetadata) MarshalJSON() 
 // message for DocumentService.PurgeDocuments method.
 type GoogleCloudDiscoveryengineV1alphaPurgeDocumentsRequest struct {
 	// Filter: Required. Filter matching documents to purge. Only currently
-	// supported value is “*” (all items).
+	// supported value is `*` (all items).
 	Filter string `json:"filter,omitempty"`
 
 	// Force: Actually performs the purge. If `force` is set to false,
@@ -3770,13 +3774,12 @@ type ProjectsLocationsCollectionsDataStoresBranchesDocumentsPurgeCall struct {
 	header_                                                http.Header
 }
 
-// Purge: Permanently deletes all selected Documents under a branch.
-// This process is asynchronous. If the request is valid, the removal
-// will be enquired and processed offlines. Depending on the number of
-// Documents, this operation could take hours to complete. Before the
-// operation completes, some Documents may still be returned by
+// Purge: Permanently deletes all selected Documents in a branch. This
+// process is asynchronous. Depending on the number of Documents to be
+// deleted, this operation can take hours to complete. Before the delete
+// operation completes, some Documents might still be returned by
 // DocumentService.GetDocument or DocumentService.ListDocuments. To get
-// a sample of Documents that would be deleted, set
+// a list of the Documents to be deleted, set
 // PurgeDocumentsRequest.force to false.
 //
 //   - parent: The parent resource name, such as
@@ -3880,7 +3883,7 @@ func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsPurgeCall) Do(op
 	}
 	return ret, nil
 	// {
-	//   "description": "Permanently deletes all selected Documents under a branch. This process is asynchronous. If the request is valid, the removal will be enquired and processed offlines. Depending on the number of Documents, this operation could take hours to complete. Before the operation completes, some Documents may still be returned by DocumentService.GetDocument or DocumentService.ListDocuments. To get a sample of Documents that would be deleted, set PurgeDocumentsRequest.force to false.",
+	//   "description": "Permanently deletes all selected Documents in a branch. This process is asynchronous. Depending on the number of Documents to be deleted, this operation can take hours to complete. Before the delete operation completes, some Documents might still be returned by DocumentService.GetDocument or DocumentService.ListDocuments. To get a list of the Documents to be deleted, set PurgeDocumentsRequest.force to false.",
 	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/dataStores/{dataStoresId}/branches/{branchesId}/documents:purge",
 	//   "httpMethod": "POST",
 	//   "id": "discoveryengine.projects.locations.collections.dataStores.branches.documents.purge",
@@ -7303,13 +7306,12 @@ type ProjectsLocationsDataStoresBranchesDocumentsPurgeCall struct {
 	header_                                                http.Header
 }
 
-// Purge: Permanently deletes all selected Documents under a branch.
-// This process is asynchronous. If the request is valid, the removal
-// will be enquired and processed offlines. Depending on the number of
-// Documents, this operation could take hours to complete. Before the
-// operation completes, some Documents may still be returned by
+// Purge: Permanently deletes all selected Documents in a branch. This
+// process is asynchronous. Depending on the number of Documents to be
+// deleted, this operation can take hours to complete. Before the delete
+// operation completes, some Documents might still be returned by
 // DocumentService.GetDocument or DocumentService.ListDocuments. To get
-// a sample of Documents that would be deleted, set
+// a list of the Documents to be deleted, set
 // PurgeDocumentsRequest.force to false.
 //
 //   - parent: The parent resource name, such as
@@ -7413,7 +7415,7 @@ func (c *ProjectsLocationsDataStoresBranchesDocumentsPurgeCall) Do(opts ...googl
 	}
 	return ret, nil
 	// {
-	//   "description": "Permanently deletes all selected Documents under a branch. This process is asynchronous. If the request is valid, the removal will be enquired and processed offlines. Depending on the number of Documents, this operation could take hours to complete. Before the operation completes, some Documents may still be returned by DocumentService.GetDocument or DocumentService.ListDocuments. To get a sample of Documents that would be deleted, set PurgeDocumentsRequest.force to false.",
+	//   "description": "Permanently deletes all selected Documents in a branch. This process is asynchronous. Depending on the number of Documents to be deleted, this operation can take hours to complete. Before the delete operation completes, some Documents might still be returned by DocumentService.GetDocument or DocumentService.ListDocuments. To get a list of the Documents to be deleted, set PurgeDocumentsRequest.force to false.",
 	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/dataStores/{dataStoresId}/branches/{branchesId}/documents:purge",
 	//   "httpMethod": "POST",
 	//   "id": "discoveryengine.projects.locations.dataStores.branches.documents.purge",

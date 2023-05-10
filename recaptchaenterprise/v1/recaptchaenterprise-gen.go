@@ -483,6 +483,44 @@ type GoogleCloudRecaptchaenterpriseV1AnnotateAssessmentResponse struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// GoogleCloudRecaptchaenterpriseV1AppleDeveloperId: Contains fields
+// that are required to perform Apple-specific integrity checks.
+type GoogleCloudRecaptchaenterpriseV1AppleDeveloperId struct {
+	// KeyId: Required. The Apple developer key ID (10-character string).
+	KeyId string `json:"keyId,omitempty"`
+
+	// PrivateKey: Required. Input only. A private key (downloaded as a text
+	// file with a .p8 file extension) generated for your Apple Developer
+	// account.
+	PrivateKey string `json:"privateKey,omitempty"`
+
+	// TeamId: Required. The Apple team ID (10-character string) owning the
+	// provisioning profile used to build your application.
+	TeamId string `json:"teamId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "KeyId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "KeyId") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRecaptchaenterpriseV1AppleDeveloperId) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecaptchaenterpriseV1AppleDeveloperId
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRecaptchaenterpriseV1Assessment: A reCAPTCHA Enterprise
 // assessment resource.
 type GoogleCloudRecaptchaenterpriseV1Assessment struct {
@@ -1153,6 +1191,13 @@ type GoogleCloudRecaptchaenterpriseV1IOSKeySettings struct {
 	// AllowedBundleIds: iOS bundle ids of apps allowed to use the key.
 	// Example: 'com.companyname.productname.appname'
 	AllowedBundleIds []string `json:"allowedBundleIds,omitempty"`
+
+	// AppleDeveloperId: Apple Developer account details for the app the
+	// reCAPTCHA key will protect. reCAPTCHA Enterprise leverages platform
+	// specific checks like Apple AppAttest and Apple DeviceCheck to protect
+	// your app from abuse. Providing these fields allows reCAPTCHA
+	// Enterprise to get a better assessment of the integrity of your app.
+	AppleDeveloperId *GoogleCloudRecaptchaenterpriseV1AppleDeveloperId `json:"appleDeveloperId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AllowAllBundleIds")
 	// to unconditionally include in API requests. By default, fields with
